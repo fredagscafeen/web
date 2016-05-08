@@ -1,0 +1,15 @@
+{% include 'header.html' %}
+{% include 'menu.html' %}
+<h2>Bartendere</h2>
+<ul>
+    {% for bartender in bartenders %}
+        <li>{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+    {% endfor %}
+</ul>
+<h3>Tidligere bartendere</h3>
+<ul>
+    {% for bartender in inactive_bartenders %}
+        <li>{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+    {% endfor %}
+</ul>
+{% include 'footer.html' %}
