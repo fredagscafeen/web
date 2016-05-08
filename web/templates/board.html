@@ -1,0 +1,9 @@
+{% include 'header.html' %}
+{% include 'menu.html' %}
+<h2>Bestyrelsen</h2>
+<ul>
+{% for boardmember in boardmembers %}
+        <li>{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>) <b>{{ boardmember.title }}</b></li>
+{% endfor %}
+</ul>
+{% include 'footer.html' %}
