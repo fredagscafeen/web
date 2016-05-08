@@ -1,0 +1,47 @@
+{% load items_extras %}
+{% include 'header.html' %}
+{% include 'menu.html' %}
+<h2>Sortiment</h2>
+<script>
+
+
+</script>
+<table class="table table-striped tablesorter" id="items"
+<thead>
+    <tr>
+        <th>Bryghus</th>
+        <th>Navn</th>
+        <th>ABV %</th>
+        <th>Beholder</th>
+        <th>Nationalitet</th>
+        <th>Pris</th>
+        {% if user.is_authenticated %}
+            <th></th>
+        {% endif %}
+    </tr>
+    </thead>
+<tbody>
+{% for item in items %}
+    <tr>
+        <td>{{ item.brewery|default_if_none:"" }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.abv }}</td>
+        <td>{{ item.get_container_display }}</td>
+        <td>{{ item.country }}</td>
+        <td>{{ item.priceInDKK }}</td>
+        {% if user.is_authenticated %}
+            <td><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
+        {% endif %}
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#items").tablesorter(
+                {sortList: [[1, 0]]}
+        );
+    })
+</script>
+{% include 'footer.html' %}

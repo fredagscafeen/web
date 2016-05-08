@@ -1,0 +1,11 @@
+#banner h1 {
+    color: midnightblue;
+    font-family: serif;
+    display: inline-block;
+}
+
+#banner img {
+    height: 50px;
+    display: inline-block;
+    padding-bottom: 12px;
+}
