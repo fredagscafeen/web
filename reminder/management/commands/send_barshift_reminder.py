@@ -110,9 +110,9 @@ def send_reminder_email(bartenders):
             humanize_bartenders += ', '
     message = 'Hello ' + humanize_bartenders + '.\n' \
               + '\n' \
-                'The coming Friday it is YOUR turn to run the Fridaycafé bar.\n' \
-                'This is an automated mail sent to You as well as to Bestyrelsen.' \
-                'It is primarily so that You may arrange for someone else to take your shift,' \
+                'The coming Friday it is YOUR turn to run Fredagscafeen.\n' \
+                'This is an automated mail sent to you as well as to Bestyrelsen.' \
+                'It is primarily sent such that you may arrange for someone else to take your shift,' \
                 'but it also serves as a kind reminder :)\n' \
                 '\n' \
                 'See you at the bar!\n' \
