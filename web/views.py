@@ -38,7 +38,7 @@ class ShiftEvent:
 
 class UserBarplan(ICalFeed):
     product_id = '-//example.com//Example//EN'
-    timezone = 'Europe/Copenhagen'
+    timezone = 'UTC'
     file_name = "barvagter.ics"
     title = "Barvagter"
 
@@ -66,6 +66,7 @@ class UserBarplan(ICalFeed):
                 if "Europe/Copenhagen" in line:
                     currentevent.dtstart = datetime.strptime(line[len("DTSTART;TZID=Europe/Copenhagen:"):],
                                                              "%Y%m%dT%H%M%S")
+                    currentevent.startstamp = line[len("DTSTART;TZID=Europe/Copenhagen:"):]
             if "DTEND;" in line:
                 if "Europe/Copenhagen" in line:
                     currentevent.dtend = datetime.strptime(line[len("DTEND;TZID=Europe/Copenhagen:"):], "%Y%m%dT%H%M%S")
@@ -73,7 +74,9 @@ class UserBarplan(ICalFeed):
                 currentevent.location = line[9:]
             if "END:VEVENT" in line:
                 if kwargs['username'] in currentevent.summary:
+                    currentevent.uid += currentevent.startstamp
                     eventlist.append(currentevent)
+                    print(currentevent.dtstart)
         return eventlist
 
     def item_guid(self, item):
