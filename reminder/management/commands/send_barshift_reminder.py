@@ -112,7 +112,7 @@ def send_reminder_email(bartenders):
               + '\n' \
                 'The coming Friday it is YOUR turn to run Fredagscafeen.\n' \
                 'This is an automated mail sent to you as well as to Bestyrelsen.' \
-                'It is primarily sent such that you may arrange for someone else to take your shift,' \
+                'It is primarily sent so that you may arrange for someone else to take your shift, '  \
                 'but it also serves as a kind reminder :)\n' \
                 '\n' \
                 'See you at the bar!\n' \
