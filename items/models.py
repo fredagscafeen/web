@@ -19,7 +19,7 @@ class Item(models.Model):
     abv = models.FloatField(null=True, blank=True)
     container = models.CharField(choices=CONTAINER, null=True, blank=True, max_length=140)
     volumeInCentiliters = models.IntegerField(null=True, blank=True)
-    inStock = models.BooleanField(default=False)
+    inStock = models.BooleanField(default=True)
     imageUrl = models.CharField(max_length=255, null=True, blank=True)
     barcode = models.CharField(max_length=255, null=True, blank=True)
 
