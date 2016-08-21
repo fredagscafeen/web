@@ -4,10 +4,13 @@
 <h2>Reservation af fadølsanlæg</h2>
 
 <h4>Fadølsanlægget er allerede reserveret følgende dage</h4>
+
 <ul>
-{% for udlejning in udlejninger %}
-        <li>{{ udlejning.dateFrom }}</li>
-{% endfor %}
+    {% for udlejning in udlejninger %}
+        <li>{{ udlejning.dateFrom }}, reserveret af {{ udlejning.whoReserved }}</li>
+    {% empty %}
+        <li>Anlægget er pt ikke reserveret på noget tidspunkt</li>
+    {% endfor %}
 </ul>
 
 <h3>Regler for udlån</h3>
