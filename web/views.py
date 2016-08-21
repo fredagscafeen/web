@@ -76,7 +76,6 @@ class UserBarplan(ICalFeed):
                 if kwargs['username'] in currentevent.summary:
                     currentevent.uid += currentevent.startstamp
                     eventlist.append(currentevent)
-                    print(currentevent.dtstart)
         return eventlist
 
     def item_guid(self, item):
