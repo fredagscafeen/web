@@ -8,6 +8,7 @@ from bartenders.models import Bartender, BoardMember
 from django_ical.views import ICalFeed
 from items.models import Item
 from udlejning.models import Udlejning
+from udlejning.models import UdlejningGrill
 
 
 class Index(TemplateView):
@@ -133,5 +134,14 @@ class Udlejninger(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Udlejninger, self).get_context_data(**kwargs)
-        context['udlejninger'] = Udlejning.objects.all()
+        context['udlejninger'] = Udlejning.objects.filter(paid=False)
+        return context
+
+
+class UdlejningerGrill(TemplateView):
+    template_name = "udlejningGrill.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(UdlejningerGrill, self).get_context_data(**kwargs)
+        context["udlejningerGrill"] = UdlejningGrill.objects.all()
         return context
