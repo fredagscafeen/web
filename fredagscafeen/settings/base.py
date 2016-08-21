@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'web',
     'api',
     'reminder',
+    'udlejning',
 )
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
