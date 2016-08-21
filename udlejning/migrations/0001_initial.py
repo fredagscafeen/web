@@ -33,5 +33,18 @@ class Migration(migrations.Migration):
                 ('paid', models.BooleanField(default=False)),
             ],
         ),
+        migrations.CreateModel(
+            name='UdlejningGrill',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('dateFrom', models.DateTimeField()),
+                ('dateTo', models.DateTimeField(blank=True, null=True)),
+                ('whoReserved', models.TextField(max_length=140)),
+                ('where', models.TextField(max_length=140)),
+                ('contactInfo', models.CharField(max_length=140)),
+                ('comments', models.TextField(blank=True, null=True)),
+                ('boardMemberInCharge', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bartenders.BoardMember')),
+            ],
+        ),
     ]
 
