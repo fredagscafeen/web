@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from bartenders.models import Bartender, BoardMember
 from django_ical.views import ICalFeed
 from items.models import Item
+from udlejning.models import Udlejning
 
 
 class Index(TemplateView):
@@ -124,4 +125,13 @@ class Board(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Board, self).get_context_data(**kwargs)
         context['boardmembers'] = BoardMember.objects.filter()
+        return context
+
+
+class Udlejninger(TemplateView):
+    template_name = "udlejning.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(Udlejninger, self).get_context_data(**kwargs)
+        context['udlejninger'] = Udlejning.objects.all()
         return context
