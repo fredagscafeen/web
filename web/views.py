@@ -145,3 +145,7 @@ class UdlejningerGrill(TemplateView):
         context = super(UdlejningerGrill, self).get_context_data(**kwargs)
         context["udlejningerGrill"] = UdlejningGrill.objects.all()
         return context
+
+
+class Guides(TemplateView):
+    template_name = "guides.html"
