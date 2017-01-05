@@ -4,14 +4,14 @@
 
 1. checkout project from vcs
 2. setup virtual env (commands should be run in project folder)
-  `virtualenv web-venv`
-  `source web-venv/bin/activate (not windows)`
-  `./web-venv/scripts/activate (windows)`
-  `pip install -r requirements.txt`
+  i. `virtualenv web-venv`
+  ii. `source web-venv/bin/activate (not windows)`
+  iii. `./web-venv/scripts/activate (windows)`
+  iv. `pip install -r requirements.txt`
 
 3. set env variables in pycharm
-  `SECRET_KEY = "whatever"`
-  `DJANGO_SETTINGS_MODULE = fredagscafeen.settings.local`
+  i. `SECRET_KEY = "whatever"`
+  ii. `DJANGO_SETTINGS_MODULE = fredagscafeen.settings.local`
   
 4. press green arrow to run
 
