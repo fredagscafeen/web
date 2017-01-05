@@ -1,4 +1,4 @@
-# Setup wip
+# Setup (wip)
 
 ## To run project locally using pycharm
 
@@ -15,4 +15,4 @@
   
 4. press green arrow to run
 
-(database needs to be set as well, use migrate)
+(database needs to be set as well, use migrate in Tools->Run manage.py Task)
