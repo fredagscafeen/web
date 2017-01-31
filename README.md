@@ -16,3 +16,7 @@
 4. press green arrow to run
 
 (database needs to be set as well, use migrate in Tools->Run manage.py Task)
+
+## Deploy changes
+
+'git push dokku master'
