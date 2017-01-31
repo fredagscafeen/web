@@ -12,6 +12,7 @@
 
 li.dropdown {
     display: inline-block;
+    z-index: 5;
 }
 
 .dropdown-content {
