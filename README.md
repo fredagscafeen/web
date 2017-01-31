@@ -19,4 +19,4 @@
 
 ## Deploy changes
 
-'git push dokku master'
+`push dokku master`
