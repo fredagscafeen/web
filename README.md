@@ -19,5 +19,6 @@
 
 ## Deploy changes
 
-in project folder run
-`git push dokku master`
+1. start pageant with private key used to log in to server
+
+2. in project folder run `git push dokku master`
