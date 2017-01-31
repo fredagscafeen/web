@@ -19,4 +19,5 @@
 
 ## Deploy changes
 
-`push dokku master`
+in project folder run
+`git push dokku master`
