@@ -4,11 +4,11 @@ from django.contrib import admin
 
 
 class UdlejningAdmin(admin.ModelAdmin):
-    list_display = ('dateFrom', 'whoReserved', 'boardMemberInCharge')
+    list_display = ('dateFrom', 'whoReserved', 'bartenderInCharge')
 
 
 class UdlejningGrillAdmin(admin.ModelAdmin):
-    list_display = ('dateFrom', 'whoReserved', 'boardMemberInCharge')
+    list_display = ('dateFrom', 'whoReserved', 'bartenderInCharge')
 
 
 admin.site.register(Udlejning, UdlejningAdmin)
