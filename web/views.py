@@ -1,5 +1,7 @@
 import urllib.request
+from datetime import timedelta
 
+from django.utils import timezone
 from django.utils.datetime_safe import datetime
 from django.views.generic import TemplateView
 from django.http import HttpResponse
@@ -134,7 +136,7 @@ class Udlejninger(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Udlejninger, self).get_context_data(**kwargs)
-        context['udlejninger'] = Udlejning.objects.filter(paid=False)
+        context['udlejninger'] = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-timedelta(days=30))
         return context
 
 
@@ -143,7 +145,7 @@ class UdlejningerGrill(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(UdlejningerGrill, self).get_context_data(**kwargs)
-        context["udlejningerGrill"] = UdlejningGrill.objects.all()
+        context["udlejningerGrill"] = UdlejningGrill.objects.filter(dateFrom__gte=timezone.now()-timedelta(days=30))
         return context
 
 
