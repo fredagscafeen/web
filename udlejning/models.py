@@ -1,4 +1,4 @@
-from bartenders.models import BoardMember
+from bartenders.models import Bartender
 from django.db import models
 
 
@@ -14,7 +14,7 @@ class Udlejning(models.Model):
     actualConsummation = models.TextField(max_length=140, blank=True, null=True)
     contactInfo = models.CharField(max_length=140)
     comments = models.TextField(blank=True, null=True)
-    boardMemberInCharge = models.ForeignKey(BoardMember, blank=True, null=True)
+    bartenderInCharge = models.ForeignKey(Bartender, blank=True, null=True)
     paid = models.BooleanField(default=False)
 
 
@@ -25,4 +25,4 @@ class UdlejningGrill(models.Model):
     where = models.TextField(max_length=140)
     contactInfo = models.CharField(max_length=140)
     comments = models.TextField(blank=True, null=True)
-    boardMemberInCharge = models.ForeignKey(BoardMember, blank=True, null=True)
+    bartenderInCharge = models.ForeignKey(Bartender, blank=True, null=True)
