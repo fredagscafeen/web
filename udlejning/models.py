@@ -17,6 +17,9 @@ class Udlejning(models.Model):
     bartenderInCharge = models.ForeignKey(Bartender, blank=True, null=True)
     paid = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('dateFrom', )
+
 
 class UdlejningGrill(models.Model):
     dateFrom = models.DateTimeField()
@@ -26,3 +29,6 @@ class UdlejningGrill(models.Model):
     contactInfo = models.CharField(max_length=140)
     comments = models.TextField(blank=True, null=True)
     bartenderInCharge = models.ForeignKey(Bartender, blank=True, null=True)
+
+    class Meta:
+        ordering = ('dateFrom', )
