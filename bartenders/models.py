@@ -10,6 +10,9 @@ class Bartender(models.Model):
     isActiveBartender = models.BooleanField(default=True)
     isBoardMember = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
         return self.username
 
