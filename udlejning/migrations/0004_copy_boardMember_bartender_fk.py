@@ -10,8 +10,7 @@ def copy_foreign_keys(apps, schema_editor):
     for model_name in ('Udlejning', 'UdlejningGrill'):
         Model = apps.get_model('udlejning', model_name)
         for udlejning in Model.objects.exclude(boardMemberInCharge__isnull=True).select_related('boardMemberInCharge'):
-            udlejning.bartenderInCharge = udlejning.boardMemberInCharge.bartender  # Copy the fk
-            udlejning.save()
+            udlejning.bartendersInCharge.add(udlejning.boardMemberInCharge.bartender)  # Copy the fk
 
 
 class Migration(migrations.Migration):
