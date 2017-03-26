@@ -16,12 +16,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='udlejning',
-            name='bartenderInCharge',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bartenders.Bartender'),
+            name='bartendersInCharge',
+            field=models.ManyToManyField(blank=True, to='bartenders.Bartender'),
         ),
         migrations.AddField(
             model_name='udlejninggrill',
-            name='bartenderInCharge',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='bartenders.Bartender'),
+            name='bartendersInCharge',
+            field=models.ManyToManyField(blank=True, to='bartenders.Bartender'),
         ),
     ]
