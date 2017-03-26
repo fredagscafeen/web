@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_object_actions',
+    'bootstrap3',
     'items',
     'bartenders',
     'rest_framework',

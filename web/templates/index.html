@@ -1,5 +1,18 @@
 {% include 'header.html' %}
 {% include 'menu.html' %}
 <h2></h2>
-Vi er ved at bygge siden op fra bunden så den vil virke en smule rodet :-) Vi håber I finder hvad I leder efter.
+Velkommen til Fredagscafeens webside, her kan du finde information om åbningstider, sortiment, udlejning af fadølsanlæg og grill mm.
+
+<h2>Bartendertilmelding</h2>
+
+{% load bootstrap3 %}
+
+<form method="post" action="/">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+    {% endbuttons %}
+</form>
+
 {% include 'footer.html' %}
