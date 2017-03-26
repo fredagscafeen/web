@@ -34,11 +34,11 @@ class BoardMember(models.Model):
 
 
 class BartenderApplication(models.Model):
-    name = models.CharField(max_length=140)
-    username = models.CharField(max_length=140, help_text='Brug evt. NFIT')
-    email = models.CharField(max_length=255)
-    studentNumber = models.IntegerField()
-    phoneNumber = models.IntegerField()
+    name = models.CharField(max_length=140, verbose_name='Navn')
+    username = models.CharField(max_length=140, verbose_name='Brugernavn', help_text='Brug evt. NFIT')
+    email = models.EmailField(max_length=255)
+    studentNumber = models.IntegerField(verbose_name='Studienummer')
+    phoneNumber = models.IntegerField(verbose_name='Telefonnummer')
     info = models.TextField(blank=True, help_text='Eventuelle ekstra info til bestyrelsen skrives her')
 
     created = models.DateTimeField(auto_now_add=True)
