@@ -3,11 +3,10 @@ from datetime import timedelta
 
 from django.utils import timezone
 from django.utils.datetime_safe import datetime
-from django.views.generic import TemplateView
-from django.http import HttpResponse
+from django.views.generic import TemplateView, ListView
+from django_ical.views import ICalFeed
 
 from bartenders.models import Bartender, BoardMember
-from django_ical.views import ICalFeed
 from items.models import Item
 from udlejning.models import Udlejning
 from udlejning.models import UdlejningGrill
@@ -104,49 +103,39 @@ class UserBarplan(ICalFeed):
         return "http://fredagscafeen.dk/barplan/"
 
 
-class Items(TemplateView):
+class Items(ListView):
     template_name = "items.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(Items, self).get_context_data(**kwargs)
-        context['items'] = Item.objects.all()
-        return context
+    allow_empty = True
+    model = Item
+    context_object_name = 'items'
 
 
-class Search(TemplateView):
+class Search(ListView):
     template_name = "search.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(Search, self).get_context_data(**kwargs)
-        context['items'] = Item.objects.all()
-        return context
+    allow_empty = True
+    model = Item
+    context_object_name = 'items'
 
 
-class Board(TemplateView):
+class Board(ListView):
     template_name = "board.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(Board, self).get_context_data(**kwargs)
-        context['boardmembers'] = BoardMember.objects.filter()
-        return context
+    allow_empty = True
+    model = BoardMember
+    context_object_name = 'boardmembers'
 
 
-class Udlejninger(TemplateView):
+class Udlejninger(ListView):
     template_name = "udlejning.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(Udlejninger, self).get_context_data(**kwargs)
-        context['udlejninger'] = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-timedelta(days=30))
-        return context
+    allow_empty = True
+    queryset = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-timedelta(days=30))
+    context_object_name = 'udlejninger'
 
 
-class UdlejningerGrill(TemplateView):
+class UdlejningerGrill(ListView):
     template_name = "udlejningGrill.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(UdlejningerGrill, self).get_context_data(**kwargs)
-        context["udlejningerGrill"] = UdlejningGrill.objects.filter(dateFrom__gte=timezone.now()-timedelta(days=30))
-        return context
+    allow_empty = True
+    queryset = UdlejningGrill.objects.filter(dateFrom__gte=timezone.now()-timedelta(days=30))
+    context_object_name = 'udlejningerGrill'
 
 
 class Guides(TemplateView):
