@@ -5,11 +5,14 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
+from captcha.fields import ReCaptchaField
 
 from bartenders.models import BartenderApplication
 
 
 class BartenderApplicationForm(ModelForm):
+	captcha = ReCaptchaField()
+
 	class Meta:
 		model = BartenderApplication
 		fields = '__all__'

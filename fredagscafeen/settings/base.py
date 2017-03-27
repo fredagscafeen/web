@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_object_actions',
     'bootstrap3',
+    'captcha',
     'items',
     'bartenders',
     'rest_framework',
@@ -46,6 +47,7 @@ INSTALLED_APPS = (
     'reminder',
     'udlejning',
 )
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -116,3 +118,6 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+# Use the new NoCaptcha
+NOCAPTCHA = True
