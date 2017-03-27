@@ -1,3 +1,4 @@
+import os
 from urllib.parse import urljoin
 
 from django.conf import settings
@@ -11,6 +12,12 @@ from bartenders.models import BartenderApplication, Bartender
 
 
 class BartenderApplicationTests(TestCase):
+	def setUp(self):
+		os.environ['RECAPTCHA_TESTING'] = 'True'
+
+	def tearDown(self):
+		os.environ['RECAPTCHA_TESTING'] = 'False'
+
 	def test_accepting_application(self):
 		ap = BartenderApplication.objects.create(name='Abekat', username='abkat', email='kat@post.au.dk', studentNumber=20147510, phoneNumber=42345123)
 		ap.accept()
@@ -40,6 +47,7 @@ class BartenderApplicationTests(TestCase):
 			info='Hkll'
 		)
 
+		data['g-recaptcha-response'] = 'PASSED'
 		response = self.client.post('/', data=data)
 		self.assertRedirects(response, '/')
 

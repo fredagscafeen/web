@@ -18,3 +18,6 @@ import dj_database_url
 DATABASES = {'default': dj_database_url.config()}
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+RECAPTCHA_PUBLIC_KEY = '6LeyixoUAAAAAFkkXnzfT8932ENQQmD2a2LLs2Bt'
+RECAPTCHA_PRIVATE_KEY = '6LeyixoUAAAAAFKIL_ycYN9nzBAB-CTxY4D8Du2q'
