@@ -12,11 +12,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameField(
-            model_name='udlejning',
-            old_name='paymentSendTo',
-            new_name='billSendTo',
-        ),
         migrations.AlterField(
             model_name='udlejning',
             name='whoPays',
