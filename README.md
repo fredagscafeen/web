@@ -1,4 +1,4 @@
-# Setup (wip)
+# Setup (WIP)
 
 ## To run project locally using pycharm
 
@@ -8,6 +8,9 @@
   2. `source web-venv/bin/activate (not windows)`
   3. `./web-venv/scripts/activate (windows)`
   4. `pip install -r requirements.txt`
+
+Installing the required psycopg2 package (PostgreSQL for Python) might require the `pg_config` binary,
+which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
 3. set env variables in pycharm
   1. `SECRET_KEY = "whatever"`
