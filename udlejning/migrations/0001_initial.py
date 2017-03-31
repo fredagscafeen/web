@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('whoReserved', models.TextField(max_length=140)),
                 ('whoPays', models.TextField(max_length=140)),
                 ('paymentType', models.CharField(max_length=140)),
-                ('paymentSendTo', models.CharField(max_length=140)),
+                ('billSendTo', models.CharField(max_length=140)),
                 ('where', models.TextField(max_length=140)),
                 ('expectedConsummation', models.TextField(max_length=140)),
                 ('actualConsummation', models.TextField(max_length=140, blank=True, null=True)),
