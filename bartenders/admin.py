@@ -14,7 +14,7 @@ class BoardMemberAdmin(admin.ModelAdmin):
     list_select_related = ('bartender', )
 
     def thumbnail(self, obj):
-        return mark_safe('<img src="%s" width="75px"/>' % obj.image.url)
+        return mark_safe('<img src="%s" width="75px"/>' % obj.image.url) if obj.image else '<missing>'
 
 admin.site.register(Bartender, BartenderAdmin)
 admin.site.register(BoardMember, BoardMemberAdmin)
