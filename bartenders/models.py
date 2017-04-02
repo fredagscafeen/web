@@ -21,6 +21,7 @@ class BoardMember(models.Model):
     bartender = models.ForeignKey(Bartender, null=False, blank=False)
     title = models.CharField(max_length=255)
     responsibilities = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='boardMembers', blank=True, null=True)
 
     def __str__(self):
         return self.bartender.username
