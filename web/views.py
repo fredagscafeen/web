@@ -1,19 +1,41 @@
 import urllib.request
 from datetime import timedelta
 
+from django.contrib import messages
 from django.utils import timezone
 from django.utils.datetime_safe import datetime
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from django_ical.views import ICalFeed
 
-from bartenders.models import Bartender, BoardMember
+from bartenders.models import Bartender, BoardMember, BartenderApplication
 from items.models import Item
 from udlejning.models import Udlejning
 from udlejning.models import UdlejningGrill
+from web.forms import BartenderApplicationForm
 
 
-class Index(TemplateView):
-    template_name = "index.html"
+class Index(CreateView):
+    model = BartenderApplication
+    template_name = 'index.html'
+    form_class = BartenderApplicationForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        # Call super to save instance
+        response = super().form_valid(form)
+
+        # Send email to best
+        form.send_email(self.object.pk)
+        messages.success(self.request, 'Your application has been sent successfully.')
+
+        return response
+
+
+class NewTestIndex(Index):
+    def get_context_data(self, **kwargs):
+        d =  super().get_context_data(**kwargs)
+        d['test'] = True
+        return d
 
 
 class Contact(TemplateView):
