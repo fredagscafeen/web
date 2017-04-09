@@ -1,6 +1,7 @@
 from django.conf.urls import url
 
-from web.views import Index, Contact, BartenderList, Barplan, UserBarplan, Items, Board, Search, Udlejninger, UdlejningerGrill, Guides
+from web.views import Index, Contact, BartenderList, Barplan, UserBarplan, Items, Board, Search, Udlejninger, \
+    UdlejningerGrill, Guides, NewTestIndex
 
 urlpatterns = [
     url(r'^contact/', Contact.as_view()),
@@ -11,6 +12,7 @@ urlpatterns = [
     url(r'^board/', Board.as_view()),
     url(r'^search/', Search.as_view()),
     url(r'^$', Index.as_view()),
+    url(r'^testindex/$', NewTestIndex.as_view()),
     url(r'^udlejning/', Udlejninger.as_view()),
     url(r'^udlejningGrill/', UdlejningerGrill.as_view()),
     url(r'^guides/', Guides.as_view()),

@@ -31,6 +31,13 @@ class Index(CreateView):
         return response
 
 
+class NewTestIndex(Index):
+    def get_context_data(self, **kwargs):
+        d =  super().get_context_data(**kwargs)
+        d['test'] = True
+        return d
+
+
 class Contact(TemplateView):
     template_name = "contact.html"
 
