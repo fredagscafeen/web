@@ -1,5 +1,6 @@
 {% include 'header.html' %}
 {% include 'menu.html' %}
+
 <h2></h2>
 Velkommen til Fredagscafeens webside, her kan du finde information om åbningstider, sortiment, udlejning af fadølsanlæg og grill mm.
 
@@ -9,13 +10,22 @@ Velkommen til Fredagscafeens webside, her kan du finde information om åbningsti
 
 {% load bootstrap3 %}
 
-<form method="post" action="/">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-        {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
-    {% endbuttons %}
-</form>
+<div class="row">
+    <div class="col-md-8">
+        <form method="post" action="/">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+            {% endbuttons %}
+        </form>
+    </div>
+    <div class="col-md-4">
+        <p>Som bartender har du ca. 2 vagter per semester, hvor du er med til at sørge for, at Fredagscafeen løber rundt.<br/><br/>
+           Udover dette inviteres du til vores årlige arrangementer for bartendere og bestyrelse, såsom turen til Djurs Sommerland.</p>
+    </div>
+</div>
+
 
 {% endif %}
 
