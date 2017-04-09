@@ -2,5 +2,7 @@ from fredagscafeen.settings.base import *
 
 DEBUG = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+SELF_URL = 'http://localhost:8000/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
