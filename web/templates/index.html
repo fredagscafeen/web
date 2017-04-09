@@ -3,6 +3,8 @@
 <h2></h2>
 Velkommen til Fredagscafeens webside, her kan du finde information om åbningstider, sortiment, udlejning af fadølsanlæg og grill mm.
 
+{% if test %}
+
 <h2>Bartendertilmelding</h2>
 
 {% load bootstrap3 %}
@@ -14,5 +16,7 @@ Velkommen til Fredagscafeens webside, her kan du finde information om åbningsti
         {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
     {% endbuttons %}
 </form>
+
+{% endif %}
 
 {% include 'footer.html' %}
