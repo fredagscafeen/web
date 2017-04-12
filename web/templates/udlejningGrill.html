@@ -1,5 +1,6 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 
 <h2>Reservation af Grill</h2>
 
@@ -30,3 +31,4 @@
     <li> Hvornår man ønsker grillen opstiller (fra hvornår til ca. hvornår)</li>
     <li> Kontaktinformation</li>
 </ul>
+{% endblock %}
