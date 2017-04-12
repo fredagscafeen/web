@@ -1,5 +1,6 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 
 {% load staticfiles %}
 
@@ -8,16 +9,24 @@
     <ul class="list-group">
     {% for boardmember in boardmembers %}
             <li class="list-group-item">
-                {% if boardmember.image %}
-                    <img src="{{ boardmember.image.url }}" width="75px"/>
-                {% else %}
-                    <img src="{% static 'images/logo.png' %}" width="75px"/>
-                {% endif %}
-                <span style="margin-left: 1em;">
-                    {{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>) <b>{{ boardmember.title }}</b>
-                </span>
+
+                <div style="display: flex; flex-direction: row; align-items: center;">
+                        
+                    {% if boardmember.image %}
+                        <img src="{{ boardmember.image.url }}" height="75px"/>
+                    {% else %}
+                        <img src="{% static 'images/logo.png' %}" height="75px"/>
+                    {% endif %}
+
+                    
+                    <span style="margin-left: 1em;">
+                        <b>{{ boardmember.responsibilities }}</b>
+                        <br>
+                        {{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)<b> {{ boardmember.title }}</b>
+                    </span>
+                </div>
             </li>
     {% endfor %}
     </ul>
 </div>
-{% include 'footer.html' %}
+{% endblock %}

@@ -1,5 +1,6 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 <h2>Bartendere</h2>
 <ul>
     {% for bartender in bartenders %}
@@ -12,4 +13,4 @@
         <li>{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
     {% endfor %}
 </ul>
-{% include 'footer.html' %}
+{% endblock %}
