@@ -1,5 +1,6 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 <h2>Guides</h2>
 
 <p>
@@ -36,4 +37,4 @@
     <li><a href="/static/guides/pizzaliste.pdf">Pizza listen</a></li>
 </ul>
 
-{% include 'footer.html' %}
+{% endblock %}

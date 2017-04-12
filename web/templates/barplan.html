@@ -1,6 +1,7 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 <h2>Barplan</h2>
 <p><iframe src="https://www.google.com/calendar/embed?showTitle=0&amp;showDate=0&amp;showTabs=0&amp;mode=AGENDA&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=7io4aah2dr5faldnd0v2dnk5k0%40group.calendar.google.com&amp;color=%23A32929&amp;src=1dt8kqlgn9mgen53otb33ag9pg%40group.calendar.google.com&amp;color=%2329527A&amp;src=rmin1g20gie2hhqgtk54nibl6k%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Europe%2FCopenhagen" style=" border-width:0" width="600" height="600" frameborder="0" scrolling="no"></iframe></p>
 <p><iframe style="border-width: 0;" src="http://www.google.com/calendar/embed?showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=125&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=2a157v77f7uuvm5f41ifbfna5s@group.calendar.google.com&amp;color=%23AB8B00&amp;ctz=Europe/Copenhagen" frameborder="0" scrolling="no" width="100%" height="150"></iframe></p>
-{% include 'footer.html' %}
+{% endblock %}

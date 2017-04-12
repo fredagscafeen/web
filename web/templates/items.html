@@ -1,6 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 {% load items_extras %}
-{% include 'header.html' %}
-{% include 'menu.html' %}
 <h2>Sortiment</h2>
 <script>
 
@@ -44,4 +46,4 @@
         );
     })
 </script>
-{% include 'footer.html' %}
+{% endblock %}
