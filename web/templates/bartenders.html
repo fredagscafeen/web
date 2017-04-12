@@ -2,15 +2,17 @@
 
 {% block content %}
 <h2>Bartendere</h2>
-<ul>
+
+<ul class="list-group">
     {% for bartender in bartenders %}
-        <li>{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+        <li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
     {% endfor %}
 </ul>
+
 <h3>Tidligere bartendere</h3>
-<ul>
+<ul class="list-group">
     {% for bartender in inactive_bartenders %}
-        <li>{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+        <li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
     {% endfor %}
 </ul>
 {% endblock %}
