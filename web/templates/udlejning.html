@@ -1,6 +1,6 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
 
+{% block content %}
 <h2>Reservation af fadølsanlæg</h2>
 
 <h4>Fadølsanlægget er allerede reserveret følgende dage</h4>
@@ -134,3 +134,4 @@
   </li>
   <li> Kontaktinformation for den event-ansvarlige</li>
 </ul>
+{% endblock %}
