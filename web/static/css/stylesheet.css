@@ -10,11 +10,6 @@
     padding-bottom: 12px;
 }
 
-li.dropdown {
-    display: inline-block;
-    z-index: 5;
-}
-
 .navbar-default .navbar-nav > li > a {
     color: #337ab7 !important;
 }
@@ -22,4 +17,12 @@ li.dropdown {
 .navbar-collapse li:hover {
     border-radius: 7px;
     background-color: #eee;
+}
+
+.board-image {
+    height: 100px; 
+    width: 100px; 
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat; 
 }

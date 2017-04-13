@@ -13,17 +13,16 @@
                 <div style="display: flex; flex-direction: row; align-items: center;">
                         
                     {% if boardmember.image %}
-                        <img src="{{ boardmember.image.url }}" height="75px"/>
+                    <div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
                     {% else %}
-                        <img src="{% static 'images/logo.png' %}" height="75px"/>
+                    <div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
                     {% endif %}
-
                     
-                    <span style="margin-left: 1em;">
+                    <div style="margin-left: 1em;">
                         <b>{{ boardmember.responsibilities }}</b>
                         <br>
                         {{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)<b> {{ boardmember.title }}</b>
-                    </span>
+                    </div>
                 </div>
             </li>
     {% endfor %}
