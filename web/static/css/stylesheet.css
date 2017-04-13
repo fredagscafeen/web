@@ -10,6 +10,10 @@
     padding-bottom: 12px;
 }
 
+ul.navbar-nav {
+    margin: 0px !important;
+}
+
 .navbar-default .navbar-nav > li > a {
     color: #337ab7 !important;
 }
@@ -20,7 +24,6 @@
 }
 
 .navbar-collapse li:hover {
-    border-radius: 7px;
     background-color: #eee;
 }
 
