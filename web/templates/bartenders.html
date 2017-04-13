@@ -2,26 +2,30 @@
 
 {% block content %}
 
-<div class="col-md-6">
-	
-	<ul class="list-group">
-		<li class="list-group-item  list-group-item-success"><b>Bartendere</b></li>
-		{% for bartender in bartenders %}
-			<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
-		{% endfor %}
-	</ul>
+<h2>Bartendere</h2>
 
-</div>
+<div class="row">
+	<div class="col-md-6">
+		
+		<ul class="list-group">
+			<li class="list-group-item  list-group-item-success"><b>Nuværende</b></li>
+			{% for bartender in bartenders %}
+				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+			{% endfor %}
+		</ul>
 
-<div class="col-md-6">
+	</div>
 
-	<ul class="list-group">
-		<li class="list-group-item  list-group-item-warning"><b>Tidligere bartendere</b></li>
-		{% for bartender in inactive_bartenders %}
-			<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
-		{% endfor %}
-	</ul>
+	<div class="col-md-6">
 
+		<ul class="list-group">
+			<li class="list-group-item  list-group-item-warning"><b>Tidligere</b></li>
+			{% for bartender in inactive_bartenders %}
+				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+			{% endfor %}
+		</ul>
+
+	</div>
 </div>
 	
 {% endblock %}
