@@ -2,97 +2,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Fredagscaféen</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/header.css' %}">
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/tablesorter/2.17.4/js/jquery.tablesorter.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
-    <script>
-        (function(document) {
-            'use strict';
+	<title>Fredagscaféen</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/header.css' %}">
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/tablesorter/2.17.4/js/jquery.tablesorter.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+	<script>
+		(function(document) {
+			'use strict';
 
-            var LightTableFilter = (function(Arr) {
+			var LightTableFilter = (function(Arr) {
 
-                var _input;
+				var _input;
 
-                function _onInputEvent(e) {
-                    _input = e.target;
-                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-                    Arr.forEach.call(tables, function(table) {
-                        Arr.forEach.call(table.tBodies, function(tbody) {
-                            Arr.forEach.call(tbody.rows, _filter);
-                        });
-                    });
-                }
+				function _onInputEvent(e) {
+					_input = e.target;
+					var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+					Arr.forEach.call(tables, function(table) {
+						Arr.forEach.call(table.tBodies, function(tbody) {
+							Arr.forEach.call(tbody.rows, _filter);
+						});
+					});
+				}
 
-                function _filter(row) {
-                    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-                }
+				function _filter(row) {
+					var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+					row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+				}
 
-                return {
-                    init: function() {
-                        var inputs = document.getElementsByClassName('light-table-filter');
-                        Arr.forEach.call(inputs, function(input) {
-                            input.oninput = _onInputEvent;
-                        });
-                    }
-                };
-            })(Array.prototype);
+				return {
+					init: function() {
+						var inputs = document.getElementsByClassName('light-table-filter');
+						Arr.forEach.call(inputs, function(input) {
+							input.oninput = _onInputEvent;
+						});
+					}
+				};
+			})(Array.prototype);
 
-            document.addEventListener('readystatechange', function() {
-                if (document.readyState === 'complete') {
-                    LightTableFilter.init();
-                }
-            });
+			document.addEventListener('readystatechange', function() {
+				if (document.readyState === 'complete') {
+					LightTableFilter.init();
+				}
+			});
 
-        })(document);
-    </script>
-    <style>
-        .form-control {
-            background-color: lightgreen;
-        }
+		})(document);
+	</script>
+	<style>
+		.form-control {
+			background-color: lightgreen;
+		}
 
-        .price
-        {
-            background-color: green;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
+		.price
+		{
+			background-color: green;
+			color: white;
+			font-weight: bold;
+		}
+	</style>
 </head>
 <body>
 <div id="input-group">
-    <input type="search" class="light-table-filter form-control" data-table="order-table" placeholder="Search">
+	<input type="search" class="light-table-filter form-control" data-table="order-table" placeholder="Search">
 </div>
 <div>
-    <table class="table table-striped light-table-filter order-table" id="items">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Pris</th>
-        </tr>
-        </thead>
-    <tbody>
-    {% for item in items %}
-        <tr>
-            <td>
-                {% if item.brewery %}
-                    {{ item.brewery }} -
-                {% endif %}
-                {{ item.name }} ({{ item.get_container_display }})
-            </td>
-        <td class="price">
-            {{ item.priceInDKK }}
-        </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    </table>
+	<table class="table table-striped light-table-filter order-table" id="items">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Pris</th>
+		</tr>
+		</thead>
+	<tbody>
+	{% for item in items %}
+		<tr>
+			<td>
+				{% if item.brewery %}
+					{{ item.brewery }} -
+				{% endif %}
+				{{ item.name }} ({{ item.get_container_display }})
+			</td>
+		<td class="price">
+			{{ item.priceInDKK }}
+		</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+	</table>
 </div>
