@@ -19,63 +19,67 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
-            <header class="banner hidden-xs">
-                <h1>
-                    <img src="{% static 'images/logo.png' %}" height="50">
-                    Fredagscaféen
-                </h1>
-            </header>
+    <div class="container wrapper">
+        <header class="banner hidden-xs">
+            <h1>
+                <img src="{% static 'images/logo.png' %}" height="50">
+                Fredagscaféen
+            </h1>
+        </header>
 
-            <nav class="navbar navbar-default" style="background: none; border: none; box-shadow: none;">
-                <div class="container-fluid">
+        <nav class="navbar navbar-default" style="background: none; border: none; box-shadow: none;">
+            <div class="container-fluid">
 
-                    <div class="navbar-header" style="border-bottom: 1px solid #efefef;">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand visible-xs-inline" href="/" style="color: midnightblue;">
-                            <img src="{% static 'images/logo.png' %}" height="20" style="display: inline-block;">
-                            Fredagscaféen
-                        </a>
-                    </div>
-
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li><a href="/">Forside</a></li>
-                            <li><a href="/barplan">Barplan</a></li>
-                            <li><a href="/bartenders">Bartendere</a></li>
-                            <li><a href="/prices">Sortiment</a></li>
-
-                            <li class="dropdown">
-                                <a href="/udlejning" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Udlejning<span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/udlejning">Udlejning af fadølsanlæg</a></li>
-                                    <li><a href="/udlejningGrill">Udlejning af grill</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="/guides">Guides</a></li>
-                            <li><a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank"><span class="glyphicon glyphicon-new-window"></span>Facebook</a></li>
-                            <li><a href="/board">Bestyrelsen</a></li>
-                            <li><a href="/contact">Kontakt</a></li>
-                        </ul>
-                    </div>
-
+                <div class="navbar-header" style="border-bottom: 1px solid #efefef;">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand visible-xs-inline" href="/" style="color: midnightblue;">
+                        <img src="{% static 'images/logo.png' %}" height="20" style="display: inline-block;">
+                        Fredagscaféen
+                    </a>
                 </div>
-            </nav>
 
-            {% load bootstrap3 %}
-            {% bootstrap_messages %}
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Forside</a></li>
+                        <li><a href="/barplan">Barplan</a></li>
+                        <li><a href="/bartenders">Bartendere</a></li>
+                        <li><a href="/prices">Sortiment</a></li>
 
-            {% block content %}{% endblock %}
-            
-            <div>
-                <!-- Footer stuff -->
+                        <li class="dropdown">
+                            <a href="/udlejning" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Udlejning<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/udlejning">Udlejning af fadølsanlæg</a></li>
+                                <li><a href="/udlejningGrill">Udlejning af grill</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="/guides">Guides</a></li>
+                        <li><a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank"><span class="glyphicon glyphicon-new-window"></span>Facebook</a></li>
+                        <li><a href="/board">Bestyrelsen</a></li>
+                        <li><a href="/contact">Kontakt</a></li>
+                    </ul>
+                </div>
+
             </div>
+        </nav>
+
+        {% load bootstrap3 %}
+        {% bootstrap_messages %}
+
+        {% block content %}{% endblock %}
     </div>
+
+    <footer>
+        <div class="container">
+            <hr>
+            Fredagscaféen er en fredagsbar for datalogi og IT på Aarhus Universitet.<br>
+            1993-{% now "Y" %} Fredagscaféen
+        </div>
+    </footer>
 </body>
 </html>
