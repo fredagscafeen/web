@@ -6,9 +6,9 @@
 	
 	<ul class="list-group">
 		<li class="list-group-item  list-group-item-success"><b>Bartendere</b></li>
-	    {% for bartender in bartenders %}
-	        <li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
-	    {% endfor %}
+		{% for bartender in bartenders %}
+			<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+		{% endfor %}
 	</ul>
 
 </div>
@@ -17,9 +17,9 @@
 
 	<ul class="list-group">
 		<li class="list-group-item  list-group-item-warning"><b>Tidligere bartendere</b></li>
-	    {% for bartender in inactive_bartenders %}
-	        <li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
-	    {% endfor %}
+		{% for bartender in inactive_bartenders %}
+			<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+		{% endfor %}
 	</ul>
 
 </div>
