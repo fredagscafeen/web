@@ -47,3 +47,25 @@ footer {
     text-align: center;
     height: 120px;
 }
+
+@media screen and (min-width: 480px) {
+    #sortiment-row {
+        display: flex; 
+        align-items: center;
+    }
+
+    #sortiment-search {
+        text-align: right;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+      #sortiment-search {
+        display: flex;
+      }
+
+    #sortiment-search input {
+        flex-grow: 1;
+    }
+}
