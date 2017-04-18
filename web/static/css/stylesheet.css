@@ -28,18 +28,19 @@ ul.navbar-nav {
 }
 
 .board-image {
-    height: 100px; 
-    width: 100px; 
+    height: 100px;
+    width: 100px;
     background-size: contain;
     background-position: center;
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
+    flex-shrink: 0;
 }
 
 .wrapper {
     min-height: 100%;
-    height: auto !important; 
+    height: auto !important;
     height: 100%;
-    margin: 0 auto -120px; 
+    margin: 0 auto -120px;
     padding-bottom: 120px;
  }
 
@@ -50,7 +51,7 @@ footer {
 
 @media screen and (min-width: 480px) {
     #sortiment-row {
-        display: flex; 
+        display: flex;
         align-items: center;
     }
 
