@@ -1,32 +1,35 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 
 <h2>Reservation af Grill</h2>
 
 <h4>Grillen er allerede reserveret følgende dage</h4>
 
 <ul>
-    {% for udlejningGrill in udlejningerGrill %}
-        <li>{{ udlejningGrill.dateFrom }}, reserveret af {{ udlejningGrill.whoReserved }}</li>
-    {% empty %}
-        <li>Grillen er pt ikke reserveret på noget tidspunkt</li>
-    {% endfor %}
+	{% for udlejningGrill in udlejningerGrill %}
+		<li>{{ udlejningGrill.dateFrom }}, reserveret af {{ udlejningGrill.whoReserved }}</li>
+	{% empty %}
+		<li>Grillen er pt ikke reserveret på noget tidspunkt</li>
+	{% endfor %}
 </ul>
 
 <p>
-    Hvis vores grill ikke allerede er udlånt, kan du låne den ved at sende en mail til
-    <a rel="nofollow" class="external text" href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>.
-    Grillen kan kun lånes til arrangementer på instituttet.
+	Hvis vores grill ikke allerede er udlånt, kan du låne den ved at sende en mail til
+	<a rel="nofollow" class="external text" href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>.
+	Grillen kan kun lånes til arrangementer på instituttet.
 </p>
 <p>
-    Mere info om grillen kommer senere.
+	Mere info om grillen kommer senere.
 </p>
 <p>
-    <b>Indholdet af email med anmodning om udlån</b>:
-    Når du kontakter Best for at låne grillen, skal der stå følgende:
+	<b>Indholdet af email med anmodning om udlån</b>:
+	Når du kontakter Best for at låne grillen, skal der stå følgende:
 </p>
 <ul>
-    <li> Hvor man ønsker grillen opstillet</li>
-    <li> Hvornår man ønsker grillen opstiller (fra hvornår til ca. hvornår)</li>
-    <li> Kontaktinformation</li>
+	<li> Hvor man ønsker grillen opstillet</li>
+	<li> Hvornår man ønsker grillen opstiller (fra hvornår til ca. hvornår)</li>
+	<li> Kontaktinformation</li>
 </ul>
+
+{% endblock %}
