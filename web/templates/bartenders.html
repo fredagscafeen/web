@@ -1,15 +1,31 @@
-{% include 'header.html' %}
-{% include 'menu.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
+
 <h2>Bartendere</h2>
-<ul>
-    {% for bartender in bartenders %}
-        <li>{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
-    {% endfor %}
-</ul>
-<h3>Tidligere bartendere</h3>
-<ul>
-    {% for bartender in inactive_bartenders %}
-        <li>{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
-    {% endfor %}
-</ul>
-{% include 'footer.html' %}
+
+<div class="row">
+	<div class="col-md-6">
+		
+		<ul class="list-group">
+			<li class="list-group-item  list-group-item-success"><b>Nuværende</b></li>
+			{% for bartender in bartenders %}
+				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+			{% endfor %}
+		</ul>
+
+	</div>
+
+	<div class="col-md-6">
+
+		<ul class="list-group">
+			<li class="list-group-item  list-group-item-warning"><b>Tidligere</b></li>
+			{% for bartender in inactive_bartenders %}
+				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+			{% endfor %}
+		</ul>
+
+	</div>
+</div>
+	
+{% endblock %}

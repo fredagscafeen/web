@@ -1,47 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 {% load items_extras %}
-{% include 'header.html' %}
-{% include 'menu.html' %}
-<h2>Sortiment</h2>
-<script>
+{% load staticfiles %}
 
 
-</script>
+<div class="row" id="sortiment-row">
+	<div class="col-sm-6">
+		<h2>Sortiment</h2>
+	</div>
+	<div class="col-sm-6" id="sortiment-search">	
+		<input type="text" id="itemsSearchInput" placeholder="Søg">
+	</div>
+</div>
+
+
 <table class="table table-striped tablesorter" id="items">
-<thead>
-    <tr>
-        <th>Bryghus</th>
-        <th>Navn</th>
-        <th>ABV %</th>
-        <th>Beholder</th>
-        <th>Nationalitet</th>
-        <th>Pris</th>
-        {% if user.is_authenticated %}
-            <th></th>
-        {% endif %}
-    </tr>
-    </thead>
-<tbody>
-{% for item in items %}
-    <tr>
-        <td>{{ item.brewery|default_if_none:"" }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.abv }}</td>
-        <td>{{ item.get_container_display }}</td>
-        <td>{{ item.country }}</td>
-        <td>{{ item.priceInDKK }}</td>
-        {% if user.is_authenticated %}
-            <td><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
-        {% endif %}
-    </tr>
-{% endfor %}
-</tbody>
+	<thead>
+		<tr>
+			<th>Bryghus</th>
+			<th>Navn</th>
+			<th class="hidden-xs">ABV %</th>
+			<th class="hidden-xs">Beholder</th>
+			<th class="hidden-xs">Nationalitet</th>
+			<th>Pris</th>
+			{% if user.is_authenticated %}
+				<th class="hidden-xs"></th>
+			{% endif %}
+		</tr>
+		</thead>
+	<tbody>
+	{% for item in items %}
+		<tr>
+			<td>{{ item.brewery|default_if_none:"" }}</td>
+			<td>{{ item.name }}</td>
+			<td class="hidden-xs">{{ item.abv }}</td>
+			<td class="hidden-xs">{{ item.get_container_display }}</td>
+			<td class="hidden-xs">{{ item.country }}</td>
+			<td>{{ item.priceInDKK }}</td>
+			{% if user.is_authenticated %}
+				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
+			{% endif %}
+		</tr>
+	{% endfor %}
+	</tbody>
 </table>
 
-<script>
-    $(document).ready(function () {
-        $("#items").tablesorter(
-                {sortList: [[1, 0]]}
-        );
-    })
-</script>
-{% include 'footer.html' %}
+<script src="{% static 'js/sortimentSearch.js' %}"></script>
+
+{% endblock %}
