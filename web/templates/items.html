@@ -8,14 +8,25 @@
 
 <div class="row" id="sortiment-row">
 	<div class="col-sm-6">
-		<h2>Sortiment</h2>
+		<h2>
+			Sortiment 
+			<div id="sortiment-count"> 
+				{% if items %}
+				   ({{ items | length }})				    
+				{% endif %}
+			</div>
+		</h2>
 	</div>
+
+	{% if items %}			   				    
 	<div class="col-sm-6" id="sortiment-search">	
 		<input type="text" id="itemsSearchInput" placeholder="Søg">
 	</div>
+	{% endif %}
 </div>
 
 
+{% if items %}
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
@@ -48,5 +59,11 @@
 </table>
 
 <script src="{% static 'js/sortimentSearch.js' %}"></script>
+
+{% else %}
+
+	<span>Sortimentet er desværre tomt &#9785;</span>
+
+{% endif %}
 
 {% endblock %}

@@ -36,6 +36,11 @@ ul.navbar-nav {
     flex-shrink: 0;
 }
 
+#sortiment-count {
+    font-size: 0.8em;
+    display: inline;
+}
+
 .wrapper {
     min-height: 100%;
     height: auto !important;
