@@ -10,11 +10,11 @@
 	<div class="col-sm-6">
 		<h2>
 			Sortiment 
+			{% if items %}
 			<div id="sortiment-count"> 
-				{% if items %}
 				   ({{ items | length }})				    
-				{% endif %}
 			</div>
+			{% endif %}
 		</h2>
 	</div>
 
