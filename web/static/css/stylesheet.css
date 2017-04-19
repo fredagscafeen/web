@@ -45,6 +45,8 @@ ul.navbar-nav {
  }
 
 footer {
+    display: flex !important;
+    align-items: center;
     text-align: center;
     height: 120px;
 }
