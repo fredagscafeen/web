@@ -19,7 +19,7 @@
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
-			<th>Bryghus</th>
+			<th class="hidden-xs">Bryghus</th>
 			<th>Navn</th>
 			<th class="hidden-xs">ABV %</th>
 			<th class="hidden-xs">Beholder</th>
@@ -33,7 +33,7 @@
 	<tbody>
 	{% for item in items %}
 		<tr>
-			<td>{{ item.brewery|default_if_none:"" }}</td>
+			<td class="hidden-xs">{{ item.brewery|default_if_none:"" }}</td>
 			<td>{{ item.name }}</td>
 			<td class="hidden-xs">{{ item.abv }}</td>
 			<td class="hidden-xs">{{ item.get_container_display }}</td>

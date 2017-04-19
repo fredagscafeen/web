@@ -69,4 +69,8 @@ footer {
     #sortiment-search input {
         flex-grow: 1;
     }
+
+    #items {
+        font-size: 0.8em;
+    }
 }
