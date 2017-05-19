@@ -123,3 +123,9 @@ REST_FRAMEWORK = {
 
 # Use the new NoCaptcha
 NOCAPTCHA = True
+
+# Server admins
+ADMINS = [
+    ('Oskar Haarklou Veileborg', 'oskarv@post.au.dk'),
+    ('Jonas Tranberg Sørensen', '201406818@post.au.dk')
+]
