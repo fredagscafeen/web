@@ -77,8 +77,8 @@ class IsBartenderView(APIView):
 class TokenAuthView(APIView):
     throttle_classes = ()
     permission_classes = ()
-    parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser)
-    renderer_classes = (renderers.JSONRenderer)
+    parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
+    renderer_classes = (renderers.JSONRenderer,)
     serializer_class = AuthTokenSerializer
 
     def post(self, request, *args, **kwargs):
@@ -87,4 +87,3 @@ class TokenAuthView(APIView):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
-        
