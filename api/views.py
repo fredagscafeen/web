@@ -7,8 +7,6 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 
-from django.contrib.auth.models import Permission
-
 from api.serializers import BartenderSerializer
 from api.serializers import BeerTypeSerializer
 from api.serializers import BrewerySerializer
