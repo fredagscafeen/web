@@ -23,7 +23,7 @@ class Item(models.Model):
     imageUrl = models.CharField(max_length=255, null=True, blank=True)
     barcode = models.CharField(max_length=255, null=True, blank=True)
 
-    created = models.DateTimeField(auto_created=True)
+    created = models.DateTimeField(auto_now_add=True)
     lastModified = models.DateTimeField(auto_now=True, null=True, blank=True)
     link = models.CharField(max_length=255, null=True, blank=True)
 
