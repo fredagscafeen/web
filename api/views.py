@@ -7,6 +7,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 
+from django.contrib.auth.models import Permission
+
 from api.serializers import BartenderSerializer
 from api.serializers import BeerTypeSerializer
 from api.serializers import BrewerySerializer
@@ -86,4 +88,4 @@ class TokenAuthView(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
+        return Response({'token': token.key, 'permissions': user.get_all_permissions()})
