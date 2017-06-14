@@ -7,8 +7,8 @@ from api.views import BreweryViewSet
 from api.views import ItemViewSet
 
 router = routers.DefaultRouter()
-router.register(r'items', ItemViewSet)
-router.register(r'breweries', BreweryViewSet)
+router.register(r'items', ItemViewSet, 'items')
+router.register(r'breweries', BreweryViewSet, 'breweries')
 router.register(r'beerTypes', BeerTypeViewSet)
 router.register(r'bartenders', BartenderViewSet)
 
