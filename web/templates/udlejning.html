@@ -10,7 +10,9 @@
 <ul>
 		{% for udlejning in udlejninger %}
 		<li>
-				{{ udlejning.dateFrom }}, reserveret af {{ udlejning.whoReserved }}
+				{{ udlejning.dateFrom }},
+                {% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} Uspecificeret {% endif %} anlæg,
+                reserveret af {{ udlejning.whoReserved }}
 		</li>
 		{% empty %}
 		<li>
@@ -118,6 +120,12 @@
 	muligt at kunne låne anlægget selv hvis man melder ud i dårlig tid, vi kan
 	blot ikke garantere at der kommer et svar i god tid.
 </p>
+<h4>Vælg fadølsanlæg</h4>
+<p>
+    Fredagscafeen ejer 3 fadølsanlæg, hvoraf 2 udlejes. Når du vil leje et fadølsanlæg, skal du specificere hvilket anlæg du vil låne.<br>
+    <b>Lille anlæg</b>: Er nemt at transportere, men har mindre kapacitet end det mellem anlæg.<br>
+    <b>Mellem anlæg</b>: Kan kun udlejes på Katrinebjerg.
+</p>
 <h3>
 		<span class="mw-headline" id="Generelle_informationer">
 				Generelle informationer
@@ -172,6 +180,9 @@
 		<li>
 				Hvor bliver arrangementet afholdt
 		</li>
+        <li>
+                Hvilket anlæg der vil lånes
+        </li>
 		<li>
 				Hvornår skal anlægget afhentes/stilles op, og hvornår skal det
 		afleveres/pilles ned
