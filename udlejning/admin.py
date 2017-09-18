@@ -6,7 +6,7 @@ from django.contrib import admin
 # Remember to cut down to 2 classes
 class UdlejningAdmin(admin.ModelAdmin):
 	ordering = ('-dateFrom',)
-	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'paid')
+	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', 'paid')
 	filter_horizontal = ('bartendersInCharge', )
 
 	def get_queryset(self, request):
