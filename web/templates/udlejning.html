@@ -10,7 +10,9 @@
 <ul>
 		{% for udlejning in udlejninger %}
 		<li>
-				{{ udlejning.dateFrom }}, reserveret af {{ udlejning.whoReserved }}
+				{{ udlejning.dateFrom }},
+                {% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} Uspecificeret {% endif %} anlæg,
+                reserveret af {{ udlejning.whoReserved }}
 		</li>
 		{% empty %}
 		<li>
