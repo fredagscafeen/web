@@ -1,32 +1,28 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+{% load bootstrap3 %}
+
 {% block content %}
 
 Velkommen til Fredagscafeens webside, her kan du finde information om åbningstider, sortiment, udlejning af fadølsanlæg og grill mm.
 
-{% if test %}
-
-<h2>Bartendertilmelding</h2>
-
-{% load bootstrap3 %}
-
 <div class="row">
 	<div class="col-md-8">
-		<form method="post" action="/">
-			{% csrf_token %}
-			{% bootstrap_form form %}
-			{% buttons %}
-				{% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
-			{% endbuttons %}
-		</form>
-	</div>
-	<div class="col-md-4">
-		<p>Som bartender har du ca. 2 vagter per semester, hvor du er med til at sørge for, at Fredagscafeen løber rundt.<br/><br/>
-		   Udover dette inviteres du til vores årlige arrangementer for bartendere og bestyrelse, såsom turen til Djurs Sommerland.</p>
-	</div>
+        <h2>Bartendertilmelding</h2>
+
+        <p>Som bartender har du ca. 2 vagter per semester, hvor du er med til at sørge for, at Fredagscafeen løber rundt.<p>
+        <p>Udover dette inviteres du til vores årlige arrangementer for bartendere og bestyrelse, såsom turen til Djurs Sommerland.</p>
+        <p>Det er en god idé at læse <a href="{% static 'guides/barvagt.pdf' %}" alt="guide">barvagt-guiden</a> før du tilmelder dig, så du
+           ved hvad en typisk vagt i Fredagscafeen indebærer.</p>
+        <form method="post" action="/">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+            {% endbuttons %}
+        </form>
+    </div>
 </div>
-
-
-{% endif %}
-
+    
 {% endblock %}
