@@ -2,17 +2,14 @@ from __future__ import print_function
 
 import httplib2
 import os
+import datetime
 
 from django.core.mail import send_mail, EmailMessage
 from django.core.management import BaseCommand
 from googleapiclient import discovery
 
 import oauth2client
-from oauth2client import client
-from oauth2client import tools
-from oauth2client import file
-
-import datetime
+from oauth2client import client, tools, file
 
 from bartenders.models import Bartender
 

@@ -1,10 +1,10 @@
 from urllib.parse import urljoin
 
 from django.conf import settings
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.forms import model_to_dict
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 
@@ -51,16 +51,21 @@ class BartenderApplication(models.Model):
         b = Bartender.objects.create(name=self.name, username=self.username, email=self.email,
                                      studentNumber=self.studentNumber, phoneNumber=self.phoneNumber)
 
+        barplan_url = urljoin(settings.SELF_URL, reverse('barplan'))
         subject = 'Bartender application: %s' % self.name
         body = 'Hello %s,\n\n' \
                 'Your application to become a bartender at Fredagscafeen has been approved.\n' \
-                'The scheduler will assign you to shifts which can be found %s,\n' \
+                'The scheduler will assign you to shifts which can be found {link},\n' \
                 'and you will be added to our mailing list.\n\n' \
                 'See you at the bar! :)\n\n' \
-                '/Bestyrelsen' % (self.name, mark_safe('<a href="%s">here</a>' % urljoin(settings.SELF_URL, reverse('barplan'))))
+                '/Bestyrelsen' % self.name
 
-        email = EmailMessage(subject=subject, body=body, from_email='best@fredagscafeen.dk',
-                             to=[self.email], cc=['best@fredagscafeen.dk'])
+        body_text = render_to_string('email.txt', {'content': body.format(link='here: %s' % barplan_url)})
+        body_html = render_to_string('email.html', {'content': body.format(link=mark_safe('<a href="%s">here</a>' % barplan_url))})
+
+        email = EmailMultiAlternatives(subject=subject, body=body_text, from_email='best@fredagscafeen.dk',
+                                       to=[self.email], cc=['best@fredagscafeen.dk'])
+        email.attach_alternative(body_html, 'text/html')
         email.send()
 
         return b.pk

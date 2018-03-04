@@ -1,11 +1,12 @@
 from urllib.parse import urljoin
 
+from captcha.fields import ReCaptchaField
 from django.conf import settings
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
-from captcha.fields import ReCaptchaField
 
 from bartenders.models import BartenderApplication
 
@@ -30,8 +31,12 @@ class BartenderApplicationForm(ModelForm):
 		        '{phoneNumber}\n\n'
 		        + ('Extra info:\n{info}\n\n' if d['info'] else '') +
 		        'The application can be accepted or denied through {link}.\n\n'
-		        '/snek').format(link=mark_safe('<a href="{url}">the admin interface</a>'.format(url=url)), **d)
+		        '/snek').format(link='{link}', **d)
 
-		email = EmailMessage(subject=subject, body=body, from_email='best@fredagscafeen.dk',
-		                     to=['best@fredagscafeen.dk'], cc=['best@fredagscafeen.dk'])
+		body_text = render_to_string('email.txt', {'content': body.format(link='the admin interface: %s' % url)})
+		body_html = render_to_string('email.html', {'content': body.format(link=mark_safe('<a href="{url}">the admin interface</a>'.format(url=url)))})
+
+		email = EmailMultiAlternatives(subject=subject, body=body_text, from_email='best@fredagscafeen.dk',
+		                               to=['best@fredagscafeen.dk'], cc=['best@fredagscafeen.dk'])
+		email.attach_alternative(body_html, 'text/html')
 		return email.send()

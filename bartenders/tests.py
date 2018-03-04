@@ -32,10 +32,11 @@ class BartenderApplicationTests(TestCase):
 
 		# Test that an email was sent
 		self.assertEqual(len(mail.outbox), 1)
-		self.assertEqual(mail.outbox[0].to, [ap.email])
+		email = mail.outbox[0]
+		self.assertEqual(email.to, [ap.email])
 
 		link = urljoin(settings.SELF_URL, reverse('barplan'))
-		self.assertIn(link, mail.outbox[0].body)
+		self.assertIn(link, email.body)
 
 	def test_sending_application(self):
 		data = dict(

@@ -77,7 +77,7 @@ ROOT_URLCONF = 'fredagscafeen.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['web/templates'],
+        'DIRS': ['web/templates', 'fredagscafeen/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,7 +130,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Use the new NoCaptcha
 NOCAPTCHA = True
 
-# Server admins
+# Server admins (get an email when server errors happen)
 ADMINS = [
     ('Oskar Haarklou Veileborg', 'oskarv@post.au.dk'),
     ('Jonas Tranberg Sørensen', '201406818@post.au.dk')
