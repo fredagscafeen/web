@@ -79,3 +79,18 @@ class BartenderApplication(models.Model):
 
     def __str__(self):
         return self.username
+
+class BartenderShift(models.Model):
+    date = models.DateField()
+    responsible = models.ForeignKey(Bartender, limit_choices_to={'isBoardMember': True}, default=None)
+    bartenders = models.ManyToManyField(Bartender, limit_choices_to={'isActiveBartender': True}, related_name="Bartenders")
+
+    class Meta:
+        ordering = ('date', )
+
+class BoardMemberDepositShift(models.Model):
+    date = models.DateField()
+    responsible = models.ManyToManyField(Bartender, limit_choices_to={'isBoardMember': True})
+
+    class Meta:
+        ordering = ('date', )
