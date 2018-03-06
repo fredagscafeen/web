@@ -2,14 +2,67 @@
 
 {% block content %}
 
+{% load staticfiles %}
+
 <h2>Barplan</h2>
 
-<p><iframe src="https://www.google.com/calendar/embed?showTitle=0&amp;showDate=0&amp;showTabs=0&amp;mode=AGENDA&amp;height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=7io4aah2dr5faldnd0v2dnk5k0%40group.calendar.google.com&amp;color=%23A32929&amp;src=1dt8kqlgn9mgen53otb33ag9pg%40group.calendar.google.com&amp;color=%2329527A&amp;src=rmin1g20gie2hhqgtk54nibl6k%40group.calendar.google.com&amp;color=%230D7813&amp;ctz=Europe%2FCopenhagen" style=" border-width:0; width: 100%;" height="600" frameborder="0" scrolling="no"></iframe></p>
+<table class="table table-striped tablesorter" id="items">
+	<thead>
+		<tr>
+			<th class="hidden-xs">Dato</th>
+			<th>Ansvarlig</th>
+			<th class="hidden-xs">Bartendere</th>
+			{% if user.is_authenticated %}
+				<th class="hidden-xs"></th>
+			{% endif %}
+		</tr>
+		</thead>
+	<tbody>
+    {% for shift in bartendershifts %}
+		<tr>
+            <td class="col-md-1">{{ shift.date | date:"d M" }}</td>
+            <td class="col-md-3">{{ shift.responsible.name }}</td>
+            <td class="col-md-7">
+                {% for bartender in shift.bartenders.all %}
+                    {{ bartender.name }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </td>
+			{% if user.is_authenticated %}
+				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">Edit</a></td>
+			{% endif %}
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
 
 <hr>
 
-<h2>Pantvagt</h2>
+<h2>Pantvagter</h2>
 
-<p><iframe style="border-width: 0; width: 100%;" src="https://www.google.com/calendar/embed?showTitle=0&showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=125&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=2a157v77f7uuvm5f41ifbfna5s@group.calendar.google.com&amp;color=%23AB8B00&amp;ctz=Europe/Copenhagen" frameborder="0" scrolling="no" height="300"></iframe></p>
-
+<table class="table table-striped tablesorter" id="items">
+	<thead>
+		<tr>
+			<th class="hidden-xs">Uge</th>
+			<th>Ansvarlige</th>
+			{% if user.is_authenticated %}
+				<th class="hidden-xs"></th>
+			{% endif %}
+		</tr>
+		</thead>
+	<tbody>
+    {% for shift in boardmemberdepositshifts %}
+		<tr>
+            <td class="col-md-1">{{ shift.date | date:"W" }}</td>
+            <td class="col-md-10">
+                {% for responsible in shift.responsible.all %}
+                    {{ responsible.name }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </td>
+			{% if user.is_authenticated %}
+				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">Edit</a></td>
+			{% endif %}
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
 {% endblock %}

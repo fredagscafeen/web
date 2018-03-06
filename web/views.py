@@ -2,13 +2,14 @@ import urllib.request
 from datetime import timedelta
 
 from django.conf import settings
+from django.db.models import Q
 from django.contrib import messages
 from django.utils import timezone
 from django.utils.datetime_safe import datetime
 from django.views.generic import TemplateView, ListView, CreateView
 from django_ical.views import ICalFeed
 
-from bartenders.models import Bartender, BoardMember, BartenderApplication
+from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift
 from items.models import Item
 from udlejning.models import Udlejning
 from udlejning.models import UdlejningGrill
@@ -49,6 +50,11 @@ class BartenderList(TemplateView):
 class Barplan(TemplateView):
     template_name = "barplan.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(Barplan, self).get_context_data(**kwargs)
+        context['bartendershifts'] = BartenderShift.objects.filter(Q(date__gte=datetime.today()))
+        context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.all()
+        return context
 
 class ShiftEvent:
     def __init__(self):
