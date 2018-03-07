@@ -39,6 +39,7 @@ class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 class BartenderShiftAdmin(admin.ModelAdmin):
     list_display = ('date', 'shift_responsible', 'other_bartenders')
+    filter_horizontal = ('bartenders',)
 
     def shift_responsible(self, obj):
         return obj.responsible.name
@@ -49,6 +50,7 @@ class BartenderShiftAdmin(admin.ModelAdmin):
 
 class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
     list_display = ('date', 'responsible_board_members')
+    filter_horizontal = ('responsible',)
 
     def responsible_board_members(self, obj):
         return ", ".join([s.name for s in obj.responsible.all()])
