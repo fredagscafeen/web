@@ -4,10 +4,8 @@
 
 1. checkout project from vcs
 2. setup virtual env (commands should be run in project folder)
-  1. `virtualenv web-venv`
-  2. `source web-venv/bin/activate (not windows)`
-  3. `./web-venv/scripts/activate (windows)`
-  4. `pip install -r requirements.txt`
+  1. `pip3 install pipenv`
+  2. `pipenv install`
 
 Installing the required psycopg2 package (PostgreSQL for Python) might require the `pg_config` binary,
 which can be installed on Ubuntu with `sudo apt install libpq-dev`.
