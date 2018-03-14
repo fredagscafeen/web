@@ -8,7 +8,7 @@
 	<div class="col-md-6">
 		
 		<ul class="list-group">
-			<li class="list-group-item  list-group-item-success"><b>Nuværende</b></li>
+			<li class="list-group-item  list-group-item-success"><b>Nuværende ({{ bartenders.count }})</b></li>
 			{% for bartender in bartenders %}
 				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
 			{% endfor %}
@@ -19,7 +19,7 @@
 	<div class="col-md-6">
 
 		<ul class="list-group">
-			<li class="list-group-item  list-group-item-warning"><b>Tidligere</b></li>
+			<li class="list-group-item  list-group-item-warning"><b>Tidligere ({{ inactive_bartenders.count }})</b></li>
 			{% for bartender in inactive_bartenders %}
 				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
 			{% endfor %}
