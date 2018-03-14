@@ -31,4 +31,4 @@ django-object-actions = "==0.9.*"
 
 [requires]
 
-python_version = "3.4"
+python_version = "3.6"
