@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.urls import path, include
 from rest_framework import routers
 
 from api.views import BartenderViewSet, LastModifiedView, IsBartenderView, TokenAuthView
@@ -13,10 +13,10 @@ router.register(r'beerTypes', BeerTypeViewSet)
 router.register(r'bartenders', BartenderViewSet)
 
 urlpatterns = [
-	url(r'^auth/', TokenAuthView.as_view(), name='token-auth'),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^last-modified/', LastModifiedView.as_view(), name='last-modified'),
-    url(r'^is-bartender/(?P<username>\w+)/', IsBartenderView.as_view(), name='is_bartender'),
+	path('auth/', TokenAuthView.as_view(), name='token-auth'),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('last-modified/', LastModifiedView.as_view(), name='last-modified'),
+    path('is-bartender/<username>/', IsBartenderView.as_view(), name='is_bartender'),
 ]
 
 urlpatterns += router.urls

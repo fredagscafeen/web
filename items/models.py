@@ -10,8 +10,8 @@ CONTAINER = (
 
 
 class Item(models.Model):
-    brewery = models.ForeignKey("Brewery", null=True, blank=True)
-    type = models.ForeignKey("BeerType", null=True, blank=True)
+    brewery = models.ForeignKey("Brewery", on_delete=models.SET_NULL, null=True, blank=True)
+    type = models.ForeignKey("BeerType", on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=140)
     description = models.TextField(null=True, blank=True)
     country = models.CharField(null=True, blank=True, max_length=140)

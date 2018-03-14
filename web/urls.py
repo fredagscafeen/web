@@ -1,18 +1,18 @@
-from django.conf.urls import url
+from django.urls import path
 
 from web.views import Index, Contact, BartenderList, Barplan, UserBarplan, Items, Board, Search, Udlejninger, \
     UdlejningerGrill, Guides
 
 urlpatterns = [
-    url(r'^contact/', Contact.as_view()),
-    url(r'^bartenders/', BartenderList.as_view()),
-    url(r'^barplan/$', Barplan.as_view(), name='barplan'),
-    url(r'^barplan/(?P<username>[0-9a-zA-Z]+)/', UserBarplan()),
-    url(r'^prices/', Items.as_view()),
-    url(r'^board/', Board.as_view()),
-    url(r'^search/', Search.as_view()),
-    url(r'^$', Index.as_view()),
-    url(r'^udlejning/', Udlejninger.as_view()),
-    url(r'^udlejningGrill/', UdlejningerGrill.as_view()),
-    url(r'^guides/', Guides.as_view()),
-    ]
+    path('contact/', Contact.as_view()),
+    path('bartenders/', BartenderList.as_view()),
+    path('barplan/', Barplan.as_view(), name='barplan'),
+    path('barplan/<username>/', UserBarplan()),
+    path('prices/', Items.as_view()),
+    path('board/', Board.as_view()),
+    path('search/', Search.as_view()),
+    path('', Index.as_view()),
+    path('udlejning/', Udlejninger.as_view()),
+    path('udlejningGrill/', UdlejningerGrill.as_view()),
+    path('guides/', Guides.as_view()),
+]

@@ -3,7 +3,7 @@ from urllib.parse import urljoin
 from captcha.fields import ReCaptchaField
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.forms import ModelForm
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
