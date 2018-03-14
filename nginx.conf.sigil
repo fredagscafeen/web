@@ -1,3 +1,7 @@
+# This has been copied from
+# https://github.com/dokku/dokku/blob/master/plugins/nginx-vhosts/templates/nginx.conf.sigil
+# and lines inside <CUSTOM> has been added
+
 {{ range $port_map := .PROXY_PORT_MAP | split " " }}
 {{ $port_map_list := $port_map | split ":" }}
 {{ $scheme := index $port_map_list 0 }}
@@ -11,6 +15,14 @@ server {
   {{ if $.NOSSL_SERVER_NAME }}server_name {{ $.NOSSL_SERVER_NAME }}; {{ end }}
   access_log  /var/log/nginx/{{ $.APP }}-access.log;
   error_log   /var/log/nginx/{{ $.APP }}-error.log;
+
+  # <CUSTOM>
+  # Redirect other hosts
+  if ( $host != $server_name ) {
+    return 301 $scheme://$server_name$request_uri;
+  }
+  # </CUSTOM>
+
 {{ if (and (eq $listen_port "80") ($.SSL_INUSE)) }}
   return 301 https://$host:{{ $.NGINX_SSL_PORT }}$request_uri;
 {{ else }}
@@ -35,10 +47,12 @@ server {
   }
   include {{ $.DOKKU_ROOT }}/{{ $.APP }}/nginx.conf.d/*.conf;
 
+  # <CUSTOM>
   # Serve media files wih nginx
   location /media {
       alias /var/lib/dokku/data/storage/fredagscafeen-media/;
   }
+  # </CUSTOM>
 
   error_page 400 401 402 403 405 406 407 408 409 410 411 412 413 414 415 416 417 418 420 422 423 424 426 428 429 431 444 449 450 451 /400-error.html;
   location /400-error.html {
@@ -97,10 +111,12 @@ server {
   }
   include {{ $.DOKKU_ROOT }}/{{ $.APP }}/nginx.conf.d/*.conf;
 
+  # <CUSTOM>
   # Serve media files wih nginx
   location /media {
       alias /var/lib/dokku/data/storage/fredagscafeen-media/;
   }
+  # </CUSTOM>
 
   error_page 400 401 402 403 405 406 407 408 409 410 411 412 413 414 415 416 417 418 420 422 423 424 426 428 429 431 444 449 450 451 /400-error.html;
   location /400-error.html {
