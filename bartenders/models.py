@@ -15,7 +15,10 @@ class Bartender(models.Model):
     studentNumber = models.IntegerField(blank=True, null=True)
     phoneNumber = models.IntegerField(blank=True, null=True)
     isActiveBartender = models.BooleanField(default=True)
-    isBoardMember = models.BooleanField(default=False)
+
+    @property
+    def isBoardMember(self):
+        return self.board_member != None
 
     class Meta:
         ordering = ('name',)
@@ -25,7 +28,7 @@ class Bartender(models.Model):
 
 
 class BoardMember(models.Model):
-    bartender = models.ForeignKey(Bartender, null=False, blank=False)
+    bartender = models.OneToOneField(Bartender, on_delete=models.CASCADE, primary_key=True)
     title = models.CharField(max_length=255)
     responsibilities = models.CharField(max_length=255)
     image = models.ImageField(upload_to='boardMembers', blank=True, null=True)

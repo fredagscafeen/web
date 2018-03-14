@@ -26,7 +26,6 @@ class BartenderApplicationTests(TestCase):
 		self.assertTrue(Bartender.objects.exists())
 		b = model_to_dict(ap)
 		b.update(isActiveBartender=True)
-		b.update(isBoardMember=False)
 		b.pop('info')
 		self.assertDictEqual(b, model_to_dict(Bartender.objects.first()))
 
