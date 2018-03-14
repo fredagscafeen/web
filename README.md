@@ -10,19 +10,15 @@
 Installing the required psycopg2 package (PostgreSQL for Python) might require the `pg_config` binary,
 which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
-3. set env variables in pycharm
-  1. `SECRET_KEY = "whatever"`
-  2. `DJANGO_SETTINGS_MODULE = fredagscafeen.settings.local`
-  
-4. press green arrow to run
-
-(database needs to be set as well, use migrate in Tools->Run manage.py Task)
+3. activate virtualenv: `pipenv shell`
+4. migrate database: `./manage.py migrate`
+5. create superuser: `./manage.py createsuperuser`
+6. run server: `./manage.py runserver`
 
 ## Deploy changes
 
-1. start pageant with private key used to log in to server
-
-2. in project folder run `git push dokku master`
+1. Add dokku remote: `git remote add dokku root@fredagscafeen.dk:/home/dokku/fredagscafeen.dk`
+2. `git push dokku master`
 
 ## API usage
 
