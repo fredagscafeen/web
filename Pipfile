@@ -7,7 +7,7 @@ name = "pypi"
 
 [packages]
 
-django = "==1.11.*"
+django = "==2.0.*"
 djangorestframework = "*"
 apiclient = "*"
 dj-config-url = "*"

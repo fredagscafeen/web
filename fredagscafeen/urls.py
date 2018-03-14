@@ -1,14 +1,14 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    url(r'^favicon.ico$', RedirectView.as_view(url='/static/favicon.ico')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include('api.urls')),
-    url(r'^', include('web.urls'))
+    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
+    path('', include('web.urls'))
 ]
 
 if settings.DEBUG:

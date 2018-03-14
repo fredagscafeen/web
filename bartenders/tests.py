@@ -2,7 +2,7 @@ import os
 from urllib.parse import urljoin
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.forms import model_to_dict
 from django.test import TestCase
 from django.core import mail
