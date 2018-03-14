@@ -2,7 +2,7 @@ from fredagscafeen.settings.base import *
 
 DEBUG = False
 
-SELF_URL = 'http://fredagscafeen.dk/'
+SELF_URL = 'https://fredagscafeen.dk/'
 ALLOWED_HOSTS = [
     '*'
 ]

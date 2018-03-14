@@ -1,6 +1,7 @@
 import urllib.request
 from datetime import timedelta
 
+from django.conf import settings
 from django.contrib import messages
 from django.utils import timezone
 from django.utils.datetime_safe import datetime
@@ -115,7 +116,7 @@ class UserBarplan(ICalFeed):
         return item.description
 
     def item_link(self, item):
-        return "http://fredagscafeen.dk/barplan/"
+        return f"{settings.SELF_URL}barplan/"
 
 
 class Items(ListView):
