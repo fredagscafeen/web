@@ -6,10 +6,13 @@ from django.urls import reverse
 from django_object_actions import DjangoObjectActions
 
 from bartenders.models import Bartender, BoardMember, BartenderApplication
+from fredagscafeen.admin_filters import NonNullFieldListFilter
 
 
 class BartenderAdmin(admin.ModelAdmin):
     list_display = ('name', 'username', 'email')
+    search_fields = ('name', 'username', 'email')
+    list_filter = ('isActiveBartender', ('boardmember', NonNullFieldListFilter))
 
 
 class BoardMemberAdmin(admin.ModelAdmin):
