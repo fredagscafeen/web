@@ -28,7 +28,9 @@ class Item(models.Model):
     link = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return self.brewery.__str__() + ' - ' + self.name
+        if self.brewery:
+            return f'{self.brewery} - {self.name}'
+        return self.name
 
 
 class BeerType(models.Model):
