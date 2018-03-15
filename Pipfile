@@ -23,6 +23,8 @@ pillow = "*"
 whitenoise = "*"
 django-ical = "*"
 django-object-actions = "*"
+django-extensions = "*"
+ipython = "*"
 
 
 [dev-packages]
