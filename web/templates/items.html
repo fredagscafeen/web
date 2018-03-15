@@ -46,7 +46,7 @@
 		<tr>
 			<td class="hidden-xs">{{ item.brewery|default_if_none:"" }}</td>
 			<td>{{ item.name }}</td>
-			<td class="hidden-xs">{{ item.abv }}</td>
+			<td class="hidden-xs">{{ item.abv|default_if_none:"" }}</td>
 			<td class="hidden-xs">{{ item.get_container_display }}</td>
 			<td class="hidden-xs">{{ item.country }}</td>
 			<td>{{ item.priceInDKK }}</td>
