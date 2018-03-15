@@ -1,8 +1,4 @@
 $(document).ready(function () {
-	$("#items").tablesorter(
-			{sortList: [[1, 0]]}
-	);
-
 	$("#itemsSearchInput").on("keyup", function() {
 		var value = $(this).val();
 		var rows = $("table tr");

@@ -124,6 +124,7 @@ class Items(ListView):
     allow_empty = True
     model = Item
     context_object_name = 'items'
+    ordering = ('name',)
 
 
 class Search(ListView):
