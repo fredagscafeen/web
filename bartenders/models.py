@@ -18,7 +18,11 @@ class Bartender(models.Model):
 
     @property
     def isBoardMember(self):
-        return self.board_member != None
+        try:
+            self.boardmember
+            return True
+        except BoardMember.DoesNotExist:
+            return False
 
     class Meta:
         ordering = ('name',)
