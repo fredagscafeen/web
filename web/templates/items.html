@@ -32,9 +32,7 @@
 		<tr>
 			<th class="hidden-xs">Bryghus</th>
 			<th>Navn</th>
-			<th class="hidden-xs">ABV %</th>
 			<th class="hidden-xs">Beholder</th>
-			<th class="hidden-xs">Nationalitet</th>
 			<th>Pris</th>
 			{% if user.is_authenticated %}
 				<th class="hidden-xs"></th>
@@ -46,9 +44,7 @@
 		<tr>
 			<td class="hidden-xs">{{ item.brewery|default_if_none:"" }}</td>
 			<td>{{ item.name }}</td>
-			<td class="hidden-xs">{{ item.abv|default_if_none:"" }}</td>
 			<td class="hidden-xs">{{ item.get_container_display }}</td>
-			<td class="hidden-xs">{{ item.country }}</td>
 			<td>{{ item.priceInDKK }}</td>
 			{% if user.is_authenticated %}
 				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
