@@ -8,7 +8,7 @@ from django.test import TestCase
 from django.core import mail
 from rest_framework import status
 
-from bartenders.models import BartenderApplication, Bartender
+from bartenders.models import BartenderApplication, Bartender, BoardMember
 
 
 class BartenderApplicationTests(TestCase):
@@ -69,3 +69,18 @@ class BartenderApplicationTests(TestCase):
 		response = self.client.post('/', data=data)
 		self.assertFalse(BartenderApplication.objects.exists())
 		self.assertEqual(len(mail.outbox), 0)
+
+	def test_board_member(self):
+		bartender = Bartender.objects.create(name='Foo',
+				                             username='foo',
+											 email='memes@memes.memes',
+											 studentNumber=123)
+
+		self.assertFalse(bartender.isBoardMember)
+
+		BoardMember.objects.create(bartender=bartender,
+				                   title='Meme master',
+								   responsibilities='Memes')
+
+		self.assertTrue(bartender.isBoardMember)
+
