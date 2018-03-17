@@ -5,7 +5,7 @@ from items.models import Item, BeerType, Brewery
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('brewery', 'name')
-    search_fields = ('brewery', 'name')
+    search_fields = ('brewery__name', 'name')
     list_display_links = ('name',)
     list_filter = ('container', 'type', 'brewery',)
     empty_value_display = ''
