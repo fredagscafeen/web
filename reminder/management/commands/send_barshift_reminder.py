@@ -1,15 +1,21 @@
+import datetime
+from django.utils import timezone
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+from bartenders.models import BartenderShift
 from reminder.management.commands._private import ReminderCommand
 
 
 class Command(ReminderCommand):
     help = 'Send barshift reminder emails to bartenders for the upcoming friday'
 
-    storage = 'barshift_reminder.calendar.storage'
-    calendar_id = '1dt8kqlgn9mgen53otb33ag9pg@group.calendar.google.com'
-    summary_offset = 2
+    def get_next_event(self):
+        return BartenderShift.objects.filter(end_datetime__gte=timezone.now(),
+                                             end_datetime__lte=timezone.now() + datetime.timedelta(7)).first()
+
+    def get_bartender_usernames_from_event(self, event):
+        return [b.username for b in event.all_bartenders()]
 
     def send_reminder_email(self, bartenders):
         subject = 'You have a barshift this friday!'
