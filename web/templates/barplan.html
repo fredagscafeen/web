@@ -52,7 +52,7 @@
 	<tbody>
     {% for shift in boardmemberdepositshifts %}
 		<tr>
-            <td class="col-md-1">{{ shift.date | date:"W" }}</td>
+            <td class="col-md-1">{{ shift.start_date | date:"d M" }} - {{ shift.end_date | date:"d M" }}</td>
             <td class="col-md-10">
                 {% for responsible in shift.responsibles.all %}
                     {{ responsible.name }}{% if not forloop.last %},{% endif %}

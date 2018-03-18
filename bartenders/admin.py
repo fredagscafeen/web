@@ -38,7 +38,7 @@ class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
         return HttpResponseRedirect(reverse('admin:bartenders_bartenderapplication_changelist'))
 
 class BartenderShiftAdmin(admin.ModelAdmin):
-    list_display = ('date', 'shift_responsible', 'other_bartenders_list')
+    list_display = ('start_datetime', 'shift_responsible', 'other_bartenders_list')
     filter_horizontal = ('other_bartenders',)
 
     def shift_responsible(self, obj):
@@ -49,7 +49,7 @@ class BartenderShiftAdmin(admin.ModelAdmin):
 
 
 class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
-    list_display = ('date', 'responsible_board_members')
+    list_display = ('start_date', 'end_date', 'responsible_board_members')
     filter_horizontal = ('responsibles',)
 
     def responsible_board_members(self, obj):

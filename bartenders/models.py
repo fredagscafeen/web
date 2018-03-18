@@ -1,5 +1,6 @@
 from urllib.parse import urljoin
 
+import datetime
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.db.models import Q
@@ -7,6 +8,8 @@ from django.urls import reverse
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
+from django.utils import timezone
+from enum import IntEnum
 
 
 class Bartender(models.Model):
@@ -82,14 +85,67 @@ class BartenderApplication(models.Model):
         return self.username
 
 
+Weekday = IntEnum('Weekday', 'MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY', start=0)
+
+def next_date_with_weekday(date, weekday):
+    date += datetime.timedelta(1)
+    while date.weekday() != weekday:
+        date += datetime.timedelta(1)
+
+    return date
+
+
+def next_bartender_shift_start():
+    '''
+    Returns the next friday after the last shift
+
+    Can't be a class method, because we need to use this as a default value
+    '''
+    last_shift = BartenderShift.objects.last()
+    if last_shift:
+        last_date = last_shift.end_datetime.date()
+    else:
+        last_date = timezone.now().date() - datetime.timedelta(1)
+
+    next_date = next_date_with_weekday(last_date, Weekday.FRIDAY)
+    return datetime.datetime.combine(next_date, BartenderShift.DEFAULT_START_TIME)
+
+
+def next_deposit_shift_start():
+    '''
+    Returns the next monday after the last shift
+
+    Can't be a class method, because we need to use this as a default value
+    '''
+    last_shift = BoardMemberDepositShift.objects.last()
+    if last_shift:
+        last_date = last_shift.end_date
+    else:
+        last_date = timezone.now().date() - datetime.timedelta(1)
+
+    return next_date_with_weekday(last_date, Weekday.MONDAY)
+
+
 class BartenderShift(models.Model):
-    date = models.DateField()
+    DEFAULT_START_TIME = datetime.time(15, 00, tzinfo=timezone.get_current_timezone())
+    DEFAUlT_END_TIME = datetime.time(22, 00, tzinfo=timezone.get_current_timezone())
+
+    start_datetime = models.DateTimeField(default=next_bartender_shift_start)
+    end_datetime = models.DateTimeField(blank=True)
     responsible = models.ForeignKey(Bartender, on_delete=models.PROTECT, limit_choices_to={'boardmember__isnull': False})
     other_bartenders = models.ManyToManyField(Bartender, limit_choices_to={'isActiveBartender': True}, related_name='shifts', blank=True)
 
     class Meta:
-        ordering = ('date', )
+        ordering = ('start_datetime', )
 
+    def clean(self):
+        if not self.end_datetime:
+            start_date = self.start_datetime.date()
+            start_time = self.start_datetime.time()
+            if start_time != self.DEFAULT_START_TIME:
+                return ValidationError('You must provide end time, if start time is not at 15:00')
+
+            self.end_datetime = datetime.datetime.combine(start_date, self.DEFAUlT_END_TIME)
 
     def all_bartenders(self):
         return [self.responsible] + list(self.other_bartenders.all())
@@ -102,22 +158,29 @@ class BartenderShift(models.Model):
         return self.objects.exclude(~Q(responsible__username=username),
                                     ~Q(other_bartenders__username=username))
 
+    @property
+    def date(self):
+        return self.start_datetime.date()
+
     def __str__(self):
-        return f'{self.date}: Responsible: {self.responsible.name}.\nOther bartenders: {", ".join(b.name for b in self.other_bartenders.all())}'
+        return f'{self.date}: Responsible: {self.responsible.name}, Other bartenders: {", ".join(b.name for b in self.other_bartenders.all())}'
 
 
 class BoardMemberDepositShift(models.Model):
-    date = models.DateField()
+    start_date = models.DateField(default=next_deposit_shift_start)
+    end_date = models.DateField(blank=True)
     responsibles = models.ManyToManyField(Bartender, limit_choices_to={'boardmember__isnull': False}, related_name='deposit_shifts')
 
     class Meta:
-        ordering = ('date', )
+        ordering = ('start_date', )
+
+    def clean(self):
+        if not self.end_date:
+            self.end_date = next_date_with_weekday(self.start_date, Weekday.SUNDAY)
 
     @classmethod
-    def with_bartender(self, username):
-        print(username)
-        print(len(self.objects.filter(responsibles__username__contains=username)))
-        return self.objects.filter(responsibles__username=username)
+    def with_bartender(cls, username):
+        return cls.objects.filter(responsibles__username=username)
 
     def __str__(self):
-        return f'{self.date}: {", ".join(b.name for b in self.responsibles.all())}'
+        return f'{self.start_date}: {", ".join(b.name for b in self.responsibles.all())}'
