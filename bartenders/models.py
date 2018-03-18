@@ -80,17 +80,19 @@ class BartenderApplication(models.Model):
     def __str__(self):
         return self.username
 
+
 class BartenderShift(models.Model):
     date = models.DateField()
     responsible = models.ForeignKey(Bartender, on_delete=models.PROTECT, limit_choices_to={'boardmember__isnull': False})
-    bartenders = models.ManyToManyField(Bartender, limit_choices_to={'isActiveBartender': True}, related_name='Bartenders')
+    other_bartenders = models.ManyToManyField(Bartender, limit_choices_to={'isActiveBartender': True}, related_name='shifts', blank=True)
 
     class Meta:
         ordering = ('date', )
 
+
 class BoardMemberDepositShift(models.Model):
     date = models.DateField()
-    responsible = models.ManyToManyField(Bartender, limit_choices_to={'boardmember__isnull': False})
+    responsibles = models.ManyToManyField(Bartender, limit_choices_to={'boardmember__isnull': False}, related_name='deposit_shifts')
 
     class Meta:
         ordering = ('date', )
