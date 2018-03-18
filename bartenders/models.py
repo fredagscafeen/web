@@ -2,6 +2,7 @@ from urllib.parse import urljoin
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.db.models import Q
 from django.urls import reverse
 from django.db import models
 from django.template.loader import render_to_string
@@ -90,9 +91,33 @@ class BartenderShift(models.Model):
         ordering = ('date', )
 
 
+    def all_bartenders(self):
+        return [self.responsible] + list(self.other_bartenders.all())
+
+    @classmethod
+    def with_bartender(self, username):
+        # You can't use filter as it returns multiple of the same object:
+        # return self.objects.filter(Q(responsible__username=username) | Q(other_bartenders__username=username))
+
+        return self.objects.exclude(~Q(responsible__username=username),
+                                    ~Q(other_bartenders__username=username))
+
+    def __str__(self):
+        return f'{self.date}: Responsible: {self.responsible.name}.\nOther bartenders: {", ".join(b.name for b in self.other_bartenders.all())}'
+
+
 class BoardMemberDepositShift(models.Model):
     date = models.DateField()
     responsibles = models.ManyToManyField(Bartender, limit_choices_to={'boardmember__isnull': False}, related_name='deposit_shifts')
 
     class Meta:
         ordering = ('date', )
+
+    @classmethod
+    def with_bartender(self, username):
+        print(username)
+        print(len(self.objects.filter(responsibles__username__contains=username)))
+        return self.objects.filter(responsibles__username=username)
+
+    def __str__(self):
+        return f'{self.date}: {", ".join(b.name for b in self.responsibles.all())}'
