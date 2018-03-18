@@ -109,7 +109,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'da-DK'
 
-TIME_ZONE = 'CET'
+TIME_ZONE = 'Europe/Copenhagen'
 
 USE_I18N = True
 

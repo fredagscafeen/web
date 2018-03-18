@@ -1,11 +1,8 @@
-import urllib.request
-from datetime import timedelta
-
+import datetime
 from django.conf import settings
 from django.db.models import Q
 from django.contrib import messages
 from django.utils import timezone
-from django.utils.datetime_safe import datetime
 from django.views.generic import TemplateView, ListView, CreateView
 from django_ical.views import ICalFeed
 
@@ -52,7 +49,7 @@ class Barplan(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Barplan, self).get_context_data(**kwargs)
-        context['bartendershifts'] = BartenderShift.objects.filter(Q(date__gte=datetime.today()))
+        context['bartendershifts'] = BartenderShift.objects.filter(Q(start_datetime__gte=timezone.now() - datetime.timedelta(1)))
         context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.all()
         return context
 
@@ -77,10 +74,10 @@ class UserBarplan(ICalFeed):
         return " + ".join(b.username for b in shift.all_bartenders())
 
     def item_start_datetime(self, shift):
-        return shift.date
+        return shift.start_datetime
 
     def item_end_datetime(self, shift):
-        return shift.date
+        return shift.end_datetime
 
     def item_description(self, shift):
         return f'''Responsible: {shift.responsible.name}
@@ -110,10 +107,10 @@ class UserDepositShifts(ICalFeed):
         return " + ".join(b.username for b in shift.responsibles.all())
 
     def item_start_datetime(self, shift):
-        return shift.date
+        return shift.start_date
 
     def item_end_datetime(self, shift):
-        return shift.date
+        return shift.end_date
 
     def item_description(self, shift):
         return f'''Responsibles: {", ".join(b.name for b in shift.responsibles.all())}'''
@@ -147,14 +144,14 @@ class Board(ListView):
 class Udlejninger(ListView):
     template_name = "udlejning.html"
     allow_empty = True
-    queryset = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-timedelta(days=30))
+    queryset = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
     context_object_name = 'udlejninger'
 
 
 class UdlejningerGrill(ListView):
     template_name = "udlejningGrill.html"
     allow_empty = True
-    queryset = UdlejningGrill.objects.filter(dateFrom__gte=timezone.now()-timedelta(days=30))
+    queryset = UdlejningGrill.objects.filter(dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
     context_object_name = 'udlejningerGrill'
 
 
