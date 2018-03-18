@@ -28,7 +28,7 @@ class Bartender(models.Model):
         ordering = ('name',)
 
     def __str__(self):
-        return self.username
+        return self.name
 
 
 class BoardMember(models.Model):
