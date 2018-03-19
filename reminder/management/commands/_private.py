@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
-
-from bartenders.models import Bartender
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 
 class ReminderCommand(BaseCommand):
@@ -14,37 +14,52 @@ class ReminderCommand(BaseCommand):
             print('No upcoming events found.')
             return
 
-        bartenders = self.get_bartender_usernames_from_event(event)
-        bartenders_with_emails = []
-        for bartender in bartenders:
-            try:
-                bartender = Bartender.objects.get(username=bartender)
-                bartenders_with_emails.append((bartender.username, bartender.email))
-            except Bartender.DoesNotExist:
-                bartenders_with_emails.append((bartender, ''))
-        self.send_reminder_email(bartenders_with_emails)
-        print(bartenders_with_emails)
+        bartenders = self.get_bartenders_from_event(event)
+        self.send_reminder_email(bartenders)
 
-    def humanize_bartenders(self, bartenders):
-        humanize_bartenders = ''
+    def send_reminder_email(self, bartenders):
+        humanized_bartenders = self.humanized_bartenders(bartenders)
+        context = {'content': self.email_body(humanized_bartenders)}
+
+        body_text = render_to_string('email.txt', context)
+        body_html = render_to_string('email.html', context)
+        recipient_list = self.filter_with_warning(bartenders)
+
+        email = EmailMultiAlternatives(
+            subject=self.email_subject(humanized_bartenders),
+            body=body_text,
+            from_email='best@fredagscafeen.dk',
+            to=recipient_list,
+            cc=['best@fredagscafeen.dk'],
+            reply_to=self.email_reply_to())
+
+        email.attach_alternative(body_html, 'text/html')
+        email.send()
+
+        print(f'Reminders sent to {", ".join(f"{b.name} ({b.email})" for b in bartenders if b.email)}!')
+
+    def humanized_bartenders(self, bartenders):
+        humanized_bartenders = ''
         for i, bartender in enumerate(bartenders):
-            humanize_bartenders += bartender[0]
+            humanized_bartenders += f'{bartender.name} ({bartender.username})'
             if i == len(bartenders) - 2:
-                humanize_bartenders += ' and '
+                humanized_bartenders += ' and '
             if i < len(bartenders) - 2:
-                humanize_bartenders += ', '
-        return humanize_bartenders
+                humanized_bartenders += ', '
+        return humanized_bartenders
 
     def filter_with_warning(self, bartenders):
         recipient_list = []
         for bartender in bartenders:
-            if bartender[1] == '':
-                self.send_warning(bartender[0])
-            recipient_list.append(bartender[1])
+            if not bartender.email:
+                self.send_warning(bartender)
+            else:
+                recipient_list.append(bartender.email)
+
         return recipient_list
 
     def send_warning(self, bartender):
-        warning = 'WARNING: Could not find e-mail for bartender ' + bartender + '! Bartender did not get a reminder!'
+        warning = f'WARNING: Could not find e-mail for bartender {bartender}! Bartender did not get a reminder!'
         send_mail(subject=warning,
                   recipient_list=['best@fredagscafeen.dk'],
                   from_email='datcafe@gmail.com',
@@ -53,8 +68,15 @@ class ReminderCommand(BaseCommand):
     def get_next_event(self):
         raise NotImplementedError
 
-    def get_bartender_usernames_from_event(self, event):
+    def get_bartenders_from_event(self, event):
         raise NotImplementedError
 
-    def send_reminder_email(self, bartenders):
+    def email_subject(self, humanized_bartenders):
         raise NotImplementedError
+
+    def email_body(self, humanized_bartenders):
+        raise NotImplementedError
+
+    def email_reply_to(self):
+        raise NotImplementedError
+
