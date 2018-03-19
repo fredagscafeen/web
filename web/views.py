@@ -1,6 +1,5 @@
 import datetime
 from django.conf import settings
-from django.db.models import Q
 from django.contrib import messages
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView
@@ -49,8 +48,8 @@ class Barplan(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Barplan, self).get_context_data(**kwargs)
-        context['bartendershifts'] = BartenderShift.objects.filter(Q(end_datetime__gte=timezone.now() - datetime.timedelta(1)))
-        context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.filter(Q(end_date__gte=timezone.now() - datetime.timedelta(1)))
+        context['bartendershifts'] = BartenderShift.objects.filter(end_datetime__gte=timezone.now() - datetime.timedelta(1))
+        context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.filter(end_date__gte=timezone.now() - datetime.timedelta(1))
         return context
 
 
