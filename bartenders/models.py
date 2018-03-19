@@ -32,8 +32,17 @@ class Bartender(models.Model):
     class Meta:
         ordering = ('name',)
 
+    @property
+    def symbol(self):
+        if self.isBoardMember:
+            return '★ '
+        elif self.isActiveBartender:
+            return ''
+        else:
+            return '✝ '
+
     def __str__(self):
-        return f'{self.name} ({self.username})'
+        return f'{self.symbol}{self.name} ({self.username})'
 
 
 class BoardMember(models.Model):
