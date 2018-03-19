@@ -133,8 +133,8 @@ class BartenderShift(models.Model):
 
     start_datetime = models.DateTimeField(default=next_bartender_shift_start)
     end_datetime = models.DateTimeField(blank=True)
-    responsible = models.ForeignKey(Bartender, on_delete=models.PROTECT, limit_choices_to={'boardmember__isnull': False})
-    other_bartenders = models.ManyToManyField(Bartender, limit_choices_to={'isActiveBartender': True}, related_name='shifts', blank=True)
+    responsible = models.ForeignKey(Bartender, on_delete=models.PROTECT)
+    other_bartenders = models.ManyToManyField(Bartender, related_name='shifts', blank=True)
 
     class Meta:
         ordering = ('start_datetime', )
@@ -170,7 +170,7 @@ class BartenderShift(models.Model):
 class BoardMemberDepositShift(models.Model):
     start_date = models.DateField(default=next_deposit_shift_start)
     end_date = models.DateField(blank=True)
-    responsibles = models.ManyToManyField(Bartender, limit_choices_to={'boardmember__isnull': False}, related_name='deposit_shifts')
+    responsibles = models.ManyToManyField(Bartender, related_name='deposit_shifts')
 
     class Meta:
         ordering = ('start_date', )

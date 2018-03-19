@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.db.models.expressions import Case, When, Value
+from django.db import models
 
 from django_object_actions import DjangoObjectActions
 
@@ -47,6 +49,31 @@ class BartenderShiftAdmin(admin.ModelAdmin):
     def other_bartenders_list(self, obj):
         return ", ".join([s.name for s in obj.other_bartenders.all()])
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'responsible':
+            kwargs['queryset'] = Bartender.objects.annotate(
+                order=Case(
+                    When(boardmember__isnull=False, then=Value(0)),
+                    When(isActiveBartender=True, then=Value(1)),
+                    default=2,
+                    output_field=models.IntegerField(),
+                )
+            ).order_by('order', 'name')
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'other_bartenders':
+            kwargs['queryset'] = Bartender.objects.annotate(
+                order=Case(
+                    When(isActiveBartender=True, then=Value(0)),
+                    default=1,
+                    output_field=models.IntegerField(),
+                )
+            ).order_by('order', 'name')
+
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
 
 class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
     list_display = ('start_date', 'end_date', 'responsible_board_members')
@@ -54,6 +81,20 @@ class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
 
     def responsible_board_members(self, obj):
         return ", ".join([s.name for s in obj.responsibles.all()])
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'responsibles':
+            kwargs['queryset'] = Bartender.objects.annotate(
+                order=Case(
+                    When(boardmember__isnull=False, then=Value(0)),
+                    When(isActiveBartender=True, then=Value(1)),
+                    default=2,
+                    output_field=models.IntegerField(),
+                )
+            ).order_by('order', 'name')
+
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
 
 admin.site.register(Bartender, BartenderAdmin)
 admin.site.register(BoardMember, BoardMemberAdmin)
