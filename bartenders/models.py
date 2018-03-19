@@ -3,6 +3,7 @@ from urllib.parse import urljoin
 import datetime
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.urls import reverse
 from django.db import models
@@ -143,7 +144,7 @@ class BartenderShift(models.Model):
             start_date = self.start_datetime.date()
             start_time = self.start_datetime.time()
             if start_time != self.DEFAULT_START_TIME:
-                return ValidationError('You must provide end time, if start time is not at 15:00')
+                return ValidationError(f'You must provide end time, if start time is not at {self.DEFAULT_START_TIME.isoformat()}')
 
             self.end_datetime = datetime.datetime.combine(start_date, self.DEFAUlT_END_TIME)
 
