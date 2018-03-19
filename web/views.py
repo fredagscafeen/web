@@ -86,6 +86,9 @@ Other bartenders: {", ".join(b.name for b in shift.other_bartenders.all())}'''
     def item_link(self, shift):
         return f"{settings.SELF_URL}barplan/"
 
+    def item_guid(self, shift):
+        return f'barshift-{shift.pk}@fredagscafeen.dk'
+
 
 class UserDepositShifts(ICalFeed):
     product_id = '-//fredagscafeen.dk//UserDepositShifts//EN'
@@ -117,6 +120,9 @@ class UserDepositShifts(ICalFeed):
 
     def item_link(self, shift):
         return f"{settings.SELF_URL}barplan/"
+
+    def item_guid(self, shift):
+        return f'depositshift-{shift.pk}@fredagscafeen.dk'
 
 
 class Items(ListView):
