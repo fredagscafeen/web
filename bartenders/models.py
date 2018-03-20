@@ -43,6 +43,19 @@ class Bartender(models.Model):
         else:
             return '✝ '
 
+    def _get_mailman(self):
+        return Mailman(settings.MAILMAN_URL_BASE,
+                       settings.MAILMAN_ALL_LIST,
+                       settings.MAILMAN_ALL_PASSWORD)
+
+    def add_to_mailing_list(self):
+        mailman = self._get_mailman()
+        mailman.add_subscriptions([f'{self.name} <{self.email}>'])
+
+    def remove_from_mailing_list(self):
+        mailman = self._get_mailman()
+        mailman.remove_subscriptions([self.email])
+
     def __str__(self):
         return f'{self.symbol}{self.name} ({self.username})'
 
@@ -94,11 +107,7 @@ class BartenderApplication(models.Model):
 
         try:
             if settings.MAILMAN_MUTABLE:
-                mailman = Mailman(settings.MAILMAN_URL_BASE,
-                                  settings.MAILMAN_ALL_LIST,
-                                  settings.MAILMAN_ALL_PASSWORD)
-
-                mailman.add_subscriptions([f'{self.name} <{self.email}>'])
+                b.add_to_mailing_list()
 
             self._send_accept_email()
         except:
