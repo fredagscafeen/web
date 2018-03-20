@@ -1,4 +1,5 @@
-from django.contrib import admin
+from django.conf import settings
+from django.contrib import admin, messages
 from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,11 +11,42 @@ from django_object_actions import DjangoObjectActions
 from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 
+from .mailman2 import MailmanError
 
-class BartenderAdmin(admin.ModelAdmin):
+
+class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ('name', 'username', 'email')
     search_fields = ('name', 'username', 'email')
     list_filter = ('isActiveBartender', ('boardmember', NonNullFieldListFilter))
+
+    change_actions = ('add_to_mailing_list', 'remove_from_mailing_list')
+
+    def add_to_mailing_list(self, request, obj):
+        if not settings.MAILMAN_MUTABLE:
+            messages.error(request, 'MAILMAN_MUTABLE is false!')
+            return
+
+        try:
+            obj.add_to_mailing_list()
+            messages.info(request, 'Successfully added to mailing list')
+        except MailmanError as e:
+            messages.error(request, f'Got Mailman error: {e}')
+
+    add_to_mailing_list.label = 'Add to mailing list'
+
+    def remove_from_mailing_list(self, request, obj):
+        if not settings.MAILMAN_MUTABLE:
+            messages.error(request, 'MAILMAN_MUTABLE is false!')
+            return
+
+        try:
+            obj.remove_from_mailing_list()
+            messages.info(request, 'Successfully removed from mailing list')
+        except MailmanError as e:
+            messages.error(request, f'Got Mailman error: {e}')
+
+
+    remove_from_mailing_list.label = 'Remove from mailing list'
 
 
 class BoardMemberAdmin(admin.ModelAdmin):
