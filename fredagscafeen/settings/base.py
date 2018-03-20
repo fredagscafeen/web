@@ -20,7 +20,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'grw9oezp+1@_e6wms(b5^0v_i9q1ugbx)f6ijm1z6u75f0+*sn'
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -133,5 +132,6 @@ NOCAPTCHA = True
 # Server admins (get an email when server errors happen)
 ADMINS = [
     ('Oskar Haarklou Veileborg', 'oskarv@post.au.dk'),
-    ('Jonas Tranberg Sørensen', '201406818@post.au.dk')
+    ('Jonas Tranberg Sørensen', '201406818@post.au.dk'),
+    ('Asger Hautop Drewsen', 'asgerdrewsen@gmail.com'),
 ]
