@@ -1,6 +1,6 @@
 import os
 from urllib.parse import urljoin
-
+from unittest import skipUnless
 from django.conf import settings
 from django.urls import reverse
 from django.forms import model_to_dict
@@ -9,6 +9,8 @@ from django.core import mail
 from rest_framework import status
 
 from bartenders.models import BartenderApplication, Bartender, BoardMember
+
+from .mailman2 import Mailman
 
 
 class BartenderApplicationTests(TestCase):
@@ -83,4 +85,22 @@ class BartenderApplicationTests(TestCase):
 								   responsibilities='Memes')
 
 		self.assertTrue(bartender.isBoardMember)
+
+	@skipUnless(settings.MAILMAN_ALL_PASSWORD, 'Mailman password for all list not set')
+	def test_mailman_all_list_members(self):
+		mailman = Mailman(settings.MAILMAN_URL_BASE,
+				          settings.MAILMAN_ALL_LIST,
+						  settings.MAILMAN_ALL_PASSWORD)
+
+		subscribers = mailman.get_subscribers()
+		self.assertFalse(len(subscribers) == 0)
+
+	@skipUnless(settings.MAILMAN_BEST_PASSWORD, 'Mailman password for best list not set')
+	def test_mailman_best_list_members(self):
+		mailman = Mailman(settings.MAILMAN_URL_BASE,
+				          settings.MAILMAN_BEST_LIST,
+						  settings.MAILMAN_BEST_PASSWORD)
+
+		subscribers = mailman.get_subscribers()
+		self.assertFalse(len(subscribers) == 0)
 

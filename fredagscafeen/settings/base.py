@@ -22,6 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY")
 
+MAILMAN_URL_BASE = 'http://maillist.au.dk/mailman'
+MAILMAN_ALL_LIST = 'datcafe-alle.cs'
+MAILMAN_ALL_PASSWORD = os.getenv('MAILMAN_ALL_PASSWORD')
+MAILMAN_BEST_LIST = 'datcafe-best.cs'
+MAILMAN_BEST_PASSWORD = os.getenv('MAILMAN_BEST_PASSWORD')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # ALLOWED_HOSTS = ['*']

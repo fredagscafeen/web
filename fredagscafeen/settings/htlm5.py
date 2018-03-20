@@ -7,6 +7,8 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
+MAILMAN_MUTABLE = True
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'datcafe@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')

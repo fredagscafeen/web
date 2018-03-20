@@ -24,6 +24,7 @@ django-ical = "*"
 django-object-actions = "*"
 django-extensions = "*"
 ipython = "*"
+requests-html = "*"
 
 
 [dev-packages]
