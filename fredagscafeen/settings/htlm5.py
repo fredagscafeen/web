@@ -9,7 +9,7 @@ ALLOWED_HOSTS = [
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'datcafe@gmail.com'
-EMAIL_HOST_PASSWORD = '!Fad!Oel!'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 
@@ -20,7 +20,7 @@ DATABASES = {'default': dj_database_url.config()}
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 RECAPTCHA_PUBLIC_KEY = '6LeyixoUAAAAAFkkXnzfT8932ENQQmD2a2LLs2Bt'
-RECAPTCHA_PRIVATE_KEY = '6LeyixoUAAAAAFKIL_ycYN9nzBAB-CTxY4D8Du2q'
+RECAPTCHA_PRIVATE_KEY = os.getenv('RECAPTCHA_PRIVATE_KEY')
 
 LOGGING = {
     'version': 1,
