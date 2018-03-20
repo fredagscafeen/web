@@ -12,6 +12,8 @@ from django.utils.safestring import mark_safe
 from django.utils import timezone
 from enum import IntEnum
 
+from .mailman2 import Mailman
+
 
 class Bartender(models.Model):
     name = models.CharField(max_length=140)
@@ -68,10 +70,7 @@ class BartenderApplication(models.Model):
     class Meta:
         ordering = ('created', )
 
-    def accept(self):
-        b = Bartender.objects.create(name=self.name, username=self.username, email=self.email,
-                                     studentNumber=self.studentNumber, phoneNumber=self.phoneNumber)
-
+    def _send_accept_email(self):
         barplan_url = urljoin(settings.SELF_URL, reverse('barplan'))
         subject = 'Bartender application: %s' % self.name
         body = 'Hello %s,\n\n' \
@@ -88,6 +87,24 @@ class BartenderApplication(models.Model):
                                        to=[self.email], cc=['best@fredagscafeen.dk'])
         email.attach_alternative(body_html, 'text/html')
         email.send()
+
+    def accept(self):
+        b = Bartender.objects.create(name=self.name, username=self.username, email=self.email,
+                                     studentNumber=self.studentNumber, phoneNumber=self.phoneNumber)
+
+        try:
+            if settings.MAILMAN_MUTABLE:
+                mailman = Mailman(settings.MAILMAN_URL_BASE,
+                                  settings.MAILMAN_ALL_LIST,
+                                  settings.MAILMAN_ALL_PASSWORD)
+
+                mailman.add_subscriptions([self.email])
+
+            self._send_accept_email()
+        except:
+            # Delete as something went wrong
+            b.delete()
+            raise
 
         return b.pk
 
