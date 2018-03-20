@@ -98,7 +98,7 @@ class BartenderApplication(models.Model):
                                   settings.MAILMAN_ALL_LIST,
                                   settings.MAILMAN_ALL_PASSWORD)
 
-                mailman.add_subscriptions([self.email])
+                mailman.add_subscriptions([f'{self.name} <{self.email}>'])
 
             self._send_accept_email()
         except:
