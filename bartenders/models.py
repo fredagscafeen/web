@@ -162,6 +162,10 @@ def next_deposit_shift_start():
     return next_date_with_weekday(last_date, Weekday.MONDAY)
 
 
+class BartenderShiftPeriod(models.Model):
+    generation_datetime = models.DateTimeField(default=timezone.now)
+
+
 class BartenderShift(models.Model):
     DEFAULT_START_TIME = datetime.time(15, 00, tzinfo=timezone.get_current_timezone())
     DEFAUlT_END_TIME = datetime.time(22, 00, tzinfo=timezone.get_current_timezone())
@@ -170,6 +174,8 @@ class BartenderShift(models.Model):
     end_datetime = models.DateTimeField(blank=True)
     responsible = models.ForeignKey(Bartender, on_delete=models.PROTECT)
     other_bartenders = models.ManyToManyField(Bartender, related_name='shifts', blank=True)
+
+    period = models.ForeignKey(BartenderShiftPeriod, on_delete=models.PROTECT, blank=True, null=True)
 
     class Meta:
         ordering = ('start_datetime', )
@@ -202,10 +208,16 @@ class BartenderShift(models.Model):
         return f'{self.date}: Responsible: {self.responsible.name}, Other bartenders: {", ".join(b.name for b in self.other_bartenders.all())}'
 
 
+class BoardMemberDepositShiftPeriod(models.Model):
+    generation_datetime = models.DateTimeField(default=timezone.now)
+
+
 class BoardMemberDepositShift(models.Model):
     start_date = models.DateField(default=next_deposit_shift_start)
     end_date = models.DateField(blank=True)
     responsibles = models.ManyToManyField(Bartender, related_name='deposit_shifts')
+
+    period = models.ForeignKey(BoardMemberDepositShiftPeriod, on_delete=models.PROTECT, blank=True, null=True)
 
     class Meta:
         ordering = ('start_date', )
