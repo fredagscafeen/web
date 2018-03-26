@@ -131,33 +131,35 @@ def next_date_with_weekday(date, weekday):
     return date
 
 
-def next_bartender_shift_start():
+def next_bartender_shift_start(last_date=None):
     '''
     Returns the next friday after the last shift
 
     Can't be a class method, because we need to use this as a default value
     '''
-    last_shift = BartenderShift.objects.last()
-    if last_shift:
-        last_date = last_shift.end_datetime.date()
-    else:
-        last_date = timezone.now().date() - datetime.timedelta(1)
+    if last_date == None:
+        last_shift = BartenderShift.objects.last()
+        if last_shift:
+            last_date = last_shift.end_datetime.date()
+        else:
+            last_date = timezone.now().date() - datetime.timedelta(1)
 
     next_date = next_date_with_weekday(last_date, Weekday.FRIDAY)
     return datetime.datetime.combine(next_date, BartenderShift.DEFAULT_START_TIME)
 
 
-def next_deposit_shift_start():
+def next_deposit_shift_start(last_date=None):
     '''
     Returns the next monday after the last shift
 
     Can't be a class method, because we need to use this as a default value
     '''
-    last_shift = BoardMemberDepositShift.objects.last()
-    if last_shift:
-        last_date = last_shift.end_date
-    else:
-        last_date = timezone.now().date() - datetime.timedelta(1)
+    if last_date == None:
+        last_shift = BoardMemberDepositShift.objects.last()
+        if last_shift:
+            last_date = last_shift.end_date
+        else:
+            last_date = timezone.now().date() - datetime.timedelta(1)
 
     return next_date_with_weekday(last_date, Weekday.MONDAY)
 
