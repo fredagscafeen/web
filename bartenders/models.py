@@ -145,7 +145,8 @@ def next_bartender_shift_start(last_date=None):
             last_date = timezone.now().date() - datetime.timedelta(1)
 
     next_date = next_date_with_weekday(last_date, Weekday.FRIDAY)
-    return datetime.datetime.combine(next_date, BartenderShift.DEFAULT_START_TIME)
+    dt = datetime.datetime.combine(next_date, BartenderShift.DEFAULT_START_TIME)
+    return timezone.get_default_timezone().localize(dt)
 
 
 def next_deposit_shift_start(last_date=None):
@@ -169,8 +170,9 @@ class BartenderShiftPeriod(models.Model):
 
 
 class BartenderShift(models.Model):
-    DEFAULT_START_TIME = datetime.time(15, 00, tzinfo=timezone.get_current_timezone())
-    DEFAUlT_END_TIME = datetime.time(22, 00, tzinfo=timezone.get_current_timezone())
+    # This can't be a timezone aware time because of DST
+    DEFAULT_START_TIME = datetime.time(15, 00)
+    DEFAULT_SHIFT_DURATION = datetime.timedelta(hours=7)
 
     start_datetime = models.DateTimeField(default=next_bartender_shift_start)
     end_datetime = models.DateTimeField(blank=True)
@@ -182,14 +184,11 @@ class BartenderShift(models.Model):
     class Meta:
         ordering = ('start_datetime', )
 
-    def clean(self):
+    def save(self, *args, **kwargs):
         if not self.end_datetime:
-            start_date = self.start_datetime.date()
-            start_time = self.start_datetime.time()
-            if start_time != self.DEFAULT_START_TIME:
-                return ValidationError(f'You must provide end time, if start time is not at {self.DEFAULT_START_TIME.isoformat()}')
+            self.end_datetime = self.start_datetime + self.DEFAULT_SHIFT_DURATION
 
-            self.end_datetime = datetime.datetime.combine(start_date, self.DEFAUlT_END_TIME)
+        super().save(*args, **kwargs)
 
     def all_bartenders(self):
         return [self.responsible] + list(self.other_bartenders.all())
@@ -224,9 +223,11 @@ class BoardMemberDepositShift(models.Model):
     class Meta:
         ordering = ('start_date', )
 
-    def clean(self):
+    def save(self, *args, **kwargs):
         if not self.end_date:
             self.end_date = next_date_with_weekday(self.start_date, Weekday.SUNDAY)
+
+        super().save(*args, **kwargs)
 
     @classmethod
     def with_bartender(cls, username):
