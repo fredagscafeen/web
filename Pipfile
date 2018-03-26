@@ -1,13 +1,10 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
-django = "==2.0.*"
+Django = "==2.0.*"
 djangorestframework = "*"
 apiclient = "*"
 dj-config-url = "*"
@@ -15,8 +12,8 @@ dj-config-url = "*"
 django-filter = "*"
 django-recaptcha = "*"
 gunicorn = "*"
-markdown = "*"
-pillow = "*"
+Markdown = "*"
+Pillow = "*"
 "psycopg2" = "*"
 "urllib3" = "*"
 whitenoise = "*"
@@ -25,12 +22,11 @@ django-object-actions = "*"
 django-extensions = "*"
 ipython = "*"
 requests-html = "*"
-
+"z3-solver" = "*"
+numpy = "*"
+cvxpy = {git = "https://github.com/cvxgrp/cvxpy.git", ref = "1.0"}
 
 [dev-packages]
 
-
-
 [requires]
-
 python_version = "3.6"
