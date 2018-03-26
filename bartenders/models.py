@@ -168,6 +168,9 @@ def next_deposit_shift_start(last_date=None):
 class BartenderShiftPeriod(models.Model):
     generation_datetime = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return f'Generated at {self.generation_datetime}'
+
 
 class BartenderShift(models.Model):
     # This can't be a timezone aware time because of DST
@@ -211,6 +214,9 @@ class BartenderShift(models.Model):
 
 class BoardMemberDepositShiftPeriod(models.Model):
     generation_datetime = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'Generated at {self.generation_datetime}'
 
 
 class BoardMemberDepositShift(models.Model):
