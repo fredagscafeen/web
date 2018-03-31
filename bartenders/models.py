@@ -72,7 +72,7 @@ class BoardMember(models.Model):
 
 class BartenderApplication(models.Model):
     name = models.CharField(max_length=140, verbose_name='Navn')
-    username = models.CharField(max_length=140, verbose_name='Brugernavn', help_text='Brug evt. NFIT')
+    username = models.CharField(max_length=140, verbose_name='Brugernavn')
     email = models.EmailField(max_length=255)
     studentNumber = models.IntegerField(verbose_name='Studienummer')
     phoneNumber = models.IntegerField(verbose_name='Telefonnummer')
