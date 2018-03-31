@@ -37,7 +37,7 @@ class BartenderList(TemplateView):
     template_name = "bartenders.html"
 
     def get_context_data(self, **kwargs):
-        context = super(BartenderList, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['bartenders'] = Bartender.objects.filter(isActiveBartender=True)
         context['inactive_bartenders'] = Bartender.objects.filter(isActiveBartender=False)
         return context
@@ -47,7 +47,7 @@ class Barplan(TemplateView):
     template_name = "barplan.html"
 
     def get_context_data(self, **kwargs):
-        context = super(Barplan, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['bartendershifts'] = BartenderShift.objects.filter(end_datetime__gte=timezone.now() - datetime.timedelta(1))
         context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.filter(end_date__gte=timezone.now() - datetime.timedelta(1))
         return context
