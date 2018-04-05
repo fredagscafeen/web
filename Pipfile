@@ -9,6 +9,7 @@ name = "pypi"
 
 django = "==2.0.*"
 djangorestframework = "*"
+coreapi = "*"
 apiclient = "*"
 dj-config-url = "*"
 "django-bootstrap3" = "*"
