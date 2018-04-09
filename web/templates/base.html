@@ -66,6 +66,9 @@
                         <li><a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Facebook</a></li>
                         <li><a href="/board">Bestyrelsen</a></li>
                         <li><a href="/contact">Kontakt</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="/admin">Admin</a></li>
+                        {% endif %}
                     </ul>
                 </div>
 
