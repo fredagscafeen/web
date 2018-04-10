@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'api',
     'reminder',
     'udlejning',
+    'logentry_admin',
 )
 
 MIDDLEWARE = (

@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 django = "==2.0.*"
 djangorestframework = "*"
 coreapi = "*"
@@ -26,12 +23,9 @@ django-object-actions = "*"
 django-extensions = "*"
 ipython = "*"
 requests-html = "*"
-
+django-logentry-admin = "*"
 
 [dev-packages]
 
-
-
 [requires]
-
 python_version = "3.6"
