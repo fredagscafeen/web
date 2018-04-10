@@ -66,6 +66,9 @@ class BoardMember(models.Model):
     responsibilities = models.CharField(max_length=255)
     image = models.ImageField(upload_to='boardMembers', blank=True, null=True)
 
+    class Meta:
+        ordering = ('title',)
+
     def __str__(self):
         return self.bartender.username
 
