@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "24421bc160d957c6f6e38c39cfaa393ba9875f81d7b3dafc6fbfa1f6366cdf8f"
+            "sha256": "33ef1b36c6a28e14f5673ec921bb4803e92a168281024b3ad6da457f61d244d1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -135,11 +135,8 @@
             "version": "==1.4"
         },
         "django-logentry-admin": {
-            "hashes": [
-                "sha256:ee6f89a20a3e07f48f087c55a14a65a6c19137dab7bb3ee5055c7703944468cd"
-            ],
-            "index": "pypi",
-            "version": "==1.0.3"
+            "git": "https://github.com/yprez/django-logentry-admin",
+            "ref": "ac28f35a7b0eced676a8f16cbe52b65b415f7fd2"
         },
         "django-object-actions": {
             "hashes": [

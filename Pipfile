@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "==2.0.*"
+Django = "==2.0.*"
 djangorestframework = "*"
 coreapi = "*"
 apiclient = "*"
@@ -13,8 +13,8 @@ dj-config-url = "*"
 django-filter = "*"
 django-recaptcha = "*"
 gunicorn = "*"
-markdown = "*"
-pillow = "*"
+Markdown = "*"
+Pillow = "*"
 "psycopg2" = "*"
 "urllib3" = "*"
 whitenoise = "*"
@@ -23,7 +23,7 @@ django-object-actions = "*"
 django-extensions = "*"
 ipython = "*"
 requests-html = "*"
-django-logentry-admin = "*"
+django-logentry-admin = {git = "https://github.com/yprez/django-logentry-admin", ref = "ac28f35a7b0eced676a8f16cbe52b65b415f7fd2"}
 
 [dev-packages]
 
