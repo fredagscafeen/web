@@ -1,4 +1,6 @@
 $(document).ready(function () {
+	$("#items").tablesorter();
+
 	$("#itemsSearchInput").on("keyup", function() {
 		var value = $(this).val();
 		var rows = $("table tr");
