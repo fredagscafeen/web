@@ -1,8 +1,8 @@
 # Setup (WIP)
 
-## To run project locally using pycharm
+## To run project locally
 
-1. checkout project from vcs
+1. checkout project from vcs: `git clone git@gitlab.au.dk:fredagscafeen/web.git`
 2. setup virtual env (commands should be run in project folder)
   1. `pip3 install pipenv`
   2. `pipenv install`
