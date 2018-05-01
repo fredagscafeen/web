@@ -3,6 +3,7 @@
 {% block content %}
 
 {% load staticfiles %}
+{% load is_with_user %}
 
 <h2>Barplan</h2>
 
@@ -19,7 +20,7 @@
 		</thead>
 	<tbody>
     {% for shift in bartendershifts %}
-		<tr>
+		<tr {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}>
             <td class="col-md-1">{{ shift.date | date:"d M" }}</td>
             <td class="col-md-3">{{ shift.responsible.name }}</td>
             <td class="col-md-7">
@@ -53,7 +54,7 @@
 		</thead>
 	<tbody>
     {% for shift in boardmemberdepositshifts %}
-		<tr>
+		<tr {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}>
             <td class="col-md-2">{{ shift.start_date | date:"d M" }} - {{ shift.end_date | date:"d M" }}</td>
             <td class="col-md-9">
                 {% for responsible in shift.responsibles.all %}

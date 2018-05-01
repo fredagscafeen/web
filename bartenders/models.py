@@ -215,6 +215,9 @@ class BartenderShift(models.Model):
         return self.objects.exclude(~Q(responsible__username=username),
                                     ~Q(other_bartenders__username=username))
 
+    def is_with_bartender(self, username):
+        return username in (b.username for b in self.all_bartenders())
+
     @property
     def date(self):
         return self.start_datetime.date()
@@ -249,6 +252,9 @@ class BoardMemberDepositShift(models.Model):
     @classmethod
     def with_bartender(cls, username):
         return cls.objects.filter(responsibles__username=username)
+
+    def is_with_bartender(self, username):
+        return username in (r.username for r in self.responsibles.all())
 
     def __str__(self):
         return f'{self.start_date}: {", ".join(b.name for b in self.responsibles.all())}'
