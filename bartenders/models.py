@@ -43,6 +43,14 @@ class Bartender(models.Model):
         else:
             return '✝ '
 
+    @property
+    def first_bartender_shift(self):
+        return BartenderShift.with_bartender(self.username).first()
+
+    @property
+    def first_deposit_shift(self):
+        return BoardMemberDepositShift.with_bartender(self.username).first()
+
     def _get_mailman(self):
         return Mailman(settings.MAILMAN_URL_BASE,
                        settings.MAILMAN_ALL_LIST,

@@ -24,7 +24,7 @@
             <td class="col-md-3">{{ shift.responsible.name }}</td>
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
-                    {{ bartender.name }}{% if not forloop.last %},{% endif %}
+					{% if bartender.first_bartender_shift == shift %}<b title="Bartender's first shift">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_authenticated %}
@@ -57,7 +57,7 @@
             <td class="col-md-2">{{ shift.start_date | date:"d M" }} - {{ shift.end_date | date:"d M" }}</td>
             <td class="col-md-9">
                 {% for responsible in shift.responsibles.all %}
-                    {{ responsible.name }}{% if not forloop.last %},{% endif %}
+					{% if responsible.first_deposit_shift == shift %}<b title="Bartender's first deposit shift">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_authenticated %}
