@@ -20,13 +20,27 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
 
 MAILMAN_URL_BASE = 'http://maillist.au.dk/mailman'
 MAILMAN_ALL_LIST = 'datcafe-alle.cs'
-MAILMAN_ALL_PASSWORD = os.getenv('MAILMAN_ALL_PASSWORD')
 MAILMAN_BEST_LIST = 'datcafe-best.cs'
-MAILMAN_BEST_PASSWORD = os.getenv('MAILMAN_BEST_PASSWORD')
+
+SECRET_ADMIN_KEYS = [
+    ('SECRET_KEY', 'Django secret key'),
+    ('MAILMAN_ALL_PASSWORD', 'Alle mailinglist admin password'),
+    ('MAILMAN_BEST_PASSWORD', 'Best mailinglist admin password'),
+    ('EMAIL_HOST_PASSWORD', 'Gmail password'),
+    ('DIGITAL_OCEAN_PASSWORD', 'Digital Ocean password'),
+    ('RECAPTCHA_PRIVATE_KEY', 'ReCaptcha private key'),
+]
+
+# Inject all secret keys
+for k, _ in SECRET_ADMIN_KEYS:
+    v = os.getenv(k)
+    if v != None:
+        globals()[k] = v
+    else:
+        print('WARNING: Missing secret key in env:', k)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -35,6 +49,7 @@ MAILMAN_BEST_PASSWORD = os.getenv('MAILMAN_BEST_PASSWORD')
 # Application definition
 
 INSTALLED_APPS = (
+    'admin_views',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
