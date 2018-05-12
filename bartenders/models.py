@@ -45,11 +45,11 @@ class Bartender(models.Model):
 
     @property
     def first_bartender_shift(self):
-        return BartenderShift.with_bartender(self.username).first()
+        return BartenderShift.with_bartender(self).first()
 
     @property
     def first_deposit_shift(self):
-        return BoardMemberDepositShift.with_bartender(self.username).first()
+        return BoardMemberDepositShift.with_bartender(self).first()
 
     def _get_mailman(self):
         return Mailman(settings.MAILMAN_URL_BASE,
@@ -208,15 +208,15 @@ class BartenderShift(models.Model):
         return [self.responsible] + list(self.other_bartenders.all())
 
     @classmethod
-    def with_bartender(self, username):
+    def with_bartender(self, bartender):
         # You can't use filter as it returns multiple of the same object:
-        # return self.objects.filter(Q(responsible__username=username) | Q(other_bartenders__username=username))
+        # return self.objects.filter(Q(responsible=bartender) | Q(other_bartenders=bartender))
 
-        return self.objects.exclude(~Q(responsible__username=username),
-                                    ~Q(other_bartenders__username=username))
+        return self.objects.exclude(~Q(responsible=bartender),
+                                    ~Q(other_bartenders=bartender))
 
-    def is_with_bartender(self, username):
-        return username in (b.username for b in self.all_bartenders())
+    def is_with_bartender(self, bartender):
+        return bartender in self.all_bartenders()
 
     def replace(self, b1, b2):
         if self.responsible == b1:
@@ -259,11 +259,11 @@ class BoardMemberDepositShift(models.Model):
         super().save(*args, **kwargs)
 
     @classmethod
-    def with_bartender(cls, username):
-        return cls.objects.filter(responsibles__username=username)
+    def with_bartender(cls, bartender):
+        return cls.objects.filter(responsibles=bartender)
 
-    def is_with_bartender(self, username):
-        return username in (r.username for r in self.responsibles.all())
+    def is_with_bartender(self, bartender):
+        return bartender in self.responsibles.all()
 
     def __str__(self):
         return f'{self.start_date}: {", ".join(b.name for b in self.responsibles.all())}'

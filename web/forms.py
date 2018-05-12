@@ -59,8 +59,8 @@ class SwapForm2(SwapForm1):
 		self.fields['bartender2'].initial = bartender2
 		self.fields['swap'].initial = swap
 
-		self.fields['bartender_shift1'].queryset = BartenderShift.with_bartender(bartender1.username)
-		self.fields['bartender_shift2'].queryset = BartenderShift.with_bartender(bartender2.username)
+		self.fields['bartender_shift1'].queryset = BartenderShift.with_bartender(bartender1)
+		self.fields['bartender_shift2'].queryset = BartenderShift.with_bartender(bartender2)
 
 		if not swap:
 			del self.fields['bartender_shift2']

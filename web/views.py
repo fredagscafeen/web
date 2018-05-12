@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView
 from django_ical.views import ICalFeed
+from django.shortcuts import get_object_or_404
 
 from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift
 from items.models import Item
@@ -65,7 +66,8 @@ class UserBarplan(ICalFeed):
 
     def items(self, username):
         if username:
-            return BartenderShift.with_bartender(username)
+            bartender = get_object_or_404(Bartender, username=username)
+            return BartenderShift.with_bartender(bartender)
         else:
             return BartenderShift.objects.all()
 
@@ -101,7 +103,8 @@ class UserDepositShifts(ICalFeed):
 
     def items(self, username):
         if username:
-            return BoardMemberDepositShift.with_bartender(username)
+            bartender = get_object_or_404(Bartender, username=username)
+            return BoardMemberDepositShift.with_bartender(bartender)
         else:
             return BoardMemberDepositShift.objects.all()
 
