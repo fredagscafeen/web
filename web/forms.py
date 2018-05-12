@@ -4,14 +4,14 @@ from captcha.fields import ReCaptchaField
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
-from django.forms import ModelForm
+from django import forms
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
-from bartenders.models import BartenderApplication
+from bartenders.models import Bartender, BartenderShift, BartenderApplication
 
 
-class BartenderApplicationForm(ModelForm):
+class BartenderApplicationForm(forms.ModelForm):
 	captcha = ReCaptchaField()
 
 	class Meta:
@@ -40,3 +40,27 @@ class BartenderApplicationForm(ModelForm):
 		                               to=['best@fredagscafeen.dk'], cc=['best@fredagscafeen.dk'])
 		email.attach_alternative(body_html, 'text/html')
 		return email.send()
+
+
+class SwapForm1(forms.Form):
+	bartender1 = forms.ModelChoiceField(label='Bartender 1', queryset=Bartender.objects)
+	bartender2 = forms.ModelChoiceField(label='Bartender 2', queryset=Bartender.objects)
+	swap = forms.BooleanField(help_text='(or replace 1 with 2)', initial=True, required=False)
+
+
+class SwapForm2(SwapForm1):
+	bartender_shift1 = forms.ModelChoiceField(label='Shift 1', queryset=BartenderShift.objects.none())
+	bartender_shift2 = forms.ModelChoiceField(label='Shift 2', queryset=BartenderShift.objects.none())
+
+	def __init__(self, *args, swap, bartender1, bartender2, **kwargs):
+		super().__init__(*args, **kwargs)
+
+		self.fields['bartender1'].initial = bartender1
+		self.fields['bartender2'].initial = bartender2
+		self.fields['swap'].initial = swap
+
+		self.fields['bartender_shift1'].queryset = BartenderShift.with_bartender(bartender1.username)
+		self.fields['bartender_shift2'].queryset = BartenderShift.with_bartender(bartender2.username)
+
+		if not swap:
+			del self.fields['bartender_shift2']

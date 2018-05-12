@@ -32,7 +32,7 @@ class Bartender(models.Model):
             return False
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('-isActiveBartender', 'name',)
 
     @property
     def symbol(self):
@@ -217,6 +217,15 @@ class BartenderShift(models.Model):
 
     def is_with_bartender(self, username):
         return username in (b.username for b in self.all_bartenders())
+
+    def replace(self, b1, b2):
+        if self.responsible == b1:
+            self.responsible = b2
+            self.save()
+        else:
+            self.other_bartenders.remove(b1)
+            self.other_bartenders.add(b2)
+            self.save()
 
     @property
     def date(self):

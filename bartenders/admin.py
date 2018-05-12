@@ -86,26 +86,12 @@ class BartenderShiftAdmin(admin.ModelAdmin):
             kwargs['queryset'] = Bartender.objects.annotate(
                 order=Case(
                     When(boardmember__isnull=False, then=Value(0)),
-                    When(isActiveBartender=True, then=Value(1)),
-                    default=2,
-                    output_field=models.IntegerField(),
-                )
-            ).order_by('order', 'name')
-
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == 'other_bartenders':
-            kwargs['queryset'] = Bartender.objects.annotate(
-                order=Case(
-                    When(isActiveBartender=True, then=Value(0)),
                     default=1,
                     output_field=models.IntegerField(),
                 )
-            ).order_by('order', 'name')
+            ).order_by('order', '-isActiveBartender', 'name')
 
-        return super().formfield_for_manytomany(db_field, request, **kwargs)
-
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
     list_display = ('start_date', 'end_date', 'responsible_board_members')
