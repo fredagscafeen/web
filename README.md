@@ -20,6 +20,12 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 1. Add dokku remote: `git remote add dokku root@fredagscafeen.dk:/home/dokku/fredagscafeen.dk`
 2. `git push dokku master`
 
+## Setup admin user on server
+
+1. ssh into server: `ssh root@fredagscafeen.dk`
+2. create superuser: `dokku run fredagscafeen.dk ./manage.py createsuperuser`
+3. login to admin interface: [https://fredagscafeen.dk/admin/](https://fredagscafeen.dk/admin/)
+
 ## API usage
 
 #### Method Overview
