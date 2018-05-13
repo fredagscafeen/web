@@ -34,7 +34,7 @@
 			<th>Navn</th>
 			<th class="hidden-xs">Beholder</th>
 			<th>Pris</th>
-			{% if user.is_authenticated %}
+			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
 			{% endif %}
 		</tr>
@@ -46,7 +46,7 @@
 			<td>{{ item.name }}</td>
 			<td class="hidden-xs">{{ item.get_container_display }}</td>
 			<td>{{ item.priceInDKK }}</td>
-			{% if user.is_authenticated %}
+			{% if user.is_staff %}
 				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
 			{% endif %}
 		</tr>

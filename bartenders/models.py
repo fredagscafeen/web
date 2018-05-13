@@ -10,18 +10,35 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 from enum import IntEnum
 
 from .mailman2 import Mailman
 
 
+EMAIL_TOKEN_LENGTH = 64
+def new_email_token():
+    return get_random_string(EMAIL_TOKEN_LENGTH)
+
+
 class Bartender(models.Model):
+    TSHIRT_SIZE_CHOICES = (
+        ('S', 'S'),
+        ('M', 'M'),
+        ('L', 'L'),
+        ('XL', 'XL'),
+        ('XXL', 'XXL'),
+        ('XXXL', 'XXXL'),
+    )
+
     name = models.CharField(max_length=140)
     username = models.CharField(max_length=140, unique=True)
     email = models.CharField(max_length=255, blank=True)
     studentNumber = models.IntegerField(blank=True, null=True)
     phoneNumber = models.IntegerField(blank=True, null=True)
     isActiveBartender = models.BooleanField(default=True)
+    tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True)
+    email_token = models.CharField(max_length=EMAIL_TOKEN_LENGTH, default=new_email_token, editable=False)
 
     @property
     def isBoardMember(self):

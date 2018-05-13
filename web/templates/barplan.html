@@ -13,7 +13,7 @@
 			<th>Dato</th>
 			<th>Ansvarlig</th>
 			<th>Bartendere</th>
-			{% if user.is_authenticated %}
+			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
 			{% endif %}
 		</tr>
@@ -28,7 +28,7 @@
 					{% if bartender.first_bartender_shift == shift %}<b title="Bartender's first shift">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
-			{% if user.is_authenticated %}
+			{% if user.is_staff %}
 				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">Edit</a></td>
 			{% endif %}
 		</tr>
@@ -47,7 +47,7 @@
 		<tr>
 			<th>Uge</th>
 			<th>Ansvarlige</th>
-			{% if user.is_authenticated %}
+			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
 			{% endif %}
 		</tr>
@@ -61,7 +61,7 @@
 					{% if responsible.first_deposit_shift == shift %}<b title="Bartender's first deposit shift">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
-			{% if user.is_authenticated %}
+			{% if user.is_staff %}
 				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">Edit</a></td>
 			{% endif %}
 		</tr>

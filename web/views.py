@@ -1,16 +1,70 @@
 import datetime
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic.edit import UpdateView, FormView
 from django_ical.views import ICalFeed
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.http import require_GET, require_POST
 
 from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift
 from items.models import Item
 from udlejning.models import Udlejning
 from udlejning.models import UdlejningGrill
-from web.forms import BartenderApplicationForm
+from web.forms import BartenderApplicationForm, BartenderInfoForm, LoginForm
+
+
+@require_GET
+def email_login_view(request, username, token):
+    user = authenticate(username=username, token=token)
+    if user:
+        login(request, user)
+    return redirect('profile')
+
+
+@require_POST
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+
+class BartenderInfo(PermissionRequiredMixin, UpdateView):
+    login_url = '/login/'
+    redirect_field_name = None
+
+    model = Bartender
+    template_name = 'bartender_info.html'
+    form_class = BartenderInfoForm
+
+    def has_permission(self):
+        try:
+            return self.request.user.has_perm('bartenders.change_bartender', self.get_object())
+        except Bartender.DoesNotExist:
+            return False
+
+    def get_object(self, queryset=None):
+        return Bartender.objects.get(username=self.request.user.username)
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Profil opdateret')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.request.path
+
+
+class Login(FormView):
+    template_name = 'login.html'
+    form_class = LoginForm
+    success_url = '/login/'
+
+    def form_valid(self, form):
+        form.send_email()
+        messages.success(self.request, 'Login mail sendt: Tryk på linket i din modtagede mail for at logge ind.')
+        return super().form_valid(form)
 
 
 class Index(CreateView):
