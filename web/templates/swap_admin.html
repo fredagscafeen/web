@@ -3,7 +3,7 @@
 <form action="?step={{ next_step }}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit" />
+    <input type="submit" value="{% if form_step == 0 %}Next{% else %}Submit{% endif %}" />
 	{% if form_step == 1 %}
 		<input type="button" value="Back" onclick="window.location.search = ''" />
 	{% endif %}
