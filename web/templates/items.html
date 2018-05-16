@@ -30,9 +30,10 @@
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
-			<th class="hidden-xs">Bryghus</th>
+			<th>Bryghus</th>
 			<th>Navn</th>
 			<th class="hidden-xs">Beholder</th>
+			<th class="hidden-xs">Type</th>
 			<th>Pris</th>
 			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
@@ -42,9 +43,10 @@
 	<tbody>
 	{% for item in items %}
 		<tr>
-			<td class="hidden-xs">{{ item.brewery|default_if_none:"" }}</td>
+			<td>{{ item.brewery|default_if_none:"" }}</td>
 			<td>{{ item.name }}</td>
 			<td class="hidden-xs">{{ item.get_container_display }}</td>
+			<td class="hidden-xs">{{ item.type|default_if_none:"" }}</td>
 			<td>{{ item.priceInDKK }}</td>
 			{% if user.is_staff %}
 				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
