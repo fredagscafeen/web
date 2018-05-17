@@ -20,7 +20,6 @@ class BartenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bartender
         fields = ('id', 'name', 'username', 'isActiveBartender')
-        fields = '__all__'
 
 
 class BeerTypeSerializer(serializers.ModelSerializer):
