@@ -31,6 +31,7 @@ SECRET_ADMIN_KEYS = [
     ('MAILMAN_BEST_PASSWORD', 'Best mailinglist admin password'),
     ('EMAIL_HOST_PASSWORD', 'Gmail password'),
     ('DIGITAL_OCEAN_PASSWORD', 'Digital Ocean password'),
+    ('MIDTTRAFIK_BESTILLING_PASSWORD', 'midttrafikbestilling.dk password'),
     ('RECAPTCHA_PRIVATE_KEY', 'ReCaptcha private key'),
 ]
 
