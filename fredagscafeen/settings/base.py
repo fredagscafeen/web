@@ -70,6 +70,7 @@ INSTALLED_APPS = (
     'reminder',
     'udlejning',
     'logentry_admin',
+    'bartab',
 )
 
 MIDDLEWARE = (
