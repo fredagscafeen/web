@@ -2,6 +2,8 @@ from django.contrib import admin
 from django import forms
 from django.forms.widgets import TextInput
 
+from easy_select2 import select2_modelform
+
 from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
 
 
@@ -12,17 +14,14 @@ class BarTabUserAdmin(admin.ModelAdmin):
 	list_filter = ('hidden_from_tab',)
 
 
-class BarTabEntryInlineFormSet(forms.models.BaseInlineFormSet):
-	def clean(self):
-		super().clean()
-		for form in self.forms:
-			pass
+BarTabEntryForm = select2_modelform(BarTabEntry)
 
 
 class BarTabEntryInline(admin.TabularInline):
+	form = BarTabEntryForm
 	model = BarTabEntry
 	fields = ('raw_added', 'user', 'raw_used')
-	formset = BarTabEntryInlineFormSet
+	extra = 1
 	formfield_overrides = {
 		SumField: {'widget': TextInput},
 	}
@@ -35,11 +34,12 @@ class BarTabEntryInline(admin.TabularInline):
 
 
 class BarTabSnapshotAdmin(admin.ModelAdmin):
+	change_form_template = 'admin/bartabsnapshot.html'
 	readonly_fields = ('timestamp',)
 	inlines = [
-			BarTabEntryInline,
-			]
+		BarTabEntryInline,
+	]
 
 
-	admin.site.register(BarTabUser, BarTabUserAdmin)
+admin.site.register(BarTabUser, BarTabUserAdmin)
 admin.site.register(BarTabSnapshot, BarTabSnapshotAdmin)

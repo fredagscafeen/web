@@ -1,0 +1,47 @@
+{% extends 'admin/change_form.html' %}
+
+{% block extrahead %}{{ block.super }}
+<script type="text/javascript">
+$(function() {
+	// Open dropdown on tab
+	$(document).on('focus', '.select2.select2-container', function (e) {
+		// only open on original attempt - close focus event should not fire open
+		if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
+			$(this).siblings('select').select2('open');
+		}
+	});
+
+	// Automatically select highlighted
+	$(document).on('select2:closing', 'select', function (e) {
+		var id = $('.select2-results__option--highlighted').attr('id');
+		if (id) {
+			$(e.target).val(id.split('-').pop()).trigger('change');
+		}
+	});
+
+	function setUntabbables() {
+		$('.related-widget-wrapper-link, .delete > input, .inline-deletelink').attr({tabindex: -1});
+	}
+
+	setUntabbables();
+
+	var add_button = $('.add-row a');
+
+	add_button.on('click', function (e) {
+		setTimeout(function() {
+			$('select').eq(-2).select2({width: '250px'});
+			setUntabbables();
+		}, 0);
+	});
+
+	// Automatically add new inlines
+	$(document).on('focus', '.field-raw_added > input', function (e) {
+		var last_fields = $('.field-raw_added > input');
+		if (e.target === last_fields.get(-2)) {
+			add_button.get(0).click();
+		}
+	});
+
+});
+</script>
+{% endblock %}
