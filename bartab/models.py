@@ -1,14 +1,17 @@
+import datetime
+
 from django.db import models
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
+from django.utils import timezone
 
 from .forms import SumValue, SumField as SumFormField
 
 
 class SumField(models.TextField):
 	def from_db_value(self, value, expression, connection):
-		if value == None:
-			return value
+		if value == '' or value == None:
+			return None
 		return SumFormField._parse_sum(value)
 
 
@@ -19,8 +22,12 @@ class SumField(models.TextField):
 
 
 	def get_prep_value(self, value):
-		if isinstance(value, str) or value == None:
+		if value == '' or value == None:
+			return None
+
+		if isinstance(value, str):
 			return value
+
 		return value.string
 
 
@@ -30,6 +37,9 @@ class SumField(models.TextField):
 
 
 class BarTabUser(models.Model):
+	ACTIVE_TIME_LIMIT = datetime.timedelta(weeks=4)
+	CREDIT_HOLD_LIMIT = -100
+
 	name = models.CharField(max_length=140)
 	email = models.EmailField(blank=True, null=True)
 	hidden_from_tab = models.BooleanField(default=False)
@@ -41,12 +51,31 @@ class BarTabUser(models.Model):
 	def balance(self):
 		return self.entries.aggregate(balance=Coalesce(Sum(F('added') - F('used')), Value(0)))['balance']
 
+	@property
+	def balance_str(self):
+		return str(self.balance).replace('.', ',')
+
+	@property
+	def has_credit_hold(self):
+		return self.balance <= self.CREDIT_HOLD_LIMIT
+
+	@property
+	def is_active(self):
+		last_entry = self.entries.last()
+		if not last_entry:
+			return False
+
+		return timezone.now() - last_entry.snapshot.timestamp < self.ACTIVE_TIME_LIMIT
+
 	def __str__(self):
 		return self.name
 
 
 class BarTabSnapshot(models.Model):
 	timestamp = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		ordering = ('timestamp',)
 
 	def __str__(self):
 		return f'{self.timestamp.date()}: {self.entries.count()} entries'
@@ -62,6 +91,7 @@ class BarTabEntry(models.Model):
 
 	class Meta:
 		unique_together = ('user', 'snapshot')
+		ordering = ('snapshot__timestamp',)
 
 	def __str__(self):
 		return f'{self.user} - {self.snapshot.timestamp.date()}'
