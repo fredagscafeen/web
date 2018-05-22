@@ -1,0 +1,50 @@
+{% load latex_trunc %}
+
+\documentclass[a4paper,oneside,article,11pt,english]{memoir}
+\usepackage[margin=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage[breakall]{truncate}
+\usepackage{pdflscape}
+
+\renewcommand\TruncateMarker{}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\large
+
+\begin{landscape}
+
+{% for users, active_name in tab_parts %}
+	{% if forloop.last %}\newpage{% endif %}
+
+\section*{ {{ active_name }} kunder \hfill {% now "SHORT_DATE_FORMAT" %} }
+
+\begin{longtabu} to \linewidth{| X[2, l] | X[9, l] | X[6, l] | X[3, r] | X[24, l] |}
+\hline
+\textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
+
+	{% for user in users %}
+& {{ user.name | latex_trunc }} & {{ user.email | default_if_none:'' | latex_trunc }} & \hfill {{ user.balance_str }} & {% if user.has_credit_hold %}\textbf{KREDITSTOP}{% endif %} \\ \hline
+	{% endfor %}
+\end{longtabu}
+
+{% endfor %}
+
+\end{landscape}
+
+\LARGE
+\section*{Pizzabestilling}
+\begin{tabu} to \linewidth{| X[1] | X[12] | X[2] |}
+\hline
+\textbf{Nr.} & \textbf{Navn} & \textbf{Betalt} \\ \hline
+
+{% for i in pizza_lines %}& & \\ \hline{% endfor %}
+
+\end{tabu}
+
+\end{document}
