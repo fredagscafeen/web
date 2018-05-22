@@ -85,13 +85,11 @@ class BarTabSnapshotAdmin(AdminViews):
 
 
 			for active, active_name in [(True, 'Aktive'), (False, 'Inaktive')]:
-				if active:
-					f.write(rf'\section*{{ {timezone.now().date()} }}')
-				else:
+				if not active:
 					f.write(r'\newpage')
 
 				f.write(r'''
-\section*{''' + active_name + r''' kunder}
+\section*{''' + active_name + r''' kunder \hfill ''' + str(timezone.now().date()) +  r'''}
 
 \begin{longtabu} to \linewidth{| X[1, l] | X[4, l] | X[2, l] | X[1, r] | X[10, l] |}
 \hline
