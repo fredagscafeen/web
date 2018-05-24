@@ -67,10 +67,18 @@ class BarTabSnapshotAdmin(AdminViews):
 			f.write(latex)
 
 		with TemporaryDirectory() as cwd:
-			for _ in range(3):
-				p = subprocess.run(['pdflatex', '-halt-on-error', '-jobname', 'bartab', filename], cwd=cwd, stdout=subprocess.PIPE)
-				if p.returncode != 0:
-					return HttpResponse(b'Got pdflatex error:\n\n' + p.stdout, content_type='text/plain')
+			p = subprocess.run(['latexmk', '-halt-on-error', '-pdf', '-jobname=bartab', filename], cwd=cwd, stdout=subprocess.PIPE)
+			if p.returncode != 0:
+				error_text = f'''==== Got an error from latexmk ====
+
+== LaTeX source ==
+
+{latex}
+
+== latexmk output ==
+
+{str(p.stdout, 'utf-8')}'''
+				return HttpResponse(error_text, content_type='text/plain')
 
 			return FileResponse(open(cwd + '/bartab.pdf', 'rb'), content_type='application/pdf')
 
