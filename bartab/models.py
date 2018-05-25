@@ -14,12 +14,10 @@ class SumField(models.TextField):
 			return None
 		return SumFormField._parse_sum(value)
 
-
 	def to_python(self, value):
 		if isinstance(value, SumValue) or value == None:
 			return value
 		return SumFormField._parse_sum(value)
-
 
 	def get_prep_value(self, value):
 		if value == '' or value == None:
@@ -30,10 +28,13 @@ class SumField(models.TextField):
 
 		return value.string
 
+	def value_to_string(self, obj):
+		""" Allows serialization of SumFields (dumpdata/loaddata) """
+		value = self.value_from_object(obj)
+		return self.get_prep_value(value)
 
 	def formfield(self, **kwargs):
 		return super().formfield(**{'form_class': SumFormField, **kwargs})
-
 
 
 class BarTabUser(models.Model):
