@@ -6,7 +6,8 @@
 \usepackage{microtype}
 \usepackage{longtable}
 \usepackage{tabu}
-\usepackage[breakall]{truncate}
+\usepackage[breakall,fit]{truncate}
+\usepackage{trimclip}
 \usepackage{pdflscape}
 
 \renewcommand\TruncateMarker{}
@@ -29,7 +30,7 @@
 \textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
 
 	{% for user in users %}
-& {{ user.name | latex_trunc }} & {{ user.email | default_if_none:'' | latex_trunc }} & \hfill {{ user.balance_str }} & {% if user.has_credit_hold %}\textbf{KREDITSTOP}{% endif %} \\ \hline
+& {{ user.name | latex_trunc }} & {{ user.email | default_if_none:'' | latex_trunc }} & {{ user.balance_str }} & {% if user.has_credit_hold %}\textbf{KREDITSTOP}{% endif %} \\ \hline
 	{% endfor %}
 \end{longtabu}
 

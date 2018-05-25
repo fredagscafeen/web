@@ -6,4 +6,7 @@ register = template.Library()
 @register.filter
 @stringfilter
 def latex_trunc(value, width=r'\linewidth'):
-	return fr'\truncate{{ {width} }}{{ {value} }}'
+	underscore_escaped_value = value.replace('_', r'\_')
+	#return fr'\truncate{{ {width} }}{{ {underscore_escaped_value} }}'
+	# \truncate breaks text too eagerly
+	return fr'\clipbox{{0pt 0pt 0pt 0pt}}{{\parbox{{ {width} }}{{ {underscore_escaped_value} }}}}'
