@@ -165,3 +165,6 @@ ADMINS = [
     ('Jonas Tranberg Sørensen', '201406818@post.au.dk'),
     ('Asger Hautop Drewsen', 'asgerdrewsen@gmail.com'),
 ]
+
+# Allow more fields in GET/POST requests (necessary for BarTabAdmin to function with large snapshots)
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10 ** 6
