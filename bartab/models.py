@@ -98,7 +98,6 @@ class BarTabEntry(models.Model):
 		return f'{self.user} - {self.snapshot.timestamp.date()}'
 
 	def clean(self):
-		print(repr(self.raw_added), repr(self.raw_used))
 		if self.raw_added:
 			self.added = self.raw_added.value
 

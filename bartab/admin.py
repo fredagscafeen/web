@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.forms.widgets import TextInput
 from django.http import FileResponse, HttpResponse
 from django.template.loader import render_to_string
-from easy_select2 import Select2
+from django_select2.forms import ModelSelect2Widget
 
 from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
 
@@ -32,15 +32,13 @@ class BarTabEntryInline(admin.TabularInline):
 		return super().get_queryset(request).select_related('user', 'snapshot')
 
 	def formfield_for_foreignkey(self, db_field, request, **kwargs):
-		""" Override user field to cache choices instead of making N queries for BarTabUsers """
-
 		field = super().formfield_for_foreignkey(db_field, request, **kwargs)
 		if db_field.name == 'user':
-			# Here we exploit that choices is a property
-			# On the RHS the original choices function is called which creates a generator that yields choice-tuples from the queryset
-			# The output of the generator is stored in a list to spare each render of the field of evaluating the queryset
-			field.choices = list(field.choices)
-			field.widget = Select2()
+			field.widget = ModelSelect2Widget(
+				model=BarTabUser,
+				search_fields=('name__icontains', 'email__icontains'),
+				attrs={'data-select-on-close': 'true', 'data-allow-clear': 'false', 'data-width': '250px'}
+			)
 
 		return field
 

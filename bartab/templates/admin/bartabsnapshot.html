@@ -1,47 +1,47 @@
 {% extends 'admin/change_form.html' %}
 
-{% block extrahead %}{{ block.super }}
-<script type="text/javascript">
-$(function() {
-	// Open dropdown on tab
-	$(document).on('focus', '.select2.select2-container', function (e) {
-		// only open on original attempt - close focus event should not fire open
-		if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
-			$(this).siblings('select').select2('open');
-		}
-	});
+{% block extrahead %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
-	// Automatically select highlighted
-	$(document).on('select2:closing', 'select', function (e) {
-		var id = $('.select2-results__option--highlighted').attr('id');
-		if (id) {
-			$(e.target).val(id.split('-').pop()).trigger('change');
-		}
-	});
+    {{ block.super }}
 
-	function setUntabbables() {
-		$('.related-widget-wrapper-link, .delete > input, .inline-deletelink').attr({tabindex: -1});
-	}
+    <script type="text/javascript">
+        $(function() {
+            // Open dropdown on tab
+            $(document).on('focus', '.select2.select2-container', function (e) {
+                // only open on original attempt - close focus event should not fire open
+                if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
+                    $(this).siblings('select').select2('open');
+                }
+            });
 
-	setUntabbables();
+            function setUntabbables() {
+                $('.related-widget-wrapper-link, .delete > input, .inline-deletelink').attr({tabindex: -1});
+                $('select[tabindex="-1"]').attr({tabindex: 0});  // Fixes incorrectly untabbable selects
+            }
 
-	var add_button = $('.add-row a');
+            setUntabbables();
 
-	add_button.on('click', function (e) {
-		setTimeout(function() {
-			$('select').eq(-2).select2({width: '250px'});
-			setUntabbables();
-		}, 0);
-	});
+            var add_button;
 
-	// Automatically add new inlines
-	$(document).on('focus', '.field-raw_added > input', function (e) {
-		var last_fields = $('.field-raw_added > input');
-		if (e.target === last_fields.get(-2)) {
-			add_button.get(0).click();
-		}
-	});
+            $(document).on('click', '.add-row a', function (e) {
+                setTimeout(function() {
+                    var el = $('select').eq(-2);
+                    el.next().remove();
+                    el.djangoSelect2();
+                    setUntabbables();
+                });
+            });
 
-});
-</script>
+            // Automatically add new inlines
+            $(document).on('focus', '.field-raw_added > input', function (e) {
+                var last_fields = $('.field-raw_added > input');
+                if (e.target === last_fields.get(-2)) {
+                    if(!add_button) add_button = $('.add-row a');
+                    add_button.get(0).click();
+                }
+            });
+
+        });
+    </script>
 {% endblock %}

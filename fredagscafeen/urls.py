@@ -5,12 +5,14 @@ from django.contrib import admin
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('', include('web.urls'))
+	path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico')),
+	path('admin/', admin.site.urls),
+	path('api/', include('api.urls')),
+	path('', include('web.urls')),
+
+	path('select2/', include('django_select2.urls')),
 ]
 
 if settings.DEBUG:
-    # Handle user-uploaded content during development
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+	# Handle user-uploaded content during development
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

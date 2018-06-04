@@ -25,7 +25,7 @@ ipython = "*"
 requests-html = "*"
 django-logentry-admin = {git = "https://github.com/yprez/django-logentry-admin", ref = "ac28f35a7b0eced676a8f16cbe52b65b415f7fd2"}
 django-admin-views = "*"
-django-easy-select2 = "*"
+"django-select2" = "*"
 
 [dev-packages]
 
