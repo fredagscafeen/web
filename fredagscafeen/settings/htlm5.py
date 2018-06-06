@@ -18,6 +18,14 @@ import dj_database_url
 
 DATABASES = {'default': dj_database_url.config()}
 
+# Cache (for django-select2)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': os.getenv('MEMCACHED_URL').replace('memcached://', ''),
+    }
+}
+
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 RECAPTCHA_PUBLIC_KEY = '6LcM200UAAAAAIi7AHBSlypIewnLk4Q4BvcC8Z-W'

@@ -26,22 +26,22 @@ MAILMAN_ALL_LIST = 'datcafe-alle.cs'
 MAILMAN_BEST_LIST = 'datcafe-best.cs'
 
 SECRET_ADMIN_KEYS = [
-    ('SECRET_KEY', 'Django secret key'),
-    ('MAILMAN_ALL_PASSWORD', 'Alle mailinglist admin password'),
-    ('MAILMAN_BEST_PASSWORD', 'Best mailinglist admin password'),
-    ('EMAIL_HOST_PASSWORD', 'Gmail password'),
-    ('DIGITAL_OCEAN_PASSWORD', 'Digital Ocean password'),
-    ('MIDTTRAFIK_BESTILLING_PASSWORD', 'midttrafikbestilling.dk password'),
-    ('RECAPTCHA_PRIVATE_KEY', 'ReCaptcha private key'),
+	('SECRET_KEY', 'Django secret key'),
+	('MAILMAN_ALL_PASSWORD', 'Alle mailinglist admin password'),
+	('MAILMAN_BEST_PASSWORD', 'Best mailinglist admin password'),
+	('EMAIL_HOST_PASSWORD', 'Gmail password'),
+	('DIGITAL_OCEAN_PASSWORD', 'Digital Ocean password'),
+	('MIDTTRAFIK_BESTILLING_PASSWORD', 'midttrafikbestilling.dk password'),
+	('RECAPTCHA_PRIVATE_KEY', 'ReCaptcha private key'),
 ]
 
 # Inject all secret keys
 for k, _ in SECRET_ADMIN_KEYS:
-    v = os.getenv(k)
-    if v != None:
-        globals()[k] = v
-    else:
-        print('WARNING: Missing secret key in env:', k)
+	v = os.getenv(k)
+	if v != None:
+		globals()[k] = v
+	else:
+		print('WARNING: Missing secret key in env:', k)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -50,73 +50,74 @@ for k, _ in SECRET_ADMIN_KEYS:
 # Application definition
 
 INSTALLED_APPS = (
-    'admin_views',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_object_actions',
-    'django_extensions',
-    'django_select2',
-    'rest_framework.authtoken',
-    'bootstrap3',
-    'captcha',
-    'items',
-    'bartenders',
-    'rest_framework',
-    'web',
-    'api',
-    'reminder',
-    'udlejning',
-    'logentry_admin',
-    'bartab',
+
+	'admin_views',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'django_object_actions',
+	'django_extensions',
+	'django_select2',
+	'rest_framework.authtoken',
+	'bootstrap3',
+	'captcha',
+	'items',
+	'bartenders',
+	'rest_framework',
+	'web',
+	'api',
+	'reminder',
+	'udlejning',
+	'logentry_admin',
+	'bartab',
 )
 
 MIDDLEWARE = (
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'bartenders.auth.BartenderTokenBackend',
+	'django.contrib.auth.backends.ModelBackend',
+	'bartenders.auth.BartenderTokenBackend',
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    )
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework.authentication.TokenAuthentication',
+		'rest_framework.authentication.BasicAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
+	),
+	'DEFAULT_PERMISSION_CLASSES': (
+		'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+		'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+	)
 }
 
 ROOT_URLCONF = 'fredagscafeen.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['web/templates', 'fredagscafeen/templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': ['web/templates', 'fredagscafeen/templates'],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 WSGI_APPLICATION = 'fredagscafeen.wsgi.application'
@@ -126,10 +127,10 @@ WSGI_APPLICATION = 'fredagscafeen.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	}
 }
 
 
@@ -161,9 +162,9 @@ NOCAPTCHA = True
 
 # Server admins (get an email when server errors happen)
 ADMINS = [
-    ('Oskar Haarklou Veileborg', 'oskarv@post.au.dk'),
-    ('Jonas Tranberg Sørensen', '201406818@post.au.dk'),
-    ('Asger Hautop Drewsen', 'asgerdrewsen@gmail.com'),
+	('Oskar Haarklou Veileborg', 'oskarv@post.au.dk'),
+	('Jonas Tranberg Sørensen', '201406818@post.au.dk'),
+	('Asger Hautop Drewsen', 'asgerdrewsen@gmail.com'),
 ]
 
 # Allow more fields in GET/POST requests (necessary for BarTabAdmin to function with large snapshots)
