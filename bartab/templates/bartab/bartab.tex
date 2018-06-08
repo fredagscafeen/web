@@ -38,6 +38,17 @@
 
 \end{landscape}
 
+% Make sure Pizza list is on a even page
+\ifoddpage
+\mbox{~}
+\clearpage
+\mbox{~}
+\clearpage
+\else
+\mbox{~}
+\clearpage
+\fi
+
 \LARGE
 \section*{Pizzabestilling}
 \begin{tabu} to \linewidth{| X[1] | X[12] | X[2] |}
