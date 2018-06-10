@@ -6,7 +6,6 @@ from django.contrib import admin
 from django.forms.widgets import TextInput
 from django.http import FileResponse, HttpResponse
 from django.template.loader import render_to_string
-from django_select2.forms import ModelSelect2Widget
 
 from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
 
@@ -26,21 +25,11 @@ class BarTabEntryInline(admin.TabularInline):
 	formfield_overrides = {
 		SumField: {'widget': TextInput},
 	}
+	autocomplete_fields = ['user']
 
 	def get_queryset(self, request):
 		""" Select related prevents 2*N queries when calling entry.__str__ in each form """
 		return super().get_queryset(request).select_related('user', 'snapshot')
-
-	def formfield_for_foreignkey(self, db_field, request, **kwargs):
-		field = super().formfield_for_foreignkey(db_field, request, **kwargs)
-		if db_field.name == 'user':
-			field.widget = ModelSelect2Widget(
-				model=BarTabUser,
-				search_fields=('name__icontains', 'email__icontains'),
-				attrs={'data-select-on-close': 'true', 'data-allow-clear': 'false', 'data-width': '250px'}
-			)
-
-		return field
 
 	def formfield_for_dbfield(self, db_field, **kwargs):
 		field = super().formfield_for_dbfield(db_field, **kwargs)

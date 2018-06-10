@@ -60,7 +60,6 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'django_object_actions',
 	'django_extensions',
-	'django_select2',
 	'rest_framework.authtoken',
 	'bootstrap3',
 	'captcha',
