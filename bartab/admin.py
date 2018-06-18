@@ -10,11 +10,26 @@ from django.template.loader import render_to_string
 from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
 
 
+class BarTabEntryReadonlyInline(admin.TabularInline):
+	model = BarTabEntry
+	fields = ('added', 'used')
+	readonly_fields = ('added', 'used')
+	ordering = ('-snapshot__timestamp',)
+	can_delete = False
+	extra = 0
+
+	def has_add_permission(self, request):
+		return False
+
+
 class BarTabUserAdmin(admin.ModelAdmin):
 	list_display = ('name', 'email', 'balance', 'hidden_from_tab')
 	readonly_fields = ('balance',)
 	search_fields = ('name', 'email')
 	list_filter = ('hidden_from_tab',)
+	inlines = [
+		BarTabEntryReadonlyInline,
+	]
 
 
 class BarTabEntryInline(admin.TabularInline):

@@ -103,4 +103,3 @@ class BarTabEntry(models.Model):
 
 		if self.raw_used:
 			self.used = self.raw_used.value
-
