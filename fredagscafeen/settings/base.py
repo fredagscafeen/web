@@ -63,9 +63,10 @@ INSTALLED_APPS = (
 	'rest_framework.authtoken',
 	'bootstrap3',
 	'captcha',
+	'rest_framework',
+	'corsheaders',
 	'items',
 	'bartenders',
-	'rest_framework',
 	'web',
 	'api',
 	'reminder',
@@ -77,6 +78,7 @@ INSTALLED_APPS = (
 MIDDLEWARE = (
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -158,6 +160,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Use the new NoCaptcha
 NOCAPTCHA = True
+
+# CORS Setup
+CORS_URLS_REGEX = r'^/api/.*$'  # Only allow CORS requests in /api
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Server admins (get an email when server errors happen)
 ADMINS = [
