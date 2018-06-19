@@ -31,13 +31,13 @@ class Bartender(models.Model):
         ('XXXL', 'XXXL'),
     )
 
-    name = models.CharField(max_length=140)
-    username = models.CharField(max_length=140, unique=True)
+    name = models.CharField(max_length=140, verbose_name='Fulde navn')
+    username = models.CharField(max_length=140, unique=True, verbose_name='Brugernavn')
     email = models.CharField(max_length=255, blank=True)
-    studentNumber = models.IntegerField(blank=True, null=True)
-    phoneNumber = models.IntegerField(blank=True, null=True)
+    studentNumber = models.IntegerField(blank=True, null=True, verbose_name='Studienummer')
+    phoneNumber = models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer')
     isActiveBartender = models.BooleanField(default=True)
-    tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True)
+    tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True, verbose_name='T-shirt størrelse')
     email_token = models.CharField(max_length=EMAIL_TOKEN_LENGTH, default=new_email_token, editable=False)
 
     @property
