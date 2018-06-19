@@ -5,9 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
-    replaces = [('bartenders', '0024_bartenderunavailabledate'), ('bartenders', '0025_auto_20180619_2337')]
-
     dependencies = [
         ('bartenders', '0023_bartender_email_token'),
     ]
