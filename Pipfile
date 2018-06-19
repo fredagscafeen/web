@@ -23,7 +23,7 @@ django-object-actions = "*"
 django-extensions = "*"
 ipython = "*"
 requests-html = "*"
-django-logentry-admin = {git = "https://github.com/yprez/django-logentry-admin", ref = "ac28f35a7b0eced676a8f16cbe52b65b415f7fd2"}
+django-logentry-admin = "*"
 django-admin-views = "*"
 django-cors-headers = "*"
 
