@@ -3,11 +3,39 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
 
+{% block extrahead %}
+<script type="text/javascript">
+$(function() {
+    $('#unavailable_dates_table input').change(function(e) {
+        $(this).closest('td').toggleClass('danger', this.checked);
+    });
+});
+</script>
+{% endblock %}
+
 {% block content %}
 
 <form method="post">
 {% csrf_token %}
 {% bootstrap_form form %}
+
+<label>Datoer, hvor du ikke har mulighed for at stå i bar:</label>
+<table id="unavailable_dates_table" class="table table-bordered table-hover">
+<tbody>
+{% for first_date, dates in dates_table %}
+    <tr>
+        <th scope="row">
+            {{ first_date | date:'M Y' }}:
+        </th>
+    {% for id, date, checked in dates %}
+        <td {% if checked %}class="danger"{% endif %}>
+            <label><input type="checkbox" name="unavailable_ordinals" value="{{ id }}" {% if checked %}checked{% endif %}> {{ date.day }}.</label>
+        </td>
+    {% endfor %}
+    </tr>
+{% endfor %}
+</tbody>
+</table>
 {% buttons %}
     {% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
 {% endbuttons %}

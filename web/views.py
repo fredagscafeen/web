@@ -1,4 +1,5 @@
 import datetime
+from itertools import groupby
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -10,7 +11,7 @@ from django_ical.views import ICalFeed
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_GET, require_POST
 
-from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift
+from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, next_bartender_shift_dates, BartenderUnavailableDate
 from items.models import Item
 from udlejning.models import Udlejning
 from udlejning.models import UdlejningGrill
@@ -39,6 +40,8 @@ class BartenderInfo(PermissionRequiredMixin, UpdateView):
     template_name = 'bartender_info.html'
     form_class = BartenderInfoForm
 
+    UNAVAILABLE_DATES = 52
+
     def has_permission(self):
         try:
             return self.request.user.has_perm('bartenders.change_bartender', self.get_object())
@@ -48,9 +51,32 @@ class BartenderInfo(PermissionRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         return Bartender.objects.get(username=self.request.user.username)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))
+
+        unavailable_dates = set(d.date for d in self.object.unavailable_dates.filter(date__gte=future_dates[0], date__lte=future_dates[-1]))
+
+        dates_table = []
+        for _, dates in groupby(future_dates, key=lambda d: d.month):
+            dates = list(dates)
+            dates_table.append((dates[0], [(d.toordinal(), d, d in unavailable_dates) for d in dates]))
+
+        context['dates_table'] = dates_table
+
+        return context
+
     def form_valid(self, form):
         messages.success(self.request, 'Profil opdateret')
-        return super().form_valid(form)
+        redirect_url = super().form_valid(form)
+
+        self.object.unavailable_dates.all().delete()
+        for ordinal in self.request.POST.getlist('unavailable_ordinals'):
+            date = datetime.date.fromordinal(int(ordinal))
+            BartenderUnavailableDate(date=date, bartender=self.object).save()
+
+        return redirect_url
 
     def get_success_url(self):
         return self.request.path

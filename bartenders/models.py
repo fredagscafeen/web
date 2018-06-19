@@ -85,6 +85,14 @@ class Bartender(models.Model):
         return f'{self.symbol}{self.name} ({self.username})'
 
 
+class BartenderUnavailableDate(models.Model):
+    bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE, related_name='unavailable_dates')
+    date = models.DateField()
+
+    class Meta:
+        unique_together = ('bartender', 'date')
+
+
 class BoardMember(models.Model):
     bartender = models.OneToOneField(Bartender, on_delete=models.CASCADE, primary_key=True)
     title = models.CharField(max_length=255)
@@ -175,6 +183,13 @@ def next_bartender_shift_start(last_date=None):
     next_date = next_date_with_weekday(last_date, Weekday.FRIDAY)
     dt = datetime.datetime.combine(next_date, BartenderShift.DEFAULT_START_TIME)
     return timezone.get_default_timezone().localize(dt)
+
+
+def next_bartender_shift_dates(count):
+    d = next_bartender_shift_start().date()
+    for i in range(count):
+        yield d
+        d = next_bartender_shift_start(d).date()
 
 
 def next_deposit_shift_start(last_date=None):

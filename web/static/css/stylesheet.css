@@ -81,3 +81,14 @@ footer {
         font-size: 0.8em;
     }
 }
+
+#unavailable_dates_table {
+    width: initial !important;
+}
+#unavailable_dates_table td {
+    padding: 0 !important;
+}
+#unavailable_dates_table label {
+    display: block !important;
+    padding: 8px !important;
+}
