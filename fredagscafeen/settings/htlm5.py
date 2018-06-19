@@ -37,7 +37,7 @@ LOGGING = {
         # Log to a text file that can be rotated by logrotate
         'logfile': {
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': '/var/log/django/fredagscafeen.log'
+            'filename': '/app/django.log'
         },
     },
     'loggers': {
