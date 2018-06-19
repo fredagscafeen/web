@@ -107,7 +107,7 @@ class BoardMember(models.Model):
 
 
 class BartenderApplication(models.Model):
-    name = models.CharField(max_length=140, verbose_name='Navn')
+    name = models.CharField(max_length=140, verbose_name='Fulde navn')
     username = models.CharField(max_length=140, verbose_name='Brugernavn')
     email = models.EmailField(max_length=255)
     studentNumber = models.IntegerField(verbose_name='Studienummer')
