@@ -1,0 +1,26 @@
+#!/bin/bash
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+
+echo "This will DELETE your local database!"
+echo -n "Continue? [yN] "
+read -r ans
+if ! [[ $ans = y || $ans = Y ]]; then
+	exit 1
+fi
+
+rm -f db.sqlite3
+pipenv run ./manage.py migrate
+
+echo
+echo "Dumping and downloading production database..."
+
+fixture=$(mktemp --suffix .json)
+
+ssh root@fredagscafeen.dk 'dokku run fredagscafeen.dk python -W ignore ./manage.py dumpdata --exclude contenttypes' > "$fixture"
+
+echo "Importing production database..."
+echo
+pipenv run ./manage.py loaddata "$fixture"
+
+rm -f "$fixture"
