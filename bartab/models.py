@@ -64,11 +64,11 @@ class BarTabUser(models.Model):
 
 	@property
 	def is_active(self):
-		last_entry = self.entries.last()
-		if not last_entry:
+		latest_entry = self.entries.first()
+		if not latest_entry:
 			return False
 
-		return timezone.now() - last_entry.snapshot.datetime < self.ACTIVE_TIME_LIMIT
+		return timezone.now() - latest_entry.snapshot.datetime < self.ACTIVE_TIME_LIMIT
 
 	def __str__(self):
 		return self.name
