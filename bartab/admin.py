@@ -14,7 +14,6 @@ class BarTabEntryReadonlyInline(admin.TabularInline):
 	model = BarTabEntry
 	fields = ('added', 'used')
 	readonly_fields = ('added', 'used')
-	ordering = ('-snapshot__bartender_shift__start_datetime',)
 	can_delete = False
 	extra = 0
 

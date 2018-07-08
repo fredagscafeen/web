@@ -74,12 +74,26 @@ class BarTabUser(models.Model):
 		return self.name
 
 
+def bar_tab_snapshot_ordering(related_name=None):
+	field_path = 'bartender_shift__start_datetime'
+	if related_name:
+		field_path = f'{related_name}__{field_path}'
+
+	print(field_path)
+
+	return F(field_path).desc(nulls_last=True)
+
+
 class BarTabSnapshot(models.Model):
 	bartender_shift = models.OneToOneField(BartenderShift, on_delete=models.PROTECT, related_name='bar_tab_snapshot', blank=True, null=True)
 	last_updated = models.DateTimeField(auto_now=True)
 
 	class Meta:
-		ordering = ('-bartender_shift__start_datetime',)
+		ordering = (bar_tab_snapshot_ordering(),)
+
+	@staticmethod
+	def get_ordering(related_name=None):
+		return bar_tab_snapshot_ordering(related_name)
 
 	@property
 	def datetime(self):
@@ -106,7 +120,7 @@ class BarTabEntry(models.Model):
 
 	class Meta:
 		unique_together = ('user', 'snapshot')
-		ordering = ('snapshot__bartender_shift__start_datetime',)
+		ordering = (BarTabSnapshot.get_ordering('snapshot'),)
 
 	def __str__(self):
 		return f'{self.user} - {self.snapshot.date}'
