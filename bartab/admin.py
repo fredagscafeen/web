@@ -14,7 +14,7 @@ class BarTabEntryReadonlyInline(admin.TabularInline):
 	model = BarTabEntry
 	fields = ('added', 'used')
 	readonly_fields = ('added', 'used')
-	ordering = ('-snapshot__timestamp',)
+	ordering = ('-snapshot__bartender_shift__start_datetime',)
 	can_delete = False
 	extra = 0
 
@@ -55,7 +55,7 @@ class BarTabEntryInline(admin.TabularInline):
 
 class BarTabSnapshotAdmin(AdminViews):
 	change_form_template = 'admin/bartabsnapshot.html'
-	readonly_fields = ('timestamp',)
+	readonly_fields = ('last_updated',)
 	inlines = [
 		BarTabEntryInline,
 	]

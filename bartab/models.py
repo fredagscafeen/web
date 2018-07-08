@@ -5,6 +5,8 @@ from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 
+from bartenders.models import BartenderShift
+
 from .forms import SumValue, SumField as SumFormField
 
 
@@ -66,20 +68,32 @@ class BarTabUser(models.Model):
 		if not last_entry:
 			return False
 
-		return timezone.now() - last_entry.snapshot.timestamp < self.ACTIVE_TIME_LIMIT
+		return timezone.now() - last_entry.snapshot.datetime < self.ACTIVE_TIME_LIMIT
 
 	def __str__(self):
 		return self.name
 
 
 class BarTabSnapshot(models.Model):
-	timestamp = models.DateTimeField(auto_now=True)
+	bartender_shift = models.OneToOneField(BartenderShift, on_delete=models.PROTECT, related_name='bar_tab_snapshot', blank=True, null=True)
+	last_updated = models.DateTimeField(auto_now=True)
 
 	class Meta:
-		ordering = ('-timestamp',)
+		ordering = ('-bartender_shift__start_datetime',)
+
+	@property
+	def datetime(self):
+		if not self.bartender_shift:
+			return timezone.make_aware(datetime.datetime.fromtimestamp(0))
+
+		return self.bartender_shift.start_datetime
+
+	@property
+	def date(self):
+		return self.datetime.date()
 
 	def __str__(self):
-		return f'{self.timestamp.date()}: {self.entries.count()} entries'
+		return f'{self.date}: {self.entries.count()} entries'
 
 
 class BarTabEntry(models.Model):
@@ -92,10 +106,10 @@ class BarTabEntry(models.Model):
 
 	class Meta:
 		unique_together = ('user', 'snapshot')
-		ordering = ('snapshot__timestamp',)
+		ordering = ('snapshot__bartender_shift__start_datetime',)
 
 	def __str__(self):
-		return f'{self.user} - {self.snapshot.timestamp.date()}'
+		return f'{self.user} - {self.snapshot.date}'
 
 	def clean(self):
 		if self.raw_added:
