@@ -79,8 +79,6 @@ def bar_tab_snapshot_ordering(related_name=None):
 	if related_name:
 		field_path = f'{related_name}__{field_path}'
 
-	print(field_path)
-
 	return F(field_path).desc(nulls_last=True)
 
 
