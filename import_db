@@ -17,7 +17,7 @@ echo "Dumping and downloading production database..."
 
 fixture=$(mktemp --suffix .json)
 
-ssh root@fredagscafeen.dk 'dokku run fredagscafeen.dk python -W ignore ./manage.py dumpdata --exclude contenttypes' > "$fixture"
+ssh root@fredagscafeen.dk 'dokku run fredagscafeen.dk python -W ignore ./manage.py dumpdata --exclude contenttypes | tail -n1' > "$fixture"
 
 echo "Importing production database..."
 echo
