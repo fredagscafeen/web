@@ -33,6 +33,7 @@
 \begin{longtabu} to \linewidth{| X[2, l] | X[7, l] | X[3, l] | X[3, r, $] | X[24, l] |}
 \hline
 \textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
+\endhead
 
 	{% for user in users %}
 & {{ user.name | latex_trunc }} & {{ user.email | default_if_none:'' | latex_trunc }} & {{ user.balance_str }} & {% if user.has_credit_hold %}\footnotesize \textbf{KREDITSTOP}{% endif %} \\ \hline
