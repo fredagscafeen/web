@@ -30,7 +30,7 @@ class BartenderCommon(models.Model):
 
     name = models.CharField(max_length=140, verbose_name='Fulde navn')
     username = models.CharField(max_length=140, unique=True, verbose_name='Brugernavn')
-    email = models.CharField(max_length=255, blank=True)
+    email = models.CharField(max_length=255, unique=True, blank=True)
     studentNumber = models.IntegerField(blank=True, null=True, verbose_name='Studienummer')
     phoneNumber = models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer')
 
