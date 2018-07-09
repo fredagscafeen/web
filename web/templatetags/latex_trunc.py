@@ -32,6 +32,6 @@ def tex_escape(text):
 @stringfilter
 def latex_trunc(value, width=r'\linewidth'):
 	escaped_value = tex_escape(value)
-	#return fr'\truncate{{ {width} }}{{ {escaped_value} }}'
+	#return fr'\truncate{{{width}}}{{{escaped_value}}}'
 	# \truncate breaks text too eagerly
-	return fr'\clipbox{{0pt 0pt 0pt 0pt}}{{\parbox{{ {width} }}{{ \mbox{{ {escaped_value} }} }}}}'
+	return fr'\clipbox{{0pt 0pt 0pt 0pt}}{{\parbox{{{width}}}{{\mbox{{{escaped_value}}}}}}}'
