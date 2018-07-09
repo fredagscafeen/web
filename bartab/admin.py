@@ -82,13 +82,13 @@ class BarTabSnapshotAdmin(AdminViews):
 			if p.returncode != 0:
 				error_text = f'''==== Got an error from latexmk ====
 
-== LaTeX source ==
-
-{latex}
-
 == latexmk output ==
 
-{str(p.stdout, 'utf-8')}'''
+{str(p.stdout, 'utf-8')}
+
+== LaTeX source ==
+
+{latex}'''
 				return HttpResponse(error_text, content_type='text/plain')
 
 			return FileResponse(open(cwd + '/bartab.pdf', 'rb'), content_type='application/pdf')
