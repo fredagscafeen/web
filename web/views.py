@@ -105,7 +105,7 @@ class Index(CreateView):
 
         # Send email to best
         form.send_email(self.object.pk)
-        messages.success(self.request, 'Your application has been sent successfully.')
+        messages.success(self.request, 'Din ansøgning er blevet indsendt.')
 
         return response
 
