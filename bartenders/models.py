@@ -146,8 +146,9 @@ Ses i baren! :)
 
 
     def accept(self):
-        b = Bartender.objects.create(name=self.name, username=self.username, email=self.email,
-                                     studentNumber=self.studentNumber, phoneNumber=self.phoneNumber)
+        common_fields = super()._meta.get_fields()
+        value_dict = {f.name: getattr(self, f.name) for f in common_fields}
+        b = Bartender.objects.create(**value_dict)
 
         try:
             if settings.MAILMAN_MUTABLE:
