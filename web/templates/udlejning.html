@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load bootstrap3 %}
+
 {% block content %}
 <h2>
 		Reservation af fadølsanlæg
@@ -208,4 +210,13 @@
 				Kontaktinformation for den event-ansvarlige
 		</li>
 </ul>
+
+
+<form method="post" action="/udlejning/">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		{% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+	{% endbuttons %}
+</form>
 {% endblock %}

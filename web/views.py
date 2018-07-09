@@ -13,9 +13,8 @@ from django.views.decorators.http import require_GET, require_POST
 
 from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, next_bartender_shift_dates, BartenderUnavailableDate
 from items.models import Item
-from udlejning.models import Udlejning
-from udlejning.models import UdlejningGrill
-from web.forms import BartenderApplicationForm, BartenderInfoForm, LoginForm
+from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
+from web.forms import BartenderApplicationForm, UdlejningApplicationForm, BartenderInfoForm, LoginForm
 
 
 @require_GET
@@ -106,6 +105,28 @@ class Index(CreateView):
         # Send email to best
         form.send_email(self.object.pk)
         messages.success(self.request, 'Din ansøgning er blevet indsendt.')
+
+        return response
+
+
+class Udlejninger(CreateView):
+    model = UdlejningApplication
+    template_name = 'udlejning.html'
+    form_class = UdlejningApplicationForm
+    success_url = '/udlejning/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['udlejninger'] = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
+        return context
+
+    def form_valid(self, form):
+        # Call super to save instance
+        response = super().form_valid(form)
+
+        # Send email to best
+        form.send_email(self.object.pk)
+        messages.success(self.request, 'Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til dig med et svar hurtigst muligt.')
 
         return response
 
@@ -227,13 +248,6 @@ class Board(ListView):
     allow_empty = True
     model = BoardMember
     context_object_name = 'boardmembers'
-
-
-class Udlejninger(ListView):
-    template_name = "udlejning.html"
-    allow_empty = True
-    queryset = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
-    context_object_name = 'udlejninger'
 
 
 class UdlejningerGrill(ListView):

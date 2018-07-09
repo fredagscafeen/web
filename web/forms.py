@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from bartenders.models import Bartender, BartenderShift, BartenderApplication
+from udlejning.models import UdlejningApplication
 from fredagscafeen.email import send_template_email
 
 
@@ -93,6 +94,49 @@ Telefonnummer: {phoneNumber}
 {extra_info}
 Ansøgningen kan blive accepteret eller afvist i {link}.
 
+/snek''',
+			text_format={'link': f'admin interfacet: {url}', **d},
+			html_format={'link': mark_safe(f'<a href="{url}">admin interfacet</a>'), **d},
+			to=['best@fredagscafeen.dk']
+		)
+
+
+class UdlejningApplicationForm(forms.ModelForm):
+	captcha = ReCaptchaField()
+
+	class Meta:
+		model = UdlejningApplication
+		fields = '__all__'
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+
+		for name in self.fields:
+			self.fields[name].required = name != 'comments'
+
+	def send_email(self, pk):
+		d = self.cleaned_data
+
+		url = urljoin(settings.SELF_URL, reverse('admin:udlejning_udlejningapplication_change', args=(pk,)))
+
+		return send_template_email(
+			subject=f'Ny anmodning om reservation af fadølsanlæg af {d["whoReserved"]}',
+			body_template='''Dette er en automatisk email.
+
+{whoReserved} har ansøgt om at låne et fadølsanlæg:
+Dato: {dateFrom} til {dateTo}
+Tilknytning: {association}
+Fadølsanlæg: {draftBeerSystem}
+Betaler: {whoPays}
+Betalingsform: {paymentType}
+Lokation: {where}
+Forventet forbrug: {expectedConsummation}
+Kontaktinformation: {contactInfo}
+Kommentarer:
+{comments}
+
+Ansøgningen kan blive accepteret eller afvist i {link} ,
+men husk at kontakte personen efter dette.
 /snek''',
 			text_format={'link': f'admin interfacet: {url}', **d},
 			html_format={'link': mark_safe(f'<a href="{url}">admin interfacet</a>'), **d},
