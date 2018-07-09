@@ -68,25 +68,27 @@ class BartenderApplicationForm(forms.ModelForm):
 		extra_info = ''
 		if d['info']:
 			extra_info = f'''
-Extra info:
+Ekstra information:
 {d["info"]}
 '''
 		d['extra_info'] = extra_info
 
 		return send_template_email(
-			subject=f'Bartender application: {d["name"]}',
-			body_template='''This is an automated email.
+			subject=f'Bartendertilmelding: {d["name"]}',
+			body_template='''Dette er en automatisk email.
 
-{name} has applied to become a bartender:
-{name} ({username})
-{studentNumber} - {email}
-{phoneNumber}
+{name} har ansøgt om at blive bartender:
+Navn: {name}
+Brugernavn: {username}
+Studienummer: {studentNumber}
+Email: {email}
+Telefonnummer: {phoneNumber}
 {extra_info}
-The application can be accepted or denied through {link}.
+Ansøgningen kan blive accepteret eller afvist i {link}.
 
 /snek''',
-			text_format={'link': f'the admin interfacec: {url}', **d},
-			html_format={'link': mark_safe(f'<a href="{url}">the admin interface</a>'), **d},
+			text_format={'link': f'admin interfacet: {url}', **d},
+			html_format={'link': mark_safe(f'<a href="{url}">admin interfacet</a>'), **d},
 			to=['best@fredagscafeen.dk']
 		)
 

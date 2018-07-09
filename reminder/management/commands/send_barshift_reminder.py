@@ -16,17 +16,18 @@ class Command(ReminderCommand):
         return event.all_bartenders()
 
     def email_subject(self, humanized_bartenders):
-        return 'You have a barshift this friday!'
+        return 'Du har en barvagt på fredag!'
 
     def email_body(self, humanized_bartenders):
-        return f'''Hello {humanized_bartenders}.
+        return f'''Hej {humanized_bartenders}.
 
-The coming Friday it is YOUR turn to run Fredagscafeen.
-This is an automated mail sent to you as well as to Bestyrelsen.
-It is primarily sent so that you may arrange for someone else to take your shift, but it also serves as a kind reminder :)
-Remember that your shift starts at 14:30.
+Den kommende fredag er det DIN tur til at stå i Fredagscaféen.
+Dette er en automatisk email sendt til jer og bestyrelsen.
+Emailen er hovedsageligt sendt så du kan finde en anden at bytte vagt med,
+hvis du ikke har mulighed for selv at tage den.
+Husk at din vagt starter kl. 14:30.
 
-See you at the bar!
+Ses i baren!
 
 /Bestyrelsen'''
 

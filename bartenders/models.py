@@ -123,18 +123,19 @@ class BartenderApplication(models.Model):
         url = urljoin(settings.SELF_URL, reverse('barplan'))
 
         return send_template_email(
-            subject=f'Bartender application: {self.name}',
-            body_template='''Hello {name},
+            subject=f'Bartendertilmelding: {self.name}',
+            body_template='''Hej {name},
 
-Your application to become a bartender at Fredagscafeen has been approved.
-The scheduler will assign you to shifts which can be found {link},
-and you will be added to our mailing list.
+Din ansøgning om at blive bartender ved Fredagscaféen er blevet accepteret.
+Scheduleren vil tildele dig barvagter, når den nye barplan bliver lavet.
+Du kan se barplanen {link}.
+Du er blevet tilføjet til vores mailing liste (alle@fredagscafeen.dk).
 
-See you at the bar! :)
+Ses i baren! :)
 
 /Bestyrelsen''',
-            text_format={'name': self.name, 'link': f'here: {url}'},
-            html_format={'name': self.name, 'link': mark_safe(f'<a href="{url}">here</a>')},
+            text_format={'name': self.name, 'link': f'her: {url}'},
+            html_format={'name': self.name, 'link': mark_safe(f'<a href="{url}">her</a>')},
             to=[self.email],
             cc=['best@fredagscafeen.dk']
         )

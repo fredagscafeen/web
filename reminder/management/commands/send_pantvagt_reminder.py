@@ -16,12 +16,12 @@ class Command(ReminderCommand):
         return event.responsibles.all()
 
     def email_subject(self, humanized_bartenders):
-        return f'Hello {humanized_bartenders}. You have to take care of the pant this week!'
+        return f'Hej {humanized_bartenders}. Du skal tage dig af panten i denne uge!'
 
     def email_body(self, humanized_bartenders):
-        return f'''Hello {humanized_bartenders}.
+        return f'''Hej {humanized_bartenders}.
 
-You have to take care of pant this week!
+Du skal tage dig af panten i denne uge!
 
 /Bestyrelsen'''
 

@@ -39,7 +39,7 @@ class ReminderCommand(BaseCommand):
         for i, bartender in enumerate(bartenders):
             humanized_bartenders += f'{bartender.name} ({bartender.username})'
             if i == len(bartenders) - 2:
-                humanized_bartenders += ' and '
+                humanized_bartenders += ' og '
             if i < len(bartenders) - 2:
                 humanized_bartenders += ', '
         return humanized_bartenders
