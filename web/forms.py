@@ -60,6 +60,13 @@ class BartenderApplicationForm(forms.ModelForm):
 		model = BartenderApplication
 		fields = '__all__'
 
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+
+		for name in self.fields:
+			self.fields[name].required = name != 'info'
+
+
 	def send_email(self, pk):
 		d = self.cleaned_data
 

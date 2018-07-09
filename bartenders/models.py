@@ -21,7 +21,21 @@ def new_email_token():
     return get_random_string(EMAIL_TOKEN_LENGTH)
 
 
-class Bartender(models.Model):
+# Fields shared between Bartender and BartenderApplication.
+# All of these should actually be required in BartenderApplication,
+# but we enforce that in BartenderApplicationForm for new applications.
+class BartenderCommon(models.Model):
+    class Meta:
+        abstract = True
+
+    name = models.CharField(max_length=140, verbose_name='Fulde navn')
+    username = models.CharField(max_length=140, unique=True, verbose_name='Brugernavn')
+    email = models.CharField(max_length=255, blank=True)
+    studentNumber = models.IntegerField(blank=True, null=True, verbose_name='Studienummer')
+    phoneNumber = models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer')
+
+
+class Bartender(BartenderCommon):
     TSHIRT_SIZE_CHOICES = (
         ('S', 'S'),
         ('M', 'M'),
@@ -31,11 +45,6 @@ class Bartender(models.Model):
         ('XXXL', 'XXXL'),
     )
 
-    name = models.CharField(max_length=140, verbose_name='Fulde navn')
-    username = models.CharField(max_length=140, unique=True, verbose_name='Brugernavn')
-    email = models.CharField(max_length=255, blank=True)
-    studentNumber = models.IntegerField(blank=True, null=True, verbose_name='Studienummer')
-    phoneNumber = models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer')
     isActiveBartender = models.BooleanField(default=True)
     tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True, verbose_name='T-shirt størrelse')
     email_token = models.CharField(max_length=EMAIL_TOKEN_LENGTH, default=new_email_token, editable=False)
@@ -106,12 +115,7 @@ class BoardMember(models.Model):
         return self.bartender.username
 
 
-class BartenderApplication(models.Model):
-    name = models.CharField(max_length=140, verbose_name='Fulde navn')
-    username = models.CharField(max_length=140, verbose_name='Brugernavn')
-    email = models.EmailField(max_length=255)
-    studentNumber = models.IntegerField(verbose_name='Studienummer')
-    phoneNumber = models.IntegerField(verbose_name='Telefonnummer')
+class BartenderApplication(BartenderCommon):
     info = models.TextField(blank=True, help_text='Eventuelle ekstra info til bestyrelsen skrives her')
 
     created = models.DateTimeField(auto_now_add=True)
