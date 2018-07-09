@@ -9,6 +9,7 @@
 \usepackage[breakall,fit]{truncate}
 \usepackage{trimclip}
 \usepackage{pdflscape}
+\usepackage{icomma}
 
 \renewcommand\TruncateMarker{}
 
@@ -29,7 +30,7 @@
 	& {\Large Opgjort til og med vagt: {{ latest_shift|date:"j. F Y" }} }{% endif %}
 \end{tabu}
 
-\begin{longtabu} to \linewidth{| X[2, l] | X[7, l] | X[3, l] | X[3, r] | X[24, l] |}
+\begin{longtabu} to \linewidth{| X[2, l] | X[7, l] | X[3, l] | X[3, r, $] | X[24, l] |}
 \hline
 \textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
 
