@@ -73,6 +73,7 @@ class BarTabSnapshotAdmin(AdminViews):
 			latex = render_to_string('bartab/bartab.tex', {
 				'tab_parts': tab_parts,
 				'pizza_lines': range(33),
+				'latest_shift': BarTabSnapshot.objects.first().date,
 			}, request)
 			f.write(latex)
 

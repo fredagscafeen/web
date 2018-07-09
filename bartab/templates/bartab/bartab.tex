@@ -23,7 +23,11 @@
 {% for users, active_name in tab_parts %}
 	{% if forloop.last %}\newpage{% endif %}
 
-\section*{ {{ active_name }} kunder \hfill {% now "SHORT_DATE_FORMAT" %} }
+\noindent\begin{tabu} to \linewidth{X[l] X[r]}
+	{\Large\textbf{% templatetag openbrace %}{{ active_name }} kunder}{% templatetag closebrace %}
+	{% if forloop.first %}& {\Large Genereret: {% now "j. F Y" %} } \\
+	& {\Large Opgjort til og med vagt: {{ latest_shift|date:"j. F Y" }} }{% endif %}
+\end{tabu}
 
 \begin{longtabu} to \linewidth{| X[2, l] | X[7, l] | X[3, l] | X[3, r] | X[24, l] |}
 \hline
