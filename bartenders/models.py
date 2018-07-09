@@ -2,7 +2,6 @@ from urllib.parse import urljoin
 
 import datetime
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.urls import reverse
@@ -14,6 +13,7 @@ from django.utils.crypto import get_random_string
 from enum import IntEnum
 
 from .mailman2 import Mailman
+from fredagscafeen.email import send_template_email
 
 
 EMAIL_TOKEN_LENGTH = 64
@@ -120,22 +120,25 @@ class BartenderApplication(models.Model):
         ordering = ('created', )
 
     def _send_accept_email(self):
-        barplan_url = urljoin(settings.SELF_URL, reverse('barplan'))
-        subject = 'Bartender application: %s' % self.name
-        body = 'Hello %s,\n\n' \
-                'Your application to become a bartender at Fredagscafeen has been approved.\n' \
-                'The scheduler will assign you to shifts which can be found {link},\n' \
-                'and you will be added to our mailing list.\n\n' \
-                'See you at the bar! :)\n\n' \
-                '/Bestyrelsen' % self.name
+        url = urljoin(settings.SELF_URL, reverse('barplan'))
 
-        body_text = render_to_string('email.txt', {'content': body.format(link='here: %s' % barplan_url)})
-        body_html = render_to_string('email.html', {'content': body.format(link=mark_safe('<a href="%s">here</a>' % barplan_url))})
+        return send_template_email(
+            subject=f'Bartender application: {self.name}',
+            body_template='''Hello {name},
 
-        email = EmailMultiAlternatives(subject=subject, body=body_text, from_email='best@fredagscafeen.dk',
-                                       to=[self.email], cc=['best@fredagscafeen.dk'])
-        email.attach_alternative(body_html, 'text/html')
-        email.send()
+Your application to become a bartender at Fredagscafeen has been approved.
+The scheduler will assign you to shifts which can be found {link},
+and you will be added to our mailing list.
+
+See you at the bar! :)
+
+/Bestyrelsen''',
+            text_format={'name': self.name, 'link': f'here: {url}'},
+            html_format={'name': self.name, 'link': mark_safe(f'<a href="{url}">here</a>')},
+            to=[self.email],
+            cc=['best@fredagscafeen.dk']
+        )
+
 
     def accept(self):
         b = Bartender.objects.create(name=self.name, username=self.username, email=self.email,

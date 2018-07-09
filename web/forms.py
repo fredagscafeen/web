@@ -2,13 +2,13 @@ from urllib.parse import urljoin
 
 from captcha.fields import ReCaptchaField
 from django.conf import settings
-from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse
 from django import forms
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from bartenders.models import Bartender, BartenderShift, BartenderApplication
+from fredagscafeen.email import send_template_email
 
 
 class BartenderInfoForm(forms.ModelForm):
@@ -42,17 +42,15 @@ class LoginForm(forms.Form):
 
 		url = urljoin(settings.SELF_URL, reverse('email_login', args=(bartender.username, bartender.email_token)))
 
-		subject = 'fredagscafeen.dk login'
-		body = ('{link} for at logge ind.\n\n'
-				'/script kiddie')
+		return send_template_email(
+			subject='fredagscafeen.dk login',
+			body_template='''{link} for at logge ind.
 
-		body_text = render_to_string('email.txt', {'content': body.format(link='Gå ind på %s' % url)})
-		body_html = render_to_string('email.html', {'content': body.format(link=mark_safe('<a href="{url}">Klik her</a>'.format(url=url)))})
-
-		email = EmailMultiAlternatives(subject=subject, body=body_text, from_email='best@fredagscafeen.dk',
-				to=[email_address])
-		email.attach_alternative(body_html, 'text/html')
-		return email.send()
+/snek''',
+			text_format={'link': f'Gå ind på {url}'},
+			html_format={'link': mark_safe(f'<a href="{url}">Klik her</a>')},
+			to=[email_address]
+		)
 
 
 class BartenderApplicationForm(forms.ModelForm):
@@ -67,23 +65,30 @@ class BartenderApplicationForm(forms.ModelForm):
 
 		url = urljoin(settings.SELF_URL, reverse('admin:bartenders_bartenderapplication_change', args=(pk,)))
 
-		subject = 'Bartender application: %s' % d['name']
-		body = ('This is an automated email.\n\n'
-				'{name} has applied to become a bartender:\n'
-				'{name} ({username})\n'
-				'{studentNumber} - {email}\n'
-				'{phoneNumber}\n\n'
-				+ ('Extra info:\n{info}\n\n' if d['info'] else '') +
-				'The application can be accepted or denied through {link}.\n\n'
-				'/snek').format(link='{link}', **d)
+		extra_info = ''
+		if d['info']:
+			extra_info = f'''
+Extra info:
+{d["info"]}
+'''
+		d['extra_info'] = extra_info
 
-		body_text = render_to_string('email.txt', {'content': body.format(link='the admin interface: %s' % url)})
-		body_html = render_to_string('email.html', {'content': body.format(link=mark_safe('<a href="{url}">the admin interface</a>'.format(url=url)))})
+		return send_template_email(
+			subject=f'Bartender application: {d["name"]}',
+			body_template='''This is an automated email.
 
-		email = EmailMultiAlternatives(subject=subject, body=body_text, from_email='best@fredagscafeen.dk',
-				to=['best@fredagscafeen.dk'], cc=['best@fredagscafeen.dk'])
-		email.attach_alternative(body_html, 'text/html')
-		return email.send()
+{name} has applied to become a bartender:
+{name} ({username})
+{studentNumber} - {email}
+{phoneNumber}
+{extra_info}
+The application can be accepted or denied through {link}.
+
+/snek''',
+			text_format={'link': f'the admin interfacec: {url}', **d},
+			html_format={'link': mark_safe(f'<a href="{url}">the admin interface</a>'), **d},
+			to=['best@fredagscafeen.dk']
+		)
 
 
 class SwapForm1(forms.Form):

@@ -3,6 +3,8 @@ from django.core.management import BaseCommand
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+from fredagscafeen.email import send_template_email
+
 
 class ReminderCommand(BaseCommand):
     """ Superclass that encapsulates logic related to sending reminder emails """
@@ -19,22 +21,16 @@ class ReminderCommand(BaseCommand):
 
     def send_reminder_email(self, bartenders):
         humanized_bartenders = self.humanized_bartenders(bartenders)
-        context = {'content': self.email_body(humanized_bartenders)}
 
-        body_text = render_to_string('email.txt', context)
-        body_html = render_to_string('email.html', context)
-        recipient_list = self.filter_with_warning(bartenders)
-
-        email = EmailMultiAlternatives(
-            subject=self.email_subject(humanized_bartenders),
-            body=body_text,
-            from_email='best@fredagscafeen.dk',
-            to=recipient_list,
+        send_template_email(
+			subject=self.email_subject(humanized_bartenders),
+			body_template=self.email_body(humanized_bartenders),
+			text_format={},
+			html_format={},
+			to=self.filter_with_warning(bartenders),
             cc=['best@fredagscafeen.dk'],
-            reply_to=self.email_reply_to())
-
-        email.attach_alternative(body_html, 'text/html')
-        email.send()
+            reply_to=self.email_reply_to()
+		)
 
         print(f'Reminders sent to {", ".join(f"{b.name} ({b.email})" for b in bartenders if b.email)}!')
 
@@ -62,7 +58,7 @@ class ReminderCommand(BaseCommand):
         warning = f'WARNING: Could not find e-mail for bartender {bartender}! Bartender did not get a reminder!'
         send_mail(subject=warning,
                   recipient_list=['best@fredagscafeen.dk'],
-                  from_email='datcafe@gmail.com',
+                  from_email='best@fredagscafeen.dk',
                   message=warning)
 
     def get_next_event(self):
