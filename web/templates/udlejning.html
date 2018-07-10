@@ -35,12 +35,7 @@
 		</i>
 </p>
 <p>
-		Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at sende en mail
-	til
-		<a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">
-				best@fredagscafeen.dk
-		</a>
-		.
+		Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde formularen nederst på siden.
 	Anlæg udlånes kun til
 		<b>
 				interne arrangementer
@@ -175,48 +170,12 @@
 		chips koster 20kr/pose, der betales pr. åbnet enhed.
 		</li>
 </ul>
-<p>
-		<b>
-				Indholdet af email med anmodning om udlån
-		</b>
-		:
-	Når du kontakter Best for at låne et fadølsanlæg, skal der stå følgende:
-</p>
-<ul>
-		<li>
-				Hvor bliver arrangementet afholdt
-		</li>
-        <li>
-                Hvilket anlæg der vil lånes
-        </li>
-		<li>
-				Hvornår skal anlægget afhentes/stilles op, og hvornår skal det
-		afleveres/pilles ned
-		</li>
-		<li>
-				Hvilke slags øl eller andre drikkevarer der ønskes
-		</li>
-		<li>
-				Hvor mange fustager man ønsker leveret af hver type
-		</li>
-		<li>
-				Hvem der betaler (hvem regningen skal sendes til).
-		</li>
-		<li>
-				Hvordan der betales. Vi tilbyder også at fakturere til EAN-nummer
-		(e-faktura) mod gebyr.
-				<a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">
-						Kontakt os
-				</a>
-				for at høre nærmere.
-		</li>
-		<li>
-				Kontaktinformation for den event-ansvarlige
-		</li>
-</ul>
-
-
-<form method="post" action="/udlejning/">
+<h3>
+		<span class="mw-headline" id="rentingform">
+				Ansøgninsformular
+		</span>
+</h3>
+<form method="post" action="/udlejning/#rentingform">
 	{% csrf_token %}
 	{% bootstrap_form form %}
 	{% buttons %}

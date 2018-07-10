@@ -15,16 +15,16 @@ class UdlejningCommon(models.Model):
 		('medium', 'Mellem'),
 	)
 
-	dateFrom = models.DateTimeField(verbose_name='Start dato')
-	dateTo = models.DateTimeField(blank=True, null=True, verbose_name='Slut dato')
+	dateFrom = models.DateTimeField(verbose_name='Start dato & tid', help_text='Hvornår skal anlægget afhentes/stilles op?')
+	dateTo = models.DateTimeField(blank=True, null=True, verbose_name='Slut dato & tid', help_text='Hvornår skal anlægget afleveres/pilles ned?')
 	whoReserved = models.CharField(max_length=140, verbose_name='Hvem er I?')
 	association = models.CharField(max_length=16, choices=ASSOCIATION_CHOICES, blank=True, verbose_name='Tilknytning')
-	draftBeerSystem = models.CharField(max_length=16, choices=SYSTEM_CHOICES, blank=True, verbose_name='Fadølsanlæg')
-	whoPays = models.CharField(max_length=140, verbose_name='Hvem betaler?')
-	paymentType = models.CharField(max_length=140, verbose_name='Hvordan vil I betale?')
-	where = models.TextField(max_length=140, verbose_name='Hvor skal det bruges?')
-	expectedConsummation = models.TextField(max_length=140, verbose_name='Forventet forbrug')
-	contactInfo = models.CharField(max_length=140, verbose_name='Kontaktinformation')
+	draftBeerSystem = models.CharField(max_length=16, choices=SYSTEM_CHOICES, blank=True, verbose_name='Fadølsanlæg', help_text='Hvilket anlæg vil I låne?')
+	whoPays = models.CharField(max_length=140, verbose_name='Hvem betaler?', help_text='Hvem skal regningen sendes til?')
+	paymentType = models.CharField(max_length=140, verbose_name='Betalingsform', help_text='Hvordan bliver der betalt? Vi tilbyder også at fakturere til EAN-nummer (e-faktura) mod gebyr. <a class="external text" href="mailto:best@fredagscafeen.dk">Kontakt os</a> for at høre nærmere.')
+	where = models.TextField(max_length=140, verbose_name='Lokation', help_text='Hvor bliver arrangmentet afholdt?')
+	expectedConsummation = models.TextField(max_length=140, verbose_name='Forventet forbrug', help_text='Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?')
+	contactInfo = models.CharField(max_length=140, verbose_name='Kontaktinformation', help_text='Kontaktinformation for den event-ansvarlige.')
 	comments = models.TextField(blank=True, verbose_name='Kommentarer')
 
 

@@ -113,7 +113,7 @@ class Udlejninger(CreateView):
     model = UdlejningApplication
     template_name = 'udlejning.html'
     form_class = UdlejningApplicationForm
-    success_url = '/udlejning/'
+    success_url = '/udlejning/#'  # Don't scroll to form on success
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
