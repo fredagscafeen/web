@@ -6,6 +6,7 @@ from django.urls import reverse
 from django import forms
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
+from bootstrap_datepicker_plus import DateTimePickerInput
 
 from bartenders.models import Bartender, BartenderShift, BartenderApplication
 from udlejning.models import UdlejningApplication
@@ -107,6 +108,10 @@ class UdlejningApplicationForm(forms.ModelForm):
 	class Meta:
 		model = UdlejningApplication
 		fields = '__all__'
+		widgets = {
+			'dateFrom': DateTimePickerInput(format='%Y-%m-%d %H:%M'),
+			'dateTo': DateTimePickerInput(format='%Y-%m-%d %H:%M')
+		}
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)

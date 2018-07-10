@@ -62,6 +62,7 @@ INSTALLED_APPS = (
 	'django_extensions',
 	'rest_framework.authtoken',
 	'bootstrap3',
+	'bootstrap_datepicker_plus',
 	'captcha',
 	'rest_framework',
 	'corsheaders',
