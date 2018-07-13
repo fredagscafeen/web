@@ -21,7 +21,7 @@ class UdlejningAdmin(admin.ModelAdmin):
 
 
 class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
-    list_display = ('dateFrom', 'whoReserved', 'draftBeerSystem', 'association')
+    list_display = ('dateFrom', 'whoReserved', 'draftBeerSystem')
 
     change_actions = ('accept', 'deny')
 
