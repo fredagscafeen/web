@@ -14,10 +14,9 @@ class UdlejningCommon(models.Model):
 	dateFrom = models.DateTimeField(verbose_name='Start dato & tid', help_text='Hvornår skal anlægget afhentes/stilles op?')
 	dateTo = models.DateTimeField(blank=True, null=True, verbose_name='Slut dato & tid', help_text='Hvornår skal anlægget afleveres/pilles ned?')
 	whoReserved = models.CharField(max_length=140, verbose_name='Hvem er I?')
-	contactInfo = models.CharField(max_length=140, verbose_name='Kontaktinformation', help_text='Kontaktinformation for den event-ansvarlige.')
 
-	'''Split op i email og telefonnummer'''
-
+	contactEmail = models.EmailField(verbose_name='Email til kontaktperson')
+	contactPhone = models.IntegerField(verbose_name='Telefonnummer til kontaktperson', blank=True, null=True)
 
 	draftBeerSystem = models.CharField(max_length=16, choices=SYSTEM_CHOICES, blank=True, verbose_name='Fadølsanlæg', help_text='Hvilket anlæg vil I låne?')
 	whoPays = models.CharField(max_length=140, verbose_name='Hvem betaler?', help_text='Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller organisation)')
