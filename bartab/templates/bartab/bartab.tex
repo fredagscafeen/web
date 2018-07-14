@@ -4,6 +4,7 @@
 \usepackage[margin=1cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
+\usepackage[table]{xcolor}
 \usepackage{longtable}
 \usepackage{tabu}
 \usepackage[breakall,fit]{truncate}
@@ -31,6 +32,7 @@
 \end{tabu}
 
 \begin{longtabu} to \linewidth{| X[2, l] | X[7, l] | X[3, l] | X[3, r, $] | X[24, l] |}
+\taburowcolors {white .. gray!50}
 \hline
 \textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
 \endhead
