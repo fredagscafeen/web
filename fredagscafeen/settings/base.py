@@ -43,6 +43,12 @@ for k, _ in SECRET_ADMIN_KEYS:
 	else:
 		print('WARNING: Missing secret key in env:', k)
 
+
+BOOTSTRAP3 = {
+	'success_css_class': '',
+}
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # ALLOWED_HOSTS = ['*']

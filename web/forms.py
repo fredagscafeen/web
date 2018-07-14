@@ -17,12 +17,15 @@ class BartenderInfoForm(forms.ModelForm):
 	class Meta:
 		model = Bartender
 		fields = ('name', 'username', 'email', 'studentNumber', 'phoneNumber', 'tshirt_size')
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+
+		self.fields['username'].disabled = True
+
 		# email isn't currently editable as we need to handle
 		# removing the old and possibly adding the new to the mailing list
-		widgets = {
-			'username': forms.TextInput(attrs={'readonly': True}),
-			'email': forms.EmailInput(attrs={'readonly': True}),
-		}
+		self.fields['email'].disabled = True
 
 
 class LoginForm(forms.Form):
