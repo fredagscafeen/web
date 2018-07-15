@@ -1,18 +1,13 @@
 import datetime
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
-from bartenders.models import Bartender, BartenderShift, BartenderShiftPeriod, next_bartender_shift_start
+from bartenders.models import Bartender, BartenderShift, BartenderShiftPeriod, next_bartender_shift_start, BartenderUnavailableDate
 import random
 from itertools import count
 import copy
 from collections import defaultdict
 import sys
 
-
-# TODO: Create web interface for entering these:
-EXCLUSIONS = '''
-*** REDACTED ***
-'''
 
 class Command(BaseCommand):
 	help = 'Generate normal barshifts'
@@ -116,25 +111,25 @@ class Command(BaseCommand):
 		available_shifts = [[set(range(total_shifts)) for _ in all_bartenders[i]]
 		                     for i in range(2)]
 
-		current_bartender = None
-		for l in EXCLUSIONS.splitlines():
-			if l == '':
-				current_bartender = None
-			else:
-				if current_bartender == None:
-					current_bartender = Bartender.objects.get(email=l)
-				else:
-					year = datetime.datetime.now().year
-					date = datetime.datetime.strptime(f'{year} {l}', '%Y %d/%m').date()
-					shift = shift_indices.get(date)
-					if shift == None:
-						if shift_starts[0].date() <= date <= shift_starts[-1].date():
-							print(f'WARNING: {date} is between first and last shift, but is not a friday')
-						continue
+		# Could be filtered
+		unavailable_dates = BartenderUnavailableDate.objects.all()
 
-					index = all_bartenders[current_bartender.isBoardMember].index(current_bartender)
-					assert index != -1
-					available_shifts[current_bartender.isBoardMember][index].remove(shift)
+		for d in unavailable_dates:
+			bartender = d.bartender
+
+			if not bartender.isActiveBartender:
+				continue
+
+			shift = shift_indices.get(d.date)
+			if shift == None:
+				if shift_starts[0].date() <= d.date <= shift_starts[-1].date():
+					print(f'WARNING: {d.date} is between first and last shift, but is not a friday')
+
+				continue
+
+			index = all_bartenders[bartender.isBoardMember].index(bartender)
+			available_shifts[bartender.isBoardMember][index].remove(shift)
+
 
 		shifts = []
 		for board_member, bartenders in enumerate(all_bartenders):
