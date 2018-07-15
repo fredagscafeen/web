@@ -133,13 +133,14 @@ class UdlejningApplicationForm(forms.ModelForm):
 
 {whoReserved} har ansøgt om at låne et fadølsanlæg:
 Dato: {dateFrom} til {dateTo}
-Tilknytning: {association}
+Kontakt email: {contactEmail}
+Kontakt telefonnummer: {contactPhone}
 Fadølsanlæg: {draftBeerSystem}
 Betaler: {whoPays}
 Betalingsform: {paymentType}
+EAN-nummer: {EANnumber}
 Lokation: {where}
 Forventet forbrug: {expectedConsummation}
-Kontaktinformation: {contactInfo}
 Kommentarer:
 {comments}
 
