@@ -117,7 +117,7 @@ class Udlejninger(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['udlejninger'] = Udlejning.objects.filter(paid=False, dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
+        context['udlejninger'] = Udlejning.objects.filter(dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
         return context
 
     def form_valid(self, form):

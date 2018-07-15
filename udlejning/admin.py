@@ -9,7 +9,7 @@ from django_object_actions import DjangoObjectActions
 # Remember to cut down to 2 classes
 class UdlejningAdmin(admin.ModelAdmin):
 	ordering = ('-dateFrom',)
-	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', 'paid')
+	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', 'status')
 	filter_horizontal = ('bartendersInCharge', )
 
 	def get_queryset(self, request):

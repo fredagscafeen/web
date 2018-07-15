@@ -41,11 +41,17 @@ class Udlejning(UdlejningCommon):
 		('external', 'Ekstern'),
 	)
 
+	STATUS_CHOICES = (
+		('notsent', 'Regning ikke sendt'),
+		('sent', 'Regning sendt'),
+		('paid', 'Regning betalt'),
+	)
+
 	association = models.CharField(max_length=16, choices=ASSOCIATION_CHOICES, blank=True, verbose_name='Tilknytning')
 	actualConsummation = models.TextField(max_length=140, blank=True)
 	bartendersInCharge = models.ManyToManyField(Bartender, blank=True)
 	billSendTo = models.CharField(max_length=140)
-	paid = models.BooleanField(default=False)
+	status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='notsent')
 
 	class Meta:
 		ordering = ('dateFrom',)
