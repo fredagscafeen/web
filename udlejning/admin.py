@@ -11,6 +11,7 @@ class UdlejningAdmin(admin.ModelAdmin):
 	ordering = ('-dateFrom',)
 	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', 'status')
 	filter_horizontal = ('bartendersInCharge', )
+	list_filter = ('status', 'association', 'draftBeerSystem')
 
 	def get_queryset(self, request):
 		qs = super().get_queryset(request)
