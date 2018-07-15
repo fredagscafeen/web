@@ -120,7 +120,7 @@ class UdlejningApplicationForm(forms.ModelForm):
 		super().__init__(*args, **kwargs)
 
 		for name in self.fields:
-			self.fields[name].required = name != 'comments'
+			self.fields[name].required = name not in ['EANnumber', 'comments']
 
 	def send_email(self, pk):
 		d = self.cleaned_data
