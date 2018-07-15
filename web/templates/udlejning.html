@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% load bootstrap3 %}
+
+{% block extrahead %}
+{{ form.media }}
+{% endblock %}
+
 {% block content %}
 <h2>
 		Reservation af fadølsanlæg
@@ -27,8 +33,7 @@
 		<i>Disse regler er under revision, og der kan opstå fejl og mangler...</i>
 </p>
 <p>
-		Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at sende en mail
-	til <a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">best@fredagscafeen.dk</a>.
+		Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde ansøgninsformularen nederst på denne side.
 	Anlæg udlånes kun til <b>interne arrangementer</b> eller til <b>arrangementer med tilknytning til baren</b>.
 </p>
 <p>
@@ -124,39 +129,16 @@
 		chips koster 20kr/pose, der betales pr. åbnet enhed.
 		</li>
 </ul>
-<p>
-		<b>Indholdet af email med anmodning om udlån</b>: Når du kontakter Best for at låne et fadølsanlæg, skal der stå følgende:
-</p>
-<ul>
-		<li>
-				Hvor bliver arrangementet afholdt
-		</li>
-        <li>
-                Hvilket anlæg der vil lånes
-        </li>
-		<li>
-				Hvornår skal anlægget afhentes/stilles op, og hvornår skal det
-		afleveres/pilles ned
-		</li>
-		<li>
-				Hvilke slags øl eller andre drikkevarer der ønskes
-		</li>
-		<li>
-				Hvor mange fustager man ønsker leveret af hver type
-		</li>
-		<li>
-				Hvem der betaler (hvem regningen skal sendes til).
-		</li>
-		<li>
-				Hvordan der betales. Vi tilbyder også at fakturere til EAN-nummer
-		(e-faktura) mod gebyr.
-				<a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">
-						Kontakt os
-				</a>
-				for at høre nærmere.
-		</li>
-		<li>
-				Kontaktinformation for den event-ansvarlige
-		</li>
-</ul>
+<h3>
+		<span class="mw-headline" id="rentingform">
+				Ansøgninsformular
+		</span>
+</h3>
+<form method="post" action="/udlejning/#rentingform">
+	{% csrf_token %}
+	{% bootstrap_form form %}
+	{% buttons %}
+		{% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+	{% endbuttons %}
+</form>
 {% endblock %}

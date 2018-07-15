@@ -26,6 +26,7 @@ requests-html = "*"
 django-logentry-admin = "*"
 django-admin-views = "*"
 django-cors-headers = "*"
+django-bootstrap-datepicker-plus = "*"
 
 [dev-packages]
 
