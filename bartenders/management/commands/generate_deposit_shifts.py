@@ -2,16 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from bartenders.models import Bartender, BoardMember, BoardMemberDepositShift, BoardMemberDepositShiftPeriod, next_deposit_shift_start
 import random
 from itertools import zip_longest, chain
-
-
-# masv is missing as he has been assigned
-NEW_USERNAMES = '''
-baaden
-Old
-Warumdk
-drewsen
-alberte
-'''
+import datetime
 
 
 class Command(BaseCommand):
@@ -21,15 +12,7 @@ class Command(BaseCommand):
 	WEEKS = 4
 
 	def handle(self, *args, **options):
-		# TODO: This needs to be updated at next generation
-		new_usernames = NEW_USERNAMES.strip().splitlines()
-
-		board_members = list(Bartender.objects.filter(boardmember__isnull=False).exclude(username='masv'))
-		new_board_members = list(Bartender.objects.filter(username__in=new_usernames))
-		old_board_members = [b for b in board_members if b not in new_board_members]
-
-		print(f'New board members: {len(new_board_members)}')
-		print(f'Old board members: {len(old_board_members)}')
+		board_members = set(Bartender.objects.filter(boardmember__isnull=False))
 
 		first_shift = None
 		for shift in reversed(BoardMemberDepositShift.objects.all()):
@@ -40,6 +23,22 @@ class Command(BaseCommand):
 
 
 		assert first_shift != None
+		assert len(first_shift.responsibles.all()) == 1
+
+		last_responsibles = BoardMemberDepositShift.objects.get(start_date=first_shift.start_date - datetime.timedelta(weeks=1)).responsibles.all()
+
+		last_responsible = first_shift.responsibles.first()
+		second_last_responsible = list(set(last_responsibles) - {last_responsible})[0]
+
+		# Shuffle board members, but ensure that no one gets two shifts in a row
+		shuffled_board_members = list(board_members - set(last_responsibles))
+		random.shuffle(shuffled_board_members)
+
+		print(second_last_responsible)
+		print(last_responsible)
+
+		shuffled_board_members.insert(random.randint(1, len(shuffled_board_members)), second_last_responsible)
+		shuffled_board_members.insert(random.randint(2, len(shuffled_board_members)), last_responsible)
 
 		responsibles = []
 		shift_starts = []
@@ -54,16 +53,17 @@ class Command(BaseCommand):
 			responsibles.append([])
 			shift_starts.append(next_deposit_shift_start(shift_starts[-1]))
 
+		for s, _ in enumerate(shift_starts):
+			first_index = (s - unfilled_existing) // (self.WEEKS // 2)
+			if first_index >= 0:
+				responsibles[s].append(shuffled_board_members[first_index])
 
-		random.shuffle(new_board_members)
-		random.shuffle(old_board_members)
-
-		for s in range(len(shift_starts)):
-			responsibles[s].append(new_board_members[s // self.WEEKS])
-
-			if unfilled_existing <= s < len(shift_starts) - unfilled_existing:
-				responsibles[s].append(old_board_members[(s - unfilled_existing) // self.WEEKS])
+			if first_index + 1 < len(board_members):
+				responsibles[s].append(shuffled_board_members[first_index + 1])
 				assert len(responsibles[s]) == self.RESPONSIBLES
+			else:
+				assert len(responsibles[s]) == self.RESPONSIBLES // 2
+
 
 			print(f'{shift_starts[s]}:')
 			for bartender in responsibles[s]:
