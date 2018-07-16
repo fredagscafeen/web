@@ -87,6 +87,7 @@ footer {
 }
 #unavailable_dates_table td {
     padding: 0 !important;
+    user-select: none;
 }
 #unavailable_dates_table label {
     display: block !important;
