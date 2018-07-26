@@ -28,7 +28,7 @@ class UdlejningCommon(models.Model):
 	whoPays = models.CharField(max_length=140, verbose_name='Hvem betaler?', help_text='Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller organisation)')
 	paymentType = models.CharField(max_length=140, choices=PAYMENT_CHOICES, verbose_name='Betalingsform', help_text='Hvordan bliver der betalt?')
 
-	EANnumber = models.IntegerField(verbose_name='EAN-nummer', blank=True, null=True, help_text='Skal kun angives, hvis der skal faktureres til et EAN-nummer')
+	EANnumber = models.BigIntegerField(verbose_name='EAN-nummer', blank=True, null=True, help_text='Skal kun angives, hvis der skal faktureres til et EAN-nummer')
 
 	where = models.TextField(max_length=140, verbose_name='Lokation', help_text='Hvor bliver arrangmentet afholdt?')
 	expectedConsummation = models.TextField(max_length=140, verbose_name='Forventet forbrug', help_text='Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?')
