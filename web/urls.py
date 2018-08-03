@@ -23,5 +23,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('udlejning/', Udlejninger.as_view()),
     path('udlejningGrill/', UdlejningerGrill.as_view()),
-    path('guides/', Guides.as_view()),
+    path('guides/', Guides.as_view(), name='guides'),
 ]

@@ -124,7 +124,20 @@ class BartenderApplication(BartenderCommon):
         ordering = ('created', )
 
     def _send_accept_email(self):
-        url = urljoin(settings.SELF_URL, reverse('barplan'))
+        URLS = [
+            'barplan',
+            'guides',
+            'profile',
+        ]
+
+        text_format = {'name': self.name}
+        html_format = {'name': self.name}
+
+        for url_name in URLS:
+            url = urljoin(settings.SELF_URL, reverse(url_name))
+            link_name = f'{url_name}_link'
+            text_format[link_name] = f'her: {url}'
+            html_format[link_name] = mark_safe(f'<a href="{url}">her</a>')
 
         return send_template_email(
             subject=f'Bartendertilmelding: {self.name}',
@@ -132,14 +145,17 @@ class BartenderApplication(BartenderCommon):
 
 Din ansøgning om at blive bartender ved Fredagscaféen er blevet accepteret.
 Scheduleren vil tildele dig barvagter, når den nye barplan bliver lavet.
-Du kan se barplanen {link}.
+Du kan se barplanen {barplan_link} og du kan markere, hvilke dage du ikke
+kan stå i bar {profile_link}.
 Du er blevet tilføjet til vores mailing liste (alle@fredagscafeen.dk).
+
+Husk at læse bartenderguides'ne, som kan ses {guides_link}.
 
 Ses i baren! :)
 
 /Bestyrelsen''',
-            text_format={'name': self.name, 'link': f'her: {url}'},
-            html_format={'name': self.name, 'link': mark_safe(f'<a href="{url}">her</a>')},
+            text_format=text_format,
+            html_format=html_format,
             to=[self.email],
             cc=['best@fredagscafeen.dk']
         )
