@@ -21,7 +21,7 @@
 	<tbody>
     {% for shift in bartendershifts %}
 		<tr {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}>
-            <td class="col-md-1">{{ shift.date | date:"d M" }}</td>
+			<td class="col-md-2">{{ shift.display_str }}</td>
             <td class="col-md-3">{{ shift.responsible.name }}</td>
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}

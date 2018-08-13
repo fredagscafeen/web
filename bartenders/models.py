@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.urls import reverse
 from django.db import models
-from django.template.loader import render_to_string
+from django.template import Template, Context
 from django.utils.safestring import mark_safe
 from django.utils import timezone
 from django.utils.crypto import get_random_string
@@ -15,6 +15,18 @@ from enum import IntEnum
 from .mailman2 import Mailman
 from fredagscafeen.email import send_template_email
 
+
+def template_render(template_str, context):
+    t = Template(template_str)
+    c = Context(context)
+    return t.render(c)
+
+def date_format(dt, format):
+    '''
+    django.utils.formats.date_format doesn't seem to work with l10n,
+    even when using use_l10n=True.
+    '''
+    return template_render('{{ dt | date:format }}', {'dt': dt, 'format': format})
 
 EMAIL_TOKEN_LENGTH = 64
 def new_email_token():
@@ -271,6 +283,18 @@ class BartenderShift(models.Model):
 
         return self.objects.exclude(~Q(responsible=bartender),
                                     ~Q(other_bartenders=bartender))
+
+    def has_multiple_shifts(self):
+        start = timezone.get_default_timezone().localize(datetime.datetime.combine(self.date, datetime.time()))
+        end = start + datetime.timedelta(days=1)
+        return BartenderShift.objects.filter(start_datetime__gte=start, start_datetime__lte=end).count() > 1
+
+    def display_str(self):
+        s = date_format(self.date, 'd M')
+        if self.has_multiple_shifts():
+            s += f' ({date_format(self.start_datetime, "H")} - {date_format(self.end_datetime, "H")})'
+
+        return s
 
     def is_with_bartender(self, bartender):
         return bartender in self.all_bartenders()

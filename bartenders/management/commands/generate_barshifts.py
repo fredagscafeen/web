@@ -1,4 +1,5 @@
 import datetime
+from django.utils import timezone
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from bartenders.models import Bartender, BartenderShift, BartenderShiftPeriod, next_bartender_shift_start, BartenderUnavailableDate
@@ -7,6 +8,14 @@ from itertools import count
 import copy
 from collections import defaultdict
 import sys
+
+
+EXTRA_SHIFTS = [
+	# Rusuge
+	(datetime.datetime(2018, 8, 24, 21), datetime.datetime(2018, 8, 25, 2)),
+]
+
+EXTRA_SHIFTS = [tuple(map(timezone.get_default_timezone().localize, period)) for period in EXTRA_SHIFTS]
 
 
 class Command(BaseCommand):
@@ -99,10 +108,14 @@ class Command(BaseCommand):
 		last_shift = BartenderShift.objects.last()
 
 		shift_starts = [next_bartender_shift_start(last_shift.start_datetime.date())]
-		for _ in range(total_shifts - 1):
+		for _ in range(total_shifts - 1 - len(EXTRA_SHIFTS)):
 			shift_starts.append(next_bartender_shift_start(shift_starts[-1].date()))
 
-		shift_indices = {dt.date(): i for i, dt in enumerate(shift_starts)}
+		shift_periods = sorted([(start, None) for start in shift_starts] + [s for s in EXTRA_SHIFTS])
+
+		shift_indices = defaultdict(list)
+		for i, (start, end) in enumerate(shift_periods):
+			shift_indices[start.date()].append(i)
 
 		print(f'Board members: {len(board_members)}')
 		print(f'Other active bartenders: {len(normal_bartenders)}')
@@ -120,15 +133,16 @@ class Command(BaseCommand):
 			if not bartender.isActiveBartender:
 				continue
 
-			shift = shift_indices.get(d.date)
-			if shift == None:
-				if shift_starts[0].date() <= d.date <= shift_starts[-1].date():
+			shifts = shift_indices.get(d.date)
+			if shifts == None:
+				if shift_periods[0][0].date() <= d.date <= shift_periods[-1][0].date():
 					print(f'WARNING: {d.date} is between first and last shift, but is not a friday')
 
 				continue
 
 			index = all_bartenders[bartender.isBoardMember].index(bartender)
-			available_shifts[bartender.isBoardMember][index].remove(shift)
+			for shift in shifts:
+				available_shifts[bartender.isBoardMember][index].remove(shift)
 
 
 		shifts = []
@@ -139,8 +153,8 @@ class Command(BaseCommand):
 				options['max_tries']))
 
 		shifts_for_bartender = defaultdict(int)
-		for s, dt in enumerate(shift_starts):
-			print(f'{dt}:')
+		for s, (start, end) in enumerate(shift_periods):
+			print(f'{start}:')
 			for board_member, bartenders in reversed(list(enumerate(all_bartenders))):
 				for b in shifts[board_member][s]:
 					shifts_for_bartender[(board_member, b)] += 1
@@ -168,11 +182,12 @@ class Command(BaseCommand):
 
 		period = BartenderShiftPeriod.objects.create()
 
-		for s, dt in enumerate(shift_starts):
+		for s, (start, end) in enumerate(shift_periods):
 			responsible = all_bartenders[True][shifts[True][s][0]]
 			other_bartenders = [all_bartenders[False][b] for b in shifts[False][s]]
 
-			shift = BartenderShift.objects.create(start_datetime=dt,
+			shift = BartenderShift.objects.create(start_datetime=start,
+					                              end_datetime=end,
 												  responsible=responsible,
 			                                      period=period)
 
