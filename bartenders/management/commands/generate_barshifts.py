@@ -10,6 +10,7 @@ from collections import defaultdict
 import sys
 
 
+# This needs to be changed before generating shifts
 EXTRA_SHIFTS = [
 	# Rusuge
 	(datetime.datetime(2018, 8, 24, 21), datetime.datetime(2018, 8, 25, 2)),
@@ -64,19 +65,18 @@ class Command(BaseCommand):
 
 		return shifts
 
-	def get_shifts_score(self, bartenders, shifts):
+	def get_shifts_score(self, bartenders, shifts, last_shifts):
 		min_distance = float('inf')
-		last_shift = [None for _ in bartenders]
 		for s, bs in enumerate(shifts):
 			for b in bs:
-				if last_shift[b] != None:
-					min_distance = min(min_distance, s - last_shift[b])
+				if last_shifts[b] != None:
+					min_distance = min(min_distance, s - last_shifts[b])
 
-				last_shift[b] = s
+				last_shifts[b] = s
 
 		return min_distance
 
-	def get_random_solution(self, total_shifts, bartenders, bartenders_needed, available_shifts, max_tries):
+	def get_random_solution(self, total_shifts, bartenders, bartenders_needed, available_shifts, max_tries, last_shifts):
 		best = (-float('inf'), None)
 
 		sorted_bartenders = sorted(range(len(bartenders)), key=lambda x: len(available_shifts[x]))
@@ -89,7 +89,7 @@ class Command(BaseCommand):
 				print(f'\r{i + 1} / {max_tries}', end='')
 				sys.stdout.flush()
 				i += 1
-				best = max(best, (self.get_shifts_score(bartenders, result), result))
+				best = max(best, (self.get_shifts_score(bartenders, result, last_shifts), result))
 
 		print()
 		print(f'Min distance: {best[0]}')
@@ -121,6 +121,16 @@ class Command(BaseCommand):
 		print(f'Other active bartenders: {len(normal_bartenders)}')
 		print(f'Generating {total_shifts} shifts from {shift_starts[0].date()} to {shift_starts[-1].date()}')
 
+		last_shifts = []
+		for bs in all_bartenders:
+			l = []
+			for b in bs:
+				s = b.last_bartender_shift
+				if s != None:
+					s = (s.date - last_shift.date + datetime.timedelta(weeks=1)).days // 7 - 2
+				l.append(s)
+			last_shifts.append(l)
+
 		available_shifts = [[set(range(total_shifts)) for _ in all_bartenders[i]]
 		                     for i in range(2)]
 
@@ -146,11 +156,11 @@ class Command(BaseCommand):
 
 
 		shifts = []
-		for board_member, bartenders in enumerate(all_bartenders):
+		for board_member, (bartenders, ls) in enumerate(zip(all_bartenders, last_shifts)):
 			bartenders_needed = 1 if board_member else self.BARTENDERS_PER_SHIFT - 1
 			shifts.append(self.get_random_solution(total_shifts,
 				bartenders, bartenders_needed, available_shifts[board_member],
-				options['max_tries']))
+				options['max_tries'], ls))
 
 		shifts_for_bartender = defaultdict(int)
 		for s, (start, end) in enumerate(shift_periods):

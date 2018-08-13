@@ -86,6 +86,10 @@ class Bartender(BartenderCommon):
         return BartenderShift.with_bartender(self).first()
 
     @property
+    def last_bartender_shift(self):
+        return BartenderShift.with_bartender(self).last()
+
+    @property
     def first_deposit_shift(self):
         return BoardMemberDepositShift.with_bartender(self).first()
 
