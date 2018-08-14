@@ -4,7 +4,6 @@ from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 from bartenders.models import Bartender, BartenderShift, BartenderShiftPeriod, next_bartender_shift_start, BartenderUnavailableDate
 import random
-from itertools import count
 import copy
 from collections import defaultdict
 import sys
@@ -66,18 +65,24 @@ class Command(BaseCommand):
 		return shifts
 
 	def get_shifts_score(self, bartenders, shifts, last_shifts):
+		count = 0
 		min_distance = float('inf')
 		for s, bs in enumerate(shifts):
 			for b in bs:
 				if last_shifts[b] != None:
-					min_distance = min(min_distance, s - last_shifts[b])
+					distance = s - last_shifts[b]
+					if distance < min_distance:
+						min_distance = distance
+						count = 1
+					elif distance == min_distance:
+						count += 1
 
 				last_shifts[b] = s
 
-		return min_distance
+		return (min_distance, count)
 
 	def get_random_solution(self, total_shifts, bartenders, bartenders_needed, available_shifts, max_tries, last_shifts):
-		best = (-float('inf'), None)
+		best = ((-float('inf'), 0), None)
 
 		sorted_bartenders = sorted(range(len(bartenders)), key=lambda x: len(available_shifts[x]))
 		i = 0
