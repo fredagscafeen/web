@@ -132,7 +132,7 @@ class Command(BaseCommand):
 			for b in bs:
 				s = b.last_bartender_shift
 				if s != None:
-					s = (s.date - last_shift.date + datetime.timedelta(weeks=1)).days // 7 - 2
+					s = (s.date - last_shift.date + datetime.timedelta(weeks=1)).days // 7 - 1
 				l.append(s)
 			last_shifts.append(l)
 
