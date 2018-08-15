@@ -15,10 +15,10 @@ class Command(ReminderCommand):
     def get_bartenders_from_event(self, event):
         return event.responsibles.all()
 
-    def email_subject(self, humanized_bartenders):
+    def email_subject(self, humanized_bartenders, event):
         return f'Hej {humanized_bartenders}. Du skal tage dig af panten i denne uge!'
 
-    def email_body(self, humanized_bartenders):
+    def email_body(self, humanized_bartenders, event):
         return f'''Hej {humanized_bartenders}.
 
 Du skal tage dig af panten i denne uge!

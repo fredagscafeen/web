@@ -18,14 +18,14 @@ class ReminderCommand(BaseCommand):
 
         for event in events:
             bartenders = self.get_bartenders_from_event(event)
-            self.send_reminder_email(bartenders)
+            self.send_reminder_email(bartenders, event)
 
-    def send_reminder_email(self, bartenders):
+    def send_reminder_email(self, bartenders, event):
         humanized_bartenders = self.humanized_bartenders(bartenders)
 
         send_template_email(
-			subject=self.email_subject(humanized_bartenders),
-			body_template=self.email_body(humanized_bartenders),
+			subject=self.email_subject(humanized_bartenders, event),
+			body_template=self.email_body(humanized_bartenders, event),
 			text_format={},
 			html_format={},
 			to=self.filter_with_warning(bartenders),
@@ -68,10 +68,10 @@ class ReminderCommand(BaseCommand):
     def get_bartenders_from_event(self, event):
         raise NotImplementedError
 
-    def email_subject(self, humanized_bartenders):
+    def email_subject(self, humanized_bartenders, event):
         raise NotImplementedError
 
-    def email_body(self, humanized_bartenders):
+    def email_body(self, humanized_bartenders, event):
         raise NotImplementedError
 
     def email_reply_to(self):

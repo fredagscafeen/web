@@ -1,7 +1,7 @@
 import datetime
 from django.utils import timezone
 
-from bartenders.models import BartenderShift
+from bartenders.models import BartenderShift, date_format
 from reminder.management.commands._private import ReminderCommand
 
 
@@ -15,17 +15,20 @@ class Command(ReminderCommand):
     def get_bartenders_from_event(self, event):
         return event.all_bartenders()
 
-    def email_subject(self, humanized_bartenders):
+    def email_subject(self, humanized_bartenders, event):
         return 'Du har en barvagt på fredag!'
 
-    def email_body(self, humanized_bartenders):
+    def email_body(self, humanized_bartenders, event):
+        start = event.start_datetime - datetime.timedelta(minutes=30)
+        start_time = date_format(start, 'H:i')
+
         return f'''Hej {humanized_bartenders}.
 
 Den kommende fredag er det DIN tur til at stå i Fredagscaféen.
 Dette er en automatisk email sendt til jer og bestyrelsen.
 Emailen er hovedsageligt sendt så du kan finde en anden at bytte vagt med,
 hvis du ikke har mulighed for selv at tage den.
-Husk at din vagt starter kl. 14:30.
+Husk at din vagt starter kl. {start_time}.
 
 Ses i baren!
 
