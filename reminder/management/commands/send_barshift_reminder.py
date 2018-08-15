@@ -8,9 +8,9 @@ from reminder.management.commands._private import ReminderCommand
 class Command(ReminderCommand):
     help = 'Send barshift reminder emails to bartenders for the upcoming friday'
 
-    def get_next_event(self):
+    def get_next_events(self):
         return BartenderShift.objects.filter(end_datetime__gte=timezone.now(),
-                                             end_datetime__lte=timezone.now() + datetime.timedelta(7)).first()
+                                             end_datetime__lte=timezone.now() + datetime.timedelta(7))
 
     def get_bartenders_from_event(self, event):
         return event.all_bartenders()

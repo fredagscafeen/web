@@ -10,14 +10,15 @@ class ReminderCommand(BaseCommand):
     """ Superclass that encapsulates logic related to sending reminder emails """
 
     def handle(self, *args, **options):
-        event = self.get_next_event()
+        events = self.get_next_events()
 
-        if not event:
+        if not events:
             print('No upcoming events found.')
             return
 
-        bartenders = self.get_bartenders_from_event(event)
-        self.send_reminder_email(bartenders)
+        for event in events:
+            bartenders = self.get_bartenders_from_event(event)
+            self.send_reminder_email(bartenders)
 
     def send_reminder_email(self, bartenders):
         humanized_bartenders = self.humanized_bartenders(bartenders)
@@ -61,7 +62,7 @@ class ReminderCommand(BaseCommand):
                   from_email='best@fredagscafeen.dk',
                   message=warning)
 
-    def get_next_event(self):
+    def get_next_events(self):
         raise NotImplementedError
 
     def get_bartenders_from_event(self, event):

@@ -8,9 +8,9 @@ from reminder.management.commands._private import ReminderCommand
 class Command(ReminderCommand):
     help = 'Sends email reminders to board members in charge of pant this week'
 
-    def get_next_event(self):
+    def get_next_events(self):
         return BoardMemberDepositShift.objects.filter(end_date__gte=timezone.now(),
-                                                      end_date__lte=timezone.now() + datetime.timedelta(7)).first()
+                                                      end_date__lte=timezone.now() + datetime.timedelta(7))
 
     def get_bartenders_from_event(self, event):
         return event.responsibles.all()
