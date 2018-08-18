@@ -24,11 +24,11 @@ class Command(ReminderCommand):
 
         return f'''Hej {humanized_bartenders}.
 
-Den kommende fredag er det DIN tur til at stå i Fredagscaféen.
+Den kommende fredag er det JERES tur til at stå i Fredagscaféen.
 Dette er en automatisk email sendt til jer og bestyrelsen.
-Emailen er hovedsageligt sendt så du kan finde en anden at bytte vagt med,
-hvis du ikke har mulighed for selv at tage den.
-Husk at din vagt starter kl. {start_time}.
+Emailen er hovedsageligt sendt så I kan finde en anden at bytte vagt med,
+hvis en af jer ikke har mulighed for selv at tage den.
+Husk at jeres vagt starter kl. {start_time}.
 
 Ses i baren!
 
