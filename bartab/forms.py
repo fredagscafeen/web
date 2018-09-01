@@ -11,6 +11,9 @@ SumValue = namedtuple('SumValue', ['string', 'value'])
 class SumField(forms.CharField):
 	@staticmethod
 	def _parse_sum(s):
+		if s.strip() == '':
+			return SumValue('', 0)
+
 		s = s.replace(',', '.')
 		value = 0
 		for d in map(Decimal, s.split('+')):
@@ -22,8 +25,7 @@ class SumField(forms.CharField):
 
 	def clean(self, value):
 		try:
-			self._parse_sum(value)
-			return value
+			return self._parse_sum(value)
 		except (ValueError, InvalidOperation):
 			raise ValidationError('Invalid sum')
 

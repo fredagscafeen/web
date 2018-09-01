@@ -12,7 +12,7 @@ from .forms import SumValue, SumField as SumFormField
 
 class SumField(models.TextField):
 	def from_db_value(self, value, expression, connection):
-		if value == '' or value == None:
+		if value == None:
 			return None
 		return SumFormField._parse_sum(value)
 
