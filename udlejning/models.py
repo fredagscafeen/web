@@ -34,6 +34,9 @@ class UdlejningCommon(models.Model):
 	expectedConsummation = models.TextField(max_length=140, verbose_name='Forventet forbrug', help_text='Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?')
 	comments = models.TextField(blank=True, verbose_name='Kommentarer')
 
+	def __str__(self):
+		return f'{self.dateFrom} {self.whoReserved}'
+
 
 class Udlejning(UdlejningCommon):
 	ASSOCIATION_CHOICES = (

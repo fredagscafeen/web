@@ -15,6 +15,21 @@ class UdlejningAdmin(admin.ModelAdmin):
 	filter_horizontal = ('bartendersInCharge', )
 	list_filter = ('status', 'association', 'draftBeerSystem')
 
+	fieldsets = (
+		(None, {
+			'fields': (('dateFrom', 'dateTo', 'where'),)
+		}),
+		('Lejer', {
+			'fields': (('whoReserved', 'contactEmail', 'contactPhone'),)
+		}),
+		('Betaling', {
+			'fields': (('whoPays', 'association'), ('paymentType', 'billSendTo', 'EANnumber'), ('expectedConsummation', 'actualConsummation'))
+		}),
+		('Internt', {
+			'fields': (('draftBeerSystem', 'status'), 'bartendersInCharge', 'comments')
+		})
+	)
+
 	def get_queryset(self, request):
 		qs = super().get_queryset(request)
 		return qs.prefetch_related('bartendersInCharge')
