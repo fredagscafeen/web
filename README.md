@@ -17,7 +17,7 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
 ## Deploy changes
 
-1. Add dokku remote: `git remote add dokku root@fredagscafeen.dk:/home/dokku/fredagscafeen.dk`
+1. Add dokku remote: `git remote add dokku dokku@fredagscafeen.dk:/home/dokku/fredagscafeen.dk`
 2. `git push dokku master`
 
 ## Setup admin user on server
