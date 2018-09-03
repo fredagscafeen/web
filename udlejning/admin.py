@@ -1,15 +1,17 @@
-from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
 from django.contrib import admin
-from django.urls import reverse
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.http import HttpResponseRedirect
-
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 from django_object_actions import DjangoObjectActions
+
+from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
 
 
 # Remember to cut down to 2 classes
 class UdlejningAdmin(admin.ModelAdmin):
 	ordering = ('-dateFrom',)
-	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', 'status')
+	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', '_status')
 	filter_horizontal = ('bartendersInCharge', )
 	list_filter = ('status', 'association', 'draftBeerSystem')
 
@@ -19,6 +21,10 @@ class UdlejningAdmin(admin.ModelAdmin):
 
 	def in_charge(self, obj):
 		return ', '.join(obj.bartendersInCharge.values_list('username', flat=True))
+
+	def _status(self, obj):
+		icon = {'notsent': 'no', 'sent': 'unknown', 'paid': 'yes'}.get(obj.status, 'unknown')
+		return mark_safe(f'<img src="{ static(f"admin/img/icon-{icon}.svg") }"> {obj.get_status_display()}')
 
 
 class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
