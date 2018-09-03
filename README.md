@@ -17,8 +17,9 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
 ## Deploy changes
 
-1. Add dokku remote: `git remote add dokku dokku@fredagscafeen.dk:/home/dokku/fredagscafeen.dk`
-2. `git push dokku master`
+1. Add your SSH key to dokku: `ssh root@fredagscafeen.dk "dokku ssh-keys:add $USER" < ~/.ssh/id_rsa.pub`
+2. Add dokku remote: `git remote add dokku dokku@fredagscafeen.dk:fredagscafeen.dk`
+3. `git push dokku master`
 
 ## Setup admin user on server
 
@@ -26,9 +27,9 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 2. create superuser: `dokku run fredagscafeen.dk ./manage.py createsuperuser`
 3. login to admin interface: [https://fredagscafeen.dk/admin/](https://fredagscafeen.dk/admin/)
 
-## API usage
+# API usage
 
-#### Method Overview
+### Method Overview
 > - Auth
 > - Items
 > - Breweries
@@ -36,19 +37,19 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 > - Bartenders
 > - Is-Bartender
 
-#### Method details
+### Method details
 
-##### **Auth**
+#### **Auth**
 POST <host>/api/auth/
 
-###### Request
+##### Request
 ```
 {
     "username": "...",
     "password": "..."
 }
 ```
-###### Response
+##### Response
 ```
 {
     "token": "...",
@@ -57,10 +58,10 @@ POST <host>/api/auth/
 ```
 -----------------
 
-##### **Items**
+#### **Items**
 GET <host>/api/items/
 
-###### Response
+##### Response
 ```
 [
     {
@@ -86,10 +87,10 @@ GET <host>/api/items/
 ```
 -----------------
 
-##### **Breweries**
+#### **Breweries**
 GET <host>/api/breweries/
 
-###### Response
+##### Response
 ```
 [
     {
@@ -103,10 +104,10 @@ GET <host>/api/breweries/
 ```
 -----------------
 
-##### **BeerTypes**
+#### **BeerTypes**
 GET <host>/api/beerTypes/
 
-###### Response
+##### Response
 ```
 [
     {
@@ -120,10 +121,10 @@ GET <host>/api/beerTypes/
 ```
 -----------------
 
-##### **Bartenders**
+#### **Bartenders**
 GET <host>/api/bartenders/
 
-###### Response
+##### Response
 ```
 [
     {
@@ -137,10 +138,10 @@ GET <host>/api/bartenders/
 ```
 -----------------
 
-##### **Is-Bartender**
+#### **Is-Bartender**
 GET <host>/api/is-bartender/<username>/
 
-###### Response
+##### Response
 ```
 true 
 ```
