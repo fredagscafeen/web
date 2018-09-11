@@ -112,9 +112,9 @@ class BarTabEntry(models.Model):
 	added_cash = models.NullBooleanField(blank=True, verbose_name='Kontant?')
 	added = models.DecimalField(max_digits=9 + 2, decimal_places=2)
 	used = models.DecimalField(max_digits=9 + 2, decimal_places=2)
-	raw_added = SumField(blank=True)
-	raw_used = SumField(blank=True)
-	user = models.ForeignKey(BarTabUser, on_delete=models.CASCADE, related_name='entries')
+	raw_added = SumField(blank=True, verbose_name='Indsat')
+	raw_used = SumField(blank=True, verbose_name='Køb')
+	user = models.ForeignKey(BarTabUser, on_delete=models.CASCADE, related_name='entries', verbose_name='Bruger')
 	snapshot = models.ForeignKey(BarTabSnapshot, on_delete=models.CASCADE, related_name='entries')
 
 	class Meta:
