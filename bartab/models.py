@@ -109,6 +109,7 @@ class BarTabSnapshot(models.Model):
 
 
 class BarTabEntry(models.Model):
+	added_cash = models.NullBooleanField(blank=True, verbose_name='Kontant?')
 	added = models.DecimalField(max_digits=9 + 2, decimal_places=2)
 	used = models.DecimalField(max_digits=9 + 2, decimal_places=2)
 	raw_added = SumField(blank=True)

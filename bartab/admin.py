@@ -33,7 +33,7 @@ class BarTabUserAdmin(admin.ModelAdmin):
 
 class BarTabEntryInline(admin.TabularInline):
 	model = BarTabEntry
-	fields = ('raw_added', 'user', 'raw_used')
+	fields = ('added_cash', 'raw_added', 'user', 'raw_used')
 	extra = 1
 	min_num = 1
 	formfield_overrides = {

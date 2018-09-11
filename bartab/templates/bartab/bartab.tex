@@ -31,14 +31,14 @@
 	& {\Large Opgjort til og med vagt: {{ latest_shift|date:"j. F Y" }} }{% endif %}
 \end{tabu}
 
-\begin{longtabu} to \linewidth{| X[2, l] | X[7, l] | X[3, l] | X[3, r, $] | X[24, l] |}
+\begin{longtabu} to \linewidth{| X[1, l] | X[4, l] | X[13, l] | X[5, l] | X[5, r, $] | X[48, l] |}
 \taburowcolors {white .. gray!50}
 \hline
-\textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
+\textbf{K} & \textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
 \endhead
 
 	{% for user in users %}
-& {{ user.name | latex_trunc }} & {{ user.email | default_if_none:'' | latex_trunc }} & {{ user.balance_str }} & {% if user.has_credit_hold %}\footnotesize \textbf{KREDITSTOP}{% endif %} \\ \hline
+&& {{ user.name | latex_trunc }} & {{ user.email | default_if_none:'' | latex_trunc }} & {{ user.balance_str }} & {% if user.has_credit_hold %}\footnotesize \textbf{KREDITSTOP}{% endif %} \\ \hline
 	{% endfor %}
 \end{longtabu}
 
