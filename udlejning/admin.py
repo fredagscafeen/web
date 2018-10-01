@@ -8,12 +8,29 @@ from django_object_actions import DjangoObjectActions
 from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
 
 
+class StatusDoneListFilter(admin.SimpleListFilter):
+	title = 'betalt'
+	parameter_name = 'paid'
+
+	def lookups(self, request, model_admin):
+		return (
+			('notpaid', 'Ikke betalt'),
+			('paid', 'Betalt'),
+		)
+
+	def queryset(self, request, queryset):
+		if self.value() == 'notpaid':
+			return queryset.exclude(status='paid')
+		if self.value() == 'paid':
+			return queryset.filter(status='paid')
+
+
 # Remember to cut down to 2 classes
 class UdlejningAdmin(admin.ModelAdmin):
 	ordering = ('-dateFrom',)
 	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', '_status')
 	filter_horizontal = ('bartendersInCharge', )
-	list_filter = ('status', 'association', 'draftBeerSystem')
+	list_filter = (StatusDoneListFilter, 'status', 'association', 'draftBeerSystem')
 
 	fieldsets = (
 		(None, {
