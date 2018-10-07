@@ -27,6 +27,32 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 2. create superuser: `dokku run fredagscafeen.dk ./manage.py createsuperuser`
 3. login to admin interface: [https://fredagscafeen.dk/admin/](https://fredagscafeen.dk/admin/)
 
+# LaTeX installation
+
+## TinyTex installation
+
+This installs TinyTex and makes it available to the dokku django instance:
+
+```
+set tinytex /var/lib/dokku/data/storage/fredagscafeen-media/TinyTeX
+rm -rf "$tinytex"
+
+wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
+
+mv "$HOME/.TinyTeX" "$tinytex"
+rm -rf "$HOME/bin"
+```
+
+We can now run `latexmk` inside the dokku django instance, by adding `/app/media/TinyTeX/bin/x86_64-linux` to the PATH.
+
+## Installing needed LaTeX packages
+
+TinyTex doesn't come with every LaTeX package we need, so we need to install these:
+
+```
+eval "$tinytex/bin/x86_64-linux/tlmgr" install was collectbox  adjustbox  truncate  varwidth  tabu  colortbl  xcolor  microtype  ifetex memoir
+```
+
 # API usage
 
 ### Method Overview
