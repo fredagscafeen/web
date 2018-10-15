@@ -35,6 +35,10 @@ SECRET_ADMIN_KEYS = [
 	('RECAPTCHA_PRIVATE_KEY', 'ReCaptcha private key'),
 ]
 
+CONSTANCE_CONFIG = {
+	'REGISTRATION_OPEN': (True, 'Er bartendertilmelding åben?', bool),
+}
+
 # Inject all secret keys
 for k, _ in SECRET_ADMIN_KEYS:
 	v = os.getenv(k)
@@ -66,6 +70,8 @@ INSTALLED_APPS = (
 	'django.contrib.staticfiles',
 	'django_object_actions',
 	'django_extensions',
+	'constance',
+	'constance.backends.database',
 	'rest_framework.authtoken',
 	'bootstrap3',
 	'bootstrap_datepicker_plus',
@@ -120,6 +126,7 @@ TEMPLATES = [
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
+				'constance.context_processors.config',
 				'django.template.context_processors.debug',
 				'django.template.context_processors.request',
 				'django.contrib.auth.context_processors.auth',
@@ -172,6 +179,8 @@ NOCAPTCHA = True
 # CORS Setup
 CORS_URLS_REGEX = r'^/api/.*$'  # Only allow CORS requests in /api
 CORS_ORIGIN_ALLOW_ALL = True
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 # Server admins (get an email when server errors happen)
 ADMINS = [

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2a5f15b2478432559359a7c4b357740dfb1ff8b21d74f4607b65d4d95a50746f"
+            "sha256": "c17eed3f82c9f0f7ba7b501f78ec97be752a9c5625993009c1ddb8f1ea0e56e5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -54,10 +54,10 @@
         },
         "certifi": {
             "hashes": [
-                "sha256:376690d6f16d32f9d1fe8932551d80b23e9d393a8578c5633a2ed39a64861638",
-                "sha256:456048c7e371c089d0a77a5212fb37a2c2dce1e24146e3b7e0261736aaeaa22a"
+                "sha256:339dc09518b07e2fa7eda5450740925974815557727d6bd35d319c1524a04a4c",
+                "sha256:6d58c986d22b038c8c0df30d639f23a3e6d172a05c3583e766f4c0b785c0986a"
             ],
-            "version": "==2018.8.24"
+            "version": "==2018.10.15"
         },
         "chardet": {
             "hashes": [
@@ -133,6 +133,17 @@
             "index": "pypi",
             "version": "==11.0.0"
         },
+        "django-constance": {
+            "extras": [
+                "database"
+            ],
+            "hashes": [
+                "sha256:5a4fec5361214b4658c64184b45a6678cb8f8bf8d342f56976f87d5c6645860a",
+                "sha256:a49735063b2c30015d2e52a90609ea9798da722ed070f091de51714758a5d018"
+            ],
+            "index": "pypi",
+            "version": "==2.3.1"
+        },
         "django-cors-headers": {
             "hashes": [
                 "sha256:5545009c9b233ea7e70da7dbab7cb1c12afa01279895086f98ec243d7eab46fa",
@@ -171,6 +182,14 @@
             ],
             "index": "pypi",
             "version": "==1.0.0"
+        },
+        "django-picklefield": {
+            "hashes": [
+                "sha256:8d1de6be099044ae61e55998b35de18a57499b946fe45781077f5cec4f73f0e0",
+                "sha256:ce7fee5c6558fe5dc8924993d994ccde75bb75b91cd82787cbd4c92b95a69f9c"
+            ],
+            "markers": "extra == 'database'",
+            "version": "==1.1.0"
         },
         "django-recaptcha": {
             "hashes": [
@@ -485,10 +504,10 @@
         },
         "tqdm": {
             "hashes": [
-                "sha256:18f1818ce951aeb9ea162ae1098b43f583f7d057b34d706f66939353d1208889",
-                "sha256:df02c0650160986bac0218bb07952245fc6960d23654648b5d5526ad5a4128c9"
+                "sha256:a0be569511161220ff709a5b60d0890d47921f746f1c737a11d965e1b29e7b2e",
+                "sha256:e293e6d7a7f41a529a27f8d6624ab11544ccbfe82a205af6fad102545099fc21"
             ],
-            "version": "==4.26.0"
+            "version": "==4.27.0"
         },
         "traitlets": {
             "hashes": [

@@ -26,6 +26,7 @@ django-logentry-admin = "*"
 django-admin-views = "*"
 django-cors-headers = "*"
 django-bootstrap-datepicker-plus = "*"
+django-constance = {extras = ["database"], version = "*"}
 
 [dev-packages]
 

@@ -10,18 +10,21 @@ Velkommen til Fredagscafeens webside, her kan du finde information om åbningsti
 <div class="row">
 	<div class="col-md-8">
         <h2>Bartendertilmelding</h2>
-
         <p>Som bartender har du ca. 2 vagter per semester, hvor du er med til at sørge for, at Fredagscafeen løber rundt.<p>
         <p>Udover dette inviteres du til vores årlige arrangementer for bartendere og bestyrelse, såsom turen til Djurs Sommerland.</p>
         <p>Det er en god idé at læse <a href="{% static 'guides/barvagt.pdf' %}" alt="guide">barvagt-guiden</a> før du tilmelder dig, så du
            ved hvad en typisk vagt i Fredagscafeen indebærer.</p>
-        <form method="post" action="/">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
-            {% endbuttons %}
-        </form>
+        {% if config.REGISTRATION_OPEN %}
+            <form method="post" action="/">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+                {% endbuttons %}
+            </form>
+        {% else %}
+            <b>Bartendertilmeldingen er lukket.</b>
+        {% endif %}
     </div>
 </div>
     
