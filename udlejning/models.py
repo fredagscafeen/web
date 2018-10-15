@@ -51,9 +51,9 @@ class Udlejning(UdlejningCommon):
 	)
 
 	association = models.CharField(max_length=16, choices=ASSOCIATION_CHOICES, blank=True, verbose_name='Tilknytning')
-	actualConsummation = models.TextField(max_length=140, blank=True)
-	bartendersInCharge = models.ManyToManyField(Bartender, blank=True)
-	billSendTo = models.CharField(max_length=140)
+	actualConsummation = models.TextField(max_length=140, blank=True, verbose_name='Faktisk forbrug')
+	bartendersInCharge = models.ManyToManyField(Bartender, blank=True, verbose_name='Ansvarlige')
+	billSendTo = models.CharField(max_length=140, verbose_name='Send regning til')
 	status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='notsent')
 
 	class Meta:
