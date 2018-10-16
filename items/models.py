@@ -15,7 +15,7 @@ class Item(models.Model):
     name = models.CharField(max_length=140)
     description = models.TextField(blank=True)
     country = models.CharField(blank=True, max_length=140)
-    priceInDKK = models.FloatField(default=0.0)
+    priceInDKK = models.DecimalField(max_digits=9 + 2, decimal_places=2)
     abv = models.FloatField(null=True, blank=True)
     container = models.CharField(choices=CONTAINER, blank=True, max_length=140)
     volumeInCentiliters = models.IntegerField(null=True, blank=True)
