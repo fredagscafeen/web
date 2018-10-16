@@ -47,7 +47,7 @@
 			<td>{{ item.name }}</td>
 			<td class="hidden-xs">{{ item.get_container_display }}</td>
 			<td class="hidden-xs">{{ item.type|default_if_none:"" }}</td>
-			<td>{{ item.priceInDKK }}</td>
+			<td>{{ item.priceInDKK|floatformat:-2 }}</td>
 			{% if user.is_staff %}
 				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
 			{% endif %}

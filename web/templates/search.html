@@ -88,7 +88,7 @@
 				{{ item.name }} ({{ item.get_container_display }})
 			</td>
 		<td class="price">
-			{{ item.priceInDKK }}
+			{{ item.priceInDKK|floatformat:-2 }}
 		</td>
 		</tr>
 	{% endfor %}
