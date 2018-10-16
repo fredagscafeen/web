@@ -28,6 +28,10 @@ django-cors-headers = "*"
 django-bootstrap-datepicker-plus = "*"
 django-constance = {extras = ["database"], version = "*"}
 
+# Not a direct dependency, but needed by django-constance
+# Work around https://github.com/pypa/pipenv/issues/3043
+django-picklefield = "*"
+
 [dev-packages]
 
 [requires]
