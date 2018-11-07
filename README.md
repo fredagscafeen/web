@@ -50,7 +50,7 @@ We can now run `latexmk` inside the dokku django instance, by adding `/app/media
 TinyTex doesn't come with every LaTeX package we need, so we need to install these:
 
 ```
-eval "$tinytex/bin/x86_64-linux/tlmgr" install was collectbox adjustbox truncate varwidth tabu colortbl xcolor microtype ifetex memoir
+eval "$tinytex/bin/x86_64-linux/tlmgr" install was collectbox adjustbox truncate varwidth tabu colortbl xcolor microtype ifetex memoir pgf
 ```
 
 # API usage
