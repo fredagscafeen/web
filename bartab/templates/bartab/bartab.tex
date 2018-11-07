@@ -12,6 +12,14 @@
 \usepackage{pdflscape}
 \usepackage{icomma}
 
+\usepackage{phaistos}
+\usepackage{tikz}
+\newcommand*\coins[1]{\tikz[baseline=(char.base)]{
+			\node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.15, 0) (char) {\phantom{#1}};
+			\node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.075, 0) (char) {\phantom{#1}};
+            \node[shape=circle,draw,fill=white,inner sep=1pt] (char) {#1};}}
+\newcommand\krcoins{\coins{\tiny kr}}
+
 \renewcommand\TruncateMarker{}
 
 \pagestyle{empty}
@@ -31,10 +39,10 @@
 	& {\Large Opgjort til og med vagt: {{ latest_shift|date:"j. F Y" }} }{% endif %}
 \end{tabu}
 
-\begin{longtabu} to \linewidth{| X[1, l] | X[4, l] | X[13, l] | X[5, l] | X[5, r, $] | X[48, l] |}
+\begin{longtabu} to \linewidth{| X[2, c] | X[4, l] | X[13, l] | X[5, l] | X[5, r, $] | X[48, l] |}
 \taburowcolors {white .. gray!50}
 \hline
-\textbf{K} & \textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
+\krcoins & \textbf{Indsat} & \textbf{Navn} & \textbf{Email} & \textbf{Saldo} & \textbf{Køb} \hfill \\ \hline
 \endhead
 
 	{% for user in users %}
