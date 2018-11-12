@@ -46,7 +46,7 @@ class ApiTests(APITestCase):
 
 	def test_last_modified_view(self):
 		b = Brewery.objects.create(name='Aarhus Bryghus')
-		item = Item.objects.create(name='Forårsbryg')
+		item = Item.objects.create(name='Forårsbryg', priceInDKK=15)
 
 		r = self.client.get(reverse('last-modified'))
 		self.assertEqual(r.status_code, status.HTTP_200_OK)

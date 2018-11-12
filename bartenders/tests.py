@@ -21,15 +21,13 @@ class BartenderApplicationTests(TestCase):
 		os.environ['RECAPTCHA_TESTING'] = 'False'
 
 	def test_accepting_application(self):
-		ap = BartenderApplication.objects.create(name='Abekat', username='abkat', email='kat@post.au.dk', studentNumber=20147510, phoneNumber=42345123)
+		d = dict(name='Abekat', username='abkat', email='kat@post.au.dk', studentNumber=20147510, phoneNumber=42345123)
+		ap = BartenderApplication.objects.create(**d)
 		ap.accept()
 
 		# Test that a Bartender has been created with the correct data
 		self.assertTrue(Bartender.objects.exists())
-		b = model_to_dict(ap)
-		b.update(isActiveBartender=True)
-		b.pop('info')
-		self.assertDictEqual(b, model_to_dict(Bartender.objects.first()))
+		self.assertDictEqual(d, {k: v for k, v in model_to_dict(Bartender.objects.first()).items() if k in d})
 
 		# Test that an email was sent
 		self.assertEqual(len(mail.outbox), 1)
