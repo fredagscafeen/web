@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from fredagscafeen.settings.base import *
 
 DEBUG = False
@@ -24,8 +25,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 RECAPTCHA_PUBLIC_KEY = '6LcM200UAAAAAIi7AHBSlypIewnLk4Q4BvcC8Z-W'
 
 # For using latexmk
-TINYTEX_BIN = '/app/media/TinyTeX/bin/x86_64-linux'
-os.environ['PATH'] = TINYTEX_BIN + ':' + os.environ['PATH']
+TEX_BIN = str(list(Path('/app/media/texlive').glob('*/bin/*'))[0])
+os.environ['PATH'] = TEX_BIN + ':' + os.environ['PATH']
 
 LOGGING = {
     'version': 1,

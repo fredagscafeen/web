@@ -29,29 +29,20 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
 # LaTeX installation
 
-## TinyTex installation
-
-This installs TinyTex and makes it available to the dokku django instance:
+This installs TeX Live full and makes it available to the dokku django instance:
 
 ```
-set tinytex /var/lib/dokku/data/storage/fredagscafeen-media/TinyTeX
-rm -rf "$tinytex"
+set -x TEXLIVE_INSTALL_PREFIX /var/lib/dokku/data/storage/fredagscafeen-media/texlive
+rm -rf "$TEXLIVE_INSTALL_PREFIX"
 
-wget -qO- "https://yihui.name/gh/tinytex/tools/install-unx.sh" | sh
-
-mv "$HOME/.TinyTeX" "$tinytex"
-rm -rf "$HOME/bin"
+cd /tmp
+curl -L http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz -o install-tl.tar.gz
+tar -xzf install-tl.tar.gz
+cd install-tl-*
+./install-tl -scheme full -profile /dev/null -repository https://ctan.mirror.norbert-ruehl.de/systems/texlive/tlnet/
 ```
 
-We can now run `latexmk` inside the dokku django instance, by adding `/app/media/TinyTeX/bin/x86_64-linux` to the PATH.
-
-## Installing needed LaTeX packages
-
-TinyTex doesn't come with every LaTeX package we need, so we need to install these:
-
-```
-eval "$tinytex/bin/x86_64-linux/tlmgr" install was collectbox adjustbox truncate varwidth tabu colortbl xcolor microtype ifetex memoir pgf
-```
+We need to specify a mirror located in Germany (as the server) as otherwise it defaults to some Australian mirror.
 
 # API usage
 
