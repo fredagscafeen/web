@@ -25,8 +25,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 RECAPTCHA_PUBLIC_KEY = '6LcM200UAAAAAIi7AHBSlypIewnLk4Q4BvcC8Z-W'
 
 # For using latexmk
-TEX_BIN = str(list(Path('/app/media/texlive').glob('*/bin/*'))[0])
-os.environ['PATH'] = TEX_BIN + ':' + os.environ['PATH']
+try:
+    TEX_BIN = str(list(Path('/app/media/texlive').glob('*/bin/*'))[0])
+    os.environ['PATH'] = TEX_BIN + ':' + os.environ['PATH']
+except IndexError:
+    print('WARNING: Couldn\'t find TeX Live installation')
 
 LOGGING = {
     'version': 1,
