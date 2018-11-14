@@ -40,7 +40,7 @@ class UdlejningAdmin(admin.ModelAdmin):
 			'fields': (('whoReserved', 'contactEmail', 'contactPhone'),)
 		}),
 		('Betaling', {
-			'fields': (('whoPays', 'association'), ('paymentType', 'billSendTo', 'EANnumber'), ('expectedConsummation', 'actualConsummation'))
+			'fields': (('whoPays', 'association'), ('paymentType', 'billSendTo', 'EANnumber'), ('expectedConsummation', 'actualConsummation'), ('invoice_number', 'total_price', 'payment_due_date'))
 		}),
 		('Internt', {
 			'fields': (('draftBeerSystem', 'status'), 'bartendersInCharge', 'comments')

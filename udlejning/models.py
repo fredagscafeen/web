@@ -55,6 +55,9 @@ class Udlejning(UdlejningCommon):
 	bartendersInCharge = models.ManyToManyField(Bartender, blank=True, verbose_name='Ansvarlige')
 	billSendTo = models.CharField(max_length=140, verbose_name='Send regning til')
 	status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='notsent')
+	invoice_number = models.CharField(max_length=32, blank=True, verbose_name='Fakturanummer')
+	total_price = models.DecimalField(max_digits=9+2, decimal_places=2, blank=True, null=True, verbose_name='Total pris')
+	payment_due_date = models.DateField(blank=True, null=True)
 
 	class Meta:
 		ordering = ('dateFrom',)
