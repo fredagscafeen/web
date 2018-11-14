@@ -56,7 +56,10 @@ class UdlejningAdmin(admin.ModelAdmin):
 
 	def _status(self, obj):
 		icon = {'notsent': 'no', 'sent': 'unknown', 'paid': 'yes'}.get(obj.status, 'unknown')
-		return mark_safe(f'<img src="{ static(f"admin/img/icon-{icon}.svg") }"> {obj.get_status_display()}')
+		suffix = ''
+		if obj.status == 'sent' and obj.payment_due_date != None:
+			suffix = f' ({obj.payment_due_date})'
+		return mark_safe(f'<img src="{ static(f"admin/img/icon-{icon}.svg") }"> {obj.get_status_display()}{suffix}')
 
 
 class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
