@@ -57,7 +57,7 @@ class Udlejning(UdlejningCommon):
 	status = models.CharField(max_length=16, choices=STATUS_CHOICES, default='notsent')
 	invoice_number = models.CharField(max_length=32, blank=True, verbose_name='Fakturanummer')
 	total_price = models.DecimalField(max_digits=9+2, decimal_places=2, blank=True, null=True, verbose_name='Total pris')
-	payment_due_date = models.DateField(blank=True, null=True)
+	payment_due_date = models.DateField(blank=True, null=True, verbose_name='Betalingsdato')
 
 	class Meta:
 		ordering = ('dateFrom',)
