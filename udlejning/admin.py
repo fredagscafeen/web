@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import admin
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.http import HttpResponseRedirect
@@ -58,7 +60,21 @@ class UdlejningAdmin(admin.ModelAdmin):
 		icon = {'notsent': 'no', 'sent': 'unknown', 'paid': 'yes'}.get(obj.status, 'unknown')
 		suffix = ''
 		if obj.status == 'sent' and obj.payment_due_date != None:
-			suffix = f' ({obj.payment_due_date})'
+			diff = (obj.payment_due_date - datetime.date.today()).days
+			if diff == 0:
+				delta = 'i dag'
+			elif diff > 0:
+				if diff == 1:
+					delta = 'i morgen'
+				else:
+					delta = f'om {diff} dage'
+			else:
+				if diff == -1:
+					delta = 'i går!'
+				else:
+					delta = f'{diff} dage siden!'
+
+			suffix = f' ({obj.payment_due_date}, {delta})'
 		return mark_safe(f'<img src="{ static(f"admin/img/icon-{icon}.svg") }"> {obj.get_status_display()}{suffix}')
 
 
