@@ -135,7 +135,6 @@ class UdlejningApplicationForm(forms.ModelForm):
 Dato: {dateFrom} til {dateTo}
 Kontakt email: {contactEmail}
 Kontakt telefonnummer: {contactPhone}
-Fadølsanlæg: {draftBeerSystem}
 Betaler: {whoPays}
 Betalingsform: {paymentType}
 EAN-nummer: {EANnumber}

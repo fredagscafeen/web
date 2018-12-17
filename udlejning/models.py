@@ -6,11 +6,6 @@ class UdlejningCommon(models.Model):
 	class Meta:
 		abstract = True
 
-	SYSTEM_CHOICES = (
-		('small', 'Lille'),
-		('medium', 'Mellem'),
-	)
-
 	PAYMENT_CHOICES = (
 		('EAN', 'EAN'),
 		('invoice', 'Faktura'),
@@ -24,7 +19,6 @@ class UdlejningCommon(models.Model):
 	contactEmail = models.EmailField(verbose_name='Email til kontaktperson')
 	contactPhone = models.IntegerField(verbose_name='Telefonnummer til kontaktperson', blank=True, null=True)
 
-	draftBeerSystem = models.CharField(max_length=16, choices=SYSTEM_CHOICES, blank=True, verbose_name='Fadølsanlæg', help_text='Hvilket anlæg vil I låne?')
 	whoPays = models.CharField(max_length=140, verbose_name='Hvem betaler?', help_text='Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller organisation)')
 	paymentType = models.CharField(max_length=140, choices=PAYMENT_CHOICES, verbose_name='Betalingsform', help_text='Hvordan bliver der betalt?')
 
@@ -50,6 +44,12 @@ class Udlejning(UdlejningCommon):
 		('paid', 'Regning betalt'),
 	)
 
+	SYSTEM_CHOICES = (
+		('small', 'Lille'),
+		('medium', 'Mellem'),
+	)
+
+	draftBeerSystem = models.CharField(max_length=16, choices=SYSTEM_CHOICES, blank=True, verbose_name='Fadølsanlæg', help_text='Hvilket anlæg vil I låne?')
 	association = models.CharField(max_length=16, choices=ASSOCIATION_CHOICES, blank=True, verbose_name='Tilknytning')
 	actualConsummation = models.TextField(max_length=140, blank=True, verbose_name='Faktisk forbrug')
 	bartendersInCharge = models.ManyToManyField(Bartender, blank=True, verbose_name='Ansvarlige')
