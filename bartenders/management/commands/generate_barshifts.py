@@ -1,7 +1,5 @@
 import datetime
-from django.utils import timezone
-from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
+from django.core.management.base import BaseCommand
 from bartenders.models import Bartender, BartenderShift, BartenderShiftPeriod, next_bartender_shift_start, BartenderUnavailableDate
 import random
 import copy
@@ -10,13 +8,16 @@ import sys
 
 
 # This needs to be changed before generating shifts
+'''
 EXTRA_SHIFTS = [
 	# Rusuge
 	(datetime.datetime(2018, 8, 24, 21), datetime.datetime(2018, 8, 25, 2)),
 ]
 
 EXTRA_SHIFTS = [tuple(map(timezone.get_default_timezone().localize, period)) for period in EXTRA_SHIFTS]
+'''
 
+EXTRA_SHIFTS = []
 
 class Command(BaseCommand):
 	help = 'Generate normal barshifts'
