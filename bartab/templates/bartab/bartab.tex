@@ -1,6 +1,6 @@
 {% load latex_trunc %}
 
-\documentclass[a4paper,oneside,article,11pt,english]{memoir}
+\documentclass[a4paper,oneside,article,11pt,english,landscape]{memoir}
 \usepackage[margin=1cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
@@ -9,7 +9,11 @@
 \usepackage{tabu}
 \usepackage[breakall,fit]{truncate}
 \usepackage{trimclip}
-\usepackage{pdflscape}
+% Using lscape instead of pdflscape, ensures that all pages
+% have the same orientation in the generated pdf.
+% This is intentional as Old can't always print pdf's,
+% containing pages of different orientation, correctly.
+\usepackage{lscape}
 \usepackage{icomma}
 \usepackage{tikz}
 
@@ -26,8 +30,6 @@
 \begin{document}
 
 \large
-
-\begin{landscape}
 
 {% for users, active_name in tab_parts %}
 	{% if forloop.last %}\newpage{% endif %}
@@ -65,7 +67,7 @@
 
 \mbox{~}
 
-\end{landscape}
+\begin{landscape}
 
 \LARGE
 \section*{Pizzabestilling}
@@ -76,5 +78,7 @@
 {% for i in pizza_lines %}& & \\ \hline{% endfor %}
 
 \end{tabu}
+
+\end{landscape}
 
 \end{document}
