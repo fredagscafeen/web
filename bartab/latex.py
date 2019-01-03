@@ -1,6 +1,7 @@
 from pathlib import Path
 import subprocess
 
+from django.conf import settings
 from django.template.loader import render_to_string
 
 from .models import BarTabUser, BarTabSnapshot
@@ -23,6 +24,7 @@ def generate_bartab(work_dir):
 			'tab_parts': tab_parts,
 			'pizza_lines': range(33),
 			'latest_shift': BarTabSnapshot.objects.first().date,
+			'logo_path': settings.STATIC_ROOT + f'images/logo_gray.png',
 		})
 		f.write(latex)
 

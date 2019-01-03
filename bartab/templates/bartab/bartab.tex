@@ -32,12 +32,22 @@
 \large
 
 {% for users, active_name in tab_parts %}
-	{% if forloop.last %}\newpage{% endif %}
+	{% if forloop.first %}
+\newsavebox\innertable
+\savebox\innertable{%
+\begin{tabu}{r}
+	{\Large Genereret: {% now "j. F Y" %} } \\
+	{\Large Opgjort til og med vagt: {{ latest_shift|date:"j. F Y" }} }
+\end{tabu}%
+}
+	{% else %}\newpage{% endif %}
 
-\noindent\begin{tabu} to \linewidth{X[l] X[r]}
+\noindent\begin{tabu} to \linewidth{X[4, l] X[1, c] X[4, r]}
 	{\Large\textbf{% templatetag openbrace %}{{ active_name }} kunder ({{ users|length }})}{% templatetag closebrace %}
-	{% if forloop.first %}& {\Large Genereret: {% now "j. F Y" %} } \\
-	& {\Large Opgjort til og med vagt: {{ latest_shift|date:"j. F Y" }} }{% endif %}
+		{% if forloop.first %}& \includegraphics[height=1cm]{%
+{{ logo_path }}%
+} & \usebox{\innertable} {% else %}
+		& & {% endif %}
 \end{tabu}
 
 \begin{longtabu} to \linewidth{| X[2, c] | X[4, l] | X[13, l] | X[5, l] | X[5, r, $] | X[48, l] |}
