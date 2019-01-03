@@ -30,4 +30,4 @@ def generate_bartab(work_dir):
 	if p.returncode != 0:
 		raise LatexError(str(p.stdout, 'utf-8'))
 
-	return open(work_dir + f'/{file_prefix}.pdf', 'rb')
+	return work_dir + f'/{file_prefix}.pdf'

@@ -64,7 +64,8 @@ class BarTabSnapshotAdmin(AdminViews):
 	def generate_bartab(self, request):
 		with TemporaryDirectory() as d:
 			try:
-				f = generate_bartab(d)
+				fname = generate_bartab(d)
+				f = open(fname, 'rb')
 				return FileResponse(f, content_type='application/pdf')
 			except LatexError as e:
 				with open(f'{d}/bartab.tex') as f:
