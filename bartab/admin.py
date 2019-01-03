@@ -1,13 +1,12 @@
-import subprocess
-from tempfile import NamedTemporaryFile, TemporaryDirectory
+from tempfile import TemporaryDirectory
 
 from admin_views.admin import AdminViews
 from django.contrib import admin
 from django.forms.widgets import TextInput
 from django.http import FileResponse, HttpResponse
-from django.template.loader import render_to_string
 
 from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
+from .latex import generate_bartab, LatexError
 
 
 class BarTabEntryReadonlyInline(admin.TabularInline):
@@ -63,36 +62,24 @@ class BarTabSnapshotAdmin(AdminViews):
 	)
 
 	def generate_bartab(self, request):
-		with NamedTemporaryFile('w', suffix='-bartab.tex', delete=False) as f:
-			filename = f.name
+		with TemporaryDirectory() as d:
+			try:
+				f = generate_bartab(d)
+				return FileResponse(f, content_type='application/pdf')
+			except LatexError as e:
+				with open(f'{d}/bartab.tex') as f:
+					source = f.read()
 
-			tab_parts = (([], 'Aktive'), ([], 'Inaktive'))
-			for user in BarTabUser.objects.exclude(hidden_from_tab=True):
-				tab_parts[not user.is_active][0].append(user)
-
-			latex = render_to_string('bartab/bartab.tex', {
-				'tab_parts': tab_parts,
-				'pizza_lines': range(33),
-				'latest_shift': BarTabSnapshot.objects.first().date,
-			}, request)
-			f.write(latex)
-
-		with TemporaryDirectory() as cwd:
-			p = subprocess.run(['latexmk', '-halt-on-error', '-pdf', '-jobname=bartab', filename], cwd=cwd, stdout=subprocess.PIPE)
-			if p.returncode != 0:
 				error_text = f'''==== Got an error from latexmk ====
 
 == latexmk output ==
 
-{str(p.stdout, 'utf-8')}
+{e.message}
 
 == LaTeX source ==
 
-{latex}'''
+{source}'''
 				return HttpResponse(error_text, content_type='text/plain')
-
-			return FileResponse(open(cwd + '/bartab.pdf', 'rb'), content_type='application/pdf')
-
 
 admin.site.register(BarTabUser, BarTabUserAdmin)
 admin.site.register(BarTabSnapshot, BarTabSnapshotAdmin)
