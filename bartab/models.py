@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 from bartenders.models import BartenderShift
 
@@ -127,6 +128,8 @@ class BarTabEntry(models.Model):
 	def clean(self):
 		if self.raw_added:
 			self.added = self.raw_added.value
+			if self.added_cash == None and self.added != 0:
+				raise ValidationError('Vælg kontant eller ej.')
 
 		if self.raw_used:
 			self.used = self.raw_used.value
