@@ -13,10 +13,15 @@ class BarTabEntryReadonlyInline(admin.TabularInline):
 	model = BarTabEntry
 	fields = ('added', 'used')
 	readonly_fields = ('added', 'used')
-	can_delete = False
 	extra = 0
 
-	def has_add_permission(self, request):
+	def has_change_permission(self, request, obj=None):
+		return False
+
+	def has_delete_permission(self, request, obj=None):
+		return False
+
+	def has_add_permission(self, request, obj=None):
 		return False
 
 
