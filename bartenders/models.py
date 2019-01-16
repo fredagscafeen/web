@@ -9,7 +9,6 @@ from django.db import models
 from django.template import Template, Context
 from django.utils.safestring import mark_safe
 from django.utils import timezone
-from django.utils.crypto import get_random_string
 from enum import IntEnum
 
 from .mailman2 import Mailman
@@ -27,10 +26,6 @@ def date_format(dt, format):
     even when using use_l10n=True.
     '''
     return template_render('{{ dt | date:format }}', {'dt': dt, 'format': format})
-
-EMAIL_TOKEN_LENGTH = 64
-def new_email_token():
-    return get_random_string(EMAIL_TOKEN_LENGTH)
 
 
 # Fields shared between Bartender and BartenderApplication.
@@ -59,7 +54,6 @@ class Bartender(BartenderCommon):
 
     isActiveBartender = models.BooleanField(default=True)
     tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True, verbose_name='T-shirt størrelse')
-    email_token = models.CharField(max_length=EMAIL_TOKEN_LENGTH, default=new_email_token, editable=False)
 
     @property
     def isBoardMember(self):

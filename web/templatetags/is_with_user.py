@@ -11,7 +11,7 @@ def is_with_user(shift, user):
         return False
 
     try:
-        bartender = Bartender.objects.get(username=user.username)
+        bartender = Bartender.objects.get(email=user.email)
         return shift.is_with_bartender(bartender)
     except Bartender.DoesNotExist:
         return False

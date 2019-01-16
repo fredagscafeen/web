@@ -4,10 +4,11 @@ from captcha.fields import ReCaptchaField
 from django.conf import settings
 from django.urls import reverse
 from django import forms
-from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from bootstrap_datepicker_plus import DateTimePickerInput
 
+from email_auth.auth import EmailTokenBackend
+from email_auth.models import EmailToken
 from bartenders.models import Bartender, BartenderShift, BartenderApplication
 from udlejning.models import UdlejningApplication
 from fredagscafeen.email import send_template_email
@@ -25,6 +26,7 @@ class BartenderInfoForm(forms.ModelForm):
 
 		# email isn't currently editable as we need to handle
 		# removing the old and possibly adding the new to the mailing list
+		# another problem is also handling of ~email_ users
 		self.fields['email'].disabled = True
 
 
@@ -34,18 +36,19 @@ class LoginForm(forms.Form):
 
 	def clean_email(self):
 		email = self.cleaned_data['email']
-		try:
-			Bartender.objects.get(email=email)
-		except Bartender.DoesNotExist:
+		if not EmailTokenBackend.is_user(email):
 			raise forms.ValidationError('Ukendt email')
 
 		return email
 
-	def send_email(self):
+	def send_email(self, next):
 		email_address = self.cleaned_data['email']
-		bartender = Bartender.objects.get(email=email_address)
 
-		url = urljoin(settings.SELF_URL, reverse('email_login', args=(bartender.username, bartender.email_token)))
+		email_token, _ = EmailToken.objects.get_or_create(email=email_address)
+
+		url = urljoin(settings.SELF_URL, reverse('email_login', args=(email_address, email_token.token)))
+		if next:
+			url += f'?next={next}'
 
 		return send_template_email(
 			subject='fredagscafeen.dk login',

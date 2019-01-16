@@ -1,8 +1,8 @@
-from django.urls import path, reverse
+from django.urls import path
 from django.views.generic.base import RedirectView
 
 from web.views import Index, Contact, BartenderList, Barplan, UserBarplan, Items, Board, Search, Udlejninger, \
-    UdlejningerGrill, Guides, UserDepositShifts, BartenderInfo, Login, email_login_view, logout_view
+    UdlejningerGrill, Guides, UserDepositShifts, BartenderInfo, Login, email_login_view, logout_view, BarTab
 
 urlpatterns = [
     path('contact/', Contact.as_view()),
@@ -18,8 +18,9 @@ urlpatterns = [
     path('search/', Search.as_view()),
     path('', Index.as_view()),
     path('profile/', BartenderInfo.as_view(), name='profile'),
+    path('bartab/', BarTab.as_view(), name='bartab'),
     path('login/', Login.as_view(), name='login'),
-    path('login/<username>/<token>/', email_login_view, name='email_login'),
+    path('login/<email>/<token>/', email_login_view, name='email_login'),
     path('logout/', logout_view, name='logout'),
     path('udlejning/', Udlejninger.as_view()),
     path('udlejningGrill/', UdlejningerGrill.as_view()),

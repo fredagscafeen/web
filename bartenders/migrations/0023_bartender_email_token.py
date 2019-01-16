@@ -2,6 +2,12 @@
 
 import bartenders.models
 from django.db import migrations, models
+from django.utils.crypto import get_random_string
+
+
+EMAIL_TOKEN_LENGTH = 64
+def get_new_email_token():
+    return get_random_string(EMAIL_TOKEN_LENGTH)
 
 
 class Migration(migrations.Migration):
@@ -14,6 +20,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bartender',
             name='email_token',
-            field=models.CharField(default=bartenders.models.new_email_token, editable=False, max_length=64),
+            field=models.CharField(default=get_new_email_token, editable=False, max_length=64),
         ),
     ]

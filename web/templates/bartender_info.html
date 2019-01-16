@@ -15,6 +15,7 @@ $(function() {
 
 {% block content %}
 
+{% if object %}
 <form method="post">
 {% csrf_token %}
 {% bootstrap_form form %}
@@ -40,12 +41,8 @@ $(function() {
     {% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
 {% endbuttons %}
 </form>
-
-<form method="post" action="/logout/">
-{% csrf_token %}
-{% buttons %}
-    {% bootstrap_button "Log ud" button_type="submit" button_class="btn-secondary" %}
-{% endbuttons %}
-</form>
+{% else %}
+<p><b>{{ user.email }} er ikke på bartender.</b></p>
+{% endif %}
 
 {% endblock %}

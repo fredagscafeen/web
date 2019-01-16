@@ -3,14 +3,17 @@ from itertools import groupby
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, DetailView
 from django.views.generic.edit import UpdateView, FormView
 from django_ical.views import ICalFeed
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_GET, require_POST
+from django.contrib.auth import REDIRECT_FIELD_NAME
 
+from email_auth.auth import EmailTokenBackend
+from bartab.models import BarTabUser, BarTabSnapshot
 from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, next_bartender_shift_dates, BartenderUnavailableDate
 from items.models import Item
 from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
@@ -18,11 +21,21 @@ from web.forms import BartenderApplicationForm, UdlejningApplicationForm, Barten
 
 
 @require_GET
-def email_login_view(request, username, token):
-    user = authenticate(username=username, token=token)
+def email_login_view(request, email, token):
+    user = authenticate(email=email, token=token)
     if user:
         login(request, user)
-    return redirect('profile')
+
+    next = request.GET.get(REDIRECT_FIELD_NAME)
+    if next:
+        return redirect(next)
+
+    if EmailTokenBackend.is_bartender(email):
+        return redirect('profile')
+    elif EmailTokenBackend.is_bartab_user(email):
+        return redirect('bartab')
+    else:
+        return redirect('/')
 
 
 @require_POST
@@ -31,38 +44,32 @@ def logout_view(request):
     return redirect('login')
 
 
-class BartenderInfo(PermissionRequiredMixin, UpdateView):
-    login_url = '/login/'
-    redirect_field_name = None
-
+class BartenderInfo(LoginRequiredMixin, UpdateView):
     model = Bartender
     template_name = 'bartender_info.html'
     form_class = BartenderInfoForm
 
     UNAVAILABLE_DATES = 52
 
-    def has_permission(self):
+    def get_object(self):
         try:
-            return self.request.user.has_perm('bartenders.change_bartender', self.get_object())
+            return Bartender.objects.get(email=self.request.user.email)
         except Bartender.DoesNotExist:
-            return False
-
-    def get_object(self, queryset=None):
-        return Bartender.objects.get(username=self.request.user.username)
+            return None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.object:
+            future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))
 
-        future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))
+            unavailable_dates = set(d.date for d in self.object.unavailable_dates.filter(date__gte=future_dates[0], date__lte=future_dates[-1]))
 
-        unavailable_dates = set(d.date for d in self.object.unavailable_dates.filter(date__gte=future_dates[0], date__lte=future_dates[-1]))
+            dates_table = []
+            for _, dates in groupby(future_dates, key=lambda d: d.month):
+                dates = list(dates)
+                dates_table.append((dates[0], [(d.toordinal(), d, d in unavailable_dates) for d in dates]))
 
-        dates_table = []
-        for _, dates in groupby(future_dates, key=lambda d: d.month):
-            dates = list(dates)
-            dates_table.append((dates[0], [(d.toordinal(), d, d in unavailable_dates) for d in dates]))
-
-        context['dates_table'] = dates_table
+            context['dates_table'] = dates_table
 
         return context
 
@@ -81,13 +88,31 @@ class BartenderInfo(PermissionRequiredMixin, UpdateView):
         return self.request.path
 
 
+class BarTab(LoginRequiredMixin, DetailView):
+    model = BarTabUser
+    template_name = 'bartab.html'
+
+    def get_object(self):
+        try:
+            return BarTabUser.objects.get(email=self.request.user.email)
+        except BarTabUser.DoesNotExist:
+            return None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['update_date'] = BarTabSnapshot.objects.first().date
+
+        return context
+
+
 class Login(FormView):
     template_name = 'login.html'
     form_class = LoginForm
-    success_url = '/login/'
+    success_url = settings.LOGIN_URL
 
     def form_valid(self, form):
-        form.send_email()
+        form.send_email(self.request.GET.get('next'))
         messages.success(self.request, 'Login mail sendt: Tryk på linket i din modtagede mail for at logge ind.')
         return super().form_valid(form)
 

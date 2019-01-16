@@ -85,6 +85,7 @@ INSTALLED_APPS = (
 	'udlejning',
 	'logentry_admin',
 	'bartab',
+	'email_auth',
 )
 
 MIDDLEWARE = (
@@ -101,7 +102,7 @@ MIDDLEWARE = (
 
 AUTHENTICATION_BACKENDS = (
 	'django.contrib.auth.backends.ModelBackend',
-	'bartenders.auth.BartenderTokenBackend',
+	'email_auth.auth.EmailTokenBackend',
 )
 
 REST_FRAMEWORK = {
@@ -171,6 +172,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+LOGIN_URL = '/login/'
 
 # Use the new NoCaptcha
 NOCAPTCHA = True

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load sub %}
+
+{% block content %}
+
+<h2>Krydsliste aktivitet</h2>
+
+<p>Krydslisten er gjort op til og med barvagten d. {{ update_date }}.</p>
+
+{% if object %}
+<h3>Saldo: {{ object.balance_str }}</h3>
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Dato</th>
+			<th>Indsat</th>
+			<th>Køb</th>
+			<th>Forskel</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for entry in object.entries.all %}
+		{% with diff=entry.added|sub:entry.used shift=entry.snapshot.bartender_shift %}
+		<tr{% if entry.added > 0 %} class="success"{% endif %}>
+			<td>{% if shift %}{{ shift.date }}{% else %}Epoch{% endif %}</td>
+			<td>{{ entry.added }}</td>
+			<td>{{ entry.used }}</td>
+			<td>{{ diff }}</td>
+		</tr>
+		{% endwith %}
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+<p><b>{{ user.email }} er ikke på krydslisten.</b></p>
+{% endif %}
+
+{% endblock %}
