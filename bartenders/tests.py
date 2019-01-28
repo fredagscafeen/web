@@ -1,4 +1,5 @@
 import os
+import datetime
 from urllib.parse import urljoin
 from unittest import skipUnless
 from django.conf import settings
@@ -6,9 +7,9 @@ from django.urls import reverse
 from django.forms import model_to_dict
 from django.test import TestCase
 from django.core import mail
-from rest_framework import status
+from django.utils import timezone
 
-from bartenders.models import BartenderApplication, Bartender, BoardMember
+from bartenders.models import BartenderApplication, Bartender, BoardMember, BoardMemberPeriod
 
 from .mailman2 import Mailman
 
@@ -66,7 +67,7 @@ class BartenderApplicationTests(TestCase):
 			info='Kill dogs'
 		)
 
-		response = self.client.post('/', data=data)
+		self.client.post('/', data=data)
 		self.assertFalse(BartenderApplication.objects.exists())
 		self.assertEqual(len(mail.outbox), 0)
 
@@ -78,11 +79,55 @@ class BartenderApplicationTests(TestCase):
 
 		self.assertFalse(bartender.isBoardMember)
 
+
+		period = BoardMemberPeriod.objects.create(start_date=timezone.localdate())
+
 		BoardMember.objects.create(bartender=bartender,
+				                   period=period,
 				                   title='Meme master',
 								   responsibilities='Memes')
 
 		self.assertTrue(bartender.isBoardMember)
+
+	def test_board_member_periods(self):
+		today = timezone.localdate()
+		day = datetime.timedelta(days=1)
+
+		p1 = BoardMemberPeriod.objects.create(start_date=today - 5 * day)
+		p2 = BoardMemberPeriod.objects.create(start_date=today)
+		p3 = BoardMemberPeriod.objects.create(start_date=today + 5 * day)
+
+		self.assertEqual(p1.end_date, p2.start_date - day)
+		self.assertEqual(p2.end_date, p3.start_date - day)
+		self.assertEqual(p3.end_date, None)
+
+		bartender = Bartender.objects.create(name='Bob',
+				                             username='bob',
+											 email='bob@example.org')
+
+		boardmember = BoardMember.objects.create(bartender=bartender,
+												 period=p1,
+												 title='Formand',
+												 responsibilities='Ingenting')
+
+		self.assertFalse(bartender.isBoardMember)
+
+		boardmember.period = p2
+		boardmember.save()
+		self.assertTrue(bartender.isBoardMember)
+
+		boardmember.period = p3
+		boardmember.save()
+		self.assertFalse(bartender.isBoardMember)
+
+
+		BoardMember.objects.create(bartender=bartender,
+				                   period=p2,
+								   title='Næstformand',
+								   responsibilities='Løbesedler?')
+
+		self.assertTrue(bartender.isBoardMember)
+
 
 	@skipUnless(settings.MAILMAN_ALL_PASSWORD, 'Mailman password for all list not set')
 	def test_mailman_all_list_members(self):

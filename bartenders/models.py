@@ -57,11 +57,8 @@ class Bartender(BartenderCommon):
 
     @property
     def isBoardMember(self):
-        try:
-            self.boardmember
-            return True
-        except BoardMember.DoesNotExist:
-            return False
+        period = BoardMemberPeriod.get_current_period()
+        return self.boardmember_set.filter(period=period).exists()
 
     class Meta:
         ordering = ('-isActiveBartender', 'name',)
@@ -113,16 +110,35 @@ class BartenderUnavailableDate(models.Model):
 
 
 class BoardMember(models.Model):
-    bartender = models.OneToOneField(Bartender, on_delete=models.CASCADE, primary_key=True)
+    bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE)
+    period = models.ForeignKey('BoardMemberPeriod', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     responsibilities = models.CharField(max_length=255)
     image = models.ImageField(upload_to='boardMembers', blank=True, null=True)
 
     class Meta:
+        unique_together = ('bartender', 'period')
         ordering = ('title',)
 
     def __str__(self):
         return self.bartender.username
+
+
+class BoardMemberPeriod(models.Model):
+    start_date = models.DateField(unique=True)
+
+    @property
+    def end_date(self):
+        try:
+            next_start = self.get_next_by_start_date().start_date
+            return next_start - datetime.timedelta(days=1)
+        except BoardMemberPeriod.DoesNotExist:
+            return None
+
+    @classmethod
+    def get_current_period(cls):
+        today = timezone.localdate()
+        return cls.objects.filter(start_date__lte=today).last()
 
 
 class BartenderApplication(BartenderCommon):
