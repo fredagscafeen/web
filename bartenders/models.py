@@ -118,7 +118,7 @@ class BoardMember(models.Model):
 
     class Meta:
         unique_together = ('bartender', 'period')
-        ordering = ('title',)
+        ordering = ('period', 'title',)
 
     def __str__(self):
         return self.bartender.username
