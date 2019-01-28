@@ -14,7 +14,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 
 from email_auth.auth import EmailTokenBackend
 from bartab.models import BarTabUser, BarTabSnapshot
-from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, next_bartender_shift_dates, BartenderUnavailableDate
+from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, next_bartender_shift_dates, BartenderUnavailableDate, BoardMemberPeriod
 from items.models import Item
 from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
 from web.forms import BartenderApplicationForm, UdlejningApplicationForm, BartenderInfoForm, LoginForm
@@ -271,8 +271,8 @@ class Search(ListView):
 class Board(ListView):
     template_name = "board.html"
     allow_empty = True
-    model = BoardMember
-    context_object_name = 'boardmembers'
+    model = BoardMemberPeriod
+    context_object_name = 'periods'
 
 
 class UdlejningerGrill(ListView):

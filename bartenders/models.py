@@ -127,6 +127,9 @@ class BoardMember(models.Model):
 class BoardMemberPeriod(models.Model):
     start_date = models.DateField(unique=True)
 
+    class Meta:
+        ordering = ('-start_date',)
+
     @property
     def end_date(self):
         try:
@@ -135,10 +138,23 @@ class BoardMemberPeriod(models.Model):
         except BoardMemberPeriod.DoesNotExist:
             return None
 
+    @property
+    def end_date_display(self):
+        d = self.end_date
+
+        if d == None:
+            return '...'
+
+        return d
+
     @classmethod
     def get_current_period(cls):
         today = timezone.localdate()
         return cls.objects.filter(start_date__lte=today).last()
+
+    def __str__(self):
+        start_year = self.start_date.year
+        return f'{start_year} / {start_year + 1}'
 
 
 class BartenderApplication(BartenderCommon):

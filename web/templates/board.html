@@ -4,28 +4,43 @@
 
 {% load staticfiles %}
 
-<h2>Bestyrelsen</h2>
+<div class="panel-group" id="accordion">
+{% for period in periods %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+				Bestyrelsen {{ period }} ({{ period.start_date }} til {{ period.end_date_display }})
+		</a>
+			</h4>
+		</div>
+	<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse{% if forloop.first %} in{% endif %}">
+			<div class="panel-body">
+				<ul class="list-group ">
+				{% for boardmember in period.boardmember_set.all %}
+						<li class="list-group-item col-md-6">
 
-<ul class="list-group ">
-{% for boardmember in boardmembers %}
-		<li class="list-group-item col-md-6">
+							<div style="display: flex; flex-direction: row; align-items: center;">
 
-			<div style="display: flex; flex-direction: row; align-items: center;">
-					
-				{% if boardmember.image %}
-				<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
-				{% else %}
-				<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
-				{% endif %}
-				
-				<div style="margin-left: 1em;">
-					<b>{{ boardmember.responsibilities }}</b>
-					<br>
-					{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)<b> {{ boardmember.title }}</b>
-				</div>
+								{% if boardmember.image %}
+								<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+								{% else %}
+								<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+								{% endif %}
+
+								<div style="margin-left: 1em;">
+									<b>{{ boardmember.responsibilities }}</b>
+									<br>
+									{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)<b> {{ boardmember.title }}</b>
+								</div>
+							</div>
+						</li>
+				{% endfor %}
+				</ul>
 			</div>
-		</li>
+		</div>
+	</div>
 {% endfor %}
-</ul>
+</div>
 
 {% endblock %}

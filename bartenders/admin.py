@@ -8,7 +8,7 @@ from django.db import models
 
 from django_object_actions import DjangoObjectActions
 
-from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift
+from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, BoardMemberPeriod
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 
 from .mailman2 import MailmanError
@@ -113,9 +113,18 @@ class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
+class BoardMemberInline(admin.StackedInline):
+    model = BoardMember
+
+class BoardMemberPeriodAdmin(admin.ModelAdmin):
+    inlines = [
+        BoardMemberInline
+    ]
+
 
 admin.site.register(Bartender, BartenderAdmin)
 admin.site.register(BoardMember, BoardMemberAdmin)
 admin.site.register(BartenderApplication, BartenderApplicationAdmin)
 admin.site.register(BartenderShift, BartenderShiftAdmin)
 admin.site.register(BoardMemberDepositShift, BoardMemberDepositShiftAdmin)
+admin.site.register(BoardMemberPeriod, BoardMemberPeriodAdmin)
