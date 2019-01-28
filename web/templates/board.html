@@ -9,9 +9,9 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-				Bestyrelsen {{ period }} ({{ period.start_date }} til {{ period.end_date_display }})
-		</a>
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+					Bestyrelsen {{ period }}
+				</a>
 			</h4>
 		</div>
 	<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse{% if forloop.first %} in{% endif %}">
