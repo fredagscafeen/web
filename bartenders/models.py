@@ -162,7 +162,7 @@ class BoardMemberPeriod(models.Model):
     @classmethod
     def get_current_period(cls):
         today = timezone.localdate()
-        return cls.objects.filter(start_date__lte=today).last()
+        return cls.objects.filter(start_date__lte=today).first()
 
     def __str__(self):
         start_year = self.start_date.year
