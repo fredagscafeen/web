@@ -8,36 +8,7 @@ from django.core.exceptions import ValidationError
 
 from bartenders.models import BartenderShift
 
-from .forms import SumValue, SumField as SumFormField
-
-
-class SumField(models.TextField):
-	def from_db_value(self, value, expression, connection):
-		if value == None:
-			return None
-		return SumFormField._parse_sum(value)
-
-	def to_python(self, value):
-		if isinstance(value, SumValue) or value == None:
-			return value
-		return SumFormField._parse_sum(value)
-
-	def get_prep_value(self, value):
-		if value == '' or value == None:
-			return None
-
-		if isinstance(value, str):
-			return value
-
-		return value.string
-
-	def value_to_string(self, obj):
-		""" Allows serialization of SumFields (dumpdata/loaddata) """
-		value = self.value_from_object(obj)
-		return self.get_prep_value(value)
-
-	def formfield(self, **kwargs):
-		return super().formfield(**{'form_class': SumFormField, **kwargs})
+from .sumfield import SumField
 
 
 class BarTabUser(models.Model):
