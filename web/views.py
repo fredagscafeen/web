@@ -300,6 +300,8 @@ class Board(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        context['periods'] = context['periods'].filter(start_date__lte=timezone.localdate())
+
         periods = context['periods']
 
         data = []
