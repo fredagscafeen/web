@@ -102,6 +102,29 @@ class BarTab(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
 
         context['update_date'] = BarTabSnapshot.objects.first().date
+        context['credit_hold_limit'] = BarTabUser.CREDIT_HOLD_LIMIT
+
+        total_used = 0
+
+        balance = self.object.balance
+
+        context['entries'] = []
+        for entry in self.object.entries.all():
+            shift = entry.snapshot.bartender_shift
+
+            context['entries'].append({
+                'shift': 'Epoch' if not shift else shift.date,
+                'added': entry.added,
+                'used': entry.used,
+                'balance': balance,
+            })
+
+            balance -= entry.added
+            balance += entry.used
+
+            total_used += entry.used
+
+        context['total_used'] = total_used
 
         return context
 

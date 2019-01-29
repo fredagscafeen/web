@@ -10,6 +10,7 @@
 
 {% if object %}
 <h3>Saldo: {{ object.balance_str }}</h3>
+<h3>Total forbrug: {{ total_used }}</h3>
 
 <table class="table table-bordered">
 	<thead>
@@ -17,19 +18,17 @@
 			<th>Dato</th>
 			<th>Indsat</th>
 			<th>Køb</th>
-			<th>Forskel</th>
+			<th>Saldo</th>
 		</tr>
 	</thead>
 	<tbody>
-		{% for entry in object.entries.all %}
-		{% with diff=entry.added|sub:entry.used shift=entry.snapshot.bartender_shift %}
-		<tr{% if entry.added > 0 %} class="success"{% endif %}>
-			<td>{% if shift %}{{ shift.date }}{% else %}Epoch{% endif %}</td>
+		{% for entry in entries %}
+		<tr{% if entry.added > 0 %} class="success"{% elif entry.balance <= credit_hold_limit %} class="danger"{% endif %}>
+			<td>{{ entry.shift }}</td>
 			<td>{{ entry.added }}</td>
 			<td>{{ entry.used }}</td>
-			<td>{{ diff }}</td>
+			<td>{{ entry.balance }}</td>
 		</tr>
-		{% endwith %}
 		{% endfor %}
 	</tbody>
 </table>
