@@ -9,7 +9,7 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 
 from email_auth.auth import EmailTokenBackend
 from email_auth.models import EmailToken
-from bartenders.models import Bartender, BartenderShift, BartenderApplication
+from bartenders.models import Bartender, BartenderShift, BartenderApplication, BoardMemberPeriod
 from udlejning.models import UdlejningApplication
 from fredagscafeen.email import send_template_email
 

@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+	<input type="submit" value="Submit">
+</form>
+{% if result %}
+<h2>Result</h1>
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Navn</th>
+			<th>Forbrug</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for name, value in result %}
+		<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ name }}</td>
+			<td>{{ value }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+{% endblock %}

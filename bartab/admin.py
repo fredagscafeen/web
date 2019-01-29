@@ -1,10 +1,13 @@
 from tempfile import TemporaryDirectory
+from collections import Counter
 
 from admin_views.admin import AdminViews
 from django.contrib import admin
 from django.forms.widgets import TextInput
 from django.http import FileResponse, HttpResponse
+from django.template.response import TemplateResponse
 
+from .forms import ConsumptionForm
 from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
 from .latex import generate_bartab, LatexError
 
@@ -64,6 +67,7 @@ class BarTabSnapshotAdmin(AdminViews):
 	]
 	admin_views = (
 		('Generate bartab', 'generate_bartab'),
+		('Count consumption', 'count_consumption'),
 	)
 
 	def generate_bartab(self, request):
@@ -86,6 +90,36 @@ class BarTabSnapshotAdmin(AdminViews):
 
 {source}'''
 				return HttpResponse(error_text, content_type='text/plain')
+
+	def count_consumption(self, request):
+		result = None
+
+		if request.method == 'POST':
+			form = ConsumptionForm(request.POST)
+			if form.is_valid():
+				counter = Counter()
+
+				start = form.cleaned_data['start_snapshot']
+				end = form.cleaned_data['end_snapshot']
+
+				for snapshot in BarTabSnapshot.objects.all():
+					if start.datetime <= snapshot.datetime <= end.datetime:
+						for entry in snapshot.entries.all():
+							counter[entry.user] += entry.used
+
+				result = counter.most_common()
+		else:
+			form = ConsumptionForm()
+
+		context = dict(
+			# Include common variables for rendering the admin template.
+			self.admin_site.each_context(request),
+			# Anything else you want in the context...
+			form=form,
+			result=result,
+		)
+		return TemplateResponse(request, 'bartab/consumption.html', context)
+
 
 admin.site.register(BarTabUser, BarTabUserAdmin)
 admin.site.register(BarTabSnapshot, BarTabSnapshotAdmin)
