@@ -139,6 +139,18 @@ class BoardMemberPeriod(models.Model):
             return None
 
     @property
+    def approx_end_date(self):
+        GENERAL_ASSEMBLY_MONTH = 3
+
+        end_date = self.end_date
+        if end_date == None:
+            end_date = self.start_date.replace(month=GENERAL_ASSEMBLY_MONTH)
+            if end_date <= self.start_date:
+                end_date = end_date.replace(year=end_date.year + 1)
+
+        return end_date
+
+    @property
     def end_date_display(self):
         d = self.end_date
 

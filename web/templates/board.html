@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
+{% block extrahead %}
+<script src="{% static 'js/timesheet.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'js/timesheet-white.min.css' %}">
+<style>
+#timesheet {
+	width: auto;
+	height: auto;
+}
+#timesheet .scale section {
+	width: 75px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 {% load staticfiles %}
@@ -43,4 +59,19 @@
 {% endfor %}
 </div>
 
+<h1>Bestyrelsen gennem tiden</h1>
+
+<div class="white">
+	<div id="timesheet"></div>
+</div>
+
+{{ timesheet_data.data | json_script:"timesheet_data" }}
+<script>
+var data = JSON.parse(document.getElementById('timesheet_data').textContent);
+new Timesheet('timesheet',
+	{{ timesheet_data.start }},
+	{{ timesheet_data.end }},
+	data
+);
+</script>
 {% endblock %}

@@ -297,6 +297,45 @@ class Board(ListView):
     model = BoardMemberPeriod
     context_object_name = 'periods'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        periods = context['periods']
+
+        data = []
+
+        intervals = {}
+
+        for period in periods.all():
+            for boardmember in period.boardmember_set.all():
+                intervals.setdefault(boardmember.bartender, []).append((period.start_date, period.approx_end_date))
+
+        merged_intervals = []
+        for bartender, ints in intervals.items():
+            prev_start = None
+            for i, (start, end) in enumerate(ints):
+                if prev_start == end + datetime.timedelta(days=1):
+                    merged_intervals[-1][1] = start
+                else:
+                    merged_intervals.append([bartender, start, end])
+
+                prev_start = start
+
+        merged_intervals.sort(key=lambda x: (-x[2].toordinal(), -x[1].toordinal()))
+
+        for bartender, start, end in merged_intervals:
+            data.append([f'{start.month}/{start.year}', f'{end.month}/{end.year}', bartender.name, 'default'])
+
+        timesheet_data = {
+            'start': periods.last().start_date.year,
+            'end': periods.first().start_date.year + 1,
+            'data': data,
+        }
+
+        context['timesheet_data'] = timesheet_data
+
+        return context
+
 
 class UdlejningerGrill(ListView):
     template_name = "udlejningGrill.html"
