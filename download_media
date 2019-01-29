@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+
+echo "This will DELETE your local media!"
+echo -n "Continue? [yN] "
+read -r ans
+if ! [[ $ans = y || $ans = Y ]]; then
+	exit 1
+fi
+
+rm -rf media
+
+echo
+echo "Downloading media..."
+
+rsync --verbose --recursive --copy-links --rsh=ssh root@fredagscafeen.dk:fredagscafeen-media/ media --exclude='texlive'
