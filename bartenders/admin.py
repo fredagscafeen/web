@@ -3,8 +3,6 @@ from django.contrib import admin, messages
 from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.db.models.expressions import Case, When, Value
-from django.db import models
 
 from django_object_actions import DjangoObjectActions
 
@@ -83,13 +81,7 @@ class BartenderShiftAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'responsible':
-            kwargs['queryset'] = Bartender.objects.annotate(
-                order=Case(
-                    When(boardmember__isnull=False, then=Value(0)),
-                    default=1,
-                    output_field=models.IntegerField(),
-                )
-            ).order_by('order', '-isActiveBartender', 'name')
+            kwargs['queryset'] = Bartender.shift_ordered()
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
@@ -102,14 +94,7 @@ class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == 'responsibles':
-            kwargs['queryset'] = Bartender.objects.annotate(
-                order=Case(
-                    When(boardmember__isnull=False, then=Value(0)),
-                    When(isActiveBartender=True, then=Value(1)),
-                    default=2,
-                    output_field=models.IntegerField(),
-                )
-            ).order_by('order', 'name')
+            kwargs['queryset'] = Bartender.shift_ordered()
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 

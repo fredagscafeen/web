@@ -2,8 +2,8 @@ from urllib.parse import urljoin
 
 import datetime
 from django.conf import settings
-from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.db.models.expressions import Case, When, Value
 from django.urls import reverse
 from django.db import models
 from django.template import Template, Context
@@ -96,6 +96,19 @@ class Bartender(BartenderCommon):
     def remove_from_mailing_list(self):
         mailman = self._get_mailman()
         mailman.remove_subscriptions([self.email])
+
+    @classmethod
+    def shift_ordered(cls):
+        period = BoardMemberPeriod.get_current_period()
+        boardmembers = cls.objects.filter(boardmember__period=period)
+        return cls.objects.annotate(
+            order=Case(
+                When(id__in=boardmembers, then=Value(0)),
+                When(isActiveBartender=True, then=Value(1)),
+                default=2,
+                output_field=models.IntegerField(),
+            )
+        ).order_by('order', 'name')
 
     def __str__(self):
         return f'{self.symbol}{self.name} ({self.username})'
