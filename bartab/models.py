@@ -76,6 +76,14 @@ class BarTabSnapshot(models.Model):
 	def date(self):
 		return self.datetime.date()
 
+	@property
+	def total_added(self):
+		return self.entries.aggregate(total_added=Sum('added'))['total_added']
+
+	@property
+	def total_used(self):
+		return self.entries.aggregate(total_used=Sum('used'))['total_used']
+
 	def __str__(self):
 		return f'{self.date}: {self.entries.count()} entries'
 

@@ -60,8 +60,9 @@ class BarTabEntryInline(admin.TabularInline):
 
 
 class BarTabSnapshotAdmin(AdminViews):
+	list_display = ('date', 'entry_count', 'total_added', 'total_used')
 	change_form_template = 'admin/bartabsnapshot.html'
-	readonly_fields = ('last_updated',)
+	readonly_fields = ('last_updated', 'total_added', 'total_used')
 	inlines = [
 		BarTabEntryInline,
 	]
@@ -69,6 +70,9 @@ class BarTabSnapshotAdmin(AdminViews):
 		('Generate bartab', 'generate_bartab'),
 		('Count consumption', 'count_consumption'),
 	)
+
+	def entry_count(self, obj):
+		return obj.entries.count()
 
 	def generate_bartab(self, request):
 		with TemporaryDirectory() as d:
