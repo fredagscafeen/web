@@ -104,6 +104,9 @@ class BarTab(LoginRequiredMixin, DetailView):
         context['update_date'] = BarTabSnapshot.objects.first().date
         context['credit_hold_limit'] = BarTabUser.CREDIT_HOLD_LIMIT
 
+        if not self.object:
+            return context
+
         total_used = 0
 
         balance = self.object.balance
