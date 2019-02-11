@@ -118,8 +118,6 @@ class BarTabEntry(models.Model):
 
 
 class Printer(models.Model):
-	HOSTNAME = 'localhost' if settings.DEBUG else 'localhost:6631'
-
 	class PrinterChoiceIter:
 		def __iter__(self):
 			yield (None, '-' * 9)
