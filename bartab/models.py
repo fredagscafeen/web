@@ -136,9 +136,11 @@ class Printer(models.Model):
 	def get_printers(cls):
 		out = check_output(['lpstat', '-h', cls.HOSTNAME,
 		                    '-E',
-							'-e'], encoding='utf-8')
+							'-p'], encoding='utf-8')
 
-		return out.strip().splitlines()
+		for l in out.strip().splitlines():
+			if l.startswith('printer '):
+				yield l.split()[1]
 
 	def print(self, fname):
 		options = {
