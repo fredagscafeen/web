@@ -133,12 +133,24 @@ class Printer(models.Model):
 	name = models.CharField(max_length=32, unique=True)
 
 	@classmethod
-	def get_printers(cls):
-		out = check_output(['lpstat', '-h', cls.HOSTNAME,
-		                    '-E',
-							'-p'], encoding='utf-8')
+	def _cups_run(cls, cmd, *args):
+		prefix = [cmd]
+		if not settings.DEBUG:
+			prefix = ['ssh',
+					  '-o', 'StrichHostKeyChecking=no',
+					  '-i', 'media/ssh/id_rsa',
+					  'remoteprint_relay@fredagscafeen.dk',
+					  '--',
+					  cmd, '-h', 'localhost:6631']
 
-		for l in out.strip().splitlines():
+
+		return check_output(prefix + list(args), encoding='utf-8').strip()
+
+	@classmethod
+	def get_printers(cls):
+		out = cls._cups_run('lpstat', '-E', '-p')
+
+		for l in out.splitlines():
 			if l.startswith('printer '):
 				yield l.split()[1]
 
@@ -153,12 +165,12 @@ class Printer(models.Model):
 			#'sides': 'two-sided-short-edge',
 		}
 		opt_args = sum((['-o', f'{k}={v}'] for k, v in options.items()), [])
-		out = check_output(['lp', '-h', self.HOSTNAME,
+		out = self._cups_run('lp',
 		              '-E',
 					  '-d', self.name,
 					  *opt_args,
 					  '--',
-					  fname], encoding='utf-8').strip()
+					  fname)
 
 		prefix = 'request id is '
 		suffix = ' (1 file(s))'
@@ -168,10 +180,10 @@ class Printer(models.Model):
 
 	@classmethod
 	def get_status(cls, job_id):
-		out = check_output(['lpstat', '-h', cls.HOSTNAME,
+		out = cls._cups_run('lpstat',
 		                    '-E',
 							'-W', 'all',
-							'-l'], encoding='utf-8')
+							'-l')
 
 		status = {}
 		lines = out.splitlines()
