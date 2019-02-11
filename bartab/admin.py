@@ -158,9 +158,15 @@ class BarTabSnapshotAdmin(AdminViews):
 		return TemplateResponse(request, 'bartab/consumption.html', context)
 
 
+class PrinterSelect(Select):
+	def __init__(self, *args, **kwargs):
+		kwargs['choices'] = Printer.PrinterChoiceIter()
+		super().__init__(*args, **kwargs)
+
+
 class PrinterAdmin(admin.ModelAdmin):
 	formfield_overrides = {
-		models.CharField: {'widget': Select(choices=Printer.PrinterChoiceIter())},
+		models.CharField: {'widget': PrinterSelect},
 	}
 
 
