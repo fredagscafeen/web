@@ -4,7 +4,8 @@ import shutil
 
 from admin_views.admin import AdminViews
 from django.contrib import admin
-from django.forms.widgets import TextInput
+from django.db import models
+from django.forms.widgets import TextInput, Select
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.conf import settings
@@ -157,6 +158,12 @@ class BarTabSnapshotAdmin(AdminViews):
 		return TemplateResponse(request, 'bartab/consumption.html', context)
 
 
+class PrinterAdmin(admin.ModelAdmin):
+	formfield_overrides = {
+		models.CharField: {'widget': Select(choices=Printer.PrinterChoiceIter())},
+	}
+
+
 admin.site.register(BarTabUser, BarTabUserAdmin)
 admin.site.register(BarTabSnapshot, BarTabSnapshotAdmin)
-admin.site.register(Printer)
+admin.site.register(Printer, PrinterAdmin)

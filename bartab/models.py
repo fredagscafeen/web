@@ -2,7 +2,6 @@ import datetime
 import re
 from subprocess import check_output
 
-from django import forms
 from django.db import models
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
@@ -123,14 +122,15 @@ class Printer(models.Model):
 
 	class PrinterChoiceIter:
 		def __iter__(self):
-			return ((p, p) for p in Printer.get_printers())
+			yield (None, '-' * 9)
+			try:
+				for p in Printer.get_printers():
+					yield (p, p)
+			except FileNotFoundError:
+				# Ignore this error as it will happen during dokku building
+				pass
 
 	name = models.CharField(max_length=32, unique=True)
-
-	def formfield_for_dbfield(self, db_field, **kwargs):
-		if db_field == 'name':
-			kwargs['widget'] = lambda *args, **kwargs: forms.Select(choices=self.PrinterChoiceIter(), *args, **kwargs)
-		return super().formfield_for_dbfield(db_field, **kwargs)
 
 	@classmethod
 	def get_printers(cls):
@@ -200,9 +200,10 @@ class Printer(models.Model):
 		else:
 			return 'unknown', None
 
-	def clean(self):
-		if self.name not in self.get_printers():
-			raise ValidationError(f'Kunne ikke finde printeren "{self.name}"')
+	def clean_name(self):
+		name = self.cleaned_data['name']
+		if name not in self.get_printers():
+			raise ValidationError(f'Kunne ikke finde printeren "{name}"')
 
 	def __str__(self):
 		return self.name
