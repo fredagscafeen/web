@@ -1,6 +1,6 @@
 import datetime
 import re
-from subprocess import check_output
+from subprocess import check_output, CalledProcessError
 
 from django.db import models
 from django.db.models import F, Sum, Value
@@ -126,7 +126,7 @@ class Printer(models.Model):
 			try:
 				for p in Printer.get_printers():
 					yield (p, p)
-			except FileNotFoundError:
+			except CalledProcessError:
 				# Ignore this error as it will happen during dokku building
 				pass
 
