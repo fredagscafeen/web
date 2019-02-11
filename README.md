@@ -46,6 +46,47 @@ We need to specify a mirror located in Germany (as the server) as otherwise it d
 
 # Remote server printing
 
+## Diagram
+
+```
++----------------------------------------------------+
+| htlm5 server:                                      |
+|                                                    |
+| autossh -N -M 0                                    |
+|         remoteprint@localhost                      |
+|         -p 2222                                    |
+|         -L 6631:localhost:631           <--\       |
+|         -v                                 |  ssh  |
+|                                            |       |
+|  +-----------------------------------------|---+   |
+|  | dokku web instance:                     |   |   |
+|  |                                             |   |
+|  |                                             |   |
+|  | ssh -o StrictHostKeyChecking=no             |   |
+|  |     -i media/id_rsa                         |   |
+|  |     remoteprint_relay@fredagscafeen.dk      |   |
+|  |     --                                      |   |
+|  |     lpstat -h localhost:6631 -E -p          |   |
+|  |                                             |   |
+|  +---------------------------------------------+   |
++----------------------------------------------------+
+                     ^
+					 |
+                     |
+	   (reverse ssh port-forwarding)
+	                 |
+                     |
++----------------------------------------------+
+| remote AU server:                            |
+|                                              |
+| autossh -N -M 0                              |
+|         remoteprint_relay@fredagscafeen.dk   |
+|         -R 2222:localhost:22                 |
+|         -v                                   |
+|                                              |
++----------------------------------------------+
+```
+
 ## Installing autossh and cups
 
 ```
