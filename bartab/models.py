@@ -135,7 +135,7 @@ class Printer(models.Model):
 		prefix = [cmd]
 		if not settings.DEBUG:
 			prefix = ['ssh',
-					  '-o', 'StrichHostKeyChecking=no',
+					  '-o', 'StrictHostKeyChecking=no',
 					  '-i', 'media/ssh/id_rsa',
 					  'remoteprint_relay@fredagscafeen.dk',
 					  '--',
