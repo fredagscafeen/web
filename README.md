@@ -113,7 +113,7 @@ After=network-online.target ssh.service
 
 [Service]
 User=remoteprint
-ExecStart=/usr/bin/autossh -N -M 0 -R 2222:localhost:22 remoteprint_relay@fredagscafeen.dk
+ExecStart=/usr/bin/autossh -N -M 0 -R 2222:localhost:22 remoteprint_relay@fredagscafeen.dk -v
 ExecStop=/bin/kill $MAINPID
 
 [Install]
@@ -128,7 +128,7 @@ sudo systemctl enable --now remoteprinter_autossh
 
 Test that we can forward port 6631 to the remote's port 631 and it works (run both command at the same time on remote):
 ```
-sudo -u remoteprint_relay autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631
+sudo -u remoteprint_relay autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631 -v
 lpstat -h localhost:6631 -p
 ```
 
@@ -140,7 +140,7 @@ After=network-online.target ssh.service
 
 [Service]
 User=remoteprint_relay
-ExecStart=/usr/bin/autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631
+ExecStart=/usr/bin/autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631 -v
 ExecStop=/bin/kill $MAINPID
 
 [Install]
