@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<b>Printer:</b> {{ printer_name }} ({{ job_id }})
+<br>
+<b>Status:</b> <span id="job_status">Ukendt</span>
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<script>
+	// Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
+	jQuery.ajaxPrefilter( function( s ) {
+		if ( s.crossDomain ) {
+			s.contents.script = false;
+		}
+	} );
+</script>
+
+<script>
+function updateStatus() {
+	$.get('/api/print_status/{{ job_id }}/', function(data) {
+		var status = data.status;
+		var code = data.code;
+		switch (status) {
+			case 'done':
+				$('#job_status').text('Færdig');
+				break;
+			case 'unknown':
+				$('#job_status').text('Ukendt');
+				break;
+			case 'error':
+				$('#job_status').text('Fejl: ' + code);
+				break;
+		}
+	});
+}
+setInterval(updateStatus, 3000);
+</script>
+{% endblock %}

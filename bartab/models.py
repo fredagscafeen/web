@@ -1,10 +1,14 @@
 import datetime
+import re
+from subprocess import check_output
 
+from django import forms
 from django.db import models
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 from bartenders.models import BartenderShift
 
@@ -112,3 +116,93 @@ class BarTabEntry(models.Model):
 
 		if self.raw_used:
 			self.used = self.raw_used.value
+
+
+class Printer(models.Model):
+	HOSTNAME = 'localhost' if settings.DEBUG else 'localhost:6631'
+
+	class PrinterChoiceIter:
+		def __iter__(self):
+			return ((p, p) for p in Printer.get_printers())
+
+	name = models.CharField(max_length=32, unique=True)
+
+	def formfield_for_dbfield(self, db_field, **kwargs):
+		if db_field == 'name':
+			kwargs['widget'] = lambda *args, **kwargs: forms.Select(choices=self.PrinterChoiceIter(), *args, **kwargs)
+		return super().formfield_for_dbfield(db_field, **kwargs)
+
+	@classmethod
+	def get_printers(cls):
+		out = check_output(['lpstat', '-h', cls.HOSTNAME,
+		                    '-E',
+							'-e'], encoding='utf-8')
+
+		return out.strip().splitlines()
+
+	def print(self, fname):
+		options = {
+			'PageSize': 'a4',
+			'Duplex': 'DuplexTumble',
+			'StapleLocation': '4Staples',
+
+			#'media': 'a4',
+			#'orientation-requested': '4', # Landscape mode
+			#'sides': 'two-sided-short-edge',
+		}
+		opt_args = sum((['-o', f'{k}={v}'] for k, v in options.items()), [])
+		out = check_output(['lp', '-h', self.HOSTNAME,
+		              '-E',
+					  '-d', self.name,
+					  *opt_args,
+					  '--',
+					  fname], encoding='utf-8').strip()
+
+		prefix = 'request id is '
+		suffix = ' (1 file(s))'
+		assert out.startswith(prefix)
+		assert out.endswith(suffix)
+		return out[len(prefix):-len(suffix)]
+
+	@classmethod
+	def get_status(cls, job_id):
+		out = check_output(['lpstat', '-h', cls.HOSTNAME,
+		                    '-E',
+							'-W', 'all',
+							'-l'], encoding='utf-8')
+
+		status = {}
+		lines = out.splitlines()
+		for i in range(len(lines)):
+			if lines[i].startswith(job_id):
+				i += 1
+				while i < len(lines) and lines[i].startswith(' '):
+					parts = lines[i].strip().split(': ')
+					if len(parts) == 2:
+						status[parts[0]] = parts[1]
+
+					i += 1
+
+				break
+		else:
+			# Not found, probably done
+			return 'done', None
+
+		if 'Status' in status:
+			s = status['Status']
+
+			m = re.search(r'NT_\S+', s)
+			if m:
+				status_code = m.group()
+				return 'error', status_code
+
+			return 'done', None
+		else:
+			return 'unknown', None
+
+	def clean(self):
+		if self.name not in self.get_printers():
+			raise ValidationError(f'Kunne ikke finde printeren "{self.name}"')
+
+	def __str__(self):
+		return self.name

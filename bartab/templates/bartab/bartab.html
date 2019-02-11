@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+
+{% load staticfiles %}
+
+{% block extrastyle %}
+<style>
+html, body, #container, #content {
+	height: 100%;
+	overflow-x: hidden;
+}
+object {
+	margin-top: 2em;
+	width: 100%;
+	height: 75%;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+	<input type="submit" value="Print">
+</form>
+<object data="{{ bartab_url }}"></object>
+{% endblock %}

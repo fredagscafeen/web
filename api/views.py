@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAdminUser
 
 from api.serializers import BartenderSerializer
 from api.serializers import BeerTypeSerializer
@@ -13,6 +14,8 @@ from bartenders.models import Bartender
 from items.models import BeerType
 from items.models import Brewery
 from items.models import Item
+
+from bartab.models import Printer
 
 
 class ItemViewSet(viewsets.ModelViewSet):
@@ -66,3 +69,11 @@ class TokenAuthView(ObtainAuthToken):
 		user = serializer.validated_data['user']
 		token, created = Token.objects.get_or_create(user=user)
 		return Response({'token': token.key, 'permissions': user.get_all_permissions()})
+
+
+class PrintStatusView(APIView):
+	permission_classes = (IsAdminUser,)
+
+	def get(self, request, job_id):
+		status, code = Printer.get_status(job_id)
+		return Response({'status': status, 'code': code})

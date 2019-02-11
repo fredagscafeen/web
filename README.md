@@ -44,6 +44,119 @@ cd install-tl-*
 
 We need to specify a mirror located in Germany (as the server) as otherwise it defaults to some Australian mirror.
 
+# Remote server printing
+
+## Installing autossh and cups
+
+```
+apt install autossh cups
+systemctl disable --now cups
+systemctl disable --now cups-browsed
+```
+
+## Setting up the reverse tunnel and ssh keys
+
+Open 3 terminal windows:
+* One connected to the remote machine on AU's network (remote)
+* One connected to htlm5 (htlm5)
+* One connected to htlm5 and inside the dokku container: `dokku run fredagscafeen.dk bash` (dokku)
+
+Then run the following commands in order:
+
+remote:
+```
+sudo useradd -m remoteprint
+sudo mkhomedir_helper remoteprint
+sudo -u remoteprint ssh-keygen
+sudo cat /home/remoteprint/.ssh/id_rsa.pub # Key remote
+```
+
+dokku:
+```
+mkdir media/ssh
+ssh-keygen -f media/ssh/id_rsa
+cat media/ssh/id_rsa.pub # Key client
+```
+
+htlm5:
+```
+useradd -m remoteprint_relay
+mkhomedir_helper remoteprint_relay
+sudo -u remoteprint_relay ssh-keygen
+cat /home/remoteprint_relay/.ssh/id_rsa.pub # Key relay
+
+sudo -u remoteprint_relay sh -c 'echo "<Key remote>" >> /home/remoteprint_relay/.ssh/authorized_keys'
+cat fredagscafeen-media/ssh/id_rsa.pub | sudo -u remoteprint_relay sh -c 'cat >> /home/remoteprint_relay/.ssh/authorized_keys'
+```
+
+remote:
+```
+sudo -u remoteprint sh -c 'echo "<Key relay>" >> /home/remoteprint/.ssh/authorized_keys'
+```
+
+Check that the remote can connect to the relay by running the following on the remote:
+```
+sudo -u remoteprint autossh -M 0 -R 2222:localhost:22 -N remoteprint_relay@fredagscafeen.dk -v
+```
+
+Check that we can connect to the relay and it can connect to the remote by running the following in dokku:
+```
+ssh -o StrictHostKeyChecking=no remoteprint_relay@fredagscafeen.dk -i media/ssh/id_rsa id
+ssh -o StrictHostKeyChecking=no remoteprint_relay@fredagscafeen.dk -i media/ssh/id_rsa ssh remoteprint@localhost -p 2222 id
+```
+
+Stop the `autossh` command on the remote and create the file `/etc/systemd/system/remoteprinter_autossh.service` containing:
+```
+[Unit]
+Description=Keeps a reverse tunnel to fredagscafeen.dk open
+After=network-online.target ssh.service
+
+[Service]
+User=remoteprint
+ExecStart=/usr/bin/autossh -N -M 0 -R 2222:localhost:22 remoteprint_relay@fredagscafeen.dk
+ExecStop=/bin/kill $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then start and enable the service on the remote:
+```
+sudo systemctl enable --now remoteprinter_autossh
+```
+
+
+Test that we can forward port 6631 to the remote's port 631 and it works (run both command at the same time on remote):
+```
+sudo -u remoteprint_relay autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631
+lpstat -h localhost:6631 -p
+```
+
+Create the file `/etc/systemd/system/remoteprinter_cups_forward.service` containing:
+```
+[Unit]
+Description=Forwards port 6631 to port 631 of an AU machine
+After=network-online.target ssh.service
+
+[Service]
+User=remoteprint_relay
+ExecStart=/usr/bin/autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631
+ExecStop=/bin/kill $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then start and enable the service on the remote:
+```
+sudo systemctl enable --now remoteprinter_cups_forward
+```
+
+## Setting up the printers to use
+
+The printers should be installed on the remote machine and also be entered into the database.
+
+
 # API usage
 
 ### Method Overview

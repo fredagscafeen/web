@@ -1,14 +1,16 @@
 from tempfile import TemporaryDirectory
 from collections import Counter
+import shutil
 
 from admin_views.admin import AdminViews
 from django.contrib import admin
 from django.forms.widgets import TextInput
-from django.http import FileResponse, HttpResponse
+from django.http import HttpResponse
 from django.template.response import TemplateResponse
+from django.conf import settings
 
-from .forms import ConsumptionForm
-from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
+from .forms import ConsumptionForm, PrintForm
+from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField, Printer
 from .latex import generate_bartab, LatexError
 
 
@@ -75,25 +77,55 @@ class BarTabSnapshotAdmin(AdminViews):
 		return obj.entries.count()
 
 	def generate_bartab(self, request):
-		with TemporaryDirectory() as d:
-			try:
-				fname = generate_bartab(d)
-				f = open(fname, 'rb')
-				return FileResponse(f, content_type='application/pdf')
-			except LatexError as e:
-				with open(f'{d}/bartab.tex') as f:
-					source = f.read()
+		PDF_PATH = f'{settings.MEDIA_ROOT}/bartab.pdf'
 
-				error_text = f'''==== Got an error from latexmk ====
+		form = PrintForm()
 
-== latexmk output ==
+		if request.method == 'POST':
+			form = PrintForm(request.POST)
+			if form.is_valid():
+				printer = form.cleaned_data['printer']
+				job_id = printer.print(PDF_PATH)
 
-{e.message}
+				context = dict(
+					# Include common variables for rendering the admin template.
+					self.admin_site.each_context(request),
+					# Anything else you want in the context...
+					printer_name=printer.name,
+					job_id=job_id,
+				)
+				return TemplateResponse(request, 'bartab/print_status.html', context)
 
-== LaTeX source ==
 
-{source}'''
-				return HttpResponse(error_text, content_type='text/plain')
+		if request.method == 'GET':
+			with TemporaryDirectory() as d:
+				try:
+					fname = generate_bartab(d)
+					shutil.copy(fname, PDF_PATH)
+				except LatexError as e:
+					with open(f'{d}/bartab.tex') as f:
+						source = f.read()
+
+					error_text = f'''==== Got an error from latexmk ====
+
+	== latexmk output ==
+
+	{e.message}
+
+	== LaTeX source ==
+
+	{source}'''
+					return HttpResponse(error_text, content_type='text/plain')
+
+		context = dict(
+			# Include common variables for rendering the admin template.
+			self.admin_site.each_context(request),
+			# Anything else you want in the context...
+			form=form,
+			bartab_url=f'{settings.MEDIA_URL}/bartab.pdf',
+		)
+		return TemplateResponse(request, 'bartab/bartab.html', context)
+
 
 	def count_consumption(self, request):
 		result = None
@@ -127,3 +159,4 @@ class BarTabSnapshotAdmin(AdminViews):
 
 admin.site.register(BarTabUser, BarTabUserAdmin)
 admin.site.register(BarTabSnapshot, BarTabSnapshotAdmin)
+admin.site.register(Printer)
