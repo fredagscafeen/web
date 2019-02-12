@@ -52,10 +52,10 @@ We need to specify a mirror located in Germany (as the server) as otherwise it d
 +----------------------------------------------------+
 | htlm5 server:                                      |
 |                                                    |
-| autossh -N -M 0                                    |
+| autossh -N -M 2244                                 |
+|         -L 6631:localhost:631                      |
 |         remoteprint@localhost                      |
-|         -p 2222                                    |
-|         -L 6631:localhost:631           <--\       |
+|         -p 2222                          <-\       |
 |         -v                                 |  ssh  |
 |                                            |       |
 |  +-----------------------------------------|---+   |
@@ -79,9 +79,9 @@ We need to specify a mirror located in Germany (as the server) as otherwise it d
 +----------------------------------------------+
 | remote AU server:                            |
 |                                              |
-| autossh -N -M 0                              |
-|         remoteprint_relay@fredagscafeen.dk   |
+| autossh -N -M 2233                           |
 |         -R 2222:localhost:22                 |
+|         remoteprint_relay@fredagscafeen.dk   |
 |         -v                                   |
 |                                              |
 +----------------------------------------------+
@@ -137,7 +137,7 @@ sudo -u remoteprint sh -c 'echo "<Key relay>" >> /home/remoteprint/.ssh/authoriz
 
 Check that the remote can connect to the relay by running the following on the remote:
 ```
-sudo -u remoteprint autossh -M 0 -R 2222:localhost:22 -N remoteprint_relay@fredagscafeen.dk -v
+sudo -u remoteprint /usr/bin/autossh -N -M 2233 -R 2222:localhost:22 remoteprint_relay@fredagscafeen.dk -v
 ```
 
 Check that we can connect to the relay and it can connect to the remote by running the following in dokku:
@@ -150,12 +150,17 @@ Stop the `autossh` command on the remote and create the file `/etc/systemd/syste
 ```
 [Unit]
 Description=Keeps a reverse tunnel to fredagscafeen.dk open
-After=network-online.target ssh.service
+After=network-online.target
+After=ssh.service
+After=org.cups.cupsd.service
 
 [Service]
+ExecStart=/usr/bin/autossh -N -M 2233 -R 2222:localhost:22 remoteprint_relay@fredagscafeen.dk -v
+Restart=on-failure
 User=remoteprint
-ExecStart=/usr/bin/autossh -N -M 0 -R 2222:localhost:22 remoteprint_relay@fredagscafeen.dk -v
-ExecStop=/bin/kill $MAINPID
+KillSignal=SIGINT
+SendSIGKILL=no
+Environment=AUTOSSH_GATETIME=0
 
 [Install]
 WantedBy=multi-user.target
@@ -169,7 +174,7 @@ sudo systemctl enable --now remoteprinter_autossh
 
 Test that we can forward port 6631 to the remote's port 631 and it works (run both command at the same time on remote):
 ```
-sudo -u remoteprint_relay autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631 -v
+sudo -u /usr/bin/autossh -N -M 2244 -L 6631:localhost:631 remoteprint@localhost -p 2222 -v
 lpstat -h localhost:6631 -p
 ```
 
@@ -177,12 +182,17 @@ Create the file `/etc/systemd/system/remoteprinter_cups_forward.service` contain
 ```
 [Unit]
 Description=Forwards port 6631 to port 631 of an AU machine
-After=network-online.target ssh.service
+After=network-online.target
+After=ssh.service
+After=org.cups.cupsd.service
 
 [Service]
+ExecStart=/usr/bin/autossh -N -M 2244 -L 6631:localhost:631 remoteprint@localhost -p 2222 -v
+Restart=on-failure
 User=remoteprint_relay
-ExecStart=/usr/bin/autossh -N -M 0 remoteprint@localhost -p 2222 -L 6631:localhost:631 -v
-ExecStop=/bin/kill $MAINPID
+KillSignal=SIGINT
+SendSIGKILL=no
+Environment=AUTOSSH_GATETIME=0
 
 [Install]
 WantedBy=multi-user.target
