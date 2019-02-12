@@ -2,6 +2,8 @@ import datetime
 import re
 from subprocess import check_output, CalledProcessError
 from shlex import quote
+from tempfile import TemporaryDirectory
+import shutil
 
 from django.db import models
 from django.db.models import F, Sum, Value
@@ -120,6 +122,7 @@ class BarTabEntry(models.Model):
 
 class Printer(models.Model):
 	HOSTNAME = 'localhost' if settings.DEBUG else 'localhost:6631'
+	HTLM5_MEDIA_DIR = '/var/lib/dokku/data/storage/fredagscafeen-media'
 
 	class PrinterChoiceIter:
 		def __iter__(self):
@@ -174,18 +177,24 @@ class Printer(models.Model):
 		}
 		opt_args = sum((['-o', f'{quote(k)}={quote(v)}'] for k, v in options.items()), [])
 
-		args = ['lp', '-E', '-d', quote(self.name), *opt_args, '--', '"$tmp"']
 
-		cmds = [
-			['tmp=$(mktemp --suffix .pdf)'],
-			['cat', '>', '"$tmp"'],
-			args,
-		]
+		with TemporaryDirectory(dir=settings.MEDIA_ROOT) as d:
+			if settings.DEBUG:
+				htlm5_name = fname
+			else:
+				tmp_dir = d.split('/')[-1]
 
-		bash_string = '; '.join(' '.join(cmd) for cmd in cmds)
+				shutil.copy(fname, f'{d}/print.pdf')
 
-		with open(fname, 'rb') as f:
-			out = self._htlm5_run('bash', '-c', bash_string, stdin=f)
+				htlm5_name = f'{self.HTLM5_MEDIA_DIR}/{tmp_dir}/print.pdf'
+
+			out = self._cups_run('lp',
+						  '-E',
+						  '-d', self.name,
+						  *opt_args,
+						  '--',
+						  htlm5_name)
+
 
 		prefix = 'request id is '
 		suffix = ' (1 file(s))'
