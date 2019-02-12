@@ -4,6 +4,7 @@ from subprocess import check_output, CalledProcessError
 from shlex import quote
 from tempfile import TemporaryDirectory
 import shutil
+import os
 
 from django.db import models
 from django.db.models import F, Sum, Value
@@ -179,12 +180,14 @@ class Printer(models.Model):
 
 
 		with TemporaryDirectory(dir=settings.MEDIA_ROOT) as d:
+			os.chmod(d, 0o777)
 			if settings.DEBUG:
 				htlm5_name = fname
 			else:
 				tmp_dir = d.split('/')[-1]
 
 				shutil.copy(fname, f'{d}/print.pdf')
+				os.chmod(f'{d}/print.pdf', 0o777)
 
 				htlm5_name = f'{self.HTLM5_MEDIA_DIR}/{tmp_dir}/print.pdf'
 
