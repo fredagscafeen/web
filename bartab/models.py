@@ -1,6 +1,7 @@
 import datetime
 import re
 from subprocess import check_output, CalledProcessError
+from shlex import quote
 
 from django.db import models
 from django.db.models import F, Sum, Value
@@ -118,6 +119,8 @@ class BarTabEntry(models.Model):
 
 
 class Printer(models.Model):
+	HOSTNAME = 'localhost' if settings.DEBUG else 'localhost:6631'
+
 	class PrinterChoiceIter:
 		def __iter__(self):
 			yield (None, '-' * 9)
@@ -131,18 +134,25 @@ class Printer(models.Model):
 	name = models.CharField(max_length=32, unique=True)
 
 	@classmethod
-	def _cups_run(cls, cmd, *args):
-		prefix = [cmd]
+	def _htlm5_run(cls, *args, **kwargs):
 		if not settings.DEBUG:
-			prefix = ['ssh',
-					  '-o', 'StrictHostKeyChecking=no',
-					  '-i', 'media/ssh/id_rsa',
-					  'remoteprint_relay@fredagscafeen.dk',
-					  '--',
-					  cmd, '-h', 'localhost:6631']
+			args = ['ssh',
+				    '-o', 'StrictHostKeyChecking=no',
+				    '-i', 'media/ssh/id_rsa',
+				    'remoteprint_relay@fredagscafeen.dk',
+				    '--',
+				    *args]
 
 
-		return check_output(prefix + list(args), encoding='utf-8').strip()
+		print(*args)
+
+		return check_output(args, encoding='utf-8', **kwargs).strip()
+
+	@classmethod
+	def _cups_run(cls, *args, **kwargs):
+		args = [args[0], '-h', cls.HOSTNAME, *args[1:]]
+
+		return cls._htlm5_run(*args, **kwargs)
 
 	@classmethod
 	def get_printers(cls):
@@ -154,7 +164,7 @@ class Printer(models.Model):
 
 	def print(self, fname):
 		options = {
-			'PageSize': 'a4',
+			'PageSize': 'A4',
 			'Duplex': 'DuplexTumble',
 			'StapleLocation': '4Staples',
 
@@ -162,13 +172,20 @@ class Printer(models.Model):
 			#'orientation-requested': '4', # Landscape mode
 			#'sides': 'two-sided-short-edge',
 		}
-		opt_args = sum((['-o', f'{k}={v}'] for k, v in options.items()), [])
-		out = self._cups_run('lp',
-		              '-E',
-					  '-d', self.name,
-					  *opt_args,
-					  '--',
-					  fname)
+		opt_args = sum((['-o', f'{quote(k)}={quote(v)}'] for k, v in options.items()), [])
+
+		args = ['lp', '-E', '-d', quote(self.name), *opt_args, '--', '"$tmp"']
+
+		cmds = [
+			['tmp=$(mktemp --suffix .pdf)'],
+			['cat', '>', '"$tmp"'],
+			args,
+		]
+
+		bash_string = '; '.join(' '.join(cmd) for cmd in cmds)
+
+		with open(fname, 'rb') as f:
+			out = self._htlm5_run('bash', '-c', bash_string, stdin=f)
 
 		prefix = 'request id is '
 		suffix = ' (1 file(s))'
