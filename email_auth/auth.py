@@ -31,7 +31,7 @@ class EmailTokenBackend:
 			email_token.refresh_token()
 
 			user, _ = User.objects.get_or_create(email=email, defaults={
-				'username': f'~email_{email}' # ~ is lexicographically large
+				'username': f'ZZZZZ_email_{email}' # Z is lexicographically large
 			})
 			return user
 		except EmailToken.DoesNotExist:

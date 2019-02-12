@@ -26,7 +26,7 @@ class BartenderInfoForm(forms.ModelForm):
 
 		# email isn't currently editable as we need to handle
 		# removing the old and possibly adding the new to the mailing list
-		# another problem is also handling of ~email_ users
+		# another problem is also handling of ZZZZZ_email_ users
 		self.fields['email'].disabled = True
 
 
