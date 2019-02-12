@@ -197,7 +197,6 @@ class Printer(models.Model):
 	def get_status(cls, job_id):
 		out = cls._cups_run('lpstat',
 		                    '-E',
-							'-W', 'all',
 							'-l')
 
 		status = {}
