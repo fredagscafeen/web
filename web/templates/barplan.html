@@ -7,6 +7,12 @@
 
 <h2>Barplan</h2>
 
+{% if show_all %}
+<a href=".">Vis nuværende</a>
+{% else %}
+<a href="?show_all">Vis også tidligere</a>
+{% endif %}
+
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
@@ -21,7 +27,7 @@
 	<tbody>
     {% for shift in bartendershifts %}
 		<tr {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}>
-			<td class="col-md-2">{{ shift.display_str }}</td>
+			<td class="col-md-2">{{ shift.display_str }}{% if show_all %} {{ shift.start_datetime.year }}{% endif %}</td>
             <td class="col-md-3">{{ shift.responsible.name }}</td>
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
@@ -42,6 +48,12 @@
 
 <h2>Pantvagter</h2>
 
+{% if show_all %}
+<a href=".">Vis nuværende</a>
+{% else %}
+<a href="?show_all">Vis også tidligere</a>
+{% endif %}
+
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
@@ -55,7 +67,7 @@
 	<tbody>
     {% for shift in boardmemberdepositshifts %}
 		<tr {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}>
-            <td class="col-md-2">{{ shift.start_date | date:"d M" }} - {{ shift.end_date | date:"d M" }}</td>
+			<td class="col-md-2">{{ shift.start_date | date:"d M" }}{% if show_all %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all %} {{ shift.end_date.year }}{% endif %}</td>
             <td class="col-md-9">
                 {% for responsible in shift.responsibles.all %}
 					{% if responsible.first_deposit_shift == shift %}<b title="Bartender's first deposit shift">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}

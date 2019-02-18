@@ -201,8 +201,19 @@ class Barplan(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['bartendershifts'] = BartenderShift.objects.filter(end_datetime__gte=timezone.now() - datetime.timedelta(1))
-        context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.filter(end_date__gte=timezone.now() - datetime.timedelta(1))
+
+        show_all = 'show_all' in self.request.GET
+
+        context['show_all'] = show_all
+
+        if show_all:
+            end_datetime = datetime.datetime.utcfromtimestamp(0)
+        else:
+            end_datetime = timezone.now() - datetime.timedelta(1)
+
+        context['bartendershifts'] = BartenderShift.objects.filter(end_datetime__gte=end_datetime)
+        context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.filter(end_date__gte=end_datetime)
+
         return context
 
 
