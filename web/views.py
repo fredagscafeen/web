@@ -207,7 +207,7 @@ class Barplan(TemplateView):
         context['show_all'] = show_all
 
         if show_all:
-            end_datetime = datetime.datetime.utcfromtimestamp(0)
+            end_datetime = timezone.make_aware(datetime.datetime.utcfromtimestamp(0))
         else:
             end_datetime = timezone.now() - datetime.timedelta(1)
 
