@@ -19,6 +19,7 @@ object {
 {% block content %}
 <form method="post">
     {% csrf_token %}
+	<p>Server status: {% if connected %}Forbundet{% else %}Ikke forbundet!{% endif %}</p>
     {{ form.as_p }}
 	<input type="submit" value="Print">
 </form>

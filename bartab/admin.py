@@ -123,6 +123,7 @@ class BarTabSnapshotAdmin(AdminViews):
 			self.admin_site.each_context(request),
 			# Anything else you want in the context...
 			form=form,
+			connected=Printer.is_connected(),
 			bartab_url=f'{settings.MEDIA_URL}/bartab.pdf',
 		)
 		return TemplateResponse(request, 'bartab/bartab.html', context)

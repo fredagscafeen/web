@@ -159,6 +159,11 @@ class Printer(models.Model):
 		return cls._htlm5_run(*args, **kwargs)
 
 	@classmethod
+	def is_connected(cls):
+		out = cls._cups_run('lpstat', '-E', '-r')
+		return out == 'scheduler is running'
+
+	@classmethod
 	def get_printers(cls):
 		out = cls._cups_run('lpstat', '-E', '-p')
 
