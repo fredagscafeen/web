@@ -174,7 +174,7 @@ class Printer(models.Model):
 	def print(self, fname):
 		options = {
 			'PageSize': 'A4',
-			'Duplex': 'DuplexTumble',
+			'Duplex': 'DuplexNoTumble',
 			'StapleLocation': '4Staples',
 
 			#'media': 'a4',
