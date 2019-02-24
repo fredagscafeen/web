@@ -31,8 +31,8 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
 This installs TeX Live full and makes it available to the dokku django instance:
 
-set -x TEXLIVE_INSTALL_PREFIX /var/lib/dokku/data/storage/fredagscafeen-media/texlive
 ```sh
+export TEXLIVE_INSTALL_PREFIX=/var/lib/dokku/data/storage/fredagscafeen-media/texlive
 rm -rf "$TEXLIVE_INSTALL_PREFIX"
 
 cd /tmp
