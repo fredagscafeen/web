@@ -31,8 +31,8 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
 This installs TeX Live full and makes it available to the dokku django instance:
 
-```
 set -x TEXLIVE_INSTALL_PREFIX /var/lib/dokku/data/storage/fredagscafeen-media/texlive
+```sh
 rm -rf "$TEXLIVE_INSTALL_PREFIX"
 
 cd /tmp
@@ -89,7 +89,7 @@ We need to specify a mirror located in Germany (as the server) as otherwise it d
 
 ## Installing autossh and cups
 
-```
+```sh
 apt install autossh cups
 systemctl disable --now cups
 systemctl disable --now cups-browsed
@@ -105,7 +105,7 @@ Open 3 terminal windows:
 Then run the following commands in order:
 
 remote:
-```
+```sh
 sudo useradd -m remoteprint
 sudo mkhomedir_helper remoteprint
 sudo -u remoteprint ssh-keygen
@@ -113,14 +113,14 @@ sudo cat /home/remoteprint/.ssh/id_rsa.pub # Key remote
 ```
 
 dokku:
-```
+```sh
 mkdir media/ssh
 ssh-keygen -f media/ssh/id_rsa
 cat media/ssh/id_rsa.pub # Key client
 ```
 
 htlm5:
-```
+```sh
 useradd -m remoteprint_relay
 mkhomedir_helper remoteprint_relay
 sudo -u remoteprint_relay ssh-keygen
@@ -131,23 +131,23 @@ cat fredagscafeen-media/ssh/id_rsa.pub | sudo -u remoteprint_relay sh -c 'cat >>
 ```
 
 remote:
-```
+```sh
 sudo -u remoteprint sh -c 'echo "<Key relay>" >> /home/remoteprint/.ssh/authorized_keys'
 ```
 
 Check that the remote can connect to the relay by running the following on the remote:
-```
+```sh
 sudo -u remoteprint /usr/bin/autossh -N -M 2233 -R 2222:localhost:22 remoteprint_relay@fredagscafeen.dk -v
 ```
 
 Check that we can connect to the relay and it can connect to the remote by running the following in dokku:
-```
+```sh
 ssh -o StrictHostKeyChecking=no remoteprint_relay@fredagscafeen.dk -i media/ssh/id_rsa id
 ssh -o StrictHostKeyChecking=no remoteprint_relay@fredagscafeen.dk -i media/ssh/id_rsa ssh remoteprint@localhost -p 2222 id
 ```
 
 Stop the `autossh` command on the remote and create the file `/etc/systemd/system/remoteprinter_autossh.service` containing:
-```
+```ini
 [Unit]
 Description=Keeps a reverse tunnel to fredagscafeen.dk open
 After=network-online.target
@@ -167,19 +167,19 @@ WantedBy=multi-user.target
 ```
 
 Then start and enable the service on the remote:
-```
+```sh
 sudo systemctl enable --now remoteprinter_autossh
 ```
 
 
 Test that we can forward port 6631 to the remote's port 631 and it works (run both command at the same time on remote):
-```
+```sh
 sudo -u /usr/bin/autossh -N -M 2244 -L 6631:localhost:631 remoteprint@localhost -p 2222 -v
 lpstat -h localhost:6631 -p
 ```
 
 Create the file `/etc/systemd/system/remoteprinter_cups_forward.service` containing:
-```
+```ini
 [Unit]
 Description=Forwards port 6631 to port 631 of an AU machine
 After=network-online.target
@@ -199,7 +199,7 @@ WantedBy=multi-user.target
 ```
 
 Then start and enable the service on the remote:
-```
+```sh
 sudo systemctl enable --now remoteprinter_cups_forward
 ```
 
