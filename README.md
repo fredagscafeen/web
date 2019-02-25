@@ -203,6 +203,26 @@ Then start and enable the service on the remote:
 sudo systemctl enable --now remoteprinter_cups_forward
 ```
 
+## Limit remote to only allow forwarding to port 631
+
+Add the following at the bottom of `/etc/ssh/sshd_config` on the remote:
+```sh
+Match User remoteprint
+	AllowTcpForwarding yes
+	X11Forwarding no
+	PermitTunnel no
+	GatewayPorts no
+	AllowAgentForwarding no
+	PermitOpen localhost:631
+	ForceCommand echo 'This account can only be used for printing'
+```
+
+Then reload `sshd`:
+
+```sh
+systemctl reload sshd
+```
+
 ## Setting up the printers to use
 
 The printers should be installed on the remote machine and also be entered into the database.
