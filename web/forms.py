@@ -4,6 +4,7 @@ from captcha.fields import ReCaptchaField
 from django.conf import settings
 from django.urls import reverse
 from django import forms
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from bootstrap_datepicker_plus import DateTimePickerInput
 
@@ -172,8 +173,8 @@ class SwapForm2(SwapForm1):
 		self.fields['bartender2'].initial = bartender2
 		self.fields['swap'].initial = swap
 
-		self.fields['bartender_shift1'].queryset = BartenderShift.with_bartender(bartender1).reverse()
-		self.fields['bartender_shift2'].queryset = BartenderShift.with_bartender(bartender2).reverse()
+		self.fields['bartender_shift1'].queryset = BartenderShift.with_bartender(bartender1).filter(end_datetime__gte=timezone.now()).reverse()
+		self.fields['bartender_shift2'].queryset = BartenderShift.with_bartender(bartender2).filter(end_datetime__gte=timezone.now()).reverse()
 
 		if not swap:
 			del self.fields['bartender_shift2']
