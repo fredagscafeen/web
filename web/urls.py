@@ -3,8 +3,10 @@ from django.views.generic.base import RedirectView
 
 from web.views import Index, Contact, BartenderList, Barplan, UserBarplan, Items, Board, Search, Udlejninger, \
     UdlejningerGrill, Guides, UserDepositShifts, BartenderInfo, Login, email_login_view, logout_view, BarTab
+from guides.update import update_hook
 
 urlpatterns = [
+    path('update_hook/', update_hook),
     path('contact/', Contact.as_view()),
     path('bartenders/', BartenderList.as_view()),
     path('barplan/', Barplan.as_view(), name='barplan'),
