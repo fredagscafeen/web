@@ -7,6 +7,7 @@ from pathlib import Path
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 
 BAD_REQUEST = HttpResponseBadRequest('<h1>400 Bad Request</h1>')
@@ -22,6 +23,7 @@ def get_path(d, *path):
 
 
 @csrf_exempt
+@require_POST
 def update_hook(request):
 	gitlab_token = request.META.get('HTTP_X_GITLAB_TOKEN')
 	gitlab_event = request.META.get('HTTP_X_GITLAB_EVENT')
