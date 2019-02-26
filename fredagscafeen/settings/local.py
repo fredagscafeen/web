@@ -1,5 +1,6 @@
 from fredagscafeen.settings.base import *
 
+ALLOWED_HOSTS = ['*']
 SECRET_KEY = "This is insecure"
 DEBUG = True
 
