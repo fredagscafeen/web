@@ -20,7 +20,7 @@ from .sumfield import SumField
 
 class BarTabUser(models.Model):
 	ACTIVE_TIME_LIMIT = datetime.timedelta(weeks=4)
-	CREDIT_HOLD_LIMIT = -100
+	CREDIT_HOLD_LIMIT = 0
 
 	name = models.CharField(max_length=140)
 	email = models.EmailField(blank=True, null=True)
