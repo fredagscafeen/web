@@ -44,6 +44,20 @@ cd install-tl-*
 
 We need to specify a mirror located in Germany (as the server) as otherwise it defaults to some Australian mirror.
 
+# GitLab hook for automatically updating guide PDFs
+
+To setup do the following for each repository {guides,vedtaegter}:
+
+* Go to Settings -> Repository -> Deploy Tokens and generate a new token.
+  * Concatenate the username and password as `<username>:<password>` and save it somewhere.
+* Go to Settings -> Integrations and add a new webhook:
+  * URL should be `https://fredagscafeen.dk/update_hook/`
+  * Secret Token should be `<username>:<password>` that you generated earlier.
+  * Click Add webhook.
+  * Test it by clicking Test -> Push events. You should get either a HTTP 200 response or a `Net::ReadTimeout` error.
+
+Every time a tex file for a guide is updated, the server will recompile it and update the hosted PDF.
+
 # Remote server printing
 
 ## Diagram
