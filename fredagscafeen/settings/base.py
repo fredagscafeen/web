@@ -86,6 +86,7 @@ INSTALLED_APPS = (
 	'logentry_admin',
 	'bartab',
 	'email_auth',
+	'guides',
 )
 
 MIDDLEWARE = (

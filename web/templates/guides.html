@@ -12,42 +12,17 @@
 	flere og flere op.
 </p>
 
+{% for category, guides in guides %}
 <div class="panel panel-default">
-	<div class="panel-heading">Til bartendere</div>
+	<div class="panel-heading">{{ category }}</div>
 	<div class="panel-body">
 		<ul>
-			<li><a href="/static/guides/barvagt.pdf">Guide til en standard barvagt</a></li>
-			<li><a href="/static/guides/rensningafanlaeg.pdf">Guide til rensning af fadølsanlæg</a></li>
-			<li><a href="/static/guides/dankortterminal.pdf">Guide til dankort terminalen</a></li>
+			{% for guide in guides %}
+				<li><a href="{{ guide.document.url }}">{{ guide.name }}</a></li>
+			{% endfor %}
 		</ul>
 	</div>
 </div>
-
-<div class="panel panel-default">
-	<div class="panel-heading">Til bestyrelsesmedlemmer</div>
-	<div class="panel-body">
-		<ul>
-			<li><a href="/static/guides/pantvagt.pdf">Guide til pantvagt</a></li>
-			<li><a href="/static/guides/aarhusbryghus.pdf">Guide til Aarhus Bryghus ansvarlig</a></li>
-			<li><a href="/static/guides/danskretursystem.pdf">Guide til pant ansvarlig</a></li>
-			<li><a href="/static/guides/event.pdf">Guide til event ansvarlig</a></li>
-			<li><a href="/static/guides/formand.pdf">Guide til formands posten</a></li>
-			<li><a href="/static/guides/lagerbeholdning.pdf">Guide til lageret</a></li>
-			<li><a href="/static/guides/pr.pdf">Guide til PR posten</a></li>
-			<li><a href="/static/guides/specialoel.pdf">Guide til specialølansvarlig</a></li>
-			<li><a href="/static/guides/udlejning.pdf">Guide til udlejningsansvarlig</a></li>
-		</ul>
-	</div>
-</div>
-
-<div class="panel panel-default">
-	<div class="panel-heading">Til alle</div>
-	<div class="panel-body">
-		<ul>
-			<li><a href="/static/guides/vedtaegter.pdf">Vedtægter</a></li>
-			<li><a href="/static/guides/pizzaliste.pdf">Pizzalisten</a></li>
-		</ul>
-	</div>
-</div>
+{% endfor %}
 
 {% endblock %}

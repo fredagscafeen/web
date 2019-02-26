@@ -15,6 +15,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from email_auth.auth import EmailTokenBackend
 from bartab.models import BarTabUser, BarTabSnapshot
 from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, next_bartender_shift_dates, BartenderUnavailableDate, BoardMemberPeriod
+from guides.models import Guide
 from items.models import Item
 from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
 from web.forms import BartenderApplicationForm, UdlejningApplicationForm, BartenderInfoForm, LoginForm
@@ -362,3 +363,14 @@ class UdlejningerGrill(ListView):
 
 class Guides(TemplateView):
     template_name = "guides.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        guides = []
+        for k, name in Guide.GUIDE_TYPES:
+            guides.append((name, Guide.objects.filter(category=k)))
+
+        context['guides'] = guides
+
+        return context
