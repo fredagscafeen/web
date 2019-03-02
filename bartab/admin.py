@@ -5,6 +5,8 @@ import shutil
 from admin_views.admin import AdminViews
 from django.contrib import admin
 from django.db import models
+from django.db.models import F, Sum, Value
+from django.db.models.functions import Coalesce
 from django.forms.widgets import TextInput, Select
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
@@ -32,13 +34,21 @@ class BarTabEntryReadonlyInline(admin.TabularInline):
 
 
 class BarTabUserAdmin(admin.ModelAdmin):
-	list_display = ('name', 'email', 'balance', 'hidden_from_tab')
-	readonly_fields = ('balance',)
+	list_display = ('name', 'email', 'current_balance', 'hidden_from_tab')
 	search_fields = ('name', 'email')
 	list_filter = ('hidden_from_tab',)
 	inlines = [
 		BarTabEntryReadonlyInline,
 	]
+
+	def current_balance(self, obj):
+		return obj.balance
+	current_balance.admin_order_field = 'current_balance'
+
+	def get_queryset(self, request):
+		qs = super().get_queryset(request)
+		qs = qs.annotate(current_balance=Coalesce(Sum(F('entries__added') - F('entries__used')), Value(0)))
+		return qs
 
 
 class BarTabEntryInline(admin.TabularInline):
