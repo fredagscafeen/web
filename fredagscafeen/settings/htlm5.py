@@ -9,6 +9,9 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
+# Only send session cookie when using https
+SESSION_COOKIE_SECURE = True
+
 MAILMAN_MUTABLE = True
 
 EMAIL_HOST = 'smtp.gmail.com'
