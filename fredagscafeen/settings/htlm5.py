@@ -6,7 +6,7 @@ DEBUG = False
 
 SELF_URL = 'https://fredagscafeen.dk/'
 ALLOWED_HOSTS = [
-    '*'
+    'fredagscafeen.dk'
 ]
 
 # Only send session cookie when using https
