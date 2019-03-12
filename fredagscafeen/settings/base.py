@@ -194,3 +194,6 @@ ADMINS = [
 
 # Allow more fields in GET/POST requests (necessary for BarTabAdmin to function with large snapshots)
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10 ** 6
+
+# Session cookie lasts a year
+SESSION_COOKIE_AGE = 365 * 24 * 60 * 60
