@@ -85,7 +85,10 @@
 				{% if item.brewery %}
 					{{ item.brewery }} -
 				{% endif %}
-				{{ item.name }} ({{ item.get_container_display }})
+				{{ item.name }}
+				{% if item.get_container_display %}
+				({{ item.get_container_display }})
+				{% endif %}
 			</td>
 		<td class="price">
 			{{ item.priceInDKK|floatformat:-2 }}

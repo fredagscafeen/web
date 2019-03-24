@@ -27,6 +27,9 @@ class Item(models.Model):
     lastModified = models.DateTimeField(auto_now=True, null=True, blank=True)
     link = models.CharField(max_length=255, blank=True)
 
+    class Meta:
+        ordering = ('name',)
+
     def __str__(self):
         if self.brewery:
             return f'{self.brewery} - {self.name}'
