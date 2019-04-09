@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import admin, messages
+from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -11,13 +12,15 @@ from fredagscafeen.admin_filters import NonNullFieldListFilter
 
 from .mailman2 import MailmanError
 
+User = get_user_model()
+
 
 class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ('name', 'username', 'email')
     search_fields = ('name', 'username', 'email')
     list_filter = ('isActiveBartender', ('boardmember', NonNullFieldListFilter))
 
-    change_actions = ('add_to_mailing_list', 'remove_from_mailing_list')
+    change_actions = ('add_to_mailing_list', 'remove_from_mailing_list', 'create_admin_user')
 
     def add_to_mailing_list(self, request, obj):
         if not settings.MAILMAN_MUTABLE:
@@ -45,6 +48,23 @@ class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 
     remove_from_mailing_list.label = 'Remove from mailing list'
+
+    def create_admin_user(self, request, obj):
+        first_name, last_name = obj.name.rsplit(' ', maxsplit=1)
+        user = User.objects.create(username=obj.username,
+                                   email=obj.email,
+                                   first_name=first_name,
+                                   last_name=last_name)
+
+        password = User.objects.make_random_password(length=30)
+        user.set_password(password)
+
+        user.is_staff = True
+        user.save()
+
+        messages.info(request, f'Created user {obj.username} with password {password}')
+
+    create_admin_user.label = 'Create admin user'
 
 
 class BoardMemberAdmin(admin.ModelAdmin):
