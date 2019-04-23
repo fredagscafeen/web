@@ -1,6 +1,6 @@
 import datetime
 import re
-from subprocess import check_output, CalledProcessError
+from subprocess import run, CalledProcessError
 from shlex import quote
 from tempfile import TemporaryDirectory
 import shutil
@@ -150,7 +150,9 @@ class Printer(models.Model):
 
 		print(*args)
 
-		return check_output(args, encoding='utf-8', **kwargs).strip()
+		p = run(args, encoding='utf-8', check=True, capture_output=True, **kwargs)
+		return p.stdout.strip()
+
 
 	@classmethod
 	def _cups_run(cls, *args, **kwargs):

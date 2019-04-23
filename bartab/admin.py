@@ -1,6 +1,7 @@
 from tempfile import TemporaryDirectory
 from collections import Counter
 import shutil
+from subprocess import CalledProcessError
 
 from admin_views.admin import AdminViews
 from django.contrib import admin
@@ -96,7 +97,17 @@ class BarTabSnapshotAdmin(AdminViews):
 			form = PrintForm(request.POST)
 			if form.is_valid():
 				printer = form.cleaned_data['printer']
-				job_id = printer.print(PDF_PATH)
+				try:
+					job_id = printer.print(PDF_PATH)
+				except CalledProcessError as e:
+					return HttpResponse(f'''Got unexpected exit code {e.returncode} from running:
+{e.cmd}
+
+stdout:
+{e.stdout}
+
+stderr:
+{e.stderr}''', content_type='text/plain')
 
 				context = dict(
 					# Include common variables for rendering the admin template.
