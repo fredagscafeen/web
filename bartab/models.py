@@ -223,8 +223,8 @@ class Printer(models.Model):
 		for i in range(len(lines)):
 			if lines[i].startswith(job_id):
 				i += 1
-				while i < len(lines) and lines[i].startswith(' '):
-					parts = lines[i].strip().split(': ')
+				while i < len(lines) and lines[i].startswith('\t'):
+					parts = lines[i].strip().split(': ', maxsplit=1)
 					if len(parts) == 2:
 						status[parts[0]] = parts[1]
 
