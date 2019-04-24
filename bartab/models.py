@@ -173,7 +173,7 @@ class Printer(models.Model):
 			if l.startswith('printer '):
 				yield l.split()[1]
 
-	def print(self, fname):
+	def print(self, fname, inside_dokku=True):
 		options = {
 			'PageSize': 'A4',
 			'Duplex': 'DuplexNoTumble',
@@ -188,7 +188,7 @@ class Printer(models.Model):
 
 		with TemporaryDirectory(dir=settings.MEDIA_ROOT) as d:
 			os.chmod(d, 0o777)
-			if settings.DEBUG:
+			if settings.DEBUG or not inside_dokku:
 				htlm5_name = fname
 			else:
 				tmp_dir = d.split('/')[-1]

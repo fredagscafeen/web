@@ -21,7 +21,8 @@ object {
     {% csrf_token %}
 	<p>Server status: {% if connected %}Forbundet{% else %}Ikke forbundet!{% endif %}</p>
     {{ form.as_p }}
-	<input type="submit" value="Print">
+	<input type="submit" name="print_submit" value="Print">
+	<input type="submit" name="print_test_submit" value="Print test side">
 </form>
 <object data="{{ bartab_url }}" type="application/pdf"></object>
 {% endblock %}

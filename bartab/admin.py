@@ -89,6 +89,7 @@ class BarTabSnapshotAdmin(AdminViews):
 		return obj.entries.count()
 
 	def generate_bartab(self, request):
+		TEST_PDF_PATH = '/usr/share/cups/data/testprint'
 		PDF_PATH = f'{settings.MEDIA_ROOT}/bartab.pdf'
 
 		form = PrintForm()
@@ -98,7 +99,10 @@ class BarTabSnapshotAdmin(AdminViews):
 			if form.is_valid():
 				printer = form.cleaned_data['printer']
 				try:
-					job_id = printer.print(PDF_PATH)
+					if request.POST.get('print_test_submit'):
+						job_id = printer.print(TEST_PDF_PATH, inside_dokku=False)
+					else:
+						job_id = printer.print(PDF_PATH)
 				except CalledProcessError as e:
 					return HttpResponse(f'''Got unexpected exit code {e.returncode} from running:
 {e.cmd}
