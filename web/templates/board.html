@@ -28,6 +28,11 @@
 				<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
 					Bestyrelsen {{ period }}
 				</a>
+				{% if user.is_staff %}
+					<a href="/admin/bartenders/boardmemberperiod/{{ period.id }}/change/" class="pull-right">
+						edit
+					</a>
+				{% endif %}
 			</h4>
 		</div>
 	<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse{% if forloop.first %} in{% endif %}">
