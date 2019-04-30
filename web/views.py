@@ -78,6 +78,15 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
         messages.success(self.request, 'Profil opdateret')
         redirect_url = super().form_valid(form)
 
+        if 'deactivate' in self.request.POST:
+            self.object.isActiveBartender = False
+            self.object.save()
+        elif 'subscribe_maillist' in self.request.POST:
+            self.object.add_to_mailing_list()
+        elif 'unsubscribe_maillist' in self.request.POST:
+            self.object.remove_from_mailing_list()
+
+
         self.object.unavailable_dates.all().delete()
         for ordinal in self.request.POST.getlist('unavailable_ordinals'):
             date = datetime.date.fromordinal(int(ordinal))

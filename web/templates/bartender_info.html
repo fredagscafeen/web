@@ -18,8 +18,31 @@ $(function() {
 {% if object %}
 <form method="post">
 {% csrf_token %}
-<p><b>Bartender status:</b> {% if object.isActiveBartender %} Aktiv {% else %} Inaktiv {% endif %}</p>
-<p>Kontakt <a href="best@fredagscafeen.dk">best@fredagscafeen.dk</a> for at skifte status.</p>
+<p><b>Bartender status:</b>
+{% if object.isActiveBartender %}
+    Aktiv
+    <button type="submit" class="btn btn-danger pull-right" name="deactivate">Bliv inaktiv</button>
+{% else %}
+    Inaktiv
+    <span class="pull-right">(Hvis du gerne vil være aktive igen, så kontakt <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>)</span>
+{% endif %}
+</p>
+{% if not object.isActiveBartender %}
+    <p>Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne.</p>
+{% endif %}
+<br>
+<p><b>Mailinglist status:</b>
+{% if object.is_on_mailing_list %}
+    På mailinglisten
+    {% if not object.isActiveBartender %}
+        <button type="submit" class="btn btn-danger pull-right" name="unsubscribe_maillist">Meld dig af mailinglisten</button>
+    {% endif %}
+{% else %}
+    Ikke på mailinglisten
+    <button type="submit" class="btn btn-success pull-right" name="subscribe_maillist">Meld dig på mailinglisten</button>
+{% endif %}
+</p>
+<br>
 {% bootstrap_form form %}
 
 <label>Datoer, hvor du ikke har mulighed for at stå i bar:</label>

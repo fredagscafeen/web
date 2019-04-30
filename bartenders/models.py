@@ -89,6 +89,10 @@ class Bartender(BartenderCommon):
                        settings.MAILMAN_ALL_LIST,
                        settings.MAILMAN_ALL_PASSWORD)
 
+    def is_on_mailing_list(self):
+        mailman = self._get_mailman()
+        return self.email in mailman.get_subscribers()
+
     def add_to_mailing_list(self):
         mailman = self._get_mailman()
         mailman.add_subscriptions([f'{self.name} <{self.email}>'])
