@@ -1,5 +1,6 @@
 import datetime
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
 from bartenders.models import Bartender, BartenderShift, BartenderShiftPeriod, next_bartender_shift_start, BartenderUnavailableDate
 import random
 import copy
@@ -7,17 +8,9 @@ from collections import defaultdict
 import sys
 
 
-# This needs to be changed before generating shifts
-'''
-EXTRA_SHIFTS = [
-	# Rusuge
-	(datetime.datetime(2018, 8, 24, 21), datetime.datetime(2018, 8, 25, 2)),
-]
+DOUBLE_SECOND_SHIFT_START = datetime.time(21, 00)
+DOUBLE_SECOND_SHIFT_DURATION = datetime.timedelta(hours=5) # Ends at 02:00
 
-EXTRA_SHIFTS = [tuple(map(timezone.get_default_timezone().localize, period)) for period in EXTRA_SHIFTS]
-'''
-
-EXTRA_SHIFTS = []
 
 class Command(BaseCommand):
 	help = 'Generate normal barshifts'
@@ -27,6 +20,7 @@ class Command(BaseCommand):
 
 	def add_arguments(self, parser):
 		parser.add_argument('-t', '--max-tries', type=int, default=10**4)
+		parser.add_argument('-d', '--double-shift', action='append', default=[], type=datetime.date.fromisoformat)
 
 	def try_random_solution(self, total_shifts, sorted_bartenders, bartenders_needed, available_shifts):
 		available_shifts = copy.deepcopy(available_shifts)
@@ -55,12 +49,10 @@ class Command(BaseCommand):
 
 		# Failed to get solution
 		if total_needed != 0:
-			# print('  Couldn\'t solve it!')
 			return None
 
 		# Solution is too skewed
 		if min(shifts_for_bartender) + 1 < max(shifts_for_bartender):
-			# print('  Solution is too skewed!')
 			return None
 
 		return shifts
@@ -86,7 +78,13 @@ class Command(BaseCommand):
 		best = ((-float('inf'), 0), None)
 
 		sorted_bartenders = sorted(range(len(bartenders)), key=lambda x: len(available_shifts[x]))
+
+		min_available = len(available_shifts[sorted_bartenders[0]])
+		if min_available < self.BARTENDER_SHIFTS:
+			raise CommandError(f'Bartender {bartenders[sorted_bartenders[0]]} only has {min_available} available dates!')
+
 		i = 0
+		fails = 0
 		while i < max_tries:
 			result = self.try_random_solution(total_shifts,
 					sorted_bartenders, bartenders_needed, available_shifts)
@@ -96,15 +94,27 @@ class Command(BaseCommand):
 				sys.stdout.flush()
 				i += 1
 				best = max(best, (self.get_shifts_score(bartenders, result, last_shifts), result))
+			else:
+				fails += 1
+
+			print(f'\r{i} / {max_tries} (failed: {fails})', end='')
+			sys.stdout.flush()
 
 		print()
-		print(f'Min distance: {best[0]}')
+		print(f'Min distance: {best[0][0]}, count: {best[0][1]}')
 		return best[1]
 
 
 	def handle(self, *args, **options):
-		board_members = list(Bartender.objects.filter(boardmember__isnull=False))
-		normal_bartenders = list(Bartender.objects.filter(isActiveBartender=True, boardmember__isnull=True))
+		double_shifts = options['double_shift']
+
+		board_members = []
+		normal_bartenders = []
+		for b in Bartender.objects.filter(isActiveBartender=True):
+			if b.isBoardMember:
+				board_members.append(b)
+			else:
+				normal_bartenders.append(b)
 
 		all_bartenders = [normal_bartenders, board_members]
 
@@ -113,11 +123,35 @@ class Command(BaseCommand):
 
 		last_shift = BartenderShift.objects.last()
 
-		shift_starts = [next_bartender_shift_start(last_shift.start_datetime.date())]
-		for _ in range(total_shifts - 1 - len(EXTRA_SHIFTS)):
-			shift_starts.append(next_bartender_shift_start(shift_starts[-1].date()))
+		shift_start = last_shift.start_datetime
+		shift_periods = []
+		double_shifts_used = 0
+		i = 0
+		while i < total_shifts:
+			i += 1
+			shift_start = next_bartender_shift_start(shift_start.date())
 
-		shift_periods = sorted([(start, None) for start in shift_starts] + [s for s in EXTRA_SHIFTS])
+			shift_periods.append((shift_start, None))
+			if shift_start.date() in double_shifts:
+				second_start_naive = datetime.datetime.combine(shift_start.date(), DOUBLE_SECOND_SHIFT_START)
+				second_start = timezone.get_default_timezone().localize(second_start_naive)
+				second_end = second_start + DOUBLE_SECOND_SHIFT_DURATION
+
+				shift_periods[-1] = (shift_start, second_start)
+				shift_periods.append((second_start, second_end))
+
+				double_shifts_used += 1
+				i += 1
+
+
+		if i > total_shifts:
+			print(f'WARNING: Final double shift is included, even though this means one more shift!')
+			total_shifts = i
+
+
+		if double_shifts_used != len(double_shifts):
+			print(f'WARNING: Only used {double_shifts_used}/{len(double_shifts)} double shifts!')
+
 
 		shift_indices = defaultdict(list)
 		for i, (start, end) in enumerate(shift_periods):
@@ -125,7 +159,7 @@ class Command(BaseCommand):
 
 		print(f'Board members: {len(board_members)}')
 		print(f'Other active bartenders: {len(normal_bartenders)}')
-		print(f'Generating {total_shifts} shifts from {shift_starts[0].date()} to {shift_starts[-1].date()}')
+		print(f'Generating {total_shifts} shifts from {shift_periods[0][0].date()} to {shift_periods[-1][0].date()}')
 
 		last_shifts = []
 		for bs in all_bartenders:
@@ -167,6 +201,8 @@ class Command(BaseCommand):
 			shifts.append(self.get_random_solution(total_shifts,
 				bartenders, bartenders_needed, available_shifts[board_member],
 				options['max_tries'], ls))
+
+		print()
 
 		shifts_for_bartender = defaultdict(int)
 		for s, (start, end) in enumerate(shift_periods):
