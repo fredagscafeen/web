@@ -19,7 +19,7 @@ class LogEntryAdminWithSecrets(LogEntryAdmin, AdminViews):
 	)
 
 	def secrets_view(self, request):
-		secrets = [(key, title, getattr(settings, key, None)) for key, title in settings.SECRET_ADMIN_KEYS]
+		secrets = [(key, title, getattr(settings, key, None), url) for key, title, url in settings.SECRET_ADMIN_KEYS]
 
 		context = dict(
 			# Include common variables for rendering the admin template.

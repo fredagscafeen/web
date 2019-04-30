@@ -26,13 +26,13 @@ MAILMAN_ALL_LIST = 'datcafe-alle.cs'
 MAILMAN_BEST_LIST = 'datcafe-best.cs'
 
 SECRET_ADMIN_KEYS = [
-	('SECRET_KEY', 'Django secret key'),
-	('MAILMAN_ALL_PASSWORD', 'Alle mailinglist admin password'),
-	('MAILMAN_BEST_PASSWORD', 'Best mailinglist admin password'),
-	('EMAIL_HOST_PASSWORD', 'Gmail password'),
-	('DIGITAL_OCEAN_PASSWORD', 'Digital Ocean password'),
-	('MIDTTRAFIK_BESTILLING_PASSWORD', 'midttrafikbestilling.dk password'),
-	('RECAPTCHA_PRIVATE_KEY', 'ReCaptcha private key'),
+	('SECRET_KEY', 'Django secret key', None),
+	('MAILMAN_ALL_PASSWORD', 'Alle mailinglist admin password', f'{MAILMAN_URL_BASE}/admin/{MAILMAN_ALL_LIST}'),
+	('MAILMAN_BEST_PASSWORD', 'Best mailinglist admin password', f'{MAILMAN_URL_BASE}/admin/{MAILMAN_BEST_LIST}'),
+	('EMAIL_HOST_PASSWORD', 'Gmail password', 'https://gmail.com/'),
+	('DIGITAL_OCEAN_PASSWORD', 'Digital Ocean password', 'https://cloud.digitalocean.com/login'),
+	('MIDTTRAFIK_BESTILLING_PASSWORD', 'midttrafikbestilling.dk password', 'https://midttrafikbestilling.dk/'),
+	('RECAPTCHA_PRIVATE_KEY', 'ReCaptcha private key', None),
 ]
 
 CONSTANCE_CONFIG = {
@@ -40,7 +40,7 @@ CONSTANCE_CONFIG = {
 }
 
 # Inject all secret keys
-for k, _ in SECRET_ADMIN_KEYS:
+for k, _, _ in SECRET_ADMIN_KEYS:
 	v = os.getenv(k)
 	if v != None:
 		globals()[k] = v
