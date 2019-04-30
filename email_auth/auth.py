@@ -34,11 +34,13 @@ class EmailTokenBackend:
 		email_token.refresh_token()
 
 		try:
-			return User.objects.get(email=email, is_staff=True)
+			user = User.objects.get(email=email, is_staff=True)
 		except User.DoesNotExist:
-			return User.objects.get_or_create(email=email, defaults={
+			user, _ = User.objects.get_or_create(email=email, defaults={
 				'username': f'ZZZZZ_email_{email}' # Z is lexicographically large
 			})
+
+		return user
 
 	def get_user(self, user_id):
 		try:
