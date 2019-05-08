@@ -58,6 +58,23 @@ class Command(BaseCommand):
 		return shifts
 
 	def get_shifts_score(self, bartenders, shifts, last_shifts):
+		'''
+		A shifts score is based on 3 factors, with the following priorities:
+		1. The amount of new bartenders, who have fewer than the normal amount of shifts.
+		   We want to minimize this and it should probably be possible to get this down to 0.
+
+		2. The minimum distance between two shifts with the same bartender.
+		   We want to maximize this.
+
+		3. The amount of pairs of shifts with the same bartender,
+		   having distance exactly equal to the distance in 2.
+		   We want to minize this.
+		'''
+
+		last_shifts = last_shifts.copy()
+
+		new_bartenders = set()
+		new_bartender_shift_count = 0
 		count = 0
 		min_distance = float('inf')
 		for s, bs in enumerate(shifts):
@@ -69,13 +86,20 @@ class Command(BaseCommand):
 						count = 1
 					elif distance == min_distance:
 						count += 1
+				else:
+					new_bartenders.add(b)
+
+				if b in new_bartenders:
+					new_bartender_shift_count += 1
 
 				last_shifts[b] = s
 
-		return (min_distance, count)
+		new_bartenders_with_fewer_shifts = len(new_bartenders) * self.BARTENDER_SHIFTS - new_bartender_shift_count
+
+		return (-new_bartenders_with_fewer_shifts, min_distance, count)
 
 	def get_random_solution(self, total_shifts, bartenders, bartenders_needed, available_shifts, max_tries, last_shifts):
-		best = ((-float('inf'), 0), None)
+		best = ((-float('inf'), -float('inf'), 0), None)
 
 		sorted_bartenders = sorted(range(len(bartenders)), key=lambda x: len(available_shifts[x]))
 
@@ -90,18 +114,17 @@ class Command(BaseCommand):
 					sorted_bartenders, bartenders_needed, available_shifts)
 
 			if result != None:
-				print(f'\r{i + 1} / {max_tries}', end='')
-				sys.stdout.flush()
 				i += 1
 				best = max(best, (self.get_shifts_score(bartenders, result, last_shifts), result))
 			else:
 				fails += 1
 
-			print(f'\r{i} / {max_tries} (failed: {fails})', end='')
+			best_str = f'fewer news: {-best[0][0]}, min distance: {best[0][1]}, count: {best[0][2]}'
+			print(f'\r{i} / {max_tries} (failed: {fails}), best: {best_str}', end='')
 			sys.stdout.flush()
 
 		print()
-		print(f'Min distance: {best[0][0]}, count: {best[0][1]}')
+		print(best_str)
 		return best[1]
 
 
