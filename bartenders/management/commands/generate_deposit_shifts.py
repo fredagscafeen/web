@@ -12,7 +12,7 @@ class Command(BaseCommand):
 	WEEKS = 4
 
 	def handle(self, *args, **options):
-		board_members = set(Bartender.objects.filter(boardmember__isnull=False))
+		board_members = set(b for b in Bartender.objects.all() if b.isBoardMember)
 
 		first_shift = None
 		for shift in reversed(BoardMemberDepositShift.objects.all()):
@@ -34,11 +34,16 @@ class Command(BaseCommand):
 		shuffled_board_members = list(board_members - set(last_responsibles))
 		random.shuffle(shuffled_board_members)
 
-		print(second_last_responsible)
-		print(last_responsible)
+		if second_last_responsible.isBoardMember:
+			shuffled_board_members.insert(random.randint(1, len(shuffled_board_members)), second_last_responsible)
 
-		shuffled_board_members.insert(random.randint(1, len(shuffled_board_members)), second_last_responsible)
-		shuffled_board_members.insert(random.randint(2, len(shuffled_board_members)), last_responsible)
+		if last_responsible.isBoardMember:
+			shuffled_board_members.insert(random.randint(2, len(shuffled_board_members)), last_responsible)
+
+
+		print('Shuffled ordering of board members:')
+		print(*shuffled_board_members, sep='\n')
+		print()
 
 		responsibles = []
 		shift_starts = []
