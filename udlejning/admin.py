@@ -72,7 +72,7 @@ class UdlejningAdmin(admin.ModelAdmin):
 				if diff == -1:
 					delta = 'i går!'
 				else:
-					delta = f'{diff} dage siden!'
+					delta = f'{-diff} dage siden!'
 
 			suffix = f' ({obj.payment_due_date}, {delta})'
 		return mark_safe(f'<img src="{ static(f"admin/img/icon-{icon}.svg") }"> {obj.get_status_display()}{suffix}')
