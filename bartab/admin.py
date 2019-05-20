@@ -1,6 +1,7 @@
 from tempfile import TemporaryDirectory
-from collections import Counter
+from collections import Counter, defaultdict
 import shutil
+import json
 from subprocess import CalledProcessError
 
 from admin_views.admin import AdminViews
@@ -83,6 +84,7 @@ class BarTabSnapshotAdmin(AdminViews):
 	admin_views = (
 		('Generate bartab', 'generate_bartab'),
 		('Count consumption', 'count_consumption'),
+		('Bartab balance graph', 'bartab_graph'),
 	)
 
 	def entry_count(self, obj):
@@ -182,6 +184,32 @@ stderr:
 			result=result,
 		)
 		return TemplateResponse(request, 'bartab/consumption.html', context)
+
+
+	def bartab_graph(self, request):
+		balances = defaultdict(int)
+		graph_data = []
+		for snapshot in reversed(BarTabSnapshot.objects.all()):
+			for entry in snapshot.entries.all():
+				balances[entry.user] += entry.added - entry.used
+
+			total_positive = sum(b for b in balances.values() if b > 0)
+			total_negative = -sum(b for b in balances.values() if b < 0)
+
+			if snapshot.bartender_shift != None:
+				graph_data.append({
+					'datetime': snapshot.datetime.timestamp() * 1000,
+					'total_positive': float(total_positive),
+					'total_negative': float(total_negative),
+				})
+
+		context = dict(
+			# Include common variables for rendering the admin template.
+			self.admin_site.each_context(request),
+			# Anything else you want in the context...
+			graph_data=json.dumps(graph_data),
+		)
+		return TemplateResponse(request, 'bartab/graph.html', context)
 
 
 class PrinterSelect(Select):

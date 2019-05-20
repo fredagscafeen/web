@@ -1,0 +1,75 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<canvas id="canvas"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+<script>
+	var graph_data = JSON.parse('{{ graph_data | escapejs }}');
+
+	var datasets = [{
+		label: 'Positive balances',
+		showLine: true,
+		fill: false,
+		borderColor: 'lightgreen',
+		lineTension: 0,
+		data: [],
+	}, {
+		label: 'Negative balances',
+		showLine: true,
+		fill: false,
+		borderColor: 'red',
+		lineTension: 0,
+		data: [],
+	}, {
+		label: 'Total',
+		showLine: true,
+		fill: false,
+		borderColor: 'gray',
+		lineTension: 0,
+		data: [],
+	}];
+
+	for (var i = 0; i < graph_data.length; i++) {
+		var d = graph_data[i];
+
+		datasets[0].data.push({
+			x: d.datetime,
+			y: d.total_positive,
+		});
+		datasets[1].data.push({
+			x: d.datetime,
+			y: d.total_negative,
+		});
+		datasets[2].data.push({
+			x: d.datetime,
+			y: d.total_positive - d.total_negative,
+		});
+	}
+
+	var ctx = document.getElementById('canvas').getContext('2d');
+	var chart = new Chart(ctx, {
+		type: 'scatter',
+
+		data: {
+			datasets: datasets,
+		},
+
+		options: {
+			animation: { duration: 0 },
+			scales: {
+				xAxes: [{
+					type: 'time',
+					time: {
+						displayFormats: {
+							millisecond: 'HH:mm:ss.SSS',
+							second: 'HH:mm:ss',
+							minute: 'HH:mm',
+							hour: 'HH',
+						},
+					},
+				}],
+			},
+		},
+	});
+</script>
+{% endblock %}
