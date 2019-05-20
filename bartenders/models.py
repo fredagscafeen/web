@@ -54,6 +54,7 @@ class Bartender(BartenderCommon):
 
     isActiveBartender = models.BooleanField(default=True)
     tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True, verbose_name='T-shirt størrelse')
+    prefer_only_early_shifts = models.BooleanField(default=False, verbose_name='Jeg foretrækker ikke at have nogle sene barvagter')
 
     @property
     def isBoardMember(self):

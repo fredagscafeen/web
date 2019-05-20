@@ -18,7 +18,7 @@ from fredagscafeen.email import send_template_email
 class BartenderInfoForm(forms.ModelForm):
 	class Meta:
 		model = Bartender
-		fields = ('name', 'username', 'email', 'studentNumber', 'phoneNumber', 'tshirt_size')
+		fields = ('name', 'username', 'email', 'studentNumber', 'phoneNumber', 'tshirt_size', 'prefer_only_early_shifts')
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
