@@ -68,9 +68,10 @@ class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 
 class BoardMemberAdmin(admin.ModelAdmin):
-    list_display = ('thumbnail', 'bartender', 'title')
+    list_display = ('thumbnail', 'bartender', 'title', 'period')
     list_display_links = ('thumbnail', 'bartender')
     list_select_related = ('bartender', )
+    list_filter = ('period',)
 
     def thumbnail(self, obj):
         return mark_safe('<img src="%s" width="75px"/>' % obj.image.url) if obj.image else '<missing>'
