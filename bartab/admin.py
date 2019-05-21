@@ -35,6 +35,7 @@ class BarTabEntryReadonlyInline(admin.TabularInline):
 		return False
 
 
+@admin.register(BarTabUser)
 class BarTabUserAdmin(admin.ModelAdmin):
 	list_display = ('name', 'email', 'current_balance', 'hidden_from_tab')
 	search_fields = ('name', 'email')
@@ -74,6 +75,7 @@ class BarTabEntryInline(admin.TabularInline):
 		return field
 
 
+@admin.register(BarTabSnapshot)
 class BarTabSnapshotAdmin(AdminViews):
 	list_display = ('date', 'entry_count', 'total_added', 'total_used')
 	change_form_template = 'admin/bartabsnapshot.html'
@@ -218,12 +220,8 @@ class PrinterSelect(Select):
 		super().__init__(*args, **kwargs)
 
 
+@admin.register(Printer)
 class PrinterAdmin(admin.ModelAdmin):
 	formfield_overrides = {
 		models.CharField: {'widget': PrinterSelect},
 	}
-
-
-admin.site.register(BarTabUser, BarTabUserAdmin)
-admin.site.register(BarTabSnapshot, BarTabSnapshotAdmin)
-admin.site.register(Printer, PrinterAdmin)

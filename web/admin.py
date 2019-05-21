@@ -12,6 +12,8 @@ from bartenders.models import BartenderShift
 from .forms import SwapForm1, SwapForm2
 
 
+admin.site.unregister(LogEntry)
+@admin.register(LogEntry)
 class LogEntryAdminWithSecrets(LogEntryAdmin, AdminViews):
 	admin_views = (
 		('Secrets', 'secrets_view'),
@@ -82,7 +84,3 @@ class LogEntryAdminWithSecrets(LogEntryAdmin, AdminViews):
 			next_step=next_step,
 		)
 		return TemplateResponse(request, 'swap_admin.html', context)
-
-
-admin.site.unregister(LogEntry)
-admin.site.register(LogEntry, LogEntryAdminWithSecrets)

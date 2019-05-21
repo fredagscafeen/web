@@ -15,6 +15,7 @@ from .mailman2 import MailmanError
 User = get_user_model()
 
 
+@admin.register(Bartender)
 class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ('name', 'username', 'email')
     search_fields = ('name', 'username', 'email')
@@ -67,6 +68,7 @@ class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
     create_admin_user.label = 'Create admin user'
 
 
+@admin.register(BoardMember)
 class BoardMemberAdmin(admin.ModelAdmin):
     list_display = ('thumbnail', 'bartender', 'title', 'period')
     list_display_links = ('thumbnail', 'bartender')
@@ -76,6 +78,8 @@ class BoardMemberAdmin(admin.ModelAdmin):
     def thumbnail(self, obj):
         return mark_safe('<img src="%s" width="75px"/>' % obj.image.url) if obj.image else '<missing>'
 
+
+@admin.register(BartenderApplication)
 class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ('name', 'created', 'username', 'email')
 
@@ -90,6 +94,8 @@ class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
         obj.delete()
         return HttpResponseRedirect(reverse('admin:bartenders_bartenderapplication_changelist'))
 
+
+@admin.register(BartenderShift)
 class BartenderShiftAdmin(admin.ModelAdmin):
     list_display = ('start_datetime', 'shift_responsible', 'other_bartenders_list')
     filter_horizontal = ('other_bartenders',)
@@ -106,6 +112,8 @@ class BartenderShiftAdmin(admin.ModelAdmin):
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+
+@admin.register(BoardMemberDepositShift)
 class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
     list_display = ('start_date', 'end_date', 'responsible_board_members')
     filter_horizontal = ('responsibles',)
@@ -119,18 +127,13 @@ class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
+
 class BoardMemberInline(admin.StackedInline):
     model = BoardMember
 
+
+@admin.register(BoardMemberPeriod)
 class BoardMemberPeriodAdmin(admin.ModelAdmin):
     inlines = [
         BoardMemberInline
     ]
-
-
-admin.site.register(Bartender, BartenderAdmin)
-admin.site.register(BoardMember, BoardMemberAdmin)
-admin.site.register(BartenderApplication, BartenderApplicationAdmin)
-admin.site.register(BartenderShift, BartenderShiftAdmin)
-admin.site.register(BoardMemberDepositShift, BoardMemberDepositShiftAdmin)
-admin.site.register(BoardMemberPeriod, BoardMemberPeriodAdmin)

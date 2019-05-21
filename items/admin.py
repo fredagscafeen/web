@@ -3,6 +3,7 @@ from django.contrib import admin
 from items.models import Item, BeerType, Brewery
 
 
+@admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('brewery', 'name')
     search_fields = ('brewery__name', 'name')
@@ -28,16 +29,13 @@ class ItemAdmin(admin.ModelAdmin):
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
+@admin.register(BeerType)
 class BeerTypeAdmin(admin.ModelAdmin):
     list_display = ('name',)
     ordering = ('name',)
 
 
+@admin.register(Brewery)
 class BreweryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     ordering = ('name',)
-
-
-admin.site.register(Item, ItemAdmin)
-admin.site.register(BeerType, BeerTypeAdmin)
-admin.site.register(Brewery, BreweryAdmin)

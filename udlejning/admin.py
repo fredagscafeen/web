@@ -28,6 +28,7 @@ class StatusDoneListFilter(admin.SimpleListFilter):
 
 
 # Remember to cut down to 2 classes
+@admin.register(Udlejning)
 class UdlejningAdmin(admin.ModelAdmin):
 	ordering = ('-dateFrom',)
 	list_display = ('dateFrom', 'whoReserved', 'in_charge', 'draftBeerSystem', 'association', '_status')
@@ -78,6 +79,7 @@ class UdlejningAdmin(admin.ModelAdmin):
 		return mark_safe(f'<img src="{ static(f"admin/img/icon-{icon}.svg") }"> {obj.get_status_display()}{suffix}')
 
 
+@admin.register(UdlejningApplication)
 class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ('dateFrom', 'whoReserved')
 
@@ -93,6 +95,7 @@ class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
         return HttpResponseRedirect(reverse('admin:udlejning_udlejningapplication_changelist'))
 
 
+@admin.register(UdlejningGrill)
 class UdlejningGrillAdmin(admin.ModelAdmin):
 	ordering = ('-dateFrom',)
 	list_display = ('dateFrom', 'whoReserved', 'in_charge')
@@ -104,8 +107,3 @@ class UdlejningGrillAdmin(admin.ModelAdmin):
 
 	def in_charge(self, obj):
 		return ', '.join(obj.bartendersInCharge.values_list('username', flat=True))
-
-
-admin.site.register(Udlejning, UdlejningAdmin)
-admin.site.register(UdlejningApplication, UdlejningApplicationAdmin)
-admin.site.register(UdlejningGrill, UdlejningGrillAdmin)
