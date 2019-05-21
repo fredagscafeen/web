@@ -322,7 +322,7 @@ class BartenderShift(models.Model):
     responsible = models.ForeignKey(Bartender, on_delete=models.PROTECT)
     other_bartenders = models.ManyToManyField(Bartender, related_name='shifts', blank=True)
 
-    period = models.ForeignKey(BartenderShiftPeriod, on_delete=models.PROTECT, blank=True, null=True)
+    period = models.ForeignKey(BartenderShiftPeriod, on_delete=models.PROTECT, blank=True, null=True, related_name='shifts')
 
     class Meta:
         ordering = ('start_datetime', )

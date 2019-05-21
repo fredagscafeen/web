@@ -1,3 +1,5 @@
+from collections import Counter
+
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
@@ -7,7 +9,7 @@ from django.urls import reverse
 
 from django_object_actions import DjangoObjectActions
 
-from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, BoardMemberPeriod
+from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, BoardMemberPeriod, BartenderShiftPeriod
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 
 from .mailman2 import MailmanError
@@ -137,3 +139,24 @@ class BoardMemberPeriodAdmin(admin.ModelAdmin):
     inlines = [
         BoardMemberInline
     ]
+
+
+@admin.register(BartenderShiftPeriod)
+class BartenderShiftPeriodAdmin(admin.ModelAdmin):
+    change_form_template = 'bartender_shift_period_change_form.html'
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+
+        obj = BartenderShiftPeriod.objects.get(id=object_id)
+
+        bartender_shifts = Counter()
+        for shift in obj.shifts.all():
+            for b in shift.all_bartenders():
+                bartender_shifts[b] += 1
+
+        extra_context['bartender_shifts'] = sorted(bartender_shifts.items(), key=lambda x: (-x[1], x[0].name))
+
+        return super().change_view(
+            request, object_id, form_url, extra_context=extra_context,
+        )
