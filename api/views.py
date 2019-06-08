@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
@@ -77,3 +78,17 @@ class PrintStatusView(APIView):
 	def get(self, request, job_id):
 		status, code = Printer.get_status(job_id)
 		return Response({'status': status, 'code': code})
+
+
+class UpdateBarcodeView(APIView):
+	permission_classes = (IsAdminUser,)
+
+	def post(self, request):
+		item_id = request.data.get('id')
+		item_barcode = request.data.get('barcode')
+
+		item = get_object_or_404(Item, id=item_id)
+		item.barcode = item_barcode
+		item.save()
+
+		return Response()
