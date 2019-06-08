@@ -162,8 +162,11 @@ class Index(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        barshift_guide = Guide.objects.get(name='Guide til en standard barvagt')
-        context['barshift_guide_url'] = barshift_guide.document.url
+        try:
+            barshift_guide = Guide.objects.get(name='Guide til en standard barvagt')
+            context['barshift_guide_url'] = barshift_guide.document.url
+        except Guide.DoesNotExist:
+            context['barshift_guide_url'] = '<missing>'
 
         return context
 
