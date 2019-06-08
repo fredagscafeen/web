@@ -8,19 +8,17 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.css" integrity="sha256-cxYyFTq8AlfZjXRMeAy8KPHpmNVSpUNhnxQwNfUT0Lo=" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js" integrity="sha256-GHC3xFbrevQ0aRcWg5JElUOncXYXxTtMOuA74cWAPTw=" crossorigin="anonymous"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.css" integrity="sha256-6qWTvP5IX0taismXz5k2YE+fvvkWUtuUqOIrddYSv8E=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js" integrity="sha256-lw0IsO3Ev8CSVJXYsRVk88L9No90X3s1EKf87RGEiJQ=" crossorigin="anonymous"></script>
+
 <style>
-#scanner-container {
-	position: fixed;
-    top: 50px;
-    bottom: 50px;
-    left: 50px;
-    right: 50px;
-    z-index: 100;
-    background-color: white;
-	border: solid;
+.modal {
 	font-size: 4rem;
 	padding: 50px;
-	visibility: hidden;
+}
+#scanner-container {
+	max-width: 100%;
+	width: 100%;
 }
 #scanner-container.not-hidden {
 	visibility: visible;
@@ -35,19 +33,29 @@
 	display: block;
 	font-size: 5rem;
 }
-#scanner-item-select {
-	width: 90%;
+#replace-barcode-confirm {
+	max-width: 100%;
+	width: 50%;
 }
 </style>
 
-<button id="scanner-button" type="submit" class="btn btn-primary btn-block">Åben scanner</button>
-<div id="scanner-container">
+<div id="scanner-container" class="modal">
 	<div id="scanner-item-name"></div>
 	<div id="scanner-item-price"></div>
-	<select id="scanner-item-select"></select>
+	<select id="scanner-item-select" style="width: 100%;"></select>
 	<div id="scanner-barcode-value"></div>
 	<input id="scanner-input" type="text">
 </div>
+
+<div id="replace-barcode-confirm" class="modal">
+	<p>Erstat nuværende stregkode?</p>
+	<p>Nuværende: <span id="previous-barcode"></span></p>
+	<p>Ny: <span id="new-barcode"></span></p>
+	<a id="replace-barcode-yes" href="#" rel="modal:close" class="btn btn-danger btn-block">Ja</a>
+	<a id="replace-barcode-no" href="#" rel="modal:close" class="btn btn-block">Nej</a>
+</div>
+
+<a href="#scanner-container" rel="modal:open" id="scanner-button" class="btn btn-primary btn-block">Åben scanner</a>
 
 <div class="row" id="sortiment-row">
 	<div class="col-sm-6">
@@ -177,14 +185,9 @@ for (var i = 0; i < items_data.length; i++) {
 scanner_item_select.select2();
 
 scanner_button.click(function() {
-	scanner_container.attr({'class': 'not-hidden'});
-	scanner_input.focus();
-});
-$(document).keyup(function (e) {
-	// Escape key
-	if (e.keyCode === 27) {
-		scanner_container.attr({'class': ''});
-	}
+	setTimeout(function() {
+		scanner_input.focus();
+	}, 0);
 });
 
 function toggle_dropdown(show) {
@@ -228,25 +231,50 @@ scanner_input.keyup(function(e) {
 	}
 });
 
+$('#replace-barcode-yes').click(function() {
+	update_barcode();
+});
+
+$('#replace-barcode-no').click(function() {
+	scanner_item_select.val(-1);
+	scanner_item_select.trigger('change');
+});
+
+var current_item = null;
+function update_barcode() {
+	current_item.barcode = current_barcode;
+	barcode_to_item[current_barcode] = current_item;
+
+	$.ajax({
+		url: '/api/items/' + current_item.id + '/',
+		method: 'PATCH',
+		data: {
+			barcode: current_barcode,
+		},
+	}).always(function() {
+		set_scanned(current_item);
+	});
+
+	toggle_dropdown(false);
+	scanner_input.focus();
+}
+
 scanner_item_select.change(function() {
 	var index = parseInt(scanner_item_select.val());
 	if (index === -1) return;
 
-	var item = items_data[index];
-
-	item.barcode = current_barcode;
-	barcode_to_item[current_barcode] = item;
-
-	$.post('/api/update_barcode/', {
-		'id': item.id,
-		'barcode': current_barcode,
-	}, function() {
-		set_scanned(item);
-	});
-
-	toggle_dropdown(false);
-
-	scanner_input.focus();
+	current_item = items_data[index];
+	if (current_item.barcode !== current_barcode) {
+		if (current_item.barcode !== '') {
+			$('#previous-barcode').text(current_item.barcode);
+			$('#new-barcode').text(current_barcode);
+			$('#replace-barcode-confirm').modal({
+				closeExisting: false
+			});
+		} else {
+			update_barcode();
+		}
+	}
 });
 </script>
 
