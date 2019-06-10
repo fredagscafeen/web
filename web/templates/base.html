@@ -87,9 +87,7 @@
                                 <li><a href="/profile">Bartender profil</a></li>
                             </ul>
                         </li>
-                        {% if user.is_staff %}
-                            <li><a href="/admin">Admin</a></li>
-                        {% endif %}
+                        <li><a href="/admin">Admin</a></li>
                     </ul>
                     {% if user.is_authenticated %}
                     <form action="/logout/" method="post">
