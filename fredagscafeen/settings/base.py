@@ -87,6 +87,7 @@ INSTALLED_APPS = (
 	'bartab',
 	'email_auth',
 	'guides',
+	'events',
 )
 
 MIDDLEWARE = (
