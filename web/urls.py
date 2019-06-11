@@ -1,13 +1,13 @@
 from django.urls import path
 from django.views.generic.base import RedirectView
 
-from web.views import Contact, Items, Search, Udlejninger, UdlejningerGrill, \
-    Guides, Login, email_login_view, logout_view
+from web.views import Contact, Items, Search, Guides, Login, email_login_view, logout_view
 from bartenders.views import Index, BartenderList, Barplan, UserBarplan, Board, \
     UserDepositShifts, BartenderInfo
 from bartab.views import BarTab
 from events.views import Events, EventFeed
 from guides.update import update_hook
+from udlejning.views import Udlejninger, UdlejningerGrill
 
 urlpatterns = [
     path('update_hook/', update_hook),

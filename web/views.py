@@ -1,9 +1,7 @@
-import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.utils import timezone
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
 from django.shortcuts import redirect
 from django.views.decorators.http import require_GET, require_POST
@@ -12,8 +10,7 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from email_auth.auth import EmailTokenBackend
 from guides.models import Guide
 from items.models import Item
-from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
-from web.forms import UdlejningApplicationForm, LoginForm
+from web.forms import LoginForm
 
 
 @require_GET
@@ -51,28 +48,6 @@ class Login(FormView):
         return super().form_valid(form)
 
 
-class Udlejninger(CreateView):
-    model = UdlejningApplication
-    template_name = 'udlejning.html'
-    form_class = UdlejningApplicationForm
-    success_url = '/udlejning/#'  # Don't scroll to form on success
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['udlejninger'] = Udlejning.objects.filter(dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
-        return context
-
-    def form_valid(self, form):
-        # Call super to save instance
-        response = super().form_valid(form)
-
-        # Send email to best
-        form.send_email(self.object.pk)
-        messages.success(self.request, 'Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til dig med et svar hurtigst muligt.')
-
-        return response
-
-
 class Contact(TemplateView):
     template_name = "contact.html"
 
@@ -107,13 +82,6 @@ class Search(ListView):
     allow_empty = True
     model = Item
     context_object_name = 'items'
-
-
-class UdlejningerGrill(ListView):
-    template_name = "udlejningGrill.html"
-    allow_empty = True
-    queryset = UdlejningGrill.objects.filter(dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
-    context_object_name = 'udlejningerGrill'
 
 
 class Guides(TemplateView):
