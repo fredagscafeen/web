@@ -369,6 +369,39 @@ class UserDepositShifts(ICalFeed):
         return f'depositshift-{shift.pk}@fredagscafeen.dk'
 
 
+class EventFeed(ICalFeed):
+    product_id = '-//fredagscafeen.dk//Events//EN'
+    timezone = 'UTC'
+    file_name = 'events.ics'
+    title = 'Events'
+
+    def items(self):
+        return Event.objects.all()
+
+    def item_title(self, event):
+        return event.name
+
+    def item_location(self, event):
+        return event.location
+
+    def item_start_datetime(self, event):
+        return event.start_datetime
+
+    def item_end_datetime(self, event):
+        return event.end_datetime
+
+    def item_description(self, event):
+        return f'''Tilmeldingsfrist: {event.response_deadline}
+
+{event.description}'''
+
+    def item_link(self, event):
+        return f'{settings.SELF_URL}events/'
+
+    def item_guid(self, event):
+        return f'event-{event.pk}@fredagscafeen.dk'
+
+
 class Items(ListView):
     template_name = "items.html"
     allow_empty = True

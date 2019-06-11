@@ -6,6 +6,8 @@
 
 <h2>Event tilmelding</h2>
 
+<p><a href="{% url 'event_feed' %}">Tilføj til kalender</a></p>
+
 {% if active %}
 	{% for event, form, enabled in events %}
 		<h3>{{ event.start_datetime.date }} - {{ event.name }}</h3>
