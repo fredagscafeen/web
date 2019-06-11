@@ -4,33 +4,39 @@
 
 {% block content %}
 
-<h2>Event tilmelding</h2>
+<h2>Bartender events</h2>
 
 <p><a href="{% url 'event_feed' %}">Tilføj til kalender</a></p>
 
-{% if active %}
-	{% for event, form, enabled in events %}
+{% if not bartender %}
+<p><b>Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events.</b></p>
+{% elif not bartender.isActiveBartender %}
+<p><b>{{ user.email }} er ikke aktiv bartender og kan derfor ikke tilmelde sig events.</b></p>
+{% endif %}
+
+{% for events_data in events_data %}
+	{% with events_data.event as event %}
 		<h3>{{ event.start_datetime.date }} - {{ event.name }}</h3>
 		<p><b>{{ event.start_datetime }}</b> til <b>{{ event.end_datetime }}</b>.</p>
 		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}{% if not enabled %} (for sent){% endif %}</p>
 		<p><b>Lokation:</b> {{ event.location }}</p>
 		<p><b>Beskrivelse:</b></p>
 		<p>{{ event.description }}</p>
-		<h4>Tilmelding</h4>
-		<form method="post">
-			<fieldset{% if not enabled %} disabled{% endif %}>
-				{% csrf_token %}
-				<input type="hidden" name="event_id" value="{{ event.id }}">
-				{% bootstrap_form form %}
-				{% buttons %}
-					{% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
-				{% endbuttons %}
-			</fieldset>
-		</form>
-	{% endfor %}
-{% else %}
-<p><b>{{ user.email }} er ikke aktiv bartender.</b></p>
-{% endif %}
+		{% if events_data.form %}
+			<h4>Tilmelding</h4>
+			<form method="post">
+				<fieldset{% if not events_data.enabled %} disabled{% endif %}>
+					{% csrf_token %}
+					<input type="hidden" name="event_id" value="{{ event.id }}">
+					{% bootstrap_form events_data.form %}
+					{% buttons %}
+						{% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+					{% endbuttons %}
+				</fieldset>
+			</form>
+		{% endif %}
+	{% endwith %}
+{% endfor %}
 
 <script>
 function updateRequired() {

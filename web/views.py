@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 from django.views.generic.edit import UpdateView, FormView
@@ -144,45 +144,42 @@ class BarTab(LoginRequiredMixin, DetailView):
         return context
 
 
-class Events(LoginRequiredMixin, TemplateView):
+class Events(TemplateView):
     template_name = 'events.html'
 
-    def get_active_bartender(self):
+    def get_bartender(self):
+        if not self.request.user.is_authenticated:
+            return None
+
         try:
-            bartender = Bartender.objects.get(email=self.request.user.email)
+            return Bartender.objects.get(email=self.request.user.email)
         except Bartender.DoesNotExist:
             return None
 
-        if not bartender.isActiveBartender:
-            return None
-
-        return bartender
- 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        bartender = self.get_active_bartender()
-        if not bartender:
-            return context
-
-        context['active'] = True
+        bartender = self.get_bartender()
 
         events_data = []
         for event in Event.objects.all():
-            form = EventResponseForm(event=event, bartender=bartender)
-            enabled = timezone.now() <= event.response_deadline
-            events_data.append((event, form, enabled))
+            data = {'event': event}
+            if bartender and bartender.isActiveBartender:
+                data['form'] = EventResponseForm(event=event, bartender=bartender)
+                data['enabled'] = timezone.now() <= event.response_deadline
+            events_data.append(data)
 
-        context['events'] = events_data
+        context['bartender'] = bartender
+        context['events_data'] = events_data
 
         return context
 
+
     def post(self, request, *args, **kwargs):
-        try:
-            bartender = self.get_active_bartender()
-        except:
-            return HttpResponseBadRequest('Not logged into an active bartender')
+        bartender = self.get_bartender()
+        if not bartender or not bartender.isActiveBartender:
+            return HttpResponseForbidden('Not logged in as an active bartender')
 
         try:
             event_id = request.POST.get('event_id')
