@@ -1,8 +1,10 @@
 from django.urls import path
 from django.views.generic.base import RedirectView
 
-from web.views import Index, Contact, BartenderList, Barplan, UserBarplan, Items, Board, Search, Udlejninger, \
-    UdlejningerGrill, Guides, UserDepositShifts, BartenderInfo, Login, email_login_view, logout_view, BarTab
+from web.views import Contact, Items, Search, Udlejninger, UdlejningerGrill, \
+    Guides, Login, email_login_view, logout_view, BarTab
+from bartenders.views import Index, BartenderList, Barplan, UserBarplan, Board, \
+    UserDepositShifts, BartenderInfo
 from events.views import Events, EventFeed
 from guides.update import update_hook
 
