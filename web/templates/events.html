@@ -34,6 +34,7 @@ function updateRequired() {
 		var attending = $(form).find('[name="attending"]').val() === 'True';
 		$(form).find('select[name!="attending"]').each(function (i, select) {
 			$(select).prop('required', attending);
+			$(select).prop('disabled', !attending);
 		});
 	});
 }
