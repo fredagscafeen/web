@@ -16,6 +16,7 @@
 		<p><b>Lokation:</b> {{ event.location }}</p>
 		<p><b>Beskrivelse:</b></p>
 		<p>{{ event.description }}</p>
+		<h4>Tilmelding</h4>
 		<form method="post">
 			<fieldset{% if not enabled %} disabled{% endif %}>
 				{% csrf_token %}
