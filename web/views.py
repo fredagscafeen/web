@@ -8,7 +8,6 @@ from django.views.decorators.http import require_GET, require_POST
 from django.contrib.auth import REDIRECT_FIELD_NAME
 
 from email_auth.auth import EmailTokenBackend
-from guides.models import Guide
 from web.forms import LoginForm
 
 
@@ -49,18 +48,3 @@ class Login(FormView):
 
 class Contact(TemplateView):
     template_name = "contact.html"
-
-
-class Guides(TemplateView):
-    template_name = "guides.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        guides = []
-        for k, name in Guide.GUIDE_TYPES:
-            guides.append((name, Guide.objects.filter(category=k)))
-
-        context['guides'] = guides
-
-        return context
