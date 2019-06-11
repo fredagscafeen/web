@@ -18,14 +18,14 @@
 	{% with events_data.event as event %}
 		<h3>{{ event.start_datetime.date }} - {{ event.name }}</h3>
 		<p><b>{{ event.start_datetime }}</b> til <b>{{ event.end_datetime }}</b>.</p>
-		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}{% if not enabled %} (for sent){% endif %}</p>
+		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} (for sent){% endif %}</p>
 		<p><b>Lokation:</b> {{ event.location }}</p>
 		<p><b>Beskrivelse:</b></p>
 		<p>{{ event.description }}</p>
 		{% if events_data.form %}
 			<h4>Tilmelding</h4>
 			<form method="post">
-				<fieldset{% if not events_data.enabled %} disabled{% endif %}>
+				<fieldset{% if event.deadline_exceeded %} disabled{% endif %}>
 					{% csrf_token %}
 					<input type="hidden" name="event_id" value="{{ event.id }}">
 					{% bootstrap_form events_data.form %}

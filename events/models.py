@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from bartenders.models import Bartender
 
 
@@ -34,6 +35,9 @@ class Event(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	def deadline_exceeded(self):
+		return timezone.now() > self.response_deadline
 	
 
 class EventResponse(models.Model):
