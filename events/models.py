@@ -17,7 +17,7 @@ class EventChoiceOption(models.Model):
 	option = models.CharField(max_length=255)
 
 	def __str__(self):
-		return f'{self.event_choice}: {self.option}'
+		return self.option
 
 
 class Event(models.Model):

@@ -1,6 +1,7 @@
 from urllib.parse import urljoin
 
 from captcha.fields import ReCaptchaField
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.urls import reverse
 from django import forms
@@ -13,6 +14,7 @@ from email_auth.models import EmailToken
 from bartenders.models import Bartender, BartenderShift, BartenderApplication, BoardMemberPeriod
 from udlejning.models import UdlejningApplication
 from fredagscafeen.email import send_template_email
+from events.models import EventResponse
 
 
 class BartenderInfoForm(forms.ModelForm):
@@ -178,3 +180,74 @@ class SwapForm2(SwapForm1):
 
 		if not swap:
 			del self.fields['bartender_shift2']
+
+
+class EventResponseForm(forms.Form):
+	ATTENDING_CHOICES = (
+		(None, '---------'),
+		(True, 'Deltager'),
+		(False, 'Deltager ikke'),
+	)
+
+
+	def _to_bool(self, s):
+		if s == 'False':
+			return False
+		elif s == 'True':
+			return True
+		else:
+			return None
+
+
+	def __init__(self, *args, event, bartender, **kwargs):
+		super().__init__(*args, **kwargs)
+
+		self.event = event
+		self.bartender = bartender
+
+		try:
+			event_response = EventResponse.objects.get(event=event, bartender=bartender)
+		except EventResponse.DoesNotExist:
+			event_response = None
+
+		attending_choices = self.ATTENDING_CHOICES
+		if event_response:
+			attending_choices = self.ATTENDING_CHOICES[1:]
+
+		self.fields['attending'] = forms.TypedChoiceField(label='Deltager',
+				                                          choices=attending_choices,
+														  coerce=self._to_bool)
+		if event_response:
+			self.fields['attending'].initial = event_response.attending
+
+		for choice in event.event_choices.all():
+			field = forms.ModelChoiceField(label=choice.name, queryset=choice.options, required=False)
+			if event_response:
+				field.initial = event_response.get_option(choice)
+
+			self.fields[f'choice_{choice.name}'] = field
+
+
+	def clean(self):
+		super().clean()
+		if self.cleaned_data['attending']:
+			for choice in self.event.event_choices.all():
+				if not self.cleaned_data[f'choice_{choice.name}']:
+					raise ValidationError('Should fill out all options, when attending')
+
+
+	def save(self):
+		attending = self.cleaned_data['attending']
+		response, _ = EventResponse.objects.update_or_create(
+			event=self.event,
+			bartender=self.bartender,
+			defaults={
+				'attending': attending,
+			})
+
+		if attending:
+			response.choices.clear()
+			for choice in self.event.event_choices.all():
+				response.choices.add(self.cleaned_data[f'choice_{choice.name}'])
+
+		return response

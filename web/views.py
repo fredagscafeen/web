@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 from django.views.generic.edit import UpdateView, FormView
@@ -18,7 +19,8 @@ from bartenders.models import Bartender, BoardMember, BartenderApplication, Bart
 from guides.models import Guide
 from items.models import Item
 from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
-from web.forms import BartenderApplicationForm, UdlejningApplicationForm, BartenderInfoForm, LoginForm
+from events.models import Event, EventResponse
+from web.forms import BartenderApplicationForm, UdlejningApplicationForm, BartenderInfoForm, LoginForm, EventResponseForm
 
 
 @require_GET
@@ -140,6 +142,64 @@ class BarTab(LoginRequiredMixin, DetailView):
         context['total_used'] = total_used
 
         return context
+
+
+class Events(LoginRequiredMixin, TemplateView):
+    template_name = 'events.html'
+
+    def get_active_bartender(self):
+        try:
+            bartender = Bartender.objects.get(email=self.request.user.email)
+        except Bartender.DoesNotExist:
+            return None
+
+        if not bartender.isActiveBartender:
+            return None
+
+        return bartender
+ 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        bartender = self.get_active_bartender()
+        if not bartender:
+            return context
+
+        context['active'] = True
+
+        events_data = []
+        for event in Event.objects.all():
+            form = EventResponseForm(event=event, bartender=bartender)
+            events_data.append((event, form))
+
+        context['events'] = events_data
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            bartender = self.get_active_bartender()
+        except:
+            return HttpResponseBadRequest('Not logged into an active bartender')
+
+        try:
+            event_id = request.POST.get('event_id')
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return HttpResponseBadRequest('Event with id does not exist')
+
+        form = EventResponseForm(request.POST, event=event, bartender=bartender)
+        if not form.is_valid():
+            return HttpResponseBadRequest('Invalid form')
+
+        response = form.save()
+        print(response.attending)
+        print(response.choices.all())
+
+        messages.success(request, f'Opdateret tilmelding til {event.name}')
+        return redirect('events')
+        return HttpResponse()
 
 
 class Login(FormView):

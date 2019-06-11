@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic.base import RedirectView
 
 from web.views import Index, Contact, BartenderList, Barplan, UserBarplan, Items, Board, Search, Udlejninger, \
-    UdlejningerGrill, Guides, UserDepositShifts, BartenderInfo, Login, email_login_view, logout_view, BarTab
+    UdlejningerGrill, Guides, UserDepositShifts, BartenderInfo, Login, email_login_view, logout_view, BarTab, Events
 from guides.update import update_hook
 
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
     path('', Index.as_view()),
     path('profile/', BartenderInfo.as_view(), name='profile'),
     path('bartab/', BarTab.as_view(), name='bartab'),
+    path('events/', Events.as_view(), name='events'),
     path('login/', Login.as_view(), name='login'),
     path('login/<email>/<token>/', email_login_view, name='email_login'),
     path('logout/', logout_view, name='logout'),

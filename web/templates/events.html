@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+
+<h2>Event tilmelding</h2>
+
+{% if active %}
+	{% for event, form in events %}
+		<h3>{{ event.start_datetime.date }} - {{ event.name }}</h3>
+		<p><b>{{ event.start_datetime }}</b> til <b>{{ event.end_datetime }}</b>.</p>
+		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}</p>
+		<p><b>Beskrivelse:</b></p>
+		<p>{{ event.description }}</p>
+		<form method="post">
+			{% csrf_token %}
+			<input type="hidden" name="event_id" value="{{ event.id }}">
+			{% bootstrap_form form %}
+			{% buttons %}
+				{% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+			{% endbuttons %}
+		</form>
+	{% endfor %}
+{% else %}
+<p><b>{{ user.email }} er ikke aktiv bartender.</b></p>
+{% endif %}
+
+<script>
+function updateRequired() {
+	$('form').each(function (i, form) {
+		var attending = $(form).find('[name="attending"]').val() === 'True';
+		$(form).find('select[name!="attending"]').each(function (i, select) {
+			$(select).prop('required', attending);
+		});
+	});
+}
+$('[name="attending"]').change(updateRequired);
+updateRequired();
+</script>
+
+{% endblock %}
