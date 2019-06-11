@@ -7,19 +7,21 @@
 <h2>Event tilmelding</h2>
 
 {% if active %}
-	{% for event, form in events %}
+	{% for event, form, enabled in events %}
 		<h3>{{ event.start_datetime.date }} - {{ event.name }}</h3>
 		<p><b>{{ event.start_datetime }}</b> til <b>{{ event.end_datetime }}</b>.</p>
 		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}</p>
 		<p><b>Beskrivelse:</b></p>
 		<p>{{ event.description }}</p>
 		<form method="post">
-			{% csrf_token %}
-			<input type="hidden" name="event_id" value="{{ event.id }}">
-			{% bootstrap_form form %}
-			{% buttons %}
-				{% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
-			{% endbuttons %}
+			<fieldset{% if not enabled %} disabled{% endif %}>
+				{% csrf_token %}
+				<input type="hidden" name="event_id" value="{{ event.id }}">
+				{% bootstrap_form form %}
+				{% buttons %}
+					{% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+				{% endbuttons %}
+			</fieldset>
 		</form>
 	{% endfor %}
 {% else %}

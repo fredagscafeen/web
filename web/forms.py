@@ -228,11 +228,16 @@ class EventResponseForm(forms.Form):
 			self.fields[f'choice_{choice.name}'] = field
 
 
+		if timezone.now() > event.response_deadline:
+			for field in self.fields.values():
+				field.disabled = True
+
+
 	def clean(self):
 		super().clean()
 		if self.cleaned_data['attending']:
 			for choice in self.event.event_choices.all():
-				if not self.cleaned_data[f'choice_{choice.name}']:
+				if not self.cleaned_data.get(f'choice_{choice.name}'):
 					raise ValidationError('Should fill out all options, when attending')
 
 

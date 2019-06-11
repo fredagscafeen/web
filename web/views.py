@@ -171,7 +171,8 @@ class Events(LoginRequiredMixin, TemplateView):
         events_data = []
         for event in Event.objects.all():
             form = EventResponseForm(event=event, bartender=bartender)
-            events_data.append((event, form))
+            enabled = timezone.now() <= event.response_deadline
+            events_data.append((event, form, enabled))
 
         context['events'] = events_data
 
@@ -193,13 +194,10 @@ class Events(LoginRequiredMixin, TemplateView):
         if not form.is_valid():
             return HttpResponseBadRequest('Invalid form')
 
-        response = form.save()
-        print(response.attending)
-        print(response.choices.all())
+        form.save()
 
         messages.success(request, f'Opdateret tilmelding til {event.name}')
         return redirect('events')
-        return HttpResponse()
 
 
 class Login(FormView):
