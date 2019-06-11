@@ -21,6 +21,9 @@ class EventChoiceOption(models.Model):
 
 
 class Event(models.Model):
+	class Meta:
+		ordering = ('-start_datetime',)
+
 	name = models.CharField(max_length=255)
 	description = models.TextField(blank=True)
 	start_datetime = models.DateTimeField()
