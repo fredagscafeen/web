@@ -25,6 +25,7 @@ class Event(models.Model):
 		ordering = ('-start_datetime',)
 
 	name = models.CharField(max_length=255)
+	location = models.CharField(max_length=255)
 	description = models.TextField(blank=True)
 	start_datetime = models.DateTimeField()
 	end_datetime = models.DateTimeField()

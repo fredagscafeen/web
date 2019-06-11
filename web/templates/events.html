@@ -11,6 +11,7 @@
 		<h3>{{ event.start_datetime.date }} - {{ event.name }}</h3>
 		<p><b>{{ event.start_datetime }}</b> til <b>{{ event.end_datetime }}</b>.</p>
 		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}{% if not enabled %} (for sent){% endif %}</p>
+		<p><b>Lokation:</b> {{ event.location }}</p>
 		<p><b>Beskrivelse:</b></p>
 		<p>{{ event.description }}</p>
 		<form method="post">
