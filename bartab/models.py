@@ -64,6 +64,7 @@ def bar_tab_snapshot_ordering(related_name=None):
 class BarTabSnapshot(models.Model):
 	bartender_shift = models.OneToOneField(BartenderShift, on_delete=models.PROTECT, related_name='bar_tab_snapshot', blank=True, null=True)
 	last_updated = models.DateTimeField(auto_now=True)
+	notes = models.TextField(blank=True)
 
 	class Meta:
 		ordering = (bar_tab_snapshot_ordering(),)
