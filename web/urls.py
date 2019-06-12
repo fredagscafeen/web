@@ -8,7 +8,7 @@ from bartab.views import BarTab
 from events.views import Events, EventFeed
 from guides.views import Guides
 from guides.update import update_hook
-from items.views import Items, Search
+from items.views import Items, Search, Scanner
 from udlejning.views import Udlejninger, UdlejningerGrill
 
 urlpatterns = [
@@ -22,6 +22,7 @@ urlpatterns = [
     path('barplan/deposit_shifts/<username>.ics', UserDepositShifts()),
     path('barplan/<username>/', RedirectView.as_view(pattern_name='user_shifts')), # Old URLs, redirect
     path('prices/', Items.as_view()),
+    path('scanner/', Scanner.as_view()),
     path('board/', Board.as_view()),
     path('search/', Search.as_view()),
     path('', Index.as_view()),
