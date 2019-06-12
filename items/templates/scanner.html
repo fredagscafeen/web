@@ -8,46 +8,72 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js" integrity="sha256-lw0IsO3Ev8CSVJXYsRVk88L9No90X3s1EKf87RGEiJQ=" crossorigin="anonymous"></script>
 
 <style>
-#scanner-container, .modal {
+/*
+   The page should be optimized for a screen size of 800 x 480 px.
+*/
+html, body, #scanner-container, #scanner-grid {
+	width: 100%;
+	height: 100%;
+}
+body {
 	font-size: 4rem;
-	padding: 50px;
+	padding: 4rem;
 }
 #scanner-container {
-	max-width: 100%;
-	width: 100%;
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
 }
-#scanner-container.not-hidden {
-	visibility: visible;
+#scanner-grid {
+	max-height: 480px;
+
+	display: grid;
+	grid-template-areas:
+		"name    price"
+		"barcode price"
+		"input   input";
+	grid-template-rows: auto 20% 30%;
+	grid-template-columns: auto 40%;
+	grid-gap: 2rem 1rem;
 }
-#scanner-container div {
-	height: 4rem;
-	margin-top: 2rem;
+#scanner-item-name {
+	grid-area: name;
+}
+#scanner-item-price {
+	grid-area: price;
+	font-size: 2em;
+	justify-self: center;
+	align-self: center;
+}
+#scanner-barcode-value {
+	grid-area: barcode;
+	align-self: end;
 }
 #scanner-input {
-	margin-top: 4rem;
-	margin: auto;
-	display: block;
-	font-size: 5rem;
+	grid-area: input;
+	font-size: 1.5em;
+	width: 100%;
 }
-#replace-barcode-confirm {
-	max-width: 100%;
-	width: 50%;
-}
-{% if not user.is_staff %}
 #admin-mode {
+{% if not user.is_staff %}
 	display: none;
-}
 {% endif %}
+	margin-top: 1em;
+}
 </style>
 {% endblock %}
 
 {% block body_content %}
+
 <div id="scanner-container">
-	<div id="scanner-item-name"></div>
-	<div id="scanner-item-price"></div>
+	<div id="scanner-grid">
+		<div id="scanner-item-name"></div>
+		<div id="scanner-item-price"></div>
+		<div id="scanner-barcode-value"></div>
+		<input id="scanner-input" type="text" autofocus placeholder="Stregkode">
+	</div>
+
 	<select id="scanner-item-select" style="width: 100%;"></select>
-	<div id="scanner-barcode-value"></div>
-	<input id="scanner-input" type="text" autofocus placeholder="Stregkode">
 	<label id="admin-mode"><input id="admin-mode-checkbox" type="checkbox"> Admin mode</label>
 </div>
 
@@ -131,7 +157,7 @@ var current_barcode = null;
 function set_scanned(item) {
 	scanner_barcode_value.text(current_barcode);
 	scanner_item_name.text(item_display(item));
-	scanner_item_price.text(item.price.replace('.', ',') + ' kr.');
+	scanner_item_price.text(item.price.replace('.', ','));
 }
 
 scanner_input.keyup(function(e) {
@@ -149,15 +175,14 @@ scanner_input.keyup(function(e) {
 			toggle_dropdown(false);
 		} else {
 			scanner_item_name.text('Ikke fundet');
+			scanner_item_price.text('?');
 
 			if (admin_mode_checkbox.prop('checked')) {
-				scanner_item_price.text('Vælg ting:');
+				scanner_item_name.text('Ikke fundet, vælg ting:');
 				scanner_item_select.val(-1);
 				scanner_item_select.trigger('change');
 				toggle_dropdown(true);
 				scanner_item_select.select2('open');
-			} else {
-				scanner_item_price.text('');
 			}
 		}
 	}
@@ -174,6 +199,9 @@ $('#replace-barcode-no').click(function() {
 
 var current_item = null;
 function update_barcode() {
+	if (current_item.barcode !== '') {
+		delete barcode_to_item[current_item.barcode];
+	}
 	current_item.barcode = current_barcode;
 	barcode_to_item[current_barcode] = current_item;
 
@@ -183,8 +211,10 @@ function update_barcode() {
 		data: {
 			barcode: current_barcode,
 		},
-	}).always(function() {
+	}).done(function() {
 		set_scanned(current_item);
+	}).fail(function(e) {
+		alert('Ændring a stregkoden fejlede, se konsolen.');
 	});
 
 	toggle_dropdown(false);

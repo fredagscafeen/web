@@ -21,7 +21,7 @@ class Item(models.Model):
     volumeInCentiliters = models.IntegerField(null=True, blank=True)
     inStock = models.BooleanField(default=True)
     imageUrl = models.CharField(max_length=255, blank=True)
-    barcode = models.CharField(max_length=255, blank=True)
+    barcode = models.CharField(max_length=255, unique=True, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     lastModified = models.DateTimeField(auto_now=True, null=True, blank=True)
@@ -34,6 +34,14 @@ class Item(models.Model):
         if self.brewery:
             return f'{self.brewery} - {self.name}'
         return self.name
+
+    def save(self, *args, **kwargs):
+        # Ensure empty barcode is represented as NULL and not ''
+        # to enforce the unique constraint
+        if not self.barcode:
+            self.barcode = None
+
+        super().save(*args, **kwargs)
 
 
 class BeerType(models.Model):
