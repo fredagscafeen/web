@@ -33,6 +33,11 @@
 	max-width: 100%;
 	width: 50%;
 }
+{% if not user.is_staff %}
+#admin-mode {
+	display: none;
+}
+{% endif %}
 </style>
 {% endblock %}
 
@@ -43,6 +48,7 @@
 	<select id="scanner-item-select" style="width: 100%;"></select>
 	<div id="scanner-barcode-value"></div>
 	<input id="scanner-input" type="text" autofocus placeholder="Stregkode">
+	<label id="admin-mode"><input id="admin-mode-checkbox" type="checkbox"> Admin mode</label>
 </div>
 
 <div id="replace-barcode-confirm" class="modal">
@@ -70,12 +76,6 @@ $.ajaxSetup({
         }
     }
 });
-
-{% if user.is_staff %}
-var is_admin = true;
-{% else %}
-var is_admin = false;
-{% endif %}
 
 function item_display(item) {
 	var s = item.name;
@@ -113,6 +113,7 @@ var scanner_input = $('#scanner-input');
 var scanner_item_name = $('#scanner-item-name');
 var scanner_item_price = $('#scanner-item-price');
 var scanner_item_select = $('#scanner-item-select');
+var admin_mode_checkbox = $('#admin-mode-checkbox');
 
 scanner_item_select.append($('<option>').val(-1).text('-----'));
 for (var i = 0; i < items_data.length; i++) {
@@ -149,7 +150,7 @@ scanner_input.keyup(function(e) {
 		} else {
 			scanner_item_name.text('Ikke fundet');
 
-			if (is_admin) {
+			if (admin_mode_checkbox.prop('checked')) {
 				scanner_item_price.text('Vælg ting:');
 				scanner_item_select.val(-1);
 				scanner_item_select.trigger('change');
