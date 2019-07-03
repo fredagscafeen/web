@@ -44,6 +44,7 @@ class BartenderCommon(models.Model):
 
 class Bartender(BartenderCommon):
     TSHIRT_SIZE_CHOICES = (
+        ('XS', 'XS'),
         ('S', 'S'),
         ('M', 'M'),
         ('L', 'L'),
