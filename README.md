@@ -27,6 +27,16 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 2. create superuser: `dokku run fredagscafeen.dk ./manage.py createsuperuser`
 3. login to admin interface: [https://fredagscafeen.dk/admin/](https://fredagscafeen.dk/admin/)
 
+# Fully rebuilding dokku app
+
+If `dokku ps:rebuild fredagscafeen.dk` does not fix your problem,
+you can try to completely rebuild the app from scratch by running:
+
+```sh
+dokku apps:rename fredagscafeen.dk test.fredagscafeen.dk
+dokku apps:rename test.fredagscafeen.dk fredagscafeen.dk
+```
+
 # LaTeX installation
 
 This installs TeX Live full and makes it available to the dokku django instance:
