@@ -116,6 +116,13 @@ class Bartender(BartenderCommon):
             )
         ).order_by('order', 'name')
 
+    def may_attend_event(self, event):
+        # Allow active bartenders and past board members
+        if self.isActiveBartender:
+            return True
+
+        return self.board_members.count() > 0
+
     def __str__(self):
         return f'{self.symbol}{self.name} ({self.username})'
 
@@ -129,7 +136,7 @@ class BartenderUnavailableDate(models.Model):
 
 
 class BoardMember(models.Model):
-    bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE)
+    bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE, related_name='board_members')
     period = models.ForeignKey('BoardMemberPeriod', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     responsibilities = models.CharField(max_length=255)

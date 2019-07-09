@@ -30,7 +30,7 @@ class Events(TemplateView):
         events_data = []
         for event in Event.objects.all():
             data = {'event': event}
-            if bartender and bartender.isActiveBartender:
+            if bartender and bartender.may_attend_event(event):
                 data['form'] = EventResponseForm(event=event, bartender=bartender)
             events_data.append(data)
 
@@ -41,15 +41,16 @@ class Events(TemplateView):
 
 
     def post(self, request, *args, **kwargs):
-        bartender = self.get_bartender()
-        if not bartender or not bartender.isActiveBartender:
-            return HttpResponseForbidden('Not logged in as an active bartender')
-
         try:
             event_id = request.POST.get('event_id')
             event = Event.objects.get(id=event_id)
         except Event.DoesNotExist:
             return HttpResponseBadRequest('Event with id does not exist')
+
+        bartender = self.get_bartender()
+        if not bartender or not bartender.may_attend_event(event):
+            return HttpResponseForbidden('Not logged in as an active bartender')
+
 
         form = EventResponseForm(request.POST, event=event, bartender=bartender)
         if not form.is_valid():
