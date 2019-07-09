@@ -35,6 +35,30 @@
 				</fieldset>
 			</form>
 		{% endif %}
+		<div class="panel-group" role="tablist">
+			<div class="panel panel-default">
+				<div class ="panel-heading" role="tab" id="coll">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" href="#collapse_{{ forloop.counter }}" aria-expanded="false">
+							Tilmeldte ({{ event.attending_count }})
+						</a>
+					</h4>
+				</div>
+			</div>
+			<div id="collapse_{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel">
+				<ul class="list-group">
+					{% for response in event.sorted_responses %}
+						{% if response.attending %}
+							<li class="list-group-item"><b>{{ response.bartender.name }}</b> -
+							{% for option in response.choices.all %}
+								{{ option.option }}{% if not forloop.last %},{% endif %}
+							{% endfor %}
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
 	{% endwith %}
 {% endfor %}
 

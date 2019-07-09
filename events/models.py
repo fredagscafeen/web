@@ -50,6 +50,12 @@ class Event(models.Model):
 				counts[option] += 1
 		return counts
 
+	def attending_count(self):
+		return sum(r.attending for r in self.responses.all())
+
+	def sorted_responses(self):
+		return sorted(self.responses.all(), key=lambda r: r.bartender.name)
+
 
 class EventResponse(models.Model):
 	class Meta:
