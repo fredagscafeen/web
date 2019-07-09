@@ -21,7 +21,7 @@ User = get_user_model()
 class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ('name', 'username', 'email')
     search_fields = ('name', 'username', 'email')
-    list_filter = ('isActiveBartender', ('boardmember', NonNullFieldListFilter))
+    list_filter = ('isActiveBartender', ('board_members', NonNullFieldListFilter))
 
     change_actions = ('add_to_mailing_list', 'remove_from_mailing_list', 'create_admin_user')
 

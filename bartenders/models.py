@@ -60,7 +60,7 @@ class Bartender(BartenderCommon):
     @property
     def isBoardMember(self):
         period = BoardMemberPeriod.get_current_period()
-        return self.boardmember_set.filter(period=period).exists()
+        return self.board_members.filter(period=period).exists()
 
     class Meta:
         ordering = ('-isActiveBartender', 'name',)
@@ -106,10 +106,10 @@ class Bartender(BartenderCommon):
     @classmethod
     def shift_ordered(cls):
         period = BoardMemberPeriod.get_current_period()
-        boardmembers = cls.objects.filter(boardmember__period=period)
+        board_members = cls.objects.filter(board_members__period=period)
         return cls.objects.annotate(
             order=Case(
-                When(id__in=boardmembers, then=Value(0)),
+                When(id__in=board_members, then=Value(0)),
                 When(isActiveBartender=True, then=Value(1)),
                 default=2,
                 output_field=models.IntegerField(),
