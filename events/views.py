@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.conf import settings
 from django_ical.views import ICalFeed
 from bartenders.models import Bartender
@@ -53,7 +53,9 @@ class Events(TemplateView):
 
         form = EventResponseForm(request.POST, event=event, bartender=bartender)
         if not form.is_valid():
-            return HttpResponseBadRequest('Invalid form')
+            for error in form.errors.values():
+                messages.error(request, f'{error}')
+            return redirect('events')
 
         form.save()
 

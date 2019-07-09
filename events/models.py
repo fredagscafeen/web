@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from bartenders.models import Bartender
+from collections import Counter
 
 
 class EventChoice(models.Model):
@@ -16,8 +17,11 @@ class EventChoiceOption(models.Model):
 
 	event_choice = models.ForeignKey(EventChoice, on_delete=models.CASCADE, related_name='options')
 	option = models.CharField(max_length=255)
+	max_selected = models.PositiveIntegerField(blank=True, null=True)
 
 	def __str__(self):
+		if self.max_selected:
+			return f'{self.option} (max {self.max_selected})'
 		return self.option
 
 
@@ -39,6 +43,13 @@ class Event(models.Model):
 	def deadline_exceeded(self):
 		return timezone.now() > self.response_deadline
 	
+	def get_option_counts(self):
+		counts = Counter()
+		for response in self.responses.all():
+			for option in response.choices.all():
+				counts[option] += 1
+		return counts
+
 
 class EventResponse(models.Model):
 	class Meta:
@@ -60,9 +71,21 @@ class EventResponse(models.Model):
 		self.choices.remove(*self.choices.filter(event_choice=event_choice))
 
 	def set_option(self, option):
+		assert self.can_set_option(option)
 		self.clear_option(option.event_choice)
 		self.choices.add(option)
 	
+	def can_set_option(self, option):
+		if self.get_option(option.event_choice) == option:
+		    return True
+		return self.can_add_option(self.event, option)
+
+	@classmethod
+	def can_add_option(cls, event, option):
+		counts = event.get_option_counts()
+		selected = counts[option]
+		return option.max_selected == None or selected < option.max_selected
+
 	def get_option(self, event_choice):
 		self._assert_event_has_event_choice(event_choice)
 

@@ -57,9 +57,25 @@ class EventResponseForm(forms.Form):
 	def clean(self):
 		super().clean()
 		if self.cleaned_data['attending']:
+			try:
+				response = EventResponse.objects.get(
+					event=self.event,
+					bartender=self.bartender,
+				)
+			except EventResponse.DoesNotExist:
+				response = None
 			for choice in self.event.event_choices.all():
 				if not self.cleaned_data.get(f'choice_{choice.name}'):
-					raise ValidationError('Should fill out all options, when attending')
+					raise ValidationError('Du skal udfylde alle felter, når du deltager')
+
+				option = self.cleaned_data[f'choice_{choice.name}']
+				if response and response.can_set_option(option):
+					continue
+
+				if not response and EventResponse.can_add_option(self.event, option):
+					continue
+
+				raise ValidationError(f'Der er for mange der har valgt {option.option}. Vælg noget andet.')
 
 
 	def save(self):
@@ -74,6 +90,6 @@ class EventResponseForm(forms.Form):
 		if attending:
 			response.choices.clear()
 			for choice in self.event.event_choices.all():
-				response.choices.add(self.cleaned_data[f'choice_{choice.name}'])
+				response.set_option(self.cleaned_data[f'choice_{choice.name}'])
 
 		return response
