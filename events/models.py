@@ -99,3 +99,6 @@ class EventResponse(models.Model):
 			return self.choices.get(event_choice=event_choice)
 		except EventChoiceOption.DoesNotExist:
 			return None
+
+	def get_sorted_options(self):
+		return sorted(self.choices.all(), key=lambda o: o.event_choice.id)

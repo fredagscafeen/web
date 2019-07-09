@@ -50,7 +50,7 @@
 					{% for response in event.sorted_responses %}
 						{% if response.attending %}
 							<li class="list-group-item"><b>{{ response.bartender.name }}</b> -
-							{% for option in response.choices.all %}
+							{% for option in response.get_sorted_options %}
 								{{ option.option }}{% if not forloop.last %},{% endif %}
 							{% endfor %}
 							</li>
