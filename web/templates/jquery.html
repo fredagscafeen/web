@@ -1,0 +1,13 @@
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<script>
+    // Prevent auto-execution of scripts when no explicit dataType was provided (See gh-2432)
+    jQuery.ajaxPrefilter( function( s ) {
+        if ( s.crossDomain ) {
+            s.contents.script = false;
+        }
+    } );
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js" integrity="sha384-5DBGnz9O9jxqph+/AFCwYJNAb4rEJXYbRT4M6WYtLfzjIPX6kKiBIKKvsW5x7gak" crossorigin="anonymous"></script>
