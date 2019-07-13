@@ -8,7 +8,7 @@ from bartab.views import BarTab
 from events.views import Events, EventFeed
 from guides.views import Guides
 from guides.update import update_hook
-from items.views import Items, Search, Scanner
+from items.views import Items, Scanner
 from udlejning.views import Udlejninger, UdlejningerGrill
 
 urlpatterns = [
@@ -24,7 +24,6 @@ urlpatterns = [
     path('prices/', Items.as_view()),
     path('scanner/', Scanner.as_view()),
     path('board/', Board.as_view()),
-    path('search/', Search.as_view()),
     path('', Index.as_view()),
     path('profile/', BartenderInfo.as_view(), name='profile'),
     path('bartab/', BarTab.as_view(), name='bartab'),

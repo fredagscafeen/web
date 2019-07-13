@@ -46,10 +46,3 @@ class Scanner(TemplateView):
         context['items_data'] = items_data
 
         return context
-
-
-class Search(ListView):
-    template_name = "search.html"
-    allow_empty = True
-    model = Item
-    context_object_name = 'items'
