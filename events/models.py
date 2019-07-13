@@ -56,6 +56,9 @@ class Event(models.Model):
 	def sorted_responses(self):
 		return sorted(self.responses.all(), key=lambda r: r.bartender.name)
 
+	def sorted_choices(self):
+		return self.event_choices.order_by('id')
+
 
 class EventResponse(models.Model):
 	class Meta:

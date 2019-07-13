@@ -44,25 +44,41 @@
 						</a>
 					</h4>
 				</div>
-			</div>
-			<div id="collapse_{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel">
-				<ul class="list-group">
-					{% for response in event.sorted_responses %}
-						{% if response.attending %}
-							<li class="list-group-item"><b>{{ response.bartender.name }}</b> -
-							{% for option in response.get_sorted_options %}
-								{{ option.option }}{% if not forloop.last %},{% endif %}
-							{% endfor %}
-							</li>
-						{% endif %}
-					{% endfor %}
-				</ul>
+				<div id="collapse_{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel">
+					<div class="panel-body">
+						<table class="table table-striped tablesorter">
+							<thead>
+								<tr>
+									<th>Navn</th>
+									{% for choice in event.sorted_choices %}
+										<th>{{ choice.name }}</th>
+									{% endfor %}
+								</tr>
+							</thead>
+							<tbody>
+								{% for response in event.sorted_responses %}
+									<tr>
+										{% if response.attending %}
+											<td>{{ response.bartender.name }}</td>
+											{% for option in response.get_sorted_options %}
+												<td>{{ option.option }}</td>
+											{% endfor %}
+										{% endif %}
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	{% endwith %}
 {% endfor %}
 
 <script>
+$(function () {
+	$(".tablesorter").tablesorter();
+});
 function updateRequired() {
 	$('form').each(function (i, form) {
 		var attending = $(form).find('[name="attending"]').val() === 'True';
