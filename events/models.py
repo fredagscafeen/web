@@ -6,9 +6,10 @@ from collections import Counter
 
 class EventChoice(models.Model):
 	name = models.CharField(max_length=255)
+	event = models.ForeignKey('Event', on_delete=models.CASCADE, related_name='event_choices')
 
 	def __str__(self):
-		return self.name
+		return f'{self.event}: {self.name}'
 
 
 class EventChoiceOption(models.Model):
@@ -35,7 +36,6 @@ class Event(models.Model):
 	start_datetime = models.DateTimeField()
 	end_datetime = models.DateTimeField()
 	response_deadline = models.DateTimeField()
-	event_choices = models.ManyToManyField(EventChoice)
 
 	def __str__(self):
 		return self.name

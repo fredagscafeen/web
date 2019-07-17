@@ -6,20 +6,26 @@ from bartenders.models import Bartender
 
 class TestEvents(TestCase):
 	def test_event(self):
-		event_choice = EventChoice.objects.create(name='Related')
-		event_choice_unrelated = EventChoice.objects.create(name='Unrelated')
+		event = Event.objects.create(name='Event',
+				                     description='...',
+									 start_datetime=timezone.now(),
+									 end_datetime=timezone.now(),
+									 response_deadline=timezone.now())
+
+		event2 = Event.objects.create(name='Event2',
+				                      description='...',
+									  start_datetime=timezone.now(),
+									  end_datetime=timezone.now(),
+									  response_deadline=timezone.now())
+
+		event_choice = EventChoice.objects.create(name='Related', event=event)
+		event_choice_unrelated = EventChoice.objects.create(name='Unrelated', event=event2)
 
 		option_a = EventChoiceOption.objects.create(event_choice=event_choice, option='A')
 		option_b = EventChoiceOption.objects.create(event_choice=event_choice, option='B')
 
 		option_unrelated = EventChoiceOption.objects.create(event_choice=event_choice_unrelated, option='C')
 
-		event = Event.objects.create(name='Event',
-				                     description='...',
-									 start_datetime=timezone.now(),
-									 end_datetime=timezone.now(),
-									 response_deadline=timezone.now())
-		
 		event.event_choices.add(event_choice)
 
 		bartender = Bartender.objects.create(name='Foo',
