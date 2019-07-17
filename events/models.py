@@ -21,9 +21,13 @@ class EventChoiceOption(models.Model):
 	max_selected = models.PositiveIntegerField(blank=True, null=True)
 
 	def __str__(self):
+		selected = self.get_selected()
 		if self.max_selected:
-			return f'{self.option} (max {self.max_selected})'
-		return self.option
+			return f'{self.option} ({selected}, max {self.max_selected})'
+		return f'{self.option} ({selected})'
+
+	def get_selected(self):
+		return EventResponse.objects.filter(choices=self).count()
 
 
 class Event(models.Model):
