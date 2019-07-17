@@ -1,5 +1,17 @@
 from django import forms
-from .models import EventResponse
+from .models import EventResponse, EventChoiceOption
+
+
+class SelectWithDisabledOptions(forms.Select):
+	def __init__(self, *args, is_enabled, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.is_enabled = is_enabled
+
+
+	def create_option(self, *args, **kwargs):
+		option = super().create_option(*args, **kwargs)
+		option['attrs']['disabled'] = not self.is_enabled(option)
+		return option
 
 
 class EventResponseForm(forms.Form):
@@ -21,6 +33,14 @@ class EventResponseForm(forms.Form):
 
 	def _get_choice_field(self, choice):
 		return f'choice_{choice.name}'
+
+
+	def _option_enabled(self, option):
+		if not option['value']:
+			return True
+
+		obj = EventChoiceOption.objects.get(id=option['value'])
+		return obj.can_bartender_choose(self.bartender)
 
 
 	def __init__(self, *args, event, bartender, **kwargs):
@@ -45,7 +65,12 @@ class EventResponseForm(forms.Form):
 			self.fields['attending'].initial = event_response.attending
 
 		for choice in event.event_choices.all():
-			field = forms.ModelChoiceField(label=choice.name, queryset=choice.options, required=False)
+			field = forms.ModelChoiceField(
+				label=choice.name,
+			    queryset=choice.options,
+				required=False,
+				widget=SelectWithDisabledOptions(is_enabled=self._option_enabled),
+			)
 			if event_response:
 				field.initial = event_response.get_option(choice)
 

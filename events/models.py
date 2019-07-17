@@ -31,6 +31,16 @@ class EventChoiceOption(models.Model):
 	def can_more_choose(self):
 		return self.max_selected == None or self.get_selected() < self.max_selected
 
+	def can_bartender_choose(self, bartender):
+		if self.can_more_choose():
+			return True
+
+		try:
+			response = EventResponse.objects.get(event=self.event_choice.event, bartender=bartender)
+			return response.get_option(self.event_choice) == self
+		except EventResponse.DoesNotExist:
+			return False
+
 
 class Event(models.Model):
 	class Meta:
@@ -84,9 +94,7 @@ class EventResponse(models.Model):
 		self.choices.add(option)
 	
 	def can_set_option(self, option):
-		if self.get_option(option.event_choice) == option:
-		    return True
-		return option.can_more_choose()
+		return option.can_bartender_choose(self.bartender)
 
 	def get_option(self, event_choice):
 		self._assert_event_has_event_choice(event_choice)
