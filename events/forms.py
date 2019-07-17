@@ -85,14 +85,6 @@ class EventResponseForm(forms.Form):
 	def clean(self):
 		super().clean()
 		if self.cleaned_data['attending']:
-			try:
-				response = EventResponse.objects.get(
-					event=self.event,
-					bartender=self.bartender,
-				)
-			except EventResponse.DoesNotExist:
-				response = None
-
 			for choice in self.event.event_choices.all():
 				field = self._get_choice_field(choice)
 
@@ -102,13 +94,8 @@ class EventResponseForm(forms.Form):
 					self.add_error(field, f'Du skal udfylde {choice.name}, når du deltager')
 					continue
 
-				if response and response.can_set_option(option):
-					continue
-
-				if not response and option.can_more_choose():
-					continue
-
-				self.add_error(field, f'Der er for mange der har valgt {option.option}. Vælg noget andet.')
+				if not option.can_bartender_choose(self.bartender):
+					self.add_error(field, f'Der er for mange der har valgt {option.option}. Vælg noget andet.')
 
 
 	def save(self):
