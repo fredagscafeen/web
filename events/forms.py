@@ -1,5 +1,4 @@
 from django import forms
-from django.core.exceptions import ValidationError
 from .models import EventResponse
 
 
@@ -18,6 +17,10 @@ class EventResponseForm(forms.Form):
 			return True
 		else:
 			return None
+
+
+	def _get_choice_field(self, choice):
+		return f'choice_{choice.name}'
 
 
 	def __init__(self, *args, event, bartender, **kwargs):
@@ -46,7 +49,7 @@ class EventResponseForm(forms.Form):
 			if event_response:
 				field.initial = event_response.get_option(choice)
 
-			self.fields[f'choice_{choice.name}'] = field
+			self.fields[self._get_choice_field(choice)] = field
 
 
 		if event.deadline_exceeded():
@@ -64,18 +67,23 @@ class EventResponseForm(forms.Form):
 				)
 			except EventResponse.DoesNotExist:
 				response = None
-			for choice in self.event.event_choices.all():
-				if not self.cleaned_data.get(f'choice_{choice.name}'):
-					raise ValidationError('Du skal udfylde alle felter, når du deltager')
 
-				option = self.cleaned_data[f'choice_{choice.name}']
+			for choice in self.event.event_choices.all():
+				field = self._get_choice_field(choice)
+
+				option = self.cleaned_data.get(field)
+
+				if not option:
+					self.add_error(field, f'Du skal udfylde {choice.name}, når du deltager')
+					continue
+
 				if response and response.can_set_option(option):
 					continue
 
-				if not response and EventResponse.can_add_option(self.event, option):
+				if not response and option.can_more_choose():
 					continue
 
-				raise ValidationError(f'Der er for mange der har valgt {option.option}. Vælg noget andet.')
+				self.add_error(field, f'Der er for mange der har valgt {option.option}. Vælg noget andet.')
 
 
 	def save(self):

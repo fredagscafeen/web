@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.conf import settings
 from django_ical.views import ICalFeed
 from bartenders.models import Bartender
