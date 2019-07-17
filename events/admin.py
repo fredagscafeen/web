@@ -27,9 +27,15 @@ class EventResponseReadonlyInline(admin.TabularInline):
 		return False
 
 
+class EventChoiceInline(admin.TabularInline):
+	model = EventChoice
+	show_change_link = True
+
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
 	inlines = [
+		EventChoiceInline,
 		EventResponseReadonlyInline,
 	]
 
