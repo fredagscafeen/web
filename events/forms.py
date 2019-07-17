@@ -32,7 +32,7 @@ class EventResponseForm(forms.Form):
 
 
 	def _get_choice_field(self, choice):
-		return f'choice_{choice.name}'
+		return f'choice_{choice.id}'
 
 
 	def _option_enabled(self, option):
@@ -120,9 +120,9 @@ class EventResponseForm(forms.Form):
 				'attending': attending,
 			})
 
+		response.selected_options.clear()
 		if attending:
-			response.choices.clear()
 			for choice in self.event.event_choices.all():
-				response.set_option(self.cleaned_data[f'choice_{choice.name}'])
+				response.set_option(self.cleaned_data[self._get_choice_field(choice)])
 
 		return response

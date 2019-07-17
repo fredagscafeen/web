@@ -26,7 +26,7 @@ class EventChoiceOption(models.Model):
 		return f'{self.option} ({selected})'
 
 	def get_selected(self):
-		return EventResponse.objects.filter(choices=self).count()
+		return EventResponse.objects.filter(selected_options=self).count()
 
 	def can_more_choose(self):
 		return self.max_selected == None or self.get_selected() < self.max_selected
@@ -76,7 +76,7 @@ class EventResponse(models.Model):
 	event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='responses')
 	bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE)
 	attending = models.BooleanField()
-	choices = models.ManyToManyField(EventChoiceOption)
+	selected_options = models.ManyToManyField(EventChoiceOption)
 
 	def __str__(self):
 		return f'{self.event}, {self.bartender}: {self.attending}'
@@ -86,12 +86,12 @@ class EventResponse(models.Model):
 	
 	def clear_option(self, event_choice):
 		self._assert_event_has_event_choice(event_choice)
-		self.choices.remove(*self.choices.filter(event_choice=event_choice))
+		self.selected_options.remove(*self.selected_options.filter(event_choice=event_choice))
 
 	def set_option(self, option):
 		assert self.can_set_option(option)
 		self.clear_option(option.event_choice)
-		self.choices.add(option)
+		self.selected_options.add(option)
 	
 	def can_set_option(self, option):
 		return option.can_bartender_choose(self.bartender)
@@ -100,9 +100,9 @@ class EventResponse(models.Model):
 		self._assert_event_has_event_choice(event_choice)
 
 		try:
-			return self.choices.get(event_choice=event_choice)
+			return self.selected_options.get(event_choice=event_choice)
 		except EventChoiceOption.DoesNotExist:
 			return None
 
 	def get_sorted_options(self):
-		return sorted(self.choices.all(), key=lambda o: o.event_choice.id)
+		return sorted(self.selected_options.all(), key=lambda o: o.event_choice.id)
