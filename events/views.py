@@ -68,7 +68,7 @@ class EventFeed(ICalFeed):
     product_id = '-//fredagscafeen.dk//Events//EN'
     timezone = 'UTC'
     file_name = 'events.ics'
-    title = 'Events'
+    title = 'Bartender Events'
 
     def items(self):
         return Event.objects.all()
