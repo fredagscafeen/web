@@ -9,9 +9,16 @@
 <p><a href="{% url 'event_feed' %}">Tilføj til kalender</a></p>
 
 {% if not bartender %}
-<p><b>Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events.</b></p>
-{% elif not bartender.isActiveBartender %}
-<p><b>{{ user.email }} er ikke aktiv bartender og kan derfor ikke tilmelde sig events.</b></p>
+<p><b>Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events. <a href="/login/?next=/events/">Klik for at logge ind.</a></b></p>
+{% elif not may_attend %}
+<p><b>Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen.</b></p>
+<p>Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav:
+<ul>
+	<li>Man er aktiv bartender.</li>
+	<li>Man har været i den forrige bestyrelse.</li>
+	<li>Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden.</li>
+</ul>
+</p>
 {% endif %}
 
 {% for events_data in events_data %}

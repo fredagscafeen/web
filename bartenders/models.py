@@ -116,13 +116,6 @@ class Bartender(BartenderCommon):
             )
         ).order_by('order', 'name')
 
-    def may_attend_event(self, event):
-        # Allow active bartenders and past board members
-        if self.isActiveBartender:
-            return True
-
-        return self.board_members.count() > 0
-
     def __str__(self):
         return f'{self.symbol}{self.name} ({self.username})'
 
@@ -314,10 +307,17 @@ def next_deposit_shift_start(last_date=None):
 
 
 class BartenderShiftPeriod(models.Model):
+    class Meta:
+        ordering = ('-generation_datetime',)
+
     generation_datetime = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f'Generated at {self.generation_datetime}'
+
+    @classmethod
+    def current(cls):
+        return cls.objects.first()
 
 
 class BartenderShift(models.Model):

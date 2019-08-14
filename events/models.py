@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from bartenders.models import Bartender
+from bartenders.models import Bartender, BartenderShift, BoardMemberPeriod
 
 
 class EventChoice(models.Model):
@@ -52,13 +52,15 @@ class Event(models.Model):
 	start_datetime = models.DateTimeField()
 	end_datetime = models.DateTimeField()
 	response_deadline = models.DateTimeField()
+	bartender_whitelist = models.ManyToManyField(Bartender, related_name='whitelisted_events')
+	bartender_blacklist = models.ManyToManyField(Bartender, related_name='blacklisted_events')
 
 	def __str__(self):
 		return self.name
 
 	def deadline_exceeded(self):
 		return timezone.now() > self.response_deadline
-	
+
 	def attending_count(self):
 		return sum(r.attending for r in self.responses.all())
 
@@ -67,6 +69,47 @@ class Event(models.Model):
 
 	def sorted_choices(self):
 		return self.event_choices.order_by('id')
+
+	@classmethod
+	def may_attend_default(cls, bartender):
+		# Allow active bartenders
+		if bartender.isActiveBartender:
+			return True
+
+		# Allow board members from previous period
+		current_board_member_period_start = BoardMemberPeriod.get_current_period().start_date
+		previous_board_member_period = BoardMemberPeriod.objects.filter(start_date__lt=current_board_member_period_start).first()
+		if previous_board_member_period.boardmember_set.filter(bartender=bartender).exists():
+			return True
+
+		# Allow bartenders who had a shift the current period of shifts,
+		# but are no longer active.
+		# Also allow bartenders who had a shift in the previous shift period,
+		# if it ended before 31 days ago
+		MAX_INACTIVE_TIME = timezone.timedelta(days=31)
+		try:
+			last_period = bartender.last_bartender_shift().period
+			if last_period == BartenderShift.current:
+				return True
+
+			previous_period = BartenderShift.objects.all()[1]
+			if last_period == previous_period:
+				time_since_period_end = timezone.now() - BartenderShift.current.generation_datetime
+				if time_since_period_end <= MAX_INACTIVE_TIME:
+					return True
+		except BartenderShift.DoesNotExist:
+			pass
+
+		return False
+	
+	def may_attend(self, bartender):
+		if self.bartender_blacklist.filter(id=bartender.id).exists():
+			return False
+
+		if self.bartender_whitelist.filter(id=bartender.id).exist():
+			return True
+
+		return self.may_attend_default(bartender)
 
 
 class EventResponse(models.Model):
@@ -83,7 +126,7 @@ class EventResponse(models.Model):
 
 	def _assert_event_has_event_choice(self, event_choice):
 		assert self.event.event_choices.filter(id=event_choice.id).exists()
-	
+
 	def clear_option(self, event_choice):
 		self._assert_event_has_event_choice(event_choice)
 		self.selected_options.remove(*self.selected_options.filter(event_choice=event_choice))
@@ -92,7 +135,7 @@ class EventResponse(models.Model):
 		assert self.can_set_option(option)
 		self.clear_option(option.event_choice)
 		self.selected_options.add(option)
-	
+
 	def can_set_option(self, option):
 		return option.can_bartender_choose(self.bartender)
 
