@@ -106,7 +106,7 @@ class Event(models.Model):
 		if self.bartender_blacklist.filter(id=bartender.id).exists():
 			return False
 
-		if self.bartender_whitelist.filter(id=bartender.id).exist():
+		if self.bartender_whitelist.filter(id=bartender.id).exists():
 			return True
 
 		return self.may_attend_default(bartender)
