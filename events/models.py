@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from bartenders.models import Bartender, BartenderShift, BoardMemberPeriod
+from bartenders.models import Bartender, BartenderShiftPeriod, BoardMemberPeriod
 
 
 class EventChoice(models.Model):
@@ -87,18 +87,18 @@ class Event(models.Model):
 		# Also allow bartenders who had a shift in the previous shift period,
 		# if it ended before 31 days ago
 		MAX_INACTIVE_TIME = timezone.timedelta(days=31)
-		try:
-			last_period = bartender.last_bartender_shift().period
-			if last_period == BartenderShift.current:
+		last_shift = bartender.last_bartender_shift
+		if last_shift:
+			last_period = last_shift.period
+			current_period = BartenderShiftPeriod.current()
+			if last_period == current_period:
 				return True
 
-			previous_period = BartenderShift.objects.all()[1]
+			previous_period = BartenderShiftPeriod.objects.all()[1]
 			if last_period == previous_period:
-				time_since_period_end = timezone.now() - BartenderShift.current.generation_datetime
+				time_since_period_end = timezone.now() - current_period.generation_datetime
 				if time_since_period_end <= MAX_INACTIVE_TIME:
 					return True
-		except BartenderShift.DoesNotExist:
-			pass
 
 		return False
 	
