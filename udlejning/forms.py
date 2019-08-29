@@ -26,6 +26,11 @@ class UdlejningApplicationForm(forms.ModelForm):
 		for name in self.fields:
 			self.fields[name].required = name not in ['EANnumber', 'comments']
 
+	def clean(self):
+		super().clean()
+		if self.cleaned_data['dateFrom'] > self.cleaned_data['dateTo']:
+			self.add_error('dateTo', f'"Til" tidspunkt skal komme efter "fra" tidspunkt')
+
 	def send_email(self, pk):
 		d = self.cleaned_data
 
