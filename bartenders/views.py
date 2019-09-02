@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django_ical.views import ICalFeed
 from guides.models import Guide
+from fredagscafeen.email import send_template_email
 from .models import Bartender, BartenderApplication, BartenderShift, BoardMemberDepositShift, BoardMemberPeriod, next_bartender_shift_dates, BartenderUnavailableDate
 from .forms import BartenderApplicationForm, BartenderInfoForm
 
@@ -228,6 +229,15 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
         if 'deactivate' in self.request.POST:
             self.object.isActiveBartender = False
             self.object.save()
+            send_template_email(
+                subject=f'Bartender har meldt sig inaktiv: {self.object.name}',
+                body_template=f'''Dette er en automatisk email.
+
+{self.object.name} har meldt sig inaktiv.
+
+/snek''',
+                to=['best@fredagscafeen.dk'],
+            )
         elif 'subscribe_maillist' in self.request.POST:
             self.object.add_to_mailing_list()
         elif 'unsubscribe_maillist' in self.request.POST:
