@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django_object_actions import DjangoObjectActions
 
-from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill
+from udlejning.models import Udlejning, UdlejningApplication, UdlejningGrill, UdlejningProjector, UdlejningSpeakers
 
 
 class StatusDoneListFilter(admin.SimpleListFilter):
@@ -107,3 +107,15 @@ class UdlejningGrillAdmin(admin.ModelAdmin):
 
 	def in_charge(self, obj):
 		return ', '.join(obj.bartendersInCharge.values_list('username', flat=True))
+
+
+@admin.register(UdlejningProjector)
+class UdlejningProjectorAdmin(admin.ModelAdmin):
+	ordering = ('-dateFrom',)
+	list_display = ('dateFrom', 'whoReserved')
+
+
+@admin.register(UdlejningSpeakers)
+class UdlejningSpeakersAdmin(admin.ModelAdmin):
+	ordering = ('-dateFrom',)
+	list_display = ('dateFrom', 'whoReserved')

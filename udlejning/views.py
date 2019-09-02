@@ -2,7 +2,7 @@ import datetime
 from django.contrib import messages
 from django.views.generic import CreateView, ListView
 from django.utils import timezone
-from .models import Udlejning, UdlejningApplication, UdlejningGrill
+from .models import Udlejning, UdlejningApplication, UdlejningGrill, UdlejningProjector, UdlejningSpeakers
 from .forms import UdlejningApplicationForm
 
 
@@ -33,3 +33,15 @@ class UdlejningerGrill(ListView):
     allow_empty = True
     queryset = UdlejningGrill.objects.filter(dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
     context_object_name = 'udlejningerGrill'
+
+
+class UdlejningerProjector(ListView):
+    template_name = "udlejningProjector.html"
+    allow_empty = True
+    queryset = UdlejningProjector.objects.filter(dateFrom__gte=timezone.now()-datetime.timedelta(days=30))
+
+
+class UdlejningerSpeakers(ListView):
+    template_name = "udlejningSpeakers.html"
+    allow_empty = True
+    queryset = UdlejningSpeakers.objects.filter(dateFrom__gte=timezone.now()-datetime.timedelta(days=30))

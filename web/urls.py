@@ -9,7 +9,7 @@ from events.views import Events, EventFeed
 from guides.views import Guides
 from guides.update import update_hook
 from items.views import Items, Scanner
-from udlejning.views import Udlejninger, UdlejningerGrill
+from udlejning.views import Udlejninger, UdlejningerGrill, UdlejningerProjector, UdlejningerSpeakers
 
 urlpatterns = [
     path('update_hook/', update_hook),
@@ -34,5 +34,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('udlejning/', Udlejninger.as_view()),
     path('udlejningGrill/', UdlejningerGrill.as_view()),
+    path('udlejningProjector/', UdlejningerProjector.as_view()),
+    path('udlejningSpeakers/', UdlejningerSpeakers.as_view()),
     path('guides/', Guides.as_view(), name='guides'),
 ]

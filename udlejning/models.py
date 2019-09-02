@@ -87,3 +87,25 @@ class UdlejningGrill(models.Model):
 
 	class Meta:
 		ordering = ('dateFrom',)
+
+
+class UdlejningProjector(models.Model):
+	dateFrom = models.DateTimeField()
+	dateTo = models.DateTimeField()
+	whoReserved = models.TextField(max_length=140, blank=True)
+	contactInfo = models.CharField(max_length=140, blank=True)
+	comments = models.TextField(blank=True)
+
+	class Meta:
+		ordering = ('dateFrom',)
+
+
+class UdlejningSpeakers(models.Model):
+	dateFrom = models.DateTimeField()
+	dateTo = models.DateTimeField()
+	whoReserved = models.TextField(max_length=140, blank=True)
+	contactInfo = models.CharField(max_length=140, blank=True)
+	comments = models.TextField(blank=True)
+
+	class Meta:
+		ordering = ('dateFrom',)

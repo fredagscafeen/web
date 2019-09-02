@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Reservation af projektor &amp; lærred</h2>
+
+<h4>Projektoren/lærredet er allerede reserveret følgende dage</h4>
+
+<ul>
+	{% for u in object_list %}
+		<li>{{ u.dateFrom }}, reserveret af {{ u.whoReserved }}</li>
+	{% empty %}
+		<li>Projektoren/lærredet er pt ikke reserveret på noget tidspunkt</li>
+	{% endfor %}
+</ul>
+
+<p>
+	Hvis vores projektor/lærred ikke allerede er udlånt, kan du låne den ved at sende en mail til
+	<a rel="nofollow" class="external text" href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>.
+	Projektoren/lærredet kan kun lånes til arrangementer på instituttet.
+</p>
+
+{% endblock %}
