@@ -229,11 +229,14 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
         if 'deactivate' in self.request.POST:
             self.object.isActiveBartender = False
             self.object.save()
+            active_count = Bartender.objects.filter(isActiveBartender=True).count()
             send_template_email(
                 subject=f'Bartender har meldt sig inaktiv: {self.object.name}',
                 body_template=f'''Dette er en automatisk email.
 
 {self.object.name} har meldt sig inaktiv.
+
+Der er nu {active_count} aktive bartendere.
 
 /snek''',
                 to=['best@fredagscafeen.dk'],
