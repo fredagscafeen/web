@@ -8,8 +8,8 @@ from collections import defaultdict
 import sys
 
 
-DOUBLE_SECOND_SHIFT_START = datetime.time(21, 00)
-DOUBLE_SECOND_SHIFT_DURATION = datetime.timedelta(hours=5) # Ends at 02:00
+DOUBLE_SECOND_SHIFT_START = datetime.time(23, 00)
+DOUBLE_SECOND_SHIFT_DURATION = datetime.timedelta(hours=3) # Ends at 02:00
 
 
 class Command(BaseCommand):
