@@ -103,10 +103,10 @@ class Command(BaseCommand):
 
 		new_bartenders_with_fewer_shifts = len(new_bartenders) * self.BARTENDER_SHIFTS - new_bartender_shift_count
 
-		return (-new_bartenders_with_fewer_shifts, min_distance, count)
+		return (new_bartenders_with_fewer_shifts, -min_distance, count)
 
 	def get_random_solution(self, total_shifts, bartenders, bartenders_needed, available_shifts, max_tries, last_shifts):
-		best = ((-float('inf'), -float('inf'), 0), None)
+		best = ((float('inf'),), None)
 
 		sorted_bartenders = sorted(range(len(bartenders)), key=lambda x: len(available_shifts[x]))
 
@@ -122,11 +122,11 @@ class Command(BaseCommand):
 
 			if result != None:
 				i += 1
-				best = max(best, (self.get_shifts_score(bartenders, result, last_shifts), result))
+				best = min(best, (self.get_shifts_score(bartenders, result, last_shifts), result))
 			else:
 				fails += 1
 
-			best_str = f'fewer news: {-best[0][0]}, min distance: {best[0][1]}, count: {best[0][2]}'
+			best_str = f'fewer news: {best[0][0]}, min distance: {-best[0][1]}, count: {best[0][2]}'
 			print(f'\r{i} / {max_tries} (failed: {fails}), best: {best_str}', end='')
 			sys.stdout.flush()
 
