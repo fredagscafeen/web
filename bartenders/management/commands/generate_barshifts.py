@@ -12,6 +12,10 @@ DOUBLE_SECOND_SHIFT_START = datetime.time(23, 00)
 DOUBLE_SECOND_SHIFT_DURATION = datetime.timedelta(hours=3) # Ends at 02:00
 
 
+def ceildiv(n, d):
+	return ((n + 1) // d) + 1
+
+
 class Command(BaseCommand):
 	help = 'Generate normal barshifts'
 
@@ -29,8 +33,11 @@ class Command(BaseCommand):
 		shifts_for_bartender = [0] * len(sorted_bartenders)
 
 		shifts = [[] for _ in range(total_shifts)]
-		for i in range(self.BARTENDER_SHIFTS):
-			if i == self.BARTENDER_SHIFTS - 1:
+
+		bartender_shifts = ceildiv(total_shifts, self.BARTENDER_SHIFTS)
+
+		for i in range(bartender_shifts):
+			if i == bartender_shifts - 1:
 				sorted_bartenders = random.sample(sorted_bartenders, total_needed)
 
 			for b in sorted_bartenders:
@@ -240,6 +247,13 @@ class Command(BaseCommand):
 		print(f'Bartenders with fewer than {self.BARTENDER_SHIFTS} shifts:')
 		for (board_member, b), shift_count in shifts_for_bartender.items():
 			if shift_count < self.BARTENDER_SHIFTS:
+				print(f'  {all_bartenders[board_member][b]}: {shift_count} shifts')
+
+		print()
+
+		print(f'Bartenders with more than {self.BARTENDER_SHIFTS} shifts:')
+		for (board_member, b), shift_count in shifts_for_bartender.items():
+			if shift_count > self.BARTENDER_SHIFTS:
 				print(f'  {all_bartenders[board_member][b]}: {shift_count} shifts')
 
 		print()
