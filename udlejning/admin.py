@@ -1,5 +1,8 @@
 import datetime
+from urllib.parse import urljoin
+from fredagscafeen.email import send_template_email
 
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.http import HttpResponseRedirect
@@ -85,9 +88,28 @@ class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
 
     change_actions = ('accept', 'deny')
 
+    def _send_accept_email(self, u):
+        url = urljoin(settings.SELF_URL, reverse('admin:udlejning_udlejning_change', args=(u.pk, )))
+        return send_template_email(
+            subject=f'Reservation af fadølsanlæg til {u.whoReserved} accepteret',
+            body_template=f'''Reservationen af fadølsanlægget til {u.whoReserved} er blevet accepteret.
+
+Se {{link}} for mere info.
+
+/snek''',
+            text_format={
+				'link': url,
+			},
+            html_format={
+				'link': mark_safe(f'<a href="{url}">{url}</a>'),
+			},
+            to=['best@fredagscafeen.dk']
+        )
+
     def accept(self, request, obj):
         pk = obj.accept()
         obj.delete()
+        self._send_accept_email(Udlejning.objects.get(id=pk))
         return HttpResponseRedirect(reverse('admin:udlejning_udlejning_change', args=(pk, )))
 
     def deny(self, request, obj):
