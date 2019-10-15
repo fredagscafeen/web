@@ -28,7 +28,11 @@ class UdlejningApplicationForm(forms.ModelForm):
 
 	def clean(self):
 		super().clean()
-		if self.cleaned_data['dateFrom'] > self.cleaned_data['dateTo']:
+
+		d_from = self.cleaned_data.get('dateFrom')
+		d_to = self.cleaned_data.get('dateTo')
+
+		if d_to and d_from and d_from > d_to:
 			self.add_error('dateTo', f'"Til" tidspunkt skal komme efter "fra" tidspunkt')
 
 	def send_email(self, pk):
