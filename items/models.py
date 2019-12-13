@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 CONTAINER = (
     ('DRAFT', 'Fad'),  #0
@@ -43,6 +44,14 @@ class Item(models.Model):
 
         super().save(*args, **kwargs)
 
+    @property
+    def current_amount(self):
+        latest_entry = self.entries.order_by('-snapshot__datetime').first()
+        if latest_entry:
+            return latest_entry.amount
+        else:
+            return 0
+
 
 class BeerType(models.Model):
     name = models.CharField(max_length=140)
@@ -63,3 +72,19 @@ class Brewery(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class InventorySnapshot(models.Model):
+    datetime = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.datetime)
+
+
+class InventoryEntry(models.Model):
+    amount = models.PositiveIntegerField()
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='entries')
+    snapshot = models.ForeignKey(InventorySnapshot, on_delete=models.CASCADE, related_name='entries')
+
+    def __str__(self):
+        return f"{self.item}: {self.amount}"

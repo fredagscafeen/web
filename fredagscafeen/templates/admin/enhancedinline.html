@@ -10,7 +10,6 @@
                 var lastFocused = null;
                 var focusCount = 0;
                 $(document).on('focus', '.select2-selection.select2-selection--single', function (e) {
-                    console.log('open');
                     if (this !== lastFocused) {
                         $(this).closest('.select2-container').siblings('select:enabled').select2('open');
                         lastFocused = this;
@@ -51,9 +50,11 @@
 
                 // Automatically add new inlines
                 var add_button = null;
-                $(document).on('focus', '.field-raw_added > input', function (e) {
-                    var last_fields = $('.field-raw_added > input');
-                    if (e.target === last_fields.get(-2)) {
+                $(document).on('focus', '.inline-group .form-row input, .inline-group .form-row select', function (e) {
+                    var row = $(e.target).parents('.form-row');
+                    var group = row.parents('.inline-group');
+                    var rows = group.find('.form-row');
+                    if (row.get(0) === rows.get(-2)) {
                         if(!add_button) add_button = $('.add-row a');
                         add_button.get(0).click();
                     }

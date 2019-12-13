@@ -90,8 +90,8 @@ class BarTabContext:
 
 @admin.register(BarTabSnapshot)
 class BarTabSnapshotAdmin(AdminViews):
+	change_form_template = 'admin/enhancedinline.html'
 	list_display = ('date', 'entry_count', 'total_added', 'total_used')
-	change_form_template = 'admin/bartabsnapshot.html'
 	readonly_fields = ('last_updated', 'total_added', 'total_used')
 	inlines = [
 		BarTabEntryInline,
