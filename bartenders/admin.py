@@ -1,29 +1,61 @@
 from collections import Counter
+import datetime
 
+from admin_views.admin import AdminViews
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.utils import timezone
 
 from django_object_actions import DjangoObjectActions
 
 from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, BoardMemberPeriod, BartenderShiftPeriod
 from fredagscafeen.admin_filters import NonNullFieldListFilter
+from printer.views import pdf_preview
 
 from .mailman2 import MailmanError
 
 User = get_user_model()
 
 
+class FreeBeerListContext:
+    file_name = 'free_beer_list'
+    file_path = 'free_beer_list.tex'
+
+    @staticmethod
+    def get_context():
+        MONTHS = 3
+
+        names = [b.name for b in Bartender.objects.filter(isActiveBartender=True)]
+        months = []
+        dt = datetime.datetime(1, timezone.now().month, 1)
+        for _ in range(MONTHS):
+            months.append(dt.strftime('%B'))
+            next_month = dt.month + 1
+            if next_month == 13:
+                next_month = 1
+            dt = dt.replace(month=next_month)
+
+        return {
+            'names': names,
+            'months': months,
+        }
+
+
 @admin.register(Bartender)
-class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
+class BartenderAdmin(DjangoObjectActions, AdminViews):
     list_display = ('name', 'username', 'email')
     search_fields = ('name', 'username', 'email')
     list_filter = ('isActiveBartender', ('board_members', NonNullFieldListFilter))
 
     change_actions = ('add_to_mailing_list', 'remove_from_mailing_list', 'create_admin_user')
+
+    admin_views = (
+        ('Generate free beer list', 'generate_free_beer_list'),
+    )
 
     def add_to_mailing_list(self, request, obj):
         if not settings.MAILMAN_MUTABLE:
@@ -68,6 +100,9 @@ class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
         messages.info(request, f'Created user {obj.username} with password {password}')
 
     create_admin_user.label = 'Create admin user'
+
+    def generate_free_beer_list(self, request):
+        return pdf_preview(request, self.admin_site, FreeBeerListContext)
 
 
 @admin.register(BoardMember)

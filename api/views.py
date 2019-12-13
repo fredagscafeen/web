@@ -15,7 +15,7 @@ from items.models import BeerType
 from items.models import Brewery
 from items.models import Item
 
-from bartab.models import Printer
+from printer.models import Printer
 
 
 class ItemViewSet(viewsets.ModelViewSet):

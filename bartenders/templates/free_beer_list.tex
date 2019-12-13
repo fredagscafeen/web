@@ -1,0 +1,41 @@
+{% load latex_trunc %}
+
+\documentclass[a4paper,oneside,article,11pt,english]{memoir}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage[breakall,fit]{truncate}
+\usepackage{trimclip}
+% Using lscape instead of pdflscape, ensures that all pages
+% have the same orientation in the generated pdf.
+% This is intentional as Old can't always print pdf's,
+% containing pages of different orientation, correctly.
+\usepackage{lscape}
+\usepackage{icomma}
+\usepackage{tikz}
+
+
+\renewcommand\TruncateMarker{}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{tabu}{| X[3, l] | X[1, l] | X[1, l] | X[1, l] |}
+	\hline
+	\textbf{Bartender}
+	{% for month in months %}
+		& \textbf{ {{ month }} }
+	{% endfor %}
+	\\ \hline
+	{% for name in names %}
+		{{ name }}
+		{% for month in months %} & {% endfor %}
+		\\ \hline
+	{% endfor %}
+\end{tabu}
+
+\end{document}

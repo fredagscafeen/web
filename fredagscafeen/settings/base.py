@@ -88,6 +88,7 @@ INSTALLED_APPS = (
 	'email_auth',
 	'guides',
 	'events',
+	'printer',
 )
 
 MIDDLEWARE = (

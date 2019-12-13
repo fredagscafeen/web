@@ -1,22 +1,17 @@
-from tempfile import TemporaryDirectory
 from collections import Counter, defaultdict
-import shutil
 import json
-from subprocess import CalledProcessError
 
 from admin_views.admin import AdminViews
+from django.conf import settings
 from django.contrib import admin
-from django.db import models
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
-from django.forms.widgets import TextInput, Select
-from django.http import HttpResponse
+from django.forms.widgets import TextInput
 from django.template.response import TemplateResponse
-from django.conf import settings
 
-from .forms import ConsumptionForm, PrintForm
-from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField, Printer
-from .latex import generate_bartab, LatexError
+from .forms import ConsumptionForm
+from .models import BarTabUser, BarTabSnapshot, BarTabEntry, SumField
+from printer.views import pdf_preview
 
 
 class BarTabEntryReadonlyInline(admin.TabularInline):
@@ -75,6 +70,24 @@ class BarTabEntryInline(admin.TabularInline):
 		return field
 
 
+class BarTabContext:
+	file_name = 'bartab'
+	file_path = 'bartab/bartab.tex'
+
+	@staticmethod
+	def get_context():
+		tab_parts = (([], 'Aktive'), ([], 'Inaktive'))
+		for user in BarTabUser.objects.exclude(hidden_from_tab=True):
+			tab_parts[not user.is_active][0].append(user)
+
+		return {
+			'tab_parts': tab_parts,
+			'pizza_lines': range(33),
+			'latest_shift': BarTabSnapshot.objects.first().date,
+			'logo_path': settings.STATIC_ROOT + f'images/logo_gray.png',
+		}
+
+
 @admin.register(BarTabSnapshot)
 class BarTabSnapshotAdmin(AdminViews):
 	list_display = ('date', 'entry_count', 'total_added', 'total_used')
@@ -93,70 +106,7 @@ class BarTabSnapshotAdmin(AdminViews):
 		return obj.entries.count()
 
 	def generate_bartab(self, request):
-		TEST_PDF_PATH = '/usr/share/cups/data/testprint'
-		PDF_PATH = f'{settings.MEDIA_ROOT}/bartab.pdf'
-
-		form = PrintForm()
-
-		if request.method == 'POST':
-			form = PrintForm(request.POST)
-			if form.is_valid():
-				printer = form.cleaned_data['printer']
-				try:
-					if request.POST.get('print_test_submit'):
-						job_id = printer.print(TEST_PDF_PATH, inside_dokku=False)
-					else:
-						job_id = printer.print(PDF_PATH)
-				except CalledProcessError as e:
-					return HttpResponse(f'''Got unexpected exit code {e.returncode} from running:
-{e.cmd}
-
-stdout:
-{e.stdout}
-
-stderr:
-{e.stderr}''', content_type='text/plain')
-
-				context = dict(
-					# Include common variables for rendering the admin template.
-					self.admin_site.each_context(request),
-					# Anything else you want in the context...
-					printer_name=printer.name,
-					job_id=job_id,
-				)
-				return TemplateResponse(request, 'bartab/print_status.html', context)
-
-
-		if request.method == 'GET':
-			with TemporaryDirectory() as d:
-				try:
-					fname = generate_bartab(d)
-					shutil.copy(fname, PDF_PATH)
-				except LatexError as e:
-					with open(f'{d}/bartab.tex') as f:
-						source = f.read()
-
-					error_text = f'''==== Got an error from latexmk ====
-
-	== latexmk output ==
-
-	{e.message}
-
-	== LaTeX source ==
-
-	{source}'''
-					return HttpResponse(error_text, content_type='text/plain')
-
-		context = dict(
-			# Include common variables for rendering the admin template.
-			self.admin_site.each_context(request),
-			# Anything else you want in the context...
-			form=form,
-			connected=Printer.is_connected(),
-			bartab_url=f'{settings.MEDIA_URL}/bartab.pdf',
-		)
-		return TemplateResponse(request, 'bartab/bartab.html', context)
-
+		return pdf_preview(request, self.admin_site, BarTabContext)
 
 	def count_consumption(self, request):
 		result = None
@@ -212,16 +162,3 @@ stderr:
 			graph_data=json.dumps(graph_data),
 		)
 		return TemplateResponse(request, 'bartab/graph.html', context)
-
-
-class PrinterSelect(Select):
-	def __init__(self, *args, **kwargs):
-		kwargs['choices'] = Printer.PrinterChoiceIter()
-		super().__init__(*args, **kwargs)
-
-
-@admin.register(Printer)
-class PrinterAdmin(admin.ModelAdmin):
-	formfield_overrides = {
-		models.CharField: {'widget': PrinterSelect},
-	}
