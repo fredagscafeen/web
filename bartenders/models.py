@@ -32,17 +32,6 @@ def date_format(dt, format):
 # All of these should actually be required in BartenderApplication,
 # but we enforce that in BartenderApplicationForm for new applications.
 class BartenderCommon(models.Model):
-    class Meta:
-        abstract = True
-
-    name = models.CharField(max_length=140, verbose_name='Fulde navn')
-    username = models.CharField(max_length=140, unique=True, verbose_name='Brugernavn')
-    email = models.CharField(max_length=255, unique=True, blank=True)
-    studentNumber = models.IntegerField(blank=True, null=True, verbose_name='Studienummer')
-    phoneNumber = models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer')
-
-
-class Bartender(BartenderCommon):
     TSHIRT_SIZE_CHOICES = (
         ('XS', 'XS'),
         ('S', 'S'),
@@ -53,8 +42,19 @@ class Bartender(BartenderCommon):
         ('XXXL', 'XXXL'),
     )
 
-    isActiveBartender = models.BooleanField(default=True)
+    class Meta:
+        abstract = True
+
+    name = models.CharField(max_length=140, verbose_name='Fulde navn')
+    username = models.CharField(max_length=140, unique=True, verbose_name='Brugernavn')
+    email = models.CharField(max_length=255, unique=True, blank=True)
+    studentNumber = models.IntegerField(blank=True, null=True, verbose_name='Studienummer')
+    phoneNumber = models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer')
     tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True, verbose_name='T-shirt størrelse')
+
+
+class Bartender(BartenderCommon):
+    isActiveBartender = models.BooleanField(default=True)
     prefer_only_early_shifts = models.BooleanField(default=False, verbose_name='Jeg foretrækker ikke at have nogle sene barvagter')
 
     @property
