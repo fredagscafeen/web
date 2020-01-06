@@ -28,7 +28,7 @@
 		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} (for sent){% endif %}</p>
 		<p><b>Lokation:</b> {{ event.location }}</p>
 		<p><b>Beskrivelse:</b></p>
-		<p>{{ event.description }}</p>
+		<p style="white-space: pre-line;">{{ event.description }}</p>
 		{% if events_data.form %}
 			<h4>Tilmelding</h4>
 			<form method="post">
