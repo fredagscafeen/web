@@ -85,11 +85,86 @@ body {
 	<a id="replace-barcode-no" href="#" rel="modal:close" class="btn btn-block">Nej</a>
 </div>
 
-{{ items_data|json_script:"items_data" }}
 {% csrf_token %}
 
 <script>
-var items_data = JSON.parse(document.getElementById('items_data').textContent);
+var scanner_container = $('#scanner-container');
+var scanner_input = $('#scanner-input');
+var scanner_barcode_value = $('#scanner-barcode-value');
+var scanner_input = $('#scanner-input');
+var scanner_item_name = $('#scanner-item-name');
+var scanner_item_price = $('#scanner-item-price');
+var scanner_item_select = $('#scanner-item-select');
+var admin_mode_checkbox = $('#admin-mode-checkbox');
+
+scanner_item_select.select2();
+
+var updateInterval = 10000;
+var items_res, breweries_res;
+
+var items_data = [];
+var barcode_to_item = {};
+var should_update = true;
+
+function updateData() {
+	items_data = items_res[0];
+	var breweries_data = breweries_res[0];
+
+	barcode_to_item = {};
+	for (var i = 0; i < items_data.length; i++) {
+		var item = items_data[i];
+		if (item.barcode) {
+			barcode_to_item[item.barcode] = item;
+		}
+		if (item.brewery in breweries_data) {
+			item.breweryName = breweries_data[item.brewery].name;
+		}
+	}
+
+	sort_by_key(items_data, item_display);
+
+	scanner_item_select.html('');
+	scanner_item_select.append($('<option>').val(-1).text('-----'));
+	for (var i = 0; i < items_data.length; i++) {
+		var item = items_data[i];
+		scanner_item_select.append($('<option>').val(i).text(item_display(item)));
+	}
+	scanner_item_select.trigger('change');
+
+	should_update = false;
+}
+
+function updateItems() {
+	$.when(
+		$.get({
+			url: '/api/items/',
+		}),
+		$.get({
+			url: '/api/breweries/',
+		})
+	).done(function (items_res, breweries_res) {
+		window.items_res = items_res;
+		window.breweries_res = breweries_res;
+
+		if (scanner_item_select.select2('isOpen')) {
+			should_update = true;
+		} else {
+			updateData();
+		}
+
+		setTimeout(updateItems, updateInterval);
+	}).fail(function () {
+		setTimeout(updateItems, updateInterval);
+	});
+}
+updateItems();
+
+scanner_item_select.on('select2:opening', function() {
+	if (should_update) {
+		updateData();
+	}
+});
+
 var csrftoken = $('[name=csrfmiddlewaretoken]').val();
 function csrfSafeMethod(method) {
     // these HTTP methods do not require CSRF protection
@@ -105,8 +180,8 @@ $.ajaxSetup({
 
 function item_display(item) {
 	var s = item.name;
-	if (item.brewery) {
-		s = item.brewery + ' ' + s;
+	if (item.breweryName) {
+		s = item.breweryName + ' ' + s;
 	}
 	return s;
 }
@@ -122,32 +197,6 @@ function sort_by_key(arr, key) {
 	});
 }
 
-sort_by_key(items_data, item_display);
-
-var barcode_to_item = {};
-for (var i = 0; i < items_data.length; i++) {
-	var item = items_data[i];
-	if (item.barcode) {
-		barcode_to_item[item.barcode] = item;
-	}
-}
-
-var scanner_container = $('#scanner-container');
-var scanner_input = $('#scanner-input');
-var scanner_barcode_value = $('#scanner-barcode-value');
-var scanner_input = $('#scanner-input');
-var scanner_item_name = $('#scanner-item-name');
-var scanner_item_price = $('#scanner-item-price');
-var scanner_item_select = $('#scanner-item-select');
-var admin_mode_checkbox = $('#admin-mode-checkbox');
-
-scanner_item_select.append($('<option>').val(-1).text('-----'));
-for (var i = 0; i < items_data.length; i++) {
-	var item = items_data[i];
-	scanner_item_select.append($('<option>').val(i).text(item_display(item)));
-}
-scanner_item_select.select2();
-
 function toggle_dropdown(show) {
 	scanner_item_select.next('.select2-container').toggle(show);
 }
@@ -157,7 +206,7 @@ var current_barcode = null;
 function set_scanned(item) {
 	scanner_barcode_value.text(current_barcode);
 	scanner_item_name.text(item_display(item));
-	scanner_item_price.text(item.price.replace('.', ','));
+	scanner_item_price.text(item.priceInDKK.replace('.', ','));
 }
 
 scanner_input.keyup(function(e) {
@@ -221,9 +270,9 @@ function update_barcode() {
 	scanner_input.focus();
 }
 
-scanner_item_select.change(function() {
+scanner_item_select.on('change.select2', function() {
 	var index = parseInt(scanner_item_select.val());
-	if (index === -1) return;
+	if (index === -1 || isNaN(index)) return;
 
 	current_item = items_data[index];
 	if (current_item.barcode !== current_barcode) {

@@ -26,4 +26,3 @@ class BeerTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = BeerType
         fields = '__all__'
-
