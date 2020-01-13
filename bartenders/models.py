@@ -189,6 +189,8 @@ class BoardMemberPeriod(models.Model):
 
 
 class BartenderApplication(BartenderCommon):
+    study = models.CharField(max_length=50, verbose_name='Studie')
+    study_year = models.IntegerField(verbose_name='Årgang')
     info = models.TextField(blank=True, help_text='Eventuelle ekstra info til bestyrelsen skrives her')
 
     created = models.DateTimeField(auto_now_add=True)
