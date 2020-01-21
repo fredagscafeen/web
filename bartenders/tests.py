@@ -23,7 +23,7 @@ class BartenderApplicationTests(TestCase):
 
 	def test_accepting_application(self):
 		d = dict(name='Abekat', username='abkat', email='kat@post.au.dk', studentNumber=20147510, phoneNumber=42345123)
-		ap = BartenderApplication.objects.create(**d)
+		ap = BartenderApplication.objects.create(**d, tshirt_size='L', study='Datalogi', study_year=1)
 		ap.accept()
 
 		# Test that a Bartender has been created with the correct data
@@ -45,6 +45,9 @@ class BartenderApplicationTests(TestCase):
 			email='abe@cs.au.dk',
 			studentNumber=123123,
 			phoneNumber=12312312,
+			tshirt_size='L',
+			study='Datalogi',
+			study_year=1,
 			info='Hkll'
 		)
 
