@@ -1,5 +1,26 @@
 from django.contrib import admin
+from django import forms
 from .models import Event, EventChoice, EventChoiceOption, EventResponse
+
+
+class EventChoiceInlineForm(forms.ModelForm):
+	class Meta:
+		model = EventChoice
+		fields = ['name']
+
+	chosen_options = forms.CharField(label='Chosen options', disabled=True, widget=forms.Textarea)
+
+	def get_initial_for_field(self, field, fieldname):
+		if fieldname == 'chosen_options':
+			options = sorted(((o.get_selected(), o.option) for o in self.instance.options.all()), reverse=True)
+
+			s = ''
+			for selected, name in options:
+				s += f'{selected}: {name}\n'
+
+			return s
+
+		return super().get_initial_for_field(field, fieldname)
 
 
 class EventChoiceOptionInline(admin.StackedInline):
@@ -30,6 +51,7 @@ class EventResponseReadonlyInline(admin.TabularInline):
 class EventChoiceInline(admin.TabularInline):
 	model = EventChoice
 	show_change_link = True
+	form = EventChoiceInlineForm
 
 
 @admin.register(Event)
