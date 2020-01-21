@@ -156,7 +156,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'da-DK'
+LANGUAGE_CODE = 'da'
 
 TIME_ZONE = 'Europe/Copenhagen'
 
@@ -198,3 +198,5 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10 ** 6
 
 # Session cookie lasts a year
 SESSION_COOKIE_AGE = 365 * 24 * 60 * 60
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

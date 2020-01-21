@@ -4,7 +4,7 @@ from fredagscafeen.email import send_template_email
 
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.templatetags.static import static
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.safestring import mark_safe

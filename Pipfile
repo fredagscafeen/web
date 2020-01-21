@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-Django = "==2.2.*"
+Django = "==3.0.*"
 djangorestframework = "*"
 coreapi = "*"
 apiclient = "*"
@@ -23,10 +23,10 @@ django-extensions = "*"
 ipython = "*"
 requests-html = "*"
 django-logentry-admin = "*"
-django-admin-views = "*"
+django-admin-views = {editable = true,git = "https://github.com/Tyilo/django-admin-views.git",ref = "django-3"}
 django-cors-headers = "*"
 django-bootstrap-datepicker-plus = "*"
-django-constance = {extras = ["database"], version = "*"}
+django-constance = {extras = ["database"],version = "*"}
 # Not a direct dependency, but needed by django-constance
 # Work around https://github.com/pypa/pipenv/issues/3043
 django-picklefield = "*"
