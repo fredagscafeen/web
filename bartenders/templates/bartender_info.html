@@ -9,11 +9,19 @@ $(function() {
     $('#unavailable_dates_table input').change(function(e) {
         $(this).closest('td').toggleClass('danger', this.checked);
     });
-    $('#info_form').one('change', function(e) {
-        window.addEventListener('beforeunload', function (e) {
+
+    var preventUnload = false;
+    $('#info_form').submit(function(e) {
+        preventUnload = false;
+    });
+    $('#info_form').change(function(e) {
+        preventUnload = true;
+    });
+    window.addEventListener('beforeunload', function (e) {
+        if (preventUnload) {
             e.preventDefault();
             e.returnValue = '';
-        });
+        }
     });
 });
 </script>
