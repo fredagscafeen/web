@@ -9,6 +9,12 @@ $(function() {
     $('#unavailable_dates_table input').change(function(e) {
         $(this).closest('td').toggleClass('danger', this.checked);
     });
+    $('#info_form').one('change', function(e) {
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+    });
 });
 </script>
 {% endblock %}
@@ -16,7 +22,7 @@ $(function() {
 {% block content %}
 
 {% if object %}
-<form method="post">
+<form method="post" id="info_form">
 {% csrf_token %}
 <p><b>Bartender status:</b>
 {% if object.isActiveBartender %}
