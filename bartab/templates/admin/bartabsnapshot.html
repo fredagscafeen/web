@@ -7,19 +7,27 @@
         (function ($) {
             $(function () {
                 // Open dropdown on tab
-                $(document).on('focus', '.select2.select2-container', function (e) {
-                    // only open on original attempt - close focus event should not fire open
-                    if (e.originalEvent && $(this).find(".select2-selection--single").length > 0) {
-                        $(this).siblings('select').select2('open');
+                var lastFocused = null;
+                var focusCount = 0;
+                $(document).on('focus', '.select2-selection.select2-selection--single', function (e) {
+                    console.log('open');
+                    if (this !== lastFocused) {
+                        $(this).closest('.select2-container').siblings('select:enabled').select2('open');
+                        lastFocused = this;
+                        focusCount = 0;
+                    } else {
+                        focusCount++;
+                        if (focusCount === 2) {
+                            lastFocused = null;
+                            focusCount = 0;
+                        }
                     }
                 });
 
-                var lastEl = null;
-
                 // Automatically select highlighted
+                var lastEl = null;
                 $(document).on('select2:closing', 'select', function (e) {
                     var el = $('.select2-results__option--highlighted').get(0);
-                    console.log(el);
                     if (el && el !== lastEl) {
                         lastEl = el;
                         var evt = $.Event('keydown');
@@ -35,8 +43,6 @@
 
                 setUntabbables();
 
-                var add_button;
-
                 $(document).on('click', '.add-row a', function (e) {
                     setTimeout(function() {
                         setUntabbables();
@@ -44,6 +50,7 @@
                 });
 
                 // Automatically add new inlines
+                var add_button = null;
                 $(document).on('focus', '.field-raw_added > input', function (e) {
                     var last_fields = $('.field-raw_added > input');
                     if (e.target === last_fields.get(-2)) {
