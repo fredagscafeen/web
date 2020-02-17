@@ -56,11 +56,26 @@ def bar_tab_snapshot_ordering(related_name=None):
 
 class BarTabSnapshot(models.Model):
 	bartender_shift = models.OneToOneField(BartenderShift, on_delete=models.PROTECT, related_name='bar_tab_snapshot', blank=True, null=True)
+	custom_datetime = models.DateTimeField(blank=True, null=True)
 	last_updated = models.DateTimeField(auto_now=True)
 	notes = models.TextField(blank=True)
 
 	class Meta:
 		ordering = (bar_tab_snapshot_ordering(),)
+
+	def clean(self):
+		error = None
+		if self.bartender_shift and self.custom_datetime:
+			error = "Can't have both bartender shift and custom datetime"
+
+		if not self.bartender_shift and not self.custom_datetime:
+			error = "Must have either bartender shift or custom datetime"
+
+		if error:
+			raise ValidationError({
+				"bartender_shift": error,
+				"custom_datetime": error,
+			})
 
 	@staticmethod
 	def get_ordering(related_name=None):
@@ -68,10 +83,13 @@ class BarTabSnapshot(models.Model):
 
 	@property
 	def datetime(self):
-		if not self.bartender_shift:
-			return timezone.make_aware(datetime.datetime.fromtimestamp(0))
+		if self.custom_datetime:
+			return self.custom_datetime
 
-		return self.bartender_shift.start_datetime
+		if self.bartender_shift:
+			return self.bartender_shift.start_datetime
+
+		return timezone.make_aware(datetime.datetime.fromtimestamp(0))
 
 	@property
 	def date(self):
@@ -86,7 +104,11 @@ class BarTabSnapshot(models.Model):
 		return self.entries.aggregate(total_used=Sum('used'))['total_used']
 
 	def __str__(self):
-		return f'{self.date}: {self.entries.count()} entries'
+		s = f'{self.date}: {self.entries.count()} entries'
+		if self.custom_datetime:
+			s = '<Custom> ' + s
+
+		return s
 
 
 class BarTabEntry(models.Model):
