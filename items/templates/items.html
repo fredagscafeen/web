@@ -8,24 +8,30 @@
 <div class="row" id="sortiment-row">
 	<div class="col-sm-6">
 		<h2>
-			Sortiment 
-			{% if items %}
+			Sortiment
+			{% if items_data %}
 			<div id="sortiment-count"> 
-				   ({{ items | length }})				    
+				   ({{ items_data | length }})
 			</div>
 			{% endif %}
 		</h2>
 	</div>
 
-	{% if items %}			   				    
+	{% if items_data %}
 	<div class="col-sm-6" id="sortiment-search">	
 		<input type="text" id="itemsSearchInput" placeholder="Søg" autofocus>
 	</div>
 	{% endif %}
 </div>
 
+{% if show_all %}
+<a href=".">Vis kun ting på lageret</a>
+{% else %}
+<a href="?show_all">Vis også ting ikke på lageret</a>
+{% endif %}
 
-{% if items %}
+
+{% if items_data %}
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
@@ -40,13 +46,13 @@
 		</tr>
 		</thead>
 	<tbody>
-	{% for item in items %}
+	{% for item in items_data %}
 		<tr>
 			<td>{{ item.brewery|default_if_none:"" }}</td>
 			<td>{{ item.name }}</td>
 			<td class="hidden-xs">{{ item.get_container_display }}</td>
 			<td class="hidden-xs">{{ item.type|default_if_none:"" }}</td>
-			<td>{{ item.priceInDKK|floatformat:-2 }}</td>
+			<td>{{ item.price|floatformat:-2 }}</td>
 			{% if user.is_staff %}
 				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
 			{% endif %}

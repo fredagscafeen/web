@@ -17,11 +17,20 @@ class Items(ListView):
             items_data.append({
                 'brewery': item.brewery.name if item.brewery else None,
                 'name': item.name,
+                'container_display': item.get_container_display(),
+                'type': item.type,
                 'price': item.priceInDKK,
                 'barcode': item.barcode,
                 'id': item.id,
+                'amount': item.current_amount,
             })
 
+        show_all = 'show_all' in self.request.GET
+
+        if not show_all:
+            items_data = [d for d in items_data if d['amount'] > 0]
+
+        context['show_all'] = show_all
         context['items_data'] = items_data
 
         return context
