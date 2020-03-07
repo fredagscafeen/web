@@ -6,9 +6,9 @@ class Guide(models.Model):
 		ordering = ('name',)
 
 	GUIDE_TYPES = (
+		('ALL', 'Til alle'),
 		('BT', 'Til bartendere'),
 		('BM', 'Til bestyrelsesmedlemmer'),
-		('ALL', 'Til alle'),
 	)
 
 	name = models.CharField(max_length=256)
