@@ -1,5 +1,6 @@
 from fredagscafeen.settings.base import *
 import os
+import sys
 
 ALLOWED_HOSTS = ['*']
 SECRET_KEY = "This is insecure"
@@ -15,4 +16,5 @@ SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 AUTOLOGIN_USERNAME = os.environ.get('AUTOLOGIN_USERNAME')
 
-MIDDLEWARE += ('fredagscafeen.autologin.AutologinMiddleware',)
+if sys.argv[1:2] != ["test"]:
+    MIDDLEWARE += ('fredagscafeen.autologin.AutologinMiddleware',)
