@@ -8,19 +8,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0005_bartendershift'),
+        ("bartenders", "0005_bartendershift"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BoardMemberDepositShift',
+            name="BoardMemberDepositShift",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('responsible', models.ManyToManyField(to='bartenders.Bartender')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("responsible", models.ManyToManyField(to="bartenders.Bartender")),
             ],
-            options={
-                'ordering': ('date',),
-            },
+            options={"ordering": ("date",),},
         ),
     ]

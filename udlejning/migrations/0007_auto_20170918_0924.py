@@ -8,18 +8,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0006_auto_20170325_1702'),
+        ("udlejning", "0006_auto_20170325_1702"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='udlejning',
-            name='association',
-            field=models.CharField(choices=[('internal', 'Intern'), ('external', 'Ekstern')], max_length=16, null=True),
+            model_name="udlejning",
+            name="association",
+            field=models.CharField(
+                choices=[("internal", "Intern"), ("external", "Ekstern")],
+                max_length=16,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='udlejning',
-            name='draftBeerSystem',
-            field=models.CharField(choices=[('small', 'Lille'), ('medium', 'Mellem')], max_length=16, null=True),
+            model_name="udlejning",
+            name="draftBeerSystem",
+            field=models.CharField(
+                choices=[("small", "Lille"), ("medium", "Mellem")],
+                max_length=16,
+                null=True,
+            ),
         ),
     ]

@@ -8,24 +8,43 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0002_auto_20170325_1618'),
+        ("bartenders", "0002_auto_20170325_1618"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BartenderApplication',
+            name="BartenderApplication",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=140, verbose_name='Navn')),
-                ('username', models.CharField(help_text='Brug evt. NFIT', max_length=140, verbose_name='Brugernavn')),
-                ('email', models.EmailField(max_length=255)),
-                ('studentNumber', models.IntegerField(verbose_name='Studienummer')),
-                ('phoneNumber', models.IntegerField(verbose_name='Telefonnummer')),
-                ('info', models.TextField(blank=True, help_text='Eventuelle ekstra info til bestyrelsen skrives her')),
-                ('created', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=140, verbose_name="Navn")),
+                (
+                    "username",
+                    models.CharField(
+                        help_text="Brug evt. NFIT",
+                        max_length=140,
+                        verbose_name="Brugernavn",
+                    ),
+                ),
+                ("email", models.EmailField(max_length=255)),
+                ("studentNumber", models.IntegerField(verbose_name="Studienummer")),
+                ("phoneNumber", models.IntegerField(verbose_name="Telefonnummer")),
+                (
+                    "info",
+                    models.TextField(
+                        blank=True,
+                        help_text="Eventuelle ekstra info til bestyrelsen skrives her",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
             ],
-            options={
-                'ordering': ('created',),
-            },
+            options={"ordering": ("created",),},
         ),
     ]

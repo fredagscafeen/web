@@ -6,13 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0005_auto_20190717_1456'),
+        ("events", "0005_auto_20190717_1456"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='eventresponse',
-            old_name='choices',
-            new_name='selected_options',
+            model_name="eventresponse", old_name="choices", new_name="selected_options",
         ),
     ]

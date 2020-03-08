@@ -6,22 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0027_udlejningprojector'),
+        ("udlejning", "0027_udlejningprojector"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='UdlejningSpeakers',
+            name="UdlejningSpeakers",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('dateFrom', models.DateTimeField()),
-                ('dateTo', models.DateTimeField()),
-                ('whoReserved', models.TextField(blank=True, max_length=140)),
-                ('contactInfo', models.CharField(blank=True, max_length=140)),
-                ('comments', models.TextField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("dateFrom", models.DateTimeField()),
+                ("dateTo", models.DateTimeField()),
+                ("whoReserved", models.TextField(blank=True, max_length=140)),
+                ("contactInfo", models.CharField(blank=True, max_length=140)),
+                ("comments", models.TextField(blank=True)),
             ],
-            options={
-                'ordering': ('dateFrom',),
-            },
+            options={"ordering": ("dateFrom",),},
         ),
     ]

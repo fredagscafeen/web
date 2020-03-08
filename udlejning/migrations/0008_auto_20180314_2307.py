@@ -6,38 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0007_auto_20170918_0924'),
+        ("udlejning", "0007_auto_20170918_0924"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='udlejning',
-            name='actualConsummation',
-            field=models.TextField(blank=True, default='', max_length=140),
+            model_name="udlejning",
+            name="actualConsummation",
+            field=models.TextField(blank=True, default="", max_length=140),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='association',
-            field=models.CharField(blank=True, choices=[('internal', 'Intern'), ('external', 'Ekstern')], default='', max_length=16),
+            model_name="udlejning",
+            name="association",
+            field=models.CharField(
+                blank=True,
+                choices=[("internal", "Intern"), ("external", "Ekstern")],
+                default="",
+                max_length=16,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='comments',
-            field=models.TextField(blank=True, default=''),
+            model_name="udlejning",
+            name="comments",
+            field=models.TextField(blank=True, default=""),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='draftBeerSystem',
-            field=models.CharField(blank=True, choices=[('small', 'Lille'), ('medium', 'Mellem')], default='', max_length=16),
+            model_name="udlejning",
+            name="draftBeerSystem",
+            field=models.CharField(
+                blank=True,
+                choices=[("small", "Lille"), ("medium", "Mellem")],
+                default="",
+                max_length=16,
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='udlejninggrill',
-            name='comments',
-            field=models.TextField(blank=True, default=''),
+            model_name="udlejninggrill",
+            name="comments",
+            field=models.TextField(blank=True, default=""),
             preserve_default=False,
         ),
     ]

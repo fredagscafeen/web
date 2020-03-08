@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0003_auto_20190611_1011'),
+        ("events", "0003_auto_20190611_1011"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='eventchoiceoption',
-            name='max_selected',
+            model_name="eventchoiceoption",
+            name="max_selected",
             field=models.PositiveIntegerField(blank=True, null=True),
         ),
     ]

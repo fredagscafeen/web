@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0033_bartender_prefer_only_early_shifts'),
+        ("bartenders", "0033_bartender_prefer_only_early_shifts"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bartender',
-            name='prefer_only_early_shifts',
-            field=models.BooleanField(default=False, verbose_name='Jeg foretrækker ikke at have nogle sene barvagter'),
+            model_name="bartender",
+            name="prefer_only_early_shifts",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Jeg foretrækker ikke at have nogle sene barvagter",
+            ),
         ),
     ]

@@ -8,16 +8,14 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0005_remove_boardMemberInCharge_fields'),
+        ("udlejning", "0005_remove_boardMemberInCharge_fields"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='udlejning',
-            options={'ordering': ('dateFrom',)},
+            name="udlejning", options={"ordering": ("dateFrom",)},
         ),
         migrations.AlterModelOptions(
-            name='udlejninggrill',
-            options={'ordering': ('dateFrom',)},
+            name="udlejninggrill", options={"ordering": ("dateFrom",)},
         ),
     ]

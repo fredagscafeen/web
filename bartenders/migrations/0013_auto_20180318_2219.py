@@ -6,17 +6,14 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0012_auto_20180318_2217'),
+        ("bartenders", "0012_auto_20180318_2217"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='bartendershift',
-            options={'ordering': ('start_date',)},
+            name="bartendershift", options={"ordering": ("start_date",)},
         ),
         migrations.RenameField(
-            model_name='bartendershift',
-            old_name='date',
-            new_name='start_date',
+            model_name="bartendershift", old_name="date", new_name="start_date",
         ),
     ]

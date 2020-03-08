@@ -1,18 +1,25 @@
-from collections import Counter
 import datetime
+from collections import Counter
 
-from admin_views.admin import AdminViews
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
-from django.utils.safestring import mark_safe
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 
+from admin_views.admin import AdminViews
+from bartenders.models import (
+    Bartender,
+    BartenderApplication,
+    BartenderShift,
+    BartenderShiftPeriod,
+    BoardMember,
+    BoardMemberDepositShift,
+    BoardMemberPeriod,
+)
 from django_object_actions import DjangoObjectActions
-
-from bartenders.models import Bartender, BoardMember, BartenderApplication, BartenderShift, BoardMemberDepositShift, BoardMemberPeriod, BartenderShiftPeriod
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 from printer.views import pdf_preview
 
@@ -22,8 +29,8 @@ User = get_user_model()
 
 
 class FreeBeerListContext:
-    file_name = 'free_beer_list'
-    file_path = 'free_beer_list.tex'
+    file_name = "free_beer_list"
+    file_path = "free_beer_list.tex"
 
     @staticmethod
     def get_context():
@@ -33,63 +40,66 @@ class FreeBeerListContext:
         months = []
         dt = datetime.datetime(1, timezone.now().month, 1)
         for _ in range(MONTHS):
-            months.append(dt.strftime('%B'))
+            months.append(dt.strftime("%B"))
             next_month = dt.month + 1
             if next_month == 13:
                 next_month = 1
             dt = dt.replace(month=next_month)
 
         return {
-            'names': names,
-            'months': months,
+            "names": names,
+            "months": months,
         }
 
 
 @admin.register(Bartender)
 class BartenderAdmin(DjangoObjectActions, AdminViews):
-    list_display = ('name', 'username', 'email')
-    search_fields = ('name', 'username', 'email')
-    list_filter = ('isActiveBartender', ('board_members', NonNullFieldListFilter))
+    list_display = ("name", "username", "email")
+    search_fields = ("name", "username", "email")
+    list_filter = ("isActiveBartender", ("board_members", NonNullFieldListFilter))
 
-    change_actions = ('add_to_mailing_list', 'remove_from_mailing_list', 'create_admin_user')
-
-    admin_views = (
-        ('Generate free beer list', 'generate_free_beer_list'),
+    change_actions = (
+        "add_to_mailing_list",
+        "remove_from_mailing_list",
+        "create_admin_user",
     )
+
+    admin_views = (("Generate free beer list", "generate_free_beer_list"),)
 
     def add_to_mailing_list(self, request, obj):
         if not settings.MAILMAN_MUTABLE:
-            messages.error(request, 'MAILMAN_MUTABLE is false!')
+            messages.error(request, "MAILMAN_MUTABLE is false!")
             return
 
         try:
             obj.add_to_mailing_list()
-            messages.info(request, 'Successfully added to mailing list')
+            messages.info(request, "Successfully added to mailing list")
         except MailmanError as e:
-            messages.error(request, f'Got Mailman error: {e}')
+            messages.error(request, f"Got Mailman error: {e}")
 
-    add_to_mailing_list.label = 'Add to mailing list'
+    add_to_mailing_list.label = "Add to mailing list"
 
     def remove_from_mailing_list(self, request, obj):
         if not settings.MAILMAN_MUTABLE:
-            messages.error(request, 'MAILMAN_MUTABLE is false!')
+            messages.error(request, "MAILMAN_MUTABLE is false!")
             return
 
         try:
             obj.remove_from_mailing_list()
-            messages.info(request, 'Successfully removed from mailing list')
+            messages.info(request, "Successfully removed from mailing list")
         except MailmanError as e:
-            messages.error(request, f'Got Mailman error: {e}')
+            messages.error(request, f"Got Mailman error: {e}")
 
-
-    remove_from_mailing_list.label = 'Remove from mailing list'
+    remove_from_mailing_list.label = "Remove from mailing list"
 
     def create_admin_user(self, request, obj):
-        first_name, last_name = obj.name.rsplit(' ', maxsplit=1)
-        user = User.objects.create(username=obj.username,
-                                   email=obj.email,
-                                   first_name=first_name,
-                                   last_name=last_name)
+        first_name, last_name = obj.name.rsplit(" ", maxsplit=1)
+        user = User.objects.create(
+            username=obj.username,
+            email=obj.email,
+            first_name=first_name,
+            last_name=last_name,
+        )
 
         password = User.objects.make_random_password(length=30)
         user.set_password(password)
@@ -97,9 +107,9 @@ class BartenderAdmin(DjangoObjectActions, AdminViews):
         user.is_staff = True
         user.save()
 
-        messages.info(request, f'Created user {obj.username} with password {password}')
+        messages.info(request, f"Created user {obj.username} with password {password}")
 
-    create_admin_user.label = 'Create admin user'
+    create_admin_user.label = "Create admin user"
 
     def generate_free_beer_list(self, request):
         return pdf_preview(request, self.admin_site, FreeBeerListContext)
@@ -107,35 +117,43 @@ class BartenderAdmin(DjangoObjectActions, AdminViews):
 
 @admin.register(BoardMember)
 class BoardMemberAdmin(admin.ModelAdmin):
-    list_display = ('thumbnail', 'bartender', 'title', 'period')
-    list_display_links = ('thumbnail', 'bartender')
-    list_select_related = ('bartender', )
-    list_filter = ('period',)
+    list_display = ("thumbnail", "bartender", "title", "period")
+    list_display_links = ("thumbnail", "bartender")
+    list_select_related = ("bartender",)
+    list_filter = ("period",)
 
     def thumbnail(self, obj):
-        return mark_safe('<img src="%s" width="75px"/>' % obj.image.url) if obj.image else '<missing>'
+        return (
+            mark_safe('<img src="%s" width="75px"/>' % obj.image.url)
+            if obj.image
+            else "<missing>"
+        )
 
 
 @admin.register(BartenderApplication)
 class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
-    list_display = ('name', 'created', 'username', 'email')
+    list_display = ("name", "created", "username", "email")
 
-    change_actions = ('accept', 'deny')
+    change_actions = ("accept", "deny")
 
     def accept(self, request, obj):
         pk = obj.accept()
         obj.delete()
-        return HttpResponseRedirect(reverse('admin:bartenders_bartender_change', args=(pk, )))
+        return HttpResponseRedirect(
+            reverse("admin:bartenders_bartender_change", args=(pk,))
+        )
 
     def deny(self, request, obj):
         obj.delete()
-        return HttpResponseRedirect(reverse('admin:bartenders_bartenderapplication_changelist'))
+        return HttpResponseRedirect(
+            reverse("admin:bartenders_bartenderapplication_changelist")
+        )
 
 
 @admin.register(BartenderShift)
 class BartenderShiftAdmin(admin.ModelAdmin):
-    list_display = ('start_datetime', 'shift_responsible', 'other_bartenders_list')
-    filter_horizontal = ('other_bartenders',)
+    list_display = ("start_datetime", "shift_responsible", "other_bartenders_list")
+    filter_horizontal = ("other_bartenders",)
 
     def shift_responsible(self, obj):
         return obj.responsible.name
@@ -144,23 +162,23 @@ class BartenderShiftAdmin(admin.ModelAdmin):
         return ", ".join([s.name for s in obj.other_bartenders.all()])
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == 'responsible':
-            kwargs['queryset'] = Bartender.shift_ordered()
+        if db_field.name == "responsible":
+            kwargs["queryset"] = Bartender.shift_ordered()
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(BoardMemberDepositShift)
 class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
-    list_display = ('start_date', 'end_date', 'responsible_board_members')
-    filter_horizontal = ('responsibles',)
+    list_display = ("start_date", "end_date", "responsible_board_members")
+    filter_horizontal = ("responsibles",)
 
     def responsible_board_members(self, obj):
         return ", ".join([s.name for s in obj.responsibles.all()])
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == 'responsibles':
-            kwargs['queryset'] = Bartender.shift_ordered()
+        if db_field.name == "responsibles":
+            kwargs["queryset"] = Bartender.shift_ordered()
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
@@ -171,16 +189,14 @@ class BoardMemberInline(admin.StackedInline):
 
 @admin.register(BoardMemberPeriod)
 class BoardMemberPeriodAdmin(admin.ModelAdmin):
-    inlines = [
-        BoardMemberInline
-    ]
+    inlines = [BoardMemberInline]
 
 
 @admin.register(BartenderShiftPeriod)
 class BartenderShiftPeriodAdmin(admin.ModelAdmin):
-    change_form_template = 'bartender_shift_period_change_form.html'
+    change_form_template = "bartender_shift_period_change_form.html"
 
-    def change_view(self, request, object_id, form_url='', extra_context=None):
+    def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
 
         obj = BartenderShiftPeriod.objects.get(id=object_id)
@@ -190,7 +206,9 @@ class BartenderShiftPeriodAdmin(admin.ModelAdmin):
             for b in shift.all_bartenders():
                 bartender_shifts[b] += 1
 
-        extra_context['bartender_shifts'] = sorted(bartender_shifts.items(), key=lambda x: (-x[1], x[0].name))
+        extra_context["bartender_shifts"] = sorted(
+            bartender_shifts.items(), key=lambda x: (-x[1], x[0].name)
+        )
 
         return super().change_view(
             request, object_id, form_url, extra_context=extra_context,

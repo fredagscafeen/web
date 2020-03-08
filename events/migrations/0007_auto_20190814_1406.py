@@ -6,19 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0038_auto_20190814_1342'),
-        ('events', '0006_auto_20190718_0027'),
+        ("bartenders", "0038_auto_20190814_1342"),
+        ("events", "0006_auto_20190718_0027"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='bartender_blacklist',
-            field=models.ManyToManyField(related_name='blacklisted_events', to='bartenders.Bartender'),
+            model_name="event",
+            name="bartender_blacklist",
+            field=models.ManyToManyField(
+                related_name="blacklisted_events", to="bartenders.Bartender"
+            ),
         ),
         migrations.AddField(
-            model_name='event',
-            name='bartender_whitelist',
-            field=models.ManyToManyField(related_name='whitelisted_events', to='bartenders.Bartender'),
+            model_name="event",
+            name="bartender_whitelist",
+            field=models.ManyToManyField(
+                related_name="whitelisted_events", to="bartenders.Bartender"
+            ),
         ),
     ]

@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+
 from .models import Guide
 
 
@@ -12,6 +13,6 @@ class Guides(TemplateView):
         for k, name in Guide.GUIDE_TYPES:
             guides.append((name, Guide.objects.filter(category=k)))
 
-        context['guides'] = guides
+        context["guides"] = guides
 
         return context

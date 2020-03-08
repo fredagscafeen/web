@@ -6,13 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartab', '0012_printer'),
+        ("bartab", "0012_printer"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='printer',
-            name='name',
-            field=models.CharField(choices=[('nygaard-394', 'nygaard-394'), ('studiecafeen', 'studiecafeen')], max_length=32),
+            model_name="printer",
+            name="name",
+            field=models.CharField(
+                choices=[
+                    ("nygaard-394", "nygaard-394"),
+                    ("studiecafeen", "studiecafeen"),
+                ],
+                max_length=32,
+            ),
         ),
     ]

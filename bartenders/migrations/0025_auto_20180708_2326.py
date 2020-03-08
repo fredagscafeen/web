@@ -6,38 +6,57 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0024_bartenderunavailabledate'),
+        ("bartenders", "0024_bartenderunavailabledate"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bartender',
-            name='name',
-            field=models.CharField(max_length=140, verbose_name='Fulde navn'),
+            model_name="bartender",
+            name="name",
+            field=models.CharField(max_length=140, verbose_name="Fulde navn"),
         ),
         migrations.AlterField(
-            model_name='bartender',
-            name='phoneNumber',
-            field=models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer'),
+            model_name="bartender",
+            name="phoneNumber",
+            field=models.IntegerField(
+                blank=True, null=True, verbose_name="Telefonnummer"
+            ),
         ),
         migrations.AlterField(
-            model_name='bartender',
-            name='studentNumber',
-            field=models.IntegerField(blank=True, null=True, verbose_name='Studienummer'),
+            model_name="bartender",
+            name="studentNumber",
+            field=models.IntegerField(
+                blank=True, null=True, verbose_name="Studienummer"
+            ),
         ),
         migrations.AlterField(
-            model_name='bartender',
-            name='tshirt_size',
-            field=models.CharField(blank=True, choices=[('S', 'S'), ('M', 'M'), ('L', 'L'), ('XL', 'XL'), ('XXL', 'XXL'), ('XXXL', 'XXXL')], max_length=10, null=True, verbose_name='T-shirt størrelse'),
+            model_name="bartender",
+            name="tshirt_size",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("S", "S"),
+                    ("M", "M"),
+                    ("L", "L"),
+                    ("XL", "XL"),
+                    ("XXL", "XXL"),
+                    ("XXXL", "XXXL"),
+                ],
+                max_length=10,
+                null=True,
+                verbose_name="T-shirt størrelse",
+            ),
         ),
         migrations.AlterField(
-            model_name='bartender',
-            name='username',
-            field=models.CharField(max_length=140, unique=True, verbose_name='Brugernavn'),
+            model_name="bartender",
+            name="username",
+            field=models.CharField(
+                max_length=140, unique=True, verbose_name="Brugernavn"
+            ),
         ),
         migrations.AlterField(
-            model_name='bartenderapplication',
-            name='name',
-            field=models.CharField(max_length=140, verbose_name='Fulde navn'),
+            model_name="bartenderapplication",
+            name="name",
+            field=models.CharField(max_length=140, verbose_name="Fulde navn"),
         ),
     ]

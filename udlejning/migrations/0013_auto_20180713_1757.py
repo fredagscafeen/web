@@ -6,18 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0012_auto_20180712_1932'),
+        ("udlejning", "0012_auto_20180712_1932"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='udlejning',
-            name='contactInfo',
-            field=models.EmailField(max_length=254, verbose_name='Email til kontaktperson'),
+            model_name="udlejning",
+            name="contactInfo",
+            field=models.EmailField(
+                max_length=254, verbose_name="Email til kontaktperson"
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='contactInfo',
-            field=models.EmailField(max_length=254, verbose_name='Email til kontaktperson'),
+            model_name="udlejningapplication",
+            name="contactInfo",
+            field=models.EmailField(
+                max_length=254, verbose_name="Email til kontaktperson"
+            ),
         ),
     ]

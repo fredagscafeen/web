@@ -6,11 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartab', '0016_bartabsnapshot_notes'),
+        ("bartab", "0016_bartabsnapshot_notes"),
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='Printer',
-        ),
+        migrations.DeleteModel(name="Printer",),
     ]

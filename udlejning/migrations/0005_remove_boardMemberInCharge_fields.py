@@ -8,16 +8,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0004_copy_boardMember_bartender_fk'),
+        ("udlejning", "0004_copy_boardMember_bartender_fk"),
     ]
 
     operations = [
+        migrations.RemoveField(model_name="udlejning", name="boardMemberInCharge",),
         migrations.RemoveField(
-            model_name='udlejning',
-            name='boardMemberInCharge',
-        ),
-        migrations.RemoveField(
-            model_name='udlejninggrill',
-            name='boardMemberInCharge',
+            model_name="udlejninggrill", name="boardMemberInCharge",
         ),
     ]

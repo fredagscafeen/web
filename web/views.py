@@ -1,11 +1,10 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
+from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login, logout
 from django.shortcuts import redirect
 from django.views.decorators.http import require_GET, require_POST
-from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
 
 from email_auth.auth import EmailTokenBackend
 from web.forms import LoginForm
@@ -22,27 +21,30 @@ def email_login_view(request, email, token):
         return redirect(next)
 
     if EmailTokenBackend.is_bartender(email):
-        return redirect('profile')
+        return redirect("profile")
     elif EmailTokenBackend.is_bartab_user(email):
-        return redirect('bartab')
+        return redirect("bartab")
     else:
-        return redirect('/')
+        return redirect("/")
 
 
 @require_POST
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect("login")
 
 
 class Login(FormView):
-    template_name = 'login.html'
+    template_name = "login.html"
     form_class = LoginForm
     success_url = settings.LOGIN_URL
 
     def form_valid(self, form):
-        form.send_email(self.request.GET.get('next'))
-        messages.success(self.request, 'Login mail sendt: Tryk på linket i din modtagede mail for at logge ind.')
+        form.send_email(self.request.GET.get("next"))
+        messages.success(
+            self.request,
+            "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind.",
+        )
         return super().form_valid(form)
 
 

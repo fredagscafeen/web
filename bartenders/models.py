@@ -1,18 +1,19 @@
+import datetime
+from enum import IntEnum
 from urllib.parse import urljoin
 
-import datetime
 from django.conf import settings
-from django.db.models import Q
-from django.db.models.expressions import Case, When, Value
-from django.urls import reverse
 from django.db import models
-from django.template import Template, Context
-from django.utils.safestring import mark_safe
+from django.db.models import Q
+from django.db.models.expressions import Case, Value, When
+from django.template import Context, Template
+from django.urls import reverse
 from django.utils import timezone
-from enum import IntEnum
+from django.utils.safestring import mark_safe
+
+from fredagscafeen.email import send_template_email
 
 from .mailman2 import Mailman
-from fredagscafeen.email import send_template_email
 
 
 def template_render(template_str, context):
@@ -20,12 +21,13 @@ def template_render(template_str, context):
     c = Context(context)
     return t.render(c)
 
+
 def date_format(dt, format):
-    '''
+    """
     django.utils.formats.date_format doesn't seem to work with l10n,
     even when using use_l10n=True.
-    '''
-    return template_render('{{ dt | date:format }}', {'dt': dt, 'format': format})
+    """
+    return template_render("{{ dt | date:format }}", {"dt": dt, "format": format})
 
 
 # Fields shared between Bartender and BartenderApplication.
@@ -33,29 +35,41 @@ def date_format(dt, format):
 # but we enforce that in BartenderApplicationForm for new applications.
 class BartenderCommon(models.Model):
     TSHIRT_SIZE_CHOICES = (
-        ('XS', 'XS'),
-        ('S', 'S'),
-        ('M', 'M'),
-        ('L', 'L'),
-        ('XL', 'XL'),
-        ('XXL', 'XXL'),
-        ('XXXL', 'XXXL'),
+        ("XS", "XS"),
+        ("S", "S"),
+        ("M", "M"),
+        ("L", "L"),
+        ("XL", "XL"),
+        ("XXL", "XXL"),
+        ("XXXL", "XXXL"),
     )
 
     class Meta:
         abstract = True
 
-    name = models.CharField(max_length=140, verbose_name='Fulde navn')
-    username = models.CharField(max_length=140, unique=True, verbose_name='Brugernavn')
+    name = models.CharField(max_length=140, verbose_name="Fulde navn")
+    username = models.CharField(max_length=140, unique=True, verbose_name="Brugernavn")
     email = models.CharField(max_length=255, unique=True, blank=True)
-    studentNumber = models.IntegerField(blank=True, null=True, verbose_name='Studienummer')
-    phoneNumber = models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer')
-    tshirt_size = models.CharField(choices=TSHIRT_SIZE_CHOICES, max_length=10, blank=True, null=True, verbose_name='T-shirt størrelse')
+    studentNumber = models.IntegerField(
+        blank=True, null=True, verbose_name="Studienummer"
+    )
+    phoneNumber = models.IntegerField(
+        blank=True, null=True, verbose_name="Telefonnummer"
+    )
+    tshirt_size = models.CharField(
+        choices=TSHIRT_SIZE_CHOICES,
+        max_length=10,
+        blank=True,
+        null=True,
+        verbose_name="T-shirt størrelse",
+    )
 
 
 class Bartender(BartenderCommon):
     isActiveBartender = models.BooleanField(default=True)
-    prefer_only_early_shifts = models.BooleanField(default=False, verbose_name='Jeg foretrækker ikke at have nogle sene barvagter')
+    prefer_only_early_shifts = models.BooleanField(
+        default=False, verbose_name="Jeg foretrækker ikke at have nogle sene barvagter"
+    )
 
     @property
     def isBoardMember(self):
@@ -63,16 +77,19 @@ class Bartender(BartenderCommon):
         return self.board_members.filter(period=period).exists()
 
     class Meta:
-        ordering = ('-isActiveBartender', 'name',)
+        ordering = (
+            "-isActiveBartender",
+            "name",
+        )
 
     @property
     def symbol(self):
         if self.isBoardMember:
-            return '★ '
+            return "★ "
         elif self.isActiveBartender:
-            return ''
+            return ""
         else:
-            return '✝ '
+            return "✝ "
 
     @property
     def first_bartender_shift(self):
@@ -87,9 +104,11 @@ class Bartender(BartenderCommon):
         return BoardMemberDepositShift.with_bartender(self).first()
 
     def _get_mailman(self):
-        return Mailman(settings.MAILMAN_URL_BASE,
-                       settings.MAILMAN_ALL_LIST,
-                       settings.MAILMAN_ALL_PASSWORD)
+        return Mailman(
+            settings.MAILMAN_URL_BASE,
+            settings.MAILMAN_ALL_LIST,
+            settings.MAILMAN_ALL_PASSWORD,
+        )
 
     def is_on_mailing_list(self):
         mailman = self._get_mailman()
@@ -97,7 +116,7 @@ class Bartender(BartenderCommon):
 
     def add_to_mailing_list(self):
         mailman = self._get_mailman()
-        mailman.add_subscriptions([f'{self.name} <{self.email}>'])
+        mailman.add_subscriptions([f"{self.name} <{self.email}>"])
 
     def remove_from_mailing_list(self):
         mailman = self._get_mailman()
@@ -114,30 +133,37 @@ class Bartender(BartenderCommon):
                 default=2,
                 output_field=models.IntegerField(),
             )
-        ).order_by('order', 'name')
+        ).order_by("order", "name")
 
     def __str__(self):
-        return f'{self.symbol}{self.name} ({self.username})'
+        return f"{self.symbol}{self.name} ({self.username})"
 
 
 class BartenderUnavailableDate(models.Model):
-    bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE, related_name='unavailable_dates')
+    bartender = models.ForeignKey(
+        Bartender, on_delete=models.CASCADE, related_name="unavailable_dates"
+    )
     date = models.DateField()
 
     class Meta:
-        unique_together = ('bartender', 'date')
+        unique_together = ("bartender", "date")
 
 
 class BoardMember(models.Model):
-    bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE, related_name='board_members')
-    period = models.ForeignKey('BoardMemberPeriod', on_delete=models.CASCADE)
+    bartender = models.ForeignKey(
+        Bartender, on_delete=models.CASCADE, related_name="board_members"
+    )
+    period = models.ForeignKey("BoardMemberPeriod", on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     responsibilities = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='boardMembers', blank=True, null=True)
+    image = models.ImageField(upload_to="boardMembers", blank=True, null=True)
 
     class Meta:
-        unique_together = ('bartender', 'period')
-        ordering = ('period', 'title',)
+        unique_together = ("bartender", "period")
+        ordering = (
+            "period",
+            "title",
+        )
 
     def __str__(self):
         return self.bartender.username
@@ -147,7 +173,7 @@ class BoardMemberPeriod(models.Model):
     start_date = models.DateField(unique=True)
 
     class Meta:
-        ordering = ('-start_date',)
+        ordering = ("-start_date",)
 
     @property
     def end_date(self):
@@ -174,7 +200,7 @@ class BoardMemberPeriod(models.Model):
         d = self.end_date
 
         if d == None:
-            return '...'
+            return "..."
 
         return d
 
@@ -185,38 +211,40 @@ class BoardMemberPeriod(models.Model):
 
     def __str__(self):
         start_year = self.start_date.year
-        return f'{start_year} / {start_year + 1} ({self.start_date} til {self.end_date_display})'
+        return f"{start_year} / {start_year + 1} ({self.start_date} til {self.end_date_display})"
 
 
 class BartenderApplication(BartenderCommon):
-    study = models.CharField(max_length=50, verbose_name='Studie')
-    study_year = models.IntegerField(verbose_name='Årgang')
-    info = models.TextField(blank=True, help_text='Eventuelle ekstra info til bestyrelsen skrives her')
+    study = models.CharField(max_length=50, verbose_name="Studie")
+    study_year = models.IntegerField(verbose_name="Årgang")
+    info = models.TextField(
+        blank=True, help_text="Eventuelle ekstra info til bestyrelsen skrives her"
+    )
 
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('created', )
+        ordering = ("created",)
 
     def _send_accept_email(self):
         URLS = [
-            'barplan',
-            'guides',
-            'profile',
+            "barplan",
+            "guides",
+            "profile",
         ]
 
-        text_format = {'name': self.name}
-        html_format = {'name': self.name}
+        text_format = {"name": self.name}
+        html_format = {"name": self.name}
 
         for url_name in URLS:
             url = urljoin(settings.SELF_URL, reverse(url_name))
-            link_name = f'{url_name}_link'
-            text_format[link_name] = f'her: {url}'
+            link_name = f"{url_name}_link"
+            text_format[link_name] = f"her: {url}"
             html_format[link_name] = mark_safe(f'<a href="{url}">her</a>')
 
         return send_template_email(
-            subject=f'Bartendertilmelding: {self.name}',
-            body_template='''Hej {name},
+            subject=f"Bartendertilmelding: {self.name}",
+            body_template="""Hej {name},
 
 Din ansøgning om at blive bartender ved Fredagscaféen er blevet accepteret.
 Scheduleren vil tildele dig barvagter, når den nye barplan bliver lavet.
@@ -228,13 +256,12 @@ Husk at læse bartenderguides'ne, som kan ses {guides_link}.
 
 Ses i baren! :)
 
-/Bestyrelsen''',
+/Bestyrelsen""",
             text_format=text_format,
             html_format=html_format,
             to=[self.email],
-            cc=['best@fredagscafeen.dk']
+            cc=["best@fredagscafeen.dk"],
         )
-
 
     def accept(self):
         common_fields = super()._meta.get_fields()
@@ -257,7 +284,10 @@ Ses i baren! :)
         return self.username
 
 
-Weekday = IntEnum('Weekday', 'MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY', start=0)
+Weekday = IntEnum(
+    "Weekday", "MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY", start=0
+)
+
 
 def next_date_with_weekday(date, weekday):
     date += datetime.timedelta(1)
@@ -268,11 +298,11 @@ def next_date_with_weekday(date, weekday):
 
 
 def next_bartender_shift_start(last_date=None):
-    '''
+    """
     Returns the next friday after the last shift
 
     Can't be a class method, because we need to use this as a default value
-    '''
+    """
     if last_date == None:
         last_shift = BartenderShift.objects.last()
         if last_shift:
@@ -293,11 +323,11 @@ def next_bartender_shift_dates(count):
 
 
 def next_deposit_shift_start(last_date=None):
-    '''
+    """
     Returns the next monday after the last shift
 
     Can't be a class method, because we need to use this as a default value
-    '''
+    """
     if last_date == None:
         last_shift = BoardMemberDepositShift.objects.last()
         if last_shift:
@@ -310,12 +340,12 @@ def next_deposit_shift_start(last_date=None):
 
 class BartenderShiftPeriod(models.Model):
     class Meta:
-        ordering = ('-generation_datetime',)
+        ordering = ("-generation_datetime",)
 
     generation_datetime = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'Generated at {self.generation_datetime}'
+        return f"Generated at {self.generation_datetime}"
 
     @classmethod
     def current(cls):
@@ -330,12 +360,20 @@ class BartenderShift(models.Model):
     start_datetime = models.DateTimeField(default=next_bartender_shift_start)
     end_datetime = models.DateTimeField(blank=True)
     responsible = models.ForeignKey(Bartender, on_delete=models.PROTECT)
-    other_bartenders = models.ManyToManyField(Bartender, related_name='shifts', blank=True)
+    other_bartenders = models.ManyToManyField(
+        Bartender, related_name="shifts", blank=True
+    )
 
-    period = models.ForeignKey(BartenderShiftPeriod, on_delete=models.PROTECT, blank=True, null=True, related_name='shifts')
+    period = models.ForeignKey(
+        BartenderShiftPeriod,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        related_name="shifts",
+    )
 
     class Meta:
-        ordering = ('start_datetime', )
+        ordering = ("start_datetime",)
 
     def save(self, *args, **kwargs):
         if not self.end_datetime:
@@ -351,16 +389,24 @@ class BartenderShift(models.Model):
         # You can't use filter as it returns multiple of the same object:
         # return self.objects.filter(Q(responsible=bartender) | Q(other_bartenders=bartender))
 
-        return self.objects.exclude(~Q(responsible=bartender),
-                                    ~Q(other_bartenders=bartender))
+        return self.objects.exclude(
+            ~Q(responsible=bartender), ~Q(other_bartenders=bartender)
+        )
 
     def has_multiple_shifts(self):
-        start = timezone.get_default_timezone().localize(datetime.datetime.combine(self.date, datetime.time()))
+        start = timezone.get_default_timezone().localize(
+            datetime.datetime.combine(self.date, datetime.time())
+        )
         end = start + datetime.timedelta(days=1)
-        return BartenderShift.objects.filter(start_datetime__gte=start, start_datetime__lte=end).count() > 1
+        return (
+            BartenderShift.objects.filter(
+                start_datetime__gte=start, start_datetime__lte=end
+            ).count()
+            > 1
+        )
 
     def display_str(self):
-        s = date_format(self.date, 'd M')
+        s = date_format(self.date, "d M")
         if self.has_multiple_shifts():
             s += f' ({date_format(self.start_datetime, "H")} - {date_format(self.end_datetime, "H")})'
 
@@ -390,18 +436,20 @@ class BoardMemberDepositShiftPeriod(models.Model):
     generation_datetime = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'Generated at {self.generation_datetime}'
+        return f"Generated at {self.generation_datetime}"
 
 
 class BoardMemberDepositShift(models.Model):
     start_date = models.DateField(default=next_deposit_shift_start)
     end_date = models.DateField(blank=True)
-    responsibles = models.ManyToManyField(Bartender, related_name='deposit_shifts')
+    responsibles = models.ManyToManyField(Bartender, related_name="deposit_shifts")
 
-    period = models.ForeignKey(BoardMemberDepositShiftPeriod, on_delete=models.PROTECT, blank=True, null=True)
+    period = models.ForeignKey(
+        BoardMemberDepositShiftPeriod, on_delete=models.PROTECT, blank=True, null=True
+    )
 
     class Meta:
-        ordering = ('start_date', )
+        ordering = ("start_date",)
 
     def save(self, *args, **kwargs):
         if not self.end_date:
@@ -417,4 +465,6 @@ class BoardMemberDepositShift(models.Model):
         return bartender in self.responsibles.all()
 
     def __str__(self):
-        return f'{self.start_date}: {", ".join(b.name for b in self.responsibles.all())}'
+        return (
+            f'{self.start_date}: {", ".join(b.name for b in self.responsibles.all())}'
+        )

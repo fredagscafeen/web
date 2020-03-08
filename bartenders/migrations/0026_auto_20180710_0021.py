@@ -6,28 +6,34 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0025_auto_20180708_2326'),
+        ("bartenders", "0025_auto_20180708_2326"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bartenderapplication',
-            name='email',
+            model_name="bartenderapplication",
+            name="email",
             field=models.CharField(blank=True, max_length=255),
         ),
         migrations.AlterField(
-            model_name='bartenderapplication',
-            name='phoneNumber',
-            field=models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer'),
+            model_name="bartenderapplication",
+            name="phoneNumber",
+            field=models.IntegerField(
+                blank=True, null=True, verbose_name="Telefonnummer"
+            ),
         ),
         migrations.AlterField(
-            model_name='bartenderapplication',
-            name='studentNumber',
-            field=models.IntegerField(blank=True, null=True, verbose_name='Studienummer'),
+            model_name="bartenderapplication",
+            name="studentNumber",
+            field=models.IntegerField(
+                blank=True, null=True, verbose_name="Studienummer"
+            ),
         ),
         migrations.AlterField(
-            model_name='bartenderapplication',
-            name='username',
-            field=models.CharField(max_length=140, unique=True, verbose_name='Brugernavn'),
+            model_name="bartenderapplication",
+            name="username",
+            field=models.CharField(
+                max_length=140, unique=True, verbose_name="Brugernavn"
+            ),
         ),
     ]

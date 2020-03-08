@@ -4,18 +4,16 @@ from django.db import migrations
 
 
 def paid_to_status(apps, schema_editor):
-    Udlejning = apps.get_model('udlejning', 'Udlejning')
+    Udlejning = apps.get_model("udlejning", "Udlejning")
     for udlejning in Udlejning.objects.all():
-        udlejning.status = 'paid' if udlejning.paid else 'notsent'
+        udlejning.status = "paid" if udlejning.paid else "notsent"
         udlejning.save()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0019_udlejning_status'),
+        ("udlejning", "0019_udlejning_status"),
     ]
 
-    operations = [
-        migrations.RunPython(paid_to_status)
-    ]
+    operations = [migrations.RunPython(paid_to_status)]

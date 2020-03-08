@@ -6,18 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0014_auto_20180713_1757'),
+        ("udlejning", "0014_auto_20180713_1757"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='udlejning',
-            name='contactPhone',
-            field=models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer til kontaktperson'),
+            model_name="udlejning",
+            name="contactPhone",
+            field=models.IntegerField(
+                blank=True, null=True, verbose_name="Telefonnummer til kontaktperson"
+            ),
         ),
         migrations.AddField(
-            model_name='udlejningapplication',
-            name='contactPhone',
-            field=models.IntegerField(blank=True, null=True, verbose_name='Telefonnummer til kontaktperson'),
+            model_name="udlejningapplication",
+            name="contactPhone",
+            field=models.IntegerField(
+                blank=True, null=True, verbose_name="Telefonnummer til kontaktperson"
+            ),
         ),
     ]

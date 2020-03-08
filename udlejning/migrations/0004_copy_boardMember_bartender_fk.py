@@ -7,16 +7,20 @@ from django.db import migrations
 
 # Copies boardMember-bartender foreign key values for Udlejning and UdlejningGrill
 def copy_foreign_keys(apps, schema_editor):
-    for model_name in ('Udlejning', 'UdlejningGrill'):
-        Model = apps.get_model('udlejning', model_name)
-        for udlejning in Model.objects.exclude(boardMemberInCharge__isnull=True).select_related('boardMemberInCharge'):
-            udlejning.bartendersInCharge.add(udlejning.boardMemberInCharge.bartender)  # Copy the fk
+    for model_name in ("Udlejning", "UdlejningGrill"):
+        Model = apps.get_model("udlejning", model_name)
+        for udlejning in Model.objects.exclude(
+            boardMemberInCharge__isnull=True
+        ).select_related("boardMemberInCharge"):
+            udlejning.bartendersInCharge.add(
+                udlejning.boardMemberInCharge.bartender
+            )  # Copy the fk
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0003_add_bartenderInCharge_fields'),
+        ("udlejning", "0003_add_bartenderInCharge_fields"),
     ]
 
     operations = [

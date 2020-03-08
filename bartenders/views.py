@@ -1,32 +1,43 @@
 import datetime
 from itertools import groupby
-from django.views.generic import TemplateView, CreateView, ListView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
+
 from django.conf import settings
-from django.utils import timezone
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView
+
 from django_ical.views import ICalFeed
-from guides.models import Guide
 from fredagscafeen.email import send_template_email
-from .models import Bartender, BartenderApplication, BartenderShift, BoardMemberDepositShift, BoardMemberPeriod, next_bartender_shift_dates, BartenderUnavailableDate
+from guides.models import Guide
+
 from .forms import BartenderApplicationForm, BartenderInfoForm
+from .models import (
+    Bartender,
+    BartenderApplication,
+    BartenderShift,
+    BartenderUnavailableDate,
+    BoardMemberDepositShift,
+    BoardMemberPeriod,
+    next_bartender_shift_dates,
+)
 
 
 class Index(CreateView):
     model = BartenderApplication
-    template_name = 'index.html'
+    template_name = "index.html"
     form_class = BartenderApplicationForm
-    success_url = '/'
+    success_url = "/"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         try:
-            barshift_guide = Guide.objects.get(name='Guide til en standard barvagt')
-            context['barshift_guide_url'] = barshift_guide.document.url
+            barshift_guide = Guide.objects.get(name="Guide til en standard barvagt")
+            context["barshift_guide_url"] = barshift_guide.document.url
         except Guide.DoesNotExist:
-            context['barshift_guide_url'] = '<missing>'
+            context["barshift_guide_url"] = "<missing>"
 
         return context
 
@@ -36,7 +47,7 @@ class Index(CreateView):
 
         # Send email to best
         form.send_email(self.object.pk)
-        messages.success(self.request, 'Din ansøgning er blevet indsendt.')
+        messages.success(self.request, "Din ansøgning er blevet indsendt.")
 
         return response
 
@@ -46,8 +57,10 @@ class BartenderList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['bartenders'] = Bartender.objects.filter(isActiveBartender=True)
-        context['inactive_bartenders'] = Bartender.objects.filter(isActiveBartender=False)
+        context["bartenders"] = Bartender.objects.filter(isActiveBartender=True)
+        context["inactive_bartenders"] = Bartender.objects.filter(
+            isActiveBartender=False
+        )
         return context
 
 
@@ -57,30 +70,34 @@ class Barplan(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        show_all = 'show_all' in self.request.GET
+        show_all = "show_all" in self.request.GET
 
-        context['show_all'] = show_all
+        context["show_all"] = show_all
 
         if show_all:
             end_datetime = timezone.make_aware(datetime.datetime.utcfromtimestamp(0))
         else:
             end_datetime = timezone.now() - datetime.timedelta(1)
 
-        context['bartendershifts'] = BartenderShift.objects.filter(end_datetime__gte=end_datetime)
-        context['boardmemberdepositshifts'] = BoardMemberDepositShift.objects.filter(end_date__gte=end_datetime)
+        context["bartendershifts"] = BartenderShift.objects.filter(
+            end_datetime__gte=end_datetime
+        )
+        context["boardmemberdepositshifts"] = BoardMemberDepositShift.objects.filter(
+            end_date__gte=end_datetime
+        )
 
         return context
 
 
 class UserBarplan(ICalFeed):
-    product_id = '-//fredagscafeen.dk//UserBarplan//EN'
-    timezone = 'UTC'
+    product_id = "-//fredagscafeen.dk//UserBarplan//EN"
+    timezone = "UTC"
     file_name = "barvagter.ics"
     title = "Barvagter"
 
     def get_object(self, request, **kwargs):
         # kwargs['username'] is None if we need to show all shifts
-        return kwargs.get('username')
+        return kwargs.get("username")
 
     def items(self, username):
         if username:
@@ -99,25 +116,25 @@ class UserBarplan(ICalFeed):
         return shift.end_datetime
 
     def item_description(self, shift):
-        return f'''Responsible: {shift.responsible.name}
-Other bartenders: {", ".join(b.name for b in shift.other_bartenders.all())}'''
+        return f"""Responsible: {shift.responsible.name}
+Other bartenders: {", ".join(b.name for b in shift.other_bartenders.all())}"""
 
     def item_link(self, shift):
         return f"{settings.SELF_URL}barplan/"
 
     def item_guid(self, shift):
-        return f'barshift-{shift.pk}@fredagscafeen.dk'
+        return f"barshift-{shift.pk}@fredagscafeen.dk"
 
 
 class UserDepositShifts(ICalFeed):
-    product_id = '-//fredagscafeen.dk//UserDepositShifts//EN'
-    timezone = 'UTC'
+    product_id = "-//fredagscafeen.dk//UserDepositShifts//EN"
+    timezone = "UTC"
     file_name = "pantvagter.ics"
     title = "Pantvagter"
 
     def get_object(self, request, **kwargs):
         # kwargs['username'] is None if we need to show all shifts
-        return kwargs.get('username')
+        return kwargs.get("username")
 
     def items(self, username):
         if username:
@@ -136,27 +153,31 @@ class UserDepositShifts(ICalFeed):
         return shift.end_date
 
     def item_description(self, shift):
-        return f'''Responsibles: {", ".join(b.name for b in shift.responsibles.all())}'''
+        return (
+            f"""Responsibles: {", ".join(b.name for b in shift.responsibles.all())}"""
+        )
 
     def item_link(self, shift):
         return f"{settings.SELF_URL}barplan/"
 
     def item_guid(self, shift):
-        return f'depositshift-{shift.pk}@fredagscafeen.dk'
+        return f"depositshift-{shift.pk}@fredagscafeen.dk"
 
 
 class Board(ListView):
     template_name = "board.html"
     allow_empty = True
     model = BoardMemberPeriod
-    context_object_name = 'periods'
+    context_object_name = "periods"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['periods'] = context['periods'].filter(start_date__lte=timezone.localdate())
+        context["periods"] = context["periods"].filter(
+            start_date__lte=timezone.localdate()
+        )
 
-        periods = context['periods']
+        periods = context["periods"]
 
         data = []
 
@@ -164,7 +185,9 @@ class Board(ListView):
 
         for period in periods.all():
             for boardmember in period.boardmember_set.all():
-                intervals.setdefault(boardmember.bartender, []).append((period.start_date, period.approx_end_date))
+                intervals.setdefault(boardmember.bartender, []).append(
+                    (period.start_date, period.approx_end_date)
+                )
 
         merged_intervals = []
         for bartender, ints in intervals.items():
@@ -180,22 +203,29 @@ class Board(ListView):
         merged_intervals.sort(key=lambda x: (-x[2].toordinal(), -x[1].toordinal()))
 
         for bartender, start, end in merged_intervals:
-            data.append([f'{start.month}/{start.year}', f'{end.month}/{end.year}', bartender.name, 'default'])
+            data.append(
+                [
+                    f"{start.month}/{start.year}",
+                    f"{end.month}/{end.year}",
+                    bartender.name,
+                    "default",
+                ]
+            )
 
         timesheet_data = {
-            'start': periods.last().start_date.year,
-            'end': periods.first().start_date.year + 1,
-            'data': data,
+            "start": periods.last().start_date.year,
+            "end": periods.first().start_date.year + 1,
+            "data": data,
         }
 
-        context['timesheet_data'] = timesheet_data
+        context["timesheet_data"] = timesheet_data
 
         return context
 
 
 class BartenderInfo(LoginRequiredMixin, UpdateView):
     model = Bartender
-    template_name = 'bartender_info.html'
+    template_name = "bartender_info.html"
     form_class = BartenderInfoForm
 
     UNAVAILABLE_DATES = 52
@@ -211,44 +241,53 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
         if self.object:
             future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))
 
-            unavailable_dates = set(d.date for d in self.object.unavailable_dates.filter(date__gte=future_dates[0], date__lte=future_dates[-1]))
+            unavailable_dates = set(
+                d.date
+                for d in self.object.unavailable_dates.filter(
+                    date__gte=future_dates[0], date__lte=future_dates[-1]
+                )
+            )
 
             dates_table = []
             for _, dates in groupby(future_dates, key=lambda d: d.month):
                 dates = list(dates)
-                dates_table.append((dates[0], [(d.toordinal(), d, d in unavailable_dates) for d in dates]))
+                dates_table.append(
+                    (
+                        dates[0],
+                        [(d.toordinal(), d, d in unavailable_dates) for d in dates],
+                    )
+                )
 
-            context['dates_table'] = dates_table
+            context["dates_table"] = dates_table
 
         return context
 
     def form_valid(self, form):
-        messages.success(self.request, 'Profil opdateret')
+        messages.success(self.request, "Profil opdateret")
         redirect_url = super().form_valid(form)
 
-        if 'deactivate' in self.request.POST:
+        if "deactivate" in self.request.POST:
             self.object.isActiveBartender = False
             self.object.save()
             active_count = Bartender.objects.filter(isActiveBartender=True).count()
             send_template_email(
-                subject=f'Bartender har meldt sig inaktiv: {self.object.name}',
-                body_template=f'''Dette er en automatisk email.
+                subject=f"Bartender har meldt sig inaktiv: {self.object.name}",
+                body_template=f"""Dette er en automatisk email.
 
 {self.object.name} har meldt sig inaktiv.
 
 Der er nu {active_count} aktive bartendere.
 
-/snek''',
-                to=['best@fredagscafeen.dk'],
+/snek""",
+                to=["best@fredagscafeen.dk"],
             )
-        elif 'subscribe_maillist' in self.request.POST:
+        elif "subscribe_maillist" in self.request.POST:
             self.object.add_to_mailing_list()
-        elif 'unsubscribe_maillist' in self.request.POST:
+        elif "unsubscribe_maillist" in self.request.POST:
             self.object.remove_from_mailing_list()
 
-
         self.object.unavailable_dates.all().delete()
-        for ordinal in self.request.POST.getlist('unavailable_ordinals'):
+        for ordinal in self.request.POST.getlist("unavailable_ordinals"):
             date = datetime.date.fromordinal(int(ordinal))
             BartenderUnavailableDate(date=date, bartender=self.object).save()
 

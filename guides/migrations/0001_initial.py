@@ -7,20 +7,35 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Guide',
+            name="Guide",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=256)),
-                ('category', models.CharField(choices=[('BT', 'Til bartendere'), ('BM', 'Til bestyrelsesmedlemmer'), ('ALL', 'Til alle')], max_length=3)),
-                ('document', models.FileField(upload_to='guides/')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=256)),
+                (
+                    "category",
+                    models.CharField(
+                        choices=[
+                            ("BT", "Til bartendere"),
+                            ("BM", "Til bestyrelsesmedlemmer"),
+                            ("ALL", "Til alle"),
+                        ],
+                        max_length=3,
+                    ),
+                ),
+                ("document", models.FileField(upload_to="guides/")),
             ],
-            options={
-                'ordering': ('name',),
-            },
+            options={"ordering": ("name",),},
         ),
     ]

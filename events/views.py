@@ -1,16 +1,18 @@
-from django.views.generic import TemplateView
-from django.http import HttpResponseBadRequest, HttpResponseForbidden
-from django.contrib import messages
-from django.shortcuts import redirect
 from django.conf import settings
-from django_ical.views import ICalFeed
+from django.contrib import messages
+from django.http import HttpResponseBadRequest, HttpResponseForbidden
+from django.shortcuts import redirect
+from django.views.generic import TemplateView
+
 from bartenders.models import Bartender
-from .models import Event
+from django_ical.views import ICalFeed
+
 from .forms import EventResponseForm
+from .models import Event
 
 
 class Events(TemplateView):
-    template_name = 'events.html'
+    template_name = "events.html"
 
     def get_bartender(self):
         if not self.request.user.is_authenticated:
@@ -21,7 +23,6 @@ class Events(TemplateView):
         except Bartender.DoesNotExist:
             return None
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -29,48 +30,46 @@ class Events(TemplateView):
 
         events_data = []
         for event in Event.objects.all():
-            data = {'event': event}
+            data = {"event": event}
             if bartender and event.may_attend(bartender):
-                data['form'] = EventResponseForm(event=event, bartender=bartender)
+                data["form"] = EventResponseForm(event=event, bartender=bartender)
             events_data.append(data)
 
-        context['bartender'] = bartender
-        context['events_data'] = events_data
+        context["bartender"] = bartender
+        context["events_data"] = events_data
         if bartender:
-            context['may_attend'] = Event.may_attend_default(bartender)
+            context["may_attend"] = Event.may_attend_default(bartender)
 
         return context
 
-
     def post(self, request, *args, **kwargs):
         try:
-            event_id = request.POST.get('event_id')
+            event_id = request.POST.get("event_id")
             event = Event.objects.get(id=event_id)
         except Event.DoesNotExist:
-            return HttpResponseBadRequest('Event with id does not exist')
+            return HttpResponseBadRequest("Event with id does not exist")
 
         bartender = self.get_bartender()
         if not bartender or not event.may_attend(bartender):
-            return HttpResponseForbidden('Not logged in as an active bartender')
-
+            return HttpResponseForbidden("Not logged in as an active bartender")
 
         form = EventResponseForm(request.POST, event=event, bartender=bartender)
         if not form.is_valid():
             for error in form.errors.values():
-                messages.error(request, f'{error}')
-            return redirect('events')
+                messages.error(request, f"{error}")
+            return redirect("events")
 
         form.save()
 
-        messages.success(request, f'Opdateret tilmelding til {event.name}')
-        return redirect('events')
+        messages.success(request, f"Opdateret tilmelding til {event.name}")
+        return redirect("events")
 
 
 class EventFeed(ICalFeed):
-    product_id = '-//fredagscafeen.dk//Events//EN'
-    timezone = 'UTC'
-    file_name = 'events.ics'
-    title = 'Bartender Events'
+    product_id = "-//fredagscafeen.dk//Events//EN"
+    timezone = "UTC"
+    file_name = "events.ics"
+    title = "Bartender Events"
 
     def items(self):
         return Event.objects.all()
@@ -88,12 +87,12 @@ class EventFeed(ICalFeed):
         return event.end_datetime
 
     def item_description(self, event):
-        return f'''Tilmeldingsfrist: {event.response_deadline}
+        return f"""Tilmeldingsfrist: {event.response_deadline}
 
-{event.description}'''
+{event.description}"""
 
     def item_link(self, event):
-        return f'{settings.SELF_URL}events/'
+        return f"{settings.SELF_URL}events/"
 
     def item_guid(self, event):
-        return f'event-{event.pk}@fredagscafeen.dk'
+        return f"event-{event.pk}@fredagscafeen.dk"

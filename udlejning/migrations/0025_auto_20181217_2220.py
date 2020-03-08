@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0024_auto_20181114_1744'),
+        ("udlejning", "0024_auto_20181114_1744"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='udlejning',
-            name='payment_due_date',
-            field=models.DateField(blank=True, null=True, verbose_name='Betalingsdato'),
+            model_name="udlejning",
+            name="payment_due_date",
+            field=models.DateField(blank=True, null=True, verbose_name="Betalingsdato"),
         ),
     ]

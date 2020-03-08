@@ -6,20 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0001_initial'),
+        ("events", "0001_initial"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='eventresponse',
-            name='respo',
-        ),
+        migrations.RemoveField(model_name="eventresponse", name="respo",),
         migrations.AddField(
-            model_name='eventresponse',
-            name='choices',
-            field=models.ManyToManyField(to='events.EventChoiceOption'),
+            model_name="eventresponse",
+            name="choices",
+            field=models.ManyToManyField(to="events.EventChoiceOption"),
         ),
-        migrations.DeleteModel(
-            name='EventChoiceResponse',
-        ),
+        migrations.DeleteModel(name="EventChoiceResponse",),
     ]

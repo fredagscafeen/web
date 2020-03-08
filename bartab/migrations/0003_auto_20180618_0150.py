@@ -6,12 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartab', '0002_auto_20180522_1651'),
+        ("bartab", "0002_auto_20180522_1651"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='bartabsnapshot',
-            options={'ordering': ('-timestamp',)},
+            name="bartabsnapshot", options={"ordering": ("-timestamp",)},
         ),
     ]

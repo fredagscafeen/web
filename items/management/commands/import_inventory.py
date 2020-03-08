@@ -1,10 +1,12 @@
-from django.core.management.base import BaseCommand
-from items.models import Item, InventoryEntry, InventorySnapshot
-import pytz
-import datetime
 import argparse
 import csv
+import datetime
 from collections import defaultdict
+
+import pytz
+from django.core.management.base import BaseCommand
+
+from items.models import InventoryEntry, InventorySnapshot, Item
 
 
 class Command(BaseCommand):
@@ -51,8 +53,8 @@ class Command(BaseCommand):
 
             if prow == None or diff_time > GROUPING_THRESHOLD:
                 print(diff_time)
-                print('Positives:', pos)
-                print('Negatives:', negs)
+                print("Positives:", pos)
+                print("Negatives:", negs)
                 groups.append((row["datetime"], {}))
 
                 pos = 0

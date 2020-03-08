@@ -6,23 +6,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0023_auto_20181016_0133'),
+        ("udlejning", "0023_auto_20181016_0133"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='udlejning',
-            name='invoice_number',
-            field=models.CharField(blank=True, max_length=32, verbose_name='Fakturanummer'),
+            model_name="udlejning",
+            name="invoice_number",
+            field=models.CharField(
+                blank=True, max_length=32, verbose_name="Fakturanummer"
+            ),
         ),
         migrations.AddField(
-            model_name='udlejning',
-            name='payment_due_date',
+            model_name="udlejning",
+            name="payment_due_date",
             field=models.DateField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='udlejning',
-            name='total_price',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=11, null=True, verbose_name='Total pris'),
+            model_name="udlejning",
+            name="total_price",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=11,
+                null=True,
+                verbose_name="Total pris",
+            ),
         ),
     ]

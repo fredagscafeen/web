@@ -6,92 +6,157 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0010_remove_udlejningapplication_billsendto'),
+        ("udlejning", "0010_remove_udlejningapplication_billsendto"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='udlejningapplication',
-            name='association',
+        migrations.RemoveField(model_name="udlejningapplication", name="association",),
+        migrations.AlterField(
+            model_name="udlejning",
+            name="contactInfo",
+            field=models.CharField(
+                help_text="Kontaktinformation for den event-ansvarlige.",
+                max_length=140,
+                verbose_name="Kontaktinformation",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='contactInfo',
-            field=models.CharField(help_text='Kontaktinformation for den event-ansvarlige.', max_length=140, verbose_name='Kontaktinformation'),
+            model_name="udlejning",
+            name="dateFrom",
+            field=models.DateTimeField(
+                help_text="Hvornår skal anlægget afhentes/stilles op?",
+                verbose_name="Start dato & tid",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='dateFrom',
-            field=models.DateTimeField(help_text='Hvornår skal anlægget afhentes/stilles op?', verbose_name='Start dato & tid'),
+            model_name="udlejning",
+            name="dateTo",
+            field=models.DateTimeField(
+                blank=True,
+                help_text="Hvornår skal anlægget afleveres/pilles ned?",
+                null=True,
+                verbose_name="Slut dato & tid",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='dateTo',
-            field=models.DateTimeField(blank=True, help_text='Hvornår skal anlægget afleveres/pilles ned?', null=True, verbose_name='Slut dato & tid'),
+            model_name="udlejning",
+            name="draftBeerSystem",
+            field=models.CharField(
+                blank=True,
+                choices=[("small", "Lille"), ("medium", "Mellem")],
+                help_text="Hvilket anlæg vil I låne?",
+                max_length=16,
+                verbose_name="Fadølsanlæg",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='draftBeerSystem',
-            field=models.CharField(blank=True, choices=[('small', 'Lille'), ('medium', 'Mellem')], help_text='Hvilket anlæg vil I låne?', max_length=16, verbose_name='Fadølsanlæg'),
+            model_name="udlejning",
+            name="expectedConsummation",
+            field=models.TextField(
+                help_text="Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?",
+                max_length=140,
+                verbose_name="Forventet forbrug",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='expectedConsummation',
-            field=models.TextField(help_text='Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?', max_length=140, verbose_name='Forventet forbrug'),
+            model_name="udlejning",
+            name="paymentType",
+            field=models.CharField(
+                help_text='Hvordan bliver der betalt? Vi tilbyder også at fakturere til EAN-nummer (e-faktura) mod gebyr. <a class="external text" href="mailto:best@fredagscafeen.dk">Kontakt os</a> for at høre nærmere.',
+                max_length=140,
+                verbose_name="Betalingsform",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='paymentType',
-            field=models.CharField(help_text='Hvordan bliver der betalt? Vi tilbyder også at fakturere til EAN-nummer (e-faktura) mod gebyr. <a class="external text" href="mailto:best@fredagscafeen.dk">Kontakt os</a> for at høre nærmere.', max_length=140, verbose_name='Betalingsform'),
+            model_name="udlejning",
+            name="where",
+            field=models.TextField(
+                help_text="Hvor bliver arrangmentet afholdt?",
+                max_length=140,
+                verbose_name="Lokation",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='where',
-            field=models.TextField(help_text='Hvor bliver arrangmentet afholdt?', max_length=140, verbose_name='Lokation'),
+            model_name="udlejning",
+            name="whoPays",
+            field=models.CharField(
+                help_text="Hvem skal regningen sendes til? (Person, virksomhed eller organisation)",
+                max_length=140,
+                verbose_name="Hvem betaler?",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejning',
-            name='whoPays',
-            field=models.CharField(help_text='Hvem skal regningen sendes til? (Person, virksomhed eller organisation)', max_length=140, verbose_name='Hvem betaler?'),
+            model_name="udlejningapplication",
+            name="contactInfo",
+            field=models.CharField(
+                help_text="Kontaktinformation for den event-ansvarlige.",
+                max_length=140,
+                verbose_name="Kontaktinformation",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='contactInfo',
-            field=models.CharField(help_text='Kontaktinformation for den event-ansvarlige.', max_length=140, verbose_name='Kontaktinformation'),
+            model_name="udlejningapplication",
+            name="dateFrom",
+            field=models.DateTimeField(
+                help_text="Hvornår skal anlægget afhentes/stilles op?",
+                verbose_name="Start dato & tid",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='dateFrom',
-            field=models.DateTimeField(help_text='Hvornår skal anlægget afhentes/stilles op?', verbose_name='Start dato & tid'),
+            model_name="udlejningapplication",
+            name="dateTo",
+            field=models.DateTimeField(
+                blank=True,
+                help_text="Hvornår skal anlægget afleveres/pilles ned?",
+                null=True,
+                verbose_name="Slut dato & tid",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='dateTo',
-            field=models.DateTimeField(blank=True, help_text='Hvornår skal anlægget afleveres/pilles ned?', null=True, verbose_name='Slut dato & tid'),
+            model_name="udlejningapplication",
+            name="draftBeerSystem",
+            field=models.CharField(
+                blank=True,
+                choices=[("small", "Lille"), ("medium", "Mellem")],
+                help_text="Hvilket anlæg vil I låne?",
+                max_length=16,
+                verbose_name="Fadølsanlæg",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='draftBeerSystem',
-            field=models.CharField(blank=True, choices=[('small', 'Lille'), ('medium', 'Mellem')], help_text='Hvilket anlæg vil I låne?', max_length=16, verbose_name='Fadølsanlæg'),
+            model_name="udlejningapplication",
+            name="expectedConsummation",
+            field=models.TextField(
+                help_text="Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?",
+                max_length=140,
+                verbose_name="Forventet forbrug",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='expectedConsummation',
-            field=models.TextField(help_text='Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?', max_length=140, verbose_name='Forventet forbrug'),
+            model_name="udlejningapplication",
+            name="paymentType",
+            field=models.CharField(
+                help_text='Hvordan bliver der betalt? Vi tilbyder også at fakturere til EAN-nummer (e-faktura) mod gebyr. <a class="external text" href="mailto:best@fredagscafeen.dk">Kontakt os</a> for at høre nærmere.',
+                max_length=140,
+                verbose_name="Betalingsform",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='paymentType',
-            field=models.CharField(help_text='Hvordan bliver der betalt? Vi tilbyder også at fakturere til EAN-nummer (e-faktura) mod gebyr. <a class="external text" href="mailto:best@fredagscafeen.dk">Kontakt os</a> for at høre nærmere.', max_length=140, verbose_name='Betalingsform'),
+            model_name="udlejningapplication",
+            name="where",
+            field=models.TextField(
+                help_text="Hvor bliver arrangmentet afholdt?",
+                max_length=140,
+                verbose_name="Lokation",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='where',
-            field=models.TextField(help_text='Hvor bliver arrangmentet afholdt?', max_length=140, verbose_name='Lokation'),
-        ),
-        migrations.AlterField(
-            model_name='udlejningapplication',
-            name='whoPays',
-            field=models.CharField(help_text='Hvem skal regningen sendes til? (Person, virksomhed eller organisation)', max_length=140, verbose_name='Hvem betaler?'),
+            model_name="udlejningapplication",
+            name="whoPays",
+            field=models.CharField(
+                help_text="Hvem skal regningen sendes til? (Person, virksomhed eller organisation)",
+                max_length=140,
+                verbose_name="Hvem betaler?",
+            ),
         ),
     ]

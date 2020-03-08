@@ -6,17 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0021_auto_20180410_2322'),
+        ("bartenders", "0021_auto_20180410_2322"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='bartender',
-            options={'ordering': ('-isActiveBartender', 'name')},
+            name="bartender", options={"ordering": ("-isActiveBartender", "name")},
         ),
         migrations.AddField(
-            model_name='bartender',
-            name='tshirt_size',
-            field=models.CharField(blank=True, choices=[('S', 'S'), ('M', 'M'), ('L', 'L'), ('XL', 'XL'), ('XXL', 'XXL'), ('XXXL', 'XXXL')], max_length=10, null=True),
+            model_name="bartender",
+            name="tshirt_size",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("S", "S"),
+                    ("M", "M"),
+                    ("L", "L"),
+                    ("XL", "XL"),
+                    ("XXL", "XXL"),
+                    ("XXXL", "XXXL"),
+                ],
+                max_length=10,
+                null=True,
+            ),
         ),
     ]

@@ -6,18 +6,36 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0017_auto_20180714_2020'),
+        ("udlejning", "0017_auto_20180714_2020"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='udlejning',
-            name='paymentType',
-            field=models.CharField(choices=[('EAN', 'EAN'), ('invoice', 'Faktura'), ('card', 'Kort i baren')], help_text='Hvordan bliver der betalt?', max_length=140, verbose_name='Betalingsform'),
+            model_name="udlejning",
+            name="paymentType",
+            field=models.CharField(
+                choices=[
+                    ("EAN", "EAN"),
+                    ("invoice", "Faktura"),
+                    ("card", "Kort i baren"),
+                ],
+                help_text="Hvordan bliver der betalt?",
+                max_length=140,
+                verbose_name="Betalingsform",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='paymentType',
-            field=models.CharField(choices=[('EAN', 'EAN'), ('invoice', 'Faktura'), ('card', 'Kort i baren')], help_text='Hvordan bliver der betalt?', max_length=140, verbose_name='Betalingsform'),
+            model_name="udlejningapplication",
+            name="paymentType",
+            field=models.CharField(
+                choices=[
+                    ("EAN", "EAN"),
+                    ("invoice", "Faktura"),
+                    ("card", "Kort i baren"),
+                ],
+                help_text="Hvordan bliver der betalt?",
+                max_length=140,
+                verbose_name="Betalingsform",
+            ),
         ),
     ]

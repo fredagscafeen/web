@@ -6,13 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0018_auto_20180714_2021'),
+        ("udlejning", "0018_auto_20180714_2021"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='udlejning',
-            name='status',
-            field=models.CharField(choices=[('notsent', 'Regning ikke sendt'), ('sent', 'Regning sendt'), ('paid', 'Regning betalt')], default='notsent', max_length=16),
+            model_name="udlejning",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("notsent", "Regning ikke sendt"),
+                    ("sent", "Regning sendt"),
+                    ("paid", "Regning betalt"),
+                ],
+                default="notsent",
+                max_length=16,
+            ),
         ),
     ]

@@ -6,18 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('udlejning', '0021_remove_udlejning_paid'),
+        ("udlejning", "0021_remove_udlejning_paid"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='udlejning',
-            name='EANnumber',
-            field=models.BigIntegerField(blank=True, help_text='Skal kun angives, hvis der skal faktureres til et EAN-nummer', null=True, verbose_name='EAN-nummer'),
+            model_name="udlejning",
+            name="EANnumber",
+            field=models.BigIntegerField(
+                blank=True,
+                help_text="Skal kun angives, hvis der skal faktureres til et EAN-nummer",
+                null=True,
+                verbose_name="EAN-nummer",
+            ),
         ),
         migrations.AlterField(
-            model_name='udlejningapplication',
-            name='EANnumber',
-            field=models.BigIntegerField(blank=True, help_text='Skal kun angives, hvis der skal faktureres til et EAN-nummer', null=True, verbose_name='EAN-nummer'),
+            model_name="udlejningapplication",
+            name="EANnumber",
+            field=models.BigIntegerField(
+                blank=True,
+                help_text="Skal kun angives, hvis der skal faktureres til et EAN-nummer",
+                null=True,
+                verbose_name="EAN-nummer",
+            ),
         ),
     ]

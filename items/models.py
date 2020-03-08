@@ -2,17 +2,21 @@ from django.db import models
 from django.utils import timezone
 
 CONTAINER = (
-    ('DRAFT', 'Fad'),  #0
-    ('BOTTLE', 'Flaske'), #1
-    ('SHOT', 'Shot'), #2
-    ('FOOD', 'Madvare'), #3
-    ('OTHER', 'Andet') #4
+    ("DRAFT", "Fad"),  # 0
+    ("BOTTLE", "Flaske"),  # 1
+    ("SHOT", "Shot"),  # 2
+    ("FOOD", "Madvare"),  # 3
+    ("OTHER", "Andet"),  # 4
 )
 
 
 class Item(models.Model):
-    brewery = models.ForeignKey("Brewery", on_delete=models.SET_NULL, null=True, blank=True)
-    type = models.ForeignKey("BeerType", on_delete=models.SET_NULL, null=True, blank=True)
+    brewery = models.ForeignKey(
+        "Brewery", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    type = models.ForeignKey(
+        "BeerType", on_delete=models.SET_NULL, null=True, blank=True
+    )
     name = models.CharField(max_length=140)
     description = models.TextField(blank=True)
     country = models.CharField(blank=True, max_length=140)
@@ -29,11 +33,11 @@ class Item(models.Model):
     link = models.CharField(max_length=255, blank=True)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ("name",)
 
     def __str__(self):
         if self.brewery:
-            return f'{self.brewery} - {self.name}'
+            return f"{self.brewery} - {self.name}"
         return self.name
 
     def save(self, *args, **kwargs):
@@ -46,7 +50,7 @@ class Item(models.Model):
 
     @property
     def current_amount(self):
-        latest_entry = self.entries.order_by('-snapshot__datetime').first()
+        latest_entry = self.entries.order_by("-snapshot__datetime").first()
         if latest_entry:
             return latest_entry.amount
         else:
@@ -83,8 +87,10 @@ class InventorySnapshot(models.Model):
 
 class InventoryEntry(models.Model):
     amount = models.PositiveIntegerField()
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='entries')
-    snapshot = models.ForeignKey(InventorySnapshot, on_delete=models.CASCADE, related_name='entries')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="entries")
+    snapshot = models.ForeignKey(
+        InventorySnapshot, on_delete=models.CASCADE, related_name="entries"
+    )
 
     def __str__(self):
         return f"{self.item}: {self.amount}"

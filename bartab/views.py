@@ -1,11 +1,12 @@
-from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import BarTabUser, BarTabSnapshot
+from django.views.generic import DetailView
+
+from .models import BarTabSnapshot, BarTabUser
 
 
 class BarTab(LoginRequiredMixin, DetailView):
     model = BarTabUser
-    template_name = 'bartab.html'
+    template_name = "bartab.html"
 
     def get_object(self):
         try:
@@ -16,8 +17,8 @@ class BarTab(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['update_date'] = BarTabSnapshot.objects.first().date
-        context['credit_hold_limit'] = BarTabUser.CREDIT_HOLD_LIMIT
+        context["update_date"] = BarTabSnapshot.objects.first().date
+        context["credit_hold_limit"] = BarTabUser.CREDIT_HOLD_LIMIT
 
         if not self.object:
             return context
@@ -26,22 +27,24 @@ class BarTab(LoginRequiredMixin, DetailView):
 
         balance = self.object.balance
 
-        context['entries'] = []
+        context["entries"] = []
         for entry in self.object.entries.all():
             shift = entry.snapshot.bartender_shift
 
-            context['entries'].append({
-                'shift': 'Epoch' if not shift else shift.date,
-                'added': entry.added,
-                'used': entry.used,
-                'balance': balance,
-            })
+            context["entries"].append(
+                {
+                    "shift": "Epoch" if not shift else shift.date,
+                    "added": entry.added,
+                    "used": entry.used,
+                    "balance": balance,
+                }
+            )
 
             balance -= entry.added
             balance += entry.used
 
             total_used += entry.used
 
-        context['total_used'] = total_used
+        context["total_used"] = total_used
 
         return context

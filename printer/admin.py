@@ -6,13 +6,13 @@ from .models import Printer
 
 
 class PrinterSelect(Select):
-	def __init__(self, *args, **kwargs):
-		kwargs['choices'] = Printer.PrinterChoiceIter()
-		super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        kwargs["choices"] = Printer.PrinterChoiceIter()
+        super().__init__(*args, **kwargs)
 
 
 @admin.register(Printer)
 class PrinterAdmin(admin.ModelAdmin):
-	formfield_overrides = {
-		models.CharField: {'widget': PrinterSelect},
-	}
+    formfield_overrides = {
+        models.CharField: {"widget": PrinterSelect},
+    }

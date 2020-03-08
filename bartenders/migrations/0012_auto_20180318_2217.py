@@ -6,9 +6,9 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('bartenders', '0011_auto_20180317_2112'),
+        ("bartenders", "0011_auto_20180317_2112"),
     ]
 
     operations = [
-        migrations.AlterField('BartenderShift', 'date', models.DateTimeField())
+        migrations.AlterField("BartenderShift", "date", models.DateTimeField())
     ]
