@@ -25,8 +25,11 @@ MAILMAN_URL_BASE = "https://maillist.au.dk/mailman"
 MAILMAN_ALL_LIST = "datcafe-alle.cs"
 MAILMAN_BEST_LIST = "datcafe-best.cs"
 
+CONSTANCE_CONFIG = {
+    "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
+}
+
 SECRET_ADMIN_KEYS = [
-    ("SECRET_KEY", "Django secret key", None),
     (
         "MAILMAN_ALL_PASSWORD",
         "Alle mailinglist admin password",
@@ -48,12 +51,7 @@ SECRET_ADMIN_KEYS = [
         "midttrafikbestilling.dk password",
         "https://midttrafikbestilling.dk/",
     ),
-    ("RECAPTCHA_PRIVATE_KEY", "ReCaptcha private key", None),
 ]
-
-CONSTANCE_CONFIG = {
-    "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
-}
 
 # Inject all secret keys
 for k, _, _ in SECRET_ADMIN_KEYS:
