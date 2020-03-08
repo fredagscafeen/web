@@ -1,3 +1,30 @@
+# After the General Meeting (WIP)
+
+After the General Meeting some accounts and data needs to updated.
+We generally add the new board members as soon as possible,
+but only remove the old board members after the first board meeting.
+
+## Before the first board meeting (as soon as possible)
+
+- Update the board member page: https://fredagscafeen.dk/board/
+- Add new board members and alternates to the best mailinglist: https://maillist.au.dk/mailman/admin/datcafe-best.cs/members/add
+- Add new board members to the gitlab group with "Developer" role: https://gitlab.au.dk/groups/fredagscafeen/-/group_members
+
+## After the first board meeting
+
+- Update https://fredagscafeen.dk/board/ with custom titles and images
+- Remove old board members and alternates from the best mailinglist: https://maillist.au.dk/mailman/admin/datcafe-best.cs/members/list
+- Remove old board members from the gitlab group: https://gitlab.au.dk/groups/fredagscafeen/-/group_members
+- Remove admin accounts for old board members and create admin accounts for new board members and add them to the correct groups: `dokku run fredagscafeen.dk ./manage.py update_board_member_accounts`
+- Change all passwords and update dokku config: http://fredagscafeen.dk/admin/admin/logentry/secrets_view
+
+### New web responsible
+
+This only needs to be done, if there is a new web responsible:
+
+- Make the new responsible's user a superuser on the website
+- Add new keys to and remove old keys from `~/.ssh/authorized_keys` on the server
+
 # Setup (WIP)
 
 ## To run project locally
