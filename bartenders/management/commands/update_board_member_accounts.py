@@ -3,7 +3,6 @@ import secrets
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand
-from django.db import transaction
 
 from bartenders.models import Bartender, BoardMemberPeriod
 
@@ -14,7 +13,9 @@ GROUPS_FOR_NEW = [Group.objects.get(name="Alle i Bestyrelsen")]
 class Command(BaseCommand):
     help = "Create/delete admin accounts"
 
-    @transaction.atomic
+    def add_arguments(self, parser):
+        parser.add_argument("--no-delete", action="store_true")
+
     def handle(self, *args, **options):
         period = BoardMemberPeriod.get_current_period()
         board_member_bartenders = Bartender.objects.filter(board_members__period=period)
@@ -22,23 +23,36 @@ class Command(BaseCommand):
         users_to_keep = User.objects.filter(
             username__in=board_member_bartenders.values("username")
         )
-        users_to_delete = User.objects.filter(is_staff=True).exclude(
-            id__in=users_to_keep
-        )
         board_members_without_users = board_member_bartenders.exclude(
             username__in=users_to_keep.values("username")
         )
+        if options["no_delete"]:
+            users_to_delete = User.objects.none()
+        else:
+            users_to_delete = User.objects.filter(is_staff=True).exclude(
+                id__in=users_to_keep
+            )
 
-        print("Users for the following bartenders will be created:")
-        for bartender in board_members_without_users:
-            print("", bartender)
+        do_something = False
+        if board_members_without_users.exists():
+            do_something = True
+            print("Users for the following bartenders will be created:")
+            for bartender in board_members_without_users:
+                print("", bartender)
 
-        print()
-        print("The following users will be deleted:")
-        for user in users_to_delete:
-            print("", user)
+            print()
 
-        print()
+        if users_to_delete.exists():
+            do_something = True
+            print("The following users will be deleted:")
+            for user in users_to_delete:
+                print("", user)
+
+            print()
+
+        if not do_something:
+            print("Accounts are already updated.")
+            return
 
         if input("Continue? [yN] ") not in ["y", "Y"]:
             return
