@@ -1,1 +1,1 @@
-web: gunicorn fredagscafeen.wsgi --log-file -
+web: gunicorn fredagscafeen.wsgi --log-file - --timeout 120
