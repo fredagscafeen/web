@@ -122,10 +122,10 @@ Every time a tex file for a guide is updated, the server will recompile it and u
 |  +---------------------------------------------+   |
 +----------------------------------------------------+
                      ^
-					 |
                      |
-	   (reverse ssh port-forwarding)
-	                 |
+                     |
+       (reverse ssh port-forwarding)
+                     |
                      |
 +----------------------------------------------+
 | remote AU server:                            |
