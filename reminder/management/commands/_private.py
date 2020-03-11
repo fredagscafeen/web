@@ -1,7 +1,7 @@
-from django.core.mail import EmailMultiAlternatives, send_mail
+from django.core.mail import send_mail
 from django.core.management import BaseCommand
-from django.template.loader import render_to_string
 
+from constance import config
 from fredagscafeen.email import send_template_email
 
 
@@ -13,6 +13,10 @@ class ReminderCommand(BaseCommand):
 
         if not events:
             print("No upcoming events found.")
+            return
+
+        if not config.SEND_REMINDERS:
+            print("SEND_REMINDERS is false, not sending any reminders.")
             return
 
         for event in events:
