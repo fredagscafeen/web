@@ -28,6 +28,7 @@ MAILMAN_BEST_LIST = "datcafe-best.cs"
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
     "SEND_REMINDERS":    (True, "Skal der sendes ugentlige barvagt og pantvagt reminders?", bool),
+    "BANNER_HTML":       ("", "HTML banner", str),
 }
 
 SECRET_ADMIN_KEYS = [

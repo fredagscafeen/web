@@ -1,6 +1,7 @@
 {% extends 'plain_base.html' %}
 {% load static %}
 {% block body_content %}
+    {{ config.BANNER_HTML|safe }}
     <div class="container wrapper">
         <header class="banner hidden-xs">
             <a href="/">
