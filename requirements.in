@@ -1,16 +1,12 @@
 django==3.*
 python-dotenv
 djangorestframework
-coreapi
-apiclient
 dj-config-url
 django-bootstrap3
 django-recaptcha
 gunicorn
-Markdown
 Pillow
 psycopg2
-urllib3
 whitenoise
 django-ical
 django-object-actions
