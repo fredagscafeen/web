@@ -10,7 +10,7 @@ if ! [[ $ans = y || $ans = Y ]]; then
 fi
 
 rm -f db.sqlite3
-pipenv run ./manage.py migrate
+./manage.py migrate
 
 echo
 echo "Dumping and downloading production database..."
@@ -21,6 +21,6 @@ ssh root@fredagscafeen.dk 'dokku run fredagscafeen.dk python -W ignore ./manage.
 
 echo "Importing production database..."
 echo
-pipenv run ./manage.py loaddata "$fixture"
+./manage.py loaddata "$fixture"
 
 rm -f "$fixture"

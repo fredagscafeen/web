@@ -55,6 +55,9 @@ SECRET_ADMIN_KEYS = [
     ),
 ]
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Inject all secret keys
 for k, _, _ in SECRET_ADMIN_KEYS:
     v = os.getenv(k)

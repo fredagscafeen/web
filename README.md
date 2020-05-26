@@ -30,17 +30,17 @@ This only needs to be done, if there is a new web responsible:
 ## To run project locally
 
 1. checkout project from vcs: `git clone git@gitlab.au.dk:fredagscafeen/web.git`
-2. setup virtual env (commands should be run in project folder)
-  1. `pip3 install pipenv`
-  2. `pipenv install`
+2. setup virtual env: `python3 -mvenv ~/.cache/venvs/fredagscafeen-web`
+3. activate virtual env: `source ~/.cache/venvs/fredagscafeen-web/bin/activate`
+4. install `pip-tools`: `pip install pip-tools`
+5. install dependencies: `pip-sync`
 
 Installing the required psycopg2 package (PostgreSQL for Python) might require the `pg_config` binary,
 which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
-3. activate virtualenv: `pipenv shell`
-4. migrate database: `./manage.py migrate`
-5. create superuser: `./manage.py createsuperuser`
-6. run server: `./manage.py runserver`
+7. migrate database: `./manage.py migrate`
+8. create superuser: `./manage.py createsuperuser`
+9. run server: `./manage.py runserver`
 
 ## Deploy changes
 

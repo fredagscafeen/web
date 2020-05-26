@@ -1,0 +1,25 @@
+django==3.*
+python-dotenv
+djangorestframework
+coreapi
+apiclient
+dj-config-url
+django-bootstrap3
+django-recaptcha
+gunicorn
+Markdown
+Pillow
+psycopg2
+urllib3
+whitenoise
+django-ical
+django-object-actions
+django-extensions
+ipython
+requests-html
+django-logentry-admin
+django-cors-headers
+django-bootstrap-datepicker-plus
+django-constance[database]
+iterfzf
+-e git+https://github.com/Tyilo/django-admin-views.git@django-3#egg=django-admin-views
