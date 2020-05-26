@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  app:
+    image: &app fredagscafeen/web
+    networks:
+      - traefik
+      - default
+    volumes:
+      - ./media:/app/media
+      - ./.env:/app/.env
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.academy-beer.rule=Host(`fredagscafeen.dk`)
+        - traefik.http.services.academy-beer.loadbalancer.server.port=8000
+    depends_on:
+      - db
+      - media
+
+  db:
+    image: postgres:12
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+
+  media:
+    image: nginx:alpine
+    volumes:
+      - ./media:/usr/share/nginx/html
+    networks:
+      - traefik
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.media-academy-beer.rule=Host(`media.fredagscafeen.dk`)
+        - traefik.http.services.media-academy-beer.loadbalancer.server.port=80
+
+networks:
+  traefik:
+    external: true
