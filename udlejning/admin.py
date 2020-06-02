@@ -7,8 +7,8 @@ from django.http import HttpResponseRedirect
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
 from django_object_actions import DjangoObjectActions
+
 from fredagscafeen.email import send_template_email
 from udlejning.models import (
     Udlejning,

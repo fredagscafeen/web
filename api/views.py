@@ -1,3 +1,10 @@
+from rest_framework import status, viewsets
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from api.serializers import (
     BartenderSerializer,
     BeerTypeSerializer,
@@ -7,12 +14,6 @@ from api.serializers import (
 from bartenders.models import Bartender
 from items.models import BeerType, Brewery, Item
 from printer.models import Printer
-from rest_framework import status, viewsets
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.permissions import IsAdminUser
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
 class ItemViewSet(viewsets.ModelViewSet):

@@ -1,6 +1,7 @@
+from rest_framework import serializers
+
 from bartenders.models import Bartender
 from items.models import BeerType, Brewery, Item
-from rest_framework import serializers
 
 
 class BrewerySerializer(serializers.ModelSerializer):

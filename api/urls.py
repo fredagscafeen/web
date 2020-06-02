@@ -1,4 +1,5 @@
 from django.urls import include, path
+from rest_framework import routers
 
 from api.views import (
     BartenderViewSet,
@@ -10,7 +11,6 @@ from api.views import (
     PrintStatusView,
     TokenAuthView,
 )
-from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r"items", ItemViewSet, "items")

@@ -1,6 +1,7 @@
 import json
 from collections import Counter, defaultdict
 
+from admin_views.admin import AdminViews
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import F, Sum, Value
@@ -8,7 +9,6 @@ from django.db.models.functions import Coalesce
 from django.forms.widgets import TextInput
 from django.template.response import TemplateResponse
 
-from admin_views.admin import AdminViews
 from printer.views import pdf_preview
 
 from .forms import ConsumptionForm

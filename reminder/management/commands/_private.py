@@ -1,7 +1,7 @@
+from constance import config
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
 
-from constance import config
 from fredagscafeen.email import send_template_email
 
 

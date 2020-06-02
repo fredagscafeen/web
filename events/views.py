@@ -3,9 +3,9 @@ from django.contrib import messages
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
+from django_ical.views import ICalFeed
 
 from bartenders.models import Bartender
-from django_ical.views import ICalFeed
 
 from .forms import EventResponseForm
 from .models import Event

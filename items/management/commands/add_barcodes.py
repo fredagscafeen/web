@@ -1,9 +1,9 @@
 import sys
 
 from django.core.management.base import BaseCommand
+from iterfzf import iterfzf
 
 from items.models import Item
-from iterfzf import iterfzf
 
 
 class Command(BaseCommand):

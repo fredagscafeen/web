@@ -1,5 +1,6 @@
 from urllib.parse import urljoin
 
+from captcha.fields import ReCaptchaField
 from django import forms
 from django.conf import settings
 from django.urls import reverse
@@ -7,7 +8,6 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 
 from bartenders.models import Bartender, BartenderShift
-from captcha.fields import ReCaptchaField
 from email_auth.auth import EmailTokenBackend
 from email_auth.models import EmailToken
 from fredagscafeen.email import send_template_email

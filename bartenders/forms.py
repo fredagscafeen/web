@@ -1,11 +1,11 @@
 from urllib.parse import urljoin
 
+from captcha.fields import ReCaptchaField
 from django import forms
 from django.conf import settings
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from captcha.fields import ReCaptchaField
 from fredagscafeen.email import send_template_email
 
 from .models import Bartender, BartenderApplication

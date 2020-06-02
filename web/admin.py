@@ -1,13 +1,13 @@
+from admin_views.admin import AdminViews
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.admin.models import LogEntry
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import path
-
-from admin_views.admin import AdminViews
-from bartenders.models import BartenderShift
 from logentry_admin.admin import LogEntryAdmin
+
+from bartenders.models import BartenderShift
 
 from .forms import SwapForm1, SwapForm2
 

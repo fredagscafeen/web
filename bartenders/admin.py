@@ -1,6 +1,7 @@
 import datetime
 from collections import Counter
 
+from admin_views.admin import AdminViews
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
@@ -8,8 +9,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+from django_object_actions import DjangoObjectActions
 
-from admin_views.admin import AdminViews
 from bartenders.models import (
     Bartender,
     BartenderApplication,
@@ -19,7 +20,6 @@ from bartenders.models import (
     BoardMemberDepositShift,
     BoardMemberPeriod,
 )
-from django_object_actions import DjangoObjectActions
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 from printer.views import pdf_preview
 

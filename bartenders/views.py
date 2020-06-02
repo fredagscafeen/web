@@ -7,8 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView
-
 from django_ical.views import ICalFeed
+
 from fredagscafeen.email import send_template_email
 from guides.models import Guide
 

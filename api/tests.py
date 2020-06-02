@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.urls import reverse
-
-from items.models import Brewery, Item
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
+
+from items.models import Brewery, Item
 
 
 class ApiTests(APITestCase):

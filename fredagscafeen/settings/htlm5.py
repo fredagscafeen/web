@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import dj_database_url
+
 from fredagscafeen.settings.base import *
 
 SECRET_KEY = os.environ["SECRET_KEY"]
