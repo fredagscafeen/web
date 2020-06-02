@@ -23,8 +23,8 @@ class LogEntryAdminWithSecrets(LogEntryAdmin, AdminViews):
 
     def secrets_view(self, request):
         secrets = [
-            (key, title, getattr(settings, key, None), url)
-            for key, title, url in settings.SECRET_ADMIN_KEYS
+            (key, title, username, getattr(settings, key, None), url)
+            for key, title, username, url in settings.SECRET_ADMIN_KEYS
         ]
 
         context = dict(

@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from dotenv import load_dotenv
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
@@ -27,39 +29,52 @@ MAILMAN_BEST_LIST = "datcafe-best.cs"
 
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
-    "SEND_REMINDERS":    (True, "Skal der sendes ugentlige barvagt og pantvagt reminders?", bool),
-    "BANNER_HTML":       ("", "HTML banner", str),
+    "SEND_REMINDERS": (
+        True,
+        "Skal der sendes ugentlige barvagt og pantvagt reminders?",
+        bool,
+    ),
+    "BANNER_HTML": ("", "HTML banner", str),
 }
 
 SECRET_ADMIN_KEYS = [
     (
         "MAILMAN_ALL_PASSWORD",
         "Alle mailinglist admin password",
+        None,
         f"{MAILMAN_URL_BASE}/admin/{MAILMAN_ALL_LIST}",
     ),
     (
         "MAILMAN_BEST_PASSWORD",
         "Best mailinglist admin password",
+        None,
         f"{MAILMAN_URL_BASE}/admin/{MAILMAN_BEST_LIST}",
     ),
-    ("EMAIL_HOST_PASSWORD", "Gmail password", "https://gmail.com/"),
+    (
+        "EMAIL_HOST_PASSWORD",
+        "Gmail password",
+        "datcafe@gmail.com",
+        "https://gmail.com/",
+    ),
     (
         "DIGITAL_OCEAN_PASSWORD",
         "Digital Ocean password",
+        "datcafe@gmail.com",
         "https://cloud.digitalocean.com/login",
     ),
     (
         "MIDTTRAFIK_BESTILLING_PASSWORD",
         "midttrafikbestilling.dk password",
+        "fredagscafeen",
         "https://midttrafikbestilling.dk/",
     ),
 ]
 
-from dotenv import load_dotenv
+
 load_dotenv()
 
 # Inject all secret keys
-for k, _, _ in SECRET_ADMIN_KEYS:
+for k, *_ in SECRET_ADMIN_KEYS:
     v = os.getenv(k)
     if v != None:
         globals()[k] = v
