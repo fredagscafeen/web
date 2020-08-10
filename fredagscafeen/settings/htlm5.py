@@ -1,8 +1,6 @@
 import os
 from pathlib import Path
 
-import dj_database_url
-
 from fredagscafeen.settings.base import *
 
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -23,7 +21,16 @@ EMAIL_USE_SSL = True
 EMAIL_PORT = 465
 
 
-DATABASES = {"default": dj_database_url.config()}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "db",
+        "PORT": 5432,
+    }
+}
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

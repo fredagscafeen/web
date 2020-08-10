@@ -1,4 +1,4 @@
 #!/bin/sh
 ./manage.py collectstatic --noinput &&
-./manage.py migrate --noinput &&
+./manage.py migrate --noinput -v 3 &&
 exec gunicorn --bind 0.0.0.0 --workers 4 fredagscafeen.wsgi:application
