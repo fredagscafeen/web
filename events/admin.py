@@ -77,11 +77,13 @@ class EventAdminForm(forms.ModelForm):
     def get_initial_for_field(self, field, fieldname):
         if fieldname == "default_may_attends":
             s = ""
+            allowed = 0
             for b in Bartender.objects.all():
                 if self.instance.may_attend_default(b):
-                    s += f"{b}\n"
+                    s += f"- {b}\n"
+                    allowed += 1
 
-            return s.strip()
+            return f"{allowed} bartenders:\n" + s.strip()
 
         return super().get_initial_for_field(field, fieldname)
 
