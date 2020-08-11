@@ -26,10 +26,16 @@ class Events(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        show_all = "show_all" in self.request.GET
+        context["show_all"] = show_all
+        qs = Event.objects.all()
+        if not show_all:
+            qs = qs[:3]
+
         bartender = self.get_bartender()
 
         events_data = []
-        for event in Event.objects.all():
+        for event in qs:
             data = {"event": event}
             if bartender and event.may_attend(bartender):
                 data["form"] = EventResponseForm(event=event, bartender=bartender)
