@@ -7,7 +7,6 @@ from django.core.management.base import BaseCommand
 from bartenders.models import Bartender, BoardMemberPeriod
 
 User = get_user_model()
-GROUPS_FOR_NEW = [Group.objects.get(name="Alle i Bestyrelsen")]
 
 
 class Command(BaseCommand):
@@ -67,8 +66,8 @@ class Command(BaseCommand):
                 last_name=last_name,
                 email=bartender.email,
                 is_staff=True,
+                is_superuser=True,
             )
-            user.groups.set(GROUPS_FOR_NEW)
             password = secrets.token_hex(32)
             user.set_password(password)
             user.save()
