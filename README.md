@@ -1,4 +1,4 @@
-# After the General Meeting (WIP)
+# After the General Meeting
 
 After the General Meeting some accounts and data needs to updated.
 We generally add the new board members as soon as possible,
@@ -23,9 +23,9 @@ but only remove the old board members after the first board meeting.
 This only needs to be done, if there is a new web responsible:
 
 - Make the new responsible's user a superuser on the website
-- Add new keys to and remove old keys from `~/.ssh/authorized_keys` on the server
+- Add new keys to and remove old keys from `~/.ssh/authorized_keys` on the server. Note that the `dokku@fredagscafeen.dk` key should not be removed.
 
-# Setup (WIP)
+# Setup
 
 ## To run project locally
 
