@@ -2,7 +2,8 @@ version: "3.7"
 
 services:
   app:
-    image: &app fredagscafeen/web
+    image: fredagscafeen/web
+    restart: always
     networks:
       - traefik
       - default
@@ -12,8 +13,12 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.routers.academy-beer.rule=Host(`fredagscafeen.dk`)
-        - traefik.http.services.academy-beer.loadbalancer.server.port=8000
+        - traefik.http.routers.fredagscafeen.rule=Host(`fredagscafeen.dk`)
+        - traefik.http.services.fredagscafeen.loadbalancer.server.port=8000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fredagscafeen.rule=Host(`fredagscafeen.dk`)
+      - traefik.http.services.fredagscafeen.loadbalancer.server.port=8000
     depends_on:
       - db
       - media
@@ -32,8 +37,12 @@ services:
     deploy:
       labels:
         - traefik.enable=true
-        - traefik.http.routers.media-academy-beer.rule=Host(`media.fredagscafeen.dk`)
-        - traefik.http.services.media-academy-beer.loadbalancer.server.port=80
+        - traefik.http.routers.media-fredagscafeen.rule=Host(`media.fredagscafeen.dk`)
+        - traefik.http.services.media-fredagscafeen.loadbalancer.server.port=80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.media-fredagscafeen.rule=Host(`media.fredagscafeen.dk`)
+      - traefik.http.services.media-fredagscafeen.loadbalancer.server.port=80
 
 networks:
   traefik:
