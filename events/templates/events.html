@@ -6,6 +6,14 @@
 
 <h2>Bartender events</h2>
 
+<p>
+{% if show_all %}
+<a href=".">Vis nuværende</a>
+{% else %}
+<a href="?show_all">Vis også tidligere</a>
+{% endif %}
+</p>
+
 <p><a href="{% url 'event_feed' %}">Tilføj til kalender</a></p>
 
 {% if not bartender %}

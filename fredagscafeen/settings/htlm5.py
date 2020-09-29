@@ -34,7 +34,7 @@ DATABASES = {
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-RECAPTCHA_PUBLIC_KEY = "6LcM200UAAAAAIi7AHBSlypIewnLk4Q4BvcC8Z-W"
+RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
 RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
 
 # For using latexmk

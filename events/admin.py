@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib import admin
 
+from bartenders.models import Bartender
+
 from .models import Event, EventChoice, EventChoiceOption, EventResponse
 
 
@@ -60,8 +62,35 @@ class EventChoiceInline(admin.TabularInline):
     form = EventChoiceInlineForm
 
 
+class EventAdminForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = "__all__"
+
+    default_may_attends = forms.CharField(
+        label="Default allowed attendees",
+        help_text="Can be overwritten using the whitelist and blacklist above.",
+        disabled=True,
+        widget=forms.Textarea,
+    )
+
+    def get_initial_for_field(self, field, fieldname):
+        if fieldname == "default_may_attends":
+            s = ""
+            allowed = 0
+            for b in Bartender.objects.all():
+                if self.instance.may_attend_default(b):
+                    s += f"- {b}\n"
+                    allowed += 1
+
+            return f"{allowed} bartenders:\n" + s.strip()
+
+        return super().get_initial_for_field(field, fieldname)
+
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+    form = EventAdminForm
     inlines = [
         EventChoiceInline,
         EventResponseReadonlyInline,
