@@ -146,3 +146,34 @@ class Mailman:
 
         if result != self.UNSUBSCRIBED_SUCCESSFULLY:
             raise OperationError(f"Got unknown response: {result}")
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--url", required=True)
+    parser.add_argument("--name", required=True)
+    parser.add_argument("--password", required=True)
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    list_parser = subparsers.add_parser("list")
+
+    add_parser = subparsers.add_parser("add")
+    add_parser.add_argument("emails", nargs="+")
+
+    remove_parser = subparsers.add_parser("remove")
+    remove_parser.add_argument("emails", nargs="+")
+
+    args = parser.parse_args()
+
+    mailman = Mailman(args.url, args.name, args.password)
+
+    if args.command == "list":
+        print(*mailman.get_subscribers(), sep="\n")
+    elif args.command == "add":
+        mailman.add_subscriptions(args.emails)
+        print("Done")
+    elif args.command == "remove":
+        mailman.remove_subscriptions(args.emails)
+        print("Done")
