@@ -71,8 +71,12 @@ class Mailman:
     def _get(self, *args, **kwargs):
         return self._request(self.session.get, *args, **kwargs)
 
-    def _post(self, *args, **kwargs):
-        return self._request(self.session.post, *args, **kwargs)
+    def _post(self, *args, data=None, **kwargs):
+        if data:
+            data = {
+                bytes(k, "cp1252"): bytes(str(v), "cp1252") for k, v in data.items()
+            }
+        return self._request(self.session.post, *args, data=data, **kwargs)
 
     def _get_csrf_token(self, url):
         r = self._get(url)
