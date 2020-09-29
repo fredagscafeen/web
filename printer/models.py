@@ -11,9 +11,6 @@ from django.db import models
 
 
 class Printer(models.Model):
-    HOSTNAME = "localhost" if settings.DEBUG else "localhost:6631"
-    HTLM5_MEDIA_DIR = "/var/lib/dokku/data/storage/fredagscafeen-media"
-
     class PrinterChoiceIter:
         def __iter__(self):
             yield (None, "-" * 9)
@@ -27,44 +24,25 @@ class Printer(models.Model):
     name = models.CharField(max_length=32, unique=True)
 
     @classmethod
-    def _htlm5_run(cls, *args, **kwargs):
-        if not settings.DEBUG:
-            args = [
-                "ssh",
-                "-o",
-                "StrictHostKeyChecking=no",
-                "-i",
-                "media/ssh/id_rsa",
-                "remoteprint_relay@fredagscafeen.dk",
-                "--",
-                *args,
-            ]
-
+    def _run(cls, *args, **kwargs):
         print(*args)
-
         p = run(args, encoding="utf-8", check=True, capture_output=True, **kwargs)
         return p.stdout.strip()
 
     @classmethod
-    def _cups_run(cls, *args, **kwargs):
-        args = [args[0], "-h", cls.HOSTNAME, *args[1:]]
-
-        return cls._htlm5_run(*args, **kwargs)
-
-    @classmethod
     def is_connected(cls):
-        out = cls._cups_run("lpstat", "-E", "-r")
+        out = cls._run("lpstat", "-E", "-r")
         return out == "scheduler is running"
 
     @classmethod
     def get_printers(cls):
-        out = cls._cups_run("lpstat", "-E", "-p")
+        out = cls._run("lpstat", "-E", "-p")
 
         for l in out.splitlines():
             if l.startswith("printer "):
                 yield l.split()[1]
 
-    def print(self, fname, inside_dokku=True):
+    def print(self, fname):
         options = {
             "PageSize": "A4",
             "Duplex": "DuplexNoTumble",
@@ -77,21 +55,7 @@ class Printer(models.Model):
             (["-o", f"{quote(k)}={quote(v)}"] for k, v in options.items()), []
         )
 
-        with TemporaryDirectory(dir=settings.MEDIA_ROOT) as d:
-            os.chmod(d, 0o777)
-            if settings.DEBUG or not inside_dokku:
-                htlm5_name = fname
-            else:
-                tmp_dir = d.split("/")[-1]
-
-                shutil.copy(fname, f"{d}/print.pdf")
-                os.chmod(f"{d}/print.pdf", 0o777)
-
-                htlm5_name = f"{self.HTLM5_MEDIA_DIR}/{tmp_dir}/print.pdf"
-
-            out = self._cups_run(
-                "lp", "-E", "-d", self.name, *opt_args, "--", htlm5_name
-            )
+        out = self._run("lp", "-E", "-d", self.name, *opt_args, "--", fname)
 
         prefix = "request id is "
         suffix = " (1 file(s))"
@@ -101,7 +65,7 @@ class Printer(models.Model):
 
     @classmethod
     def get_status(cls, job_id):
-        out = cls._cups_run("lpstat", "-E", "-l")
+        out = cls._run("lpstat", "-E", "-l")
 
         status = {}
         lines = out.splitlines()

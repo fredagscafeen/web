@@ -1,5 +1,7 @@
 FROM python:3.8
 
+RUN apt-get update && apt-get install -y texlive-full cups && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY requirements.txt /app/

@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   app:
-    image: fredagscafeen/web
+    build: .
     restart: always
     networks:
       - traefik
@@ -10,11 +10,7 @@ services:
     volumes:
       - ./media:/app/media
       - ./.env:/app/.env
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.fredagscafeen.rule=Host(`fredagscafeen.dk`)
-        - traefik.http.services.fredagscafeen.loadbalancer.server.port=8000
+      - /var/run/cups:/var/run/cups
     labels:
       - traefik.enable=true
       - traefik.http.routers.fredagscafeen.rule=Host(`fredagscafeen.dk`)
@@ -34,11 +30,6 @@ services:
       - ./media:/usr/share/nginx/html
     networks:
       - traefik
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.http.routers.media-fredagscafeen.rule=Host(`media.fredagscafeen.dk`)
-        - traefik.http.services.media-fredagscafeen.loadbalancer.server.port=80
     labels:
       - traefik.enable=true
       - traefik.http.routers.media-fredagscafeen.rule=Host(`media.fredagscafeen.dk`)

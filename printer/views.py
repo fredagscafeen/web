@@ -25,7 +25,7 @@ def pdf_preview(request, admin_site, latex_context):
             printer = form.cleaned_data["printer"]
             try:
                 if request.POST.get("print_test_submit"):
-                    job_id = printer.print(TEST_PDF_PATH, inside_dokku=False)
+                    job_id = printer.print(TEST_PDF_PATH)
                 else:
                     job_id = printer.print(pdf_path)
             except CalledProcessError as e:

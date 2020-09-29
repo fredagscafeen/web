@@ -4,11 +4,12 @@ from pathlib import Path
 from fredagscafeen.settings.base import *
 
 SECRET_KEY = os.environ["SECRET_KEY"]
-
 DEBUG = False
 
 SELF_URL = "https://fredagscafeen.dk/"
 ALLOWED_HOSTS = ["fredagscafeen.dk"]
+
+MEDIA_URL = "https://media.fredagscafeen.dk/"
 
 # Only send session cookie when using https
 SESSION_COOKIE_SECURE = True
@@ -36,13 +37,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
 RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
-
-# For using latexmk
-try:
-    TEX_BIN = str(list(Path("/app/media/texlive").glob("*/bin/*"))[0])
-    os.environ["PATH"] = TEX_BIN + ":" + os.environ["PATH"]
-except IndexError:
-    print("WARNING: Couldn't find TeX Live installation")
 
 LOGGING = {
     "version": 1,
