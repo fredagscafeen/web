@@ -90,8 +90,8 @@ class BartenderInfoForm(forms.ModelForm):
             # Update mailing lists
             for list_and_password in [Bartender.MAILMAN_ALL, Bartender.MAILMAN_BEST]:
                 if old_obj.is_on_mailing_list(list_and_password):
-                    old_obj.remove_from_mailing_list()
-                    obj.add_to_mailing_list()
+                    old_obj.remove_from_mailing_list(list_and_password)
+                    obj.add_to_mailing_list(list_and_password)
 
             # Update bartab user
             BarTabUser.objects.filter(email=old_obj.email).update(email=obj.email)
