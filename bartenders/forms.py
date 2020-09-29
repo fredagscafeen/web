@@ -3,9 +3,11 @@ from urllib.parse import urljoin
 from captcha.fields import ReCaptchaField
 from django import forms
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
+from bartab.models import BarTabUser
 from fredagscafeen.email import send_template_email
 
 from .models import Bartender, BartenderApplication
@@ -81,7 +83,26 @@ class BartenderInfoForm(forms.ModelForm):
 
         self.fields["username"].disabled = True
 
-        # email isn't currently editable as we need to handle
-        # removing the old and possibly adding the new to the mailing list
-        # another problem is also handling of ZZZZZ_email_ users
-        self.fields["email"].disabled = True
+    def save(self, *args, **kwargs):
+        old_obj = type(self.instance).objects.get(id=self.instance.id)
+        obj = super().save(*args, **kwargs)
+        if old_obj.email != obj.email:
+            # Update mailing lists
+            for list_and_password in [Bartender.MAILMAN_ALL, Bartender.MAILMAN_BEST]:
+                if old_obj.is_on_mailing_list(list_and_password):
+                    old_obj.remove_from_mailing_list()
+                    obj.add_to_mailing_list()
+
+            # Update bartab user
+            BarTabUser.objects.filter(email=old_obj.email).update(email=obj.email)
+
+            # Update django user
+            user = User.objects.get(email=old_obj.email)
+
+            if user.username.startswith("ZZZZZ_email_"):
+                user.delete()
+            else:
+                user.email = obj.email
+                user.save()
+
+        return obj
