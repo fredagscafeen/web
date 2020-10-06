@@ -23,7 +23,7 @@ but only remove the old board members after the first board meeting.
 This only needs to be done, if there is a new web responsible:
 
 - Make the new responsible's user a superuser on the website
-- Add new keys to and remove old keys from `~/.ssh/authorized_keys` on the server. Note that the `dokku@fredagscafeen.dk` key should not be removed.
+- Add new keys to and remove old keys from `~/.ssh/authorized_keys` on the server.
 
 # Setup
 
@@ -44,42 +44,14 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 
 ## Deploy changes
 
-1. Add your SSH key to dokku: `ssh root@fredagscafeen.dk "dokku ssh-keys:add $USER" < ~/.ssh/id_rsa.pub`
-2. Add dokku remote: `git remote add dokku dokku@fredagscafeen.dk:fredagscafeen.dk`
-3. `git push dokku master`
+1. `git push`
+2. Build docker image and redeploy: `ssh ubuntu@fredagscafeen.dk 'cd web && git pull && docker-compose build && docker-compose up -d'`
 
 ## Setup admin user on server
 
-1. ssh into server: `ssh root@fredagscafeen.dk`
-2. create superuser: `dokku run fredagscafeen.dk ./manage.py createsuperuser`
+1. ssh into server: `ssh ubuntu@fredagscafeen.dk`
+2. create superuser: `docker exec -it web_app_1 ./manage.py createsuperuser`
 3. login to admin interface: [https://fredagscafeen.dk/admin/](https://fredagscafeen.dk/admin/)
-
-# Fully rebuilding dokku app
-
-If `dokku ps:rebuild fredagscafeen.dk` does not fix your problem,
-you can try to completely rebuild the app from scratch by running:
-
-```sh
-dokku apps:rename fredagscafeen.dk test.fredagscafeen.dk
-dokku apps:rename test.fredagscafeen.dk fredagscafeen.dk
-```
-
-# LaTeX installation
-
-This installs TeX Live full and makes it available to the dokku django instance:
-
-```sh
-export TEXLIVE_INSTALL_PREFIX=/var/lib/dokku/data/storage/fredagscafeen-media/texlive
-rm -rf "$TEXLIVE_INSTALL_PREFIX"
-
-cd /tmp
-curl -L http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz -o install-tl.tar.gz
-tar -xzf install-tl.tar.gz
-cd install-tl-*
-./install-tl -scheme full -profile /dev/null -repository https://ctan.mirror.norbert-ruehl.de/systems/texlive/tlnet/
-```
-
-We need to specify a mirror located in Germany (as the server) as otherwise it defaults to some Australian mirror.
 
 # GitLab hook for automatically updating guide PDFs
 
@@ -96,6 +68,8 @@ To setup do the following for each repository {guides,vedtaegter}:
 Every time a tex file for a guide is updated, the server will recompile it and update the hosted PDF.
 
 # Remote server printing
+
+**TODO:** This needs to be updated.
 
 ## Diagram
 
