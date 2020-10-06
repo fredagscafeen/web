@@ -14,4 +14,4 @@ rm -rf media
 echo
 echo "Downloading media..."
 
-rsync --verbose --recursive --copy-links --rsh=ssh root@fredagscafeen.dk:fredagscafeen-media/ media --exclude='texlive'
+rsync --verbose --recursive --copy-links --rsh=ssh ubuntu@fredagscafeen.dk:web/media/ media

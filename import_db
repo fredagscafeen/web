@@ -17,7 +17,7 @@ echo "Dumping and downloading production database..."
 
 fixture=$(mktemp --suffix .json)
 
-ssh root@fredagscafeen.dk 'dokku run fredagscafeen.dk python -W ignore ./manage.py dumpdata --natural-foreign --exclude auth.permission --exclude contenttypes --exclude admin.logentry | tail -n1' > "$fixture"
+ssh ubuntu@fredagscafeen.dk 'docker exec web_app_1 ./manage.py dumpdata --natural-foreign --exclude auth.permission --exclude contenttypes --exclude admin.logentry | tail -n1' > "$fixture"
 
 echo "Importing production database..."
 echo
