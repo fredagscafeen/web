@@ -24,7 +24,7 @@ services:
 
   celery:
     image: *app
-    command: ["celery", "worker", "--app=fredagscafeen", "--loglevel=INFO"]
+    command: ["celery", "--app=fredagscafeen", "worker", "--loglevel=INFO"]
     volumes:
       - ./.env:/app/.env
     depends_on:
@@ -33,7 +33,7 @@ services:
 
   celery-beat:
     image: *app
-    command: ["celery", "beat", "--app=fredagscafeen", "--loglevel=INFO", "--scheduler=django_celery_beat.schedulers:DatabaseScheduler"]
+    command: ["celery", "--app=fredagscafeen", "beat", "--loglevel=INFO", "--scheduler=django_celery_beat.schedulers:DatabaseScheduler"]
     volumes:
       - ./.env:/app/.env
     depends_on:

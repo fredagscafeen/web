@@ -38,7 +38,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
 RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
 
-CELERY_BROKER_URL = "redis://redis:6390/0"
+CELERY_BROKER_URL = "redis://redis:6379/0"
 
 LOGGING = {
     "version": 1,
