@@ -36,7 +36,7 @@ class EventResponseForm(forms.Form):
         if not option["value"]:
             return True
 
-        obj = EventChoiceOption.objects.get(id=option["value"])
+        obj = EventChoiceOption.objects.get(id=option["value"].value)
         return obj.can_bartender_choose(self.bartender)
 
     def __init__(self, *args, event, bartender, **kwargs):
