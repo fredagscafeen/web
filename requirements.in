@@ -19,5 +19,5 @@ django-bootstrap-datepicker-plus
 django-constance[database]
 iterfzf
 -e git+https://github.com/Tyilo/django-admin-views.git@django-3#egg=django-admin-views
-celery[redis]==4.*
+celery[redis]
 django-celery-beat
