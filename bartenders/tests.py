@@ -155,7 +155,10 @@ class BartenderApplicationTests(TestCase):
 
         self.assertTrue(bartender.isBoardMember)
 
-    @skipUnless(settings.MAILMAN_ALL_PASSWORD, "Mailman password for all list not set")
+    @skipUnless(
+        getattr(settings, "MAILMAN_ALL_PASSWORD", None),
+        "Mailman password for all list not set",
+    )
     def test_mailman_all_list_members(self):
         mailman = Mailman(
             settings.MAILMAN_URL_BASE,
@@ -167,7 +170,8 @@ class BartenderApplicationTests(TestCase):
         self.assertFalse(len(subscribers) == 0)
 
     @skipUnless(
-        settings.MAILMAN_BEST_PASSWORD, "Mailman password for best list not set"
+        getattr(settings, "MAILMAN_BEST_PASSWORD", None),
+        "Mailman password for best list not set",
     )
     def test_mailman_best_list_members(self):
         mailman = Mailman(

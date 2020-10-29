@@ -103,8 +103,14 @@ class Bartender(BartenderCommon):
     def first_deposit_shift(self):
         return BoardMemberDepositShift.with_bartender(self).first()
 
-    MAILMAN_ALL = (settings.MAILMAN_ALL_LIST, settings.MAILMAN_ALL_PASSWORD)
-    MAILMAN_BEST = (settings.MAILMAN_BEST_LIST, settings.MAILMAN_BEST_PASSWORD)
+    MAILMAN_ALL = (
+        settings.MAILMAN_ALL_LIST,
+        getattr(settings, "MAILMAN_ALL_PASSWORD", None),
+    )
+    MAILMAN_BEST = (
+        settings.MAILMAN_BEST_LIST,
+        getattr(settings, "MAILMAN_BEST_PASSWORD", None),
+    )
 
     def _get_mailman(self, list_and_password):
         return Mailman(settings.MAILMAN_URL_BASE, *list_and_password)
