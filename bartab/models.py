@@ -81,7 +81,10 @@ class BarTabSnapshot(models.Model):
 
         if error:
             raise ValidationError(
-                {"bartender_shift": error, "custom_datetime": error,}
+                {
+                    "bartender_shift": error,
+                    "custom_datetime": error,
+                }
             )
 
     @staticmethod

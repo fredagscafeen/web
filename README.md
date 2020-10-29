@@ -33,7 +33,8 @@ This only needs to be done, if there is a new web responsible:
 2. setup virtual env: `python3 -mvenv ~/.cache/venvs/fredagscafeen-web`
 3. activate virtual env: `source ~/.cache/venvs/fredagscafeen-web/bin/activate`
 4. install `pip-tools`: `pip install pip-tools`
-5. install dependencies: `pip-sync`
+5. install dependencies: `pip-sync requirements.txt dev-requirements.txt`
+6. install pre-commit hook: `pre-commit install`
 
 Installing the required psycopg2 package (PostgreSQL for Python) might require the `pg_config` binary,
 which can be installed on Ubuntu with `sudo apt install libpq-dev`.
@@ -369,6 +370,6 @@ GET <host>/api/is-bartender/<username>/
 
 ##### Response
 ```
-true 
+true
 ```
 -----------------

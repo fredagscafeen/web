@@ -127,8 +127,12 @@ class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
 Se {{link}} for mere info.
 
 /snek""",
-            text_format={"link": url,},
-            html_format={"link": mark_safe(f'<a href="{url}">{url}</a>'),},
+            text_format={
+                "link": url,
+            },
+            html_format={
+                "link": mark_safe(f'<a href="{url}">{url}</a>'),
+            },
             to=["best@fredagscafeen.dk"],
         )
 

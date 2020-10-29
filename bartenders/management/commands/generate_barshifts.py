@@ -81,17 +81,17 @@ class Command(BaseCommand):
 
     def get_shifts_score(self, bartenders, shifts, last_shifts):
         """
-		A shifts score is based on 3 factors, with the following priorities:
-		1. The amount of new bartenders, who have fewer than the normal amount of shifts.
-		   We want to minimize this and it should probably be possible to get this down to 0.
+        A shifts score is based on 3 factors, with the following priorities:
+        1. The amount of new bartenders, who have fewer than the normal amount of shifts.
+           We want to minimize this and it should probably be possible to get this down to 0.
 
-		2. The minimum distance between two shifts with the same bartender.
-		   We want to maximize this.
+        2. The minimum distance between two shifts with the same bartender.
+           We want to maximize this.
 
-		3. The amount of pairs of shifts with the same bartender,
-		   having distance exactly equal to the distance in 2.
-		   We want to minize this.
-		"""
+        3. The amount of pairs of shifts with the same bartender,
+           having distance exactly equal to the distance in 2.
+           We want to minize this.
+        """
 
         last_shifts = last_shifts.copy()
 

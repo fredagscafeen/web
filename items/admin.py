@@ -84,7 +84,10 @@ class InventoryEntryInlineFormSet(forms.models.BaseInlineFormSet):
             self.initial = []
             for item in filter_by_amount(Item.objects.all(), True):
                 self.initial.append(
-                    {"amount": item.current_amount, "item": item.id,}
+                    {
+                        "amount": item.current_amount,
+                        "item": item.id,
+                    }
                 )
 
             self.initial.sort(key=lambda x: -x["amount"])

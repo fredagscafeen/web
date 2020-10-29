@@ -66,6 +66,10 @@ LOGGING = {
             "propagate": True,
         },
         # Might as well log any errors anywhere else in Django
-        "django": {"handlers": ["logfile"], "level": "ERROR", "propagate": False,},
+        "django": {
+            "handlers": ["logfile"],
+            "level": "ERROR",
+            "propagate": False,
+        },
     },
 }

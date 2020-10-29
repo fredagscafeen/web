@@ -8,8 +8,8 @@ register = template.Library()
 # From https://stackoverflow.com/questions/16259923/how-can-i-escape-latex-special-characters-inside-django-templates
 def tex_escape(text):
     """
-        :param text: a plain text message
-        :return: the message escaped to appear correctly in LaTeX
+    :param text: a plain text message
+    :return: the message escaped to appear correctly in LaTeX
     """
     conv = {
         "&": r"\&",

@@ -60,10 +60,14 @@ class Event(models.Model):
     end_datetime = models.DateTimeField()
     response_deadline = models.DateTimeField()
     bartender_whitelist = models.ManyToManyField(
-        Bartender, related_name="whitelisted_events", blank=True,
+        Bartender,
+        related_name="whitelisted_events",
+        blank=True,
     )
     bartender_blacklist = models.ManyToManyField(
-        Bartender, related_name="blacklisted_events", blank=True,
+        Bartender,
+        related_name="blacklisted_events",
+        blank=True,
     )
 
     def __str__(self):

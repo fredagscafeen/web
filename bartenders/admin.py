@@ -211,5 +211,8 @@ class BartenderShiftPeriodAdmin(admin.ModelAdmin):
         )
 
         return super().change_view(
-            request, object_id, form_url, extra_context=extra_context,
+            request,
+            object_id,
+            form_url,
+            extra_context=extra_context,
         )

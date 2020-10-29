@@ -101,7 +101,9 @@ class EventResponseForm(forms.Form):
         response, _ = EventResponse.objects.update_or_create(
             event=self.event,
             bartender=self.bartender,
-            defaults={"attending": attending,},
+            defaults={
+                "attending": attending,
+            },
         )
 
         response.selected_options.clear()

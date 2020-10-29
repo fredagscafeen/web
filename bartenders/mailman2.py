@@ -15,12 +15,12 @@ class OperationError(MailmanError):
 
 class Mailman:
     """
-	Class for interacting with Mailman 2 lists.
-	Tested on version 2.1.15
+    Class for interacting with Mailman 2 lists.
+    Tested on version 2.1.15
 
-	Requires that the list language is English (USA)
-	and that admin_member_chunksize is >= the number of subscribers.
-	"""
+    Requires that the list language is English (USA)
+    and that admin_member_chunksize is >= the number of subscribers.
+    """
 
     NEED_AUTHENTICATION_TITLE_SUFFIX = "Administrator Authentication"
 

@@ -62,7 +62,10 @@ class ApiTests(APITestCase):
     def test_get_authentication_token(self):
         r = self.client.post(
             reverse("token-auth"),
-            {"username": self.user.username, "password": self.password,},
+            {
+                "username": self.user.username,
+                "password": self.password,
+            },
         )
 
         self.assertEqual(r.status_code, status.HTTP_200_OK)
@@ -77,7 +80,10 @@ class ApiTests(APITestCase):
 
         r = self.client.post(
             reverse("token-auth"),
-            {"username": self.user.username, "password": "xXLegitPasswordXx",},
+            {
+                "username": self.user.username,
+                "password": "xXLegitPasswordXx",
+            },
         )
         self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST)
 
