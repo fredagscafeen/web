@@ -1,0 +1,138 @@
+name: Build, Test & Deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  DOCKER_IMAGE_NAME: ghcr.io/fredagscafeen/web
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install python dependencies
+        run: pip install -r requirements.txt -r dev-requirements.txt
+
+      - name: Run pre-commit checks
+        uses: pre-commit/action@v2.0.0
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Pull existing images
+        run: |
+          echo "$GHCR_PASSWORD" | docker login ghcr.io --username "$GHCR_USERNAME" --password-stdin
+          docker-compose pull
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_PASSWORD: ${{ secrets.GHCR_PASSWORD }}
+
+      - name: Restore docker layer cache
+        uses: satackey/action-docker-layer-caching@v0.0.8
+        continue-on-error: true
+
+      - name: Build image
+        run: ./build
+
+      - name: Save docker image
+        run: docker save "$DOCKER_IMAGE_NAME" | gzip > image.tar.gz
+
+      - name: Upload docker image for other jobs
+        uses: actions/upload-artifact@v2
+        with:
+          name: image
+          path: image.tar.gz
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download docker image
+        uses: actions/download-artifact@v2
+        with:
+          name: image
+
+      - name: Load docker image
+        run: docker load < image.tar.gz
+
+      - name: Run tests
+        run: docker run --env DJANGO_SETTINGS_MODULE=fredagscafeen.settings.local "$DOCKER_IMAGE_NAME" ./manage.py test
+
+  test-docker-compose:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download docker image
+        uses: actions/download-artifact@v2
+        with:
+          name: image
+
+      - name: Load docker image
+        run: docker load < image.tar.gz
+
+      - name: Test docker-compose
+        run: |
+          for k in "SECRET_KEY" "RECAPTCHA_PUBLIC_KEY" "RECAPTCHA_PRIVATE_KEY"; do
+            echo "$k=foo" >> ".env"
+          done
+          docker network create traefik
+          docker-compose up -d
+          sleep 10
+          res=$(docker-compose ps)
+          echo "$res"
+          if echo "$res" | grep Exit &>/dev/null; then
+            exit 1
+          fi
+
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - pre-commit
+      - build
+      - test
+      - test-docker-compose
+    steps:
+      - name: Download docker image
+        uses: actions/download-artifact@v2
+        with:
+          name: image
+
+      - name: Load docker image
+        run: docker load < image.tar.gz
+
+      - name: Publish image to ghcr.io
+        run: |
+          echo "$GHCR_PASSWORD" | docker login ghcr.io --username "$GHCR_USERNAME" --password-stdin
+          docker push "$DOCKER_IMAGE_NAME"
+        env:
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_PASSWORD: ${{ secrets.GHCR_PASSWORD }}
+
+#  deploy:
+#    runs-on: ubuntu-latest
+#    needs: release
+#    steps:
+#      - name: Deploy image to production
+#        run: curl --fail -X POST "$WEBHOOK_URL"
+#        env:
+#          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}

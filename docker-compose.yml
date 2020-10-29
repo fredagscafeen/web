@@ -2,8 +2,7 @@ version: "3.7"
 
 services:
   app:
-    build: .
-    image: &app fredagscafeen/web
+    image: &app ghcr.io/fredagscafeen/web
     restart: always
     networks:
       - traefik
