@@ -18,8 +18,7 @@ services:
     depends_on:
       - db
       - media
-      - celery
-      - celery-beat
+      - redis
 
   celery:
     image: *app
@@ -27,15 +26,17 @@ services:
     volumes:
       - ./.env:/app/.env
     depends_on:
+      - app
       - redis
       - db
 
   celery-beat:
     image: *app
-    command: ["celery", "--app=fredagscafeen", "beat", "--loglevel=INFO", "--scheduler=django_celery_beat.schedulers:DatabaseScheduler"]
+    command: ["./wait_for_app", "celery", "--app=fredagscafeen", "beat", "--loglevel=INFO", "--scheduler=django_celery_beat.schedulers:DatabaseScheduler"]
     volumes:
       - ./.env:/app/.env
     depends_on:
+      - app
       - redis
       - db
 
