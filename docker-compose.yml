@@ -22,6 +22,7 @@ services:
 
   celery:
     image: *app
+    restart: always
     command: ["celery", "--app=fredagscafeen", "worker", "--loglevel=INFO"]
     volumes:
       - ./.env:/app/.env
@@ -32,6 +33,7 @@ services:
 
   celery-beat:
     image: *app
+    restart: always
     command: ["./wait_for_app", "celery", "--app=fredagscafeen", "beat", "--loglevel=INFO", "--scheduler=django_celery_beat.schedulers:DatabaseScheduler"]
     volumes:
       - ./.env:/app/.env
@@ -42,6 +44,7 @@ services:
 
   db:
     image: postgres:12
+    restart: always
     volumes:
       - ./db_data:/var/lib/postgresql/data
     environment:
@@ -51,6 +54,7 @@ services:
 
   media:
     image: nginx:alpine
+    restart: always
     volumes:
       - ./media:/usr/share/nginx/html
     networks:
@@ -62,6 +66,7 @@ services:
 
   redis:
     image: redis:alpine
+    restart: always
 
 networks:
   traefik:
