@@ -123,11 +123,11 @@ jobs:
           GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
           GHCR_PASSWORD: ${{ secrets.GHCR_PASSWORD }}
 
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: release
-#    steps:
-#      - name: Deploy image to production
-#        run: curl --fail -X POST "$WEBHOOK_URL"
-#        env:
-#          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      - name: Deploy image to production
+        run: curl --fail -X POST "$WEBHOOK_URL"
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
