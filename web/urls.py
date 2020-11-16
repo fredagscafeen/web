@@ -12,7 +12,6 @@ from bartenders.views import (
     UserDepositShifts,
 )
 from events.views import EventFeed, Events
-from guides.update import update_hook
 from guides.views import Guides
 from items.views import Items, Scanner
 from udlejning.views import (
@@ -24,7 +23,6 @@ from udlejning.views import (
 from web.views import Contact, Login, email_login_view, logout_view
 
 urlpatterns = [
-    path("update_hook/", update_hook),
     path("contact/", Contact.as_view()),
     path("bartenders/", BartenderList.as_view()),
     path("barplan/", Barplan.as_view(), name="barplan"),
