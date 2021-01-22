@@ -97,12 +97,12 @@ class BartenderInfoForm(forms.ModelForm):
             BarTabUser.objects.filter(email=old_obj.email).update(email=obj.email)
 
             # Update django user
-            user = User.objects.get(email=old_obj.email)
-
-            if user.username.startswith("ZZZZZ_email_"):
-                user.delete()
-            else:
-                user.email = obj.email
-                user.save()
+            # There might be multiple users with that email
+            for user in User.objects.filter(email=old_obj.email):
+                if user.username.startswith("ZZZZZ_email_"):
+                    user.delete()
+                else:
+                    user.email = obj.email
+                    user.save()
 
         return obj
