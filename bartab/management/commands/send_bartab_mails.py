@@ -38,7 +38,7 @@ class Command(BaseCommand):
 
 Vi er i øjeblikket i gang med at indkræve gammel krydslistegæld i Fredagscaféen, da vi ikke længere tillader negative balancer.
 Din balance er {round(bartab_user.balance, 2)} kr. på vores krydsliste.
-Det letteste ville være hvis du kom i fredagscafeen en fredag og betalte din gæld med kort eller kontanter,
+Det letteste ville være hvis du kom i fredagscaféen en fredag og betalte din gæld med kort eller kontanter,
 hvis dette ikke er muligt så skriv endelig tilbage, så kan vi finde ud af noget med at mobilepaye mig personligt eller at vi laver en faktura.
 
 Mvh.
