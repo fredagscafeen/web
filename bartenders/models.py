@@ -473,3 +473,16 @@ class BoardMemberDepositShift(models.Model):
         return (
             f'{self.start_date}: {", ".join(b.name for b in self.responsibles.all())}'
         )
+
+
+class Poll(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class BallotLink(models.Model):
+    poll = models.ForeignKey(Poll, models.CASCADE)
+    bartender = models.ForeignKey(Bartender, models.CASCADE)
+    url = models.URLField()

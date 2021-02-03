@@ -12,6 +12,7 @@ from django.utils.safestring import mark_safe
 from django_object_actions import DjangoObjectActions
 
 from bartenders.models import (
+    BallotLink,
     Bartender,
     BartenderApplication,
     BartenderShift,
@@ -19,6 +20,7 @@ from bartenders.models import (
     BoardMember,
     BoardMemberDepositShift,
     BoardMemberPeriod,
+    Poll,
 )
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 from printer.views import pdf_preview
@@ -216,3 +218,8 @@ class BartenderShiftPeriodAdmin(admin.ModelAdmin):
             form_url,
             extra_context=extra_context,
         )
+
+
+@admin.register(Poll)
+class PollAdmin(admin.ModelAdmin):
+    pass

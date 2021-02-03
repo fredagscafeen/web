@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+{% if not bartender %}
+  <p><b>{{ user.email }} er ikke bartender og kan derfor ikke stemme.</b></p>
+{% elif not bartender.isActiveBartender %}
+  <p><b>Som inaktiv bartender kan du ikke stemme.</b></p>
+{% else %}
+  Stemmesedler:
+  {% if not ballots %}
+    <p><b>Der er ingen stemmesedler.</b></p>
+  {% else %}
+    <ul>
+      {% for b in ballots %}
+        <li><a href="{{ b.url }}" target="_blank">{{ b.poll.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endif %}
+
+{% if user.is_staff %}
+<a href="{% url 'ballots_update' %}">Admin: Opdater stemmesedler</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<p><a href="{% url 'admin:bartenders_poll_changelist' %}">Poll admin</a></p>
+
+<p>Stemmeberettigede: <b>{{ votees.count }}</b></p>
+
+<h2>Tilføj poll</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  {% buttons %}
+      {% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+  {% endbuttons %}
+</form>
+
+{% endblock %}

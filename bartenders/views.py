@@ -1,25 +1,36 @@
 import datetime
+import random
 from itertools import groupby
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db import IntegrityError
+from django.shortcuts import get_object_or_404, redirect, reverse
 from django.utils import timezone
-from django.views.generic import CreateView, ListView, TemplateView, UpdateView
+from django.views.generic import (
+    CreateView,
+    FormView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 from django_ical.views import ICalFeed
 
 from fredagscafeen.email import send_template_email
 from guides.models import Guide
 
-from .forms import BartenderApplicationForm, BartenderInfoForm
+from .forms import BallotsUpdateForm, BartenderApplicationForm, BartenderInfoForm
 from .models import (
+    BallotLink,
     Bartender,
     BartenderApplication,
     BartenderShift,
     BartenderUnavailableDate,
     BoardMemberDepositShift,
     BoardMemberPeriod,
+    Poll,
     next_bartender_shift_dates,
 )
 
@@ -295,3 +306,50 @@ Der er nu {active_count} aktive bartendere.
 
     def get_success_url(self):
         return self.request.path
+
+
+class Ballots(LoginRequiredMixin, TemplateView):
+    template_name = "ballots.html"
+    allow_empty = True
+    model = BallotLink
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            bartender = Bartender.objects.get(email=self.request.user.email)
+            context["ballots"] = BallotLink.objects.filter(bartender=bartender)
+        except Bartender.DoesNotExist:
+            bartender = None
+        context["bartender"] = bartender
+        return context
+
+
+class BallotsUpdate(PermissionRequiredMixin, FormView):
+    template_name = "ballots_update.html"
+    form_class = BallotsUpdateForm
+    permission_required = "is_staff"
+
+    def get_votees(self):
+        return Bartender.objects.filter(isActiveBartender=True)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["votees"] = self.get_votees()
+        return context
+
+    def form_valid(self, form):
+        votees = self.get_votees()
+        data = form.cleaned_data
+        urls = data["urls"].split()
+        if len(urls) < votees.count():
+            form.add_error("urls", f"Atleast {votees.count()} urls required")
+            return self.form_invalid(form)
+        try:
+            poll = Poll.objects.create(name=data["name"])
+        except IntegrityError:
+            form.add_error("name", f"Poll with name '{data['name']}' already exists")
+            return self.form_invalid(form)
+        random.shuffle(urls)
+        for bartender, url in zip(votees, urls):
+            BallotLink.objects.create(poll=poll, bartender=bartender, url=url)
+        return redirect(reverse("ballots_update"))

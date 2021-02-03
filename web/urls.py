@@ -3,6 +3,8 @@ from django.views.generic.base import RedirectView
 
 from bartab.views import BarTab
 from bartenders.views import (
+    Ballots,
+    BallotsUpdate,
     Barplan,
     BartenderInfo,
     BartenderList,
@@ -38,6 +40,8 @@ urlpatterns = [
     path("board/", Board.as_view()),
     path("", Index.as_view()),
     path("profile/", BartenderInfo.as_view(), name="profile"),
+    path("vote/", Ballots.as_view(), name="ballots"),
+    path("vote/update/", BallotsUpdate.as_view(), name="ballots_update"),
     path("bartab/", BarTab.as_view(), name="bartab"),
     path("events/", Events.as_view(), name="events"),
     path("events.ics", EventFeed(), name="event_feed"),

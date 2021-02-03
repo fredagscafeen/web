@@ -106,3 +106,8 @@ class BartenderInfoForm(forms.ModelForm):
                     user.save()
 
         return obj
+
+
+class BallotsUpdateForm(forms.Form):
+    name = forms.CharField()
+    urls = forms.CharField(widget=forms.Textarea)
