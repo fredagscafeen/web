@@ -54,19 +54,19 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 2. create superuser: `docker exec -it web_app_1 ./manage.py createsuperuser`
 3. login to admin interface: [https://fredagscafeen.dk/admin/](https://fredagscafeen.dk/admin/)
 
-# GitLab hook for automatically updating guide PDFs
+# Github hook for automatically updating guide PDFs
 
-To setup do the following for each repository {guides,vedtaegter}:
+- Generate a new ssh key: `ssh-keygen -t ed25519 -C github-action -f /tmp/github-action`
+- Add the public key to the servers `~/.ssh/authorized_keys` file:
+  `ssh ubuntu@fredagscafeen.dk 'cat >> ~/.ssh/authorized_keys' < /tmp/github-action.pub`
+- Add Github action secrets on https://github.com/organizations/fredagscafeen/settings/secrets/actions:
+  - Create the action secret `UPLOAD_SSH_KNOWN_HOSTS` containing the output of running:
+    `grep fredagscafeen.dk ~/.ssh/known_hosts`
+  - Create the action secret `UPLOAD_SSH_PRIVATE_KEY` containing the output of running:
+    `cat /tmp/github-action`
+  - Make sure both `guides` and `vedtægter` repos have access to these
 
-* Go to Settings -> Repository -> Deploy Tokens and generate a new token.
-  * Concatenate the username and password as `<username>:<password>` and save it somewhere.
-* Go to Settings -> Integrations and add a new webhook:
-  * URL should be `https://fredagscafeen.dk/update_hook/`
-  * Secret Token should be `<username>:<password>` that you generated earlier.
-  * Click Add webhook.
-  * Test it by clicking Test -> Push events. You should get either a HTTP 200 response or a `Net::ReadTimeout` error.
-
-Every time a tex file for a guide is updated, the server will recompile it and update the hosted PDF.
+Every time a tex file for a guide is updated, Github will recompile it and update the hosted PDF.
 
 # Remote server printing
 
