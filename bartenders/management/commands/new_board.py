@@ -34,4 +34,6 @@ class Command(BaseCommand):
                 image=bm.image,
             )
 
-        print("Created a new board member period. Remember to add/remove people in the admin interface.")
+        print(
+            "Created a new board member period. Remember to add/remove people in the admin interface."
+        )
