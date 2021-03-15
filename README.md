@@ -6,7 +6,7 @@ but only remove the old board members after the first board meeting.
 
 ## Before the first board meeting (as soon as possible)
 
-- Update the board member page: https://fredagscafeen.dk/board/
+- Update the board member page: https://fredagscafeen.dk/board/ (`docker exec -it web_app_1 ./manage.py new_board`)
 - Add new board members and alternates to the best mailinglist: https://maillist.au.dk/mailman/admin/datcafe-best.cs/members/add
 - Add new board members to the gitlab group with "Developer" role: https://gitlab.au.dk/groups/fredagscafeen/-/group_members
 
@@ -15,8 +15,8 @@ but only remove the old board members after the first board meeting.
 - Update https://fredagscafeen.dk/board/ with custom titles and images
 - Remove old board members and alternates from the best mailinglist: https://maillist.au.dk/mailman/admin/datcafe-best.cs/members/list
 - Remove old board members from the gitlab group: https://gitlab.au.dk/groups/fredagscafeen/-/group_members
-- Remove admin accounts for old board members and create admin accounts for new board members and add them to the correct groups: `dokku run fredagscafeen.dk ./manage.py update_board_member_accounts`
-- Change all passwords and update dokku config: http://fredagscafeen.dk/admin/admin/logentry/secrets_view
+- Remove admin accounts for old board members and create admin accounts for new board members and add them to the correct groups: `docker exec -it web_app_1 ./manage.py update_board_member_accounts`
+- Change all passwords and update `.env` config: http://fredagscafeen.dk/admin/admin/logentry/secrets_view
 
 ### New web responsible
 
