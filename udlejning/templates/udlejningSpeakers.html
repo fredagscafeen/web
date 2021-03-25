@@ -10,7 +10,7 @@
 	{% for u in object_list %}
 		<li>{{ u.dateFrom }}, reserveret af {{ u.whoReserved }}</li>
 	{% empty %}
-		<li>Højtalerne pt ikke reserveret på noget tidspunkt</li>
+		<li>Højtalerne er pt ikke reserveret på noget tidspunkt</li>
 	{% endfor %}
 </ul>
 
