@@ -57,10 +57,10 @@ SECRET_ADMIN_KEYS = [
         "https://gmail.com/",
     ),
     (
-        "DIGITAL_OCEAN_PASSWORD",
-        "Digital Ocean password",
-        "datcafe@gmail.com",
-        "https://cloud.digitalocean.com/login",
+        "CONTABO_PASSWORD",
+        "Contabo password",
+        "best@fredagscafeen.dk",
+        "https://my.contabo.com/account/login",
     ),
     (
         "MIDTTRAFIK_BESTILLING_PASSWORD",
