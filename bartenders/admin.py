@@ -1,7 +1,6 @@
 import datetime
 from collections import Counter
 
-from admin_views.admin import AdminViews
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
@@ -23,6 +22,7 @@ from bartenders.models import (
     Poll,
 )
 from fredagscafeen.admin_filters import NonNullFieldListFilter
+from fredagscafeen.admin_view import custom_admin_view
 from printer.views import pdf_preview
 
 from .mailman2 import MailmanError
@@ -55,7 +55,7 @@ class FreeBeerListContext:
 
 
 @admin.register(Bartender)
-class BartenderAdmin(DjangoObjectActions, AdminViews):
+class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = ("name", "username", "email")
     search_fields = ("name", "username", "email")
     list_filter = ("isActiveBartender", ("board_members", NonNullFieldListFilter))
@@ -65,8 +65,6 @@ class BartenderAdmin(DjangoObjectActions, AdminViews):
         "remove_from_mailing_list",
         "create_admin_user",
     )
-
-    admin_views = (("Generate free beer list", "generate_free_beer_list"),)
 
     def add_to_mailing_list(self, request, obj):
         if not settings.MAILMAN_MUTABLE:
@@ -113,8 +111,10 @@ class BartenderAdmin(DjangoObjectActions, AdminViews):
 
     create_admin_user.label = "Create admin user"
 
-    def generate_free_beer_list(self, request):
-        return pdf_preview(request, self.admin_site, FreeBeerListContext)
+
+@custom_admin_view("bartenders", "generate free beer list")
+def generate_free_beer_list(admin, request):
+    return pdf_preview(request, admin.admin_site, FreeBeerListContext)
 
 
 @admin.register(BoardMember)

@@ -1,7 +1,6 @@
 import json
 from collections import Counter, defaultdict
 
-from admin_views.admin import AdminViews
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import F, Sum, Value
@@ -9,6 +8,7 @@ from django.db.models.functions import Coalesce
 from django.forms.widgets import TextInput
 from django.template.response import TemplateResponse
 
+from fredagscafeen.admin_view import custom_admin_view
 from printer.views import pdf_preview
 
 from .forms import ConsumptionForm
@@ -95,77 +95,78 @@ class BarTabContext:
 
 
 @admin.register(BarTabSnapshot)
-class BarTabSnapshotAdmin(AdminViews):
+class BarTabSnapshotAdmin(admin.ModelAdmin):
     change_form_template = "admin/enhancedinline.html"
     list_display = ("date", "entry_count", "total_added", "total_used")
     readonly_fields = ("last_updated", "total_added", "total_used")
     inlines = [
         BarTabEntryInline,
     ]
-    admin_views = (
-        ("Generate bartab", "generate_bartab"),
-        ("Count consumption", "count_consumption"),
-        ("Bartab balance graph", "bartab_graph"),
-    )
 
     def entry_count(self, obj):
         return obj.entries.count()
 
-    def generate_bartab(self, request):
-        return pdf_preview(request, self.admin_site, BarTabContext)
 
-    def count_consumption(self, request):
-        result = None
+@custom_admin_view("bartab", "generate bartab")
+def generate_bartab(admin, request):
+    return pdf_preview(request, admin.admin_site, BarTabContext)
 
-        if request.method == "POST":
-            form = ConsumptionForm(request.POST)
-            if form.is_valid():
-                counter = Counter()
 
-                start = form.cleaned_data["start_snapshot"]
-                end = form.cleaned_data["end_snapshot"]
+@custom_admin_view("bartab", "count consumption")
+def count_consumption(admin, request):
+    result = None
 
-                for snapshot in BarTabSnapshot.objects.all():
-                    if start.datetime <= snapshot.datetime <= end.datetime:
-                        for entry in snapshot.entries.all():
-                            counter[entry.user] += entry.used
+    if request.method == "POST":
+        form = ConsumptionForm(request.POST)
+        if form.is_valid():
+            counter = Counter()
 
-                result = counter.most_common()
-        else:
-            form = ConsumptionForm()
+            start = form.cleaned_data["start_snapshot"]
+            end = form.cleaned_data["end_snapshot"]
 
-        context = dict(
-            # Include common variables for rendering the admin template.
-            self.admin_site.each_context(request),
-            # Anything else you want in the context...
-            form=form,
-            result=result,
-        )
-        return TemplateResponse(request, "bartab/consumption.html", context)
+            for snapshot in BarTabSnapshot.objects.all():
+                if start.datetime <= snapshot.datetime <= end.datetime:
+                    for entry in snapshot.entries.all():
+                        counter[entry.user] += entry.used
 
-    def bartab_graph(self, request):
-        balances = defaultdict(int)
-        graph_data = []
-        for snapshot in reversed(BarTabSnapshot.objects.all()):
-            for entry in snapshot.entries.all():
-                balances[entry.user] += entry.added - entry.used
+            result = counter.most_common()
+    else:
+        form = ConsumptionForm()
 
-            total_positive = sum(b for b in balances.values() if b > 0)
-            total_negative = -sum(b for b in balances.values() if b < 0)
+    context = dict(
+        # Include common variables for rendering the admin template.
+        admin.admin_site.each_context(request),
+        # Anything else you want in the context...
+        form=form,
+        result=result,
+    )
+    return TemplateResponse(request, "bartab/consumption.html", context)
 
-            if snapshot.bartender_shift != None:
-                graph_data.append(
-                    {
-                        "datetime": snapshot.datetime.timestamp() * 1000,
-                        "total_positive": float(total_positive),
-                        "total_negative": float(total_negative),
-                    }
-                )
 
-        context = dict(
-            # Include common variables for rendering the admin template.
-            self.admin_site.each_context(request),
-            # Anything else you want in the context...
-            graph_data=json.dumps(graph_data),
-        )
-        return TemplateResponse(request, "bartab/graph.html", context)
+@custom_admin_view("bartab", "bartab balance graph")
+def bartab_graph(admin, request):
+    balances = defaultdict(int)
+    graph_data = []
+    for snapshot in reversed(BarTabSnapshot.objects.all()):
+        for entry in snapshot.entries.all():
+            balances[entry.user] += entry.added - entry.used
+
+        total_positive = sum(b for b in balances.values() if b > 0)
+        total_negative = -sum(b for b in balances.values() if b < 0)
+
+        if snapshot.bartender_shift != None:
+            graph_data.append(
+                {
+                    "datetime": snapshot.datetime.timestamp() * 1000,
+                    "total_positive": float(total_positive),
+                    "total_negative": float(total_negative),
+                }
+            )
+
+    context = dict(
+        # Include common variables for rendering the admin template.
+        admin.admin_site.each_context(request),
+        # Anything else you want in the context...
+        graph_data=json.dumps(graph_data),
+    )
+    return TemplateResponse(request, "bartab/graph.html", context)
