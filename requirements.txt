@@ -54,7 +54,7 @@ django-constance[database]==2.8.0
     # via -r requirements.in
 django-cors-headers==3.7.0
     # via -r requirements.in
-django-extensions==3.1.0
+django-extensions==3.1.1
     # via -r requirements.in
 django-ical==1.7.1
     # via -r requirements.in
@@ -68,9 +68,9 @@ django-recaptcha==2.0.6
     # via -r requirements.in
 django-recurrence==1.10.3
     # via django-ical
-django-timezone-field==4.1.1
+django-timezone-field==4.1.2
     # via django-celery-beat
-django==3.1.6
+django==3.1.7
     # via
     #   -r requirements.in
     #   django-bootstrap-datepicker-plus
@@ -84,7 +84,7 @@ django==3.1.6
     #   django-recurrence
     #   django-timezone-field
     #   djangorestframework
-djangorestframework==3.12.2
+djangorestframework==3.12.3
     # via -r requirements.in
 fake-useragent==0.1.11
     # via requests-html
@@ -96,7 +96,7 @@ idna==2.10
     # via requests
 ipython-genutils==0.2.0
     # via traitlets
-ipython==7.20.0
+ipython==7.21.0
     # via -r requirements.in
 iterfzf==0.5.0.20.0
     # via -r requirements.in
@@ -104,7 +104,7 @@ jedi==0.18.0
     # via ipython
 kombu==5.0.2
     # via celery
-lxml==4.6.2
+lxml==4.6.3
     # via pyquery
 parse==1.19.0
     # via requests-html
@@ -114,9 +114,9 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pillow==8.1.0
+pillow==8.1.2
     # via -r requirements.in
-prompt-toolkit==3.0.14
+prompt-toolkit==3.0.18
     # via
     #   click-repl
     #   ipython
@@ -126,7 +126,7 @@ ptyprocess==0.7.0
     # via pexpect
 pyee==8.1.0
     # via pyppeteer
-pygments==2.7.4
+pygments==2.8.1
     # via ipython
 pyppeteer==0.2.5
     # via requests-html
@@ -159,15 +159,15 @@ six==1.15.0
     #   click-repl
     #   python-dateutil
     #   w3lib
-soupsieve==2.1
+soupsieve==2.2.1
     # via beautifulsoup4
 sqlparse==0.4.1
     # via django
-tqdm==4.56.0
+tqdm==4.59.0
     # via pyppeteer
 traitlets==5.0.5
     # via ipython
-urllib3==1.26.3
+urllib3==1.26.4
     # via
     #   pyppeteer
     #   requests
