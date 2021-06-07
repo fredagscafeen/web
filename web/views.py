@@ -48,5 +48,5 @@ class Login(FormView):
         return super().form_valid(form)
 
 
-class Contact(TemplateView):
-    template_name = "contact.html"
+class About(TemplateView):
+    template_name = "about.html"

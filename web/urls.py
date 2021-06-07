@@ -22,10 +22,10 @@ from udlejning.views import (
     UdlejningerProjector,
     UdlejningerSpeakers,
 )
-from web.views import Contact, Login, email_login_view, logout_view
+from web.views import About, Login, email_login_view, logout_view
 
 urlpatterns = [
-    path("contact/", Contact.as_view()),
+    path("about/", About.as_view()),
     path("bartenders/", BartenderList.as_view()),
     path("barplan/", Barplan.as_view(), name="barplan"),
     path("barplan/shifts.ics", UserBarplan()),
