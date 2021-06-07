@@ -4,25 +4,25 @@
 #
 #    pip-compile requirements.in
 #
-amqp==5.0.5
+amqp==5.0.6
     # via kombu
 appdirs==1.4.4
     # via pyppeteer
-asgiref==3.3.1
+asgiref==3.3.4
     # via django
 backcall==0.2.0
     # via ipython
 beautifulsoup4==4.9.3
     # via bs4
-billiard==3.6.3.0
+billiard==3.6.4.0
     # via celery
 bs4==0.0.1
     # via requests-html
-celery[redis]==5.0.5
+celery[redis]==5.1.0
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2020.12.5
+certifi==2021.5.30
     # via requests
 chardet==4.0.0
     # via requests
@@ -30,7 +30,7 @@ click-didyoumean==0.0.3
     # via celery
 click-plugins==1.1.1
     # via celery
-click-repl==0.1.6
+click-repl==0.2.0
     # via celery
 click==7.1.2
     # via
@@ -40,13 +40,13 @@ click==7.1.2
     #   click-repl
 cssselect==1.1.0
     # via pyquery
-decorator==4.4.2
+decorator==5.0.9
     # via ipython
 dj-config-url==0.1.1
     # via -r requirements.in
 django-bootstrap-datepicker-plus==3.0.5
     # via -r requirements.in
-django-bootstrap3==14.2.0
+django-bootstrap3==15.0.0
     # via -r requirements.in
 django-celery-beat==2.2.0
     # via -r requirements.in
@@ -54,13 +54,13 @@ django-constance[database]==2.8.0
     # via -r requirements.in
 django-cors-headers==3.7.0
     # via -r requirements.in
-django-extensions==3.1.1
+django-extensions==3.1.3
     # via -r requirements.in
-django-ical==1.7.1
+django-ical==1.8.0
     # via -r requirements.in
-django-logentry-admin==1.0.6
+django-logentry-admin==1.1.0
     # via -r requirements.in
-django-object-actions==3.0.1
+django-object-actions==3.0.2
     # via -r requirements.in
 django-picklefield==3.0.1
     # via django-constance
@@ -70,13 +70,14 @@ django-recurrence==1.10.3
     # via django-ical
 django-timezone-field==4.1.2
     # via django-celery-beat
-django==3.1.7
+django==3.2.4
     # via
     #   -r requirements.in
     #   django-bootstrap-datepicker-plus
     #   django-bootstrap3
     #   django-celery-beat
     #   django-cors-headers
+    #   django-extensions
     #   django-ical
     #   django-logentry-admin
     #   django-picklefield
@@ -84,11 +85,11 @@ django==3.1.7
     #   django-recurrence
     #   django-timezone-field
     #   djangorestframework
-djangorestframework==3.12.3
+djangorestframework==3.12.4
     # via -r requirements.in
 fake-useragent==0.1.11
     # via requests-html
-gunicorn==20.0.4
+gunicorn==20.1.0
     # via -r requirements.in
 icalendar==4.0.7
     # via django-ical
@@ -96,25 +97,27 @@ idna==2.10
     # via requests
 ipython-genutils==0.2.0
     # via traitlets
-ipython==7.21.0
+ipython==7.24.1
     # via -r requirements.in
 iterfzf==0.5.0.20.0
     # via -r requirements.in
 jedi==0.18.0
     # via ipython
-kombu==5.0.2
+kombu==5.1.0
     # via celery
 lxml==4.6.3
     # via pyquery
+matplotlib-inline==0.1.2
+    # via ipython
 parse==1.19.0
     # via requests-html
-parso==0.8.1
+parso==0.8.2
     # via jedi
 pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pillow==8.1.2
+pillow==8.2.0
     # via -r requirements.in
 prompt-toolkit==3.0.18
     # via
@@ -126,7 +129,7 @@ ptyprocess==0.7.0
     # via pexpect
 pyee==8.1.0
     # via pyppeteer
-pygments==2.8.1
+pygments==2.9.0
     # via ipython
 pyppeteer==0.2.5
     # via requests-html
@@ -139,7 +142,7 @@ python-dateutil==2.8.1
     #   django-recurrence
     #   icalendar
     #   python-crontab
-python-dotenv==0.15.0
+python-dotenv==0.17.1
     # via -r requirements.in
 pytz==2021.1
     # via
@@ -154,7 +157,7 @@ requests-html==0.10.0
     # via -r requirements.in
 requests==2.25.1
     # via requests-html
-six==1.15.0
+six==1.16.0
     # via
     #   click-repl
     #   python-dateutil
@@ -163,11 +166,13 @@ soupsieve==2.2.1
     # via beautifulsoup4
 sqlparse==0.4.1
     # via django
-tqdm==4.59.0
+tqdm==4.61.0
     # via pyppeteer
 traitlets==5.0.5
-    # via ipython
-urllib3==1.26.4
+    # via
+    #   ipython
+    #   matplotlib-inline
+urllib3==1.26.5
     # via
     #   pyppeteer
     #   requests
@@ -175,6 +180,7 @@ vine==5.0.0
     # via
     #   amqp
     #   celery
+    #   kombu
 w3lib==1.22.0
     # via requests-html
 wcwidth==0.2.5

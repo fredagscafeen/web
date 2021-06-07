@@ -1,4 +1,5 @@
 import datetime
+from decimal import Decimal
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -25,7 +26,7 @@ class BarTabUser(models.Model):
     @property
     def balance(self):
         return self.entries.aggregate(
-            balance=Coalesce(Sum(F("added") - F("used")), Value(0))
+            balance=Coalesce(Sum(F("added") - F("used")), Value(Decimal("0.00"))),
         )["balance"]
 
     @property
