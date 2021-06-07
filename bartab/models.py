@@ -31,7 +31,7 @@ class BarTabUser(models.Model):
 
     @property
     def balance_str(self):
-        return str(self.balance).replace(".", ",")
+        return str(self.balance.quantize(Decimal("1.00"))).replace(".", ",")
 
     @property
     def has_credit_hold(self):
