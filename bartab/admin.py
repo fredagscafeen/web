@@ -1,5 +1,6 @@
 import json
 from collections import Counter, defaultdict
+from decimal import Decimal
 
 from django.conf import settings
 from django.contrib import admin
@@ -41,17 +42,13 @@ class BarTabUserAdmin(admin.ModelAdmin):
     ]
 
     def current_balance(self, obj):
-        return obj.balance
+        return obj.balance_str
 
     current_balance.admin_order_field = "current_balance"
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        qs = qs.annotate(
-            current_balance=Coalesce(
-                Sum(F("entries__added") - F("entries__used")), Value(0)
-            )
-        )
+        qs = BarTabUser.with_balances(qs)
         return qs
 
 
@@ -66,7 +63,7 @@ class BarTabEntryInline(admin.TabularInline):
     autocomplete_fields = ["user"]
 
     def get_queryset(self, request):
-        """ Select related prevents 2*N queries when calling entry.__str__ in each form """
+        """Select related prevents 2*N queries when calling entry.__str__ in each form"""
         return super().get_queryset(request).select_related("user", "snapshot")
 
     def formfield_for_dbfield(self, db_field, **kwargs):

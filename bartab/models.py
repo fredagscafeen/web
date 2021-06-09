@@ -23,11 +23,19 @@ class BarTabUser(models.Model):
     class Meta:
         ordering = ("name",)
 
+    @classmethod
+    def with_balances(cls, qs):
+        return qs.annotate(
+            current_balance=Coalesce(
+                Sum(F("entries__added") - F("entries__used")), Value(Decimal("0.00"))
+            )
+        )
+
     @property
     def balance(self):
-        return self.entries.aggregate(
-            balance=Coalesce(Sum(F("added") - F("used")), Value(Decimal("0.00"))),
-        )["balance"]
+        qs = BarTabUser.objects.filter(id=self.id)
+        qs = self.with_balances(qs)
+        return qs.first().current_balance
 
     @property
     def balance_str(self):
