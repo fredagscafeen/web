@@ -143,11 +143,13 @@ class Command(BaseCommand):
             range(len(bartenders)), key=lambda x: len(available_shifts[x])
         )
 
-        min_available = len(available_shifts[sorted_bartenders[0]])
-        if min_available < shifts_per_bartender:
-            raise CommandError(
-                f"Bartender {bartenders[sorted_bartenders[0]]} only has {min_available} available dates!"
-            )
+        for bartender_i in sorted_bartenders:
+            available = len(available_shifts[bartender_i])
+            if available < shifts_per_bartender:
+                print(
+                    f"Bartender {bartenders[bartender_i]} only has {available} available dates!",
+                    file=sys.stderr,
+                )
 
         i = 0
         fails = 0
