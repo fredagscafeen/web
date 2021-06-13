@@ -323,7 +323,14 @@ class Command(BaseCommand):
             for board_member, bartenders in reversed(list(enumerate(all_bartenders))):
                 for b in shifts[board_member][s]:
                     shifts_for_bartender[(board_member, b)] += 1
-                    print(f"  {bartenders[b]}")
+                    bartender = bartenders[b]
+                    print("  ", end="")
+                    if (
+                        bartender.first_bartender_shift == None
+                        and shifts_for_bartender[(board_member, b)] == 1
+                    ):
+                        print("FIRST SHIFT: ", end="")
+                    print(bartender)
 
             print()
 
