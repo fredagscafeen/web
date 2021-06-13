@@ -166,7 +166,7 @@ soupsieve==2.2.1
     # via beautifulsoup4
 sqlparse==0.4.1
     # via django
-tqdm==4.61.0
+tqdm==4.61.1
     # via pyppeteer
 traitlets==5.0.5
     # via
