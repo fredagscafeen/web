@@ -142,11 +142,9 @@ class Command(BaseCommand):
         )
 
         return (
-            new_bartenders_per_shift_max,
-            new_bartenders_per_shift_max_count,
+            (new_bartenders_per_shift_max, new_bartenders_per_shift_max_count),
             new_bartenders_with_fewer_shifts,
-            -min_distance,
-            count,
+            (-min_distance, count),
         )
 
     def get_random_solution(
@@ -159,7 +157,7 @@ class Command(BaseCommand):
         last_shifts,
         shifts_per_bartender,
     ):
-        best = ((float("inf"),), None)
+        best = (((float("inf"),),), None)
 
         sorted_bartenders = sorted(
             range(len(bartenders)), key=lambda x: len(available_shifts[x])
@@ -198,7 +196,8 @@ class Command(BaseCommand):
             else:
                 fails += 1
 
-            best_str = f"max news: {best[0][0]} (count: {best[0][1]}), fewer news: {best[0][2]}, min distance: {-best[0][2]} (count: {best[0][4]})"
+            best_score = best[0]
+            best_str = f"max news: {best_score[0][0]} (count: {best_score[0][1]}), fewer news: {best_score[1]}, min distance: {-best_score[2][0]} (count: {best_score[2][1]})"
             print(f"\r{i} / {max_tries} (failed: {fails}), best: {best_str}", end="")
             sys.stdout.flush()
 
