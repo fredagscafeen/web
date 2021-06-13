@@ -26,10 +26,10 @@ def ceildiv(n, d):
 class Command(BaseCommand):
     help = "Generate normal barshifts"
 
-    BARTENDER_SHIFTS = 2
     BARTENDERS_PER_SHIFT = 4
 
     def add_arguments(self, parser):
+        parser.add_argument("--shifts-per-bartender", type=int, default=2)
         parser.add_argument("-t", "--max-tries", type=int, default=10 ** 4)
         parser.add_argument(
             "-d",
@@ -40,7 +40,12 @@ class Command(BaseCommand):
         )
 
     def try_random_solution(
-        self, total_shifts, sorted_bartenders, bartenders_needed, available_shifts
+        self,
+        total_shifts,
+        sorted_bartenders,
+        bartenders_needed,
+        available_shifts,
+        shifts_per_bartender,
     ):
         available_shifts = copy.deepcopy(available_shifts)
 
@@ -49,7 +54,7 @@ class Command(BaseCommand):
 
         shifts = [[] for _ in range(total_shifts)]
 
-        bartender_shifts = ceildiv(total_shifts, self.BARTENDER_SHIFTS)
+        bartender_shifts = ceildiv(total_shifts, shifts_per_bartender)
 
         for i in range(bartender_shifts):
             if i == bartender_shifts - 1:
@@ -79,7 +84,7 @@ class Command(BaseCommand):
 
         return shifts
 
-    def get_shifts_score(self, bartenders, shifts, last_shifts):
+    def get_shifts_score(self, bartenders, shifts, last_shifts, shifts_per_bartender):
         """
         A shifts score is based on 3 factors, with the following priorities:
         1. The amount of new bartenders, who have fewer than the normal amount of shifts.
@@ -117,7 +122,7 @@ class Command(BaseCommand):
                 last_shifts[b] = s
 
         new_bartenders_with_fewer_shifts = (
-            len(new_bartenders) * self.BARTENDER_SHIFTS - new_bartender_shift_count
+            len(new_bartenders) * shifts_per_bartender - new_bartender_shift_count
         )
 
         return (new_bartenders_with_fewer_shifts, -min_distance, count)
@@ -130,6 +135,7 @@ class Command(BaseCommand):
         available_shifts,
         max_tries,
         last_shifts,
+        shifts_per_bartender,
     ):
         best = ((float("inf"),), None)
 
@@ -138,7 +144,7 @@ class Command(BaseCommand):
         )
 
         min_available = len(available_shifts[sorted_bartenders[0]])
-        if min_available < self.BARTENDER_SHIFTS:
+        if min_available < shifts_per_bartender:
             raise CommandError(
                 f"Bartender {bartenders[sorted_bartenders[0]]} only has {min_available} available dates!"
             )
@@ -147,14 +153,23 @@ class Command(BaseCommand):
         fails = 0
         while i < max_tries:
             result = self.try_random_solution(
-                total_shifts, sorted_bartenders, bartenders_needed, available_shifts
+                total_shifts,
+                sorted_bartenders,
+                bartenders_needed,
+                available_shifts,
+                shifts_per_bartender,
             )
 
             if result != None:
                 i += 1
                 best = min(
                     best,
-                    (self.get_shifts_score(bartenders, result, last_shifts), result),
+                    (
+                        self.get_shifts_score(
+                            bartenders, result, last_shifts, shifts_per_bartender
+                        ),
+                        result,
+                    ),
                 )
             else:
                 fails += 1
@@ -168,6 +183,7 @@ class Command(BaseCommand):
         return best[1]
 
     def handle(self, *args, **options):
+        shifts_per_bartender = options["shifts_per_bartender"]
         double_shifts = options["double_shift"]
 
         board_members = []
@@ -181,8 +197,8 @@ class Command(BaseCommand):
         all_bartenders = [normal_bartenders, board_members]
 
         total_shifts = min(
-            self.BARTENDER_SHIFTS * len(board_members),
-            self.BARTENDER_SHIFTS
+            shifts_per_bartender * len(board_members),
+            shifts_per_bartender
             * len(normal_bartenders)
             // (self.BARTENDERS_PER_SHIFT - 1),
         )
@@ -293,6 +309,7 @@ class Command(BaseCommand):
                     available_shifts[board_member],
                     options["max_tries"],
                     ls,
+                    shifts_per_bartender,
                 )
             )
 
@@ -308,16 +325,16 @@ class Command(BaseCommand):
 
             print()
 
-        print(f"Bartenders with fewer than {self.BARTENDER_SHIFTS} shifts:")
+        print(f"Bartenders with fewer than {shifts_per_bartender} shifts:")
         for (board_member, b), shift_count in shifts_for_bartender.items():
-            if shift_count < self.BARTENDER_SHIFTS:
+            if shift_count < shifts_per_bartender:
                 print(f"  {all_bartenders[board_member][b]}: {shift_count} shifts")
 
         print()
 
-        print(f"Bartenders with more than {self.BARTENDER_SHIFTS} shifts:")
+        print(f"Bartenders with more than {shifts_per_bartender} shifts:")
         for (board_member, b), shift_count in shifts_for_bartender.items():
-            if shift_count > self.BARTENDER_SHIFTS:
+            if shift_count > shifts_per_bartender:
                 print(f"  {all_bartenders[board_member][b]}: {shift_count} shifts")
 
         print()
