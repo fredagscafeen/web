@@ -86,16 +86,22 @@ class Command(BaseCommand):
 
     def get_shifts_score(self, bartenders, shifts, last_shifts, shifts_per_bartender):
         """
-        A shifts score is based on 3 factors, with the following priorities:
-        1. The amount of new bartenders, who have fewer than the normal amount of shifts.
-           We want to minimize this and it should probably be possible to get this down to 0.
+        A shifts score is based on 5 factors, with the following priorities:
+        - The maximum amount of new bartenders on the same shift.
+          We want to minimize this.
 
-        2. The minimum distance between two shifts with the same bartender.
-           We want to maximize this.
+        - The amount of shifts with number of new bartenders being equal to the factor above.
+          We want to minimize this.
 
-        3. The amount of pairs of shifts with the same bartender,
-           having distance exactly equal to the distance in 2.
-           We want to minize this.
+        - The amount of new bartenders, who have fewer than the normal amount of shifts.
+          We want to minimize this and it should probably be possible to get this down to 0.
+
+        - The minimum distance between two shifts with the same bartender.
+          We want to maximize this.
+
+        - The amount of pairs of shifts with the same bartender,
+          having distance exactly equal to the distance in the factor above.
+          We want to minimize this.
         """
 
         last_shifts = last_shifts.copy()
@@ -104,7 +110,9 @@ class Command(BaseCommand):
         new_bartender_shift_count = 0
         count = 0
         min_distance = float("inf")
+        new_bartenders_per_shift = []
         for s, bs in enumerate(shifts):
+            new_bartenders_in_shift = 0
             for b in bs:
                 if last_shifts[b] != None:
                     distance = s - last_shifts[b]
@@ -115,17 +123,31 @@ class Command(BaseCommand):
                         count += 1
                 else:
                     new_bartenders.add(b)
+                    new_bartenders_in_shift += 1
 
                 if b in new_bartenders:
                     new_bartender_shift_count += 1
 
                 last_shifts[b] = s
 
+            new_bartenders_per_shift.append(new_bartenders_in_shift)
+
+        new_bartenders_per_shift_max = max(new_bartenders_per_shift)
+        new_bartenders_per_shift_max_count = sum(
+            c == new_bartenders_per_shift_max for c in new_bartenders_per_shift
+        )
+
         new_bartenders_with_fewer_shifts = (
             len(new_bartenders) * shifts_per_bartender - new_bartender_shift_count
         )
 
-        return (new_bartenders_with_fewer_shifts, -min_distance, count)
+        return (
+            new_bartenders_per_shift_max,
+            new_bartenders_per_shift_max_count,
+            new_bartenders_with_fewer_shifts,
+            -min_distance,
+            count,
+        )
 
     def get_random_solution(
         self,
@@ -176,7 +198,7 @@ class Command(BaseCommand):
             else:
                 fails += 1
 
-            best_str = f"fewer news: {best[0][0]}, min distance: {-best[0][1]}, count: {best[0][2]}"
+            best_str = f"max news: {best[0][0]} (count: {best[0][1]}), fewer news: {best[0][2]}, min distance: {-best[0][2]} (count: {best[0][4]})"
             print(f"\r{i} / {max_tries} (failed: {fails}), best: {best_str}", end="")
             sys.stdout.flush()
 
