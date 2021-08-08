@@ -109,6 +109,11 @@ var should_update = true;
 function updateData() {
 	items_data = items_res[0];
 	var breweries_data = breweries_res[0];
+  var breweries_map = {};
+  for (var i = 0; i < breweries_data.length; i++) {
+    var brewery = breweries_data[i];
+    breweries_map[brewery.id] = brewery;
+  }
 
 	barcode_to_item = {};
 	for (var i = 0; i < items_data.length; i++) {
@@ -116,8 +121,8 @@ function updateData() {
 		if (item.barcode) {
 			barcode_to_item[item.barcode] = item;
 		}
-		if (item.brewery in breweries_data) {
-			item.breweryName = breweries_data[item.brewery].name;
+		if (item.brewery in breweries_map) {
+			item.breweryName = breweries_map[item.brewery].name;
 		}
 	}
 
