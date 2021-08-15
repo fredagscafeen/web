@@ -68,6 +68,12 @@ SECRET_ADMIN_KEYS = [
         "fredagscafeen",
         "https://midttrafikbestilling.dk/",
     ),
+    (
+        "CLOUDFLARE_PASSWORD",
+        "Cloudflare password",
+        "best@fredagscafeen.dk",
+        "https://dash.cloudflare.com/",
+    ),
 ]
 
 
