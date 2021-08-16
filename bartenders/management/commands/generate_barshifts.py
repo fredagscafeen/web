@@ -84,7 +84,9 @@ class Command(BaseCommand):
 
         return shifts
 
-    def get_shifts_score(self, bartenders, shifts, last_shifts, shifts_per_bartender):
+    def get_shifts_score(
+        self, bartenders, shifts, last_shifts, shifts_per_bartender, late_shift_indices
+    ):
         """
         A shifts score is based on 5 factors, with the following priorities:
         - The maximum amount of new bartenders on the same shift.
@@ -111,7 +113,11 @@ class Command(BaseCommand):
         count = 0
         min_distance = float("inf")
         new_bartenders_per_shift = []
-        for s, bs in enumerate(shifts):
+        s = -1
+        for os, bs in enumerate(shifts):
+            s += 1
+            if os in late_shift_indices:
+                s -= 1
             new_bartenders_in_shift = 0
             for b in bs:
                 if last_shifts[b] != None:
@@ -156,6 +162,7 @@ class Command(BaseCommand):
         max_tries,
         last_shifts,
         shifts_per_bartender,
+        late_shift_indices,
     ):
         best = (((float("inf"),),), None)
 
@@ -188,7 +195,11 @@ class Command(BaseCommand):
                     best,
                     (
                         self.get_shifts_score(
-                            bartenders, result, last_shifts, shifts_per_bartender
+                            bartenders,
+                            result,
+                            last_shifts,
+                            shifts_per_bartender,
+                            late_shift_indices,
                         ),
                         result,
                     ),
@@ -333,6 +344,7 @@ class Command(BaseCommand):
                     options["max_tries"],
                     ls,
                     shifts_per_bartender,
+                    late_shift_indices,
                 )
             )
 
