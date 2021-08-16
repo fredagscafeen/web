@@ -31,7 +31,7 @@ This only needs to be done, if there is a new web responsible:
 
 ## To run project locally
 
-1. checkout project from vcs: `git clone git@gitlab.au.dk:fredagscafeen/web.git`
+1. checkout project from vcs: `git clone git@github.com:fredagscafeen/web.git`
 2. setup virtual env: `python3 -mvenv ~/.cache/venvs/fredagscafeen-web`
 3. activate virtual env: `source ~/.cache/venvs/fredagscafeen-web/bin/activate`
 4. install `pip-tools`: `pip install pip-tools`
