@@ -74,6 +74,12 @@ SECRET_ADMIN_KEYS = [
         "best@fredagscafeen.dk",
         "https://dash.cloudflare.com/",
     ),
+    (
+        "ZETTLE_PASSWORD",
+        "Zettle password",
+        "best@fredagscafeen.dk",
+        "https://my.zettle.com/",
+    ),
 ]
 
 
