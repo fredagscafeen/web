@@ -51,7 +51,7 @@ class ItemAdmin(admin.ModelAdmin):
     }
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        """ Makes querysets for brewery and type fields ordered by name """
+        """Makes querysets for brewery and type fields ordered by name"""
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
         try:

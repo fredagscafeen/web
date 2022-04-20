@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--shifts-per-bartender", type=int, default=2)
-        parser.add_argument("-t", "--max-tries", type=int, default=10 ** 4)
+        parser.add_argument("-t", "--max-tries", type=int, default=10**4)
         parser.add_argument(
             "-d",
             "--double-shift",

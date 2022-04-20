@@ -6,7 +6,7 @@ from fredagscafeen.email import send_template_email
 
 
 class ReminderCommand(BaseCommand):
-    """ Superclass that encapsulates logic related to sending reminder emails """
+    """Superclass that encapsulates logic related to sending reminder emails"""
 
     def handle(self, *args, **options):
         events = self.get_next_events()

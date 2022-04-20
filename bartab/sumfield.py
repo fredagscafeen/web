@@ -56,7 +56,7 @@ class SumField(models.TextField):
         return value.string
 
     def value_to_string(self, obj):
-        """ Allows serialization of SumFields (dumpdata/loaddata) """
+        """Allows serialization of SumFields (dumpdata/loaddata)"""
         value = self.value_from_object(obj)
         return self.get_prep_value(value)
 
