@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils import timezone
 
@@ -91,17 +93,14 @@ class Event(models.Model):
         if bartender.isActiveBartender:
             return True
 
-        # Allow board members from previous period
-        current_board_member_period_start = (
-            BoardMemberPeriod.get_current_period().start_date
-        )
-        previous_board_member_period = BoardMemberPeriod.objects.filter(
-            start_date__lt=current_board_member_period_start
-        ).first()
-        if previous_board_member_period.boardmember_set.filter(
-            bartender=bartender
-        ).exists():
-            return True
+        # Allow board members that have been active for atleast one day between now and 1 year ago
+        period_count = BoardMemberPeriod.objects.filter(
+            start_date__gt=datetime.datetime.today() - datetime.timedelta(days=365)
+        ).count()
+        allowed_periods = BoardMemberPeriod.objects.all()[: period_count + 1]
+        for period in allowed_periods:
+            if period.boardmember_set.filter(bartender=bartender).exists():
+                return True
 
         # Allow bartenders who had a shift the current period of shifts,
         # but are no longer active.
