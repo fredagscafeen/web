@@ -18,9 +18,8 @@ MAILMAN_MUTABLE = True
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "datcafe@gmail.com"
-EMAIL_USE_SSL = True
-EMAIL_PORT = 465
-
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 
 DATABASES = {
     "default": {
