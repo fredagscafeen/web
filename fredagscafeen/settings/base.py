@@ -51,8 +51,8 @@ SECRET_ADMIN_KEYS = [
         f"{MAILMAN_URL_BASE}/admin/{MAILMAN_BEST_LIST}",
     ),
     (
-        "EMAIL_HOST_PASSWORD",
-        "Gmail password",
+        "GOOGLE_PASSWORD",
+        "Google password",
         "datcafe@gmail.com",
         "https://gmail.com/",
     ),
