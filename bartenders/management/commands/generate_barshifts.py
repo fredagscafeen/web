@@ -208,12 +208,12 @@ class Command(BaseCommand):
                 fails += 1
 
             best_score = best[0]
-            best_str = f"max news: {best_score[0][0]} (count: {best_score[0][1]}), fewer news: {best_score[1]}, min distance: {-best_score[2][0]} (count: {best_score[2][1]})"
-            print(f"\r{i} / {max_tries} (failed: {fails}), best: {best_str}", end="")
+            # best_str = f"max news: {best_score[0][0]} (count: {best_score[0][1]}), fewer news: {best_score[1]}, min distance: {-best_score[2][0]} (count: {best_score[2][1]})"
+            print(f"\r{i} / {max_tries} (failed: {fails}), best: ---", end="")
             sys.stdout.flush()
 
         print()
-        print(best_str)
+        # print(best_str)
         return best[1]
 
     def handle(self, *args, **options):
@@ -324,6 +324,17 @@ class Command(BaseCommand):
             index = all_bartenders[bartender.isBoardMember].index(bartender)
             for shift in shifts:
                 available_shifts[bartender.isBoardMember][index].remove(shift)
+
+        # Remove useless bartenders
+        for i in range(2):
+            for j, b in enumerate(
+                [i for i, x in enumerate(available_shifts[i]) if not x]
+            ):
+                print(
+                    f"WARNING: This bartender has ZERO available dates:\n- {all_bartenders[i][b-j]}\n"
+                )
+                del all_bartenders[i][b - j]
+                del available_shifts[i][b - j]
 
         for board_member, bartenders in enumerate(all_bartenders):
             for i, bartender in enumerate(bartenders):
