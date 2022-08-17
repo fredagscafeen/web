@@ -116,14 +116,22 @@ class Bartender(BartenderCommon):
         return Mailman(settings.MAILMAN_URL_BASE, *list_and_password)
 
     def is_on_mailing_list(self, list_and_password=MAILMAN_ALL):
+        # TODO: Fix mailman implementation
+        return True
+        """
         mailman = self._get_mailman(list_and_password)
         return self.email in mailman.get_subscribers()
+        """
 
     def add_to_mailing_list(self, list_and_password=MAILMAN_ALL):
+        # TODO: Fix mailman implementation
+        return
         mailman = self._get_mailman(list_and_password)
         mailman.add_subscriptions([f"{self.name} <{self.email}>"])
 
     def remove_from_mailing_list(self, list_and_password=MAILMAN_ALL):
+        # TODO: Fix mailman implementation
+        return
         mailman = self._get_mailman(list_and_password)
         mailman.remove_subscriptions([self.email])
 
