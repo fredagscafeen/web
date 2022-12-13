@@ -86,6 +86,12 @@ SECRET_ADMIN_KEYS = [
         "best@fredagscafeen.dk",
         "https://www.bevco.dk/account/login",
     ),
+    (
+        "KARET_PASSWORD",
+        "Hængelås-kodeord til karet",
+        "Dig selv",
+        "https://fredagscafeen.dk",
+    ),
 ]
 
 
