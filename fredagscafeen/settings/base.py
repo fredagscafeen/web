@@ -80,6 +80,12 @@ SECRET_ADMIN_KEYS = [
         "best@fredagscafeen.dk",
         "https://my.zettle.com/",
     ),
+    (
+        "BEVCO_PASSWORD",
+        "Bevco password",
+        "best@fredagscafeen.dk",
+        "https://www.bevco.dk/account/login",
+    ),
 ]
 
 
