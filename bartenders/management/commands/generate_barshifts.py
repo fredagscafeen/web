@@ -225,8 +225,9 @@ class Command(BaseCommand):
         for b in Bartender.objects.filter(isActiveBartender=True):
             if b.isBoardMember:
                 board_members.append(b)
-            else:
-                normal_bartenders.append(b)
+            normal_bartenders.append(b) # THIS IS A HOTFIX PLAESE REVERT CHANGES AFTERWARDS #
+            # else:
+            #    normal_bartenders.append(b)
 
         all_bartenders = [normal_bartenders, board_members]
 
