@@ -226,7 +226,7 @@ class Command(BaseCommand):
             normal_bartenders.append(b)
             if b.isBoardMember:
                 board_members.append(b)
-             # THIS IS A HOTFIX PLAESE REVERT CHANGES AFTERWARDS #
+            # THIS IS A HOTFIX PLAESE REVERT CHANGES AFTERWARDS
             # else:
             #    normal_bartenders.append(b)
 
