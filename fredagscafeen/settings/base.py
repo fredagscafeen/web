@@ -57,6 +57,12 @@ SECRET_ADMIN_KEYS = [
         "https://gmail.com/",
     ),
     (
+        "META_PASSWORD",
+        "Meta Business Suite password",
+        "fredagscafeen.dk",
+        "https://business.facebook.com/",
+    ),
+    (
         "CONTABO_PASSWORD",
         "Contabo password",
         "best@fredagscafeen.dk",
@@ -87,8 +93,20 @@ SECRET_ADMIN_KEYS = [
         "https://www.bevco.dk/account/login",
     ),
     (
+        "DRINX_PASSWORD",
+        "Drinx password",
+        "best@fredagscafeen.dk",
+        "https://drinx.dk/",
+    ),
+    (
         "KARET_PASSWORD",
         "Hængelås-kodeord til karet",
+        "Dig selv",
+        "https://fredagscafeen.dk",
+    ),
+    (
+        "KOELESKABE_PASSWORD",
+        "Hængelås-kodeord til køleskabene i Nygaardkælderen",
         "Dig selv",
         "https://fredagscafeen.dk",
     ),
