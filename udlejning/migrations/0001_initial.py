@@ -134,7 +134,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name="UdlejningSpeakers",
+            name="UdlejningSpeaker",
             fields=[
                 (
                     "id",
