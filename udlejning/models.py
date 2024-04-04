@@ -65,7 +65,7 @@ class UdlejningCommon(models.Model):
         return f"{self.dateFrom} {self.whoReserved}"
 
 
-class UdlejningForegoing(UdlejningCommon):
+class Udlejning(UdlejningCommon):
     ASSOCIATION_CHOICES = (
         ("internal", "Intern"),
         ("external", "Ekstern"),
@@ -130,7 +130,7 @@ class UdlejningApplication(UdlejningCommon):
     def accept(self):
         common_fields = super()._meta.get_fields()
         value_dict = {f.name: getattr(self, f.name) for f in common_fields}
-        u = UdlejningForegoing.objects.create(**value_dict)
+        u = Udlejning.objects.create(**value_dict)
         return u.pk
 
 
@@ -158,7 +158,7 @@ class UdlejningProjector(models.Model):
         ordering = ("dateFrom",)
 
 
-class UdlejningSpeaker(models.Model):
+class UdlejningSpeakers(models.Model):
     dateFrom = models.DateTimeField()
     dateTo = models.DateTimeField()
     whoReserved = models.TextField(max_length=140, blank=True)

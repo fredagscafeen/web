@@ -6,11 +6,11 @@ from django.views.generic import CreateView, ListView
 
 from .forms import UdlejningApplicationForm
 from .models import (
-    UdlejningForegoing,
+    Udlejning,
     UdlejningApplication,
     UdlejningGrill,
     UdlejningProjector,
-    UdlejningSpeaker,
+    UdlejningSpeakers,
 )
 
 
@@ -22,7 +22,7 @@ class Udlejninger(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["udlejninger"] = UdlejningForegoing.objects.filter(
+        context["udlejninger"] = Udlejning.objects.filter(
             dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
         )
         return context
@@ -61,6 +61,6 @@ class UdlejningerProjector(ListView):
 class UdlejningerSpeakers(ListView):
     template_name = "udlejningSpeakers.html"
     allow_empty = True
-    queryset = UdlejningSpeaker.objects.filter(
+    queryset = UdlejningSpeakers.objects.filter(
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )

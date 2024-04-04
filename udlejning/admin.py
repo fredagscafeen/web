@@ -11,11 +11,11 @@ from django_object_actions import DjangoObjectActions
 
 from fredagscafeen.email import send_template_email
 from udlejning.models import (
-    UdlejningForegoing,
+    Udlejning,
     UdlejningApplication,
     UdlejningGrill,
     UdlejningProjector,
-    UdlejningSpeaker,
+    UdlejningSpeakers,
 )
 
 
@@ -37,7 +37,7 @@ class StatusDoneListFilter(admin.SimpleListFilter):
 
 
 # Remember to cut down to 2 classes
-@admin.register(UdlejningForegoing)
+@admin.register(Udlejning)
 class UdlejningAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = (
@@ -139,7 +139,7 @@ Se {{link}} for mere info.
     def accept(self, request, obj):
         pk = obj.accept()
         obj.delete()
-        self._send_accept_email(UdlejningForegoing.objects.get(id=pk))
+        self._send_accept_email(Udlejning.objects.get(id=pk))
         return HttpResponseRedirect(
             reverse("admin:udlejning_udlejning_change", args=(pk,))
         )
@@ -171,7 +171,7 @@ class UdlejningProjectorAdmin(admin.ModelAdmin):
     list_display = ("dateFrom", "whoReserved")
 
 
-@admin.register(UdlejningSpeaker)
-class UdlejningSpeakerAdmin(admin.ModelAdmin):
+@admin.register(UdlejningSpeakers)
+class UdlejningSpeakersAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved")
