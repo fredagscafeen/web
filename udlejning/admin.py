@@ -38,7 +38,7 @@ class StatusDoneListFilter(admin.SimpleListFilter):
 
 # Remember to cut down to 2 classes
 @admin.register(UdlejningForegoing)
-class UdlejningForegoingAdmin(admin.ModelAdmin):
+class UdlejningAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = (
         "dateFrom",
