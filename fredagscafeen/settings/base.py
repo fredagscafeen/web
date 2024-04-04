@@ -101,13 +101,13 @@ SECRET_ADMIN_KEYS = [
     (
         "KARET_PASSWORD",
         "Hængelås-kodeord til karet",
-        "Dig selv",
+        None,
         "https://fredagscafeen.dk",
     ),
     (
         "KOELESKABE_PASSWORD",
         "Hængelås-kodeord til køleskabene i Nygaardkælderen",
-        "Dig selv",
+        None,
         "https://fredagscafeen.dk",
     ),
 ]
