@@ -183,7 +183,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name="Udlejning",
+            name="UdlejningForegoing",
             fields=[
                 (
                     "id",
