@@ -79,13 +79,24 @@
 
 \begin{landscape}
 
-\title{Guide til krydslisten}
-\author{Emil Sixhøj Mors}
-\date{June 2023}
+\iffalse
+\LARGE
+\section*{Pizzabestilling}
+\begin{tabu} to \linewidth{| X[1] | X[14] |}
+\hline
+\textbf{Nr.} & \textbf{Navn} \\ \hline
 
-\begin{document}
+{% for i in pizza_lines %}& \\ \hline{% endfor %}
 
-\maketitle
+\end{tabu}
+\fi
+
+\begin{center}
+\section*{\LARGE Guide til krydslisten}
+\subsection*{Emil Sixhøj Mors}
+\subsection*{\small June 2023}
+\end{center}
+
 Krydslisten benyttes på følgende måde:
 
 \begin{itemize}
