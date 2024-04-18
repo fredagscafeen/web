@@ -94,9 +94,9 @@ SECRET_ADMIN_KEYS = [
     ),
     (
         "DRINX_PASSWORD",
-        "Drinx password",
-        "best@fredagscafeen.dk",
-        "https://drinx.dk/",
+        "Drinx password, Kunde nr. 27973647",
+        "fredag",
+        "https://drinx.dk/login",
     ),
     (
         "KARET_PASSWORD",
