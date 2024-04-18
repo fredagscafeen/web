@@ -90,7 +90,7 @@ SECRET_ADMIN_KEYS = [
         "BEVCO_PASSWORD",
         "Bevco password",
         "best@fredagscafeen.dk",
-        "https://www.bevco.dk/account/login",
+        "https://www.bevco.dk/login",
     ),
     (
         "DRINX_PASSWORD",
@@ -102,13 +102,13 @@ SECRET_ADMIN_KEYS = [
         "KARET_PASSWORD",
         "Hængelås-kodeord til karet",
         None,
-        "https://fredagscafeen.dk",
+        None,
     ),
     (
         "KOELESKABE_PASSWORD",
         "Hængelås-kodeord til køleskabene i Nygaardkælderen",
         None,
-        "https://fredagscafeen.dk",
+        None,
     ),
 ]
 
