@@ -57,10 +57,10 @@ SECRET_ADMIN_KEYS = [
         "https://gmail.com/",
     ),
     (
-        "META_PASSWORD",
-        "Meta Business Suite password",
+        "INSTAGRAM_PASSWORD",
+        "Instagram password",
         "fredagscafeen.dk",
-        "https://business.facebook.com/",
+        "https://www.instagram.com/",
     ),
     (
         "CONTABO_PASSWORD",
