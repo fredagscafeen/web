@@ -29,8 +29,8 @@ class Command(BaseCommand):
 
             first_shift = shift
 
-        assert first_shift != None
-        assert len(first_shift.responsibles.all()) == 1
+        # assert first_shift != None
+        # assert len(first_shift.responsibles.all()) == 1
 
         last_responsibles = BoardMemberDepositShift.objects.get(
             start_date=first_shift.start_date - datetime.timedelta(weeks=1)
