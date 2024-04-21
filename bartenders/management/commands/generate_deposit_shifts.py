@@ -17,7 +17,7 @@ class Command(BaseCommand):
     help = "Generates new deposit shifts"
 
     RESPONSIBLES = 2
-    WEEKS = 4
+    WEEKS = 2
 
     def handle(self, *args, **options):
         board_members = set(b for b in Bartender.objects.all() if b.isBoardMember)
