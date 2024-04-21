@@ -88,6 +88,7 @@ class BarTabContext:
             "pizza_lines": range(33),
             "latest_shift": BarTabSnapshot.objects.first().date,
             "logo_path": settings.STATIC_ROOT + f"images/logo_gray.png",
+            "guide_path": settings.MEDIA_ROOT + f"guides/krydsliste.pdf",
         }
 
 
