@@ -22,8 +22,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         board_members = set(b for b in Bartender.objects.all() if b.isBoardMember)
 
-        deposit_shifts = set(s for s in BoardMemberDepositShift.objects.all() if s.start_date)
-        for shift in deposit_shifts:
+        for shift in iter(BoardMemberDepositShift.objects.all()):
             first_shift = shift
 
         assert first_shift != None
