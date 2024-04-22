@@ -16,31 +16,27 @@ from bartenders.models import (
 class Command(BaseCommand):
     help = "Generates new deposit shifts"
 
-    RESPONSIBLES = 2
-    WEEKS = 2
+    RESPONSIBLES = int(input("Number of responsible board members (2): ") or "2")
+    WEEKS = int(input("Number of consecutive weeks (2): ") or "2")
 
     def handle(self, *args, **options):
         board_members = set(b for b in Bartender.objects.all() if b.isBoardMember)
 
-        first_shift = None
-        for shift in reversed(BoardMemberDepositShift.objects.all()):
-            if shift.responsibles.count() == self.RESPONSIBLES:
-                break
-
+        deposit_shifts = set(s for s in BoardMemberDepositShift.objects.all() if s.start_date)
+        for shift in deposit_shifts:
             first_shift = shift
 
-        # assert first_shift != None
-        # assert len(first_shift.responsibles.all()) == 1
+        assert first_shift != None
 
-        last_responsibles = BoardMemberDepositShift.objects.get(
-            start_date=first_shift.start_date - datetime.timedelta(weeks=1)
-        ).responsibles.all()
+        last_responsible = None
+        for board_member in board_members:
+            last_responsible = board_member
 
-        last_responsible = first_shift.responsibles.first()
-        second_last_responsible = list(set(last_responsibles) - {last_responsible})[0]
+        assert last_responsible != None
+        second_last_responsible = list(set(board_members) - {last_responsible})[0]
 
         # Shuffle board members, but ensure that no one gets two shifts in a row
-        shuffled_board_members = list(board_members - set(last_responsibles))
+        shuffled_board_members = list(board_members)
         random.shuffle(shuffled_board_members)
 
         if second_last_responsible.isBoardMember:
@@ -90,7 +86,7 @@ class Command(BaseCommand):
             print()
 
         while True:
-            r = input("Publish? [yN] ").lower()
+            r = input("Publish? [y/N] ").lower()
             if r in ["", "n"]:
                 return
 
