@@ -2,12 +2,34 @@
 
 {% block content %}
 
+<style>
+.google-maps {
+  max-width: 600px;
+  max-height: 450px;
+  position: relative;
+  padding-bottom: 450px;
+  height: 0;
+  overflow: hidden;
+}
+
+.google-maps iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+</style>
+
 <h2>Generel info</h2>
 
 <p>Fredagscaféen befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi, Finlandsgade 21, 8200 Aarhus N.
 Baren har åbent <em>alle</em> fredage fra klokken 15.00 til vi lukker.</p>
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4442.319456514069!2d10.187308076907637!3d56.17163165965389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fc4cda7462f%3A0x4219610040f322c5!2sFredagscaf%C3%A9en!5e0!3m2!1sda!2sdk!4v1716252357825!5m2!1sda!2sdk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<div class="google-maps">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4442.319456514069!2d10.187308076907637!3d56.17163165965389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fc4cda7462f%3A0x4219610040f322c5!2sFredagscaf%C3%A9en!5e0!3m2!1sda!2sdk!4v1716252357825!5m2!1sda!2sdk" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
 
 <hr>
 
@@ -31,13 +53,13 @@ Fredagscaféen<br>
 
 <hr>
 
-<h2>CVR</h2>
-<p>Vores CVR-nr er: <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647">27973647</a></p>
+<h2>E-mail</h2>
+Bestyrelsen kan kontaktes på <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>
 
 <hr>
 
-<h2>E-mail</h2>
-Bestyrelsen kan kontaktes på <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>
+<h2>CVR</h2>
+<p>Vores CVR-nr er: <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647">27973647</a></p>
 
 
 
