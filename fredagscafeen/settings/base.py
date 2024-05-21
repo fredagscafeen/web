@@ -110,6 +110,12 @@ SECRET_ADMIN_KEYS = [
         None,
         None,
     ),
+    (
+        "BIZAY_PASSWORD",
+        "Bizay password",
+        "best@fredagscafeen.dk",
+        "https://www.bizay.dk/Account/Login",
+    ),
 ]
 
 
