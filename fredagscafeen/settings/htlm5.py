@@ -3,7 +3,7 @@ from pathlib import Path
 
 from fredagscafeen.settings.base import *
 
-SECRET_KEY = os.environ.get["SECRET_KEY"]
+SECRET_KEY = os.environ["SECRET_KEY"]
 DEBUG = False
 
 SELF_URL = "https://fredagscafeen.dk/"
