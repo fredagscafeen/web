@@ -116,6 +116,12 @@ SECRET_ADMIN_KEYS = [
         "best@fredagscafeen.dk",
         "https://www.bizay.dk/Account/Login",
     ),
+    (
+        "DISCORD_PASSWORD",
+        "Discord password",
+        "datcafe@gmail.com",
+        "https://discord.com/channels/@me",
+    ),
 ]
 
 
