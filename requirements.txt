@@ -18,7 +18,7 @@ billiard==3.6.4.0
     # via celery
 bs4==0.0.1
     # via requests-html
-celery[redis]==5.2.0
+celery[redis]==5.4.0
     # via
     #   -r requirements.in
     #   django-celery-beat
