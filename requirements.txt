@@ -14,7 +14,7 @@ backcall==0.2.0
     # via ipython
 beautifulsoup4==4.9.3
     # via bs4
-billiard==3.6.4.0
+billiard==4.2.0
     # via celery
 bs4==0.0.1
     # via requests-html
