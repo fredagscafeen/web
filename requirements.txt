@@ -14,11 +14,11 @@ backcall==0.2.0
     # via ipython
 beautifulsoup4==4.9.3
     # via bs4
-billiard==4.2.0
+billiard==3.6.4.0
     # via celery
 bs4==0.0.1
     # via requests-html
-celery[redis]==5.4.0
+celery[redis]==5.2.0
     # via
     #   -r requirements.in
     #   django-celery-beat
@@ -103,7 +103,7 @@ iterfzf==0.5.0.20.0
     # via -r requirements.in
 jedi==0.18.0
     # via ipython
-kombu==5.3.4
+kombu==5.2.1
     # via celery
 lxml==4.6.3
     # via pyquery
