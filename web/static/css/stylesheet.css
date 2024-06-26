@@ -1,6 +1,10 @@
+:root {
+    --datblue: #152ff5;
+  }
+
 .banner h1 {
-    color: midnightblue;
-    font-family: serif;
+    color: var(--datblue);
+    font-family: "Times New Roman", Times, serif;
     display: inline-block;
 }
 
