@@ -8,14 +8,35 @@
     display: inline-block;
 }
 
-.banner img {
+.logo {
     height: 50px;
     display: inline-block;
     padding-bottom: 12px;
 }
 
+.locale {
+    float: right; 
+    margin: 10px;
+    padding: 0px; 
+    height: 25px; 
+    border: solid; 
+    border-width: 0px; 
+    border-radius: 5px; 
+    border-color: white;
+}
+
+.center-align {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+}
+
 ul.navbar-nav {
     margin: 0px !important;
+}
+
+.navbar-brand {
+    font-family: "Times New Roman", Times, serif;
 }
 
 .navbar-default .navbar-nav > li > a {

@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 {% load bootstrap3 %}
 
 {% block content %}
 
-Velkommen til Fredagscaféens webside, her kan du finde information om åbningstider, sortiment, udlejning af fadølsanlæg og grill mm.
+{% translate "Velkommen til Fredagscaféens webside, her kan du finde information om åbningstider, sortiment, udlejning af fadølsanlæg og grill mm." %}
 
 <div class="row">
 	<div class="col-md-8">
-        <h2>Bartendertilmelding</h2>
-        <p>Er du interesseret i at være med i et fedt fællesskab hvor vi hygger bag baren og serverer nogle kolde drikkevarer?</p>
-        <p>Du vil som bartender få ca. 2 vagter pr. semester, hvor du er med til at sikre at alle får slukket tørsten.<p>
-        <p>Udover dette inviteres du til vores årlige arrangementer for bartendere, såsom Sommerfesten og Julefrokosten. Derudover vil der løbende være fede begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere.</p>
-        <p>Det er en god idé at læse <a href="{{ barshift_guide_url }}" alt="guide">barvagt-guiden</a> før du tilmelder dig, så du
-           ved hvad en typisk vagt i Fredagscaféen indebærer.</p>
+        <h2>{% translate "Bartendertilmelding" %}</h2>
+        <p>{% translate "Er du interesseret i at være med i et fedt fællesskab hvor vi hygger bag baren og serverer nogle kolde drikkevarer?" %}</p>
+        <p>{% translate "Du vil som bartender få ca. 2 vagter pr. semester, hvor du er med til at sikre at alle får slukket tørsten." %}<p>
+        <p>{% translate "Udover dette inviteres du til vores årlige arrangementer for bartendere, såsom Sommerfesten og Julefrokosten. Derudover vil der løbende være fede begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere." %}</p>
+        <p>{% translate "Det er en god idé at læse" %} <a href="{{ barshift_guide_url }}" alt="guide">{% translate "barvagt-guiden" %}</a> 
+            {% translate "før du tilmelder dig, så du ved hvad en typisk vagt i Fredagscaféen indebærer." %}</p>
         {% if config.REGISTRATION_OPEN %}
             <form method="post" action="/">
                 {% csrf_token %}
@@ -24,7 +24,7 @@ Velkommen til Fredagscaféens webside, her kan du finde information om åbningst
                 {% endbuttons %}
             </form>
         {% else %}
-            <b>Bartendertilmeldingen er lukket.</b>
+            <b>{% translate "Bartendertilmeldingen er lukket." %}</b>
         {% endif %}
     </div>
 </div>

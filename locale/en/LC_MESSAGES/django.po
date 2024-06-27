@@ -1,0 +1,219 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-27 13:48+0200\n"
+"PO-Revision-Date: 2024-06-27 13:28+0050\n"
+"Last-Translator:   <abs@post.au.dk>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: bartenders/migrations/0001_initial.py:29
+#: bartenders/migrations/0001_initial.py:92
+msgid "Fulde navn"
+msgstr "Full name"
+
+#: bartenders/migrations/0001_initial.py:33
+#: bartenders/migrations/0001_initial.py:96
+msgid "Brugernavn"
+msgstr "Username"
+
+#: bartenders/migrations/0001_initial.py:40
+#: bartenders/migrations/0001_initial.py:103
+msgid "Studienummer"
+msgstr "Study number"
+
+#: bartenders/migrations/0001_initial.py:46
+#: bartenders/migrations/0001_initial.py:109
+msgid "Telefonnummer"
+msgstr "Phone number"
+
+#: bartenders/migrations/0001_initial.py:64
+#: bartenders/migrations/0001_initial.py:127
+msgid "T-shirt størrelse"
+msgstr "T-shirt size"
+
+#: bartenders/migrations/0001_initial.py:72
+msgid "Jeg foretrækker ikke at have nogle sene barvagter"
+msgstr "I prefer to not have any late shifts"
+
+#: bartenders/migrations/0001_initial.py:130
+msgid "Studie"
+msgstr "Study"
+
+#: bartenders/migrations/0001_initial.py:131
+msgid "Årgang"
+msgstr "Year"
+
+#: bartenders/migrations/0001_initial.py:136
+msgid "Eventuelle ekstra info til bestyrelsen skrives her"
+msgstr "Any additional information for the board can be written here"
+
+#: bartenders/templates/index.html:8
+msgid ""
+"Velkommen til Fredagscaféens webside, her kan du finde information om "
+"åbningstider, sortiment, udlejning af fadølsanlæg og grill mm."
+msgstr ""
+"Welcome to Fredagscaféens website. Here you can find information about "
+"openning hours, selection, rental of kegerator and grill etc."
+
+#: bartenders/templates/index.html:12
+msgid "Bartendertilmelding"
+msgstr "Bartender application"
+
+#: bartenders/templates/index.html:13
+msgid ""
+"Er du interesseret i at være med i et fedt fællesskab hvor vi hygger bag "
+"baren og serverer nogle kolde drikkevarer?"
+msgstr ""
+"Are you interested in becoming a member of a cool community, where we have "
+"fun behind the bar and serve some cold drinks?"
+
+#: bartenders/templates/index.html:14
+msgid ""
+"Du vil som bartender få ca. 2 vagter pr. semester, hvor du er med til at "
+"sikre at alle får slukket tørsten."
+msgstr ""
+"As a bartender, you will get approx. 2 shifts per semester, where you help "
+"to ensure that everyone quenches their thirst."
+
+#: bartenders/templates/index.html:15
+msgid ""
+"Udover dette inviteres du til vores årlige arrangementer for bartendere, "
+"såsom Sommerfesten og Julefrokosten. Derudover vil der løbende være fede "
+"begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere."
+msgstr ""
+"In addition to this, you are invited to our annual events for bartenders, "
+"such as the Summer Party and the Christmas Lunch. In addition, there will be "
+"ongoing cool events, such as beer tasting and the like. All free for "
+"bartenders."
+
+#: bartenders/templates/index.html:16
+msgid "Det er en god idé at læse"
+msgstr "It is a good idea to read the"
+
+#: bartenders/templates/index.html:16
+msgid "barvagt-guiden"
+msgstr "bar shift-guide"
+
+#: bartenders/templates/index.html:17
+msgid ""
+"før du tilmelder dig, så du ved hvad en typisk vagt i Fredagscaféen "
+"indebærer."
+msgstr ""
+"before you sign up, so you know what a typical shift in Fredagscaféen "
+"involve."
+
+#: bartenders/templates/index.html:27
+msgid "Bartendertilmeldingen er lukket."
+msgstr "Bartender applications are closed."
+
+#: fredagscafeen/admin_filters.py:30
+msgid "All"
+msgstr ""
+
+#: fredagscafeen/admin_filters.py:30
+msgid "Yes"
+msgstr ""
+
+#: fredagscafeen/admin_filters.py:30
+msgid "No"
+msgstr ""
+
+#: fredagscafeen/settings/base.py:262
+msgid "Danish"
+msgstr ""
+
+#: fredagscafeen/settings/base.py:263
+msgid "English"
+msgstr ""
+
+#: web/templates/base.html:59
+msgid "Forside"
+msgstr "Home"
+
+#: web/templates/base.html:60
+msgid "Barplan"
+msgstr "Bar Plan"
+
+#: web/templates/base.html:61
+msgid "Bartendere"
+msgstr "Bartenders"
+
+#: web/templates/base.html:65
+msgid "Udlejning"
+msgstr "Rental"
+
+#: web/templates/base.html:67
+msgid "Udlejning af fadølsanlæg"
+msgstr "Rental of kegerator"
+
+#: web/templates/base.html:68
+msgid "Udlejning af grill"
+msgstr "Rental of grill"
+
+#: web/templates/base.html:69
+msgid "Udlejning af projektor"
+msgstr "Rental of projector"
+
+#: web/templates/base.html:69
+msgid "lærred"
+msgstr "screen"
+
+#: web/templates/base.html:70
+msgid "Udlejning af højtalere"
+msgstr "Rental of speakers"
+
+#: web/templates/base.html:74
+msgid "Guides"
+msgstr "Guides"
+
+#: web/templates/base.html:76
+msgid "Bestyrelsen"
+msgstr "Board"
+
+#: web/templates/base.html:77
+msgid "Events"
+msgstr "Events"
+
+#: web/templates/base.html:78
+msgid "Om baren"
+msgstr "About"
+
+#: web/templates/base.html:80
+msgid "Profil"
+msgstr "Profile"
+
+#: web/templates/base.html:82
+msgid "Krydlistestatus"
+msgstr "Tab status"
+
+#: web/templates/base.html:83
+msgid "Bartenderprofil"
+msgstr "Bartender profile"
+
+#: web/templates/base.html:86
+msgid "Admin"
+msgstr "Admin"
+
+#: web/templates/base.html:91
+msgid "Log ud"
+msgstr "Log out"
+
+#: web/templates/base.html:109
+msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
+msgstr "is a friday bar for computer science and IT at Aarhus University."
+
+#~ msgid "Bartender"
+#~ msgstr "Bartender"

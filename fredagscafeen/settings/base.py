@@ -177,12 +177,14 @@ INSTALLED_APPS = (
     "guides",
     "events",
     "printer",
+    "rosetta",
 )
 
 MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'django.middleware.locale.LocaleMiddleware', # Used for internationalization. Has to be after sessions but before common
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -254,6 +256,27 @@ USE_L10N = True
 
 USE_TZ = True
 
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = (
+    ('da', _('Danish')),
+    ('en', _('English')),
+)
+
+PARLER_LANGUAGES = {
+    None : (
+        {'code': 'da',},
+        {'code': 'en',},
+    ),
+    'default': {
+        'fallbacks': ['da'],
+        'hide_untranslated': False,
+    }
+}
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
