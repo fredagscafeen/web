@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 20:48+0200\n"
+"POT-Creation-Date: 2024-06-28 21:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,8 @@ msgstr ""
 msgid "Ansvarlig"
 msgstr ""
 
-#: bartenders/templates/barplan.html:21 web/templates/base.html:61
+#: bartenders/templates/barplan.html:21 bartenders/templates/bartenders.html:6
+#: web/templates/base.html:61
 msgid "Bartendere"
 msgstr ""
 
@@ -92,6 +93,87 @@ msgstr ""
 
 #: bartenders/templates/barplan.html:61
 msgid "Ansvarlige"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:38
+msgid "Bartender status"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:40
+msgid "Aktiv"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:41
+msgid "Bliv inaktiv"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:43
+msgid "Inaktiv"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:44
+msgid "Hvis du gerne vil være aktive igen, så kontakt"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:48
+msgid ""
+"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:51
+msgid "Mailinglist status"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:53
+msgid "På mailinglisten"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:55
+msgid "Meld dig af mailinglisten"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:58
+msgid "Ikke på mailinglisten"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:59
+msgid "Meld dig på mailinglisten"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:65
+msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:87
+msgid "er ikke bartender."
+msgstr ""
+
+#: bartenders/templates/bartender_shift_period_change_form.html:7
+msgid "Bartender"
+msgstr ""
+
+#: bartenders/templates/bartender_shift_period_change_form.html:8
+msgid "Email"
+msgstr ""
+
+#: bartenders/templates/bartender_shift_period_change_form.html:9
+msgid "Antal vagter"
+msgstr ""
+
+#: bartenders/templates/bartenders.html:12
+msgid "Nuværende"
+msgstr ""
+
+#: bartenders/templates/bartenders.html:23
+msgid "Tidligere"
+msgstr ""
+
+#: bartenders/templates/board.html:29 web/templates/base.html:76
+msgid "Bestyrelsen"
+msgstr ""
+
+#: bartenders/templates/board.html:69
+msgid "Bestyrelsen gennem tiden"
 msgstr ""
 
 #: bartenders/templates/index.html:8
@@ -191,10 +273,6 @@ msgstr ""
 
 #: web/templates/base.html:74
 msgid "Guides"
-msgstr ""
-
-#: web/templates/base.html:76
-msgid "Bestyrelsen"
 msgstr ""
 
 #: web/templates/base.html:77

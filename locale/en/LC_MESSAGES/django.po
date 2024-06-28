@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 20:48+0200\n"
-"PO-Revision-Date: 2024-06-28 21:44+0050\n"
+"POT-Creation-Date: 2024-06-28 21:58+0200\n"
+"PO-Revision-Date: 2024-06-28 22:03+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -79,7 +79,8 @@ msgstr "Date"
 msgid "Ansvarlig"
 msgstr "Responsible"
 
-#: bartenders/templates/barplan.html:21 web/templates/base.html:61
+#: bartenders/templates/barplan.html:21 bartenders/templates/bartenders.html:6
+#: web/templates/base.html:61
 msgid "Bartendere"
 msgstr "Bartenders"
 
@@ -94,6 +95,96 @@ msgstr "Week"
 #: bartenders/templates/barplan.html:61
 msgid "Ansvarlige"
 msgstr "Responsible"
+
+#: bartenders/templates/bartender_info.html:38
+#, fuzzy
+#| msgid "Bartender"
+msgid "Bartender status"
+msgstr "Bartender"
+
+#: bartenders/templates/bartender_info.html:40
+msgid "Aktiv"
+msgstr "Active"
+
+#: bartenders/templates/bartender_info.html:41
+msgid "Bliv inaktiv"
+msgstr "Become active"
+
+#: bartenders/templates/bartender_info.html:43
+msgid "Inaktiv"
+msgstr "Inactive"
+
+#: bartenders/templates/bartender_info.html:44
+msgid "Hvis du gerne vil være aktive igen, så kontakt"
+msgstr "If you wish to be active again, contact"
+
+#: bartenders/templates/bartender_info.html:48
+msgid ""
+"Husk at du som inaktiv bartender ikke kan komme til "
+"bartenderarrangementerne."
+msgstr ""
+"Remember that as an inactive bartender you cannot come to the bartending "
+"events."
+
+#: bartenders/templates/bartender_info.html:51
+#| msgid "Krydlistestatus"
+msgid "Mailinglist status"
+msgstr "Mailing list status"
+
+#: bartenders/templates/bartender_info.html:53
+msgid "På mailinglisten"
+msgstr "On the mailing list"
+
+#: bartenders/templates/bartender_info.html:55
+msgid "Meld dig af mailinglisten"
+msgstr "Sign up for the mailing list"
+
+#: bartenders/templates/bartender_info.html:58
+msgid "Ikke på mailinglisten"
+msgstr "Not on the mailing list"
+
+#: bartenders/templates/bartender_info.html:59
+msgid "Meld dig på mailinglisten"
+msgstr "Sign up for the mailing list"
+
+#: bartenders/templates/bartender_info.html:65
+msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
+msgstr "Dates when you do not have the opportunity to stand at the bar"
+
+#: bartenders/templates/bartender_info.html:87
+msgid "er ikke bartender."
+msgstr "is not a bartender."
+
+#: bartenders/templates/bartender_shift_period_change_form.html:7
+msgid "Bartender"
+msgstr "Bartender"
+
+#: bartenders/templates/bartender_shift_period_change_form.html:8
+msgid "Email"
+msgstr "Email"
+
+#: bartenders/templates/bartender_shift_period_change_form.html:9
+#| msgid "Pantvagter"
+msgid "Antal vagter"
+msgstr "Number of shifts"
+
+#: bartenders/templates/bartenders.html:12
+#| msgid "Vis nuværende"
+msgid "Nuværende"
+msgstr "Current"
+
+#: bartenders/templates/bartenders.html:23
+msgid "Tidligere"
+msgstr "Earlier"
+
+#: bartenders/templates/board.html:29 web/templates/base.html:76
+msgid "Bestyrelsen"
+msgstr "Board"
+
+#: bartenders/templates/board.html:69
+#| msgid "Bestyrelsen"
+msgid "Bestyrelsen gennem tiden"
+msgstr "The board over time"
 
 #: bartenders/templates/index.html:8
 msgid ""
@@ -206,10 +297,6 @@ msgstr "Rental of speakers"
 msgid "Guides"
 msgstr "Guides"
 
-#: web/templates/base.html:76
-msgid "Bestyrelsen"
-msgstr "Board"
-
 #: web/templates/base.html:77
 msgid "Events"
 msgstr "Events"
@@ -241,6 +328,3 @@ msgstr "Log out"
 #: web/templates/base.html:109
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
 msgstr "is a friday bar for computer science and IT at Aarhus University."
-
-#~ msgid "Bartender"
-#~ msgstr "Bartender"

@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Bartendere</h2>
+<h2>{% translate "Bartendere" %}</h2>
 
 <div class="row">
 	<div class="col-md-6">
 
 		<ul class="list-group">
-			<li class="list-group-item  list-group-item-success"><b>Nuværende ({{ bartenders.count }})</b></li>
+			<li class="list-group-item  list-group-item-success"><b>{% translate "Nuværende" %} ({{ bartenders.count }})</b></li>
 			{% for bartender in bartenders %}
 				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
 			{% endfor %}
@@ -19,7 +20,7 @@
 	<div class="col-md-6">
 
 		<ul class="list-group">
-			<li class="list-group-item  list-group-item-warning"><b>Tidligere ({{ inactive_bartenders.count }})</b></li>
+			<li class="list-group-item  list-group-item-warning"><b>{% translate "Tidligere" %} ({{ inactive_bartenders.count }})</b></li>
 			{% for bartender in inactive_bartenders %}
 				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
 			{% endfor %}
