@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load i18n %}
 
-<h2>Reservation af projektor &amp; lærred</h2>
+<h2>{% translate "Reservation af projektor" %} &amp; {% translate "lærred" %}</h2>
 
-<h4>Projektoren/lærredet er allerede reserveret følgende dage</h4>
+<h4>{% translate "Projektoren/lærredet" %} {% translate "er allerede reserveret følgende dage" %}</h4>
 
 <ul>
 	{% for u in object_list %}
-		<li>{{ u.dateFrom }}, reserveret af {{ u.whoReserved }}</li>
+		<li>{{ u.dateFrom }}, {% translate "reserveret af" %} {{ u.whoReserved }}</li>
 	{% empty %}
-		<li>Projektoren/lærredet er pt ikke reserveret på noget tidspunkt</li>
+		<li>{% translate "Projektoren/lærredet" %} {% translate "er pt ikke reserveret på noget tidspunkt" %}</li>
 	{% endfor %}
 </ul>
 
 <p>
-	Hvis vores projektor/lærred ikke allerede er udlånt, kan du låne den ved at sende en mail til
+	{% translate "Hvis vores" %} {% translate "projektor/lærred" %} {% translate "ikke allerede er udlånt, kan du låne den ved at sende en mail til" %}
 	<a rel="nofollow" class="external text" href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>.
-	Projektoren/lærredet kan kun lånes til arrangementer på instituttet.
+	{% translate "Projektoren/lærredet" %} {% translate "kan kun lånes til arrangementer på instituttet." %}
 </p>
 
 {% endblock %}

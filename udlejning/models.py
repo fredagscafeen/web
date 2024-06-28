@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 from bartenders.models import Bartender
 
@@ -8,58 +9,58 @@ class UdlejningCommon(models.Model):
         abstract = True
 
     PAYMENT_CHOICES = (
-        ("EAN", "EAN"),
-        ("invoice", "Faktura"),
-        ("card", "Kort i baren"),
+        ("EAN", _("EAN")),
+        ("invoice", _("Faktura")),
+        ("card", _("Kort i baren")),
     )
 
     dateFrom = models.DateTimeField(
-        verbose_name="Start dato & tid",
-        help_text="Hvornår skal anlægget afhentes/stilles op?",
+        verbose_name=_("Start dato & tid"),
+        help_text=_("Hvornår skal anlægget afhentes/stilles op?"),
     )
     dateTo = models.DateTimeField(
         blank=True,
         null=True,
-        verbose_name="Slut dato & tid",
-        help_text="Hvornår skal anlægget afleveres/pilles ned?",
+        verbose_name=_("Slut dato & tid"),
+        help_text=_("Hvornår skal anlægget afleveres/pilles ned?"),
     )
-    whoReserved = models.CharField(max_length=140, verbose_name="Hvem er I?")
+    whoReserved = models.CharField(max_length=140, verbose_name=_("Hvem er I?"))
 
-    contactEmail = models.EmailField(verbose_name="Email til kontaktperson")
+    contactEmail = models.EmailField(verbose_name=_("Email til kontaktperson"))
     contactPhone = models.IntegerField(
-        verbose_name="Telefonnummer til kontaktperson", blank=True, null=True
+        verbose_name=_("Telefonnummer til kontaktperson"), blank=True, null=True
     )
 
     whoPays = models.CharField(
         max_length=140,
-        verbose_name="Hvem betaler?",
-        help_text="Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller organisation)",
+        verbose_name=_("Hvem betaler?"),
+        help_text=_("Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller organisation)"),
     )
     paymentType = models.CharField(
         max_length=140,
         choices=PAYMENT_CHOICES,
-        verbose_name="Betalingsform",
-        help_text="Hvordan bliver der betalt?",
+        verbose_name=_("Betalingsform"),
+        help_text=_("Hvordan bliver der betalt?"),
     )
 
     EANnumber = models.BigIntegerField(
-        verbose_name="EAN-nummer",
+        verbose_name=_("EAN-nummer"),
         blank=True,
         null=True,
-        help_text="Skal kun angives, hvis der skal faktureres til et EAN-nummer",
+        help_text=_("Skal kun angives, hvis der skal faktureres til et EAN-nummer"),
     )
 
     where = models.TextField(
         max_length=140,
-        verbose_name="Lokation",
-        help_text="Hvor bliver arrangmentet afholdt?",
+        verbose_name=_("Lokation"),
+        help_text=_("Hvor bliver arrangmentet afholdt?"),
     )
     expectedConsummation = models.TextField(
         max_length=140,
-        verbose_name="Forventet forbrug",
-        help_text="Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?",
+        verbose_name=_("Forventet forbrug"),
+        help_text=_("Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?"),
     )
-    comments = models.TextField(blank=True, verbose_name="Kommentarer")
+    comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
 
     def __str__(self):
         return f"{self.dateFrom} {self.whoReserved}"
@@ -67,54 +68,54 @@ class UdlejningCommon(models.Model):
 
 class Udlejning(UdlejningCommon):
     ASSOCIATION_CHOICES = (
-        ("internal", "Intern"),
-        ("external", "Ekstern"),
+        ("internal", _("Intern")),
+        ("external", _("Ekstern")),
     )
 
     STATUS_CHOICES = (
-        ("notsent", "Regning ikke sendt"),
-        ("sent", "Regning sendt"),
-        ("paid", "Regning betalt"),
+        ("notsent", _("Regning ikke sendt")),
+        ("sent", _("Regning sendt")),
+        ("paid", _("Regning betalt")),
     )
 
     SYSTEM_CHOICES = (
-        ("small", "Lille"),
-        ("medium", "Mellem"),
+        ("small", _("Lille")),
+        ("medium", _("Mellem")),
     )
 
     draftBeerSystem = models.CharField(
         max_length=16,
         choices=SYSTEM_CHOICES,
         blank=True,
-        verbose_name="Fadølsanlæg",
-        help_text="Hvilket anlæg vil I låne?",
+        verbose_name=_("Fadølsanlæg"),
+        help_text=_("Hvilket anlæg vil I låne?"),
     )
     association = models.CharField(
         max_length=16,
         choices=ASSOCIATION_CHOICES,
         blank=True,
-        verbose_name="Tilknytning",
+        verbose_name=_("Tilknytning"),
     )
     actualConsummation = models.TextField(
-        max_length=140, blank=True, verbose_name="Faktisk forbrug"
+        max_length=140, blank=True, verbose_name=_("Faktisk forbrug")
     )
     bartendersInCharge = models.ManyToManyField(
-        Bartender, blank=True, verbose_name="Ansvarlige"
+        Bartender, blank=True, verbose_name=_("Ansvarlige")
     )
-    billSendTo = models.CharField(max_length=140, verbose_name="Send regning til")
+    billSendTo = models.CharField(max_length=140, verbose_name=_("Send regning til"))
     status = models.CharField(max_length=16, choices=STATUS_CHOICES, default="notsent")
     invoice_number = models.CharField(
-        max_length=32, blank=True, verbose_name="Fakturanummer"
+        max_length=32, blank=True, verbose_name=_("Fakturanummer")
     )
     total_price = models.DecimalField(
         max_digits=9 + 2,
         decimal_places=2,
         blank=True,
         null=True,
-        verbose_name="Total pris",
+        verbose_name=_("Total pris"),
     )
     payment_due_date = models.DateField(
-        blank=True, null=True, verbose_name="Betalingsdato"
+        blank=True, null=True, verbose_name=_("Betalingsdato")
     )
 
     class Meta:

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class Guide(models.Model):
@@ -6,9 +7,9 @@ class Guide(models.Model):
         ordering = ("name",)
 
     GUIDE_TYPES = (
-        ("ALL", "Til alle"),
-        ("BT", "Til bartendere"),
-        ("BM", "Til bestyrelsesmedlemmer"),
+        ("ALL", _("Til alle")),
+        ("BT", _("Til bartendere")),
+        ("BM", _("Til bestyrelsesmedlemmer")),
     )
 
     name = models.CharField(max_length=256)
