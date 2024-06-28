@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 22:08+0200\n"
+"POT-Creation-Date: 2024-06-28 22:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: bartab/templates/bartab.html:8
+msgid "Krydslisteaktivitet"
+msgstr ""
+
+#: bartab/templates/bartab.html:10
+msgid "Krydslisten er gjort op til og med barvagten d."
+msgstr ""
+
+#: bartab/templates/bartab.html:13 bartab/templates/bartab.html:22
+msgid "Saldo"
+msgstr ""
+
+#: bartab/templates/bartab.html:14
+msgid "Total forbrug"
+msgstr ""
+
+#: bartab/templates/bartab.html:19 bartenders/templates/barplan.html:19
+msgid "Dato"
+msgstr ""
+
+#: bartab/templates/bartab.html:20
+msgid "Indsat"
+msgstr ""
+
+#: bartab/templates/bartab.html:21
+msgid "Køb"
+msgstr ""
+
+#: bartab/templates/bartab.html:37
+msgid "er ikke på krydslisten."
+msgstr ""
 
 #: bartenders/models.py:51
 msgid "Fulde navn"
@@ -70,10 +102,6 @@ msgstr ""
 #: bartenders/templates/barplan.html:13 bartenders/templates/barplan.html:54
 #: events/templates/events.html:14
 msgid "Vis også tidligere"
-msgstr ""
-
-#: bartenders/templates/barplan.html:19
-msgid "Dato"
 msgstr ""
 
 #: bartenders/templates/barplan.html:20

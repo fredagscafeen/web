@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 22:08+0200\n"
-"PO-Revision-Date: 2024-06-28 22:15+0050\n"
+"POT-Creation-Date: 2024-06-28 22:20+0200\n"
+"PO-Revision-Date: 2024-06-28 22:24+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,6 +18,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: bartab/templates/bartab.html:8
+#| msgid "Krydlistestatus"
+msgid "Krydslisteaktivitet"
+msgstr "Tab activity"
+
+#: bartab/templates/bartab.html:10
+msgid "Krydslisten er gjort op til og med barvagten d."
+msgstr "The tab is done up to and including the bar shift the"
+
+#: bartab/templates/bartab.html:13 bartab/templates/bartab.html:22
+msgid "Saldo"
+msgstr "Balance"
+
+#: bartab/templates/bartab.html:14
+msgid "Total forbrug"
+msgstr "Total consumption"
+
+#: bartab/templates/bartab.html:19 bartenders/templates/barplan.html:19
+msgid "Dato"
+msgstr "Date"
+
+#: bartab/templates/bartab.html:20
+msgid "Indsat"
+msgstr "Deposited"
+
+#: bartab/templates/bartab.html:21
+msgid "Køb"
+msgstr "Purchases"
+
+#: bartab/templates/bartab.html:37
+#| msgid "er ikke bartender."
+msgid "er ikke på krydslisten."
+msgstr "is not on the tab."
 
 #: bartenders/models.py:51
 msgid "Fulde navn"
@@ -73,10 +107,6 @@ msgstr "Show current"
 msgid "Vis også tidligere"
 msgstr "Also show earlier"
 
-#: bartenders/templates/barplan.html:19
-msgid "Dato"
-msgstr "Date"
-
 #: bartenders/templates/barplan.html:20
 msgid "Ansvarlig"
 msgstr "Responsible"
@@ -99,7 +129,6 @@ msgid "Ansvarlige"
 msgstr "Responsible"
 
 #: bartenders/templates/bartender_info.html:38
-#| msgid "Bartender"
 msgid "Bartender status"
 msgstr "Bartender status"
 
@@ -243,7 +272,6 @@ msgid "Bartendertilmeldingen er lukket."
 msgstr "Bartender applications are closed."
 
 #: events/templates/events.html:8
-#| msgid "Bartendere"
 msgid "Bartender events"
 msgstr "Bartender events"
 
@@ -279,7 +307,6 @@ msgstr ""
 "requirements"
 
 #: events/templates/events.html:26
-#| msgid "er ikke bartender."
 msgid "Man er aktiv bartender."
 msgstr "You are an active bartender"
 
@@ -311,16 +338,14 @@ msgid "Lokation"
 msgstr "Location"
 
 #: events/templates/events.html:39
-#, fuzzy
 #| msgid "Bestyrelsen"
 msgid "Beskrivelse"
-msgstr "Board"
+msgstr "Description"
 
 #: events/templates/events.html:42
-#, fuzzy
 #| msgid "Bartendertilmelding"
 msgid "Tilmelding"
-msgstr "Bartender application"
+msgstr "Sign up"
 
 #: events/templates/events.html:59
 msgid "Tilmeldte"
