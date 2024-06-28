@@ -59,6 +59,7 @@ django==3.2.4
     #   django-picklefield
     #   django-recaptcha
     #   django-recurrence
+    #   django-rosetta
     #   django-timezone-field
     #   djangorestframework
 django-bootstrap-datepicker-plus==3.0.5
@@ -85,6 +86,8 @@ django-recaptcha==2.0.6
     # via -r requirements.in
 django-recurrence==1.10.3
     # via django-ical
+django-rosetta==0.9.9
+    # via -r requirements.in
 django-timezone-field==4.1.2
     # via django-celery-beat
 djangorestframework==3.12.4
@@ -121,6 +124,8 @@ pickleshare==0.7.5
     # via ipython
 pillow==8.2.0
     # via -r requirements.in
+polib==1.2.0
+    # via django-rosetta
 prompt-toolkit==3.0.18
     # via
     #   click-repl
@@ -156,7 +161,9 @@ pytz==2021.1
 redis==5.0.7
     # via celery
 requests==2.32.3
-    # via requests-html
+    # via
+    #   django-rosetta
+    #   requests-html
 requests-html==0.10.0
     # via -r requirements.in
 six==1.16.0
