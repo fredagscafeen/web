@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 13:48+0200\n"
+"POT-Creation-Date: 2024-06-28 20:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,45 +18,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: bartenders/migrations/0001_initial.py:29
-#: bartenders/migrations/0001_initial.py:92
+#: bartenders/models.py:51
 msgid "Fulde navn"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:33
-#: bartenders/migrations/0001_initial.py:96
+#: bartenders/models.py:52
 msgid "Brugernavn"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:40
-#: bartenders/migrations/0001_initial.py:103
+#: bartenders/models.py:55
 msgid "Studienummer"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:46
-#: bartenders/migrations/0001_initial.py:109
+#: bartenders/models.py:58
 msgid "Telefonnummer"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:64
-#: bartenders/migrations/0001_initial.py:127
+#: bartenders/models.py:65
 msgid "T-shirt størrelse"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:72
+#: bartenders/models.py:72
 msgid "Jeg foretrækker ikke at have nogle sene barvagter"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:130
+#: bartenders/models.py:228
+msgid "til"
+msgstr ""
+
+#: bartenders/models.py:233
 msgid "Studie"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:131
+#: bartenders/models.py:234
 msgid "Årgang"
 msgstr ""
 
-#: bartenders/migrations/0001_initial.py:136
+#: bartenders/models.py:236
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
+msgstr ""
+
+#: bartenders/templates/barplan.html:8 web/templates/base.html:60
+msgid "Barplan"
+msgstr ""
+
+#: bartenders/templates/barplan.html:11 bartenders/templates/barplan.html:52
+msgid "Vis nuværende"
+msgstr ""
+
+#: bartenders/templates/barplan.html:13 bartenders/templates/barplan.html:54
+msgid "Vis også tidligere"
+msgstr ""
+
+#: bartenders/templates/barplan.html:19
+msgid "Dato"
+msgstr ""
+
+#: bartenders/templates/barplan.html:20
+msgid "Ansvarlig"
+msgstr ""
+
+#: bartenders/templates/barplan.html:21 web/templates/base.html:61
+msgid "Bartendere"
+msgstr ""
+
+#: bartenders/templates/barplan.html:49
+msgid "Pantvagter"
+msgstr ""
+
+#: bartenders/templates/barplan.html:60
+msgid "Uge"
+msgstr ""
+
+#: bartenders/templates/barplan.html:61
+msgid "Ansvarlige"
 msgstr ""
 
 #: bartenders/templates/index.html:8
@@ -128,14 +163,6 @@ msgstr "Engelsk"
 
 #: web/templates/base.html:59
 msgid "Forside"
-msgstr ""
-
-#: web/templates/base.html:60
-msgid "Barplan"
-msgstr ""
-
-#: web/templates/base.html:61
-msgid "Bartendere"
 msgstr ""
 
 #: web/templates/base.html:65

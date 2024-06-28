@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 13:48+0200\n"
-"PO-Revision-Date: 2024-06-27 13:28+0050\n"
+"POT-Creation-Date: 2024-06-28 20:48+0200\n"
+"PO-Revision-Date: 2024-06-28 21:44+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,46 +19,81 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: bartenders/migrations/0001_initial.py:29
-#: bartenders/migrations/0001_initial.py:92
+#: bartenders/models.py:51
 msgid "Fulde navn"
 msgstr "Full name"
 
-#: bartenders/migrations/0001_initial.py:33
-#: bartenders/migrations/0001_initial.py:96
+#: bartenders/models.py:52
 msgid "Brugernavn"
 msgstr "Username"
 
-#: bartenders/migrations/0001_initial.py:40
-#: bartenders/migrations/0001_initial.py:103
+#: bartenders/models.py:55
 msgid "Studienummer"
 msgstr "Study number"
 
-#: bartenders/migrations/0001_initial.py:46
-#: bartenders/migrations/0001_initial.py:109
+#: bartenders/models.py:58
 msgid "Telefonnummer"
 msgstr "Phone number"
 
-#: bartenders/migrations/0001_initial.py:64
-#: bartenders/migrations/0001_initial.py:127
+#: bartenders/models.py:65
 msgid "T-shirt størrelse"
 msgstr "T-shirt size"
 
-#: bartenders/migrations/0001_initial.py:72
+#: bartenders/models.py:72
 msgid "Jeg foretrækker ikke at have nogle sene barvagter"
 msgstr "I prefer to not have any late shifts"
 
-#: bartenders/migrations/0001_initial.py:130
+#: bartenders/models.py:228
+msgid "til"
+msgstr "to"
+
+#: bartenders/models.py:233
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/migrations/0001_initial.py:131
+#: bartenders/models.py:234
 msgid "Årgang"
 msgstr "Year"
 
-#: bartenders/migrations/0001_initial.py:136
+#: bartenders/models.py:236
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr "Any additional information for the board can be written here"
+
+#: bartenders/templates/barplan.html:8 web/templates/base.html:60
+msgid "Barplan"
+msgstr "Bar Plan"
+
+#: bartenders/templates/barplan.html:11 bartenders/templates/barplan.html:52
+msgid "Vis nuværende"
+msgstr "Show current"
+
+#: bartenders/templates/barplan.html:13 bartenders/templates/barplan.html:54
+msgid "Vis også tidligere"
+msgstr "Also show earlier"
+
+#: bartenders/templates/barplan.html:19
+msgid "Dato"
+msgstr "Date"
+
+#: bartenders/templates/barplan.html:20
+msgid "Ansvarlig"
+msgstr "Responsible"
+
+#: bartenders/templates/barplan.html:21 web/templates/base.html:61
+msgid "Bartendere"
+msgstr "Bartenders"
+
+#: bartenders/templates/barplan.html:49
+msgid "Pantvagter"
+msgstr "Deposit shifts"
+
+#: bartenders/templates/barplan.html:60
+msgid "Uge"
+msgstr "Week"
+
+#: bartenders/templates/barplan.html:61
+msgid "Ansvarlige"
+msgstr "Responsible"
 
 #: bartenders/templates/index.html:8
 msgid ""
@@ -95,8 +130,8 @@ msgid ""
 "begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere."
 msgstr ""
 "In addition to this, you are invited to our annual events for bartenders, "
-"such as the Summer Party and the Christmas Lunch. In addition, there will be "
-"ongoing cool events, such as beer tasting and the like. All free for "
+"such as the Summer Party and the Christmas Lunch. In addition, there will be"
+" ongoing cool events, such as beer tasting and the like. All free for "
 "bartenders."
 
 #: bartenders/templates/index.html:16
@@ -121,35 +156,27 @@ msgstr "Bartender applications are closed."
 
 #: fredagscafeen/admin_filters.py:30
 msgid "All"
-msgstr ""
+msgstr "All"
 
 #: fredagscafeen/admin_filters.py:30
 msgid "Yes"
-msgstr ""
+msgstr "Yes"
 
 #: fredagscafeen/admin_filters.py:30
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: fredagscafeen/settings/base.py:262
 msgid "Danish"
-msgstr ""
+msgstr "Danish"
 
 #: fredagscafeen/settings/base.py:263
 msgid "English"
-msgstr ""
+msgstr "English"
 
 #: web/templates/base.html:59
 msgid "Forside"
 msgstr "Home"
-
-#: web/templates/base.html:60
-msgid "Barplan"
-msgstr "Bar Plan"
-
-#: web/templates/base.html:61
-msgid "Bartendere"
-msgstr "Bartenders"
 
 #: web/templates/base.html:65
 msgid "Udlejning"

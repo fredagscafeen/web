@@ -225,7 +225,8 @@ class BoardMemberPeriod(models.Model):
 
     def __str__(self):
         start_year = self.start_date.year
-        return f"{start_year} / {start_year + 1} ({self.start_date} {_("til")} {self.end_date_display})"
+        til = _("til")
+        return f"{start_year} / {start_year + 1} ({self.start_date} {til} {self.end_date_display})"
 
 
 class BartenderApplication(BartenderCommon):
