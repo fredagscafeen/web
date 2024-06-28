@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 21:58+0200\n"
+"POT-Creation-Date: 2024-06-28 22:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,10 +63,12 @@ msgid "Barplan"
 msgstr ""
 
 #: bartenders/templates/barplan.html:11 bartenders/templates/barplan.html:52
+#: events/templates/events.html:12
 msgid "Vis nuværende"
 msgstr ""
 
 #: bartenders/templates/barplan.html:13 bartenders/templates/barplan.html:54
+#: events/templates/events.html:14
 msgid "Vis også tidligere"
 msgstr ""
 
@@ -221,6 +223,79 @@ msgstr ""
 
 #: bartenders/templates/index.html:27
 msgid "Bartendertilmeldingen er lukket."
+msgstr ""
+
+#: events/templates/events.html:8
+msgid "Bartender events"
+msgstr ""
+
+#: events/templates/events.html:18
+msgid "Tilføj til kalender"
+msgstr ""
+
+#: events/templates/events.html:21
+msgid ""
+"Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
+msgstr ""
+
+#: events/templates/events.html:21
+msgid "Klik for at logge ind."
+msgstr ""
+
+#: events/templates/events.html:23
+msgid ""
+"Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit "
+"lov af bestyrelsen."
+msgstr ""
+
+#: events/templates/events.html:24
+msgid ""
+"Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende "
+"krav"
+msgstr ""
+
+#: events/templates/events.html:26
+msgid "Man er aktiv bartender."
+msgstr ""
+
+#: events/templates/events.html:27
+msgid ""
+"Man har været i en bestyrelse som har været aktiv mellem nu og for et år "
+"siden."
+msgstr ""
+
+#: events/templates/events.html:28
+msgid ""
+"Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre "
+"end en måned siden."
+msgstr ""
+
+#: events/templates/events.html:37
+msgid "Tilmeldingsfrist"
+msgstr ""
+
+#: events/templates/events.html:37
+msgid "for sent"
+msgstr ""
+
+#: events/templates/events.html:38
+msgid "Lokation"
+msgstr ""
+
+#: events/templates/events.html:39
+msgid "Beskrivelse"
+msgstr ""
+
+#: events/templates/events.html:42
+msgid "Tilmelding"
+msgstr ""
+
+#: events/templates/events.html:59
+msgid "Tilmeldte"
+msgstr ""
+
+#: events/templates/events.html:68
+msgid "Navn"
 msgstr ""
 
 #: fredagscafeen/admin_filters.py:30
