@@ -111,7 +111,11 @@ jedi==0.18.0
 kombu==5.3.7
     # via celery
 lxml==5.2.1
-    # via pyquery
+    # via
+    #   lxml-html-clean
+    #   pyquery
+lxml-html-clean==0.1.1
+    # via -r requirements.in
 matplotlib-inline==0.1.2
     # via ipython
 parse==1.19.0
