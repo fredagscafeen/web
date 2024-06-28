@@ -1,20 +1,20 @@
 {% extends 'plain_base.html' %}
 {% load i18n %}
 {% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
 {% block body_content %}
     {{ config.BANNER_HTML|safe }}
     <div class="container wrapper">
         <header class="banner hidden-xs">
             <div class="center-align">
-                <a href="/">
+                <a href="/{{ LANGUAGE_CODE }}/">
                     <h1>
                         <img src="{% static 'images/logo.png' %}" height="50" class="logo">
                         Fredagscaféen
                     </h1>
                 </a>
-                {% get_current_language as LANGUAGE_CODE %}
-                {% get_available_languages as LANGUAGES %}
-                {% get_language_info_list for LANGUAGES as languages %}
                 {% if LANGUAGE_CODE == 'da' %}
                     <a href="/en/">
                         <img src="{% static 'images/unionjac.png' %}" align="right" class="locale">
