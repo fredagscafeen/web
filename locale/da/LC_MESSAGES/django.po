@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 23:03+0200\n"
+"POT-Creation-Date: 2024-06-28 23:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -744,6 +744,51 @@ msgstr ""
 
 #: udlejning/templates/udlejningSpeakers.html:19
 msgid "højtalere"
+msgstr ""
+
+#: web/templates/about.html:26
+msgid "Generel info"
+msgstr ""
+
+#: web/templates/about.html:28
+msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
+msgstr ""
+
+#: web/templates/about.html:29
+msgid "Baren har åbent"
+msgstr ""
+
+#: web/templates/about.html:29
+msgctxt "Baren har åbent alle fredage..."
+msgid "alle"
+msgstr ""
+
+#: web/templates/about.html:29
+msgid "fredage fra klokken 15.00 til vi lukker."
+msgstr ""
+
+#: web/templates/about.html:37
+msgid "Direktion"
+msgstr ""
+
+#: web/templates/about.html:38
+msgid "s direktion består af"
+msgstr ""
+
+#: web/templates/about.html:47
+msgid "Postadresse"
+msgstr ""
+
+#: web/templates/about.html:49
+msgid "Vores postadresse er"
+msgstr ""
+
+#: web/templates/about.html:58
+msgid "Bestyrelsen kan kontaktes på"
+msgstr ""
+
+#: web/templates/about.html:63
+msgid "Vores CVR-nr er"
 msgstr ""
 
 #: web/templates/base.html:59
