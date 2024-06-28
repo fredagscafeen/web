@@ -34,7 +34,9 @@ class UdlejningCommon(models.Model):
     whoPays = models.CharField(
         max_length=140,
         verbose_name=_("Hvem betaler?"),
-        help_text=_("Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller organisation)"),
+        help_text=_(
+            "Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller organisation)"
+        ),
     )
     paymentType = models.CharField(
         max_length=140,
@@ -58,7 +60,9 @@ class UdlejningCommon(models.Model):
     expectedConsummation = models.TextField(
         max_length=140,
         verbose_name=_("Forventet forbrug"),
-        help_text=_("Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?"),
+        help_text=_(
+            "Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?"
+        ),
     )
     comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
 

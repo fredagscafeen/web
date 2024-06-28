@@ -49,7 +49,9 @@ class BartenderCommon(models.Model):
         abstract = True
 
     name = models.CharField(max_length=140, verbose_name=_("Fulde navn"))
-    username = models.CharField(max_length=140, unique=True, verbose_name=_("Brugernavn"))
+    username = models.CharField(
+        max_length=140, unique=True, verbose_name=_("Brugernavn")
+    )
     email = models.CharField(max_length=255, unique=True, blank=True)
     studentNumber = models.IntegerField(
         blank=True, null=True, verbose_name=_("Studienummer")
@@ -69,7 +71,8 @@ class BartenderCommon(models.Model):
 class Bartender(BartenderCommon):
     isActiveBartender = models.BooleanField(default=True)
     prefer_only_early_shifts = models.BooleanField(
-        default=False, verbose_name=_("Jeg foretrækker ikke at have nogle sene barvagter")
+        default=False,
+        verbose_name=_("Jeg foretrækker ikke at have nogle sene barvagter"),
     )
 
     @property
