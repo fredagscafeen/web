@@ -43,11 +43,11 @@
                             Fredagscaféen
                         </a>
                         {% if LANGUAGE_CODE == 'da' %}
-                            <a class="navbar-brand visible-xs-inline" href="/en">
+                            <a class="navbar-brand visible-xs-inline" href="/en/{{request.get_full_path|slice:"4:"}}">
                                 <img src="{% static 'images/unionjac.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
                             </a>
                         {% elif LANGUAGE_CODE == 'en' %}
-                            <a class="navbar-brand visible-xs-inline" href="/da">
+                            <a class="navbar-brand visible-xs-inline" href="/da/{{request.get_full_path|slice:"4:"}}">
                                 <img src="{% static 'images/dannebro.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
                             </a>
                         {% endif %}
