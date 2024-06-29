@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 08:23+0200\n"
-"PO-Revision-Date: 2024-06-29 08:44+0050\n"
+"POT-Creation-Date: 2024-06-29 14:05+0200\n"
+"PO-Revision-Date: 2024-06-29 14:08+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -477,7 +477,6 @@ msgid "Hvor bliver arrangmentet afholdt?"
 msgstr "Where will the event be held?"
 
 #: udlejning/models.py:62
-#| msgid "Total forbrug"
 msgid "Forventet forbrug"
 msgstr "Expected consumption"
 
@@ -558,7 +557,6 @@ msgid "Reservation af fadølsanlæg"
 msgstr "Rental of kegerator"
 
 #: udlejning/templates/udlejning.html:14
-#| msgid "er allerede reserveret følgende dage"
 msgid "Fadølsanlæggene er allerede reserveret følgende dage"
 msgstr "The kegerators are already reserved the following days"
 
@@ -606,6 +604,12 @@ msgstr "events with association to the bar"
 msgid "Interne arrangementer"
 msgstr "Internal events"
 
+#: udlejning/templates/udlejning.html:41
+msgid ""
+"Udelukkende arrangementer der finder sted på universitetet. Dette "
+"inkluderer:"
+msgstr ""
+
 #: udlejning/templates/udlejning.html:43
 msgid "Instittutets arrangementer"
 msgstr "The institute's events"
@@ -617,6 +621,12 @@ msgstr "Special receptions"
 #: udlejning/templates/udlejning.html:48 udlejning/templates/udlejning.html:64
 msgid "Arrangementer med tilknytning"
 msgstr "Events with association"
+
+#: udlejning/templates/udlejning.html:49
+msgid ""
+"Arrangementer der finder sted på universitetet eller andetsteds, kan være af"
+" privat natur. Dette inkluderer:"
+msgstr ""
 
 #: udlejning/templates/udlejning.html:51
 msgid "Eksterne virksomheder, der af en årsag har tilknytning til baren"
@@ -651,27 +661,81 @@ msgstr ""
 msgid "Anmod om udlejning i god tid"
 msgstr "Request rental in good time"
 
-#: udlejning/templates/udlejning.html:88
+#: udlejning/templates/udlejning.html:74
+msgid ""
+"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være"
+" et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
+"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi"
+" ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
+msgstr ""
+"When you borrow a facility, there must be a board member responsible for "
+"practical matters on the day of lending and return. We are all volunteers "
+"and have studies and jobs alongside our board work, and therefore we cannot "
+"be sure of being able to provide a tenured member."
+
+#: udlejning/templates/udlejning.html:76
+msgid "Derfor skal du, for at være sikker på at kunne låne anlægget"
+msgstr "Therefore, to be sure of being able to borrow the facility, you must"
+
+#: udlejning/templates/udlejning.html:76
+msgid "skrive mindst 7 dage i forvejen"
+msgstr "write at least 7 days in advance"
+
+#: udlejning/templates/udlejning.html:77
+msgid ""
+"Vi vil derfor, senest 5 dage før, melde ud hvorvidt nogen i bestyrelsen har "
+"mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver "
+"mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt "
+"udlejning er muligt i god tid, dog er det stadig muligt at kunne låne "
+"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at"
+" der kommer et svar i god tid."
+msgstr ""
+"We will therefore, no later than 5 days before, announce whether someone on "
+"the board has the opportunity to be there during one of the possible times. "
+"If you do not write at least 7 days in advance, we cannot guarantee that we "
+"can announce whether or not renting is possible in good time, however it is "
+"still possible to borrow the facility even if you announce at a bad time, we"
+" just cannot guarantee that there will be an answer in good time."
+
+#: udlejning/templates/udlejning.html:81
 msgid "Generelle informationer"
 msgstr "General information"
 
-#: udlejning/templates/udlejning.html:93
+#: udlejning/templates/udlejning.html:86
 msgid "Der betales per åbnet fustage."
 msgstr "Payment is made per opened keg."
 
-#: udlejning/templates/udlejning.html:96
+#: udlejning/templates/udlejning.html:89
 msgid "Vores primære fadøl er"
 msgstr "Our primary draft beer is"
 
-#: udlejning/templates/udlejning.html:109
+#: udlejning/templates/udlejning.html:93
+#| msgid ""
+#| "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
+#| "(incl. moms)."
+msgid ""
+", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. "
+"moms)"
+msgstr ""
+", which comes in 25 liter kegs. The price is DKK 750 per keg (incl. VAT)"
+
+#: udlejning/templates/udlejning.html:96
+msgid ""
+"Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
+"hjemmeside, som fast kan fås på fad. Dvs."
+msgstr ""
+"In addition to the primary draft beer, you can get the beers listed on "
+"Aarhus Bryghus' website, which are always available on draft. That is"
+
+#: udlejning/templates/udlejning.html:100
 msgid "og"
 msgstr "and"
 
-#: udlejning/templates/udlejning.html:111
+#: udlejning/templates/udlejning.html:102
 msgid "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
 msgstr "(depending on the season). The price is DKK 800 per keg (incl. VAT)"
 
-#: udlejning/templates/udlejning.html:114
+#: udlejning/templates/udlejning.html:105
 msgid ""
 "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
 "(incl. moms)."
@@ -679,7 +743,23 @@ msgstr ""
 "We also sell Magners Cider in kegs, which costs DKK 1250 per keg (incl. "
 "VAT)."
 
-#: udlejning/templates/udlejning.html:127
+#: udlejning/templates/udlejning.html:108
+msgid ""
+"Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
+"pt. men man kan skrive en mail til"
+msgstr ""
+"We have a range of specialty beers available at: (it is not available at the"
+" moment, but you can write an email to"
+
+#: udlejning/templates/udlejning.html:111
+msgid ""
+"Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
+"chips koster 20kr/pose, der betales pr. åbnet enhed."
+msgstr ""
+"In addition, we also deliver soft drinks and chips. Soda costs DKK 10/piece "
+"and chips cost DKK 20/bag, which is paid per opened device."
+
+#: udlejning/templates/udlejning.html:116
 msgid "Ansøgninsformular"
 msgstr "Application form"
 
@@ -805,7 +885,6 @@ msgid "Baren har åbent"
 msgstr "The bar is oben"
 
 #: web/templates/about.html:29
-#| msgid "Til alle"
 msgctxt "Baren har åbent alle fredage..."
 msgid "alle"
 msgstr "every"
@@ -831,7 +910,6 @@ msgid "Vores postadresse er"
 msgstr "Our postal address is"
 
 #: web/templates/about.html:58
-#| msgid "Bestyrelsen gennem tiden"
 msgid "Bestyrelsen kan kontaktes på"
 msgstr "The board can be contacted at"
 
