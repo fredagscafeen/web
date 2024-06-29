@@ -20,7 +20,8 @@
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 {% buttons %}
-                    {% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+                    {% translate "Indsend" as BUTTON_TEXT %}
+                    {% bootstrap_button BUTTON_TEXT button_type="submit" icon="send" button_class="btn-primary" %}
                 {% endbuttons %}
             </form>
         {% else %}
