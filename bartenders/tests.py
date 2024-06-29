@@ -73,7 +73,7 @@ class BartenderApplicationTests(TestCase):
         )
 
         data["g-recaptcha-response"] = "PASSED"
-        response = self.client.post("/", data=data)
+        response = self.client.post("/da/", data=data)
         # self.assertRedirects(response, "/")
 
         # Test that application was made
