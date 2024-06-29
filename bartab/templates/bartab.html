@@ -3,22 +3,23 @@
 {% load sub %}
 
 {% block content %}
+{% load i18n %}
 
-<h2>Krydslisteaktivitet</h2>
+<h2>{% translate "Krydslisteaktivitet" %}</h2>
 
-<p>Krydslisten er gjort op til og med barvagten d. {{ update_date }}.</p>
+<p>{% translate "Krydslisten er gjort op til og med barvagten d." %} {{ update_date }}.</p>
 
 {% if object %}
-<h3>Saldo: {{ object.balance_str }}</h3>
-<h3>Total forbrug: {{ total_used }}</h3>
+<h3>{% translate "Saldo" %}: {{ object.balance_str }}</h3>
+<h3>{% translate "Total forbrug" %}: {{ total_used }}</h3>
 
 <table class="table table-bordered">
 	<thead>
 		<tr>
-			<th>Dato</th>
-			<th>Indsat</th>
-			<th>Køb</th>
-			<th>Saldo</th>
+			<th>{% translate "Dato" %}</th>
+			<th>{% translate "Indsat" %}</th>
+			<th>{% translate "Køb" %}</th>
+			<th>{% translate "Saldo" %}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,7 +34,7 @@
 	</tbody>
 </table>
 {% else %}
-<p><b>{{ user.email }} er ikke på krydslisten.</b></p>
+<p><b>{{ user.email }} {% translate "er ikke på krydslisten." %}</b></p>
 {% endif %}
 
 {% endblock %}

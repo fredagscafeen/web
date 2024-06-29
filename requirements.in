@@ -20,3 +20,5 @@ django-constance[database]
 iterfzf
 celery[redis]
 django-celery-beat
+django-rosetta==0.9.9
+lxml_html_clean

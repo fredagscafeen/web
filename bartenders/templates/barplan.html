@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+{% load i18n %}
 {% load static %}
 {% load is_with_user %}
 
-<h2>Barplan</h2>
+<h2>{% translate "Barplan" %}</h2>
 
 {% if show_all %}
-<a href=".">Vis nuværende</a>
+<a href=".">{% translate "Vis nuværende" %}</a>
 {% else %}
-<a href="?show_all">Vis også tidligere</a>
+<a href="?show_all">{% translate "Vis også tidligere" %}</a>
 {% endif %}
 
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
-			<th>Dato</th>
-			<th>Ansvarlig</th>
-			<th>Bartendere</th>
+			<th>{% translate "Dato" %}</th>
+			<th>{% translate "Ansvarlig" %}</th>
+			<th>{% translate "Bartendere" %}</th>
 			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
 			{% endif %}
@@ -46,19 +46,19 @@
 
 <hr>
 
-<h2>Pantvagter</h2>
+<h2>{% translate "Pantvagter" %}</h2>
 
 {% if show_all %}
-<a href=".">Vis nuværende</a>
+<a href=".">{% translate "Vis nuværende" %}</a>
 {% else %}
-<a href="?show_all">Vis også tidligere</a>
+<a href="?show_all">{% translate "Vis også tidligere" %}</a>
 {% endif %}
 
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
-			<th>Uge</th>
-			<th>Ansvarlige</th>
+			<th>{% translate "Uge" %}</th>
+			<th>{% translate "Ansvarlige" %}</th>
 			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
 			{% endif %}

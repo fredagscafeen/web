@@ -3,28 +3,29 @@
 {% load bootstrap3 %}
 
 {% block content %}
+{% load i18n %}
 
-<h2>Bartender events</h2>
+<h2>{% translate "Bartender events" %}</h2>
 
 <p>
 {% if show_all %}
-<a href=".">Vis nuværende</a>
+<a href=".">{% translate "Vis nuværende" %}</a>
 {% else %}
-<a href="?show_all">Vis også tidligere</a>
+<a href="?show_all">{% translate "Vis også tidligere" %}</a>
 {% endif %}
 </p>
 
-<p><a href="{% url 'event_feed' %}">Tilføj til kalender</a></p>
+<p><a href="{% url 'event_feed' %}">{% translate "Tilføj til kalender" %}</a></p>
 
 {% if not bartender %}
-<p><b>Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events. <a href="/login/?next=/events/">Klik for at logge ind.</a></b></p>
+<p><b>{% translate "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events." %} <a href="/login/?next=/events/">{% translate "Klik for at logge ind." %}</a></b></p>
 {% elif not may_attend %}
-<p><b>Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen.</b></p>
-<p>Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav:
+<p><b>{% translate "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen." %}</b></p>
+<p>{% translate "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav" %}:
 <ul>
-	<li>Man er aktiv bartender.</li>
-	<li>Man har været i en bestyrelse som har været aktiv mellem nu og for et år siden.</li>
-	<li>Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden.</li>
+	<li>{% translate "Man er aktiv bartender." %}</li>
+	<li>{% translate "Man har været i en bestyrelse som har været aktiv mellem nu og for et år siden." %}</li>
+	<li>{% translate "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden." %}</li>
 </ul>
 </p>
 {% endif %}
@@ -33,12 +34,12 @@
 	{% with events_data.event as event %}
 		<h3>{{ event.start_datetime.date }} - {{ event.name }}</h3>
 		<p><b>{{ event.start_datetime }}</b> til <b>{{ event.end_datetime }}</b>.</p>
-		<p><b>Tilmeldingsfrist:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} (for sent){% endif %}</p>
-		<p><b>Lokation:</b> {{ event.location }}</p>
-		<p><b>Beskrivelse:</b></p>
+		<p><b>{% translate "Tilmeldingsfrist" %}:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} ({% translate "for sent" %}){% endif %}</p>
+		<p><b>{% translate "Lokation" %}:</b> {{ event.location }}</p>
+		<p><b>{% translate "Beskrivelse" %}:</b></p>
 		<p style="white-space: pre-line;">{{ event.description }}</p>
 		{% if events_data.form %}
-			<h4>Tilmelding</h4>
+			<h4>{% translate "Tilmelding" %}</h4>
 			<form method="post">
 				<fieldset{% if event.deadline_exceeded %} disabled{% endif %}>
 					{% csrf_token %}
@@ -55,7 +56,7 @@
 				<div class ="panel-heading" role="tab" id="coll">
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse" href="#collapse_{{ forloop.counter }}" aria-expanded="false">
-							Tilmeldte ({{ event.attending_count }})
+							{% translate "Tilmeldte" %} ({{ event.attending_count }})
 						</a>
 					</h4>
 				</div>
@@ -64,7 +65,7 @@
 						<table class="table table-striped tablesorter">
 							<thead>
 								<tr>
-									<th>Navn</th>
+									<th>{% translate "Navn" %}</th>
 									{% for choice in event.sorted_choices %}
 										<th>{{ choice.name }}</th>
 									{% endfor %}

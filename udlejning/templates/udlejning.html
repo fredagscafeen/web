@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load bootstrap3 %}
 
 {% block extrahead %}
@@ -8,123 +8,112 @@
 
 {% block content %}
 <h2>
-		Reservation af fadølsanlæg
+		{% translate "Reservation af fadølsanlæg" %}
 </h2>
 <h4>
-		Fadølsanlæggene er allerede reserveret følgende dage
+		{% translate "Fadølsanlæggene er allerede reserveret følgende dage" %}
 </h4>
 <ul>
 		{% for udlejning in udlejninger %}
 		<li>
 				{{ udlejning.dateFrom }},
-                {% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} Uspecificeret {% endif %} anlæg,
-                reserveret af {{ udlejning.whoReserved }}
+                {% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} {% translate "Uspecificeret" %} {% endif %} {% translate "anlæg,
+                reserveret af" %} {{ udlejning.whoReserved }}
 		</li>
 		{% empty %}
 		<li>
-				Anlæggene er pt ikke reserveret på noget tidspunkt
+				{% translate "Anlæggene er pt ikke reserveret på noget tidspunkt" %}
 		</li>
 		{% endfor %}
 </ul>
 <h3>
-		Regler for udlån
+		{% translate "Regler for udlån" %}
 </h3>
 <p>
-		<i>Disse regler er under revision, og der kan opstå fejl og mangler...</i>
+		<i>{% translate "Disse regler er under revision, og der kan opstå fejl og mangler..." %}</i>
 </p>
 <p>
-		Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde ansøgninsformularen nederst på denne side.
-	Anlæg udlånes kun til <b>interne arrangementer</b> eller til <b>arrangementer med tilknytning til baren</b>.
+		{% translate "Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde ansøgninsformularen nederst på denne side." %}
+	{% translate "Anlæg udlånes kun til" %} <b>{% translate "interne arrangementer" %}</b> {% translate "eller til" %} <b>{% translate "arrangementer med tilknytning til baren" %}</b>.
 </p>
 <p>
-		<b>Interne arrangementer</b>: Udelukkende arrangementer der finder sted på
-	universitetet. Dette inkluderer:
+		<b>{% translate "Interne arrangementer" %}</b>:
+		{% translate "Udelukkende arrangementer der finder sted på universitetet. Dette inkluderer:" %}
 		<ul>
-				<li>Instittutets arrangementer</li>
-				<li>Specialereceptioner</li>
+				<li>{% translate "Instittutets arrangementer" %}</li>
+				<li>{% translate "Specialereceptioner" %}</li>
 		</ul>
 </p>
 <p>
-		<b>Arrangementer med tilknytning</b>: Arrangementer der finder sted på
-	universitetet eller andetsteds, kan være af privat natur. Dette inkluderer:
+		<b>{% translate "Arrangementer med tilknytning" %}</b>:
+		{% translate "Arrangementer der finder sted på universitetet eller andetsteds, kan være af privat natur. Dette inkluderer:" %}
 		<ul>
-				<li>Eksterne virksomheder, der af en årsag har tilknytning til baren</li>
-				<li>Arrangementer af bestyrelsesmedlemmer</li>
-				<li>I nogle tilfælde, arrangementer af bartendere</li>
+				<li>{% translate "Eksterne virksomheder, der af en årsag har tilknytning til baren" %}</li>
+				<li>{% translate "Arrangementer af bestyrelsesmedlemmer" %}</li>
+				<li>{% translate "I nogle tilfælde, arrangementer af bartendere" %}</li>
 		</ul>
 </p>
 <p>
-		Indtil videre dækker følgende regler for de to grupper:
+		{% translate "Indtil videre dækker følgende regler for de to grupper" %}:
 </p>
 <p>
-		<b>Interne arrangermenter</b>:
-	Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk.
+		<b>{% translate "Interne arrangermenter" %}</b>:
+	{% translate "Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk." %}
 </p>
 <p>
-		<b>Arrangementer med tilknytning</b>:
-	Her inkluderer udlån udelukkende oplås og aflås af fadølsanlægget. Det vil
+		<b>{% translate "Arrangementer med tilknytning" %}</b>:
+	{% translate "Her inkluderer udlån udelukkende oplås og aflås af fadølsanlægget. Det vil
 	sige at anlægget skal afhentes i Ada-0, og afleveres rengjort i Ada-0.
 	Afleveringstid af anlægget skal aftales i dialog med den ansvarlige for det
-	praktiske, og er ikke nødvendigvis samme dag.
+	praktiske, og er ikke nødvendigvis samme dag." %}
 </p>
 <h4>
-		Anmod om udlejning i god tid
+		{% translate "Anmod om udlejning i god tid" %}
 </h4>
 <p>
-		Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være
-	et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og har
-	studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi ikke
-	være sikre på at kunne stille et besyterelsesmedlem til rådighed.
+		{% translate "Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed." %}
 		<br/>
-		Derfor skal du, for at være sikker på at kunne låne anlægget, <b>skrive mindst 7 dage i forvejen</b>. Vi vil derfor, senest 5 dage før, melde ud
-	hvorvidt nogen i bestyrelsen har mulighed for at være der i en af de mulige
-	tidsrum. Hvis ikke du skriver mindst 7 dage i forvejen, kan vi ikke garantere
-	at vi kan melde ud hvorvidt udlejning er muligt i god tid, dog er det stadig
-	muligt at kunne låne anlægget selv hvis man melder ud i dårlig tid, vi kan
-	blot ikke garantere at der kommer et svar i god tid.
+		{% translate "Derfor skal du, for at være sikker på at kunne låne anlægget" %}, <b>{% translate "skrive mindst 7 dage i forvejen" %}</b>.
+		{% translate "Vi vil derfor, senest 5 dage før, melde ud hvorvidt nogen i bestyrelsen har mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt udlejning er muligt i god tid, dog er det stadig muligt at kunne låne anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at der kommer et svar i god tid." %}
 </p>
 <h3>
 		<span class="mw-headline" id="Generelle_informationer">
-				Generelle informationer
+				{% translate "Generelle informationer" %}
 		</span>
 </h3>
 <ul>
 		<li>
-				Der betales per åbnet fustage.
+				{% translate "Der betales per åbnet fustage." %}
 		</li>
 		<li>
-				Vores primære fadøl er
+				{% translate "Vores primære fadøl er" %}
 				<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/extra-pilsner/" rel="nofollow">
 						Aarhus Ekstra Pilsner
 				</a>
-				, som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage
-		(incl. moms)
+				{% translate ", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)" %}
 		</li>
 		<li>
-				Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus'
-		hjemmeside, som fast kan fås på fad. Dvs.
+				{% translate "Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' hjemmeside, som fast kan fås på fad. Dvs." %}
 		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/klosterbryg/" rel="nofollow">Klosterbryg</a>,
 		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/foraarsbryg/" rel="nofollow">Forårsbryg</a>,
 		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/celebration/" rel="nofollow">Celebration</a>
-		og
+		{% translate "og" %}
 		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/blondie/" rel="nofollow">Blondie</a>
-		(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)
+		{% translate "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)" %}
 		</li>
 		<li>
-				Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage (incl. moms).
+				{% translate "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage (incl. moms)." %}
 		</li>
 		<li>
-				Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig
-		pt. men man kan skrive en mail til <a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">best@fredagscafeen.dk</a>)
+				{% translate "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig pt. men man kan skrive en mail til" %} <a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">best@fredagscafeen.dk</a>)
 		</li>
 		<li>
-				Derudover leverer vi også sodavand og chips. Sodavand koster 5 kr/stk og
-		chips koster 20kr/pose, der betales pr. åbnet enhed.
+				{% translate "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og chips koster 20kr/pose, der betales pr. åbnet enhed." %}
 		</li>
 </ul>
 <h3>
 		<span class="mw-headline" id="rentingform">
-				Ansøgninsformular
+				{% translate "Ansøgninsformular" %}
 		</span>
 </h3>
 <form method="post" action="/udlejning/#rentingform">

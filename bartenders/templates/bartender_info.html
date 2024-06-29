@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 {% load bootstrap3 %}
 
@@ -35,34 +35,34 @@ $(function() {
 {% buttons %}
     {% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
 {% endbuttons %}
-<p><b>Bartender status:</b>
+<p><b>{% translate "Bartender status" %}:</b>
 {% if object.isActiveBartender %}
-    Aktiv
-    <button type="submit" class="btn btn-danger pull-right" name="deactivate">Bliv inaktiv</button>
+    {% translate "Aktiv" %}
+    <button type="submit" class="btn btn-danger pull-right" name="deactivate">{% translate "Bliv inaktiv" %}</button>
 {% else %}
-    Inaktiv
-    <span class="pull-right">(Hvis du gerne vil være aktive igen, så kontakt <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>)</span>
+    {% translate "Inaktiv" %}
+    <span class="pull-right">({% translate "Hvis du gerne vil være aktive igen, så kontakt" %} <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>)</span>
 {% endif %}
 </p>
 {% if not object.isActiveBartender %}
-    <p>Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne.</p>
+    <p>{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}</p>
 {% endif %}
 <br>
-<p><b>Mailinglist status:</b>
+<p><b>{% translate "Mailinglist status" %}:</b>
 {% if object.is_on_mailing_list %}
-    På mailinglisten
+    {% translate "På mailinglisten" %}
     {% if not object.isActiveBartender %}
-        <button type="submit" class="btn btn-danger pull-right" name="unsubscribe_maillist">Meld dig af mailinglisten</button>
+        <button type="submit" class="btn btn-danger pull-right" name="unsubscribe_maillist">{% translate "Meld dig af mailinglisten" %}</button>
     {% endif %}
 {% else %}
-    Ikke på mailinglisten
-    <button type="submit" class="btn btn-success pull-right" name="subscribe_maillist">Meld dig på mailinglisten</button>
+    {% translate "Ikke på mailinglisten" %}
+    <button type="submit" class="btn btn-success pull-right" name="subscribe_maillist">{% translate "Meld dig på mailinglisten" %}</button>
 {% endif %}
 </p>
 <br>
 {% bootstrap_form form %}
 
-<label>Datoer, hvor du ikke har mulighed for at stå i bar:</label>
+<label>{% translate "Datoer, hvor du ikke har mulighed for at stå i bar" %}:</label>
 <table id="unavailable_dates_table" class="table table-bordered table-hover">
 <tbody>
 {% for first_date, dates in dates_table %}
@@ -84,7 +84,7 @@ $(function() {
 {% endbuttons %}
 </form>
 {% else %}
-<p><b>{{ user.email }} er ikke bartender.</b></p>
+<p><b>{{ user.email }} {% translate "er ikke bartender." %}</b></p>
 {% endif %}
 
 {% endblock %}

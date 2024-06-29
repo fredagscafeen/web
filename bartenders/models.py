@@ -10,6 +10,7 @@ from django.template import Context, Template
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from fredagscafeen.email import send_template_email
 
@@ -47,28 +48,31 @@ class BartenderCommon(models.Model):
     class Meta:
         abstract = True
 
-    name = models.CharField(max_length=140, verbose_name="Fulde navn")
-    username = models.CharField(max_length=140, unique=True, verbose_name="Brugernavn")
+    name = models.CharField(max_length=140, verbose_name=_("Fulde navn"))
+    username = models.CharField(
+        max_length=140, unique=True, verbose_name=_("Brugernavn")
+    )
     email = models.CharField(max_length=255, unique=True, blank=True)
     studentNumber = models.IntegerField(
-        blank=True, null=True, verbose_name="Studienummer"
+        blank=True, null=True, verbose_name=_("Studienummer")
     )
     phoneNumber = models.IntegerField(
-        blank=True, null=True, verbose_name="Telefonnummer"
+        blank=True, null=True, verbose_name=_("Telefonnummer")
     )
     tshirt_size = models.CharField(
         choices=TSHIRT_SIZE_CHOICES,
         max_length=10,
         blank=True,
         null=True,
-        verbose_name="T-shirt størrelse",
+        verbose_name=_("T-shirt størrelse"),
     )
 
 
 class Bartender(BartenderCommon):
     isActiveBartender = models.BooleanField(default=True)
     prefer_only_early_shifts = models.BooleanField(
-        default=False, verbose_name="Jeg foretrækker ikke at have nogle sene barvagter"
+        default=False,
+        verbose_name=_("Jeg foretrækker ikke at have nogle sene barvagter"),
     )
 
     @property
@@ -224,14 +228,15 @@ class BoardMemberPeriod(models.Model):
 
     def __str__(self):
         start_year = self.start_date.year
-        return f"{start_year} / {start_year + 1} ({self.start_date} til {self.end_date_display})"
+        til = _("til")
+        return f"{start_year} / {start_year + 1} ({self.start_date} {til} {self.end_date_display})"
 
 
 class BartenderApplication(BartenderCommon):
-    study = models.CharField(max_length=50, verbose_name="Studie")
-    study_year = models.IntegerField(verbose_name="Årgang")
+    study = models.CharField(max_length=50, verbose_name=_("Studie"))
+    study_year = models.IntegerField(verbose_name=_("Årgang"))
     info = models.TextField(
-        blank=True, help_text="Eventuelle ekstra info til bestyrelsen skrives her"
+        blank=True, help_text=_("Eventuelle ekstra info til bestyrelsen skrives her")
     )
 
     created = models.DateTimeField(auto_now_add=True)

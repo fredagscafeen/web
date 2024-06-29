@@ -1,11 +1,12 @@
 {% extends "admin/change_form.html" %}
 {% block after_related_objects %}
+{% load i18n %}
 <table>
 	<thead>
 		<tr>
-			<th>Bartender</th>
-			<th>Email</th>
-			<th>Antal vagter</th>
+			<th>{% translate "Bartender" %}</th>
+			<th>{% translate "Email" %}</th>
+			<th>{% translate "Antal vagter" %}</th>
 		</tr>
 	</thead>
 	<tbody>

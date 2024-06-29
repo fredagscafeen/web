@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load i18n %}
 
-<h2>Guides</h2>
+<h2>{% translate "Guides" %}</h2>
 
 <p>
-	Her kommer alle de lækre guides til at ligge, som er rare at have når man involverer sig i driften af Fredagscaféen.
+	{% translate "Her ligger alle de lækre guides, som er rare at have, når man involverer sig i driften af" context "Fredagscaféen" %} Fredagscaféen.
 </p>
 <p>
+	{% translate "Vi forsøger at opdaterer dem løbende, men forstå at de ikke altid afspejler virkeligheden fuldt ud." %}
+</p>
+<!--<p>
 	Alle guides er desværre ikke kommet op endnu, da de forsvandt med den gamle wiki, men vi arbejder løbende på at få
 	flere og flere op.
-</p>
+</p>-->
 
 {% for category, guides in guides %}
 <div class="panel panel-default">
