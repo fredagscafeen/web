@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 19:40+0200\n"
+"POT-Creation-Date: 2024-06-29 23:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -249,7 +249,7 @@ msgid ""
 "indebærer."
 msgstr ""
 
-#: bartenders/templates/index.html:23
+#: bartenders/templates/index.html:23 udlejning/templates/udlejning.html:120
 msgid "Indsend"
 msgstr ""
 
@@ -821,6 +821,12 @@ msgstr ""
 
 #: udlejning/templates/udlejningSpeakers.html:19
 msgid "højtalere"
+msgstr ""
+
+#: udlejning/views.py:40
+msgid ""
+"Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til "
+"dig med et svar hurtigst muligt."
 msgstr ""
 
 #: web/templates/about.html:26
