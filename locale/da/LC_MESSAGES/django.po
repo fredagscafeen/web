@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-28 23:08+0200\n"
+"POT-Creation-Date: 2024-06-29 08:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,39 +54,39 @@ msgstr ""
 msgid "Fulde navn"
 msgstr ""
 
-#: bartenders/models.py:52
+#: bartenders/models.py:53
 msgid "Brugernavn"
 msgstr ""
 
-#: bartenders/models.py:55
+#: bartenders/models.py:57
 msgid "Studienummer"
 msgstr ""
 
-#: bartenders/models.py:58
+#: bartenders/models.py:60
 msgid "Telefonnummer"
 msgstr ""
 
-#: bartenders/models.py:65
+#: bartenders/models.py:67
 msgid "T-shirt størrelse"
 msgstr ""
 
-#: bartenders/models.py:72
+#: bartenders/models.py:75
 msgid "Jeg foretrækker ikke at have nogle sene barvagter"
 msgstr ""
 
-#: bartenders/models.py:228
+#: bartenders/models.py:231
 msgid "til"
 msgstr ""
 
-#: bartenders/models.py:233
+#: bartenders/models.py:236
 msgid "Studie"
 msgstr ""
 
-#: bartenders/models.py:234
+#: bartenders/models.py:237
 msgid "Årgang"
 msgstr ""
 
-#: bartenders/models.py:236
+#: bartenders/models.py:239
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Uge"
 msgstr ""
 
-#: bartenders/templates/barplan.html:61 udlejning/models.py:103
+#: bartenders/templates/barplan.html:61 udlejning/models.py:107
 msgid "Ansvarlige"
 msgstr ""
 
@@ -306,7 +306,7 @@ msgstr ""
 msgid "for sent"
 msgstr ""
 
-#: events/templates/events.html:38 udlejning/models.py:55
+#: events/templates/events.html:38 udlejning/models.py:57
 msgid "Lokation"
 msgstr ""
 
@@ -363,9 +363,10 @@ msgid "Guides"
 msgstr ""
 
 #: guides/templates/guides.html:9
+msgctxt "Fredagscaféen"
 msgid ""
 "Her ligger alle de lækre guides, som er rare at have, når man involverer sig "
-"i driften af Fredagscaféen."
+"i driften af"
 msgstr ""
 
 #: guides/templates/guides.html:12
@@ -418,103 +419,103 @@ msgstr ""
 msgid "Hvem betaler?"
 msgstr ""
 
-#: udlejning/models.py:37
+#: udlejning/models.py:38
 msgid ""
 "Hvem skal regningen sendes til? (Fulde navn på person, virksomhed eller "
 "organisation)"
 msgstr ""
 
-#: udlejning/models.py:42
+#: udlejning/models.py:44
 msgid "Betalingsform"
 msgstr ""
 
-#: udlejning/models.py:43
+#: udlejning/models.py:45
 msgid "Hvordan bliver der betalt?"
 msgstr ""
 
-#: udlejning/models.py:47
+#: udlejning/models.py:49
 msgid "EAN-nummer"
 msgstr ""
 
-#: udlejning/models.py:50
+#: udlejning/models.py:52
 msgid "Skal kun angives, hvis der skal faktureres til et EAN-nummer"
 msgstr ""
 
-#: udlejning/models.py:56
+#: udlejning/models.py:58
 msgid "Hvor bliver arrangmentet afholdt?"
 msgstr ""
 
-#: udlejning/models.py:60
+#: udlejning/models.py:62
 msgid "Forventet forbrug"
 msgstr ""
 
-#: udlejning/models.py:61
+#: udlejning/models.py:64
 msgid ""
 "Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af "
 "hver type?"
 msgstr ""
 
-#: udlejning/models.py:63
+#: udlejning/models.py:67
 msgid "Kommentarer"
 msgstr ""
 
-#: udlejning/models.py:71
+#: udlejning/models.py:75
 msgid "Intern"
 msgstr ""
 
-#: udlejning/models.py:72
+#: udlejning/models.py:76
 msgid "Ekstern"
 msgstr ""
 
-#: udlejning/models.py:76
+#: udlejning/models.py:80
 msgid "Regning ikke sendt"
 msgstr ""
 
-#: udlejning/models.py:77
+#: udlejning/models.py:81
 msgid "Regning sendt"
 msgstr ""
 
-#: udlejning/models.py:78
+#: udlejning/models.py:82
 msgid "Regning betalt"
 msgstr ""
 
-#: udlejning/models.py:82
+#: udlejning/models.py:86
 msgid "Lille"
 msgstr ""
 
-#: udlejning/models.py:83
+#: udlejning/models.py:87
 msgid "Mellem"
 msgstr ""
 
-#: udlejning/models.py:90
+#: udlejning/models.py:94
 msgid "Fadølsanlæg"
 msgstr ""
 
-#: udlejning/models.py:91
+#: udlejning/models.py:95
 msgid "Hvilket anlæg vil I låne?"
 msgstr ""
 
-#: udlejning/models.py:97
+#: udlejning/models.py:101
 msgid "Tilknytning"
 msgstr ""
 
-#: udlejning/models.py:100
+#: udlejning/models.py:104
 msgid "Faktisk forbrug"
 msgstr ""
 
-#: udlejning/models.py:105
+#: udlejning/models.py:109
 msgid "Send regning til"
 msgstr ""
 
-#: udlejning/models.py:108
+#: udlejning/models.py:112
 msgid "Fakturanummer"
 msgstr ""
 
-#: udlejning/models.py:115
+#: udlejning/models.py:119
 msgid "Total pris"
 msgstr ""
 
-#: udlejning/models.py:118
+#: udlejning/models.py:122
 msgid "Betalingsdato"
 msgstr ""
 

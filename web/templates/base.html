@@ -16,11 +16,11 @@
                     </h1>
                 </a>
                 {% if LANGUAGE_CODE == 'da' %}
-                    <a href="/en/">
+                    <a href="/en/{{request.get_full_path|slice:"4:"}}">
                         <img src="{% static 'images/unionjac.png' %}" align="right" class="locale">
                     </a>
                 {% elif LANGUAGE_CODE == 'en' %}
-                    <a href="/da/">
+                    <a href="/da/{{request.get_full_path|slice:"4:"}}">
                         <img src="{% static 'images/dannebro.png' %}" align="right" class="locale">
                     </a>
                 {% endif %}
