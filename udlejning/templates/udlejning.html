@@ -17,8 +17,8 @@
 		{% for udlejning in udlejninger %}
 		<li>
 				{{ udlejning.dateFrom }},
-                {% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} {% translate "Uspecificeret" %} {% endif %} {% translate "anlæg,
-                reserveret af" %} {{ udlejning.whoReserved }}
+                {% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} {% translate "Uspecificeret" %} {% endif %}
+				{% translate "anlæg, reserveret af" %} {{ udlejning.whoReserved }}
 		</li>
 		{% empty %}
 		<li>
@@ -62,10 +62,7 @@
 </p>
 <p>
 		<b>{% translate "Arrangementer med tilknytning" %}</b>:
-	{% translate "Her inkluderer udlån udelukkende oplås og aflås af fadølsanlægget. Det vil
-	sige at anlægget skal afhentes i Ada-0, og afleveres rengjort i Ada-0.
-	Afleveringstid af anlægget skal aftales i dialog med den ansvarlige for det
-	praktiske, og er ikke nødvendigvis samme dag." %}
+	{% translate "Her inkluderer udlån udelukkende oplås og aflås af fadølsanlægget. Det vil sige at anlægget skal afhentes i Ada-0, og afleveres rengjort i Ada-0. Afleveringstid af anlægget skal aftales i dialog med den ansvarlige for det praktiske, og er ikke nødvendigvis samme dag." %}
 </p>
 <h4>
 		{% translate "Anmod om udlejning i god tid" %}
@@ -120,7 +117,8 @@
 	{% csrf_token %}
 	{% bootstrap_form form %}
 	{% buttons %}
-		{% bootstrap_button "Indsend" button_type="submit" icon="send" button_class="btn-primary" %}
+		{% translate "Indsend" as BUTTON_TEXT %}
+		{% bootstrap_button BUTTON_TEXT button_type="submit" icon="send" button_class="btn-primary" %}
 	{% endbuttons %}
 </form>
 {% endblock %}

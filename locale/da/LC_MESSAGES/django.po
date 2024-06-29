@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 14:05+0200\n"
+"POT-Creation-Date: 2024-06-29 19:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -249,7 +249,11 @@ msgid ""
 "indebærer."
 msgstr ""
 
-#: bartenders/templates/index.html:27
+#: bartenders/templates/index.html:23
+msgid "Indsend"
+msgstr ""
+
+#: bartenders/templates/index.html:28
 msgid "Bartendertilmeldingen er lukket."
 msgstr ""
 
@@ -531,6 +535,10 @@ msgstr ""
 msgid "Uspecificeret"
 msgstr ""
 
+#: udlejning/templates/udlejning.html:21
+msgid "anlæg, reserveret af"
+msgstr ""
+
 #: udlejning/templates/udlejning.html:25
 msgid "Anlæggene er pt ikke reserveret på noget tidspunkt"
 msgstr ""
@@ -618,11 +626,19 @@ msgid ""
 "og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:71
+#: udlejning/templates/udlejning.html:65
+msgid ""
+"Her inkluderer udlån udelukkende oplås og aflås af fadølsanlægget. Det vil "
+"sige at anlægget skal afhentes i Ada-0, og afleveres rengjort i Ada-0. "
+"Afleveringstid af anlægget skal aftales i dialog med den ansvarlige for det "
+"praktiske, og er ikke nødvendigvis samme dag."
+msgstr ""
+
+#: udlejning/templates/udlejning.html:68
 msgid "Anmod om udlejning i god tid"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:74
+#: udlejning/templates/udlejning.html:71
 msgid ""
 "Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være "
 "et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
@@ -630,15 +646,15 @@ msgid ""
 "ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:76
+#: udlejning/templates/udlejning.html:73
 msgid "Derfor skal du, for at være sikker på at kunne låne anlægget"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:76
+#: udlejning/templates/udlejning.html:73
 msgid "skrive mindst 7 dage i forvejen"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:77
+#: udlejning/templates/udlejning.html:74
 msgid ""
 "Vi vil derfor, senest 5 dage før, melde ud hvorvidt nogen i bestyrelsen har "
 "mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver "
@@ -648,56 +664,56 @@ msgid ""
 "der kommer et svar i god tid."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:81
+#: udlejning/templates/udlejning.html:78
 msgid "Generelle informationer"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:86
+#: udlejning/templates/udlejning.html:83
 msgid "Der betales per åbnet fustage."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:89
+#: udlejning/templates/udlejning.html:86
 msgid "Vores primære fadøl er"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:93
+#: udlejning/templates/udlejning.html:90
 msgid ""
 ", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:96
+#: udlejning/templates/udlejning.html:93
 msgid ""
 "Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
 "hjemmeside, som fast kan fås på fad. Dvs."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:100
+#: udlejning/templates/udlejning.html:97
 msgid "og"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:102
+#: udlejning/templates/udlejning.html:99
 msgid "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:105
+#: udlejning/templates/udlejning.html:102
 msgid ""
 "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
 "(incl. moms)."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:108
+#: udlejning/templates/udlejning.html:105
 msgid ""
 "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
 "pt. men man kan skrive en mail til"
 msgstr ""
 
-#: udlejning/templates/udlejning.html:111
+#: udlejning/templates/udlejning.html:108
 msgid ""
 "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
 "chips koster 20kr/pose, der betales pr. åbnet enhed."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:116
+#: udlejning/templates/udlejning.html:113
 msgid "Ansøgninsformular"
 msgstr ""
 
