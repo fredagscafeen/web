@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 23:42+0200\n"
-"PO-Revision-Date: 2024-06-29 21:31+0050\n"
+"POT-Creation-Date: 2024-06-30 21:55+0200\n"
+"PO-Revision-Date: 2024-06-30 21:55+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -91,6 +91,11 @@ msgstr "Year"
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr "Any additional information for the board can be written here"
 
+#: bartenders/templates/ballots_update.html:18
+#: bartenders/templates/bartender_info.html:36 events/templates/events.html:49
+msgid "Gem"
+msgstr "Save"
+
 #: bartenders/templates/barplan.html:8 web/templates/base.html:60
 msgid "Barplan"
 msgstr "Bar Plan"
@@ -126,58 +131,63 @@ msgstr "Week"
 msgid "Ansvarlige"
 msgstr "Responsible"
 
-#: bartenders/templates/bartender_info.html:38
+#: bartenders/templates/bartender_info.html:39
 msgid "Bartender status"
 msgstr "Bartender status"
 
-#: bartenders/templates/bartender_info.html:40
+#: bartenders/templates/bartender_info.html:41
 msgid "Aktiv"
 msgstr "Active"
 
-#: bartenders/templates/bartender_info.html:41
+#: bartenders/templates/bartender_info.html:42
 msgid "Bliv inaktiv"
 msgstr "Become active"
 
-#: bartenders/templates/bartender_info.html:43
+#: bartenders/templates/bartender_info.html:44
 msgid "Inaktiv"
 msgstr "Inactive"
 
-#: bartenders/templates/bartender_info.html:44
+#: bartenders/templates/bartender_info.html:45
 msgid "Hvis du gerne vil være aktive igen, så kontakt"
 msgstr "If you wish to be active again, contact"
 
-#: bartenders/templates/bartender_info.html:48
+#: bartenders/templates/bartender_info.html:49
 msgid ""
-"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
+"Husk at du som inaktiv bartender ikke kan komme til "
+"bartenderarrangementerne."
 msgstr ""
 "Remember that as an inactive bartender you cannot come to the bartending "
 "events."
 
-#: bartenders/templates/bartender_info.html:51
+#: bartenders/templates/bartender_info.html:52
 msgid "Mailinglist status"
 msgstr "Mailing list status"
 
-#: bartenders/templates/bartender_info.html:53
+#: bartenders/templates/bartender_info.html:54
 msgid "På mailinglisten"
 msgstr "On the mailing list"
 
-#: bartenders/templates/bartender_info.html:55
+#: bartenders/templates/bartender_info.html:56
 msgid "Meld dig af mailinglisten"
 msgstr "Sign up for the mailing list"
 
-#: bartenders/templates/bartender_info.html:58
+#: bartenders/templates/bartender_info.html:59
 msgid "Ikke på mailinglisten"
 msgstr "Not on the mailing list"
 
-#: bartenders/templates/bartender_info.html:59
+#: bartenders/templates/bartender_info.html:60
 msgid "Meld dig på mailinglisten"
 msgstr "Sign up for the mailing list"
 
-#: bartenders/templates/bartender_info.html:65
+#: bartenders/templates/bartender_info.html:66
 msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
 msgstr "Dates when you do not have the opportunity to stand at the bar"
 
-#: bartenders/templates/bartender_info.html:87
+#: bartenders/templates/bartender_info.html:84 web/templates/login.html:12
+msgid "Log ind"
+msgstr "Log in"
+
+#: bartenders/templates/bartender_info.html:89
 msgid "er ikke bartender."
 msgstr "is not a bartender."
 
@@ -244,8 +254,8 @@ msgid ""
 "begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere."
 msgstr ""
 "In addition to this, you are invited to our annual events for bartenders, "
-"such as the Summer Party and the Christmas Lunch. In addition, there will be "
-"ongoing cool events, such as beer tasting and the like. All free for "
+"such as the Summer Party and the Christmas Lunch. In addition, there will be"
+" ongoing cool events, such as beer tasting and the like. All free for "
 "bartenders."
 
 #: bartenders/templates/index.html:16
@@ -271,6 +281,14 @@ msgstr "Submit"
 #: bartenders/templates/index.html:28
 msgid "Bartendertilmeldingen er lukket."
 msgstr "Bartender applications are closed."
+
+#: events/forms.py:21 events/forms.py:59
+msgid "Deltager"
+msgstr "Attending"
+
+#: events/forms.py:22
+msgid "Deltager ikke"
+msgstr "Not attending"
 
 #: events/templates/events.html:8
 msgid "Bartender events"
@@ -346,11 +364,11 @@ msgstr "Description"
 msgid "Tilmelding"
 msgstr "Sign up"
 
-#: events/templates/events.html:59
+#: events/templates/events.html:60
 msgid "Tilmeldte"
 msgstr "Registered participant"
 
-#: events/templates/events.html:68
+#: events/templates/events.html:69
 msgid "Navn"
 msgstr "Name"
 
@@ -393,8 +411,8 @@ msgstr "Guides"
 #: guides/templates/guides.html:9
 msgctxt "Fredagscaféen"
 msgid ""
-"Her ligger alle de lækre guides, som er rare at have, når man involverer sig "
-"i driften af"
+"Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
+" i driften af"
 msgstr ""
 "Here are all the delicious guides that are nice to have when you get "
 "involved in the operation of"
@@ -485,8 +503,8 @@ msgstr "Expected consumption"
 
 #: udlejning/models.py:64
 msgid ""
-"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af "
-"hver type?"
+"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af"
+" hver type?"
 msgstr ""
 "What types of beer or other beverages are desired and how many kegs of each "
 "type?"
@@ -588,8 +606,8 @@ msgid ""
 "Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde "
 "ansøgninsformularen nederst på denne side."
 msgstr ""
-"If our equipment is not already on loan, you can borrow it by filling in the "
-"application form at the bottom of this page."
+"If our equipment is not already on loan, you can borrow it by filling in the"
+" application form at the bottom of this page."
 
 #: udlejning/templates/udlejning.html:37
 msgid "Anlæg udlånes kun til"
@@ -613,7 +631,8 @@ msgstr "Internal events"
 
 #: udlejning/templates/udlejning.html:41
 msgid ""
-"Udelukkende arrangementer der finder sted på universitetet. Dette inkluderer:"
+"Udelukkende arrangementer der finder sted på universitetet. Dette "
+"inkluderer:"
 msgstr "Exclusive events that take place at the university. This includes:"
 
 #: udlejning/templates/udlejning.html:43
@@ -630,8 +649,8 @@ msgstr "Events with association"
 
 #: udlejning/templates/udlejning.html:49
 msgid ""
-"Arrangementer der finder sted på universitetet eller andetsteds, kan være af "
-"privat natur. Dette inkluderer:"
+"Arrangementer der finder sted på universitetet eller andetsteds, kan være af"
+" privat natur. Dette inkluderer:"
 msgstr ""
 "Events that take place at the university or elsewhere may be of a private "
 "nature. This includes:"
@@ -661,9 +680,9 @@ msgid ""
 "Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre "
 "og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk."
 msgstr ""
-"Precursor as it has been until now, lending includes setting up, carbonation "
-"and rinsing of the system, 50 cups (1 roll) can be purchased for DKK 150 per "
-"PCS."
+"Precursor as it has been until now, lending includes setting up, carbonation"
+" and rinsing of the system, 50 cups (1 roll) can be purchased for DKK 150 "
+"per PCS."
 
 #: udlejning/templates/udlejning.html:65
 msgid ""
@@ -672,9 +691,9 @@ msgid ""
 "Afleveringstid af anlægget skal aftales i dialog med den ansvarlige for det "
 "praktiske, og er ikke nødvendigvis samme dag."
 msgstr ""
-"Here, loans only include unlocking and unlocking of the draft beer facility. "
-"This means that the plant must be picked up in Ada-0, and delivered cleaned "
-"in Ada-0. The delivery time of the installation must be agreed in dialogue "
+"Here, loans only include unlocking and unlocking of the draft beer facility."
+" This means that the plant must be picked up in Ada-0, and delivered cleaned"
+" in Ada-0. The delivery time of the installation must be agreed in dialogue "
 "with the person responsible for the practical, and is not necessarily the "
 "same day."
 
@@ -684,10 +703,10 @@ msgstr "Request rental in good time"
 
 #: udlejning/templates/udlejning.html:71
 msgid ""
-"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være "
-"et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
-"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi "
-"ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
+"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være"
+" et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
+"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi"
+" ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
 msgstr ""
 "When you borrow a facility, there must be a board member responsible for "
 "practical matters on the day of lending and return. We are all volunteers "
@@ -708,15 +727,15 @@ msgid ""
 "mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver "
 "mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt "
 "udlejning er muligt i god tid, dog er det stadig muligt at kunne låne "
-"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at "
-"der kommer et svar i god tid."
+"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at"
+" der kommer et svar i god tid."
 msgstr ""
 "We will therefore, no later than 5 days before, announce whether someone on "
 "the board has the opportunity to be there during one of the possible times. "
 "If you do not write at least 7 days in advance, we cannot guarantee that we "
 "can announce whether or not renting is possible in good time, however it is "
-"still possible to borrow the facility even if you announce at a bad time, we "
-"just cannot guarantee that there will be an answer in good time."
+"still possible to borrow the facility even if you announce at a bad time, we"
+" just cannot guarantee that there will be an answer in good time."
 
 #: udlejning/templates/udlejning.html:78
 msgid "Generelle informationer"
@@ -732,7 +751,8 @@ msgstr "Our primary draft beer is"
 
 #: udlejning/templates/udlejning.html:90
 msgid ""
-", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. "
+"moms)"
 msgstr ""
 ", which comes in 25 liter kegs. The price is DKK 750 per keg (incl. VAT)"
 
@@ -757,15 +777,16 @@ msgid ""
 "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
 "(incl. moms)."
 msgstr ""
-"We also sell Magners Cider in kegs, which costs DKK 1250 per keg (incl. VAT)."
+"We also sell Magners Cider in kegs, which costs DKK 1250 per keg (incl. "
+"VAT)."
 
 #: udlejning/templates/udlejning.html:105
 msgid ""
 "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
 "pt. men man kan skrive en mail til"
 msgstr ""
-"We have a range of specialty beers available at: (it is not available at the "
-"moment, but you can write an email to"
+"We have a range of specialty beers available at: (it is not available at the"
+" moment, but you can write an email to"
 
 #: udlejning/templates/udlejning.html:108
 msgid ""
@@ -891,6 +912,8 @@ msgid ""
 "Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til "
 "dig med et svar hurtigst muligt."
 msgstr ""
+"Your request to borrow the draft beer system has been received. We will get "
+"back to you with an answer as soon as possible."
 
 #: web/templates/about.html:26
 msgid "Generel info"

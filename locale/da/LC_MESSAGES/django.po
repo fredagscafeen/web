@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-29 23:42+0200\n"
+"POT-Creation-Date: 2024-06-30 21:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,6 +90,11 @@ msgstr ""
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr ""
 
+#: bartenders/templates/ballots_update.html:18
+#: bartenders/templates/bartender_info.html:36 events/templates/events.html:49
+msgid "Gem"
+msgstr ""
+
 #: bartenders/templates/barplan.html:8 web/templates/base.html:60
 msgid "Barplan"
 msgstr ""
@@ -125,56 +130,60 @@ msgstr ""
 msgid "Ansvarlige"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:38
+#: bartenders/templates/bartender_info.html:39
 msgid "Bartender status"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:40
+#: bartenders/templates/bartender_info.html:41
 msgid "Aktiv"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:41
+#: bartenders/templates/bartender_info.html:42
 msgid "Bliv inaktiv"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:43
+#: bartenders/templates/bartender_info.html:44
 msgid "Inaktiv"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:44
+#: bartenders/templates/bartender_info.html:45
 msgid "Hvis du gerne vil være aktive igen, så kontakt"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:48
+#: bartenders/templates/bartender_info.html:49
 msgid ""
 "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:51
+#: bartenders/templates/bartender_info.html:52
 msgid "Mailinglist status"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:53
+#: bartenders/templates/bartender_info.html:54
 msgid "På mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:55
+#: bartenders/templates/bartender_info.html:56
 msgid "Meld dig af mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:58
+#: bartenders/templates/bartender_info.html:59
 msgid "Ikke på mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:59
+#: bartenders/templates/bartender_info.html:60
 msgid "Meld dig på mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:65
+#: bartenders/templates/bartender_info.html:66
 msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:87
+#: bartenders/templates/bartender_info.html:84 web/templates/login.html:12
+msgid "Log ind"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:89
 msgid "er ikke bartender."
 msgstr ""
 
@@ -257,6 +266,14 @@ msgstr ""
 msgid "Bartendertilmeldingen er lukket."
 msgstr ""
 
+#: events/forms.py:21 events/forms.py:59
+msgid "Deltager"
+msgstr ""
+
+#: events/forms.py:22
+msgid "Deltager ikke"
+msgstr ""
+
 #: events/templates/events.html:8
 msgid "Bartender events"
 msgstr ""
@@ -322,11 +339,11 @@ msgstr ""
 msgid "Tilmelding"
 msgstr ""
 
-#: events/templates/events.html:59
+#: events/templates/events.html:60
 msgid "Tilmeldte"
 msgstr ""
 
-#: events/templates/events.html:68
+#: events/templates/events.html:69
 msgid "Navn"
 msgstr ""
 
