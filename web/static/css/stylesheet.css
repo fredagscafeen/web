@@ -132,3 +132,17 @@ footer {
     display: block !important;
     padding: 8px !important;
 }
+
+.social-link {
+    flex: right;
+    padding: 0px;
+    height: 25px;
+    border: solid;
+    border-width: 0px;
+    border-radius: 5px;
+    border-color: white;
+}
+
+.social-link:hover {
+    opacity: 0.6;
+}
