@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-01 11:10+0200\n"
+"POT-Creation-Date: 2024-07-10 11:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,7 +91,8 @@ msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr ""
 
 #: bartenders/templates/ballots_update.html:18
-#: bartenders/templates/bartender_info.html:36 events/templates/events.html:49
+#: bartenders/templates/bartender_info.html:36
+#: bartenders/templates/bartender_info.html:84 events/templates/events.html:49
 msgid "Gem"
 msgstr ""
 
@@ -139,6 +140,16 @@ msgid "Aktiv"
 msgstr ""
 
 #: bartenders/templates/bartender_info.html:42
+msgid "Er du sikker?"
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:42
+#: bartenders/templates/bartender_info.html:49
+msgid ""
+"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
+msgstr ""
+
+#: bartenders/templates/bartender_info.html:42
 msgid "Bliv inaktiv"
 msgstr ""
 
@@ -147,12 +158,7 @@ msgid "Inaktiv"
 msgstr ""
 
 #: bartenders/templates/bartender_info.html:45
-msgid "Hvis du gerne vil være aktive igen, så kontakt"
-msgstr ""
-
-#: bartenders/templates/bartender_info.html:49
-msgid ""
-"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
+msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr ""
 
 #: bartenders/templates/bartender_info.html:52
@@ -177,10 +183,6 @@ msgstr ""
 
 #: bartenders/templates/bartender_info.html:66
 msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
-msgstr ""
-
-#: bartenders/templates/bartender_info.html:84 web/templates/login.html:12
-msgid "Log ind"
 msgstr ""
 
 #: bartenders/templates/bartender_info.html:89
@@ -846,48 +848,48 @@ msgid ""
 "dig med et svar hurtigst muligt."
 msgstr ""
 
-#: web/templates/about.html:26
+#: web/templates/about.html:6
 msgid "Generel info"
 msgstr ""
 
-#: web/templates/about.html:28
+#: web/templates/about.html:8
 msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
 msgstr ""
 
-#: web/templates/about.html:29
+#: web/templates/about.html:9
 msgid "Baren har åbent"
 msgstr ""
 
-#: web/templates/about.html:29
+#: web/templates/about.html:9
 msgctxt "Baren har åbent alle fredage..."
 msgid "alle"
 msgstr ""
 
-#: web/templates/about.html:29
+#: web/templates/about.html:9
 msgid "fredage fra klokken 15.00 til vi lukker."
 msgstr ""
 
-#: web/templates/about.html:37
+#: web/templates/about.html:17
 msgid "Direktion"
 msgstr ""
 
-#: web/templates/about.html:38
+#: web/templates/about.html:18
 msgid "s direktion består af"
 msgstr ""
 
-#: web/templates/about.html:47
+#: web/templates/about.html:27
 msgid "Postadresse"
 msgstr ""
 
-#: web/templates/about.html:49
+#: web/templates/about.html:29
 msgid "Vores postadresse er"
 msgstr ""
 
-#: web/templates/about.html:58
+#: web/templates/about.html:38
 msgid "Bestyrelsen kan kontaktes på"
 msgstr ""
 
-#: web/templates/about.html:63
+#: web/templates/about.html:43
 msgid "Vores CVR-nr er"
 msgstr ""
 
@@ -943,6 +945,10 @@ msgstr ""
 msgid "Log ud"
 msgstr ""
 
-#: web/templates/base.html:109
+#: web/templates/base.html:124
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
+msgstr ""
+
+#: web/templates/login.html:12
+msgid "Log ind"
 msgstr ""
