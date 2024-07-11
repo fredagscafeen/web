@@ -31,11 +31,11 @@
             <td class="col-md-3">{{ shift.responsible.name }}</td>
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
-					{% if bartender.first_bartender_shift == shift %}<b title="Bartender's first shift">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
+					{% if bartender.first_bartender_shift == shift %}<b title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">Edit</a></td>
+				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 	{% endfor %}
@@ -74,7 +74,7 @@
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">Edit</a></td>
+				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 	{% endfor %}

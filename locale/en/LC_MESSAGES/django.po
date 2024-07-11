@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-10 11:24+0200\n"
-"PO-Revision-Date: 2024-07-10 11:27+0050\n"
+"POT-Creation-Date: 2024-07-11 22:32+0200\n"
+"PO-Revision-Date: 2024-07-11 22:33+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -120,6 +120,15 @@ msgstr "Responsible"
 msgid "Bartendere"
 msgstr "Bartenders"
 
+#: bartenders/templates/barplan.html:34
+msgid "Bartender's first shift"
+msgstr "Bartender's first shift"
+
+#: bartenders/templates/barplan.html:38 bartenders/templates/barplan.html:77
+#: bartenders/templates/board.html:33
+msgid "Edit"
+msgstr "Edit"
+
 #: bartenders/templates/barplan.html:49
 msgid "Pantvagter"
 msgstr "Deposit shifts"
@@ -162,7 +171,6 @@ msgid "Inaktiv"
 msgstr "Inactive"
 
 #: bartenders/templates/bartender_info.html:45
-#| msgid "Hvis du gerne vil være aktive igen, så kontakt"
 msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr "If you wish to become active again, please contact"
 
@@ -387,11 +395,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:262
+#: fredagscafeen/settings/base.py:264
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:263
+#: fredagscafeen/settings/base.py:265
 msgid "English"
 msgstr "English"
 

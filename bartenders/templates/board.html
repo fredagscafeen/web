@@ -30,7 +30,7 @@
 				</a>
 				{% if user.is_staff %}
 					<a href="/admin/bartenders/boardmemberperiod/{{ period.id }}/change/" class="pull-right">
-						edit
+						{% translate "Edit" %}
 					</a>
 				{% endif %}
 			</h4>
