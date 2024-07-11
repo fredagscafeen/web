@@ -70,7 +70,8 @@
 			<td class="col-md-2">{{ shift.start_date | date:"d M" }}{% if show_all %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all %} {{ shift.end_date.year }}{% endif %}</td>
             <td class="col-md-9">
                 {% for responsible in shift.responsibles.all %}
-					{% if responsible.first_deposit_shift == shift %}<b title="Bartender's first deposit shift">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
+					{% translate "Bartender's first deposit shift" as FIRST_DEPOSIT_SHIFT_TEXT %}
+					{% if responsible.first_deposit_shift == shift %}<b title="{{ FIRST_DEPOSIT_SHIFT_TEXT }}">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}

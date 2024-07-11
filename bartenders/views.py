@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, reverse
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import (
     CreateView,
     FormView,
@@ -58,7 +59,7 @@ class Index(CreateView):
 
         # Send email to best
         form.send_email(self.object.pk)
-        messages.success(self.request, "Din ansøgning er blevet indsendt.")
+        messages.success(self.request, _("Din ansøgning er blevet indsendt."))
 
         return response
 
@@ -104,7 +105,7 @@ class UserBarplan(ICalFeed):
     product_id = "-//fredagscafeen.dk//UserBarplan//EN"
     timezone = "UTC"
     file_name = "barvagter.ics"
-    title = "Barvagter"
+    title = _("Barvagter")
 
     def get_object(self, request, **kwargs):
         # kwargs['username'] is None if we need to show all shifts
@@ -127,8 +128,10 @@ class UserBarplan(ICalFeed):
         return shift.end_datetime
 
     def item_description(self, shift):
-        return f"""Responsible: {shift.responsible.name}
-Other bartenders: {", ".join(b.name for b in shift.other_bartenders.all())}"""
+        responsible_text = _("Responsible")
+        other_text = _("Other bartenders")
+        return f"""{responsible_text}: {shift.responsible.name}
+{other_text}: {", ".join(b.name for b in shift.other_bartenders.all())}"""
 
     def item_link(self, shift):
         return f"{settings.SELF_URL}barplan/"
@@ -141,7 +144,7 @@ class UserDepositShifts(ICalFeed):
     product_id = "-//fredagscafeen.dk//UserDepositShifts//EN"
     timezone = "UTC"
     file_name = "pantvagter.ics"
-    title = "Pantvagter"
+    title = _("Pantvagter")
 
     def get_object(self, request, **kwargs):
         # kwargs['username'] is None if we need to show all shifts
@@ -164,9 +167,8 @@ class UserDepositShifts(ICalFeed):
         return shift.end_date
 
     def item_description(self, shift):
-        return (
-            f"""Responsibles: {", ".join(b.name for b in shift.responsibles.all())}"""
-        )
+        responsible_text = _("Responsible")
+        return f"""{responsible_text}: {", ".join(b.name for b in shift.responsibles.all())}"""
 
     def item_link(self, shift):
         return f"{settings.SELF_URL}barplan/"
@@ -274,15 +276,16 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        messages.success(self.request, "Profil opdateret")
+        messages.success(self.request, _("Profil opdateret"))
         redirect_url = super().form_valid(form)
 
         if "deactivate" in self.request.POST:
             self.object.isActiveBartender = False
             self.object.save()
             active_count = Bartender.objects.filter(isActiveBartender=True).count()
+            inactive_text = "Bartender har meldt sig inaktiv"
             send_template_email(
-                subject=f"Bartender har meldt sig inaktiv: {self.object.name}",
+                subject=f"{inactive_text}: {self.object.name}",
                 body_template=f"""Dette er en automatisk email.
 
 {self.object.name} har meldt sig inaktiv.
@@ -342,7 +345,7 @@ class BallotsUpdate(PermissionRequiredMixin, FormView):
         data = form.cleaned_data
         urls = data["urls"].split()
         if len(urls) < votees.count():
-            form.add_error("urls", f"Atleast {votees.count()} urls required")
+            form.add_error("urls", f"At least {votees.count()} urls required")
             return self.form_invalid(form)
         try:
             poll = Poll.objects.create(name=data["name"])

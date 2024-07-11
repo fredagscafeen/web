@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 from django_ical.views import ICalFeed
 
@@ -53,11 +54,11 @@ class Events(TemplateView):
             event_id = request.POST.get("event_id")
             event = Event.objects.get(id=event_id)
         except Event.DoesNotExist:
-            return HttpResponseBadRequest("Event with id does not exist")
+            return HttpResponseBadRequest(_("Event with id does not exist"))
 
         bartender = self.get_bartender()
         if not bartender or not event.may_attend(bartender):
-            return HttpResponseForbidden("Not logged in as an active bartender")
+            return HttpResponseForbidden(_("Not logged in as an active bartender"))
 
         form = EventResponseForm(request.POST, event=event, bartender=bartender)
         if not form.is_valid():
@@ -67,7 +68,10 @@ class Events(TemplateView):
 
         form.save()
 
-        messages.success(request, f"Opdateret tilmelding til {event.name}")
+        messages.success(
+            request,
+            _("Opdateret tilmelding til %(event_name)s") % {"event_name": event.name},
+        )
         return redirect("events")
 
 
@@ -75,7 +79,7 @@ class EventFeed(ICalFeed):
     product_id = "-//fredagscafeen.dk//Events//EN"
     timezone = "UTC"
     file_name = "events.ics"
-    title = "Bartender Events"
+    title = _("Bartender Events")
 
     def items(self):
         return Event.objects.all()
@@ -93,7 +97,8 @@ class EventFeed(ICalFeed):
         return event.end_datetime
 
     def item_description(self, event):
-        return f"""Tilmeldingsfrist: {event.response_deadline}
+        tilmeldingsfrist = _("Tilmeldingsfrist")
+        return f"""{tilmeldingsfrist}: {event.response_deadline}
 
 {event.description}"""
 

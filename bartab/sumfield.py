@@ -4,6 +4,7 @@ from decimal import Decimal, InvalidOperation
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 SumValue = namedtuple("SumValue", ["string", "value"])
 
@@ -27,7 +28,7 @@ class SumFormField(forms.CharField):
         try:
             return parse_sum(value)
         except (ValueError, InvalidOperation):
-            raise ValidationError("Invalid sum")
+            raise ValidationError(_("Invalid sum"))
 
     def prepare_value(self, value):
         if isinstance(value, str) or value == None:
