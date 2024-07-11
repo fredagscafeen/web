@@ -87,14 +87,19 @@ class EventResponseForm(forms.Form):
 
                 if not option:
                     self.add_error(
-                        field, f"Du skal udfylde {choice.name}, når du deltager"
+                        field,
+                        _("Du skal udfylde %(choice_name)s, når du deltager")
+                        % {"choice_name": choice.name},
                     )
                     continue
 
                 if not option.can_bartender_choose(self.bartender):
                     self.add_error(
                         field,
-                        f"Der er for mange der har valgt {option.option}. Vælg noget andet.",
+                        _(
+                            "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
+                        )
+                        & {"option_option": option.option},
                     )
 
     def save(self):
