@@ -33,15 +33,16 @@ $(function() {
 <form method="post" id="info_form">
 {% csrf_token %}
 {% buttons %}
-    {% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+    {% translate "Gem" as BUTTON_TEXT %}
+    {% bootstrap_button BUTTON_TEXT button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
 {% endbuttons %}
 <p><b>{% translate "Bartender status" %}:</b>
 {% if object.isActiveBartender %}
     {% translate "Aktiv" %}
-    <button type="submit" class="btn btn-danger pull-right" name="deactivate">{% translate "Bliv inaktiv" %}</button>
+    <button type="submit" class="btn btn-danger pull-right" name="deactivate" onclick="return confirm('{% translate "Er du sikker?" %} \n{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}');">{% translate "Bliv inaktiv" %}</button>
 {% else %}
     {% translate "Inaktiv" %}
-    <span class="pull-right">({% translate "Hvis du gerne vil være aktive igen, så kontakt" %} <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>)</span>
+    <span class="pull-right">({% translate "Hvis du gerne vil være aktiv igen, så kontakt" %} <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>)</span>
 {% endif %}
 </p>
 {% if not object.isActiveBartender %}
@@ -80,7 +81,8 @@ $(function() {
 </tbody>
 </table>
 {% buttons %}
-    {% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+    {% translate "Gem" as BUTTON_TEXT %}
+    {% bootstrap_button BUTTON_TEXT button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
 {% endbuttons %}
 </form>
 {% else %}

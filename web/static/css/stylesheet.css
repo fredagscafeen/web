@@ -132,3 +132,34 @@ footer {
     display: block !important;
     padding: 8px !important;
 }
+
+.google-maps {
+    max-width: 600px;
+    max-height: 450px;
+    position: relative;
+    padding-bottom: 450px;
+    height: 0;
+    overflow: hidden;
+}
+
+.google-maps iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.social-link {
+    flex: right;
+    padding: 0px;
+    height: 25px;
+    border: solid;
+    border-width: 0px;
+    border-radius: 5px;
+    border-color: white;
+}
+
+.social-link:hover {
+    opacity: 0.6;
+}

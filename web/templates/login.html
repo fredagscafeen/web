@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 {% load bootstrap3 %}
 
@@ -9,7 +9,8 @@
 {% csrf_token %}
 {% bootstrap_form form %}
 {% buttons %}
-    {% bootstrap_button "Log ind" button_type="submit" button_class="btn-primary" %}
+    {% translate "Log ind" as BUTTON_TEXT %}
+    {% bootstrap_button BUTTON_TEXT button_type="submit" button_class="btn-primary" %}
 {% endbuttons %}
 </form>
 

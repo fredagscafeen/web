@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib import messages
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from django.views.generic import CreateView, ListView
 
 from .forms import UdlejningApplicationForm
@@ -35,7 +36,9 @@ class Udlejninger(CreateView):
         form.send_email(self.object.pk)
         messages.success(
             self.request,
-            "Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til dig med et svar hurtigst muligt.",
+            _(
+                "Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til dig med et svar hurtigst muligt."
+            ),
         )
 
         return response

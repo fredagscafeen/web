@@ -43,11 +43,11 @@
                             Fredagscaféen
                         </a>
                         {% if LANGUAGE_CODE == 'da' %}
-                            <a class="navbar-brand visible-xs-inline" href="/en">
+                            <a class="navbar-brand visible-xs-inline" href="/en/{{request.get_full_path|slice:"4:"}}">
                                 <img src="{% static 'images/unionjac.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
                             </a>
                         {% elif LANGUAGE_CODE == 'en' %}
-                            <a class="navbar-brand visible-xs-inline" href="/da">
+                            <a class="navbar-brand visible-xs-inline" href="/da/{{request.get_full_path|slice:"4:"}}">
                                 <img src="{% static 'images/dannebro.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
                             </a>
                         {% endif %}
@@ -72,7 +72,7 @@
                         </li>
 
                         <li><a href="/{{ LANGUAGE_CODE }}/guides">{% translate "Guides" %}</a></li>
-                        <li><a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener"><span class="glyphicon glyphicon-new-window"></span> Facebook</a></li>
+                        <!--<li><a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener"><span class="glyphicon glyphicon-new-window"></span> Facebook</a></li>-->
                         <li><a href="/{{ LANGUAGE_CODE }}/board">{% translate "Bestyrelsen" %}</a></li>
                         <li><a href="/{{ LANGUAGE_CODE }}/events">{% translate "Events" %}</a></li>
                         <li><a href="/{{ LANGUAGE_CODE }}/about">{% translate "Om baren" %}</a></li>
@@ -106,8 +106,25 @@
     <footer>
         <div class="container">
             <hr>
-            Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
-            1993-{% now "Y" %} Fredagscaféen
+            <div>
+                <div>
+                    <a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener" style="text-decoration: none;">
+                    <img src="{% static 'images/facebook.png' %}" class="social-link">
+                    </a>
+                    <span style="padding: 5px;"></span>
+                    <a href="https://www.instagram.com/fredagscafeen.dk/" target="_blank" rel="noopener" style="text-decoration: none;">
+                        <img src="{% static 'images/instagram.png' %}" class="social-link">
+                    </a>
+                    <span style="padding: 5px;"></span>
+                    <a href="https://github.com/fredagscafeen" target="_blank" rel="noopener" style="text-decoration: none;">
+                        <img src="{% static 'images/github.png' %}" class="social-link">
+                    </a>
+                </div>
+                <div align="center" style="padding-top: 15px; padding-bottom: 5px;">
+                    Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
+                    1993-{% now "Y" %} Fredagscaféen
+                </div>
+            </div>
         </div>
     </footer>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% load static %}
 {% load bootstrap3 %}
 
@@ -15,7 +15,8 @@
   {% csrf_token %}
   {% bootstrap_form form %}
   {% buttons %}
-      {% bootstrap_button "Gem" button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+      {% translate "Gem" as BUTTON_TEXT %}
+      {% bootstrap_button BUTTON_TEXT button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
   {% endbuttons %}
 </form>
 
