@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 from bartenders.models import BartenderShift
 
@@ -83,10 +84,10 @@ class BarTabSnapshot(models.Model):
     def clean(self):
         error = None
         if self.bartender_shift and self.custom_datetime:
-            error = "Can't have both bartender shift and custom datetime"
+            error = _("Can't have both bartender shift and custom datetime")
 
         if not self.bartender_shift and not self.custom_datetime:
-            error = "Must have either bartender shift or custom datetime"
+            error = _("Must have either bartender shift or custom datetime")
 
         if error:
             raise ValidationError(
@@ -131,16 +132,16 @@ class BarTabSnapshot(models.Model):
 
 
 class BarTabEntry(models.Model):
-    added_cash = models.BooleanField(blank=True, null=True, verbose_name="Kontant?")
+    added_cash = models.BooleanField(blank=True, null=True, verbose_name=_("Kontant?"))
     added = models.DecimalField(max_digits=9 + 2, decimal_places=2)
     used = models.DecimalField(max_digits=9 + 2, decimal_places=2)
-    raw_added = SumField(blank=True, verbose_name="Indsat")
-    raw_used = SumField(blank=True, verbose_name="Køb")
+    raw_added = SumField(blank=True, verbose_name=_("Indsat"))
+    raw_used = SumField(blank=True, verbose_name=_("Køb"))
     user = models.ForeignKey(
         BarTabUser,
         on_delete=models.CASCADE,
-        related_name="entries",
-        verbose_name="Bruger",
+        related_name=_("entries"),
+        verbose_name=_("Bruger"),
     )
     snapshot = models.ForeignKey(
         BarTabSnapshot, on_delete=models.CASCADE, related_name="entries"
@@ -157,7 +158,7 @@ class BarTabEntry(models.Model):
         if self.raw_added:
             self.added = self.raw_added.value
             if self.added_cash == None and self.added != 0:
-                raise ValidationError("Vælg kontant eller ej.")
+                raise ValidationError(_("Vælg kontant eller ej."))
 
         if self.raw_used:
             self.used = self.raw_used.value

@@ -1,12 +1,13 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from .models import BarTabSnapshot
 
 
 class ConsumptionForm(forms.Form):
     start_snapshot = forms.ModelChoiceField(
-        label="First to include", queryset=BarTabSnapshot.objects
+        label=_("First to include"), queryset=BarTabSnapshot.objects
     )
     end_snapshot = forms.ModelChoiceField(
-        label="Last to include", queryset=BarTabSnapshot.objects
+        label=_("Last to include"), queryset=BarTabSnapshot.objects
     )

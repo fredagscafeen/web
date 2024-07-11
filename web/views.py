@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login, logout
 from django.shortcuts import redirect
+from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
@@ -43,7 +44,9 @@ class Login(FormView):
         form.send_email(self.request.GET.get("next"))
         messages.success(
             self.request,
-            "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind.",
+            _(
+                "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+            ),
         )
         return super().form_valid(form)
 

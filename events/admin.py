@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
 from bartenders.models import Bartender
 
@@ -12,7 +13,7 @@ class EventChoiceInlineForm(forms.ModelForm):
         fields = ["name"]
 
     chosen_options = forms.CharField(
-        label="Chosen options", disabled=True, widget=forms.Textarea
+        label=_("Chosen options"), disabled=True, widget=forms.Textarea
     )
 
     def get_initial_for_field(self, field, fieldname):
@@ -68,8 +69,8 @@ class EventAdminForm(forms.ModelForm):
         fields = "__all__"
 
     default_may_attends = forms.CharField(
-        label="Default allowed attendees",
-        help_text="Can be overwritten using the whitelist and blacklist above.",
+        label=_("Default allowed attendees"),
+        help_text=_("Can be overwritten using the whitelist and blacklist above."),
         disabled=True,
         widget=forms.Textarea,
     )
@@ -82,8 +83,8 @@ class EventAdminForm(forms.ModelForm):
                 if self.instance.may_attend_default(b):
                     s += f"- {b}\n"
                     allowed += 1
-
-            return f"{allowed} bartenders:\n" + s.strip()
+            bartenders = _("bartenders")
+            return f"{allowed} {bartenders}:\n" + s.strip()
 
         return super().get_initial_for_field(field, fieldname)
 

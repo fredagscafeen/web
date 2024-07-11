@@ -1,18 +1,19 @@
 {% extends "admin/base_site.html" %}
 {% block content %}
+{% load i18n %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-	<input type="submit" value="Submit">
+	<input type="submit" value="{% translate "Submit" %}">
 </form>
 {% if result %}
-<h2>Result</h1>
+<h2>{% translate "Result" %}</h1>
 <table>
 	<thead>
 		<tr>
 			<th>#</th>
-			<th>Navn</th>
-			<th>Forbrug</th>
+			<th>{% translate "Navn" %}</th>
+			<th>{% translate "Forbrug" %}</th>
 		</tr>
 	</thead>
 	<tbody>

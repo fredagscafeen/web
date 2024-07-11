@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from .models import EventChoiceOption, EventResponse
 
@@ -17,8 +18,8 @@ class SelectWithDisabledOptions(forms.Select):
 class EventResponseForm(forms.Form):
     ATTENDING_CHOICES = (
         (None, "---------"),
-        (True, "Deltager"),
-        (False, "Deltager ikke"),
+        (True, _("Deltager")),
+        (False, _("Deltager ikke")),
     )
 
     def _to_bool(self, s):
@@ -55,7 +56,7 @@ class EventResponseForm(forms.Form):
             attending_choices = self.ATTENDING_CHOICES[1:]
 
         self.fields["attending"] = forms.TypedChoiceField(
-            label="Deltager", choices=attending_choices, coerce=self._to_bool
+            label=_("Deltager"), choices=attending_choices, coerce=self._to_bool
         )
         if event_response:
             self.fields["attending"].initial = event_response.attending
@@ -86,14 +87,19 @@ class EventResponseForm(forms.Form):
 
                 if not option:
                     self.add_error(
-                        field, f"Du skal udfylde {choice.name}, når du deltager"
+                        field,
+                        _("Du skal udfylde %(choice_name)s, når du deltager")
+                        % {"choice_name": choice.name},
                     )
                     continue
 
                 if not option.can_bartender_choose(self.bartender):
                     self.add_error(
                         field,
-                        f"Der er for mange der har valgt {option.option}. Vælg noget andet.",
+                        _(
+                            "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
+                        )
+                        & {"option_option": option.option},
                     )
 
     def save(self):
