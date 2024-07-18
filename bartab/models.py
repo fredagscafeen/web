@@ -140,8 +140,8 @@ class BarTabEntry(models.Model):
     user = models.ForeignKey(
         BarTabUser,
         on_delete=models.CASCADE,
-        related_name=_("entries"),
-        verbose_name=_("Bruger"),
+        related_name="entries",
+        verbose_name="Bruger",
     )
     snapshot = models.ForeignKey(
         BarTabSnapshot, on_delete=models.CASCADE, related_name="entries"
