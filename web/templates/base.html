@@ -45,19 +45,27 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="center-align">
-                        <a class="navbar-brand visible-xs-inline" href="/" style="color: var(--datblue); font-size: 20px;">
+                        <a class="navbar-brand visible-xs-inline" href="/" style="color: var(--datblue); font-size: 20px; text-shadow: None;">
                             <img src="{% static 'images/logo.png' %}" height="20" style="display: inline-block;">
                             Fredagscaféen
                         </a>
-                        {% if LANGUAGE_CODE == 'da' %}
-                            <a class="navbar-brand visible-xs-inline" href="/en/{{request.get_full_path|slice:"4:"}}">
-                                <img src="{% static 'images/unionjac.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
+                        <div>
+                            <!--{% if LANGUAGE_CODE == 'da' %}
+                                <a class="navbar-brand visible-xs-inline" href="/en/{{request.get_full_path|slice:"4:"}}">
+                                    <img src="{% static 'images/unionjac.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
+                                </a>
+                            {% elif LANGUAGE_CODE == 'en' %}
+                                <a class="navbar-brand visible-xs-inline" href="/da/{{request.get_full_path|slice:"4:"}}">
+                                    <img src="{% static 'images/dannebro.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
+                                </a>
+                            {% endif %}-->
+                            <a class="navbar-brand visible-xs-inline" style="padding-left: 0px;">
+                                <label class="switch">
+                                    <input id="themeToggleNav" type="checkbox" onclick="switchTheme()">
+                                    <span class="slider round"></span>
+                                </label>
                             </a>
-                        {% elif LANGUAGE_CODE == 'en' %}
-                            <a class="navbar-brand visible-xs-inline" href="/da/{{request.get_full_path|slice:"4:"}}">
-                                <img src="{% static 'images/dannebro.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
-                            </a>
-                        {% endif %}
+                        </div>
                     </div>
                 </div>
 

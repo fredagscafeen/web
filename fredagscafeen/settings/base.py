@@ -246,17 +246,21 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = "da"
+CELERY_ENABLE_UTC = False
+
+CELERY_TIMEZONE = "Europe/Copenhagen"
+
+DJANGO_CELERY_BEAT_TZ_AWARE = True
 
 TIME_ZONE = "Europe/Copenhagen"
+
+LANGUAGE_CODE = "da"
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
-DJANGO_CELERY_BEAT_TZ_AWARE = False
 
 from django.utils.translation import gettext_lazy as _
 

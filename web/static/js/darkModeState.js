@@ -79,6 +79,7 @@ function setThemeToggle() {
     const isDarkMode = document.documentElement.classList.contains("dark");
     if (isDarkMode) {
         document.getElementById("themeToggle").checked = true;
+        document.getElementById("themeToggleNav").checked = true;
         document.getElementById("facebook-link").setAttribute("class", "image-inverted social-link");
         document.getElementById("instagram-link").setAttribute("class", "image-inverted social-link");
         document.getElementById("github-link").setAttribute("class", "image-inverted social-link");

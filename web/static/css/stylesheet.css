@@ -429,7 +429,7 @@ html.dark {
     }
     #unavailable_dates_table label {
         display: block !important;
-        padding: 8px !important;
+        padding: 0px !important;
     }
 
     .google-maps {
