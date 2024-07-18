@@ -15,6 +15,7 @@
                         Fredagscaféen
                     </h1>
                 </a>
+                <div>
                 {% if LANGUAGE_CODE == 'da' %}
                     <a href="/en/{{request.get_full_path|slice:"4:"}}">
                         <img src="{% static 'images/unionjac.png' %}" align="right" class="locale">
@@ -24,9 +25,15 @@
                         <img src="{% static 'images/dannebro.png' %}" align="right" class="locale">
                     </a>
                 {% endif %}
+                <a>
+                    <label class="switch locale">
+                        <input id="themeToggle" type="checkbox" onclick="switchTheme()">
+                        <span class="slider round"></span>
+                    </label>
+                </a>
+                </div>
             </div>
         </header>
-
         <nav class="navbar navbar-default" style="background: none; border: none; box-shadow: none;">
             <div class="container-fluid">
 
@@ -80,6 +87,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/{{ LANGUAGE_CODE }}/bartab">{% translate "Krydlistestatus" %}</a></li>
+                                <li class="divider"></li>
                                 <li><a href="/{{ LANGUAGE_CODE }}/profile">{% translate "Bartenderprofil" %}</a></li>
                             </ul>
                         </li>
@@ -88,7 +96,7 @@
                     {% if user.is_authenticated %}
                     <form action="/{{ LANGUAGE_CODE }}/logout/" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
+                        <button type="submit" style="background-color: None; color: #c3c3c3;" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
                     </form>
                     {% endif %}
                 </div>
@@ -109,20 +117,20 @@
             <div>
                 <div>
                     <a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener" style="text-decoration: none;">
-                    <img src="{% static 'images/facebook.png' %}" class="social-link">
+                    <img id="facebook-link" src="{% static 'images/facebook.png' %}" class="social-link">
                     </a>
                     <span style="padding: 5px;"></span>
                     <a href="https://www.instagram.com/fredagscafeen.dk/" target="_blank" rel="noopener" style="text-decoration: none;">
-                        <img src="{% static 'images/instagram.png' %}" class="social-link">
+                        <img id="instagram-link" src="{% static 'images/instagram.png' %}" class="social-link">
                     </a>
                     <span style="padding: 5px;"></span>
                     <a href="https://github.com/fredagscafeen" target="_blank" rel="noopener" style="text-decoration: none;">
-                        <img src="{% static 'images/github.png' %}" class="social-link">
+                        <img id="github-link" src="{% static 'images/github.png' %}" class="social-link">
                     </a>
                 </div>
                 <div align="center" style="padding-top: 15px; padding-bottom: 5px;">
-                    Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
-                    1993-{% now "Y" %} Fredagscaféen
+                    <p>Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
+                    1993-{% now "Y" %} Fredagscaféen<p>
                 </div>
             </div>
         </div>

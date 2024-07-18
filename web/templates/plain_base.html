@@ -10,15 +10,18 @@
 
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
 
-    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
-
     {% include "jquery.html" %}
     {% include "bootstrap.html" %}
+
+    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+    <script type="text/javascript" src="{% static 'js/darkModeState.js' %}"></script>
+    <script> window.onload = setTheme()</script>
 
     <script src="{% static 'js/memes.js' %}"></script>
     {% block extrahead %}{% endblock %}
 </head>
 <body>
     {% block body_content %}{% endblock %}
+    <script> window.onload = setThemeToggle()</script>
 </body>
 </html>
