@@ -26,16 +26,16 @@
 		</thead>
 	<tbody>
     {% for shift in bartendershifts %}
-		<tr {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}>
-			<td class="col-md-2">{{ shift.display_str }}{% if show_all %} {{ shift.start_datetime.year }}{% endif %}</td>
-            <td class="col-md-3">{{ shift.responsible.name }}</td>
-            <td class="col-md-7">
+		<tr class="is-user-shift">
+			<td {% if shift|is_with_user:user %}style="background-color: lightBlue; color: black;"{% endif %}class="col-md-2">{{ shift.display_str }} {% if show_all %} {{ shift.start_datetime.year }}{% endif %}</td>
+            <td {% if shift|is_with_user:user %}style="background-color: lightBlue; color: black;"{% endif %} class="col-md-3">{{ shift.responsible.name }}</td>
+            <td {% if shift|is_with_user:user %}style="background-color: lightBlue; color: black;"{% endif %} class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
-					{% if bartender.first_bartender_shift == shift %}<b title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
+					{% if bartender.first_bartender_shift == shift %}<b {% if shift|is_with_user:user %}style="color: black;"{% endif %} title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td {% if shift|is_with_user:user %}style="background-color: lightBlue; color: black;"{% endif %} class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 	{% endfor %}
