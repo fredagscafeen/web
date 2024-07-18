@@ -87,6 +87,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/{{ LANGUAGE_CODE }}/bartab">{% translate "Krydlistestatus" %}</a></li>
+                                <li class="divider"></li>
                                 <li><a href="/{{ LANGUAGE_CODE }}/profile">{% translate "Bartenderprofil" %}</a></li>
                             </ul>
                         </li>
@@ -95,7 +96,7 @@
                     {% if user.is_authenticated %}
                     <form action="/{{ LANGUAGE_CODE }}/logout/" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
+                        <button type="submit" style="background-color: None; color: #c3c3c3;" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
                     </form>
                     {% endif %}
                 </div>

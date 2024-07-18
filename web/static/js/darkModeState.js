@@ -16,6 +16,26 @@ function switchTheme() {
         } catch(err) {
             // Page not selected
         }
+        try {
+            document.getElementById("timesheet-theme").classList = "black";
+        } catch(err) {
+            // Page not selected
+        }
+        const panels = document.getElementsByClassName("panel");
+        for (let i = 0; i < panels.length; i++) {
+            panels[i].classList = "panel panel-primary";
+        }
+        const success = document.getElementsByClassName("success");
+        for (let i = 0; i < success.length; i++) {
+            success[i].classList = "success-dark";
+        }
+        const danger = document.getElementsByClassName("danger");
+        for (let n = 0; n < 5; n++) {
+            const danger = document.getElementsByClassName("danger");
+            for (let i = 0; i < danger.length; i++) {
+                danger[i].classList = "danger-dark";
+            }
+        }
     } else {
         document.getElementById("facebook-link").setAttribute("class", "social-link");
         document.getElementById("instagram-link").setAttribute("class", "social-link");
@@ -24,6 +44,23 @@ function switchTheme() {
             document.getElementById("google-maps").setAttribute("style", "border: 0;");
         } catch(err) {
             // Page not selected
+        }
+        try {
+            document.getElementById("timesheet-theme").classList = "white";
+        } catch(err) {
+            // Page not selected
+        }
+        const panels = document.getElementsByClassName("panel");
+        for (let i = 0; i < panels.length; i++) {
+            panels[i].classList = "panel panel-default";
+        }
+        const success = document.getElementsByClassName("success-dark");
+        for (let i = 0; i < success.length; i++) {
+            success[i].classList = "success";
+        }
+        const danger = document.getElementsByClassName("danger-dark");
+        for (let i = 0; i < danger.length; i++) {
+            danger[i].classList = "danger";
         }
     }
 }
@@ -49,6 +86,25 @@ function setThemeToggle() {
             document.getElementById("google-maps").setAttribute("style", "filter: invert(90%) hue-rotate(180deg); border: 0;");
         } catch(err) {
             // Page not selected
+        }
+        try {
+            document.getElementById("timesheet-theme").classList = "black";
+        } catch(err) {
+            // Page not selected
+        }
+        const panels = document.getElementsByClassName("panel");
+        for (let i = 0; i < panels.length; i++) {
+            panels[i].classList = "panel panel-primary";
+        }
+        const success = document.getElementsByClassName("success");
+        for (let i = 0; i < success.length; i++) {
+            success[i].classList = "success-dark";
+        }
+        for (let n = 0; n < 5; n++) {
+            const danger = document.getElementsByClassName("danger");
+            for (let i = 0; i < danger.length; i++) {
+                danger[i].classList = "danger-dark";
+            }
         }
     }
 }

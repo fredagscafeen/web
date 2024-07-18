@@ -5,6 +5,7 @@
 {% block extrahead %}
 <script src="{% static 'js/timesheet.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'js/timesheet-white.min.css' %}">
+<link rel="stylesheet" href="{% static 'js/timesheet-black.min.css' %}">
 <style>
 #timesheet {
 	width: auto;
@@ -68,7 +69,7 @@
 
 <h1>{% translate "Bestyrelsen gennem tiden" %}</h1>
 
-<div class="white">
+<div id="timesheet-theme" class="white">
 	<div id="timesheet"></div>
 </div>
 

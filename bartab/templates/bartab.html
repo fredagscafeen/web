@@ -24,7 +24,7 @@
 	</thead>
 	<tbody>
 		{% for entry in entries %}
-		<tr{% if entry.added > 0 %} class="success-"{% elif entry.balance <= credit_hold_limit %} class="danger-"{% endif %}>
+		<tr{% if entry.added > 0 %} class="success"{% elif entry.balance <= credit_hold_limit %} class="danger"{% endif %}>
 			<td>{{ entry.shift }}</td>
 			<td>{{ entry.added }}</td>
 			<td>{{ entry.used }}</td>

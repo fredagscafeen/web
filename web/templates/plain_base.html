@@ -10,12 +10,12 @@
 
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
 
+    {% include "jquery.html" %}
+    {% include "bootstrap.html" %}
+
     <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
     <script type="text/javascript" src="{% static 'js/darkModeState.js' %}"></script>
     <script> window.onload = setTheme()</script>
-
-    {% include "jquery.html" %}
-    {% include "bootstrap.html" %}
 
     <script src="{% static 'js/memes.js' %}"></script>
     {% block extrahead %}{% endblock %}

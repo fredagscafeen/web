@@ -237,47 +237,67 @@ html.dark {
         background-color: #151515;
     }
 
-    button {
-        background-color: #151515;
-        color: #c3c3c3;
+    .navbar-btn {
+        background-color: #282828;
     }
 
     code {
         background-color: #351b1b;
     }
 
-    input, textarea, select, .input-group-addon, .panel, td {
+    input, textarea, select, .input-group-addon, .panel, select, th, .dropdown.open {
         background-color: #282828;
         border-color: #282828;
-        color: white;
+        color: #EEEEEE;
+    }
+
+    .dropdown.open {
+        background-color: black !important;
+    }
+
+    select:disabled, input:disabled {
+        background-color: #28282828;
+        color: #4d4d4d;
+      }
+
+    tr:nth-child(odd) {
+        background-color: #151515;
+    }
+
+    tr:nth-child(even) {
+        background-color: #282828;
     }
 
     .list-group-item {
         background-color: #282828;
-        border-color: #282828;
+        border-color: #4d4d4d;
     }
 
-    .list-group-item-success, .success- {
-        background-color: #4c8542;
-        color: white;
+    .list-group-item-success {
+        background-color: #3C763D;
+    }
+    .list-group-item-success > b {
+        color: #DFF0D8;
     }
 
     .list-group-item-warning {
-        background-color: #857e40;
-        color: white;
+        background-color: #8A6D3B;
     }
 
-    .is-user-shift {
-        background-color: lightBlue;
+    .list-group-item-warning > b {
+        color: #FCF8E3;
     }
 
-    .danger- {
-        background-color: #854040;
-        color: white;
+    .success-dark {
+        background-color: #28611e !important;
     }
 
-    p, h1, h2, h3, h4, h5, label, th, b, li {
-        color: white;
+    .danger-dark {
+        background-color: #854040 !important;
+    }
+
+    p, h1, h2, h3, h4, h5, label, b, li, td {
+        color: #EEEEEE;
     }
 
     .banner h1 {
@@ -499,7 +519,6 @@ html.dark {
         transform: translateX(16px);
     }
 
-    /* Rounded sliders */
     .slider.round {
         border-radius: 24px;
     }
