@@ -98,9 +98,11 @@ function setThemeToggle() {
         for (let i = 0; i < panels.length; i++) {
             panels[i].classList = "panel panel-primary";
         }
-        const success = document.getElementsByClassName("success");
-        for (let i = 0; i < success.length; i++) {
-            success[i].classList = "success-dark";
+        for (let n = 0; n < 5; n++) {
+            const success = document.getElementsByClassName("success");
+            for (let i = 0; i < success.length; i++) {
+                success[i].classList = "success-dark";
+            }
         }
         for (let n = 0; n < 5; n++) {
             const danger = document.getElementsByClassName("danger");
