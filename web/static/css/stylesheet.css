@@ -245,14 +245,20 @@ html.dark {
         background-color: #351b1b;
     }
 
-    input, textarea, select, .input-group-addon, .panel, select, th, .dropdown.open {
+    input, textarea, select, .input-group-addon, .panel, select, th {
         background-color: #282828;
         border-color: #282828;
         color: #EEEEEE;
     }
 
-    .dropdown.open {
-        background-color: black !important;
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a, .navbar-default .navbar-nav .open .dropdown-menu {
+        background-color: #282828;
+        color:#EEEEEE;
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
+        background-color: #151515;
+        color: #4d4d4d;
     }
 
     select:disabled, input:disabled {
@@ -273,19 +279,19 @@ html.dark {
         border-color: #4d4d4d;
     }
 
-    .list-group-item-success {
-        background-color: #3C763D;
+    .list-group-item-info {
+        background-color: var(--datblue);
     }
-    .list-group-item-success > b {
-        color: #DFF0D8;
-    }
-
-    .list-group-item-warning {
-        background-color: #8A6D3B;
+    .list-group-item-info > b {
+        color: #D9EDF7;
     }
 
-    .list-group-item-warning > b {
-        color: #FCF8E3;
+    .list-group-item-danger {
+        background-color: #854040;
+    }
+
+    .list-group-item-danger > b {
+        color: #F2DEDE;
     }
 
     .success-dark {

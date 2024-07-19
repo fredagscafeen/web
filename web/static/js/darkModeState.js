@@ -25,13 +25,12 @@ function switchTheme() {
         for (let i = 0; i < panels.length; i++) {
             panels[i].classList = "panel panel-primary";
         }
-        const success = document.getElementsByClassName("success");
         for (let n = 0; n < 5; n++) {
+            const success = document.getElementsByClassName("success");
             for (let i = 0; i < success.length; i++) {
                 success[i].classList = "success-dark";
             }
         }
-        const danger = document.getElementsByClassName("danger");
         for (let n = 0; n < 5; n++) {
             const danger = document.getElementsByClassName("danger");
             for (let i = 0; i < danger.length; i++) {
