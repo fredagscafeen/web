@@ -1,13 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
-CONTAINER = (
-    ("DRAFT", "Fad"),  # 0
-    ("BOTTLE", "Flaske"),  # 1
-    ("SHOT", "Shot"),  # 2
-    ("FOOD", "Madvare"),  # 3
-    ("OTHER", "Andet"),  # 4
-)
+from django.utils.translation import gettext_noop
 
 
 class Item(models.Model):
@@ -18,14 +11,16 @@ class Item(models.Model):
         "BeerType", on_delete=models.SET_NULL, null=True, blank=True
     )
     name = models.CharField(max_length=140)
+    name_dk = models.CharField(max_length=140, null=True, blank=True)
     description = models.TextField(blank=True)
     country = models.CharField(blank=True, max_length=140)
     priceInDKK = models.DecimalField(max_digits=9 + 2, decimal_places=2)
     abv = models.FloatField(null=True, blank=True)
-    container = models.CharField(choices=CONTAINER, blank=True, max_length=140)
+    container = models.CharField(blank=True, max_length=140)
+    container_dk = models.CharField(blank=True, max_length=140)
     volumeInCentiliters = models.IntegerField(null=True, blank=True)
     inStock = models.BooleanField(default=True)
-    imageUrl = models.CharField(max_length=255, blank=True)
+    image = models.ImageField(upload_to="items", blank=True, null=True)
     barcode = models.CharField(max_length=255, unique=True, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -59,6 +54,7 @@ class Item(models.Model):
 
 class BeerType(models.Model):
     name = models.CharField(max_length=140)
+    name_dk = models.CharField(max_length=140, null=True, blank=True)
     description = models.TextField(blank=True)
     link = models.CharField(blank=True, max_length=255)
 
