@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.core.exceptions import FieldError
+from django.utils.safestring import mark_safe
 
 from items.models import BeerType, Brewery, InventoryEntry, InventorySnapshot, Item
 
@@ -33,9 +34,9 @@ class AmountFilter(admin.SimpleListFilter):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ("brewery", "name", "current_amount")
+    list_display = ("brewery", "name", "current_amount", "thumbnail")
     search_fields = ("brewery__name", "name")
-    list_display_links = ("name",)
+    list_display_links = ("name", "thumbnail")
     list_filter = (
         AmountFilter,
         "container",
@@ -49,6 +50,13 @@ class ItemAdmin(admin.ModelAdmin):
         "brewery": Brewery,
         "type": BeerType,
     }
+
+    def thumbnail(self, obj):
+        return (
+            mark_safe('<img src="%s" width="75px"/>' % obj.image.url)
+            if obj.image
+            else "<missing>"
+        )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         """Makes querysets for brewery and type fields ordered by name"""
