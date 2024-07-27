@@ -50,7 +50,7 @@
 	{% get_current_language as LANGUAGE_CODE %}
 	{% for item in items_data %}
 		<tr class="{% if not item.inStock %}danger{% endif %}">
-			<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %}</a>{% endif %}</td>
+			<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <span class="glyphicon glyphicon-new-window"></span></a>{% endif %}</td>
 			<td>{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
 			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}</td>
 			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}</td>
