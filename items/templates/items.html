@@ -4,10 +4,20 @@
 
 {% load static %}
 {% load i18n %}
+
+<p>
+	{% blocktrans %}
+	Her kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.
+	Men derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
+	Vi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere
+	glutenfrie og alkoholfrie øl.
+	{% endblocktrans %}
+</p>
+
 <div class="row" id="sortiment-row">
 	<div class="col-sm-6">
 		<h2>
-			{% translate "Standardsortiment" %}
+			{% translate "Fast sortiment" %}
 			{% if items_data %}
 			<div id="sortiment-count">
 				   ({{ items_data | length }})
@@ -52,7 +62,7 @@
 		<tr class="{% if not item.inStock %}danger{% endif %}">
 			<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <span class="glyphicon glyphicon-new-window"></span></a>{% endif %}</td>
 			<td>{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
-			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}</td>
+			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type.name }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}</td>
 			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}</td>
 			<td>{{ item.price|floatformat:-2 }},-</td>
 			<td class="hidden-xs">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
