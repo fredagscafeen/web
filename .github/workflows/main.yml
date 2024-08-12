@@ -81,15 +81,15 @@ jobs:
       - name: Load docker image
         run: docker load < image.tar.gz
 
-      - name: Test docker-compose
+      - name: Test docker compose
         run: |
           for k in "SECRET_KEY" "RECAPTCHA_PUBLIC_KEY" "RECAPTCHA_PRIVATE_KEY"; do
             echo "$k=foo" >> ".env"
           done
           docker network create traefik
-          docker-compose up -d
+          docker compose up -d
           sleep 10
-          res=$(docker-compose ps)
+          res=$(docker compose ps)
           echo "$res"
           if echo "$res" | grep Exit &>/dev/null; then
             exit 1

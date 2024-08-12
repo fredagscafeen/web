@@ -48,7 +48,7 @@ which can be installed on Ubuntu with `sudo apt install libpq-dev`.
 ## Deploy changes
 
 1. `git push`
-2. Build docker image and redeploy: `ssh ubuntu@fredagscafeen.dk 'cd web && git pull && docker-compose build && docker-compose up -d'`
+2. Build docker image and redeploy: `ssh ubuntu@fredagscafeen.dk 'cd web && git pull && docker compose build && docker compose up -d'`
 
 ## Setup admin user on server
 
