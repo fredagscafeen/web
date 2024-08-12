@@ -250,7 +250,7 @@ CELERY_ENABLE_UTC = False
 
 CELERY_TIMEZONE = "Europe/Copenhagen"
 
-DJANGO_CELERY_BEAT_TZ_AWARE = True
+DJANGO_CELERY_BEAT_TZ_AWARE = False
 
 TIME_ZONE = "Europe/Copenhagen"
 
