@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-27 19:16+0200\n"
-"PO-Revision-Date: 2024-07-27 19:23+0050\n"
+"POT-Creation-Date: 2024-09-03 02:00+0200\n"
+"PO-Revision-Date: 2024-09-03 02:02+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -87,7 +87,7 @@ msgstr "Submit"
 msgid "Result"
 msgstr "Result"
 
-#: bartab/templates/bartab/consumption.html:15 events/templates/events.html:69
+#: bartab/templates/bartab/consumption.html:15 events/templates/events.html:80
 #: items/templates/items.html:48
 msgid "Navn"
 msgstr "Name"
@@ -374,10 +374,6 @@ msgstr "Default allowed attendees"
 msgid "Can be overwritten using the whitelist and blacklist above."
 msgstr "Can be overwritten using the whitelist and blacklist above."
 
-#: events/admin.py:86
-msgid "bartenders"
-msgstr "bartenders"
-
 #: events/forms.py:21 events/forms.py:59
 msgid "Deltager"
 msgstr "Attending"
@@ -475,6 +471,10 @@ msgstr "Sign up"
 msgid "Tilmeldte"
 msgstr "Registered participant"
 
+#: events/templates/events.html:70
+msgid "Send mail"
+msgstr "Send mail"
+
 #: events/views.py:57
 msgid "Event with id does not exist"
 msgstr "Event with id does not exist"
@@ -504,11 +504,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:268
+#: fredagscafeen/settings/base.py:264
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:269
+#: fredagscafeen/settings/base.py:265
 msgid "English"
 msgstr "English"
 
@@ -546,11 +546,18 @@ msgstr ""
 "fully reflect reality."
 
 #: items/templates/items.html:9
+#| msgid ""
+#| "\n"
+#| "\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge. \n"
+#| "\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren. \n"
+#| "\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere \n"
+#| "\tglutenfrie og alkoholfrie øl.\n"
+#| "\t"
 msgid ""
 "\n"
-"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge. \n"
-"\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren. \n"
-"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere \n"
+"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.\n"
+"\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.\n"
+"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere\n"
 "\tglutenfrie og alkoholfrie øl.\n"
 "\t"
 msgstr ""
@@ -561,7 +568,6 @@ msgstr ""
 "gluten-free and alcohol-free beers."
 
 #: items/templates/items.html:20
-#| msgid "Sortiment"
 msgid "Fast sortiment"
 msgstr "Fixed selection"
 
@@ -1218,6 +1224,9 @@ msgstr "Log in"
 msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login email sent: Press the link in your received email to log in."
+
+#~ msgid "bartenders"
+#~ msgstr "bartenders"
 
 #~ msgid "Standardsortiment"
 #~ msgstr "Standard assortment"
