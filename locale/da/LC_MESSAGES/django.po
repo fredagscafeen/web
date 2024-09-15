@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-03 02:00+0200\n"
-"PO-Revision-Date: 2024-09-03 02:02+0050\n"
+"POT-Creation-Date: 2024-09-15 20:46+0200\n"
+"PO-Revision-Date: 2024-09-15 20:47+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -105,34 +105,42 @@ msgid "Brugernavn"
 msgstr ""
 
 #: bartenders/models.py:57
+msgid "E-mail"
+msgstr ""
+
+#: bartenders/models.py:58
+msgid "En post.au mail fungerer ikke"
+msgstr ""
+
+#: bartenders/models.py:61
 msgid "Studienummer"
 msgstr ""
 
-#: bartenders/models.py:60
+#: bartenders/models.py:64
 msgid "Telefonnummer"
 msgstr ""
 
-#: bartenders/models.py:67
+#: bartenders/models.py:71
 msgid "T-shirt størrelse"
 msgstr ""
 
-#: bartenders/models.py:75
+#: bartenders/models.py:79
 msgid "Jeg foretrækker ikke at have nogle sene barvagter"
 msgstr ""
 
-#: bartenders/models.py:231
+#: bartenders/models.py:235
 msgid "til"
 msgstr ""
 
-#: bartenders/models.py:236
+#: bartenders/models.py:240
 msgid "Studie"
 msgstr ""
 
-#: bartenders/models.py:237
+#: bartenders/models.py:241
 msgid "Årgang"
 msgstr ""
 
-#: bartenders/models.py:239
+#: bartenders/models.py:243
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr ""
 

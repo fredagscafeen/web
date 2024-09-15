@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-03 02:00+0200\n"
-"PO-Revision-Date: 2024-09-03 02:02+0050\n"
+"POT-Creation-Date: 2024-09-15 20:46+0200\n"
+"PO-Revision-Date: 2024-09-15 20:47+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -105,34 +105,43 @@ msgid "Brugernavn"
 msgstr "Username"
 
 #: bartenders/models.py:57
+#| msgid "Email"
+msgid "E-mail"
+msgstr "E-mail"
+
+#: bartenders/models.py:58
+msgid "En post.au mail fungerer ikke"
+msgstr "A post.au email does not work"
+
+#: bartenders/models.py:61
 msgid "Studienummer"
 msgstr "Study number"
 
-#: bartenders/models.py:60
+#: bartenders/models.py:64
 msgid "Telefonnummer"
 msgstr "Phone number"
 
-#: bartenders/models.py:67
+#: bartenders/models.py:71
 msgid "T-shirt størrelse"
 msgstr "T-shirt size"
 
-#: bartenders/models.py:75
+#: bartenders/models.py:79
 msgid "Jeg foretrækker ikke at have nogle sene barvagter"
 msgstr "I prefer to not have any late shifts"
 
-#: bartenders/models.py:231
+#: bartenders/models.py:235
 msgid "til"
 msgstr "to"
 
-#: bartenders/models.py:236
+#: bartenders/models.py:240
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/models.py:237
+#: bartenders/models.py:241
 msgid "Årgang"
 msgstr "Year"
 
-#: bartenders/models.py:239
+#: bartenders/models.py:243
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr "Any additional information for the board can be written here"
 
@@ -546,13 +555,6 @@ msgstr ""
 "fully reflect reality."
 
 #: items/templates/items.html:9
-#| msgid ""
-#| "\n"
-#| "\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge. \n"
-#| "\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren. \n"
-#| "\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere \n"
-#| "\tglutenfrie og alkoholfrie øl.\n"
-#| "\t"
 msgid ""
 "\n"
 "\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.\n"

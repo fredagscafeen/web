@@ -52,7 +52,13 @@ class BartenderCommon(models.Model):
     username = models.CharField(
         max_length=140, unique=True, verbose_name=_("Brugernavn")
     )
-    email = models.CharField(max_length=255, unique=True, blank=True)
+    email = models.CharField(
+        max_length=255,
+        unique=True,
+        blank=True,
+        verbose_name=_("E-mail"),
+        help_text=_("En post.au mail fungerer ikke"),
+    )
     studentNumber = models.IntegerField(
         blank=True, null=True, verbose_name=_("Studienummer")
     )
@@ -282,6 +288,7 @@ Ses i baren! :)
         )
 
     def accept(self):
+        self.email = self.email if self.email is None else self.email.lower()
         common_fields = super()._meta.get_fields()
         value_dict = {f.name: getattr(self, f.name) for f in common_fields}
         b = Bartender.objects.create(**value_dict)
