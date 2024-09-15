@@ -46,7 +46,7 @@ jobs:
         run: docker save "$DOCKER_IMAGE_NAME" | gzip > image.tar.gz
 
       - name: Upload docker image for other jobs
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: image
           path: image.tar.gz
@@ -56,7 +56,7 @@ jobs:
     needs: build
     steps:
       - name: Download docker image
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: image
 
@@ -74,7 +74,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download docker image
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: image
 
@@ -105,7 +105,7 @@ jobs:
       - test-docker-compose
     steps:
       - name: Download docker image
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: image
 
