@@ -113,15 +113,13 @@ class Bartender(BartenderCommon):
     def first_deposit_shift(self):
         return BoardMemberDepositShift.with_bartender(self).first()
 
-    # TODO: Fix mailman implementation
-    """
     MAILMAN_ALL = (
         settings.MAILMAN_ALL_LIST,
-        getattr(settings, "MAILMAN_ALL_PASSWORD", None),
+        getattr(settings, "MAILMAN", None),
     )
     MAILMAN_BEST = (
         settings.MAILMAN_BEST_LIST,
-        getattr(settings, "MAILMAN_BEST_PASSWORD", None),
+        getattr(settings, "MAILMAN", None),
     )
 
     def _get_mailman(self, list_and_password):
@@ -130,8 +128,10 @@ class Bartender(BartenderCommon):
     def is_on_mailing_list(self, list_and_password=MAILMAN_ALL):
         # TODO: Fix mailman implementation
         return True
+        """
         mailman = self._get_mailman(list_and_password)
         return self.email in mailman.get_subscribers()
+        """
 
     def add_to_mailing_list(self, list_and_password=MAILMAN_ALL):
         # TODO: Fix mailman implementation
@@ -144,7 +144,6 @@ class Bartender(BartenderCommon):
         return
         mailman = self._get_mailman(list_and_password)
         mailman.remove_subscriptions([self.email])
-    """
 
     @classmethod
     def shift_ordered(cls):

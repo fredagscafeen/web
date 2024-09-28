@@ -23,6 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+MAILMAN_URL_BASE = "https://maillist.au.dk/mailman"
+MAILMAN_ALL_LIST = "datcafe-alle.cs"
+MAILMAN_BEST_LIST = "datcafe-best.cs"
+
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
     "SEND_REMINDERS": (
@@ -35,16 +39,16 @@ CONSTANCE_CONFIG = {
 
 SECRET_ADMIN_KEYS = [
     (
-        "MAILMAN",
-        "Alle, Best og Fest mailinglist admin password",
-        "best@fredagscafeen.dk",
-        "https://maillist.au.dk/postorius/lists/",
-    ),
-    (
         "GOOGLE_PASSWORD",
         "Google password",
         "datcafe@gmail.com",
         "https://gmail.com/",
+    ),
+    (
+        "MAILMAN",
+        "Alle, Best og Fest mailinglist admin password",
+        "datcafe@gmail.com",
+        "https://maillist.au.dk/postorius/lists/",
     ),
     (
         "INSTAGRAM_PASSWORD",
