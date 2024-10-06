@@ -101,7 +101,7 @@ SECRET_ADMIN_KEYS = [
     (
         "KOELESKABE_PASSWORD",
         "Hængelås-kodeord til køleskabene i Nygaardkælderen",
-        None,
+        "Koden til det ene køleskab er omvendt det andet",
         None,
     ),
     (
