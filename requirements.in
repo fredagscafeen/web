@@ -23,3 +23,5 @@ celery[redis]
 django-celery-beat
 django-rosetta==0.10.1
 lxml_html_clean
+pydantic
+importlib-metadata

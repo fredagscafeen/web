@@ -44,6 +44,8 @@ cssselect==1.2.0
     # via pyquery
 decorator==5.1.1
     # via ipython
+defusedxml==0.7.1
+    # via -r requirements.in
 dj-config-url==0.1.1
     # via -r requirements.in
 django==4.2
@@ -102,6 +104,8 @@ icalendar==6.0.1
     # via django-ical
 idna==3.10
     # via requests
+importlib-metadata==8.5.0
+    # via -r requirements.in
 ipython==7.24.1
     # via -r requirements.in
 ipython-genutils==0.2.0
@@ -128,7 +132,7 @@ pexpect==4.9.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pillow==11.0.0
+pillow==10.4.0
     # via -r requirements.in
 polib==1.2.0
     # via django-rosetta
@@ -140,7 +144,9 @@ psycopg2==2.9.10
     # via -r requirements.in
 ptyprocess==0.7.0
     # via pexpect
-pyee==12.0.0
+pydantic==2.9.2
+    # via -r requirements.in
+pyee==11.1.1
     # via pyppeteer
 pygments==2.18.0
     # via ipython
@@ -189,7 +195,7 @@ traitlets==5.14.3
     #   matplotlib-inline
 tzdata==2024.2
     # via celery
-urllib3==2.2.3
+urllib3==1.26.20
     # via
     #   pyppeteer
     #   requests
@@ -202,7 +208,7 @@ w3lib==2.2.1
     # via requests-html
 wcwidth==0.2.13
     # via prompt-toolkit
-websockets==13.1
+websockets==10.4
     # via pyppeteer
 whitenoise==6.7.0
     # via -r requirements.in
