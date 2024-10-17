@@ -46,7 +46,7 @@ decorator==5.1.1
     # via ipython
 dj-config-url==0.1.1
     # via -r requirements.in
-django==5.1.2
+django==4.2
     # via
     #   -r requirements.in
     #   django-bootstrap-datepicker-plus
