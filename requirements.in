@@ -26,3 +26,4 @@ lxml_html_clean
 pydantic
 importlib-metadata
 cron-descriptor
+typing-extensions
