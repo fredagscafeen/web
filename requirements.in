@@ -1,7 +1,8 @@
-django==3.*
+django==5.*
 python-dotenv
 djangorestframework
 dj-config-url
+django-bootstrap-icons
 django-bootstrap5
 django-recaptcha
 gunicorn
@@ -20,5 +21,5 @@ django-constance[database]
 iterfzf
 celery[redis]
 django-celery-beat
-django-rosetta==0.9.9
+django-rosetta==0.10.1
 lxml_html_clean
