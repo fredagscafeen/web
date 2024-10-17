@@ -14,19 +14,19 @@ asgiref==3.8.1
     # via django
 backcall==0.2.0
     # via ipython
-beautifulsoup4==4.9.3
+beautifulsoup4==4.12.3
     # via bs4
-billiard==4.2.0
+billiard==4.2.1
     # via celery
-bs4==0.0.1
+bs4==0.0.2
     # via requests-html
 celery[redis]==5.4.0
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2021.5.30
+certifi==2024.8.30
     # via requests
-charset-normalizer==3.3.2
+charset-normalizer==3.4.0
     # via requests
 click==8.1.7
     # via
@@ -38,15 +38,15 @@ click-didyoumean==0.3.1
     # via celery
 click-plugins==1.1.1
     # via celery
-click-repl==0.2.0
+click-repl==0.3.0
     # via celery
-cssselect==1.1.0
+cssselect==1.2.0
     # via pyquery
-decorator==5.0.9
+decorator==5.1.1
     # via ipython
 dj-config-url==0.1.1
     # via -r requirements.in
-django==3.2.4
+django==5.1.2
     # via
     #   -r requirements.in
     #   django-bootstrap-datepicker-plus
@@ -62,91 +62,91 @@ django==3.2.4
     #   django-rosetta
     #   django-timezone-field
     #   djangorestframework
-django-bootstrap-datepicker-plus==3.0.5
+django-bootstrap-datepicker-plus==5.0.5
     # via -r requirements.in
-django-bootstrap5==15.0.0
+django-bootstrap5==24.3
     # via -r requirements.in
-django-celery-beat==2.2.0
+django-celery-beat==2.7.0
     # via -r requirements.in
-django-constance[database]==2.8.0
+django-constance[database]==4.1.2
     # via -r requirements.in
-django-cors-headers==3.7.0
+django-cors-headers==4.5.0
     # via -r requirements.in
-django-extensions==3.1.3
+django-extensions==3.2.3
     # via -r requirements.in
-django-ical==1.8.0
+django-ical==1.9.2
     # via -r requirements.in
 django-logentry-admin==1.1.0
     # via -r requirements.in
-django-object-actions==3.0.2
+django-object-actions==4.3.0
     # via -r requirements.in
-django-picklefield==3.0.1
+django-picklefield==3.2
     # via django-constance
-django-recaptcha==2.0.6
+django-recaptcha==4.0.0
     # via -r requirements.in
-django-recurrence==1.10.3
+django-recurrence==1.11.1
     # via django-ical
-django-rosetta==0.9.9
+django-rosetta==0.10.1
     # via -r requirements.in
-django-timezone-field==4.1.2
+django-timezone-field==7.0
     # via django-celery-beat
-djangorestframework==3.12.4
+djangorestframework==3.15.2
     # via -r requirements.in
-fake-useragent==0.1.11
+fake-useragent==1.5.1
     # via requests-html
-gunicorn==20.1.0
+gunicorn==23.0.0
     # via -r requirements.in
-icalendar==4.0.7
+icalendar==6.0.1
     # via django-ical
-idna==2.10
+idna==3.10
     # via requests
 ipython==7.24.1
     # via -r requirements.in
 ipython-genutils==0.2.0
     # via traitlets
-iterfzf==0.5.0.20.0
+iterfzf==1.4.0.54.3
     # via -r requirements.in
 jedi==0.18.0
     # via ipython
-kombu==5.3.7
+kombu==5.4.2
     # via celery
-lxml==5.2.1
+lxml==5.3.0
     # via
     #   lxml-html-clean
     #   pyquery
-lxml-html-clean==0.1.1
+lxml-html-clean==0.3.1
     # via -r requirements.in
-matplotlib-inline==0.1.2
+matplotlib-inline==0.1.7
     # via ipython
-parse==1.19.0
+parse==1.20.2
     # via requests-html
-parso==0.8.2
+parso==0.8.4
     # via jedi
-pexpect==4.8.0
+pexpect==4.9.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pillow==8.2.0
+pillow==11.0.0
     # via -r requirements.in
 polib==1.2.0
     # via django-rosetta
-prompt-toolkit==3.0.18
+prompt-toolkit==3.0.48
     # via
     #   click-repl
     #   ipython
-psycopg2==2.9.9
+psycopg2==2.9.10
     # via -r requirements.in
 ptyprocess==0.7.0
     # via pexpect
-pyee==8.1.0
+pyee==12.0.0
     # via pyppeteer
-pygments==2.9.0
+pygments==2.18.0
     # via ipython
-pyppeteer==0.2.5
+pyppeteer==2.0.0
     # via requests-html
-pyquery==1.4.3
+pyquery==2.0.1
     # via requests-html
-python-crontab==2.5.1
+python-crontab==3.2.0
     # via django-celery-beat
 python-dateutil==2.9.0.post0
     # via
@@ -154,7 +154,7 @@ python-dateutil==2.9.0.post0
     #   django-recurrence
     #   icalendar
     #   python-crontab
-python-dotenv==0.17.1
+python-dotenv==1.0.1
     # via -r requirements.in
 pytz==2021.1
     # via
@@ -162,7 +162,7 @@ pytz==2021.1
     #   django-recurrence
     #   django-timezone-field
     #   icalendar
-redis==5.0.7
+redis==5.1.1
     # via celery
 requests==2.32.3
     # via
@@ -175,19 +175,19 @@ six==1.16.0
     #   click-repl
     #   python-dateutil
     #   w3lib
-soupsieve==2.2.1
+soupsieve==2.6
     # via beautifulsoup4
-sqlparse==0.4.1
+sqlparse==0.5.1
     # via django
-tqdm==4.61.1
+tqdm==4.66.5
     # via pyppeteer
-traitlets==5.0.5
+traitlets==5.14.3
     # via
     #   ipython
     #   matplotlib-inline
-tzdata==2024.1
+tzdata==2024.2
     # via celery
-urllib3==1.26.5
+urllib3==2.2.3
     # via
     #   pyppeteer
     #   requests
@@ -196,13 +196,13 @@ vine==5.1.0
     #   amqp
     #   celery
     #   kombu
-w3lib==1.22.0
+w3lib==2.2.1
     # via requests-html
-wcwidth==0.2.5
+wcwidth==0.2.13
     # via prompt-toolkit
-websockets==8.1
+websockets==13.1
     # via pyppeteer
-whitenoise==5.2.0
+whitenoise==6.7.0
     # via -r requirements.in
 
 # The following packages are considered to be unsafe in a requirements file:

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from django.contrib import messages
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -134,6 +135,13 @@ bootstrap5 = {
     "success_css_class": "",
 }
 
+MESSAGE_TAGS = {
+    messages.DEBUG: "alert-info",
+    messages.INFO: "alert-info",
+    messages.SUCCESS: "alert-success",
+    messages.WARNING: "alert-warning",
+    messages.ERROR: "alert-danger",
+}
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -156,7 +164,7 @@ INSTALLED_APPS = (
     "bootstrap5",
     "django_bootstrap_icons",
     "bootstrap_datepicker_plus",
-    "captcha",
+    "django_recaptcha",
     "rest_framework",
     "django_celery_beat",
     "corsheaders",
@@ -290,6 +298,8 @@ LOGIN_URL = "/login/"
 
 # Use the new NoCaptcha
 NOCAPTCHA = True
+
+RECAPTCHA_REQUIRED_SCORE = 0.85
 
 # CORS Setup
 CORS_URLS_REGEX = r"^/api/.*$"  # Only allow CORS requests in /api

@@ -11,7 +11,7 @@ from django.template import Context, Template
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from fredagscafeen.email import send_template_email
 
@@ -53,8 +53,7 @@ class BartenderCommon(models.Model):
     username = models.CharField(
         max_length=140, unique=True, verbose_name=_("Brugernavn")
     )
-    email = models.CharField(
-        max_length=255,
+    email = models.EmailField(
         unique=True,
         blank=True,
         verbose_name=_("E-mail"),
@@ -337,7 +336,9 @@ def next_bartender_shift_start(last_date=None):
 
     next_date = next_date_with_weekday(last_date, Weekday.FRIDAY)
     dt = datetime.datetime.combine(next_date, BartenderShift.DEFAULT_START_TIME)
-    return timezone.get_default_timezone().localize(dt)
+    tz = timezone.get_current_timezone()
+    aware_datetime = timezone.make_aware(dt, tz)
+    return aware_datetime
 
 
 def next_bartender_shift_dates(count):

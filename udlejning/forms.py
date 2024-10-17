@@ -1,11 +1,12 @@
 from urllib.parse import urljoin
 
-from bootstrap_datepicker_plus import DateTimePickerInput
-from captcha.fields import ReCaptchaField
+from bootstrap_datepicker_plus.widgets import DateTimePickerInput
 from django import forms
 from django.conf import settings
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Invisible
 
 from fredagscafeen.email import send_template_email
 
@@ -13,14 +14,14 @@ from .models import UdlejningApplication
 
 
 class UdlejningApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     class Meta:
         model = UdlejningApplication
         fields = "__all__"
         widgets = {
-            "dateFrom": DateTimePickerInput(format="%Y-%m-%d %H:%M"),
-            "dateTo": DateTimePickerInput(format="%Y-%m-%d %H:%M"),
+            "dateFrom": DateTimePickerInput(),
+            "dateTo": DateTimePickerInput(),
         }
 
     def __init__(self, *args, **kwargs):

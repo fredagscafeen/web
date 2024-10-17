@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 {% load bootstrap5 bootstrap_icons %}
 
 {% block extrahead %}
@@ -102,7 +103,7 @@
 				{% translate "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage (incl. moms)." %}
 		</li>
 		<li>
-				{% translate "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig pt. men man kan skrive en mail til" %} <a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">best@fredagscafeen.dk</a>)
+				{% translate "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig pt. men man kan skrive en mail til" %} <a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">best@fredagscafeen.dk</a> {{ ')' }}
 		</li>
 		<li>
 				{% translate "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og chips koster 20kr/pose, der betales pr. åbnet enhed." %}

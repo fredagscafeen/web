@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login, logout
 from django.shortcuts import redirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
