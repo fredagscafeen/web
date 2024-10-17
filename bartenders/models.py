@@ -37,13 +37,13 @@ def date_format(dt, format):
 # but we enforce that in BartenderApplicationForm for new applications.
 class BartenderCommon(models.Model):
     TSHIRT_SIZE_CHOICES = (
-        (0, "XS"),
-        (1, "S"),
-        (2, "M"),
-        (3, "L"),
-        (4, "XL"),
-        (5, "XXL"),
-        (6, "XXXL"),
+        ("XS", "XS"),
+        ("S", "S"),
+        ("M", "M"),
+        ("L", "L"),
+        ("XL", "XL"),
+        ("XXL", "XXL"),
+        ("XXXL", "XXXL"),
     )
 
     class Meta:
@@ -65,7 +65,8 @@ class BartenderCommon(models.Model):
     phoneNumber = models.IntegerField(
         blank=True, null=True, verbose_name=_("Telefonnummer")
     )
-    tshirt_size = models.IntegerField(
+    tshirt_size = models.CharField(
+        max_length=140,
         choices=TSHIRT_SIZE_CHOICES,
         blank=True,
         null=True,

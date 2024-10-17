@@ -36,7 +36,7 @@ class BartenderApplicationTests(TestCase):
             phoneNumber=42345123,
         )
         ap = BartenderApplication.objects.create(
-            **d, tshirt_size=2, study="Datalogi", study_year=1
+            **d, tshirt_size="L", study="Datalogi", study_year=1
         )
         ap.accept()
 
@@ -66,7 +66,7 @@ class BartenderApplicationTests(TestCase):
             email="abe@cs.au.dk",
             studentNumber=123123,
             phoneNumber=12312312,
-            tshirt_size=2,
+            tshirt_size="L",
             study="Datalogi",
             study_year=1,
             info="Hkll",
