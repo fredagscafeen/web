@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib import messages
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView
 
 from .forms import UdlejningApplicationForm

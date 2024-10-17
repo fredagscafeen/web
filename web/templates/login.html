@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
-{% load bootstrap3 %}
+{% load bootstrap5 %}
 
 {% block content %}
 
@@ -10,7 +10,9 @@
 {% bootstrap_form form %}
 {% buttons %}
     {% translate "Log ind" as BUTTON_TEXT %}
-    {% bootstrap_button BUTTON_TEXT button_type="submit" button_class="btn-primary" %}
+    <button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+        {{ BUTTON_TEXT }}
+    </button>
 {% endbuttons %}
 </form>
 

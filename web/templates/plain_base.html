@@ -1,5 +1,7 @@
 <!doctype html>
-<html>
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     {% load static %}
     <title>Fredagscaféen</title>
@@ -23,6 +25,11 @@
 </head>
 <body>
     {% block body_content %}{% endblock %}
-    <script> window.onload = setThemeToggle()</script>
+    <script>
+        window.onload = setThemeToggle()
+        try {
+            document.getElementById("id_captcha").parentElement.style.display = "none"
+        } catch (error) {}
+    </script>
 </body>
 </html>

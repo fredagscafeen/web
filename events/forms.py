@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from .models import EventChoiceOption, EventResponse
 
@@ -58,6 +58,9 @@ class EventResponseForm(forms.Form):
         self.fields["attending"] = forms.TypedChoiceField(
             label=_("Deltager"), choices=attending_choices, coerce=self._to_bool
         )
+        for field in self.fields.values():
+            field.widget.attrs.update({"class": "form-control"})
+
         if event_response:
             self.fields["attending"].initial = event_response.attending
 
@@ -68,6 +71,7 @@ class EventResponseForm(forms.Form):
                 required=False,
                 widget=SelectWithDisabledOptions(is_enabled=self._option_enabled),
             )
+            field.widget.attrs.update({"class": "form-control"})
             if event_response:
                 field.initial = event_response.get_option(choice)
 

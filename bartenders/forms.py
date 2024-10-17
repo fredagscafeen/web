@@ -1,11 +1,12 @@
 from urllib.parse import urljoin
 
-from captcha.fields import ReCaptchaField
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Invisible
 
 from bartab.models import BarTabUser
 from fredagscafeen.email import send_template_email
@@ -14,7 +15,7 @@ from .models import Bartender, BartenderApplication
 
 
 class BartenderApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     class Meta:
         model = BartenderApplication
@@ -23,6 +24,7 @@ class BartenderApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name != "info"
 
@@ -81,6 +83,7 @@ class BartenderInfoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         self.fields["username"].disabled = True
 
     def save(self, *args, **kwargs):

@@ -87,6 +87,23 @@ html.light {
         height: 120px;
     }
 
+    .form-label, .form-check {
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+
+    #id_prefer_only_early_shifts {
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        font-weight: normal;
+    }
+
+    .invalid-feedback {
+        color: red;
+    }
+
     #sortiment-search input {
         border-radius: 48px;
         border: 1px solid #aaa;
@@ -386,6 +403,23 @@ html.dark {
         align-items: center;
         text-align: center;
         height: 120px;
+    }
+
+    .form-label, .form-check {
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+
+    #id_prefer_only_early_shifts {
+        margin-right: 10px;
+    }
+
+    .form-check-label {
+        font-weight: normal;
+    }
+
+    .invalid-feedback {
+        color: red;
     }
 
     #sortiment-search input {
