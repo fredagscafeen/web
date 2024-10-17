@@ -4,6 +4,8 @@
 #
 #    pip-compile requirements.in
 #
+annotated-types==0.7.0
+    # via -r requirements.in
 amqp==5.2.0
     # via kombu
 appdirs==1.4.4
@@ -40,6 +42,8 @@ click-plugins==1.1.1
     # via celery
 click-repl==0.3.0
     # via celery
+cron-descriptor
+    # via -r requirements.in
 cssselect==1.2.0
     # via pyquery
 decorator==5.1.1
@@ -68,7 +72,7 @@ django-bootstrap-datepicker-plus==5.0.5
     # via -r requirements.in
 django-bootstrap-icons==0.8.7
     # via -r requirements.in
-django-bootstrap5==24.3
+django-bootstrap-v5==1.0.11
     # via -r requirements.in
 django-celery-beat==2.7.0
     # via -r requirements.in
@@ -146,6 +150,8 @@ ptyprocess==0.7.0
     # via pexpect
 pydantic==2.9.2
     # via -r requirements.in
+pydantic-core==2.23.4
+    # via pydantic
 pyee==11.1.1
     # via pyppeteer
 pygments==2.18.0
@@ -193,6 +199,8 @@ traitlets==5.14.3
     # via
     #   ipython
     #   matplotlib-inline
+typing-extensions==4.12.2
+    # via -r requirements.in
 tzdata==2024.2
     # via celery
 urllib3==1.26.20
