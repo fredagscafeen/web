@@ -2,13 +2,22 @@
 
 {% block content %}
 
-{% load items_extras %}
 {% load static %}
+{% load i18n %}
+
+<p>
+	{% blocktrans %}
+	Her kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.
+	Men derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
+	Vi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere
+	glutenfrie og alkoholfrie øl.
+	{% endblocktrans %}
+</p>
 
 <div class="row" id="sortiment-row">
 	<div class="col-sm-6">
 		<h2>
-			Sortiment
+			{% translate "Fast sortiment" %}
 			{% if items_data %}
 			<div id="sortiment-count">
 				   ({{ items_data | length }})
@@ -19,15 +28,15 @@
 
 	{% if items_data %}
 	<div class="col-sm-6" id="sortiment-search">
-		<input type="text" id="itemsSearchInput" placeholder="Søg" autofocus>
+		<input type="text" id="itemsSearchInput" placeholder="{% translate "Søg" %}" autofocus>
 	</div>
 	{% endif %}
 </div>
 
 {% if show_all %}
-<a href=".">Vis kun ting på lageret</a>
+<a href=".">{% translate "Vis kun ting på lager" %}</a>
 {% else %}
-<a href="?show_all">Vis også ting ikke på lageret</a>
+<a href="?show_all">{% translate "Vis også ting ikke på lager" %}</a>
 {% endif %}
 
 
@@ -35,26 +44,37 @@
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
-			<th>Bryghus</th>
-			<th>Navn</th>
-			<th class="hidden-xs">Beholder</th>
-			<th class="hidden-xs">Type</th>
-			<th>Pris</th>
+			<th>{% translate "Bryghus" %}<i class="fa fa-fw fa-sort"></i></span></th>
+			<th class="filter-select filter-exact">{% translate "Navn" %}<i class="fa fa-fw fa-sort"></i></th>
+			<th class="hidden-xs">{% translate "Type" %}<i class="fa fa-fw fa-sort"></i></th>
+			<th class="hidden-xs">{% translate "Container" %}<i class="fa fa-fw fa-sort"></i></th>
+			<th>{% translate "Pris" %}<i class="fa fa-fw fa-sort"></i></th>
+			<th class="hidden-xs">{% translate "Status" %}<i class="fa fa-fw fa-sort"></i></th>
+			<th class="hidden-xs">{% translate "Image" %}</i></th>
 			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
 			{% endif %}
 		</tr>
-		</thead>
+	</thead>
 	<tbody>
+	{% get_current_language as LANGUAGE_CODE %}
 	{% for item in items_data %}
-		<tr>
-			<td>{{ item.brewery|default_if_none:"" }}</td>
-			<td>{{ item.name }}</td>
-			<td class="hidden-xs">{{ item.get_container_display }}</td>
-			<td class="hidden-xs">{{ item.type|default_if_none:"" }}</td>
-			<td>{{ item.price|floatformat:-2 }}</td>
+		<tr class="{% if not item.inStock %}danger{% endif %}">
+			<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <span class="glyphicon glyphicon-new-window"></span></a>{% endif %}</td>
+			<td>{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
+			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type.name }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}</td>
+			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}</td>
+			<td>{{ item.price|floatformat:-2 }},-</td>
+			<td class="hidden-xs">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
+			<td class="hidden-xs">
+				{% if item.image %}
+				<div class="board-image" style="background-image: url({{ item.image.url }});"></div>
+				{% else %}
+				<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+				{% endif %}
+			</td>
 			{% if user.is_staff %}
-				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">Edit</a></td>
+				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 	{% endfor %}
@@ -65,7 +85,7 @@
 
 {% else %}
 
-	<span>Sortimentet er desværre tomt &#9785;</span>
+	<span>{% translate "Sortimentet er desværre tomt" %} &#9785;</span>
 
 {% endif %}
 {% endblock %}

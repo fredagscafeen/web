@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext as _
 from django.views.generic import ListView, TemplateView
 
 from .models import Item
@@ -8,7 +9,7 @@ class Items(ListView):
     allow_empty = True
     model = Item
     context_object_name = "items"
-    ordering = ("name",)
+    ordering = ("brewery",)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -18,20 +19,27 @@ class Items(ListView):
             items_data.append(
                 {
                     "brewery": item.brewery.name if item.brewery else None,
+                    "brewery_url": item.brewery.website
+                    if item.brewery.website
+                    else None,
                     "name": item.name,
-                    "container_display": item.get_container_display(),
+                    "name_dk": item.name_dk,
+                    "inStock": item.inStock,
                     "type": item.type,
+                    "container": item.container,
+                    "container_dk": item.container_dk,
                     "price": item.priceInDKK,
                     "barcode": item.barcode,
                     "id": item.id,
                     "amount": item.current_amount,
+                    "image": item.image,
                 }
             )
 
         show_all = "show_all" in self.request.GET
 
         if not show_all:
-            items_data = [d for d in items_data if d["amount"] > 0]
+            items_data = [d for d in items_data if d["inStock"]]
 
         context["show_all"] = show_all
         context["items_data"] = items_data

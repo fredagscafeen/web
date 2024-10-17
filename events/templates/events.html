@@ -61,6 +61,17 @@
 						<a class="collapsed" role="button" data-toggle="collapse" href="#collapse_{{ forloop.counter }}" aria-expanded="false">
 							{% translate "Tilmeldte" %} ({{ event.attending_count }})
 						</a>
+						{% if user.is_staff %}
+							<a href="mailto:
+							{% for response in event.sorted_responses %}
+								{% if response.attending %}
+									{{ response.bartender.email }},
+								{% endif %}
+							{% endfor %}
+							?cc=best@fredagscafeen.dk&bcc=&subject={{ event.name }}&body=" class="pull-right" target="_top">
+								<span class="glyphicon glyphicon-envelope"></span> {% translate "Send mail" %}
+							</a>
+						{% endif %}
 					</h4>
 				</div>
 				<div id="collapse_{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel">

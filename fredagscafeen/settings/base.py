@@ -39,22 +39,16 @@ CONSTANCE_CONFIG = {
 
 SECRET_ADMIN_KEYS = [
     (
-        "MAILMAN_ALL_PASSWORD",
-        "Alle mailinglist admin password",
-        None,
-        f"{MAILMAN_URL_BASE}/admin/{MAILMAN_ALL_LIST}",
-    ),
-    (
-        "MAILMAN_BEST_PASSWORD",
-        "Best mailinglist admin password",
-        None,
-        f"{MAILMAN_URL_BASE}/admin/{MAILMAN_BEST_LIST}",
-    ),
-    (
         "GOOGLE_PASSWORD",
         "Google password",
         "datcafe@gmail.com",
         "https://gmail.com/",
+    ),
+    (
+        "MAILMAN",
+        "Alle, Best og Fest mailinglist admin password",
+        "datcafe@gmail.com",
+        "https://maillist.au.dk/postorius/lists/",
     ),
     (
         "INSTAGRAM_PASSWORD",

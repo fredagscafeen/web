@@ -6,8 +6,13 @@
 {% block extrahead %}
 <script type="text/javascript">
 $(function() {
+    const isDarkMode = document.documentElement.classList.contains("dark");
     $('#unavailable_dates_table input').change(function(e) {
-        $(this).closest('td').toggleClass('danger', this.checked);
+        if (isDarkMode) {
+            $(this).closest('td').toggleClass('danger-dark', this.checked);
+        } else {
+            $(this).closest('td').toggleClass('danger', this.checked);
+        }
     });
 
     var preventUnload = false;

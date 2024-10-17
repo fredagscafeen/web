@@ -15,6 +15,7 @@
                         Fredagscaféen
                     </h1>
                 </a>
+                <div>
                 {% if LANGUAGE_CODE == 'da' %}
                     <a href="/en/{{request.get_full_path|slice:"4:"}}">
                         <img src="{% static 'images/unionjac.png' %}" align="right" class="locale">
@@ -24,13 +25,19 @@
                         <img src="{% static 'images/dannebro.png' %}" align="right" class="locale">
                     </a>
                 {% endif %}
+                <a>
+                    <label class="switch locale">
+                        <input id="themeToggle" type="checkbox" onclick="switchTheme()">
+                        <span class="slider round"></span>
+                    </label>
+                </a>
+                </div>
             </div>
         </header>
-
         <nav class="navbar navbar-default" style="background: none; border: none; box-shadow: none;">
             <div class="container-fluid">
 
-                <div class="navbar-header" style="border-bottom: 1px solid #efefef;">
+                <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
@@ -38,19 +45,27 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="center-align">
-                        <a class="navbar-brand visible-xs-inline" href="/" style="color: var(--datblue); font-size: 20px;">
+                        <a class="navbar-brand visible-xs-inline" href="/" style="color: var(--datblue); font-size: 20px; text-shadow: None;">
                             <img src="{% static 'images/logo.png' %}" height="20" style="display: inline-block;">
                             Fredagscaféen
                         </a>
-                        {% if LANGUAGE_CODE == 'da' %}
-                            <a class="navbar-brand visible-xs-inline" href="/en/{{request.get_full_path|slice:"4:"}}">
-                                <img src="{% static 'images/unionjac.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
+                        <div>
+                            <!--{% if LANGUAGE_CODE == 'da' %}
+                                <a class="navbar-brand visible-xs-inline" href="/en/{{request.get_full_path|slice:"4:"}}">
+                                    <img src="{% static 'images/unionjac.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
+                                </a>
+                            {% elif LANGUAGE_CODE == 'en' %}
+                                <a class="navbar-brand visible-xs-inline" href="/da/{{request.get_full_path|slice:"4:"}}">
+                                    <img src="{% static 'images/dannebro.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
+                                </a>
+                            {% endif %}-->
+                            <a class="navbar-brand visible-xs-inline" style="padding-left: 0px;">
+                                <label class="switch">
+                                    <input id="themeToggleNav" type="checkbox" onclick="switchTheme()">
+                                    <span class="slider round"></span>
+                                </label>
                             </a>
-                        {% elif LANGUAGE_CODE == 'en' %}
-                            <a class="navbar-brand visible-xs-inline" href="/da/{{request.get_full_path|slice:"4:"}}">
-                                <img src="{% static 'images/dannebro.png' %}" align="right" style="padding: 0px; height: 20px; border: solid; border-width: 0px; border-radius: 5px; border-color: white;">
-                            </a>
-                        {% endif %}
+                        </div>
                     </div>
                 </div>
 
@@ -75,11 +90,13 @@
                         <!--<li><a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener"><span class="glyphicon glyphicon-new-window"></span> Facebook</a></li>-->
                         <li><a href="/{{ LANGUAGE_CODE }}/board">{% translate "Bestyrelsen" %}</a></li>
                         <li><a href="/{{ LANGUAGE_CODE }}/events">{% translate "Events" %}</a></li>
+                        <li><a href="/{{ LANGUAGE_CODE }}/prices">{% translate "Sortiment" %}</a></li>
                         <li><a href="/{{ LANGUAGE_CODE }}/about">{% translate "Om baren" %}</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/{{ LANGUAGE_CODE }}/bartab">{% translate "Krydlistestatus" %}</a></li>
+                                <li class="divider"></li>
                                 <li><a href="/{{ LANGUAGE_CODE }}/profile">{% translate "Bartenderprofil" %}</a></li>
                             </ul>
                         </li>
@@ -88,7 +105,7 @@
                     {% if user.is_authenticated %}
                     <form action="/{{ LANGUAGE_CODE }}/logout/" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
+                        <button type="submit" style="background-color: None; color: #c3c3c3;" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
                     </form>
                     {% endif %}
                 </div>
@@ -109,20 +126,20 @@
             <div>
                 <div>
                     <a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener" style="text-decoration: none;">
-                    <img src="{% static 'images/facebook.png' %}" class="social-link">
+                    <img id="facebook-link" src="{% static 'images/facebook.png' %}" class="social-link">
                     </a>
                     <span style="padding: 5px;"></span>
                     <a href="https://www.instagram.com/fredagscafeen.dk/" target="_blank" rel="noopener" style="text-decoration: none;">
-                        <img src="{% static 'images/instagram.png' %}" class="social-link">
+                        <img id="instagram-link" src="{% static 'images/instagram.png' %}" class="social-link">
                     </a>
                     <span style="padding: 5px;"></span>
                     <a href="https://github.com/fredagscafeen" target="_blank" rel="noopener" style="text-decoration: none;">
-                        <img src="{% static 'images/github.png' %}" class="social-link">
+                        <img id="github-link" src="{% static 'images/github.png' %}" class="social-link">
                     </a>
                 </div>
                 <div align="center" style="padding-top: 15px; padding-bottom: 5px;">
-                    Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
-                    1993-{% now "Y" %} Fredagscaféen
+                    <p>Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
+                    1993-{% now "Y" %} Fredagscaféen<p>
                 </div>
             </div>
         </div>

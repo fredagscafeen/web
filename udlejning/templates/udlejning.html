@@ -113,7 +113,7 @@
 				{% translate "Ansøgninsformular" %}
 		</span>
 </h3>
-<form method="post" action="/udlejning/#rentingform">
+<form method="post" action="/{{ LANGUAGE_CODE }}/udlejning/#rentingform">
 	{% csrf_token %}
 	{% bootstrap_form form %}
 	{% buttons %}

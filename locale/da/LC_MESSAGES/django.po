@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-11 22:32+0200\n"
-"PO-Revision-Date: 2024-07-11 22:32+0050\n"
+"POT-Creation-Date: 2024-09-15 20:46+0200\n"
+"PO-Revision-Date: 2024-09-15 20:47+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,6 +18,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: bartab/forms.py:9
+msgid "First to include"
+msgstr "Først til at inkludere"
+
+#: bartab/forms.py:12
+msgid "Last to include"
+msgstr "Sidste til at inkludere"
+
+#: bartab/models.py:87
+msgid "Can't have both bartender shift and custom datetime"
+msgstr "Kan ikke have både bartenderskift og tilpasset datetime"
+
+#: bartab/models.py:90
+msgid "Must have either bartender shift or custom datetime"
+msgstr "Skal have enten bartendervagt eller tilpasset datetime"
+
+#: bartab/models.py:135
+msgid "Kontant?"
+msgstr ""
+
+#: bartab/models.py:138 bartab/templates/bartab.html:20
+msgid "Indsat"
+msgstr ""
+
+#: bartab/models.py:139 bartab/templates/bartab.html:21
+msgid "Køb"
+msgstr ""
+
+#: bartab/models.py:161
+msgid "Vælg kontant eller ej."
+msgstr ""
+
+#: bartab/sumfield.py:31
+msgid "Invalid sum"
+msgstr ""
 
 #: bartab/templates/bartab.html:8
 msgid "Krydslisteaktivitet"
@@ -39,16 +75,25 @@ msgstr ""
 msgid "Dato"
 msgstr ""
 
-#: bartab/templates/bartab.html:20
-msgid "Indsat"
-msgstr ""
-
-#: bartab/templates/bartab.html:21
-msgid "Køb"
-msgstr ""
-
 #: bartab/templates/bartab.html:37
 msgid "er ikke på krydslisten."
+msgstr ""
+
+#: bartab/templates/bartab/consumption.html:7
+msgid "Submit"
+msgstr "Indsend"
+
+#: bartab/templates/bartab/consumption.html:10
+msgid "Result"
+msgstr "Resultat"
+
+#: bartab/templates/bartab/consumption.html:15 events/templates/events.html:80
+#: items/templates/items.html:48
+msgid "Navn"
+msgstr ""
+
+#: bartab/templates/bartab/consumption.html:16
+msgid "Forbrug"
 msgstr ""
 
 #: bartenders/models.py:51
@@ -60,44 +105,52 @@ msgid "Brugernavn"
 msgstr ""
 
 #: bartenders/models.py:57
+msgid "E-mail"
+msgstr ""
+
+#: bartenders/models.py:58
+msgid "En post.au mail fungerer ikke"
+msgstr ""
+
+#: bartenders/models.py:61
 msgid "Studienummer"
 msgstr ""
 
-#: bartenders/models.py:60
+#: bartenders/models.py:64
 msgid "Telefonnummer"
 msgstr ""
 
-#: bartenders/models.py:67
+#: bartenders/models.py:71
 msgid "T-shirt størrelse"
 msgstr ""
 
-#: bartenders/models.py:75
+#: bartenders/models.py:79
 msgid "Jeg foretrækker ikke at have nogle sene barvagter"
 msgstr ""
 
-#: bartenders/models.py:231
+#: bartenders/models.py:235
 msgid "til"
 msgstr ""
 
-#: bartenders/models.py:236
+#: bartenders/models.py:240
 msgid "Studie"
 msgstr ""
 
-#: bartenders/models.py:237
+#: bartenders/models.py:241
 msgid "Årgang"
 msgstr ""
 
-#: bartenders/models.py:239
+#: bartenders/models.py:243
 msgid "Eventuelle ekstra info til bestyrelsen skrives her"
 msgstr ""
 
 #: bartenders/templates/ballots_update.html:18
-#: bartenders/templates/bartender_info.html:36
-#: bartenders/templates/bartender_info.html:84 events/templates/events.html:49
+#: bartenders/templates/bartender_info.html:41
+#: bartenders/templates/bartender_info.html:89 events/templates/events.html:49
 msgid "Gem"
 msgstr ""
 
-#: bartenders/templates/barplan.html:8 web/templates/base.html:60
+#: bartenders/templates/barplan.html:8 web/templates/base.html:75
 msgid "Barplan"
 msgstr ""
 
@@ -116,7 +169,7 @@ msgid "Ansvarlig"
 msgstr ""
 
 #: bartenders/templates/barplan.html:21 bartenders/templates/bartenders.html:6
-#: web/templates/base.html:61
+#: web/templates/base.html:76
 msgid "Bartendere"
 msgstr ""
 
@@ -124,12 +177,12 @@ msgstr ""
 msgid "Bartender's first shift"
 msgstr "Bartenderens første vagt"
 
-#: bartenders/templates/barplan.html:38 bartenders/templates/barplan.html:77
-#: bartenders/templates/board.html:33
+#: bartenders/templates/barplan.html:38 bartenders/templates/barplan.html:78
+#: bartenders/templates/board.html:34 items/templates/items.html:77
 msgid "Edit"
 msgstr "Rediger"
 
-#: bartenders/templates/barplan.html:49
+#: bartenders/templates/barplan.html:49 bartenders/views.py:147
 msgid "Pantvagter"
 msgstr ""
 
@@ -141,62 +194,66 @@ msgstr ""
 msgid "Ansvarlige"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:39
+#: bartenders/templates/barplan.html:73
+msgid "Bartender's first deposit shift"
+msgstr "Bartenderens første pantvagt"
+
+#: bartenders/templates/bartender_info.html:44
 msgid "Bartender status"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:41
+#: bartenders/templates/bartender_info.html:46
 msgid "Aktiv"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:42
+#: bartenders/templates/bartender_info.html:47
 msgid "Er du sikker?"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:42
-#: bartenders/templates/bartender_info.html:49
+#: bartenders/templates/bartender_info.html:47
+#: bartenders/templates/bartender_info.html:54
 msgid ""
 "Husk at du som inaktiv bartender ikke kan komme til "
 "bartenderarrangementerne."
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:42
+#: bartenders/templates/bartender_info.html:47
 msgid "Bliv inaktiv"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:44
+#: bartenders/templates/bartender_info.html:49
 msgid "Inaktiv"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:45
+#: bartenders/templates/bartender_info.html:50
 msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:52
+#: bartenders/templates/bartender_info.html:57
 msgid "Mailinglist status"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:54
+#: bartenders/templates/bartender_info.html:59
 msgid "På mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:56
+#: bartenders/templates/bartender_info.html:61
 msgid "Meld dig af mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:59
+#: bartenders/templates/bartender_info.html:64
 msgid "Ikke på mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:60
+#: bartenders/templates/bartender_info.html:65
 msgid "Meld dig på mailinglisten"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:66
+#: bartenders/templates/bartender_info.html:71
 msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
 msgstr ""
 
-#: bartenders/templates/bartender_info.html:89
+#: bartenders/templates/bartender_info.html:94
 msgid "er ikke bartender."
 msgstr ""
 
@@ -220,11 +277,11 @@ msgstr ""
 msgid "Tidligere"
 msgstr ""
 
-#: bartenders/templates/board.html:29 web/templates/base.html:76
+#: bartenders/templates/board.html:30 web/templates/base.html:91
 msgid "Bestyrelsen"
 msgstr ""
 
-#: bartenders/templates/board.html:69
+#: bartenders/templates/board.html:70
 msgid "Bestyrelsen gennem tiden"
 msgstr ""
 
@@ -279,12 +336,54 @@ msgstr ""
 msgid "Bartendertilmeldingen er lukket."
 msgstr ""
 
+#: bartenders/views.py:62
+msgid "Din ansøgning er blevet indsendt."
+msgstr ""
+
+#: bartenders/views.py:108
+msgid "Barvagter"
+msgstr ""
+
+#: bartenders/views.py:131 bartenders/views.py:170
+msgid "Responsible"
+msgstr "Ansvarlig"
+
+#: bartenders/views.py:132
+msgid "Other bartenders"
+msgstr "Andre bartendere"
+
+#: bartenders/views.py:279
+msgid "Profil opdateret"
+msgstr ""
+
+#: events/admin.py:16
+msgid "Chosen options"
+msgstr "Valgte muligheder"
+
+#: events/admin.py:72
+msgid "Default allowed attendees"
+msgstr "Standard tilladte deltagere"
+
+#: events/admin.py:73
+msgid "Can be overwritten using the whitelist and blacklist above."
+msgstr "Kan overskrives ved hjælp af hvidlisten og sortlisten ovenfor."
+
 #: events/forms.py:21 events/forms.py:59
 msgid "Deltager"
 msgstr ""
 
 #: events/forms.py:22
 msgid "Deltager ikke"
+msgstr ""
+
+#: events/forms.py:91
+#, python-format
+msgid "Du skal udfylde %(choice_name)s, når du deltager"
+msgstr ""
+
+#: events/forms.py:100
+#, python-format
+msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr ""
 
 #: events/templates/events.html:8
@@ -332,7 +431,7 @@ msgid ""
 "end en måned siden."
 msgstr ""
 
-#: events/templates/events.html:37
+#: events/templates/events.html:37 events/views.py:100
 msgid "Tilmeldingsfrist"
 msgstr ""
 
@@ -356,8 +455,25 @@ msgstr ""
 msgid "Tilmeldte"
 msgstr ""
 
-#: events/templates/events.html:69
-msgid "Navn"
+#: events/templates/events.html:70
+msgid "Send mail"
+msgstr ""
+
+#: events/views.py:57
+msgid "Event with id does not exist"
+msgstr "Begivenhed med id findes ikke"
+
+#: events/views.py:61
+msgid "Not logged in as an active bartender"
+msgstr "Ikke logget ind som aktiv bartender"
+
+#: events/views.py:73
+#, python-format
+msgid "Opdateret tilmelding til %(event_name)s"
+msgstr ""
+
+#: events/views.py:82
+msgid "Bartender Events"
 msgstr ""
 
 #: fredagscafeen/admin_filters.py:30
@@ -392,7 +508,7 @@ msgstr ""
 msgid "Til bestyrelsesmedlemmer"
 msgstr ""
 
-#: guides/templates/guides.html:6 web/templates/base.html:74
+#: guides/templates/guides.html:6 web/templates/base.html:89
 msgid "Guides"
 msgstr ""
 
@@ -407,6 +523,68 @@ msgstr ""
 msgid ""
 "Vi forsøger at opdaterer dem løbende, men forstå at de ikke altid afspejler "
 "virkeligheden fuldt ud."
+msgstr ""
+
+#: items/templates/items.html:9
+msgid ""
+"\n"
+"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.\n"
+"\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.\n"
+"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere\n"
+"\tglutenfrie og alkoholfrie øl.\n"
+"\t"
+msgstr ""
+
+#: items/templates/items.html:20
+msgid "Fast sortiment"
+msgstr ""
+
+#: items/templates/items.html:31
+msgid "Søg"
+msgstr ""
+
+#: items/templates/items.html:37
+msgid "Vis kun ting på lager"
+msgstr ""
+
+#: items/templates/items.html:39
+msgid "Vis også ting ikke på lager"
+msgstr ""
+
+#: items/templates/items.html:47
+msgid "Bryghus"
+msgstr ""
+
+#: items/templates/items.html:49
+msgid "Type"
+msgstr ""
+
+#: items/templates/items.html:50
+msgid "Container"
+msgstr "Beholder"
+
+#: items/templates/items.html:51
+msgid "Pris"
+msgstr ""
+
+#: items/templates/items.html:52
+msgid "Status"
+msgstr ""
+
+#: items/templates/items.html:53
+msgid "Image"
+msgstr "Billede"
+
+#: items/templates/items.html:68
+msgid "På lager"
+msgstr ""
+
+#: items/templates/items.html:68
+msgid "Ikke på lager"
+msgstr ""
+
+#: items/templates/items.html:88
+msgid "Sortimentet er desværre tomt"
 msgstr ""
 
 #: udlejning/models.py:12
@@ -827,7 +1005,7 @@ msgstr ""
 msgid "Reservation af projektor"
 msgstr ""
 
-#: udlejning/templates/udlejningProjector.html:6 web/templates/base.html:69
+#: udlejning/templates/udlejningProjector.html:6 web/templates/base.html:84
 msgid "lærred"
 msgstr ""
 
@@ -906,62 +1084,77 @@ msgstr ""
 msgid "Vores CVR-nr er"
 msgstr ""
 
-#: web/templates/base.html:59
+#: web/templates/base.html:74
 msgid "Forside"
 msgstr ""
 
-#: web/templates/base.html:65
+#: web/templates/base.html:80
 msgid "Udlejning"
 msgstr ""
 
-#: web/templates/base.html:67
+#: web/templates/base.html:82
 msgid "Udlejning af fadølsanlæg"
 msgstr ""
 
-#: web/templates/base.html:68
+#: web/templates/base.html:83
 msgid "Udlejning af grill"
 msgstr ""
 
-#: web/templates/base.html:69
+#: web/templates/base.html:84
 msgid "Udlejning af projektor"
 msgstr ""
 
-#: web/templates/base.html:70
+#: web/templates/base.html:85
 msgid "Udlejning af højtalere"
 msgstr ""
 
-#: web/templates/base.html:77
+#: web/templates/base.html:92
 msgid "Events"
 msgstr ""
 
-#: web/templates/base.html:78
+#: web/templates/base.html:93
+msgid "Sortiment"
+msgstr ""
+
+#: web/templates/base.html:94
 msgid "Om baren"
 msgstr ""
 
-#: web/templates/base.html:80
+#: web/templates/base.html:96
 msgid "Profil"
 msgstr ""
 
-#: web/templates/base.html:82
+#: web/templates/base.html:98
 msgid "Krydlistestatus"
 msgstr ""
 
-#: web/templates/base.html:83
+#: web/templates/base.html:100
 msgid "Bartenderprofil"
 msgstr ""
 
-#: web/templates/base.html:86
+#: web/templates/base.html:103
 msgid "Admin"
 msgstr ""
 
-#: web/templates/base.html:91
+#: web/templates/base.html:108
 msgid "Log ud"
 msgstr ""
 
-#: web/templates/base.html:124
+#: web/templates/base.html:141
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
 msgstr ""
 
 #: web/templates/login.html:12
 msgid "Log ind"
 msgstr ""
+
+#: web/views.py:48
+msgid ""
+"Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+msgstr ""
+
+#~ msgid "bartenders"
+#~ msgstr "bartendere"
+
+#~ msgid "entries"
+#~ msgstr "indtastninger"

@@ -83,7 +83,7 @@ class EventAdminForm(forms.ModelForm):
                 if self.instance.may_attend_default(b):
                     s += f"- {b}\n"
                     allowed += 1
-            bartenders = _("bartenders")
+            bartenders = "bartenders"
             return f"{allowed} {bartenders}:\n" + s.strip()
 
         return super().get_initial_for_field(field, fieldname)
