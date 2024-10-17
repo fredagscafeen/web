@@ -81,6 +81,11 @@ footer {
     height: 120px;
 }
 
+.form-label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
 #sortiment-search input {
     border-radius: 48px;
     border: 1px solid #aaa;

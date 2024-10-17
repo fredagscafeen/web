@@ -2,7 +2,7 @@ django==3.*
 python-dotenv
 djangorestframework
 dj-config-url
-django-bootstrap3
+django-bootstrap5
 django-recaptcha
 gunicorn
 Pillow

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
-{% load bootstrap3 %}
+{% load bootstrap5 bootstrap_icons %}
 
 {% block extrahead %}
 <script type="text/javascript">
@@ -34,7 +34,9 @@ $(function() {
 {% csrf_token %}
 {% buttons %}
     {% translate "Gem" as BUTTON_TEXT %}
-    {% bootstrap_button BUTTON_TEXT button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+    <button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+        <i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
+    </button>
 {% endbuttons %}
 <p><b>{% translate "Bartender status" %}:</b>
 {% if object.isActiveBartender %}
@@ -82,7 +84,9 @@ $(function() {
 </table>
 {% buttons %}
     {% translate "Gem" as BUTTON_TEXT %}
-    {% bootstrap_button BUTTON_TEXT button_type="submit" icon="floppy-disk" button_class="btn-primary" %}
+    <button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+        <i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
+    </button>
 {% endbuttons %}
 </form>
 {% else %}

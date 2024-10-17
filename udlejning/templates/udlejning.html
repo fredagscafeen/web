@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% load bootstrap3 %}
+{% load bootstrap5 bootstrap_icons %}
 
 {% block extrahead %}
 {{ form.media }}
@@ -118,7 +118,9 @@
 	{% bootstrap_form form %}
 	{% buttons %}
 		{% translate "Indsend" as BUTTON_TEXT %}
-		{% bootstrap_button BUTTON_TEXT button_type="submit" icon="send" button_class="btn-primary" %}
+		<button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+			<i>{% bs_icon 'send-fill' size='1.0em' %}</i> {{ BUTTON_TEXT }}
+		</button>
 	{% endbuttons %}
 </form>
 {% endblock %}

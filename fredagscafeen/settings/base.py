@@ -107,7 +107,7 @@ SECRET_ADMIN_KEYS = [
     (
         "KOELESKABE_PASSWORD",
         "Hængelås-kodeord til køleskabene i Nygaardkælderen",
-        None,
+        "Koden til det ene køleskab er omvendt det andet",
         None,
     ),
     (
@@ -136,7 +136,7 @@ for k, *_ in SECRET_ADMIN_KEYS:
         print("WARNING: Missing secret key in env:", k)
 
 
-BOOTSTRAP3 = {
+bootstrap5 = {
     "success_css_class": "",
 }
 
@@ -159,7 +159,8 @@ INSTALLED_APPS = (
     "constance",
     "constance.backends.database",
     "rest_framework.authtoken",
-    "bootstrap3",
+    "bootstrap5",
+    "django_bootstrap_icons",
     "bootstrap_datepicker_plus",
     "captcha",
     "rest_framework",

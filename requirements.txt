@@ -50,7 +50,7 @@ django==3.2.4
     # via
     #   -r requirements.in
     #   django-bootstrap-datepicker-plus
-    #   django-bootstrap3
+    #   django-bootstrap5
     #   django-celery-beat
     #   django-cors-headers
     #   django-extensions
@@ -64,7 +64,7 @@ django==3.2.4
     #   djangorestframework
 django-bootstrap-datepicker-plus==3.0.5
     # via -r requirements.in
-django-bootstrap3==15.0.0
+django-bootstrap5==15.0.0
     # via -r requirements.in
 django-celery-beat==2.2.0
     # via -r requirements.in

@@ -2,6 +2,7 @@ import datetime
 from enum import IntEnum
 from urllib.parse import urljoin
 
+from django import forms
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
@@ -36,13 +37,13 @@ def date_format(dt, format):
 # but we enforce that in BartenderApplicationForm for new applications.
 class BartenderCommon(models.Model):
     TSHIRT_SIZE_CHOICES = (
-        ("XS", "XS"),
-        ("S", "S"),
-        ("M", "M"),
-        ("L", "L"),
-        ("XL", "XL"),
-        ("XXL", "XXL"),
-        ("XXXL", "XXXL"),
+        (0, "XS"),
+        (1, "S"),
+        (2, "M"),
+        (3, "L"),
+        (4, "XL"),
+        (5, "XXL"),
+        (6, "XXXL"),
     )
 
     class Meta:
@@ -59,9 +60,8 @@ class BartenderCommon(models.Model):
     phoneNumber = models.IntegerField(
         blank=True, null=True, verbose_name=_("Telefonnummer")
     )
-    tshirt_size = models.CharField(
+    tshirt_size = models.IntegerField(
         choices=TSHIRT_SIZE_CHOICES,
-        max_length=10,
         blank=True,
         null=True,
         verbose_name=_("T-shirt størrelse"),
