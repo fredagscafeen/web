@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from bartab.models import BarTabUser
 from fredagscafeen.email import send_template_email
@@ -24,7 +25,7 @@ class BartenderApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["captcha"].help_text = "Hjemmesiden er sikret med reCAPTCHAv2"
+        self.fields["captcha"].help_text = _("Hjemmesiden er sikret med reCAPTCHAv2")
         self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name != "info"

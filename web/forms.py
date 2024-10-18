@@ -7,6 +7,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from bartenders.models import Bartender, BartenderShift
 from email_auth.auth import EmailTokenBackend
@@ -17,7 +18,7 @@ from fredagscafeen.email import send_template_email
 class LoginForm(forms.Form):
     email = forms.EmailField()
     captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
-    captcha.help_text = "Hjemmesiden er sikret med reCAPTCHAv2"
+    captcha.help_text = _("Hjemmesiden er sikret med reCAPTCHAv2")
 
     def clean_email(self):
         email = self.cleaned_data["email"]
