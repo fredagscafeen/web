@@ -421,8 +421,9 @@ class BartenderShift(models.Model):
         )
 
     def has_multiple_shifts(self):
-        start = timezone.get_default_timezone().localize(
-            datetime.datetime.combine(self.date, datetime.time())
+        tz = timezone.get_current_timezone()
+        start = timezone.make_aware(
+            datetime.datetime.combine(self.date, datetime.time()), tz
         )
         end = start + datetime.timedelta(days=1)
         return (

@@ -255,9 +255,8 @@ class Command(BaseCommand):
                 second_start_naive = datetime.datetime.combine(
                     shift_start.date(), DOUBLE_SECOND_SHIFT_START
                 )
-                second_start = timezone.get_default_timezone().localize(
-                    second_start_naive
-                )
+                tz = timezone.get_current_timezone()
+                second_start = timezone.make_aware(second_start_naive, tz)
                 second_end = second_start + DOUBLE_SECOND_SHIFT_DURATION
 
                 shift_periods[-1] = (shift_start, second_start)
