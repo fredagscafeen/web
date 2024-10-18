@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django_recaptcha.fields import ReCaptchaField
-from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 from bartab.models import BarTabUser
 from fredagscafeen.email import send_template_email
@@ -15,7 +14,7 @@ from .models import Bartender, BartenderApplication
 
 
 class BartenderApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    captcha = ReCaptchaField()
 
     class Meta:
         model = BartenderApplication
@@ -27,7 +26,6 @@ class BartenderApplicationForm(forms.ModelForm):
         self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name != "info"
-        self.fields["captcha"].widget.attrs.update({"class": "g-recaptcha"})
 
     def send_email(self, pk):
         d = self.cleaned_data

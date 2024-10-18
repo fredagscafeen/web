@@ -6,7 +6,6 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django_recaptcha.fields import ReCaptchaField
-from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 from fredagscafeen.email import send_template_email
 
@@ -14,7 +13,7 @@ from .models import UdlejningApplication
 
 
 class UdlejningApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
+    captcha = ReCaptchaField()
 
     class Meta:
         model = UdlejningApplication
