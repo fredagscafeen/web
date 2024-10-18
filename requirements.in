@@ -1,9 +1,8 @@
-django==5.*
+django==3.*
 python-dotenv
 djangorestframework
 dj-config-url
-django-bootstrap-icons
-django-bootstrap5
+django-bootstrap-v5
 django-recaptcha
 gunicorn
 Pillow
@@ -21,9 +20,6 @@ django-constance[database]
 iterfzf
 celery[redis]
 django-celery-beat
-django-rosetta==0.10.1
+django-rosetta==0.9.9
 lxml_html_clean
-pydantic
-importlib-metadata
-cron-descriptor
-typing-extensions
+django_bootstrap_icons

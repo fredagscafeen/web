@@ -24,6 +24,7 @@ class BartenderApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.fields["captcha"].help_text = "Hjemmesiden er sikret med reCAPTCHAv2"
         self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name != "info"

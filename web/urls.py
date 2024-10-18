@@ -38,7 +38,7 @@ urlpatterns = [
     path("prices/", Items.as_view()),
     path("scanner/", Scanner.as_view()),
     path("board/", Board.as_view()),
-    path("", Index.as_view()),
+    path("", Index.as_view(), name="index"),
     path("profile/", BartenderInfo.as_view(), name="profile"),
     path("vote/", Ballots.as_view(), name="ballots"),
     path("vote/update/", BallotsUpdate.as_view(), name="ballots_update"),

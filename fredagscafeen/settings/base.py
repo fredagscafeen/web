@@ -296,9 +296,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 LOGIN_URL = "/login/"
 
-# Use the new NoCaptcha
-NOCAPTCHA = True
-
 # CORS Setup
 CORS_URLS_REGEX = r"^/api/.*$"  # Only allow CORS requests in /api
 CORS_ORIGIN_ALLOW_ALL = True
