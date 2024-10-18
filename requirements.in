@@ -22,4 +22,4 @@ celery[redis]
 django-celery-beat
 django-rosetta==0.9.9
 lxml_html_clean
-django_bootstrap_icons
+django_bootstrap_icons==0.8.7
