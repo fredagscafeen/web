@@ -13,7 +13,7 @@ MAILMAN_MUTABLE = False
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
+SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
 AUTOLOGIN_USERNAME = os.environ.get("AUTOLOGIN_USERNAME")
 

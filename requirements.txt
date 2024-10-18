@@ -90,7 +90,7 @@ django-object-actions==4.3.0
     # via -r requirements.in
 django-picklefield==3.2
     # via django-constance
-django-recaptcha==4.0.0
+django-recaptcha==3.0.0
     # via -r requirements.in
 django-recurrence==1.11.1
     # via django-ical

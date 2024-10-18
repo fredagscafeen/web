@@ -164,7 +164,7 @@ INSTALLED_APPS = (
     "bootstrap5",
     "django_bootstrap_icons",
     "bootstrap_datepicker_plus",
-    "django_recaptcha",
+    "captcha",
     "rest_framework",
     "django_celery_beat",
     "corsheaders",
@@ -295,6 +295,9 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 LOGIN_URL = "/login/"
+
+# Use the new NoCaptcha
+NOCAPTCHA = True
 
 # CORS Setup
 CORS_URLS_REGEX = r"^/api/.*$"  # Only allow CORS requests in /api
