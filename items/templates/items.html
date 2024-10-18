@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load bootstrap5 bootstrap_icons %}
+
 {% block content %}
 
 {% load static %}
@@ -44,12 +46,12 @@
 <table class="table table-striped tablesorter" id="items">
 	<thead>
 		<tr>
-			<th>{% translate "Bryghus" %}<i class="fa fa-fw fa-sort"></i></span></th>
-			<th class="filter-select filter-exact">{% translate "Navn" %}<i class="fa fa-fw fa-sort"></i></th>
-			<th class="hidden-xs">{% translate "Type" %}<i class="fa fa-fw fa-sort"></i></th>
-			<th class="hidden-xs">{% translate "Container" %}<i class="fa fa-fw fa-sort"></i></th>
-			<th>{% translate "Pris" %}<i class="fa fa-fw fa-sort"></i></th>
-			<th class="hidden-xs">{% translate "Status" %}<i class="fa fa-fw fa-sort"></i></th>
+			<th>{% translate "Bryghus" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></span></th>
+			<th class="filter-select filter-exact">{% translate "Navn" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></i></th>
+			<th class="hidden-xs">{% translate "Type" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></i></th>
+			<th class="hidden-xs">{% translate "Container" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></i></th>
+			<th>{% translate "Pris" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></i></th>
+			<th class="hidden-xs">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></i></th>
 			<th class="hidden-xs">{% translate "Image" %}</i></th>
 			{% if user.is_staff %}
 				<th class="hidden-xs"></th>
@@ -60,7 +62,7 @@
 	{% get_current_language as LANGUAGE_CODE %}
 	{% for item in items_data %}
 		<tr class="{% if not item.inStock %}danger{% endif %}">
-			<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <span class="glyphicon glyphicon-new-window"></span></a>{% endif %}</td>
+			<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
 			<td>{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
 			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type.name }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}</td>
 			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}</td>
