@@ -1,6 +1,7 @@
 from urllib.parse import urljoin
 
 from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Invisible
 from django import forms
 from django.conf import settings
 from django.urls import reverse
@@ -15,7 +16,7 @@ from fredagscafeen.email import send_template_email
 
 class LoginForm(forms.Form):
     email = forms.EmailField()
-    captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     def clean_email(self):
         email = self.cleaned_data["email"]

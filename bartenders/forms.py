@@ -1,6 +1,7 @@
 from urllib.parse import urljoin
 
 from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Invisible
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -14,7 +15,7 @@ from .models import Bartender, BartenderApplication
 
 
 class BartenderApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     class Meta:
         model = BartenderApplication
