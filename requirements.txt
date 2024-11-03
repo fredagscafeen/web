@@ -71,6 +71,7 @@ django==3.2.4
     #   django-recurrence
     #   django-rosetta
     #   django-timezone-field
+    #   django-versatileimagefield
     #   djangorestframework
 django-bootstrap-datepicker-plus==5.0.5
     # via -r requirements.in
@@ -106,6 +107,8 @@ django-rosetta==0.9.9
     # via -r requirements.in
 django-timezone-field==4.1.2
     # via django-celery-beat
+django-versatileimagefield==3.1
+    # via -r requirements.in
 djangorestframework==3.12.4
     # via -r requirements.in
 fake-useragent==0.1.11
@@ -145,7 +148,9 @@ pexpect==4.8.0
 pickleshare==0.7.5
     # via ipython
 pillow==8.2.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   django-versatileimagefield
 polib==1.2.0
     # via django-rosetta
 prompt-toolkit==3.0.18
@@ -178,6 +183,8 @@ python-dateutil==2.9.0.post0
     #   python-crontab
 python-dotenv==0.17.1
     # via -r requirements.in
+python-magic==0.4.27
+    # via django-versatileimagefield
 pytz==2021.1
     # via
     #   django

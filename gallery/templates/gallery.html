@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% load bootstrap5 bootstrap_icons %}
+
 {% block title %}{{ show_year }}{% endblock title %}
 
 {% block canonical_url %}{% url 'gfyear' gfyear=show_year %}{% endblock canonical_url %}
@@ -17,7 +19,7 @@
             {{ year }}
           </a>
           {% if user.is_staff %}
-            <a href="/admin/gallery/album/{{ period.id }}/change/" class="pull-right">
+            <a href="/admin/gallery/album/{{ period.id }}" class="pull-right">
               {% translate "Edit" %}
             </a>
           {% endif %}
@@ -41,7 +43,15 @@
                 <a class="thumbnail" href="{% url 'album' gfyear=album.gfyear album_slug=album.slug %}">
                   <div class="thumbcap">
                     {% if firstFile.type == "I" %}
-                      <img src="{{ firstFile.file.url }}" alt="{{ album.title }}">
+                      <img src="{{ firstFile.file.crop.253x253.url }}" alt="{{ album.title }}">
+                    {% elif firstFile.type == "V" %}
+                      {% bs_icon "film" %}
+                    {% elif firstFile.type == "A" %}
+                      {% bs_icon "volume-up" %}
+                    {% elif firstFile.type == "O" %}
+                      {% bs_icon "file" %}
+                    {% elif not firstFile %}
+                      {% bs_icon "ban-circle" %}
                     {% endif %}
                     <div class="caption">
                       <h5>{{ album.title }}

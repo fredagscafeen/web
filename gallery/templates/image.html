@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% load bootstrap5 bootstrap_icons %}
+
 {% block title %}{{ album.title }}{% endblock title %}
 {% block navbar_class %}navbar-static-top{% endblock navbar_class %}
 
@@ -35,8 +37,43 @@
 	{% for file, next_file, prev_file in file_orders %}
 	<div class="{% if file != start_file %}hidden{% endif %}" data-permlink="{{ file.slug }}">
 		<div class="mediawrapper">
-			<img alt="{{ album.slug }}/{{ file.slug }}"
-				src="{{ file.file.url }}">
+			{% if file.type == "I" %}
+				<img alt="{{ album.slug }}/{{ file.slug }}"
+					{% if file != start_file %}data-{% endif %}srcset=
+						"{{ file.file.thumbnail.400x400.url }} 400w,
+						{{ file.file.thumbnail.720x720.url }} 720w,
+						{{ file.file.thumbnail.940x940.url }} 940w,
+						{{ file.file.thumbnail.1140x1140.url }} 1140w,
+						{{ file.file.thumbnail.2280x2280.url }} 2280w"
+					{% if file != start_file %}data-{% endif %}sizes="100vw"
+					{% if file != start_file %}data-src=
+						"{{ file.file.thumbnail.720x720.url }}"
+					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+					{% else %}
+					src="{{ file.file.thumbnail.720x720.url }}"
+					{% endif %}
+					title="{{ file.caption }}">
+			{% elif file.type == "A" %}
+				<audio controls
+					{% if file != start_file %}data-{% endif %}src=
+					"{{ file.file.url }}">
+					Your browser does not support the audio element.
+				</audio>
+			{% elif file.type == "V" %}
+				<video controls
+					{% if file != start_file %}data-{% endif %}src=
+					"{{ file.file.url }}">
+					Your browser does not support the video tag.
+				</video>
+			{% else %}
+				<div class="lg-file-download text-center">
+					<a class="btn btn-default btn-lg" href="{{ file.file.url }}">
+						{% bs_icon "download-alt" %}
+						{{ file.slug }}
+						({{ file.file.size|filesizeformat }})
+					</a>
+				</div>
+			{% endif %}
 			<div class="overlay-top">
         		<ol class="breadcrumb">
 					<li><a href="{% url 'gfyear' gfyear=album.gfyear  %}">{{ album.gfyear }}</a></li>
@@ -51,7 +88,7 @@
 			<div class="overlay-bottom">
 				<div class="row">
 					<div class="text-left">{{ file.date|default_if_none:"" }}</div>
-					<div class="text-right"><a href="{{ file.file.url }}" download>download-alt ({{ file.file.size|filesizeformat }})</a></div>
+					<div class="text-right"><a href="{{ file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ file.file.size|filesizeformat }})</a></div>
 					<div class="text-center">
 			    {% if file_count > 1 %}
 						<a class="tkgal-control tkgal-prev"

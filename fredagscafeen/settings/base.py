@@ -184,6 +184,7 @@ INSTALLED_APPS = (
     "sorl.thumbnail",
     "jfu",
     "gallery",
+    "versatileimagefield",
 )
 
 MIDDLEWARE = (
@@ -325,4 +326,13 @@ THUMBNAIL_KVSTORE = "sorl.thumbnail.kvstores.dbm_kvstore.KVStore"
 # THUMBNAIL_DBM_FILE = '/home/mftutor/web/thumbnails/thumbnail_kvstore'
 THUMBNAIL_DBM_FILE = "/Users/andersseverinsen/Library/CloudStorage/OneDrive-Aarhusuniversitet/Uni/tutor/thumbnails/thumbnail_kvstore"
 
-THUMBNAIL_DEBUG = True
+VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
+    "gallery": [
+        ("gallery_253", "crop__253x253"),
+        ("image_400", "thumbnail__400x400"),
+        ("image_720", "thumbnail__720x720"),
+        ("image_940", "thumbnail__940x940"),
+        ("image_1140", "thumbnail__1140x1140"),
+        ("image_2280", "thumbnail__2280x2280"),
+    ],
+}

@@ -21,3 +21,5 @@ if sys.argv[1:2] != ["test"]:
     MIDDLEWARE += ("fredagscafeen.autologin.AutologinMiddleware",)
 
 YEAR = 2024
+
+THUMBNAIL_DEBUG = True
