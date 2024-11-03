@@ -65,6 +65,7 @@ django==3.2.4
     #   django-extensions
     #   django-ical
     #   django-logentry-admin
+    #   django-model-utils
     #   django-picklefield
     #   django-recaptcha
     #   django-recurrence
@@ -87,7 +88,11 @@ django-extensions==3.1.3
     # via -r requirements.in
 django-ical==1.8.0
     # via -r requirements.in
+django-jfu==2.0.9
+    # via -r requirements.in
 django-logentry-admin==1.1.0
+    # via -r requirements.in
+django-model-utils==5.0.0
     # via -r requirements.in
 django-object-actions==3.0.2
     # via -r requirements.in
@@ -193,6 +198,8 @@ six==1.16.0
     #   click-repl
     #   python-dateutil
     #   w3lib
+sorl-thumbnail==12.10.0
+    # via -r requirements.in
 soupsieve==2.2.1
     # via beautifulsoup4
 sqlparse==0.4.1
@@ -211,6 +218,8 @@ typing-extensions==4.12.2
     #   pyee
 tzdata==2024.1
     # via celery
+unidecode==1.3.8
+    # via -r requirements.in
 urllib3==1.26.5
     # via
     #   pyppeteer

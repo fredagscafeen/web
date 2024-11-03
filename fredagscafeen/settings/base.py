@@ -181,6 +181,9 @@ INSTALLED_APPS = (
     "events",
     "printer",
     "rosetta",
+    "sorl.thumbnail",
+    "jfu",
+    "gallery",
 )
 
 MIDDLEWARE = (
@@ -227,6 +230,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
+                "django.template.context_processors.static",
             ],
         },
     },
@@ -317,3 +322,9 @@ SESSION_COOKIE_AGE = 365 * 24 * 60 * 60
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+THUMBNAIL_KVSTORE = "sorl.thumbnail.kvstores.dbm_kvstore.KVStore"
+# THUMBNAIL_DBM_FILE = '/home/mftutor/web/thumbnails/thumbnail_kvstore'
+THUMBNAIL_DBM_FILE = "/Users/andersseverinsen/Library/CloudStorage/OneDrive-Aarhusuniversitet/Uni/tutor/thumbnails/thumbnail_kvstore"
+
+THUMBNAIL_DEBUG = True

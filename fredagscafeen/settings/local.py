@@ -19,3 +19,5 @@ AUTOLOGIN_USERNAME = os.environ.get("AUTOLOGIN_USERNAME")
 
 if sys.argv[1:2] != ["test"]:
     MIDDLEWARE += ("fredagscafeen.autologin.AutologinMiddleware",)
+
+YEAR = 2024
