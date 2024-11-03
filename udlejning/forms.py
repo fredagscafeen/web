@@ -28,7 +28,7 @@ class UdlejningApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["captcha"].help_text = "Hjemmesiden er sikret med reCAPTCHAv2"
+        self.fields["captcha"].help_text = _("Hjemmesiden er sikret med reCAPTCHAv2")
         self.fields["paymentType"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name not in ["EANnumber", "comments"]
