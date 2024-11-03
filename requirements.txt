@@ -84,11 +84,11 @@ django-constance[database]==2.8.0
     # via -r requirements.in
 django-cors-headers==3.7.0
     # via -r requirements.in
+django-dprog-jfu==3.0.0
+    # via -r requirements.in
 django-extensions==3.1.3
     # via -r requirements.in
 django-ical==1.8.0
-    # via -r requirements.in
-django-jfu==2.0.9
     # via -r requirements.in
 django-logentry-admin==1.1.0
     # via -r requirements.in

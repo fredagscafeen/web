@@ -24,6 +24,6 @@ django-rosetta==0.9.9
 lxml_html_clean
 django_bootstrap_icons==0.8.7
 sorl-thumbnail==12.10
-django-jfu
+django-dprog-jfu
 django-model-utils
 Unidecode
