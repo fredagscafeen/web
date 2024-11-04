@@ -15,7 +15,7 @@ from versatileimagefield.fields import VersatileImageField
 from versatileimagefield.image_warmer import VersatileImageFieldWarmer
 
 from fredagscafeen.settings.base import MEDIA_ROOT
-from gallery.utils import file_name, get_exif_date, get_year, slugify
+from gallery.utils import file_name, get_exif_date, get_gfyear, slugify
 
 FORCEDORDERMAX = 10000
 
@@ -25,22 +25,22 @@ logger = logging.getLogger(__name__)
 @python_2_unicode_compatible
 class Album(models.Model):
     class Meta:
-        ordering = ["year", "-eventalbum", "oldFolder", "publish_date"]
-        unique_together = (("year", "slug"),)
+        ordering = ["gfyear", "-eventalbum", "oldFolder", "publish_date"]
+        unique_together = (("gfyear", "slug"),)
 
     title = models.CharField(max_length=200, verbose_name="Titel")
     publish_date = models.DateField(
         blank=True, null=True, default=date.today, verbose_name="Udgivelsesdato"
     )
     eventalbum = models.BooleanField(default=True, verbose_name="Arrangement")
-    year = models.PositiveSmallIntegerField(default=get_year, verbose_name="Årgang")
+    gfyear = models.PositiveSmallIntegerField(default=get_gfyear, verbose_name="Årgang")
     slug = models.SlugField(verbose_name="Kort titel")
     description = models.TextField(blank=True, verbose_name="Beskrivelse")
 
     oldFolder = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
-        return "%s: %s" % (self.year, self.title)
+        return "%s: %s" % (self.gfyear, self.title)
 
     def clean(self):
         for m in self.basemedia.all():
@@ -53,7 +53,7 @@ class Album(models.Model):
             f.save()
 
     def get_absolute_url(self):
-        return reverse("album", kwargs={"year": self.year, "album_slug": self.slug})
+        return reverse("album", kwargs={"gfyear": self.gfyear, "album_slug": self.slug})
 
 
 @python_2_unicode_compatible
@@ -131,7 +131,7 @@ class BaseMedia(models.Model):
         return reverse(
             "image",
             kwargs={
-                "year": self.album.year,
+                "gfyear": self.album.gfyear,
                 "album_slug": self.album.slug,
                 "image_slug": self.slug,
             },

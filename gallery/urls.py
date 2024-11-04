@@ -6,12 +6,12 @@ import gallery.views as views
 urlpatterns = [
     # Gallery overview
     path("", views.gallery, name="gallery_index"),
-    re_path(r"^(?P<year>\d+)$", views.gallery, name="year"),
+    re_path(r"^(?P<gfyear>\d+)$", views.gallery, name="gfyear"),
     # Album overview
-    re_path(r"^(?P<year>\d+)/(?P<album_slug>[^/]+)$", views.album, name="album"),
+    re_path(r"^(?P<gfyear>\d+)/(?P<album_slug>[^/]+)$", views.album, name="album"),
     # Single images
     re_path(
-        r"^(?P<year>\d+)/(?P<album_slug>[^/]+)/(?P<image_slug>[^/]+)$",
+        r"^(?P<gfyear>\d+)/(?P<album_slug>[^/]+)/(?P<image_slug>[^/]+)$",
         views.image,
         name="image",
     ),
