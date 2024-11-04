@@ -2,9 +2,9 @@
 
 {% load bootstrap5 bootstrap_icons %}
 
-{% block title %}{{ album.gfyear }} / {{ album.title }}{% endblock title %}
+{% block title %}{{ album.year }} / {{ album.title }}{% endblock title %}
 
-{% block canonical_url %}{% url 'album' gfyear=album.gfyear album_slug=album.slug %}{% endblock canonical_url %}
+{% block canonical_url %}{% url 'album' year=album.year album_slug=album.slug %}{% endblock canonical_url %}
 
 {% block content %}
 <!--
@@ -23,22 +23,22 @@ hvoraf {{ new_count }} er ny{{ new_count|pluralize:'e' }}.
 </form>
 {% endif %}
 <div class="row">
-  <div class="text-left">
-    <ol class="breadcrumb">
-      <li><a href="{% url 'gfyear' gfyear=album.gfyear  %}">{{ album.gfyear }}</a></li>
+  <div class="col-xs-12 col-sm-7 col-md-6">
+    <ol class="breadcrumb imagetitle">
+      <li><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
       <li class="active">{{ album.title }}</li>
     </ol>
   </div>
-  <div class="imagetitle text-right">
-      <p>
+  <div class="col-xs-12 col-sm-5 col-md-6 text-right">
+      <p class="imagetitle">
           {{ files|length }} billede{{ files|length|pluralize:"r" }}{% if album.publish_date %} fra d. {{ album.publish_date }}{% endif %}
       </p>
   </div>
 </div>
-<div class="panel-body">
+<div class="row">
   {% for file in files %}
-  <div class="gallery-elem border">
-    <a class="thumbnail" href="{% url 'image' gfyear=album.gfyear album_slug=album.slug image_slug=file.slug %}" alt="Se billede">
+  <div class="col-xs-6 col-sm-4 col-md-3">
+    <a class="thumbnail" href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede">
       <div class="thumbcap">
         {% if file.type == "I" %}
           <img src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
@@ -53,10 +53,12 @@ hvoraf {{ new_count }} er ny{{ new_count|pluralize:'e' }}.
     </a>
   </div> <!-- col-xs-6 -->
   {% empty %}
-  <div> <p>Albummet '{{ album.title }}' har ingen billeder endnu.</p></div>
+  <div class="col-xs-12">
+    <p>Albummet '{{ album.title }}' har ingen billeder endnu.</p>
+  </div>
   {% endfor %}
 </div> <!-- row -->
-<div style="width: 100%; display: flex; padding-left: 20px;">
-  <a href="{% url 'gfyear' gfyear=album.gfyear  %}">Tilbage til {{ album.gfyear }}</a>
+<div class="col-xs-12">
+  <a href="{% url 'year' year=album.year  %}">Tilbage til {{ album.year }}</a>
 </div>
 {% endblock content%}

@@ -21,7 +21,7 @@
   {% endif %}
 {% endblock %}
 
-{% block canonical_url %}{% url 'image' gfyear=album.gfyear album_slug=album.slug image_slug=start_file.slug %}{% endblock canonical_url %}
+{% block canonical_url %}{% url 'image' year=album.year album_slug=album.slug image_slug=start_file.slug %}{% endblock canonical_url %}
 
 {% block opengraph %}
   <meta property="og:type" content="{% if start_file.type == "I" %}image{% elif start_file.type == "V" %}video{% elif start_file.type == "A" %}audio{% else %}website{% endif %}" />
@@ -76,8 +76,8 @@
 			{% endif %}
 			<div class="overlay-top">
         		<ol class="breadcrumb">
-					<li><a href="{% url 'gfyear' gfyear=album.gfyear  %}">{{ album.gfyear }}</a></li>
-					<li><a id="albumlink" href="{% url 'album' gfyear=album.gfyear album_slug=album.slug %}">{{ album.title }}</a></li>
+					<li><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
+					<li><a id="albumlink" href="{% url 'album' year=album.year album_slug=album.slug %}">{{ album.title }}</a></li>
 					<li>{{ forloop.counter }} af {{ file_count }}{% if file.type == "I" %} <span class="hidden-xs">billede{{ file_count|pluralize:"r" }}</span>{% endif %}</li>
 				</ol>
 				{% if edit_visibility %}
@@ -87,18 +87,20 @@
 			</div>
 			<div class="overlay-bottom">
 				<div class="row">
-					<div class="text-left">{{ file.date|default_if_none:"" }}</div>
-					<div class="text-right"><a href="{{ file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ file.file.size|filesizeformat }})</a></div>
-					<div class="text-center">
-			    {% if file_count > 1 %}
-						<a class="gal-control gal-prev"
-							rel="prev"
-							href="{{ prev_file.slug }}">Forrige</a> |
-						<a class="gal-control gal-next"
-							rel="next"
-							href="{{ next_file.slug }}">Næste</a>
-					{% endif %}
-					</div>
+					<div class="col-sm-4 hidden-xs text-left"><p>{{ file.date|default_if_none:"" }}</p></div>
+					<div class="col-sm-4 col-xs-12 text-center">
+						{% if file_count > 1 %}
+								<p>
+									<a class="gal-control gal-prev"
+										rel="prev"
+										href="{{ prev_file.slug }}">Forrige</a> |
+									<a class="gal-control gal-next"
+										rel="next"
+										href="{{ next_file.slug }}">Næste</a>
+								</p>
+							{% endif %}
+							</div>
+					<div class="col-sm-4 hidden-xs text-right"><a href="{{ file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ file.file.size|filesizeformat }})</a></div>
 				</div>
 			</div>
 		</div>

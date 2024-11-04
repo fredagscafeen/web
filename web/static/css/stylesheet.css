@@ -252,24 +252,42 @@ html.light {
     }
 
     .panel-body {
+        padding: 0px;
+        padding-top: 15px;
+    }
+
+    .thumbcap {
         width: 100%;
-    }
-
-    .gallery-elem {
-        margin: 10px;
-        float: left;
-        width: 165px;
-        height: 185px;
-    }
-
-    .thumbnail, .mediawrapper {
+        padding-bottom: 100%;
         position: relative;
-    }
-
-    .thumbcap img {
-        width: 155px;
-        height: 155px;
-        object-fit: cover;
+        img {
+            display: block;
+            width:100%;
+            margin-bottom:-100%;
+        }
+        .glyphicon {
+            font-size: 50px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+        .caption {
+            background-color: rgba(0,0,0,0.5);
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            h5 {
+                color: #eee;
+            }
+            h5 small {
+                color: lightgray;
+                white-space: nowrap;
+            }
+        }
     }
 
     .mediawrapper {
@@ -282,15 +300,6 @@ html.light {
         width: 100%;
         height: 100%;
         object-fit: cover;
-    }
-
-    .caption {
-        text-align: center;
-        position: absolute;
-        bottom: 4px;
-        left: 0px;
-        right: 0px;
-        background: rgba(255, 255, 255, 0.7);
     }
 
     .overlay-top {
@@ -308,18 +317,6 @@ html.light {
         left: 0px;
         right: 0px;
         background: rgba(255, 255, 255, 0.7);
-        padding: 8px;
-    }
-
-    .text-left {
-        float: left;
-    }
-
-    .text-right {
-        float: right;
-    }
-
-    .imagetitle {
         padding: 8px;
     }
 
@@ -652,5 +649,96 @@ html.dark {
 
     .slider.round:before {
         border-radius: 50%;
+    }
+
+    .row {
+        margin: 0px;
+    }
+
+    .panel-body-top {
+        padding: 0px;
+        padding-top: 15px;
+    }
+
+    .thumbnail {
+        background-color: #151515;
+        border-color: #4d4d4d;
+    }
+
+    .thumbnail:hover {
+        border-color: #eee;
+    }
+
+    .thumbcap {
+        width: 100%;
+        padding-bottom: 100%;
+        position: relative;
+        img {
+            display: block;
+            width:100%;
+            margin-bottom:-100%;
+        }
+        .glyphicon {
+            font-size: 50px;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+        }
+        .caption {
+            background-color: rgba(0,0,0,0.5);
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            h5 {
+                color: #eee;
+            }
+            h5 small {
+                color: lightgray;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    .mediawrapper {
+        position: relative;
+        width: 100%;
+        text-align: center;
+    }
+
+    .mediawrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .overlay-top {
+        text-align: left;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .overlay-bottom {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 8px;
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        margin: 0px;
+    }
+
+    .breadcrumb:before {
+        color: black;
     }
 }

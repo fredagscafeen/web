@@ -45,7 +45,7 @@ def gallery(request, **kwargs):
     edit_visibility = request.user.has_perm(GALLERY_PERMISSION)
 
     try:
-        requested_year = int(kwargs["gfyear"])
+        requested_year = int(kwargs["year"])
     except (KeyError, ValueError):
         requested_year = None
 
@@ -56,7 +56,7 @@ def gallery(request, **kwargs):
 
     # Hide albums with no images
     albums = [a for a in albums if a.count + a.new_count > 0]
-    years = set(a.gfyear for a in albums)
+    years = set(a.year for a in albums)
     years = sorted(years, reverse=True)
 
     if requested_year is None:
@@ -65,7 +65,7 @@ def gallery(request, **kwargs):
         show_year = requested_year
 
     # Hide albums not in show_year
-    albums = [a for a in albums if a.gfyear == show_year]
+    albums = [a for a in albums if a.year == show_year]
 
     if not albums:
         raise Http404("No albums exist")
@@ -84,8 +84,8 @@ def gallery(request, **kwargs):
     return render(request, "gallery.html", context)
 
 
-def album(request, gfyear, album_slug):
-    album = get_object_or_404(Album, gfyear=gfyear, slug=album_slug)
+def album(request, year, album_slug):
+    album = get_object_or_404(Album, year=year, slug=album_slug)
     files = album.basemedia.filter(visibility=BaseMedia.PUBLIC).select_subclasses()
     context = {"album": album, "files": files}
 
@@ -99,11 +99,9 @@ def album(request, gfyear, album_slug):
             # Update isCoverFile
             album.clean()
 
-            return redirect("album", gfyear=gfyear, album_slug=album_slug)
+            return redirect("album", year=year, album_slug=album_slug)
 
-        kwargs = dict(
-            gfyear=album.gfyear, album_slug=album.slug, image_slug=new_file.slug
-        )
+        kwargs = dict(year=album.year, album_slug=album.slug, image_slug=new_file.slug)
         context["edit_visibility_link"] = reverse("image", kwargs=kwargs) + "?v=1"
 
         qs = album.basemedia.all().order_by()
@@ -122,8 +120,8 @@ def album(request, gfyear, album_slug):
     return render(request, "album.html", context)
 
 
-def image(request, gfyear, album_slug, image_slug, **kwargs):
-    album = get_object_or_404(Album, gfyear=gfyear, slug=album_slug)
+def image(request, year, album_slug, image_slug, **kwargs):
+    album = get_object_or_404(Album, year=year, slug=album_slug)
 
     edit_visibility = bool(request.GET.get("v")) and request.user.has_perm(
         GALLERY_PERMISSION
@@ -246,7 +244,7 @@ def set_visibility(request):
     # Redirect to album
     if albums:
         album = albums[0]
-        kwargs = dict(gfyear=album.gfyear, album_slug=album.slug)
+        kwargs = dict(year=album.year, album_slug=album.slug)
         return HttpResponseRedirect(reverse("album", kwargs=kwargs))
     else:
         return HttpResponse("Synlighed på givne billeder er blevet opdateret")
