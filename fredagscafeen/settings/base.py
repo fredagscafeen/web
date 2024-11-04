@@ -322,10 +322,6 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-THUMBNAIL_KVSTORE = "sorl.thumbnail.kvstores.dbm_kvstore.KVStore"
-# THUMBNAIL_DBM_FILE = '/home/mftutor/web/thumbnails/thumbnail_kvstore'
-THUMBNAIL_DBM_FILE = "/Users/andersseverinsen/Library/CloudStorage/OneDrive-Aarhusuniversitet/Uni/tutor/thumbnails/thumbnail_kvstore"
-
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
     "gallery": [
         ("gallery_253", "crop__253x253"),

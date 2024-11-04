@@ -1,16 +1,26 @@
 {% extends 'jfu/upload_form.html' %}
-
+{% load i18n %}
 {% block CSS_BOOTSTRAP %}
 <link
     rel="stylesheet"
     href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
 >
 {% endblock %}
+{% block CSS_EXTRA %}
+<style>
+  #content, .content {
+    background-color: black;
+  }
+  h1, h2, p {
+    color: white;
+  }
+</style>
+{% endblock %}
 
 {% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
 <button type="reset" class="btn btn-warning cancel">
   <i class="glyphicon glyphicon-ban-circle"></i>
-  <span>Cancel upload</span>
+  <span>{% translate "Cancel upload" %}</span>
 </button>
 {% endblock %}
 

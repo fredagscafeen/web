@@ -260,7 +260,11 @@ html.light {
         width: 100%;
         padding-bottom: 100%;
         position: relative;
-        img {
+        img, span {
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
             display: block;
             width:100%;
             margin-bottom:-100%;
@@ -275,16 +279,12 @@ html.light {
             -webkit-transform: translate(-50%, -50%);
         }
         .caption {
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(255, 255, 255, 0.5);
             bottom: 0;
             left: 0;
             position: absolute;
             width: 100%;
-            h5 {
-                color: #eee;
-            }
             h5 small {
-                color: lightgray;
                 white-space: nowrap;
             }
         }
@@ -673,7 +673,11 @@ html.dark {
         width: 100%;
         padding-bottom: 100%;
         position: relative;
-        img {
+        img, span {
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
             display: block;
             width:100%;
             margin-bottom:-100%;
@@ -693,11 +697,7 @@ html.dark {
             left: 0;
             position: absolute;
             width: 100%;
-            h5 {
-                color: #eee;
-            }
             h5 small {
-                color: lightgray;
                 white-space: nowrap;
             }
         }
@@ -721,7 +721,7 @@ html.dark {
         top: 0px;
         left: 0px;
         right: 0px;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.8);
     }
 
     .overlay-bottom {
@@ -729,7 +729,7 @@ html.dark {
         bottom: 0px;
         left: 0px;
         right: 0px;
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.8);
         padding: 8px;
     }
 

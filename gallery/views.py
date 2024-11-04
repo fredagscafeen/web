@@ -12,6 +12,7 @@ from django.http import (
 )
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from jfu.http import JFUResponse, UploadResponse, upload_receive
 
@@ -68,7 +69,7 @@ def gallery(request, **kwargs):
     albums = [a for a in albums if a.year == show_year]
 
     if not albums:
-        raise Http404("No albums exist")
+        raise Http404(_("No albums exist"))
 
     firstImages = BaseMedia.objects.filter(album__in=albums, isCoverFile=True)
     firstImages = firstImages.select_subclasses()
@@ -142,10 +143,10 @@ def image(request, year, album_slug, image_slug, **kwargs):
             file.visibility_field = form[key]
 
     if not start_file:
-        raise Http404("Billedet kan ikke findes")
+        raise Http404(_("Billedet kan ikke findes"))
 
     if start_file.notPublic and not edit_visibility:
-        raise Http404("Billedet kan ikke findes")
+        raise Http404(_("Billedet kan ikke findes"))
 
     prev_files = files[1:] + files[:1]
     next_files = files[-1:] + files[:-1]
@@ -247,16 +248,16 @@ def set_visibility(request):
         kwargs = dict(year=album.year, album_slug=album.slug)
         return HttpResponseRedirect(reverse("album", kwargs=kwargs))
     else:
-        return HttpResponse("Synlighed på givne billeder er blevet opdateret")
+        return HttpResponse(_("Synlighed på givne billeder er blevet opdateret"))
 
 
 class AlbumFeed(Feed):
-    title = "Fredagscaféens billedalbummer"
+    title = _("Fredagscaféens billedalbummer")
 
     def link(self):
         return reverse("gallery_index")
 
-    description = "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
+    description = _("Feed med nye billedalbummer fra Fredagscaféens begivenheder.")
 
     def items(self):
         nonempties = Album.objects.filter(

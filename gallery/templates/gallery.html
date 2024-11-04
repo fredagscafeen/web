@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% load bootstrap5 bootstrap_icons %}
 
@@ -35,7 +36,7 @@
             </div>
             <div class="col-xs-12">
               <hr>
-              <h4>Årets gang:</h4>
+              <h4>{% translate "Årets gang" %}:</h4>
             </div>
             <div class="col-xs-12">
               {% endif %}{% endifchanged %}
@@ -45,17 +46,17 @@
                     {% if firstFile.type == "I" %}
                       <img src="{{ firstFile.file.crop.253x253.url }}" alt="{{ album.title }}">
                     {% elif firstFile.type == "V" %}
-                      {% bs_icon "film" %}
+                      <i>{% bs_icon "film" %}</i>
                     {% elif firstFile.type == "A" %}
                       {% bs_icon "volume-up" %}
                     {% elif firstFile.type == "O" %}
-                      {% bs_icon "file" %}
+                      {% bs_icon "file-binary" %}
                     {% elif not firstFile %}
-                      {% bs_icon "ban-circle" %}
+                      <img src="{% static 'images/logo.png' %}" alt="{{ album.title }}">
                     {% endif %}
                     <div class="caption">
                       <h5>{{ album.title }}
-                        <small>{{ album.count }} billede{{ album.count|pluralize:"r" }}</small>
+                        <small>{{ album.count }} {% translate "billede" %}{{ album.count|pluralize:"r" }}</small>
                       </h5>
                     </div>
                   </div>

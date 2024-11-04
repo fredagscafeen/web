@@ -8,6 +8,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 from model_utils.managers import InheritanceManager
 from six import python_2_unicode_compatible
 from sorl.thumbnail import get_thumbnail
@@ -72,10 +73,10 @@ class BaseMedia(models.Model):
     AUDIO = "A"
     OTHER = "O"
     TYPE_CHOICES = (
-        (IMAGE, "Image"),
-        (VIDEO, "Video"),
-        (AUDIO, "Audio"),
-        (OTHER, "Other"),
+        (IMAGE, _("Image")),
+        (VIDEO, _("Video")),
+        (AUDIO, _("Audio")),
+        (OTHER, _("Other")),
     )
 
     PUBLIC = "public"
@@ -84,11 +85,11 @@ class BaseMedia(models.Model):
     DELETE = "delete"
     NEW = "new"
     VISIBILITY = (
-        (PUBLIC, "Synligt"),
-        (DISCARDED, "Frasorteret"),
-        (SENSITIVE, "Skjult"),
-        (DELETE, "Slet"),
-        (NEW, "Ubesluttet"),
+        (PUBLIC, _("Synligt")),
+        (DISCARDED, _("Frasorteret")),
+        (SENSITIVE, _("Skjult")),
+        (DELETE, _("Slet")),
+        (NEW, _("Ubesluttet")),
     )
 
     type = models.CharField(max_length=1, choices=TYPE_CHOICES, default=OTHER)
@@ -96,13 +97,13 @@ class BaseMedia(models.Model):
     objects = InheritanceManager()
     album = models.ForeignKey(Album, on_delete=models.CASCADE, related_name="basemedia")
 
-    date = models.DateTimeField(null=True, blank=True, verbose_name="Dato")
+    date = models.DateTimeField(null=True, blank=True, verbose_name=_("Dato"))
     visibility = models.CharField(
-        max_length=10, choices=VISIBILITY, verbose_name="Synlighed", default=NEW
+        max_length=10, choices=VISIBILITY, verbose_name=_("Synlighed"), default=NEW
     )
-    caption = models.CharField(max_length=200, blank=True, verbose_name="Overskrift")
+    caption = models.CharField(max_length=200, blank=True, verbose_name=_("Overskrift"))
 
-    slug = models.SlugField(null=True, blank=True, verbose_name="Kort titel")
+    slug = models.SlugField(null=True, blank=True, verbose_name=_("Kort titel"))
 
     forcedOrder = models.SmallIntegerField(
         default=0,
@@ -112,13 +113,13 @@ class BaseMedia(models.Model):
         ],
         verbose_name="Rækkefølge",
     )
-    isCoverFile = models.NullBooleanField(null=True, verbose_name="Vis på forsiden")
+    isCoverFile = models.NullBooleanField(null=True, verbose_name=_("Vis på forsiden"))
 
     def admin_thumbnail(self):
         if self.type == BaseMedia.IMAGE:
             return self.image.admin_thumbnail()
 
-    admin_thumbnail.short_description = "Thumbnail"
+    admin_thumbnail.short_description = _("Thumbnail")
 
     @property
     def notPublic(self):
@@ -151,7 +152,7 @@ class Image(BaseMedia):
     def admin_thumbnail(self):
         return format_html('<img src="{}" />', get_thumbnail(self.file, "150x150").url)
 
-    admin_thumbnail.short_description = "Thumbnail"
+    admin_thumbnail.short_description = _("Thumbnail")
 
     def clean(self):
         self.type = BaseMedia.IMAGE

@@ -9,8 +9,6 @@ from PIL import Image as PilImage
 from PIL.ExifTags import TAGS
 from unidecode import unidecode
 
-from fredagscafeen.settings.local import YEAR
-
 logger = logging.getLogger(__name__)
 
 
@@ -29,7 +27,8 @@ def file_name(instance, path):
 
 
 def get_year():
-    return YEAR
+    year = datetime.now().year
+    return year
 
 
 def get_exif_date(filename):

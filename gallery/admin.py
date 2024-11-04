@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 from gallery.models import Album, BaseMedia
 
@@ -75,11 +76,10 @@ class AlbumAdmin(admin.ModelAdmin):
         file = album.basemedia.first()
         if file:
             kwargs = dict(year=album.year, album_slug=album.slug, image_slug=file.slug)
-            return format_html(
-                '<a href="{}?v=1">Udvælg billeder</a>', reverse("image", kwargs=kwargs)
-            )
+            html_string = '<a href="{}?v=1">' + _("Udvælg billeder") + "</a>"
+            return format_html(html_string, reverse("image", kwargs=kwargs))
 
-    get_visibility_link.short_description = "Udvælg billeder"
+    get_visibility_link.short_description = _("Udvælg billeder")
 
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)

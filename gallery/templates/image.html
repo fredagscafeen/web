@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% load bootstrap5 bootstrap_icons %}
 
@@ -57,18 +58,18 @@
 				<audio controls
 					{% if file != start_file %}data-{% endif %}src=
 					"{{ file.file.url }}">
-					Your browser does not support the audio element.
+					{% translate "Your browser does not support the audio element." %}
 				</audio>
 			{% elif file.type == "V" %}
 				<video controls
 					{% if file != start_file %}data-{% endif %}src=
 					"{{ file.file.url }}">
-					Your browser does not support the video tag.
+					{% translate "Your browser does not support the video tag." %}
 				</video>
 			{% else %}
 				<div class="lg-file-download text-center">
 					<a class="btn btn-default btn-lg" href="{{ file.file.url }}">
-						{% bs_icon "download-alt" %}
+						{% bs_icon "download" %}
 						{{ file.slug }}
 						({{ file.file.size|filesizeformat }})
 					</a>
@@ -93,10 +94,10 @@
 								<p>
 									<a class="gal-control gal-prev"
 										rel="prev"
-										href="{{ prev_file.slug }}">Forrige</a> |
+										href="{{ prev_file.slug }}">{% translate "Forrige" %}</a> |
 									<a class="gal-control gal-next"
 										rel="next"
-										href="{{ next_file.slug }}">Næste</a>
+										href="{{ next_file.slug }}">{% translate "Næste" %}</a>
 								</p>
 							{% endif %}
 							</div>

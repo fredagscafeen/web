@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-03 23:42+0100\n"
-"PO-Revision-Date: 2024-10-17 23:46+0200\n"
+"POT-Creation-Date: 2024-11-04 14:04+0100\n"
+"PO-Revision-Date: 2024-11-04 13:55+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Translated-Using: django-rosetta 0.10.1\n"
+"X-Translated-Using: django-rosetta 0.9.9\n"
 
 #: bartab/forms.py:9
 msgid "First to include"
@@ -72,6 +72,7 @@ msgid "Total forbrug"
 msgstr ""
 
 #: bartab/templates/bartab.html:19 bartenders/templates/barplan.html:19
+#: gallery/models.py:100
 msgid "Dato"
 msgstr ""
 
@@ -182,7 +183,7 @@ msgid "Bartender's first shift"
 msgstr "Bartenderens første vagt"
 
 #: bartenders/templates/barplan.html:38 bartenders/templates/barplan.html:78
-#: bartenders/templates/board.html:34 gallery/templates/gallery.html:21
+#: bartenders/templates/board.html:34 gallery/templates/gallery.html:24
 #: items/templates/items.html:79
 msgid "Edit"
 msgstr "Rediger"
@@ -492,13 +493,176 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: fredagscafeen/settings/base.py:272
+#: fredagscafeen/settings/base.py:271
 msgid "Danish"
 msgstr "Dansk"
 
-#: fredagscafeen/settings/base.py:273
+#: fredagscafeen/settings/base.py:272
 msgid "English"
 msgstr "Engelsk"
+
+#: gallery/admin.py:76 gallery/admin.py:81 gallery/templates/album.html:16
+msgid "Udvælg billeder"
+msgstr ""
+
+#: gallery/models.py:76 items/templates/items.html:55
+msgid "Image"
+msgstr "Billede"
+
+#: gallery/models.py:77
+msgid "Video"
+msgstr ""
+
+#: gallery/models.py:78
+msgid "Audio"
+msgstr ""
+
+#: gallery/models.py:79
+msgid "Other"
+msgstr ""
+
+#: gallery/models.py:88
+msgid "Synligt"
+msgstr ""
+
+#: gallery/models.py:89
+msgid "Frasorteret"
+msgstr ""
+
+#: gallery/models.py:90
+msgid "Skjult"
+msgstr ""
+
+#: gallery/models.py:91
+msgid "Slet"
+msgstr ""
+
+#: gallery/models.py:92
+msgid "Ubesluttet"
+msgstr ""
+
+#: gallery/models.py:102
+msgid "Synlighed"
+msgstr ""
+
+#: gallery/models.py:104
+msgid "Overskrift"
+msgstr ""
+
+#: gallery/models.py:106
+msgid "Kort titel"
+msgstr ""
+
+#: gallery/models.py:116
+msgid "Vis på forsiden"
+msgstr ""
+
+#: gallery/models.py:122 gallery/models.py:155
+msgid "Thumbnail"
+msgstr ""
+
+#: gallery/templates/admin/gallery/add_form.html:4
+#: gallery/templates/admin/gallery/change_form.html:10
+msgid ""
+"Du kan tilføje billeder efter du har trykket på 'Gem og forsæt med at "
+"redigere'."
+msgstr ""
+
+#: gallery/templates/admin/gallery/upload_form.html:23
+msgid "Cancel upload"
+msgstr ""
+
+#: gallery/templates/album.html:17
+msgid "synlig"
+msgstr ""
+
+#: gallery/templates/album.html:18 udlejning/templates/udlejning.html:98
+msgid "og"
+msgstr ""
+
+#: gallery/templates/album.html:18
+msgid "skjult"
+msgstr ""
+
+#: gallery/templates/album.html:19
+msgid "hvoraf"
+msgstr ""
+
+#: gallery/templates/album.html:19
+msgid "er ny"
+msgstr ""
+
+#: gallery/templates/album.html:21
+msgid "Er du sikker på at du vil offentliggøre alle nye billeder i albummet?"
+msgstr ""
+
+#: gallery/templates/album.html:23
+msgid "Gør alle nye billeder synlige"
+msgstr ""
+
+#: gallery/templates/album.html:35 gallery/templates/gallery.html:59
+msgid "billede"
+msgstr ""
+
+#: gallery/templates/album.html:35
+msgid "fra d."
+msgstr ""
+
+#: gallery/templates/album.html:58
+msgid "Albummet"
+msgstr ""
+
+#: gallery/templates/album.html:58
+msgid "har ingen billeder endnu."
+msgstr ""
+
+#: gallery/templates/album.html:63
+msgid "Tilbage til"
+msgstr ""
+
+#: gallery/templates/gallery.html:39
+msgid "Årets gang"
+msgstr ""
+
+#: gallery/templates/gallery.html:75
+msgid "Ingen albums med billeder fundet."
+msgstr ""
+
+#: gallery/templates/image.html:61
+msgid "Your browser does not support the audio element."
+msgstr "Din browser understøtter ikke lydelementet."
+
+#: gallery/templates/image.html:67
+msgid "Your browser does not support the video tag."
+msgstr "Din browser understøtter ikke videomærket."
+
+#: gallery/templates/image.html:97
+msgid "Forrige"
+msgstr ""
+
+#: gallery/templates/image.html:100
+msgid "Næste"
+msgstr ""
+
+#: gallery/views.py:72
+msgid "No albums exist"
+msgstr ""
+
+#: gallery/views.py:146 gallery/views.py:149
+msgid "Billedet kan ikke findes"
+msgstr ""
+
+#: gallery/views.py:251
+msgid "Synlighed på givne billeder er blevet opdateret"
+msgstr ""
+
+#: gallery/views.py:255
+msgid "Fredagscaféens billedalbummer"
+msgstr ""
+
+#: gallery/views.py:260
+msgid "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
+msgstr ""
 
 #: guides/models.py:10
 msgid "Til alle"
@@ -577,10 +741,6 @@ msgstr ""
 #: items/templates/items.html:54
 msgid "Status"
 msgstr ""
-
-#: items/templates/items.html:55
-msgid "Image"
-msgstr "Billede"
 
 #: items/templates/items.html:70
 msgid "På lager"
@@ -902,10 +1062,6 @@ msgid ""
 "hjemmeside, som fast kan fås på fad. Dvs."
 msgstr ""
 
-#: udlejning/templates/udlejning.html:98
-msgid "og"
-msgstr ""
-
 #: udlejning/templates/udlejning.html:100
 msgid "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
 msgstr ""
@@ -1119,7 +1275,7 @@ msgstr ""
 
 #: web/templates/base.html:93
 msgid "Gallery"
-msgstr ""
+msgstr "Galleri"
 
 #: web/templates/base.html:94
 msgid "Sortiment"
