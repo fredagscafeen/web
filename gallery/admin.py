@@ -35,7 +35,7 @@ class AlbumAdminForm(forms.ModelForm):
         fields = [
             "title",
             "publish_date",
-            "gfyear",
+            "year",
             "eventalbum",
             "description",
             "slug",
@@ -44,14 +44,14 @@ class AlbumAdminForm(forms.ModelForm):
 
 class AlbumAdmin(admin.ModelAdmin):
     # List display of multiple albums
-    list_display = ("title", "gfyear", "publish_date", "get_visibility_link")
+    list_display = ("title", "year", "publish_date", "get_visibility_link")
     ordering = [
-        "-gfyear",
+        "-year",
         "eventalbum",
         "-oldFolder",
         "-publish_date",
     ]  # Reverse of models.Album.ordering
-    list_filter = ("gfyear", "eventalbum")
+    list_filter = ("year", "eventalbum")
 
     # Form display of single album
     inlines = [InlineBaseMediaAdmin]
@@ -74,9 +74,7 @@ class AlbumAdmin(admin.ModelAdmin):
     def get_visibility_link(self, album):
         file = album.basemedia.first()
         if file:
-            kwargs = dict(
-                gfyear=album.gfyear, album_slug=album.slug, image_slug=file.slug
-            )
+            kwargs = dict(year=album.year, album_slug=album.slug, image_slug=file.slug)
             return format_html(
                 '<a href="{}?v=1">Udvælg billeder</a>', reverse("image", kwargs=kwargs)
             )

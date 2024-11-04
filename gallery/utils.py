@@ -22,13 +22,13 @@ def file_name(instance, path):
     filename = os.path.basename(path)
     sepFilename = os.path.splitext(filename)
     newFilename = slugify(sepFilename[0]) + sepFilename[1]
-    gfyear = str(instance.album.gfyear)
+    year = str(instance.album.year)
     album_slug = instance.album.slug
 
-    return "/".join([gfyear, album_slug, newFilename])
+    return "/".join([year, album_slug, newFilename])
 
 
-def get_gfyear():
+def get_year():
     return YEAR
 
 

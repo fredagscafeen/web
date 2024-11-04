@@ -2,9 +2,9 @@
 
 {% load bootstrap5 bootstrap_icons %}
 
-{% block title %}{{ album.gfyear }} / {{ album.title }}{% endblock title %}
+{% block title %}{{ album.year }} / {{ album.title }}{% endblock title %}
 
-{% block canonical_url %}{% url 'album' gfyear=album.gfyear album_slug=album.slug %}{% endblock canonical_url %}
+{% block canonical_url %}{% url 'album' year=album.year album_slug=album.slug %}{% endblock canonical_url %}
 
 {% block content %}
 <!--
@@ -25,7 +25,7 @@ hvoraf {{ new_count }} er ny{{ new_count|pluralize:'e' }}.
 <div class="row">
   <div class="col-xs-12 col-sm-7 col-md-6">
     <ol class="breadcrumb imagetitle">
-      <li><a href="{% url 'gfyear' gfyear=album.gfyear  %}">{{ album.gfyear }}</a></li>
+      <li><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
       <li class="active">{{ album.title }}</li>
     </ol>
   </div>
@@ -38,7 +38,7 @@ hvoraf {{ new_count }} er ny{{ new_count|pluralize:'e' }}.
 <div class="row">
   {% for file in files %}
   <div class="col-xs-6 col-sm-4 col-md-3">
-    <a class="thumbnail" href="{% url 'image' gfyear=album.gfyear album_slug=album.slug image_slug=file.slug %}" alt="Se billede">
+    <a class="thumbnail" href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede">
       <div class="thumbcap">
         {% if file.type == "I" %}
           <img src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
@@ -59,6 +59,6 @@ hvoraf {{ new_count }} er ny{{ new_count|pluralize:'e' }}.
   {% endfor %}
 </div> <!-- row -->
 <div class="col-xs-12">
-  <a href="{% url 'gfyear' gfyear=album.gfyear  %}">Tilbage til {{ album.gfyear }}</a>
+  <a href="{% url 'year' year=album.year  %}">Tilbage til {{ album.year }}</a>
 </div>
 {% endblock content%}

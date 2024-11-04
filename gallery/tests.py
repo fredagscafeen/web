@@ -78,7 +78,7 @@ class CorruptedMediaTest(TestCase):
 class GalleryViewTest(TestCase):
     def setUp(self):
         super().setUp()
-        self.album = Album.objects.create(gfyear=2018, title="Test", slug="test")
+        self.album = Album.objects.create(year=2018, title="Test", slug="test")
         # Create two images
         self.create_image("image1")
         self.create_image("image2")

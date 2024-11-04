@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 (
                     "gfyear",
                     models.PositiveSmallIntegerField(
-                        default=gallery.utils.get_gfyear, verbose_name="Årgang"
+                        default=gallery.utils.get_year, verbose_name="Årgang"
                     ),
                 ),
                 ("slug", models.SlugField(verbose_name="Kort titel")),
