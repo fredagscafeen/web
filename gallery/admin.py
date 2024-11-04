@@ -18,12 +18,10 @@ class InlineBaseMediaAdmin(admin.TabularInline):
         "visibility",
         "slug",
         "forcedOrder",
-        "isCoverFile",
     )
     readonly_fields = (
         "admin_thumbnail",
         "slug",
-        "isCoverFile",
     )
 
     def has_add_permission(self, request, obj=None):
@@ -37,6 +35,7 @@ class AlbumAdminForm(forms.ModelForm):
             "title",
             "publish_date",
             "year",
+            "thumbnail",
             "eventalbum",
             "description",
             "slug",
@@ -83,9 +82,6 @@ class AlbumAdmin(admin.ModelAdmin):
 
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
-        # Update isCoverFile on all images in album
-        # now that images have been saved to the database.
-        form.instance.clean()
 
 
 admin.site.register(Album, AlbumAdmin)

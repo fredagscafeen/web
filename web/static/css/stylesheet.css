@@ -251,7 +251,7 @@ html.light {
         margin: 0px;
     }
 
-    .panel-body {
+    .panel-body-top {
         padding: 0px;
         padding-top: 15px;
     }
@@ -263,8 +263,10 @@ html.light {
         img, span {
             position: absolute;
             top: 50%;
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            text-align: center;
             display: block;
             width:100%;
             margin-bottom:-100%;
@@ -300,6 +302,12 @@ html.light {
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+
+    .download-file-button {
+        height: 500px;
+        top: 200px;
+        position: relative;
     }
 
     .overlay-top {
@@ -676,8 +684,10 @@ html.dark {
         img, span {
             position: absolute;
             top: 50%;
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            text-align: center;
             display: block;
             width:100%;
             margin-bottom:-100%;
@@ -715,13 +725,19 @@ html.dark {
         object-fit: cover;
     }
 
+    .download-file-button {
+        height: 500px;
+        top: 200px;
+        position: relative;
+    }
+
     .overlay-top {
         text-align: left;
         position: absolute;
         top: 0px;
         left: 0px;
         right: 0px;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(21, 21, 21, 0.8);
     }
 
     .overlay-bottom {
@@ -729,7 +745,7 @@ html.dark {
         bottom: 0px;
         left: 0px;
         right: 0px;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(21, 21, 21, 0.8);
         padding: 8px;
     }
 

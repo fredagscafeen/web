@@ -43,20 +43,21 @@
               <div class="col-xs-6 col-sm-4 col-md-3">
                 <a class="thumbnail" href="{% url 'album' year=album.year album_slug=album.slug %}">
                   <div class="thumbcap">
-                    {% if firstFile.type == "I" %}
-                      <img src="{{ firstFile.file.crop.253x253.url }}" alt="{{ album.title }}">
-                    {% elif firstFile.type == "V" %}
-                      <i>{% bs_icon "film" %}</i>
-                    {% elif firstFile.type == "A" %}
-                      {% bs_icon "volume-up" %}
-                    {% elif firstFile.type == "O" %}
-                      {% bs_icon "file-binary" %}
-                    {% elif not firstFile %}
-                      <img src="{% static 'images/logo.png' %}" alt="{{ album.title }}">
+                    {% if album.thumbnail %}
+                    <img src="{{ album.thumbnail.url }}" alt="{{ album.title }}">
+                    {% else %}
+                    <img src="{% static 'images/logo.png' %}" alt="{{ album.title }}">
                     {% endif %}
                     <div class="caption">
                       <h5>{{ album.title }}
-                        <small>{{ album.count }} {% translate "billede" %}{{ album.count|pluralize:"r" }}</small>
+                        <small>
+                          {{ album.count }}
+                          {% blocktranslate count c=album.count %}
+                          billede
+                          {% plural %}
+                          billeder
+                          {% endblocktranslate %}
+                        </small>
                       </h5>
                     </div>
                   </div>

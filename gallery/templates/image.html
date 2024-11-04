@@ -67,7 +67,7 @@
 					{% translate "Your browser does not support the video tag." %}
 				</video>
 			{% else %}
-				<div class="lg-file-download text-center">
+				<div class="lg-file-download text-center download-file-button">
 					<a class="btn btn-default btn-lg" href="{{ file.file.url }}">
 						{% bs_icon "download" %}
 						{{ file.slug }}
@@ -79,7 +79,16 @@
         		<ol class="breadcrumb">
 					<li><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
 					<li><a id="albumlink" href="{% url 'album' year=album.year album_slug=album.slug %}">{{ album.title }}</a></li>
-					<li>{{ forloop.counter }} af {{ file_count }}{% if file.type == "I" %} <span class="hidden-xs">billede{{ file_count|pluralize:"r" }}</span>{% endif %}</li>
+					<li>
+						{{ forloop.counter }} af {{ file_count }}
+						{% if file.type == "I" %}
+						<span class="hidden-xs">
+							{% blocktranslate count c=file_count %}
+							billede
+							{% plural %}
+							billeder
+							{% endblocktranslate %}
+						</span>{% endif %}</li>
 				</ol>
 				{% if edit_visibility %}
 				<div class="select_visibility">{{ file.visibility_field }}</div>

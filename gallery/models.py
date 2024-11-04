@@ -29,14 +29,17 @@ class Album(models.Model):
         ordering = ["year", "-eventalbum", "oldFolder", "publish_date"]
         unique_together = (("year", "slug"),)
 
-    title = models.CharField(max_length=200, verbose_name="Titel")
+    title = models.CharField(max_length=200, verbose_name=_("Titel"))
     publish_date = models.DateField(
-        blank=True, null=True, default=date.today, verbose_name="Udgivelsesdato"
+        blank=True, null=True, default=date.today, verbose_name=_("Udgivelsesdato")
     )
-    eventalbum = models.BooleanField(default=True, verbose_name="Arrangement")
-    year = models.PositiveSmallIntegerField(default=get_year, verbose_name="Årgang")
-    slug = models.SlugField(verbose_name="Kort titel")
-    description = models.TextField(blank=True, verbose_name="Beskrivelse")
+    thumbnail = models.ImageField(
+        upload_to="galleries", blank=True, null=True, verbose_name=_("Thumbnail")
+    )
+    eventalbum = models.BooleanField(default=True, verbose_name=_("Arrangement"))
+    year = models.PositiveSmallIntegerField(default=get_year, verbose_name=_("Årgang"))
+    slug = models.SlugField(verbose_name=_("Kort titel"))
+    description = models.TextField(blank=True, verbose_name=_("Beskrivelse"))
 
     oldFolder = models.CharField(max_length=200, blank=True)
 
@@ -45,12 +48,10 @@ class Album(models.Model):
 
     def clean(self):
         for m in self.basemedia.all():
-            m.isCoverFile = False
             m.save()
 
         f = self.basemedia.filter(visibility=BaseMedia.PUBLIC).first()
         if f:
-            f.isCoverFile = True
             f.save()
 
     def get_absolute_url(self):
@@ -113,7 +114,6 @@ class BaseMedia(models.Model):
         ],
         verbose_name="Rækkefølge",
     )
-    isCoverFile = models.NullBooleanField(null=True, verbose_name=_("Vis på forsiden"))
 
     def admin_thumbnail(self):
         if self.type == BaseMedia.IMAGE:
@@ -215,14 +215,6 @@ class GenericFile(BaseMedia):
                 self.slug = self.date.strftime("%Y%m%d%H%M%S_%f")[
                     : len("YYYYmmddHHMMSS_ff")
                 ]
-
-
-@receiver(models.signals.post_save, sender=BaseMedia)
-@receiver(models.signals.post_save, sender=Image)
-@receiver(models.signals.post_save, sender=GenericFile)
-def cleanAlbum(sender, instance, **kwargs):
-    if instance.isCoverFile is None:
-        instance.album.full_clean()
 
 
 @receiver(models.signals.post_delete, sender=Image)

@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
 from django.contrib.syndication.views import Feed
@@ -61,17 +62,17 @@ def gallery(request, **kwargs):
     years = sorted(years, reverse=True)
 
     if requested_year is None:
-        show_year = max(years)
+        if years:
+            show_year = max(years)
+        else:
+            show_year = datetime.now().year
     else:
         show_year = requested_year
 
     # Hide albums not in show_year
     albums = [a for a in albums if a.year == show_year]
 
-    if not albums:
-        raise Http404(_("No albums exist"))
-
-    firstImages = BaseMedia.objects.filter(album__in=albums, isCoverFile=True)
+    firstImages = BaseMedia.objects.filter(album__in=albums)
     firstImages = firstImages.select_subclasses()
     firstImages = {fi.album_id: fi for fi in firstImages}
     albumSets = [(a, firstImages.get(a.id)) for a in albums]
@@ -96,9 +97,6 @@ def album(request, year, album_slug):
         if request.POST.get("set_all_new_visible"):
             qs = album.basemedia.filter(visibility=BaseMedia.NEW)
             qs.update(visibility=BaseMedia.PUBLIC)
-
-            # Update isCoverFile
-            album.clean()
 
             return redirect("album", year=year, album_slug=album_slug)
 
@@ -238,9 +236,6 @@ def set_visibility(request):
             BaseMedia.objects.filter(pk=pk).update(visibility=value)
 
     albums = list(Album.objects.filter(pk__in=form.album_pks))
-    for a in albums:
-        # Update isCoverFile
-        a.clean()
 
     # Redirect to album
     if albums:

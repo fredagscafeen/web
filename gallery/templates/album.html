@@ -14,9 +14,27 @@
 -->
 {% if edit_visibility_link %}
 <p><a href="{{ edit_visibility_link }}">{% translate "Udvælg billeder" %}</a></p>
-<p>{{ visible_count }} {% translate "synlig" %}{{ visible_count|pluralize:'e' }}
-{% translate "og" %} {{ hidden_count }} {% translate "skjult" %}{{ hidden_count|pluralize:'e' }}
-{% translate "hvoraf" %} {{ new_count }} {% translate "er ny" %}{{ new_count|pluralize:'e' }}.
+<p>
+{{ visible_count }}
+{% blocktranslate count visible_count=visible_count %}
+synlig
+{% plural %}
+synlige
+{% endblocktranslate %}
+{% translate "og" %}
+{{ hidden_count }}
+{% blocktranslate count hidden_count=hidden_count %}
+skjult
+{% plural %}
+skjulte
+{% endblocktranslate %}
+{% translate "hvoraf" %}
+{{ new_count }}
+{% blocktranslate count new_count=new_count %}
+er ny
+{% plural %}
+er nye
+{% endblocktranslate %}.
 </p>
 <form onsubmit="return confirm('{% translate "Er du sikker på at du vil offentliggøre alle nye billeder i albummet?" %}')" method="post">
     {% csrf_token %}
@@ -32,7 +50,13 @@
   </div>
   <div class="col-xs-12 col-sm-5 col-md-6 text-right">
       <p class="imagetitle">
-          {{ files|length }} {% translate "billede" %}{{ files|length|pluralize:"r" }}{% if album.publish_date %} {% translate "fra d." %} {{ album.publish_date }}{% endif %}
+          {{ files|length }}
+          {% blocktranslate count c=files|length %}
+          billede
+          {% plural %}
+          billeder
+          {% endblocktranslate %}
+          {% if album.publish_date %} {% translate "fra d." %} {{ album.publish_date }}{% endif %}
       </p>
   </div>
 </div>
@@ -44,11 +68,11 @@
         {% if file.type == "I" %}
           <img src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
         {% elif file.type == "V" %}
-          {% bs_icon "film" %}
+          <span>{% bs_icon "film" size='2.0em' %}</span>
         {% elif file.type == "A" %}
-          {% bs_icon "volume-up" %}
+          <span>{% bs_icon "volume-up" size='2.0em' %}</span>
         {% elif file.type == "O" %}
-          {% bs_icon "file-binary" %}
+          <span>{% bs_icon "file-binary" size='2.0em' %}</span>
         {% endif %}
       </div>
     </a>

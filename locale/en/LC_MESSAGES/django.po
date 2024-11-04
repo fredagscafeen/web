@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 14:04+0100\n"
-"PO-Revision-Date: 2024-11-04 14:09+0050\n"
+"POT-Creation-Date: 2024-11-04 15:03+0100\n"
+"PO-Revision-Date: 2024-11-04 20:17+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -115,7 +115,7 @@ msgstr "E-mail"
 
 #: bartenders/models.py:60
 msgid "En post.au mail fungerer ikke"
-msgstr "A post.au email does not work"
+msgstr "A post.au mail does not work"
 
 #: bartenders/models.py:63
 msgid "Studienummer"
@@ -141,7 +141,7 @@ msgstr "to"
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/models.py:243
+#: bartenders/models.py:243 gallery/models.py:37
 msgid "Årgang"
 msgstr "Year"
 
@@ -271,7 +271,7 @@ msgstr "Bartender"
 
 #: bartenders/templates/bartender_shift_period_change_form.html:8
 msgid "Email"
-msgstr "Email"
+msgstr "E-mail"
 
 #: bartenders/templates/bartender_shift_period_change_form.html:9
 msgid "Antal vagter"
@@ -473,7 +473,7 @@ msgstr "too late"
 msgid "Lokation"
 msgstr "Location"
 
-#: events/templates/events.html:39
+#: events/templates/events.html:39 gallery/models.py:39
 msgid "Beskrivelse"
 msgstr "Description"
 
@@ -526,9 +526,26 @@ msgstr "Danish"
 msgid "English"
 msgstr "English"
 
-#: gallery/admin.py:76 gallery/admin.py:81 gallery/templates/album.html:16
+#: gallery/admin.py:76 gallery/admin.py:79 gallery/templates/album.html:16
 msgid "Udvælg billeder"
 msgstr "Select images"
+
+#: gallery/models.py:32
+msgid "Titel"
+msgstr "Title"
+
+#: gallery/models.py:34
+msgid "Udgivelsesdato"
+msgstr "Release date"
+
+#: gallery/models.py:36
+#| msgid "interne arrangementer"
+msgid "Arrangement"
+msgstr "Event"
+
+#: gallery/models.py:38 gallery/models.py:106
+msgid "Kort titel"
+msgstr "Short title"
 
 #: gallery/models.py:76 items/templates/items.html:55
 msgid "Image"
@@ -547,17 +564,14 @@ msgid "Other"
 msgstr "Other"
 
 #: gallery/models.py:88
-#| msgid "synlig"
 msgid "Synligt"
 msgstr "Visible"
 
 #: gallery/models.py:89
-#| msgid "Fast sortiment"
 msgid "Frasorteret"
 msgstr "Discarded"
 
 #: gallery/models.py:90
-#| msgid "skjult"
 msgid "Skjult"
 msgstr "Hidden"
 
@@ -570,18 +584,12 @@ msgid "Ubesluttet"
 msgstr "Undecided"
 
 #: gallery/models.py:102
-#| msgid "synlig"
 msgid "Synlighed"
 msgstr "Visibility"
 
 #: gallery/models.py:104
 msgid "Overskrift"
 msgstr "Title"
-
-#: gallery/models.py:106
-#| msgid "Kort i baren"
-msgid "Kort titel"
-msgstr "Short title"
 
 #: gallery/models.py:116
 msgid "Vis på forsiden"
@@ -602,51 +610,93 @@ msgstr "You can add images after pressing 'Save and continue editing'."
 msgid "Cancel upload"
 msgstr "Cancel upload"
 
-#: gallery/templates/album.html:17
-msgid "synlig"
-msgstr "visible"
+#: gallery/templates/album.html:19
+msgid ""
+"\n"
+"synlig\n"
+msgid_plural ""
+"\n"
+"synlige\n"
+msgstr[0] ""
+"\n"
+"visible\n"
+msgstr[1] ""
+"\n"
+"visible\n"
 
-#: gallery/templates/album.html:18 udlejning/templates/udlejning.html:98
+#: gallery/templates/album.html:24 udlejning/templates/udlejning.html:98
 msgid "og"
 msgstr "and"
 
-#: gallery/templates/album.html:18
-msgid "skjult"
-msgstr "hidden"
+#: gallery/templates/album.html:26
+msgid ""
+"\n"
+"skjult\n"
+msgid_plural ""
+"\n"
+"skjulte\n"
+msgstr[0] ""
+"\n"
+"hidden\n"
+msgstr[1] ""
+"\n"
+"hidden\n"
 
-#: gallery/templates/album.html:19
+#: gallery/templates/album.html:31
 msgid "hvoraf"
 msgstr "of which"
 
-#: gallery/templates/album.html:19
-msgid "er ny"
-msgstr "are new"
+#: gallery/templates/album.html:33
+msgid ""
+"\n"
+"er ny\n"
+msgid_plural ""
+"\n"
+"er nye\n"
+msgstr[0] ""
+"\n"
+"is new\n"
+msgstr[1] ""
+"\n"
+"are new\n"
 
-#: gallery/templates/album.html:21
+#: gallery/templates/album.html:39
 msgid "Er du sikker på at du vil offentliggøre alle nye billeder i albummet?"
 msgstr "Are you sure you want to publish all new photos in the album?"
 
-#: gallery/templates/album.html:23
+#: gallery/templates/album.html:41
 msgid "Gør alle nye billeder synlige"
 msgstr "Make all new images visible"
 
-#: gallery/templates/album.html:35 gallery/templates/gallery.html:59
-msgid "billede"
-msgstr "image"
+#: gallery/templates/album.html:54
+msgid ""
+"\n"
+"          billede\n"
+"          "
+msgid_plural ""
+"\n"
+"          billeder\n"
+"          "
+msgstr[0] ""
+"\n"
+"image"
+msgstr[1] ""
+"\n"
+"images"
 
-#: gallery/templates/album.html:35
+#: gallery/templates/album.html:59
 msgid "fra d."
 msgstr "from"
 
-#: gallery/templates/album.html:58
+#: gallery/templates/album.html:82
 msgid "Albummet"
 msgstr "The album"
 
-#: gallery/templates/album.html:58
+#: gallery/templates/album.html:82
 msgid "har ingen billeder endnu."
 msgstr "has no images yet."
 
-#: gallery/templates/album.html:63
+#: gallery/templates/album.html:87
 msgid "Tilbage til"
 msgstr "Back to"
 
@@ -654,7 +704,23 @@ msgstr "Back to"
 msgid "Årets gang"
 msgstr "The years course"
 
-#: gallery/templates/gallery.html:75
+#: gallery/templates/gallery.html:61
+msgid ""
+"\n"
+"                          billede\n"
+"                          "
+msgid_plural ""
+"\n"
+"                          billeder\n"
+"                          "
+msgstr[0] ""
+"\n"
+"image"
+msgstr[1] ""
+"\n"
+"images"
+
+#: gallery/templates/gallery.html:82
 msgid "Ingen albums med billeder fundet."
 msgstr "No albums with images found."
 
@@ -666,11 +732,27 @@ msgstr "Your browser does not support the audio element."
 msgid "Your browser does not support the video tag."
 msgstr "Your browser does not support the video tag."
 
-#: gallery/templates/image.html:97
+#: gallery/templates/image.html:86
+msgid ""
+"\n"
+"\t\t\t\t\t\t\tbillede\n"
+"\t\t\t\t\t\t\t"
+msgid_plural ""
+"\n"
+"\t\t\t\t\t\t\tbilleder\n"
+"\t\t\t\t\t\t\t"
+msgstr[0] ""
+"\n"
+"image"
+msgstr[1] ""
+"\n"
+"images"
+
+#: gallery/templates/image.html:106
 msgid "Forrige"
 msgstr "Previous"
 
-#: gallery/templates/image.html:100
+#: gallery/templates/image.html:109
 msgid "Næste"
 msgstr "Next"
 
@@ -824,7 +906,7 @@ msgstr "Who are you?"
 
 #: udlejning/models.py:29
 msgid "Email til kontaktperson"
-msgstr "Email to contact person"
+msgstr "E-mail to contact person"
 
 #: udlejning/models.py:31
 msgid "Telefonnummer til kontaktperson"
@@ -1147,7 +1229,7 @@ msgid ""
 "pt. men man kan skrive en mail til"
 msgstr ""
 "We have a range of specialty beers available at: (it is not available at the"
-" moment, but you can write an email to"
+" moment, but you can write an e-mail to"
 
 #: udlejning/templates/udlejning.html:109
 msgid ""
@@ -1203,7 +1285,7 @@ msgstr "grill"
 #: udlejning/templates/udlejningProjector.html:19
 #: udlejning/templates/udlejningSpeakers.html:19
 msgid "ikke allerede er udlånt, kan du låne den ved at sende en mail til"
-msgstr "is not already borrowed, you can borrow it by sending an email to"
+msgstr "is not already borrowed, you can borrow it by sending an e-mail to"
 
 #: udlejning/templates/udlejningGrill.html:21
 #: udlejning/templates/udlejningProjector.html:21
@@ -1217,7 +1299,7 @@ msgstr "More info about the grill will come later."
 
 #: udlejning/templates/udlejningGrill.html:27
 msgid "Indholdet af email med anmodning om udlån"
-msgstr "The content of the email with the loan request"
+msgstr "The content of the e-mail with the loan request"
 
 #: udlejning/templates/udlejningGrill.html:28
 msgid "Når du kontakter Best for at låne grillen, skal der stå følgende"
@@ -1398,7 +1480,10 @@ msgstr "Missing from environment"
 #: web/views.py:48
 msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
-msgstr "Login email sent: Press the link in your received email to log in."
+msgstr "Login mail sent: Press the link in your received email to log in."
+
+#~ msgid "billede"
+#~ msgstr "image"
 
 #~ msgid "bartenders"
 #~ msgstr "bartenders"
