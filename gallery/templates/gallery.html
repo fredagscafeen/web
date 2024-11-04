@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% load bootstrap5 bootstrap_icons %}
+
+{% block title %}{{ show_year }}{% endblock title %}
+
+{% block canonical_url %}{% url 'year' year=show_year %}{% endblock canonical_url %}
+
+{% block content %}
+<div>
+  <div class="panel-group" id="accordion">
+  {% for year in years %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+            <a {% if year == show_year %} data-toggle="collapse" data-parent="#accordion" href="#collapse{{year}}"
+               {% else %} href="{{year}}" {% endif %}>
+            {{ year }}
+          </a>
+          {% if user.is_staff %}
+            <a href="/admin/gallery/album/{{ period.id }}" class="pull-right">
+              {% translate "Edit" %}
+            </a>
+          {% endif %}
+        </h4>
+      </div>
+      <div id="collapse{{year}}" class="panel-collapse collapse{% if year == show_year %} in{% endif %}" role="tabpanel" aria-labelledby="heading{{year}}">
+        {% if year == show_year %}
+        <div class="panel-body panel-body-top">
+          <div>
+            <div class="col-xs-12">
+            {% for album, firstFile in albumSets %}
+              {% ifchanged album.eventalbum %}{% if not album.eventalbum %}
+            </div>
+            <div class="col-xs-12">
+              <hr>
+              <h4>{% translate "Årets gang" %}:</h4>
+            </div>
+            <div class="col-xs-12">
+              {% endif %}{% endifchanged %}
+              <div class="col-xs-6 col-sm-4 col-md-3">
+                <a class="thumbnail" href="{% url 'album' year=album.year album_slug=album.slug %}">
+                  <div class="thumbcap">
+                    {% if album.thumbnail %}
+                    <img src="{{ album.thumbnail.url }}" alt="{{ album.title }}">
+                    {% else %}
+                    <img src="{% static 'images/logo.png' %}" alt="{{ album.title }}">
+                    {% endif %}
+                    <div class="caption">
+                      <h5>{{ album.title }}
+                        <small>
+                          {{ album.count }}
+                          {% blocktranslate count c=album.count %}
+                          billede
+                          {% plural %}
+                          billeder
+                          {% endblocktranslate %}
+                        </small>
+                      </h5>
+                    </div>
+                  </div>
+                </a>
+              </div> <!-- col-xs-6 thumb -->
+              {% endfor %}
+            </div>
+          </div> <!-- row-->
+        </div> <!-- panel-body -->
+        {% endif %}
+      </div> <!-- collapse{{year}} -->
+    </div> <!-- panel panel-default  -->
+  {% empty %}
+    <div class="col-xs-12">
+      <p>
+        {% translate "Ingen albums med billeder fundet." %}
+      </p>
+    </div>
+  {% endfor %}
+  </div> <!-- panel-group -->
+</div> <!-- row -->
+{% endblock content%}

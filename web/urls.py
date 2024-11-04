@@ -1,3 +1,4 @@
+from django.conf.urls import include
 from django.urls import path
 from django.views.generic.base import RedirectView
 
@@ -53,4 +54,5 @@ urlpatterns = [
     path("udlejningProjector/", UdlejningerProjector.as_view()),
     path("udlejningSpeakers/", UdlejningerSpeakers.as_view()),
     path("guides/", Guides.as_view(), name="guides"),
+    path("gallery/", include("gallery.urls")),
 ]

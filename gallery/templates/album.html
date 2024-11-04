@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% load bootstrap5 bootstrap_icons %}
+
+{% block title %}{{ album.year }} / {{ album.title }}{% endblock title %}
+
+{% block canonical_url %}{% url 'album' year=album.year album_slug=album.slug %}{% endblock canonical_url %}
+
+{% block content %}
+<!--
+{% for file in files %}https://{{ request.get_host }}{{ file.file.url }}
+{% endfor %}
+-->
+{% if edit_visibility_link %}
+<p><a href="{{ edit_visibility_link }}">{% translate "Udvælg billeder" %}</a></p>
+<p>
+{{ visible_count }}
+{% blocktranslate count visible_count=visible_count %}
+synlig
+{% plural %}
+synlige
+{% endblocktranslate %}
+{% translate "og" %}
+{{ hidden_count }}
+{% blocktranslate count hidden_count=hidden_count %}
+skjult
+{% plural %}
+skjulte
+{% endblocktranslate %}
+{% translate "hvoraf" %}
+{{ new_count }}
+{% blocktranslate count new_count=new_count %}
+er ny
+{% plural %}
+er nye
+{% endblocktranslate %}.
+</p>
+<form onsubmit="return confirm('{% translate "Er du sikker på at du vil offentliggøre alle nye billeder i albummet?" %}')" method="post">
+    {% csrf_token %}
+    <input name="set_all_new_visible" type="submit" value="{% translate "Gør alle nye billeder synlige" %}" style="background-color: transparent" />
+</form>
+{% endif %}
+<div class="row">
+  <div class="col-xs-12 col-sm-7 col-md-6">
+    <ol class="breadcrumb imagetitle">
+      <li><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
+      <li class="active">{{ album.title }}</li>
+    </ol>
+  </div>
+  <div class="col-xs-12 col-sm-5 col-md-6 text-right">
+      <p class="imagetitle">
+          {{ files|length }}
+          {% blocktranslate count c=files|length %}
+          billede
+          {% plural %}
+          billeder
+          {% endblocktranslate %}
+          {% if album.publish_date %} {% translate "fra d." %} {{ album.publish_date }}{% endif %}
+      </p>
+  </div>
+</div>
+<div class="row">
+  {% for file in files %}
+  <div class="col-xs-6 col-sm-4 col-md-3">
+    <a class="thumbnail" href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede">
+      <div class="thumbcap">
+        {% if file.type == "I" %}
+          <img src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
+        {% elif file.type == "V" %}
+          <span>{% bs_icon "film" size='2.0em' %}</span>
+        {% elif file.type == "A" %}
+          <span>{% bs_icon "volume-up" size='2.0em' %}</span>
+        {% elif file.type == "O" %}
+          <span>{% bs_icon "file-binary" size='2.0em' %}</span>
+        {% endif %}
+      </div>
+    </a>
+  </div> <!-- col-xs-6 -->
+  {% empty %}
+  <div class="col-xs-12">
+    <p>{% translate "Albummet" %} '{{ album.title }}' {% translate "har ingen billeder endnu." %}</p>
+  </div>
+  {% endfor %}
+</div> <!-- row -->
+<div class="col-xs-12">
+  <a href="{% url 'year' year=album.year  %}">{% translate "Tilbage til" %} {{ album.year }}</a>
+</div>
+{% endblock content%}
