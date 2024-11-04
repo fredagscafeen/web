@@ -4,12 +4,12 @@ $(document).ready(function() {
     $(".navbar-fixed-top").css("position", "absolute");
 
     // Get array of all slugs
-    var slugs = $("#tkgal-container > *").map(function() {
+    var slugs = $("#gal-container > *").map(function() {
         return $(this).attr("data-permlink");
     }).get();
 
     // Call changeCurrent on click on the controls
-    $(".tkgal-control").click(function(e) {
+    $(".gal-control").click(function(e) {
         e.preventDefault();
         pauseMedia();
         changeCurrent($(this).attr("href"));
@@ -24,8 +24,8 @@ $(document).ready(function() {
         var next = slugs[(i+1)%l];
 
         // Update visibility of current picture
-        $("#tkgal-container>*").addClass("hidden");
-        $("#tkgal-caption-container>*").addClass("hidden");
+        $("#gal-container>*").addClass("hidden");
+        $("#gal-caption-container>*").addClass("hidden");
         $("[data-permlink='"+newimage+"']").removeClass("hidden");
 
         function deferMedia(file) {
@@ -65,17 +65,17 @@ $(document).ready(function() {
     function swipehandler(event, direction) {
         switch(direction) {
         case "left":
-            $(".tkgal-next:visible").eq(0).click();
+            $(".gal-next:visible").eq(0).click();
             break;
         case "right":
-            $(".tkgal-prev:visible").eq(0).click();
+            $(".gal-prev:visible").eq(0).click();
             break;
         default:
         }
     }
 
   //Load neighbors on pageload
-  loadfirst = $("#tkgal-container > :not(.hidden)").attr("data-permlink");
+  loadfirst = $("#gal-container > :not(.hidden)").attr("data-permlink");
   changeCurrent(loadfirst);
 });
 
@@ -95,10 +95,10 @@ function togglePlay() {
 $(document).keydown(function(e) {
     switch(e.which) {
     case 37: // left
-        $(".tkgal-prev:visible").eq(0).click();
+        $(".gal-prev:visible").eq(0).click();
         break;
     case 39: // right
-        $(".tkgal-next:visible").eq(0).click();
+        $(".gal-next:visible").eq(0).click();
         break;
     case 32: // space
         togglePlay();

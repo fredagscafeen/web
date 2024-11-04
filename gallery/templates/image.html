@@ -6,11 +6,11 @@
 {% block title %}{{ album.title }}{% endblock title %}
 {% block navbar_class %}navbar-static-top{% endblock navbar_class %}
 
-{% block js %}
-  <script src="{% static "gallery/jquery.touchswipe.min.js" %}"></script>
-  <script src="{% static "gallery/tkgal.js" %}"></script>
+{% block extrahead %}
+  <script src="{% static 'js/jquery.touchswipe.min.js' %}"></script>
+  <script src="{% static 'js/gal.js' %}"></script>
   {% if edit_visibility %}
-  <script src="{% static "gallery/tkgal-visibility.js" %}"></script>
+  <script src="{% static 'js/gal-visibility.js' %}"></script>
   <style>
   .select_visibility label { font-weight: normal; }
   .select_visibility ul { list-style-type: none; }
@@ -19,7 +19,7 @@
   .select_visibility input[type=radio] { margin: 0 0.2em 0.25em -1.6em; }
   </style>
   {% endif %}
-{% endblock js %}
+{% endblock %}
 
 {% block canonical_url %}{% url 'image' gfyear=album.gfyear album_slug=album.slug image_slug=start_file.slug %}{% endblock canonical_url %}
 
@@ -31,7 +31,7 @@
 
 {% block content %}
 {% if edit_visibility %}
-<form id="tkgal-form" style="height: 100%" method="post" action="{% url 'set_image_visibility' %}" onsubmit="$(window).off('beforeunload')">{% csrf_token %}
+<form id="gal-form" style="height: 100%" method="post" action="{% url 'set_image_visibility' %}" onsubmit="$(window).off('beforeunload')">{% csrf_token %}
 {% endif %}
 <div id="gal-container" role="main">
 	{% for file, next_file, prev_file in file_orders %}
@@ -91,10 +91,10 @@
 					<div class="text-right"><a href="{{ file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ file.file.size|filesizeformat }})</a></div>
 					<div class="text-center">
 			    {% if file_count > 1 %}
-						<a class="tkgal-control tkgal-prev"
+						<a class="gal-control gal-prev"
 							rel="prev"
 							href="{{ prev_file.slug }}">Forrige</a> |
-						<a class="tkgal-control tkgal-next"
+						<a class="gal-control gal-next"
 							rel="next"
 							href="{{ next_file.slug }}">Næste</a>
 					{% endif %}
@@ -108,7 +108,7 @@
 {% if edit_visibility %}</form>{% endif %}
 
 <div class="container">
-    <div id="tkgal-caption-container">
+    <div id="gal-caption-container">
         {% for file, next_file, prev_file in file_orders %}
 		    <p class="hidden" data-permlink="{{ file.slug }}">{{ file.caption }}</p>
         {% endfor %}
