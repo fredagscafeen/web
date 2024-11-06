@@ -165,6 +165,8 @@ def image(request, year, album_slug, image_slug, **kwargs):
 @permission_required("gallery.add_image", raise_exception=True)
 def upload(request):
     file = upload_receive(request)
+    if file is None:
+        return UploadResponse(request, {"error": "No file"})
     album = Album.objects.get(id=int(request.POST["object_id"]))
     ext = os.path.splitext(file.name)[1].lower()
 
