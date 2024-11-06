@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 @python_2_unicode_compatible
 class Album(models.Model):
     class Meta:
-        ordering = ["year", "-eventalbum", "oldFolder", "publish_date"]
+        ordering = ["year", "-eventalbum", "oldFolder", "-publish_date"]
         unique_together = (("year", "slug"),)
 
     title = models.CharField(max_length=200, verbose_name=_("Titel"))
