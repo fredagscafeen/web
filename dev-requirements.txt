@@ -20,7 +20,7 @@ nodeenv==1.6.0
     # via pre-commit
 pre-commit==2.13.0
     # via -r dev-requirements.in
-pyyaml==6.0.2
+pyyaml==5.4.1
     # via pre-commit
 six==1.16.0
     # via
@@ -28,5 +28,5 @@ six==1.16.0
     #   virtualenv
 toml==0.10.2
     # via pre-commit
-virtualenv==20.27.1
+virtualenv==20.4.7
     # via pre-commit

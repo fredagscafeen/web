@@ -147,7 +147,7 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pillow==11.0.0
+pillow==10.4.0
     # via
     #   -r requirements.in
     #   django-versatileimagefield
@@ -157,7 +157,7 @@ prompt-toolkit==3.0.18
     # via
     #   click-repl
     #   ipython
-psycopg2==2.9.10
+psycopg2==2.9.9
     # via -r requirements.in
 ptyprocess==0.7.0
     # via pexpect
@@ -185,7 +185,7 @@ python-dotenv==0.17.1
     # via -r requirements.in
 python-magic==0.4.27
     # via django-versatileimagefield
-pytz==2024.2
+pytz==2021.1
     # via
     #   django
     #   django-recurrence
