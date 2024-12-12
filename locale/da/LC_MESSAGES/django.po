@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 15:03+0100\n"
+"POT-Creation-Date: 2024-12-12 23:42+0100\n"
 "PO-Revision-Date: 2024-11-04 20:16+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgid "Total forbrug"
 msgstr "Total forbrug"
 
 #: bartab/templates/bartab.html:19 bartenders/templates/barplan.html:19
-#: gallery/models.py:100
+#: gallery/models.py:101
 msgid "Dato"
 msgstr "Dato"
 
@@ -141,13 +141,15 @@ msgstr "til"
 msgid "Studie"
 msgstr "Studie"
 
-#: bartenders/models.py:243 gallery/models.py:37
+#: bartenders/models.py:243 gallery/models.py:40
 msgid "Årgang"
 msgstr "Årgang"
 
 #: bartenders/models.py:245
-msgid "Eventuelle ekstra info til bestyrelsen skrives her"
-msgstr "Eventuelle ekstra info til bestyrelsen skrives her"
+msgid ""
+"Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være "
+"en god bartender"
+msgstr ""
 
 #: bartenders/templates/ballots_update.html:18
 #: bartenders/templates/bartender_info.html:41
@@ -188,7 +190,7 @@ msgstr "Bartenderens første vagt"
 msgid "Edit"
 msgstr "Rediger"
 
-#: bartenders/templates/barplan.html:49 bartenders/views.py:147
+#: bartenders/templates/barplan.html:49 bartenders/views.py:150
 msgid "Pantvagter"
 msgstr ""
 
@@ -219,8 +221,7 @@ msgstr ""
 #: bartenders/templates/bartender_info.html:49
 #: bartenders/templates/bartender_info.html:56
 msgid ""
-"Husk at du som inaktiv bartender ikke kan komme til "
-"bartenderarrangementerne."
+"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
 msgstr ""
 
 #: bartenders/templates/bartender_info.html:49
@@ -342,23 +343,23 @@ msgstr ""
 msgid "Bartendertilmeldingen er lukket."
 msgstr ""
 
-#: bartenders/views.py:62
+#: bartenders/views.py:65
 msgid "Din ansøgning er blevet indsendt."
 msgstr ""
 
-#: bartenders/views.py:108
+#: bartenders/views.py:111
 msgid "Barvagter"
 msgstr ""
 
-#: bartenders/views.py:131 bartenders/views.py:170
+#: bartenders/views.py:134 bartenders/views.py:173
 msgid "Responsible"
 msgstr "Ansvarlig"
 
-#: bartenders/views.py:132
+#: bartenders/views.py:135
 msgid "Other bartenders"
 msgstr "Andre bartendere"
 
-#: bartenders/views.py:279
+#: bartenders/views.py:282
 msgid "Profil opdateret"
 msgstr ""
 
@@ -449,7 +450,7 @@ msgstr ""
 msgid "Lokation"
 msgstr ""
 
-#: events/templates/events.html:39 gallery/models.py:39
+#: events/templates/events.html:39 gallery/models.py:42
 msgid "Beskrivelse"
 msgstr ""
 
@@ -502,7 +503,7 @@ msgstr "Dansk"
 msgid "English"
 msgstr "Engelsk"
 
-#: gallery/admin.py:76 gallery/admin.py:79 gallery/templates/album.html:16
+#: gallery/admin.py:78 gallery/admin.py:81 gallery/templates/album.html:16
 msgid "Udvælg billeder"
 msgstr ""
 
@@ -514,64 +515,60 @@ msgstr ""
 msgid "Udgivelsesdato"
 msgstr ""
 
-#: gallery/models.py:36
+#: gallery/models.py:37 gallery/models.py:122 gallery/models.py:155
+msgid "Thumbnail"
+msgstr ""
+
+#: gallery/models.py:39
 msgid "Arrangement"
 msgstr ""
 
-#: gallery/models.py:38 gallery/models.py:106
+#: gallery/models.py:41 gallery/models.py:107
 msgid "Kort titel"
 msgstr ""
 
-#: gallery/models.py:76 items/templates/items.html:55
+#: gallery/models.py:77 items/templates/items.html:55
 msgid "Image"
 msgstr "Billede"
 
-#: gallery/models.py:77
+#: gallery/models.py:78
 msgid "Video"
 msgstr ""
 
-#: gallery/models.py:78
+#: gallery/models.py:79
 msgid "Audio"
 msgstr ""
 
-#: gallery/models.py:79
+#: gallery/models.py:80
 msgid "Other"
 msgstr ""
 
-#: gallery/models.py:88
+#: gallery/models.py:89
 msgid "Synligt"
 msgstr ""
 
-#: gallery/models.py:89
+#: gallery/models.py:90
 msgid "Frasorteret"
 msgstr ""
 
-#: gallery/models.py:90
+#: gallery/models.py:91
 msgid "Skjult"
 msgstr ""
 
-#: gallery/models.py:91
+#: gallery/models.py:92
 msgid "Slet"
 msgstr ""
 
-#: gallery/models.py:92
+#: gallery/models.py:93
 msgid "Ubesluttet"
 msgstr ""
 
-#: gallery/models.py:102
+#: gallery/models.py:103
 msgid "Synlighed"
 msgstr ""
 
-#: gallery/models.py:104
+#: gallery/models.py:105
 msgid "Overskrift"
-msgstr ""
-
-#: gallery/models.py:116
-msgid "Vis på forsiden"
-msgstr ""
-
-#: gallery/models.py:122 gallery/models.py:155
-msgid "Thumbnail"
 msgstr ""
 
 #: gallery/templates/admin/gallery/add_form.html:4
@@ -663,7 +660,7 @@ msgstr ""
 msgid "Årets gang"
 msgstr ""
 
-#: gallery/templates/gallery.html:61
+#: gallery/templates/gallery.html:55
 msgid ""
 "\n"
 "                          billede\n"
@@ -675,7 +672,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: gallery/templates/gallery.html:82
+#: gallery/templates/gallery.html:76
 msgid "Ingen albums med billeder fundet."
 msgstr ""
 
@@ -707,23 +704,19 @@ msgstr ""
 msgid "Næste"
 msgstr ""
 
-#: gallery/views.py:72
-msgid "No albums exist"
-msgstr ""
-
-#: gallery/views.py:146 gallery/views.py:149
+#: gallery/views.py:144 gallery/views.py:147
 msgid "Billedet kan ikke findes"
 msgstr ""
 
-#: gallery/views.py:251
+#: gallery/views.py:248
 msgid "Synlighed på givne billeder er blevet opdateret"
 msgstr ""
 
-#: gallery/views.py:255
+#: gallery/views.py:252
 msgid "Fredagscaféens billedalbummer"
 msgstr ""
 
-#: gallery/views.py:260
+#: gallery/views.py:257
 msgid "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
 msgstr ""
 
@@ -746,8 +739,8 @@ msgstr ""
 #: guides/templates/guides.html:9
 msgctxt "Fredagscaféen"
 msgid ""
-"Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
-" i driften af"
+"Her ligger alle de lækre guides, som er rare at have, når man involverer sig "
+"i driften af"
 msgstr ""
 
 #: guides/templates/guides.html:12
@@ -759,9 +752,12 @@ msgstr ""
 #: items/templates/items.html:11
 msgid ""
 "\n"
-"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.\n"
-"\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.\n"
-"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere\n"
+"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er "
+"kendte for at sælge.\n"
+"\tMen derudover finder du altid et stort sortiment af spændende og nye "
+"specialøl, for enhver smag, i baren.\n"
+"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor "
+"finder du også flere\n"
 "\tglutenfrie og alkoholfrie øl.\n"
 "\t"
 msgstr ""
@@ -890,8 +886,8 @@ msgstr ""
 
 #: udlejning/models.py:64
 msgid ""
-"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af"
-" hver type?"
+"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af "
+"hver type?"
 msgstr ""
 
 #: udlejning/models.py:67
@@ -1014,8 +1010,7 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:42
 msgid ""
-"Udelukkende arrangementer der finder sted på universitetet. Dette "
-"inkluderer:"
+"Udelukkende arrangementer der finder sted på universitetet. Dette inkluderer:"
 msgstr ""
 
 #: udlejning/templates/udlejning.html:44
@@ -1032,8 +1027,8 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:50
 msgid ""
-"Arrangementer der finder sted på universitetet eller andetsteds, kan være af"
-" privat natur. Dette inkluderer:"
+"Arrangementer der finder sted på universitetet eller andetsteds, kan være af "
+"privat natur. Dette inkluderer:"
 msgstr ""
 
 #: udlejning/templates/udlejning.html:52
@@ -1076,10 +1071,10 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:72
 msgid ""
-"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være"
-" et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
-"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi"
-" ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
+"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være "
+"et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
+"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi "
+"ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
 msgstr ""
 
 #: udlejning/templates/udlejning.html:74
@@ -1096,8 +1091,8 @@ msgid ""
 "mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver "
 "mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt "
 "udlejning er muligt i god tid, dog er det stadig muligt at kunne låne "
-"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at"
-" der kommer et svar i god tid."
+"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at "
+"der kommer et svar i god tid."
 msgstr ""
 
 #: udlejning/templates/udlejning.html:79
@@ -1114,8 +1109,7 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:91
 msgid ""
-", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. "
-"moms)"
+", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
 msgstr ""
 
 #: udlejning/templates/udlejning.html:94
@@ -1380,9 +1374,11 @@ msgid "Missing from environment"
 msgstr "Fraværende i miljøet"
 
 #: web/views.py:48
-msgid ""
-"Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+msgid "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr ""
+
+#~ msgid "Eventuelle ekstra info til bestyrelsen skrives her"
+#~ msgstr "Eventuelle ekstra info til bestyrelsen skrives her"
 
 #~ msgid "bartenders"
 #~ msgstr "bartendere"

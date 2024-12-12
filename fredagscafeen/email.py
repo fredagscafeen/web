@@ -10,7 +10,7 @@ def send_template_email(
     html_format={},
     from_email="best@fredagscafeen.dk",
     cc=[],
-    reply_to=[],
+    reply_to=["best@fredagscafeen.dk"],
 ):
     body_text = render_to_string(
         "email.txt", {"content": body_template.format(**text_format)}

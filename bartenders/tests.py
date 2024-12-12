@@ -79,7 +79,7 @@ class BartenderApplicationTests(TestCase):
         # Test that application was made
         self.assertTrue(BartenderApplication.objects.exists())
         # And mail was sent
-        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(len(mail.outbox), 2)
 
     def test_invalid_application(self):
         data = dict(

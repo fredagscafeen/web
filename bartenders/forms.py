@@ -68,6 +68,43 @@ Ansøgningen kan blive accepteret eller afvist i {link}.
             to=["best@fredagscafeen.dk"],
         )
 
+    def send_confirmation_email(self, pk):
+        d = self.cleaned_data
+
+        extra_info = ""
+        if d["info"]:
+            extra_info = f"""
+Ekstra information:
+{d["info"]}
+"""
+        d["extra_info"] = extra_info
+
+        return send_template_email(
+            subject=f"Kvittering for bartendertilmelding til fredagscaféen",
+            body_template="""Dette er en automatisk email.
+
+Hej {name},
+
+Tak for din ansøgning om at blive bartender i fredagscaféen!
+Vi gennemgår din ansøgning på næste bestyrelsesmøde, så forvent lidt ventetid, før du hører fra os.
+
+Kopi af din ansøgning:
+
+Navn: {name}
+Brugernavn: {username}
+Studienummer: {studentNumber}
+Email: {email}
+Telefonnummer: {phoneNumber}
+{extra_info}
+
+/snek""",
+            text_format={**d},
+            html_format={
+                **d,
+            },
+            to=[d["email"]],
+        )
+
 
 class BartenderInfoForm(forms.ModelForm):
     class Meta:

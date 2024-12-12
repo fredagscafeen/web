@@ -55,12 +55,12 @@ class BartenderCommon(models.Model):
     )
     email = models.EmailField(
         unique=True,
-        blank=True,
+        blank=False,
         verbose_name=_("E-mail"),
         help_text=_("En post.au mail fungerer ikke"),
     )
     studentNumber = models.IntegerField(
-        blank=True, null=True, verbose_name=_("Studienummer")
+        blank=False, null=True, verbose_name=_("Studienummer")
     )
     phoneNumber = models.IntegerField(
         blank=True, null=True, verbose_name=_("Telefonnummer")
@@ -242,7 +242,10 @@ class BartenderApplication(BartenderCommon):
     study = models.CharField(max_length=50, verbose_name=_("Studie"))
     study_year = models.IntegerField(verbose_name=_("Årgang"))
     info = models.TextField(
-        blank=True, help_text=_("Eventuelle ekstra info til bestyrelsen skrives her")
+        blank=False,
+        help_text=_(
+            "Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være en god bartender"
+        ),
     )
 
     created = models.DateTimeField(auto_now_add=True)
@@ -400,7 +403,7 @@ class BartenderShift(models.Model):
     )
 
     class Meta:
-        ordering = ("start_datetime",)
+        ordering = ("-start_datetime",)
 
     def save(self, *args, **kwargs):
         if not self.end_datetime:
