@@ -88,15 +88,27 @@ class Barplan(TemplateView):
         bartendershifts = BartenderShift.objects.all()
         depositshifts = BoardMemberDepositShift.objects.all()
 
-        paginator_bartendershifts = Paginator(bartendershifts, 10)
-        paginator_depositshifts = Paginator(depositshifts, 10)
+        paginator_bartendershifts = Paginator(bartendershifts, 15)
+        paginator_depositshifts = Paginator(depositshifts, 15)
 
         bartendershifts_page_number = self.request.GET.get("shifts_page")
+        if not bartendershifts_page_number:
+            bartendershifts_page_number = self.current_week_page_number(
+                paginator_bartendershifts
+            )
+            if not bartendershifts_page_number:
+                bartendershifts_page_number = paginator_bartendershifts.num_pages
         bartendershifts_page_obj = paginator_bartendershifts.get_page(
             bartendershifts_page_number
         )
 
         depositshifts_page_number = self.request.GET.get("deposit_page")
+        if not depositshifts_page_number:
+            depositshifts_page_number = self.current_deposit_week_page_number(
+                paginator_depositshifts
+            )
+            if not depositshifts_page_number:
+                depositshifts_page_number = paginator_depositshifts.num_pages
         depositshifts_page_obj = paginator_depositshifts.get_page(
             depositshifts_page_number
         )
@@ -106,6 +118,22 @@ class Barplan(TemplateView):
         context["boardmemberdepositshifts"] = depositshifts_page_obj
 
         return context
+
+    def current_week_page_number(self, paginator):
+        for i in range(1, paginator.num_pages + 1):
+            page = paginator.get_page(i)
+            if any(shift.is_current_week for shift in page):
+                print(i)
+                return i
+        print("None")
+        return None
+
+    def current_deposit_week_page_number(self, paginator):
+        for i in range(1, paginator.num_pages + 1):
+            page = paginator.get_page(i)
+            if any(shift.is_current_week for shift in page):
+                return i
+        return None
 
 
 class UserBarplan(ICalFeed):
