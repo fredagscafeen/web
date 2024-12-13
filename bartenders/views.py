@@ -6,8 +6,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.shortcuts import get_object_or_404, redirect, reverse
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import (
@@ -84,22 +85,25 @@ class Barplan(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        bartendershifts = BartenderShift.objects.all()
+        depositshifts = BoardMemberDepositShift.objects.all()
 
-        show_all = "show_all" in self.request.GET
+        paginator_bartendershifts = Paginator(bartendershifts, 10)
+        paginator_depositshifts = Paginator(depositshifts, 10)
 
-        context["show_all"] = show_all
-
-        if show_all:
-            end_datetime = timezone.make_aware(datetime.datetime.utcfromtimestamp(0))
-        else:
-            end_datetime = timezone.now() - datetime.timedelta(1)
-
-        context["bartendershifts"] = BartenderShift.objects.filter(
-            end_datetime__gte=end_datetime
+        bartendershifts_page_number = self.request.GET.get("shifts_page")
+        bartendershifts_page_obj = paginator_bartendershifts.get_page(
+            bartendershifts_page_number
         )
-        context["boardmemberdepositshifts"] = BoardMemberDepositShift.objects.filter(
-            end_date__gte=end_datetime
+
+        depositshifts_page_number = self.request.GET.get("deposit_page")
+        depositshifts_page_obj = paginator_depositshifts.get_page(
+            depositshifts_page_number
         )
+
+        context["bartendershifts"] = bartendershifts_page_obj
+
+        context["boardmemberdepositshifts"] = depositshifts_page_obj
 
         return context
 

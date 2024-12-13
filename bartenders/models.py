@@ -103,15 +103,15 @@ class Bartender(BartenderCommon):
 
     @property
     def first_bartender_shift(self):
-        return BartenderShift.with_bartender(self).first()
-
-    @property
-    def last_bartender_shift(self):
         return BartenderShift.with_bartender(self).last()
 
     @property
+    def last_bartender_shift(self):
+        return BartenderShift.with_bartender(self).first()
+
+    @property
     def first_deposit_shift(self):
-        return BoardMemberDepositShift.with_bartender(self).first()
+        return BoardMemberDepositShift.with_bartender(self).last()
 
     MAILMAN_ALL = (
         settings.MAILMAN_ALL_LIST,
@@ -446,6 +446,11 @@ class BartenderShift(models.Model):
     def is_with_bartender(self, bartender):
         return bartender in self.all_bartenders()
 
+    def is_current_week(self):
+        return self.start_datetime >= timezone.now() - datetime.timedelta(
+            days=7
+        ) and self.end_datetime <= timezone.now() + datetime.timedelta(days=7)
+
     def replace(self, b1, b2):
         if self.responsible == b1:
             self.responsible = b2
@@ -480,7 +485,7 @@ class BoardMemberDepositShift(models.Model):
     )
 
     class Meta:
-        ordering = ("start_date",)
+        ordering = ("-start_date",)
 
     def save(self, *args, **kwargs):
         if not self.end_date:
@@ -494,6 +499,12 @@ class BoardMemberDepositShift(models.Model):
 
     def is_with_bartender(self, bartender):
         return bartender in self.responsibles.all()
+
+    def is_current_week(self):
+        return (
+            timezone.now().date() >= self.start_date
+            and timezone.now().date() <= self.end_date
+        )
 
     def __str__(self):
         return (

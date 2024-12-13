@@ -3,15 +3,10 @@
 {% block content %}
 {% load i18n %}
 {% load static %}
-{% load is_with_user %}
+{% load bootstrap5 bootstrap_icons %}
+{% load is_with_user is_current_week %}
 
 <h2>{% translate "Barplan" %}</h2>
-
-{% if show_all %}
-<a href=".">{% translate "Vis nuværende" %}</a>
-{% else %}
-<a href="?show_all">{% translate "Vis også tidligere" %}</a>
-{% endif %}
 
 <table class="table table-striped tablesorter" id="items">
 	<thead>
@@ -27,7 +22,7 @@
 	<tbody>
     {% for shift in bartendershifts %}
 		<tr>
-			<td {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}class="col-md-2">{{ shift.display_str }} {% if show_all %} {{ shift.start_datetime.year }}{% endif %}</td>
+			<td {% if shift|is_current_week %}title="{% translate "This weeks friday" %}"{% endif %} class="col-md-2" style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|is_current_week %}font-weight: bold;{% endif %}">{{ shift.display_str }} {% if show_all %} {{ shift.start_datetime.year }}{% endif %}</td>
             <td {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %} class="col-md-3">{{ shift.responsible.name }}</td>
             <td {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %} class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
@@ -42,17 +37,45 @@
 	</tbody>
 </table>
 
+<div class="pagination center-align">
+    <span class="step-links">
+        {% if bartendershifts.has_previous %}
+			<a href="?shifts_page={{ bartendershifts.previous_page_number }}"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
+
+			{% if bartendershifts.number > 3 %}
+				<a href="?shifts_page=1">1</a>
+				{% if bartendershifts.number > 4 %}
+				<span>...</span>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+
+		{% for num in bartendershifts.paginator.page_range %}
+			{% if bartendershifts.number == num %}
+				<a href="?shifts_page={{ num }}" class="active">{{ num }}</a>
+			{% elif num > bartendershifts.number|add:'-3' and num < bartendershifts.number|add:'3' %}
+				<a href="?shifts_page={{ num }}">{{ num }}</a>
+			{% endif %}
+		{% endfor %}
+
+		{% if bartendershifts.has_next %}
+			{% if bartendershifts.number < bartendershifts.paginator.num_pages|add:'-3' %}
+				<span>...</span>
+				<a href="?shifts_page={{ bartendershifts.paginator.num_pages }}">{{ bartendershifts.paginator.num_pages }}</a>
+			{% elif bartendershifts.number < bartendershifts.paginator.num_pages|add:'-2' %}
+				<a href="?shifts_page={{ bartendershifts.paginator.num_pages }}">{{ bartendershifts.paginator.num_pages }}</a>
+		{% endif %}
+
+		<a href="?shifts_page={{ bartendershifts.next_page_number }}"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
+		{% endif %}
+    </span>
+</div>
+
 <a href="/barplan/shifts.ics">iCal feed</a>
 
 <hr>
 
 <h2>{% translate "Pantvagter" %}</h2>
-
-{% if show_all %}
-<a href=".">{% translate "Vis nuværende" %}</a>
-{% else %}
-<a href="?show_all">{% translate "Vis også tidligere" %}</a>
-{% endif %}
 
 <table class="table table-striped tablesorter" id="items">
 	<thead>
@@ -66,7 +89,7 @@
 		</thead>
 	<tbody>
     {% for shift in boardmemberdepositshifts %}
-		<tr {% if shift|is_with_user:user %}style="background-color: skyblue;"{% endif %}>
+		<tr {% if shift|is_current_week %}title="{% translate "Current week" %}"{% endif %} style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|is_current_week %}font-weight: bold;{% endif %}">
 			<td class="col-md-2">{{ shift.start_date | date:"d M" }}{% if show_all %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all %} {{ shift.end_date.year }}{% endif %}</td>
             <td class="col-md-9">
                 {% for responsible in shift.responsibles.all %}
@@ -81,6 +104,40 @@
 	{% endfor %}
 	</tbody>
 </table>
+
+<div class="pagination center-align">
+    <span class="step-links">
+        {% if boardmemberdepositshifts.has_previous %}
+			<a href="?deposit_page={{ boardmemberdepositshifts.previous_page_number }}"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
+
+			{% if boardmemberdepositshifts.number > 3 %}
+				<a href="?deposit_page=1">1</a>
+				{% if boardmemberdepositshifts.number > 4 %}
+				<span>...</span>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+
+		{% for num in boardmemberdepositshifts.paginator.page_range %}
+			{% if boardmemberdepositshifts.number == num %}
+				<a href="?deposit_page={{ num }}" class="active">{{ num }}</a>
+			{% elif num > boardmemberdepositshifts.number|add:'-3' and num < boardmemberdepositshifts.number|add:'3' %}
+				<a href="?deposit_page={{ num }}">{{ num }}</a>
+			{% endif %}
+		{% endfor %}
+
+		{% if boardmemberdepositshifts.has_next %}
+			{% if boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-3' %}
+				<span>...</span>
+				<a href="?deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
+			{% elif boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-2' %}
+				<a href="?deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
+		{% endif %}
+
+		<a href="?deposit_page={{ boardmemberdepositshifts.next_page_number }}"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
+		{% endif %}
+    </span>
+</div>
 
 <a href="/barplan/deposit_shifts.ics">iCal feed</a>
 

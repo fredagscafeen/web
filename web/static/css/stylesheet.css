@@ -336,6 +336,25 @@ html.light {
     .breadcrumb :before {
         color: black;
     }
+
+    .pagination {
+        margin: 0px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pagination a.active {
+        color: black;
+    }
+
+    .pagination a {
+        padding: 5px;
+    }
+
+    .pagination a:hover {
+        text-decoration: none;
+        color: black;
+    }
 }
 
 /* dark theme */
@@ -756,5 +775,24 @@ html.dark {
 
     .breadcrumb:before {
         color: black;
+    }
+
+    .pagination {
+        margin: 0px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .pagination a.active {
+        color: white;
+    }
+
+    .pagination a {
+        padding: 5px;
+    }
+
+    .pagination a:hover {
+        text-decoration: none;
+        color: white;
     }
 }
