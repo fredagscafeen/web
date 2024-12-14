@@ -5,9 +5,9 @@ from bartenders.models import BartenderShift
 register = template.Library()
 
 
-@register.filter(name="is_current_week")
-def is_current_week(shift):
+@register.filter(name="compare_to_current_week")
+def compare_to_current_week(shift):
     try:
-        return shift.is_current_week()
+        return shift.compare_to_current_week()
     except BartenderShift.DoesNotExist:
         return False

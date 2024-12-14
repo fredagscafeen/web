@@ -122,16 +122,14 @@ class Barplan(TemplateView):
     def current_week_page_number(self, paginator):
         for i in range(1, paginator.num_pages + 1):
             page = paginator.get_page(i)
-            if any(shift.is_current_week for shift in page):
-                print(i)
+            if any(shift.compare_to_current_week() == 0 for shift in page):
                 return i
-        print("None")
         return None
 
     def current_deposit_week_page_number(self, paginator):
         for i in range(1, paginator.num_pages + 1):
             page = paginator.get_page(i)
-            if any(shift.is_current_week for shift in page):
+            if any(shift.compare_to_current_week() == 0 for shift in page):
                 return i
         return None
 

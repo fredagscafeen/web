@@ -446,10 +446,16 @@ class BartenderShift(models.Model):
     def is_with_bartender(self, bartender):
         return bartender in self.all_bartenders()
 
-    def is_current_week(self):
-        return self.start_datetime >= timezone.now() - datetime.timedelta(
-            days=2
-        ) and self.end_datetime <= timezone.now() + datetime.timedelta(days=5)
+    def compare_to_current_week(self):
+        date = timezone.now().date()
+        less_than_week = self.start_datetime.date() < date + datetime.timedelta(5)
+        greater_than_week = self.end_datetime.date() > date - datetime.timedelta(2)
+        if less_than_week and greater_than_week:
+            return 0
+        elif less_than_week:
+            return -1
+        else:
+            return 1
 
     def replace(self, b1, b2):
         if self.responsible == b1:
@@ -500,11 +506,16 @@ class BoardMemberDepositShift(models.Model):
     def is_with_bartender(self, bartender):
         return bartender in self.responsibles.all()
 
-    def is_current_week(self):
-        return (
-            timezone.now().date() >= self.start_date
-            and timezone.now().date() <= self.end_date
-        )
+    def compare_to_current_week(self):
+        date = timezone.now().date()
+        less_than_week = self.start_date < date
+        greater_than_week = self.end_date > date
+        if less_than_week and greater_than_week:
+            return 0
+        elif less_than_week:
+            return -1
+        else:
+            return 1
 
     def __str__(self):
         return (
