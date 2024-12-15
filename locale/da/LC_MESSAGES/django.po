@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-15 14:25+0100\n"
+"POT-Creation-Date: 2024-12-15 15:21+0100\n"
 "PO-Revision-Date: 2024-12-13 20:28+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -182,13 +182,13 @@ msgstr "Denne uges fredag"
 msgid "Bartender's first shift"
 msgstr "Bartenderens første vagt"
 
-#: bartenders/templates/barplan.html:43 bartenders/templates/barplan.html:121
+#: bartenders/templates/barplan.html:43 bartenders/templates/barplan.html:120
 #: bartenders/templates/board.html:34 gallery/templates/gallery.html:24
 #: items/templates/items.html:79
 msgid "Edit"
 msgstr "Rediger"
 
-#: bartenders/templates/barplan.html:88 bartenders/views.py:187
+#: bartenders/templates/barplan.html:88 bartenders/views.py:201
 msgid "Pantvagter"
 msgstr ""
 
@@ -349,23 +349,23 @@ msgstr ""
 msgid "Bartendertilmeldingen er lukket."
 msgstr ""
 
-#: bartenders/views.py:68
+#: bartenders/views.py:69
 msgid "Din ansøgning er blevet indsendt."
 msgstr ""
 
-#: bartenders/views.py:148
+#: bartenders/views.py:162
 msgid "Barvagter"
 msgstr ""
 
-#: bartenders/views.py:171 bartenders/views.py:210
+#: bartenders/views.py:185 bartenders/views.py:224
 msgid "Responsible"
 msgstr "Ansvarlig"
 
-#: bartenders/views.py:172
+#: bartenders/views.py:186
 msgid "Other bartenders"
 msgstr "Andre bartendere"
 
-#: bartenders/views.py:319
+#: bartenders/views.py:333
 msgid "Profil opdateret"
 msgstr ""
 

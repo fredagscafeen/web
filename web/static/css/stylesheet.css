@@ -355,6 +355,19 @@ html.light {
         text-decoration: none;
         color: black;
     }
+
+    td span{
+        position:absolute;
+
+        margin-top:20px;
+
+        color:black;
+        background:white;
+        padding:5px;
+        border:1px solid lightgray;
+        border-radius:5px;
+        font-weight: lighter;
+    }
 }
 
 /* dark theme */
@@ -377,12 +390,12 @@ html.dark {
         color: #EEEEEE;
     }
 
-    .navbar-default .navbar-nav .open .dropdown-menu>li>a, .navbar-default .navbar-nav .open .dropdown-menu {
+    .dropdown-menu>li>a, .dropdown-menu, .open:active {
         background-color: #282828;
         color:#EEEEEE;
     }
 
-    .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
+    .dropdown-menu>li>a:hover {
         background-color: #151515;
         color: #4d4d4d;
     }
@@ -794,5 +807,18 @@ html.dark {
     .pagination a:hover {
         text-decoration: none;
         color: white;
+    }
+
+    td span{
+        position:absolute;
+
+        margin-top:20px;
+
+        color:white;
+        background:black;
+        padding:5px;
+        border:1px solid darkgray;
+        border-radius:5px;
+        font-weight: lighter;
     }
 }

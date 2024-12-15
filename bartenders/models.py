@@ -110,8 +110,8 @@ class Bartender(BartenderCommon):
         return BartenderShift.with_bartender(self).last()
 
     @property
-    def last_deposit_shift(self):
-        return BoardMemberDepositShift.with_bartender(self).last()
+    def first_deposit_shift(self):
+        return BoardMemberDepositShift.with_bartender(self).first()
 
     MAILMAN_ALL = (
         settings.MAILMAN_ALL_LIST,
