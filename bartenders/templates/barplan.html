@@ -6,7 +6,17 @@
 {% load bootstrap5 bootstrap_icons %}
 {% load is_with_user compare_to_current_week %}
 
-<h2>{% translate "Barplan" %}</h2>
+<h2 id="barplan">{% translate "Barplan" %}</h2>
+
+<li class="dropdown" style="list-style: none;">
+	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Vagter per side" %}: {{ shifts_pages_per_page }} <span class="caret"></span></a>
+	<ul class="dropdown-menu">
+		<li><a href="?shifts_pages_per_page=15#barplan">15</a></li>
+		<li><a href="?shifts_pages_per_page=25#barplan">25</a></li>
+		<li><a href="?shifts_pages_per_page=50#barplan">50</a></li>
+		<li><a href="?shifts_pages_per_page=100#barplan">100</a></li>
+	</ul>
+</li>
 
 <table class="table table-striped tablesorter" id="items">
 	<thead>
@@ -21,16 +31,16 @@
 		</thead>
 	<tbody>
     {% for shift in bartendershifts %}
-		<tr>
-			<td {% if shift|compare_to_current_week == 0 %}title="{% translate "This weeks friday" %}"{% endif %} class="col-md-2" style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == 0 %}font-weight: bold;{% elif shift|compare_to_current_week == -1 %}opacity:0.5;{% endif %}">{{ shift.display_str }} {% if show_all %} {{ shift.start_datetime.year }}{% endif %}</td>
-            <td style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}opacity:0.5;{% endif %}" class="col-md-3">{{ shift.responsible.name }}</td>
-            <td style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}opacity:0.5;{% endif %}" class="col-md-7">
+		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}opacity:0.5;{% endif %}">
+			<td {% if shift|compare_to_current_week == 0 %}title="{% translate "This weeks friday" %}"{% endif %} class="col-md-2" style="{% if shift|compare_to_current_week == 0 %}font-weight: bold;{% endif %}">{{ shift.display_str }} {% if show_all %} {{ shift.start_datetime.year }}{% endif %}</td>
+            <td class="col-md-3">{{ shift.responsible.name }}</td>
+            <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
 					{% if bartender.first_bartender_shift == shift %}<b title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}opacity:0.5;{% endif %}" class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 	{% endfor %}
@@ -40,10 +50,10 @@
 <div class="pagination center-align">
     <span class="step-links">
         {% if bartendershifts.has_previous %}
-			<a href="?shifts_page={{ bartendershifts.previous_page_number }}"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
+			<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}#barplan"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
 
 			{% if bartendershifts.number > 3 %}
-				<a href="?shifts_page=1">1</a>
+				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}shifts_page=1#barplan">1</a>
 				{% if bartendershifts.number > 4 %}
 				<span>...</span>
 				{% endif %}
@@ -52,21 +62,21 @@
 
 		{% for num in bartendershifts.paginator.page_range %}
 			{% if bartendershifts.number == num %}
-				<a href="?shifts_page={{ num }}" class="active">{{ num }}</a>
+				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ num }}#barplan" class="active">{{ num }}</a>
 			{% elif num > bartendershifts.number|add:'-3' and num < bartendershifts.number|add:'3' %}
-				<a href="?shifts_page={{ num }}">{{ num }}</a>
+				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ num }}#barplan">{{ num }}</a>
 			{% endif %}
 		{% endfor %}
 
 		{% if bartendershifts.has_next %}
 			{% if bartendershifts.number < bartendershifts.paginator.num_pages|add:'-3' %}
 				<span>...</span>
-				<a href="?shifts_page={{ bartendershifts.paginator.num_pages }}">{{ bartendershifts.paginator.num_pages }}</a>
+				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}#barplan">{{ bartendershifts.paginator.num_pages }}</a>
 			{% elif bartendershifts.number < bartendershifts.paginator.num_pages|add:'-2' %}
-				<a href="?shifts_page={{ bartendershifts.paginator.num_pages }}">{{ bartendershifts.paginator.num_pages }}</a>
+				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}#barplan">{{ bartendershifts.paginator.num_pages }}</a>
 		{% endif %}
 
-		<a href="?shifts_page={{ bartendershifts.next_page_number }}"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
+		<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.next_page_number }}"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
 		{% endif %}
     </span>
 </div>
@@ -75,7 +85,17 @@
 
 <hr>
 
-<h2>{% translate "Pantvagter" %}</h2>
+<h2 id="pantvagter">{% translate "Pantvagter" %}</h2>
+
+<li class="dropdown" style="list-style: none;">
+	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Pantvagter per side" %}: {{ deposit_pages_per_page }} <span class="caret"></span></a>
+	<ul class="dropdown-menu">
+		<li><a href="?deposit_pages_per_page=15#pantvagter">15</a></li>
+		<li><a href="?deposit_pages_per_page=25#pantvagter">25</a></li>
+		<li><a href="?deposit_pages_per_page=50#pantvagter">50</a></li>
+		<li><a href="?deposit_pages_per_page=100#pantvagter">100</a></li>
+	</ul>
+</li>
 
 <table class="table table-striped tablesorter" id="items">
 	<thead>
@@ -89,8 +109,8 @@
 		</thead>
 	<tbody>
     {% for shift in boardmemberdepositshifts %}
-		<tr {% if shift|compare_to_current_week == 0 %}title="{% translate "Current week" %}"{% endif %} style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == 0 %}font-weight: bold;{% elif shift|compare_to_current_week == -1 %}opacity:0.5;{% endif %}">
-			<td class="col-md-2">{{ shift.start_date | date:"d M" }}{% if show_all %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all %} {{ shift.end_date.year }}{% endif %}</td>
+		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}opacity:0.5;{% endif %}">
+			<td {% if shift|compare_to_current_week == 0 %}title="{% translate "Current week" %}"{% endif %} style="{% if shift|compare_to_current_week == 0 %}font-weight: bold;{% endif %}" class="col-md-2">{{ shift.start_date | date:"d M" }}{% if show_all %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all %} {{ shift.end_date.year }}{% endif %}</td>
             <td class="col-md-9">
                 {% for responsible in shift.responsibles.all %}
 					{% translate "Bartender's first deposit shift" as FIRST_DEPOSIT_SHIFT_TEXT %}
@@ -108,10 +128,10 @@
 <div class="pagination center-align">
     <span class="step-links">
         {% if boardmemberdepositshifts.has_previous %}
-			<a href="?deposit_page={{ boardmemberdepositshifts.previous_page_number }}"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
+			<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}#pantvagter"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
 
 			{% if boardmemberdepositshifts.number > 3 %}
-				<a href="?deposit_page=1">1</a>
+				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page=1">1</a>
 				{% if boardmemberdepositshifts.number > 4 %}
 				<span>...</span>
 				{% endif %}
@@ -120,21 +140,21 @@
 
 		{% for num in boardmemberdepositshifts.paginator.page_range %}
 			{% if boardmemberdepositshifts.number == num %}
-				<a href="?deposit_page={{ num }}" class="active">{{ num }}</a>
+				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ num }}#pantvagter" class="active">{{ num }}</a>
 			{% elif num > boardmemberdepositshifts.number|add:'-3' and num < boardmemberdepositshifts.number|add:'3' %}
-				<a href="?deposit_page={{ num }}">{{ num }}</a>
+				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ num }}#pantvagter">{{ num }}</a>
 			{% endif %}
 		{% endfor %}
 
 		{% if boardmemberdepositshifts.has_next %}
 			{% if boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-3' %}
 				<span>...</span>
-				<a href="?deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
+				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
 			{% elif boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-2' %}
-				<a href="?deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
+				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
 		{% endif %}
 
-		<a href="?deposit_page={{ boardmemberdepositshifts.next_page_number }}"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
+		<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.next_page_number }}#pantvagter"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
 		{% endif %}
     </span>
 </div>

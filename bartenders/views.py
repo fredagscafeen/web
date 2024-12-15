@@ -36,6 +36,9 @@ from .models import (
     next_bartender_shift_dates,
 )
 
+default_shifts_pages_per_page = 15
+default_deposit_pages_per_page = 15
+
 
 class Index(CreateView):
     model = BartenderApplication
@@ -85,30 +88,48 @@ class Barplan(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        bartendershifts_pages_per_page = self.request.GET.get("shifts_pages_per_page")
+        if (
+            not bartendershifts_pages_per_page
+            or bartendershifts_pages_per_page == "0"
+            or bartendershifts_pages_per_page == ""
+        ):
+            bartendershifts_pages_per_page = default_shifts_pages_per_page
+        context["shifts_pages_per_page"] = bartendershifts_pages_per_page
+
+        depositshifts_pages_per_page = self.request.GET.get("deposit_pages_per_page")
+        if (
+            not depositshifts_pages_per_page
+            or depositshifts_pages_per_page == "0"
+            or depositshifts_pages_per_page == ""
+        ):
+            depositshifts_pages_per_page = default_deposit_pages_per_page
+        context["deposit_pages_per_page"] = depositshifts_pages_per_page
+
         bartendershifts = BartenderShift.objects.all()
         depositshifts = BoardMemberDepositShift.objects.all()
 
-        paginator_bartendershifts = Paginator(bartendershifts, 15)
-        paginator_depositshifts = Paginator(depositshifts, 15)
+        paginator_bartendershifts = Paginator(
+            bartendershifts, bartendershifts_pages_per_page
+        )
+        paginator_depositshifts = Paginator(depositshifts, depositshifts_pages_per_page)
 
-        bartendershifts_page_number = self.request.GET.get("shifts_page")
+        bartendershifts_page_number = self.request.GET.get(
+            "shifts_page", self.current_week_page_number(paginator_bartendershifts)
+        )
         if not bartendershifts_page_number:
-            bartendershifts_page_number = self.current_week_page_number(
-                paginator_bartendershifts
-            )
-            if not bartendershifts_page_number:
-                bartendershifts_page_number = paginator_bartendershifts.num_pages
+            bartendershifts_page_number = paginator_bartendershifts.num_pages
         bartendershifts_page_obj = paginator_bartendershifts.get_page(
             bartendershifts_page_number
         )
 
-        depositshifts_page_number = self.request.GET.get("deposit_page")
+        depositshifts_page_number = self.request.GET.get(
+            "deposit_page",
+            self.current_deposit_week_page_number(paginator_depositshifts),
+        )
         if not depositshifts_page_number:
-            depositshifts_page_number = self.current_deposit_week_page_number(
-                paginator_depositshifts
-            )
-            if not depositshifts_page_number:
-                depositshifts_page_number = paginator_depositshifts.num_pages
+            depositshifts_page_number = paginator_depositshifts.num_pages
         depositshifts_page_obj = paginator_depositshifts.get_page(
             depositshifts_page_number
         )

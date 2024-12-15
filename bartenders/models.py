@@ -448,8 +448,8 @@ class BartenderShift(models.Model):
 
     def compare_to_current_week(self):
         date = timezone.now().date()
-        less_than_week = self.start_datetime.date() < date + datetime.timedelta(5)
-        greater_than_week = self.end_datetime.date() > date - datetime.timedelta(2)
+        less_than_week = self.start_datetime.date() <= date + datetime.timedelta(4)
+        greater_than_week = self.end_datetime.date() >= date - datetime.timedelta(2)
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:
@@ -509,7 +509,7 @@ class BoardMemberDepositShift(models.Model):
     def compare_to_current_week(self):
         date = timezone.now().date()
         less_than_week = self.start_date < date
-        greater_than_week = self.end_date > date
+        greater_than_week = self.end_date > date - datetime.timedelta(1)
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:
