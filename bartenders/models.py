@@ -508,8 +508,8 @@ class BoardMemberDepositShift(models.Model):
 
     def compare_to_current_week(self):
         date = timezone.now().date()
-        less_than_week = self.start_date < date
-        greater_than_week = self.end_date > date - datetime.timedelta(1)
+        less_than_week = self.start_date <= date
+        greater_than_week = self.end_date >= date
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:

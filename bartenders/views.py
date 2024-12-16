@@ -94,6 +94,7 @@ class Barplan(TemplateView):
             not bartendershifts_pages_per_page
             or bartendershifts_pages_per_page == "0"
             or bartendershifts_pages_per_page == ""
+            or not bartendershifts_pages_per_page.isdigit()
         ):
             bartendershifts_pages_per_page = default_shifts_pages_per_page
         context["shifts_pages_per_page"] = bartendershifts_pages_per_page
@@ -103,6 +104,7 @@ class Barplan(TemplateView):
             not depositshifts_pages_per_page
             or depositshifts_pages_per_page == "0"
             or depositshifts_pages_per_page == ""
+            or not depositshifts_pages_per_page.isdigit()
         ):
             depositshifts_pages_per_page = default_deposit_pages_per_page
         context["deposit_pages_per_page"] = depositshifts_pages_per_page
