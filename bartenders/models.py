@@ -448,8 +448,10 @@ class BartenderShift(models.Model):
 
     def compare_to_current_week(self):
         date = timezone.now().date()
-        less_than_week = self.start_datetime.date() <= date + datetime.timedelta(4)
-        greater_than_week = self.end_datetime.date() >= date - datetime.timedelta(2)
+        less_than_week = self.start_datetime.date() <= date + datetime.timedelta(days=4)
+        greater_than_week = self.end_datetime.date() >= date - datetime.timedelta(
+            days=2
+        )
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:

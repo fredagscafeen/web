@@ -112,6 +112,13 @@ class Barplan(TemplateView):
         bartendershifts = BartenderShift.objects.all()
         depositshifts = BoardMemberDepositShift.objects.all()
 
+        current_shift = BartenderShift.objects.all().filter(
+            start_datetime__lte=timezone.now() + datetime.timedelta(days=2),
+            end_datetime__gte=timezone.now() - datetime.timedelta(days=5),
+        )
+        shift_streak = current_shift[0].streak() if current_shift else 0
+        context["shift_streak"] = shift_streak
+
         show_all_bartendershifts = self.request.GET.get("show_all_bartendershifts")
         if not show_all_bartendershifts:
             bartendershifts = bartendershifts.filter(
