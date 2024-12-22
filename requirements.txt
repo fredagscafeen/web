@@ -123,12 +123,14 @@ executing==2.1.0
     # via stack-data
 fake-useragent==0.1.11
     # via requests-html
-gunicorn==20.1.0
+gunicorn==23.0.0
     # via -r requirements.in
 icalendar==4.0.7
     # via django-ical
-idna==2.10
-    # via requests
+idna==3.10
+    # via
+    #   -r requirements.in
+    #   requests
 importlib-metadata==8.5.0
     # via pyppeteer
 ipython==8.12.3
@@ -149,6 +151,8 @@ lxml-html-clean==0.4.1
     # via -r requirements.in
 matplotlib-inline==0.1.2
     # via ipython
+packaging==24.2
+    # via gunicorn
 parse==1.19.0
     # via requests-html
 parso==0.8.2

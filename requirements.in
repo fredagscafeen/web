@@ -4,7 +4,7 @@ djangorestframework
 dj-config-url
 django-bootstrap-v5
 django-recaptcha
-gunicorn
+gunicorn>=22.0.0
 Pillow
 psycopg2
 whitenoise
@@ -32,3 +32,4 @@ urllib3>=1.26.19
 Pygments>=2.15.0
 sqlparse>=0.5.0
 tqdm>=4.66.3
+idna>=3.7
