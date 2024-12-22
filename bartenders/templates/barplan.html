@@ -39,7 +39,7 @@
 	<tbody>
     {% for shift in bartendershifts %}
 		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}color:gray;{% endif %}">
-			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }} {% if show_all %} {{ shift.start_datetime.year }}{% endif %}{% else %} {{ shift.display_str }} {% if show_all %} {{ shift.start_datetime.year }}{% endif %}{% endif %}</td>
+			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% else %} {{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% endif %}</td>
             <td class="col-md-3">{{ shift.responsible.name }}</td>
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
@@ -124,7 +124,7 @@
 	<tbody>
     {% for shift in boardmemberdepositshifts %}
 		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}color:gray;{% endif %}">
-			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all %} {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all %} {{ shift.end_date.year }}{% endif %}{% endif %}</td>
+			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}{% endif %}</td>
             <td class="col-md-9">
                 {% for responsible in shift.responsibles.all %}
 					{% if responsible.first_deposit_shift == shift %}<b alt="{% translate "Bartender's first deposit shift" %}">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
