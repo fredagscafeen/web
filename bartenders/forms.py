@@ -1,6 +1,7 @@
 from urllib.parse import urljoin
 
 from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Invisible
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -15,7 +16,7 @@ from .models import Bartender, BartenderApplication
 
 
 class BartenderApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
     class Meta:
         model = BartenderApplication
@@ -24,7 +25,7 @@ class BartenderApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["captcha"].help_text = _("Hjemmesiden er sikret med reCAPTCHA")
+        self.fields["captcha"].help_text = _("Hjemmesiden er sikret med reCAPTCHAv2")
         self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name != "info"

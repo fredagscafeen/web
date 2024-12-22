@@ -1,4 +1,4 @@
-django==3.*
+django>=3.2.20
 python-dotenv
 djangorestframework
 dj-config-url
@@ -11,7 +11,7 @@ whitenoise
 django-ical
 django-object-actions
 django-extensions
-ipython
+ipython>=8.10.0
 requests-html
 django-logentry-admin
 django-cors-headers
@@ -21,10 +21,14 @@ iterfzf
 celery[redis]
 django-celery-beat
 django-rosetta==0.9.9
-lxml_html_clean
+lxml_html_clean>=0.4.0
 django_bootstrap_icons==0.8.7
 sorl-thumbnail==12.10
 django-dprog-jfu
 django-versatileimagefield
 django-model-utils
 Unidecode
+urllib3>=1.26.19
+Pygments>=2.15.0
+sqlparse>=0.5.0
+tqdm>=4.66.3
