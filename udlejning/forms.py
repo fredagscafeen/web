@@ -2,7 +2,6 @@ from urllib.parse import urljoin
 
 from bootstrap_datepicker_plus.widgets import DateTimePickerInput
 from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Invisible
 from django import forms
 from django.conf import settings
 from django.urls import reverse
@@ -15,7 +14,7 @@ from .models import UdlejningApplication
 
 
 class UdlejningApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
+    captcha = ReCaptchaField()
 
     class Meta:
         model = UdlejningApplication
@@ -28,7 +27,7 @@ class UdlejningApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["captcha"].help_text = _("Hjemmesiden er sikret med reCAPTCHAv2")
+        self.fields["captcha"].help_text = _("Hjemmesiden er sikret med reCAPTCHA")
         self.fields["paymentType"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name not in ["EANnumber", "comments"]
