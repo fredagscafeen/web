@@ -39,7 +39,7 @@
 	<tbody>
     {% for shift in bartendershifts %}
 		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}color:gray;{% endif %}">
-			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% else %} {{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% endif %} {% if shift|compare_to_current_week == 0 %}</b> &nbsp; <b alt="{% translate "Baren har været åben" %} {{ shift_streak }} {% blocktranslate count c=shift_streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i træk" %}"><i>{{ shift_streak }}{% bs_icon 'fire' size='0.8em' %}</i></b>{% endif %}</td>
+			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% else %} {{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% endif %}</td>
             <td class="col-md-3">{{ shift.responsible.name }}</td>
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
