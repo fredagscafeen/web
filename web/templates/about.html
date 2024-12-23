@@ -27,27 +27,6 @@
     {% translate "Pt. har baren været åben" %} <b><i>{{ shift_streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, som startede" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak_start_date }}</b>.
   </p>
 
-  {% if shift_streaks %}
-  <table class="table table-striped tablesorter" id="items">
-    <thead>
-    <tr>
-      <th>{% translate "Placering" %}</th>
-      <th>{% translate "Streak" %}</th>
-      <th>{% translate "Start - Slut" %}</th>
-    </tr>
-    </thead>
-    <tbody>
-      {% for streak in shift_streaks %}
-      <tr>
-        <td class="col-md-1">{{ forloop.counter }}</td>
-        <td class="col-md-1">{{ streak.0}}{% if forloop.counter == shift_placement %}{% bs_icon 'fire' size='0.8em' %}{% endif%}</td>
-        <td>{{ streak.1| date:"d M, Y" }} - {{ streak.2| date:"d M, Y" }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
-
   <hr>
 
   <h2>{% translate "Direktion" %}</h2>

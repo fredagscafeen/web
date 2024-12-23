@@ -61,34 +61,13 @@ class About(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         shifts = BartenderShift.objects.all().filter(end_datetime__lte=timezone.now())
-        shift_streaks = []
-        for shift in shifts:
-            shift_streaks.append(shift.streak())
-        sorted_shift_streaks = sorted(shift_streaks, key=lambda x: x[0], reverse=True)
-        sorted_shift_streaks_short = []
-        for shift in sorted_shift_streaks:
-            found = False
-            for sorted_shift in sorted_shift_streaks_short:
-                if shift[1] == sorted_shift[1]:
-                    found = True
-                    break
-            if not found:
-                sorted_shift_streaks_short.append(shift)
-        context["shift_streaks"] = sorted_shift_streaks_short[:5]
         current_shift = shifts.filter(
             start_datetime__lte=timezone.now() + datetime.timedelta(days=2),
             end_datetime__gte=timezone.now() - datetime.timedelta(days=5),
         )
         if current_shift:
             shift_streak, start_date, _ = current_shift[0].streak()
-
-        shift_placement = 0
-        for i, shift in enumerate(sorted_shift_streaks):
-            if shift[2] == current_shift[0].end_datetime:
-                shift_placement = i + 1
-                break
         context["shift_streak"] = shift_streak
         context["shift_streak_start_date"] = start_date.date()
-        context["shift_placement"] = shift_placement
 
         return context
