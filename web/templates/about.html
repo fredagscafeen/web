@@ -2,46 +2,81 @@
 
 {% block content %}
 {% load i18n %}
+{% load static %}
+{% load bootstrap5 bootstrap_icons %}
 
-<h2>{% translate "Generel info" %}</h2>
+<div style="max-width: 600px; justify-content: center; margin: 0 auto;">
+  <h2>{% translate "Generel info" %}</h2>
 
-<p>Fredagscaféen {% translate "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi" %}, Finlandsgade 21, 8200 Aarhus N.
-{% translate "Baren har åbent" %} <em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage fra klokken 15.00 til vi lukker." %}</p>
+  <h3>{% translate "Lokation" %}</h3>
+  <p>
+    Fredagscaféen {% translate "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi" %}, <b>Finlandsgade 21, 8200 Aarhus N</b>.
+  </p>
 
-<div class="google-maps">
-<iframe id="google-maps" style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4442.319456514069!2d10.187308076907637!3d56.17163165965389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fc4cda7462f%3A0x4219610040f322c5!2sFredagscaf%C3%A9en!5e0!3m2!1sda!2sdk!4v1716252357825!5m2!1sda!2sdk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div class="google-maps">
+    <iframe id="google-maps" style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4442.319456514069!2d10.187308076907637!3d56.17163165965389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fc4cda7462f%3A0x4219610040f322c5!2sFredagscaf%C3%A9en!5e0!3m2!1sda!2sdk!4v1716252357825!5m2!1sda!2sdk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+
+  <h3>{% translate "Åbningstider" %}</h3>
+  <p>
+    {% translate "Baren har åbent" %} <b><em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage fra klokken 15.00 til vi lukker." %}</b>
+    {% translate "Når vi siger vi har åbent" %} <em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller sommerferie, så har vi åbent." %}
+    {% translate "Se bare tabellen nedenfor, over vores længste streaks." %}
+  <p>
+  </p>
+    {% translate "Pt. har baren været åben" %} <b><i>{{ shift_streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, som startede" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak_start_date }}</b>.
+  </p>
+
+  {% if shift_streaks %}
+  <table class="table table-striped tablesorter" id="items">
+    <thead>
+    <tr>
+      <th>{% translate "Placering" %}</th>
+      <th>{% translate "Streak" %}</th>
+      <th>{% translate "Start - Slut" %}</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for streak in shift_streaks %}
+      <tr>
+        <td class="col-md-1">{{ forloop.counter }}</td>
+        <td class="col-md-1">{{ streak.0}}{% if forloop.counter == shift_placement %}{% bs_icon 'fire' size='0.8em' %}{% endif%}</td>
+        <td>{{ streak.1| date:"d M, Y" }} - {{ streak.2| date:"d M, Y" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  <hr>
+
+  <h2>{% translate "Direktion" %}</h2>
+  <p>Fredagscaféen{% translate "s direktion består af" %}:</p>
+  <ul>
+    <li>Jonathan Eilath</li>
+    <li>Rasmus Graversgaard Pedersen</li>
+    <li>Mikkel Ugilt</li>
+  </ul>
+
+  <hr>
+
+  <h2>{% translate "Postadresse" %}</h2>
+  <p>
+  {% translate "Vores postadresse er" %}:<br>
+  Fredagscaféen<br>
+  Åbogade 34<br>
+  8200 Aarhus N
+  </p>
+
+  <hr>
+
+  <h2>E-mail</h2>
+  <p>{% translate "Bestyrelsen kan kontaktes på" %} <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a></p>
+
+  <hr>
+
+  <h2>CVR</h2>
+  <p>{% translate "Vores CVR-nr er" %}: <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647">27973647</a></p>
 </div>
-
-<hr>
-
-<h2>{% translate "Direktion" %}</h2>
-<p>Fredagscaféen{% translate "s direktion består af" %}:</p>
-<ul>
-  <li>Jonathan Eilath</li>
-  <li>Rasmus Graversgaard Pedersen</li>
-  <li>Mikkel Ugilt</li>
-</ul>
-
-<hr>
-
-<h2>{% translate "Postadresse" %}</h2>
-<p>
-{% translate "Vores postadresse er" %}:<br>
-Fredagscaféen<br>
-Åbogade 34<br>
-8200 Aarhus N
-</p>
-
-<hr>
-
-<h2>E-mail</h2>
-<p>{% translate "Bestyrelsen kan kontaktes på" %} <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a></p>
-
-<hr>
-
-<h2>CVR</h2>
-<p>{% translate "Vores CVR-nr er" %}: <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647">27973647</a></p>
-
-
 
 {% endblock %}

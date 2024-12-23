@@ -462,6 +462,8 @@ class BartenderShift(models.Model):
     def streak(self):
         streak = 0
         date = self.start_datetime + datetime.timedelta(days=2)
+        start_date = self.start_datetime
+        end_date = self.end_datetime
         previous_bartendershifts = BartenderShift.objects.all().filter(
             start_datetime__lte=date
         )
@@ -475,6 +477,7 @@ class BartenderShift(models.Model):
                 ):
                     streak += 1
                     found_shift = True
+                    start_date = previous_shift.start_datetime
                     break
             if not found_shift:
                 break
@@ -483,7 +486,7 @@ class BartenderShift(models.Model):
             previous_bartendershifts = BartenderShift.objects.all().filter(
                 start_datetime__lte=date
             )
-        return streak
+        return streak, start_date, end_date
 
     def replace(self, b1, b2):
         if self.responsible == b1:

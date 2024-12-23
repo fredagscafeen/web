@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-22 22:44+0100\n"
-"PO-Revision-Date: 2024-12-22 22:45+0050\n"
+"POT-Creation-Date: 2024-12-23 21:06+0100\n"
+"PO-Revision-Date: 2024-12-23 21:12+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -187,23 +187,7 @@ msgstr "Bartenders"
 
 #: bartenders/templates/barplan.html:42
 msgid "This weeks friday"
-msgstr "This week's friday"
-
-#: bartenders/templates/barplan.html:42
-#| msgid "Baren har åbent"
-msgid "Baren har været åben"
-msgstr "The bar has been open"
-
-#: bartenders/templates/barplan.html:42
-#| msgid "Uge"
-msgid "uge"
-msgid_plural "uger"
-msgstr[0] "week"
-msgstr[1] "weeks"
-
-#: bartenders/templates/barplan.html:42
-msgid "i træk"
-msgstr "in a row"
+msgstr "This week's Friday"
 
 #: bartenders/templates/barplan.html:46
 msgid "Bartender's first shift"
@@ -509,6 +493,7 @@ msgid "for sent"
 msgstr "too late"
 
 #: events/templates/events.html:38 udlejning/models.py:57
+#: web/templates/about.html:11
 msgid "Lokation"
 msgstr "Location"
 
@@ -1388,50 +1373,103 @@ msgstr ""
 "Your request to borrow the draft beer system has been received. We will get "
 "back to you with an answer as soon as possible."
 
-#: web/templates/about.html:6
+#: web/templates/about.html:9
 msgid "Generel info"
 msgstr "General info"
 
-#: web/templates/about.html:8
+#: web/templates/about.html:13
 msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
 msgstr ""
 "is located in the basement of the Nygaard building at the Department of "
 "Computer Science"
 
-#: web/templates/about.html:9
+#: web/templates/about.html:20
+msgid "Åbningstider"
+msgstr "Opening hours"
+
+#: web/templates/about.html:22
 msgid "Baren har åbent"
 msgstr "The bar is open"
 
-#: web/templates/about.html:9
+#: web/templates/about.html:22 web/templates/about.html:23
 msgctxt "Baren har åbent alle fredage..."
 msgid "alle"
 msgstr "every"
 
-#: web/templates/about.html:9
+#: web/templates/about.html:22
 msgid "fredage fra klokken 15.00 til vi lukker."
-msgstr "friday from 3pm until we close."
+msgstr "Friday from 3pm until we close."
 
-#: web/templates/about.html:17
+#: web/templates/about.html:23
+#| msgid "Baren har åbent"
+msgid "Når vi siger vi har åbent"
+msgstr "When we say the bar is open"
+
+#: web/templates/about.html:23
+msgid ""
+"fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller "
+"sommerferie, så har vi åbent."
+msgstr ""
+"Friday, we mean it. Whether it's public holidays, exam periods or summer "
+"vacation, we're open."
+
+#: web/templates/about.html:24
+msgid "Se bare tabellen nedenfor, over vores længste streaks."
+msgstr "Just look at the table below, of our longest streaks."
+
+#: web/templates/about.html:25
+#| msgid "Baren har været åben"
+msgid "Pt. har baren været åben"
+msgstr "At the moment the bar has been open"
+
+#: web/templates/about.html:25
+msgid "uge"
+msgid_plural "uger"
+msgstr[0] "week"
+msgstr[1] "weeks"
+
+#: web/templates/about.html:25
+msgid "i streg, som startede"
+msgstr "in a row, that started"
+
+#: web/templates/about.html:25
+msgctxt "d. 1. i 1."
+msgid "d."
+msgstr " "
+
+#: web/templates/about.html:32
+msgid "Placering"
+msgstr "Placement"
+
+#: web/templates/about.html:33
+msgid "Streak"
+msgstr "Streak"
+
+#: web/templates/about.html:34
+msgid "Start - Slut"
+msgstr "Start - Finish"
+
+#: web/templates/about.html:51
 msgid "Direktion"
 msgstr "Management"
 
-#: web/templates/about.html:18
+#: web/templates/about.html:52
 msgid "s direktion består af"
 msgstr "'s management consists of"
 
-#: web/templates/about.html:27
+#: web/templates/about.html:61
 msgid "Postadresse"
 msgstr "Postal address"
 
-#: web/templates/about.html:29
+#: web/templates/about.html:63
 msgid "Vores postadresse er"
 msgstr "Our postal address is"
 
-#: web/templates/about.html:38
+#: web/templates/about.html:72
 msgid "Bestyrelsen kan kontaktes på"
 msgstr "The board can be contacted at"
 
-#: web/templates/about.html:43
+#: web/templates/about.html:77
 msgid "Vores CVR-nr er"
 msgstr "Our CVR number is"
 
@@ -1497,7 +1535,7 @@ msgstr "Log out"
 
 #: web/templates/base.html:148
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
-msgstr "is a friday bar for computer science and IT at Aarhus University."
+msgstr "is a Friday bar for computer science and IT at Aarhus University."
 
 #: web/templates/login.html:12
 msgid "Log ind"
@@ -1507,10 +1545,13 @@ msgstr "Log in"
 msgid "Missing from environment"
 msgstr "Missing from environment"
 
-#: web/views.py:48
+#: web/views.py:51
 msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login mail sent: Press the link in your received email to log in."
+
+#~ msgid "i træk"
+#~ msgstr "in a row"
 
 #~ msgid "Bar open"
 #~ msgstr "Bar open"
