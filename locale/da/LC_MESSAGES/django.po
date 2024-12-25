@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-23 21:06+0100\n"
+"POT-Creation-Date: 2024-12-25 22:43+0100\n"
 "PO-Revision-Date: 2024-12-23 21:27+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -236,8 +236,7 @@ msgstr ""
 #: bartenders/templates/bartender_info.html:49
 #: bartenders/templates/bartender_info.html:56
 msgid ""
-"Husk at du som inaktiv bartender ikke kan komme til "
-"bartenderarrangementerne."
+"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
 msgstr ""
 
 #: bartenders/templates/bartender_info.html:49
@@ -467,7 +466,7 @@ msgid "for sent"
 msgstr ""
 
 #: events/templates/events.html:38 udlejning/models.py:57
-#: web/templates/about.html:11
+#: web/templates/about.html:34
 msgid "Lokation"
 msgstr ""
 
@@ -760,8 +759,8 @@ msgstr ""
 #: guides/templates/guides.html:9
 msgctxt "Fredagscaféen"
 msgid ""
-"Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
-" i driften af"
+"Her ligger alle de lækre guides, som er rare at have, når man involverer sig "
+"i driften af"
 msgstr ""
 
 #: guides/templates/guides.html:12
@@ -773,9 +772,12 @@ msgstr ""
 #: items/templates/items.html:11
 msgid ""
 "\n"
-"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.\n"
-"\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.\n"
-"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere\n"
+"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er "
+"kendte for at sælge.\n"
+"\tMen derudover finder du altid et stort sortiment af spændende og nye "
+"specialøl, for enhver smag, i baren.\n"
+"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor "
+"finder du også flere\n"
 "\tglutenfrie og alkoholfrie øl.\n"
 "\t"
 msgstr ""
@@ -904,8 +906,8 @@ msgstr ""
 
 #: udlejning/models.py:64
 msgid ""
-"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af"
-" hver type?"
+"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af "
+"hver type?"
 msgstr ""
 
 #: udlejning/models.py:67
@@ -1028,8 +1030,7 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:42
 msgid ""
-"Udelukkende arrangementer der finder sted på universitetet. Dette "
-"inkluderer:"
+"Udelukkende arrangementer der finder sted på universitetet. Dette inkluderer:"
 msgstr ""
 
 #: udlejning/templates/udlejning.html:44
@@ -1046,8 +1047,8 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:50
 msgid ""
-"Arrangementer der finder sted på universitetet eller andetsteds, kan være af"
-" privat natur. Dette inkluderer:"
+"Arrangementer der finder sted på universitetet eller andetsteds, kan være af "
+"privat natur. Dette inkluderer:"
 msgstr ""
 
 #: udlejning/templates/udlejning.html:52
@@ -1090,10 +1091,10 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:72
 msgid ""
-"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være"
-" et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
-"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi"
-" ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
+"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være "
+"et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
+"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi "
+"ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
 msgstr ""
 
 #: udlejning/templates/udlejning.html:74
@@ -1110,8 +1111,8 @@ msgid ""
 "mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver "
 "mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt "
 "udlejning er muligt i god tid, dog er det stadig muligt at kunne låne "
-"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at"
-" der kommer et svar i god tid."
+"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at "
+"der kommer et svar i god tid."
 msgstr ""
 
 #: udlejning/templates/udlejning.html:79
@@ -1128,8 +1129,7 @@ msgstr ""
 
 #: udlejning/templates/udlejning.html:91
 msgid ""
-", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. "
-"moms)"
+", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
 msgstr ""
 
 #: udlejning/templates/udlejning.html:94
@@ -1276,97 +1276,117 @@ msgid ""
 "dig med et svar hurtigst muligt."
 msgstr ""
 
-#: web/templates/about.html:9
+#: web/templates/about.html:8
 msgid "Generel info"
 msgstr ""
 
-#: web/templates/about.html:13
-msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
+#: web/templates/about.html:11
+msgid ""
+"\n"
+"Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus "
+"Universitet, \n"
+"som siden 1993 har været et socialt samlingspunkt for studerende og ansatte "
+"på instituttet.\n"
+"Vi er kendt for vores store udvalg af specialøl, der kontinuerligt "
+"udskiftes.\n"
+"Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi "
+"har altid \n"
+"et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie "
+"alternativer.\n"
+"Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra \n"
 msgstr ""
 
 #: web/templates/about.html:20
+msgid ""
+" \n"
+"på fad.\n"
+"Tag endelig et kig på vores faste sortiment,\n"
+msgstr ""
+
+#: web/templates/about.html:24 web/templates/about.html:31
+msgctxt "På linket her"
+msgid "her"
+msgstr ""
+
+#: web/templates/about.html:27
+msgid ""
+"\n"
+"Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på "
+"instituttet,\n"
+"som også kan ses\n"
+msgstr ""
+
+#: web/templates/about.html:36
+msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
+msgstr ""
+
+#: web/templates/about.html:43
 msgid "Åbningstider"
 msgstr ""
 
-#: web/templates/about.html:22
+#: web/templates/about.html:45
 msgid "Baren har åbent"
 msgstr ""
 
-#: web/templates/about.html:22 web/templates/about.html:23
+#: web/templates/about.html:45 web/templates/about.html:46
 msgctxt "Baren har åbent alle fredage..."
 msgid "alle"
 msgstr ""
 
-#: web/templates/about.html:22
+#: web/templates/about.html:45
 msgid "fredage fra klokken 15.00 til vi lukker."
 msgstr ""
 
-#: web/templates/about.html:23
+#: web/templates/about.html:46
 msgid "Når vi siger vi har åbent"
 msgstr ""
 
-#: web/templates/about.html:23
+#: web/templates/about.html:46
 msgid ""
 "fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller "
 "sommerferie, så har vi åbent."
 msgstr ""
 
-#: web/templates/about.html:24
-msgid "Se bare tabellen nedenfor, over vores længste streaks."
-msgstr ""
-
-#: web/templates/about.html:25
+#: web/templates/about.html:49
 msgid "Pt. har baren været åben"
 msgstr ""
 
-#: web/templates/about.html:25
+#: web/templates/about.html:49
 msgid "uge"
 msgid_plural "uger"
 msgstr[0] ""
 msgstr[1] ""
 
-#: web/templates/about.html:25
-msgid "i streg, som startede"
+#: web/templates/about.html:49
+msgid "i streg, siden"
 msgstr ""
 
-#: web/templates/about.html:25
+#: web/templates/about.html:49
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr ""
 
-#: web/templates/about.html:32
-msgid "Placering"
-msgstr ""
-
-#: web/templates/about.html:33
-msgid "Streak"
-msgstr ""
-
-#: web/templates/about.html:34
-msgid "Start - Slut"
-msgstr ""
-
-#: web/templates/about.html:51
+#: web/templates/about.html:54
 msgid "Direktion"
 msgstr ""
 
-#: web/templates/about.html:52
+#: web/templates/about.html:55
 msgid "s direktion består af"
 msgstr ""
 
-#: web/templates/about.html:61
+#: web/templates/about.html:64
 msgid "Postadresse"
 msgstr ""
 
-#: web/templates/about.html:63
+#: web/templates/about.html:66
 msgid "Vores postadresse er"
 msgstr ""
 
-#: web/templates/about.html:72
+#: web/templates/about.html:75
 msgid "Bestyrelsen kan kontaktes på"
 msgstr ""
 
-#: web/templates/about.html:77
+#: web/templates/about.html:80
 msgid "Vores CVR-nr er"
 msgstr ""
 
@@ -1442,9 +1462,8 @@ msgstr ""
 msgid "Missing from environment"
 msgstr "Fraværende i miljøet"
 
-#: web/views.py:51
-msgid ""
-"Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+#: web/views.py:52
+msgid "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr ""
 
 #~ msgid "Bar open"

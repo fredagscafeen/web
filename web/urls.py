@@ -36,9 +36,9 @@ urlpatterns = [
     path(
         "barplan/<username>/", RedirectView.as_view(pattern_name="user_shifts")
     ),  # Old URLs, redirect
-    path("prices/", Items.as_view()),
+    path("prices/", Items.as_view(), name="prices"),
     path("scanner/", Scanner.as_view()),
-    path("board/", Board.as_view()),
+    path("board/", Board.as_view(), name="board"),
     path("", Index.as_view(), name="index"),
     path("profile/", BartenderInfo.as_view(), name="profile"),
     path("vote/", Ballots.as_view(), name="ballots"),

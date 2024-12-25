@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-23 21:06+0100\n"
-"PO-Revision-Date: 2024-12-23 21:12+0050\n"
+"POT-Creation-Date: 2024-12-25 22:43+0100\n"
+"PO-Revision-Date: 2024-12-25 22:44+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -493,7 +493,7 @@ msgid "for sent"
 msgstr "too late"
 
 #: events/templates/events.html:38 udlejning/models.py:57
-#: web/templates/about.html:11
+#: web/templates/about.html:34
 msgid "Lokation"
 msgstr "Location"
 
@@ -1373,39 +1373,88 @@ msgstr ""
 "Your request to borrow the draft beer system has been received. We will get "
 "back to you with an answer as soon as possible."
 
-#: web/templates/about.html:9
+#: web/templates/about.html:8
 msgid "Generel info"
 msgstr "General info"
 
-#: web/templates/about.html:13
+#: web/templates/about.html:11
+#| msgid ""
+#| "\n"
+#| "Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet, \n"
+#| "som siden 1993 har været et socialt samlingspunkt for studerende og ansatte på instituttet.\n"
+#| "Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.\n"
+#| "Derudover har vi fokus på, at have noget for enhver smag og prisklasse, og vi har altid \n"
+#| "et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.\n"
+#| "Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra \n"
+msgid ""
+"\n"
+"Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet, \n"
+"som siden 1993 har været et socialt samlingspunkt for studerende og ansatte på instituttet.\n"
+"Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.\n"
+"Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi har altid \n"
+"et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.\n"
+"Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra \n"
+msgstr ""
+"\n"
+"Fredagscaféen is a student-run bar at the Department of Computer Science, Aarhus University,\n"
+"which has been a social gathering place for students and employees at the department since 1993.\n"
+"We are known for our large selection of specialty beers, which are constantly being changed.\n"
+"In addition, we focus on having something for every taste and price range, and we always have\n"
+"a large selection of soda, cider, shots, gluten-free beer and non-alcoholic alternatives.\n"
+"We are also the only Friday bar in the country that always has lager from\n"
+
+#: web/templates/about.html:20
+msgid ""
+" \n"
+"på fad.\n"
+"Tag endelig et kig på vores faste sortiment,\n"
+msgstr ""
+"on tap.\n"
+"Finally, feel free to take a look at our fixed selection,\n"
+
+#: web/templates/about.html:24 web/templates/about.html:31
+msgctxt "På linket her"
+msgid "her"
+msgstr "here"
+
+#: web/templates/about.html:27
+msgid ""
+"\n"
+"Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på instituttet,\n"
+"som også kan ses\n"
+msgstr ""
+"\n"
+"Fredagscaféen is run by a volunteer board of directors consisting of students at the department,\n"
+"which can also be seen\n"
+
+#: web/templates/about.html:36
 msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
 msgstr ""
 "is located in the basement of the Nygaard building at the Department of "
 "Computer Science"
 
-#: web/templates/about.html:20
+#: web/templates/about.html:43
 msgid "Åbningstider"
 msgstr "Opening hours"
 
-#: web/templates/about.html:22
+#: web/templates/about.html:45
 msgid "Baren har åbent"
 msgstr "The bar is open"
 
-#: web/templates/about.html:22 web/templates/about.html:23
+#: web/templates/about.html:45 web/templates/about.html:46
 msgctxt "Baren har åbent alle fredage..."
 msgid "alle"
 msgstr "every"
 
-#: web/templates/about.html:22
+#: web/templates/about.html:45
 msgid "fredage fra klokken 15.00 til vi lukker."
 msgstr "Friday from 3pm until we close."
 
-#: web/templates/about.html:23
-#| msgid "Baren har åbent"
+#: web/templates/about.html:46
 msgid "Når vi siger vi har åbent"
 msgstr "When we say the bar is open"
 
-#: web/templates/about.html:23
+#: web/templates/about.html:46
 msgid ""
 "fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller "
 "sommerferie, så har vi åbent."
@@ -1413,63 +1462,46 @@ msgstr ""
 "Friday, we mean it. Whether it's public holidays, exam periods or summer "
 "vacation, we're open."
 
-#: web/templates/about.html:24
-msgid "Se bare tabellen nedenfor, over vores længste streaks."
-msgstr "Just look at the table below, of our longest streaks."
-
-#: web/templates/about.html:25
-#| msgid "Baren har været åben"
+#: web/templates/about.html:49
 msgid "Pt. har baren været åben"
 msgstr "At the moment the bar has been open"
 
-#: web/templates/about.html:25
+#: web/templates/about.html:49
 msgid "uge"
 msgid_plural "uger"
 msgstr[0] "week"
 msgstr[1] "weeks"
 
-#: web/templates/about.html:25
-msgid "i streg, som startede"
-msgstr "in a row, that started"
+#: web/templates/about.html:49
+msgid "i streg, siden"
+msgstr "in a row, since"
 
-#: web/templates/about.html:25
+#: web/templates/about.html:49
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr " "
 
-#: web/templates/about.html:32
-msgid "Placering"
-msgstr "Placement"
-
-#: web/templates/about.html:33
-msgid "Streak"
-msgstr "Streak"
-
-#: web/templates/about.html:34
-msgid "Start - Slut"
-msgstr "Start - Finish"
-
-#: web/templates/about.html:51
+#: web/templates/about.html:54
 msgid "Direktion"
 msgstr "Management"
 
-#: web/templates/about.html:52
+#: web/templates/about.html:55
 msgid "s direktion består af"
 msgstr "'s management consists of"
 
-#: web/templates/about.html:61
+#: web/templates/about.html:64
 msgid "Postadresse"
 msgstr "Postal address"
 
-#: web/templates/about.html:63
+#: web/templates/about.html:66
 msgid "Vores postadresse er"
 msgstr "Our postal address is"
 
-#: web/templates/about.html:72
+#: web/templates/about.html:75
 msgid "Bestyrelsen kan kontaktes på"
 msgstr "The board can be contacted at"
 
-#: web/templates/about.html:77
+#: web/templates/about.html:80
 msgid "Vores CVR-nr er"
 msgstr "Our CVR number is"
 
@@ -1545,10 +1577,22 @@ msgstr "Log in"
 msgid "Missing from environment"
 msgstr "Missing from environment"
 
-#: web/views.py:51
+#: web/views.py:52
 msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login mail sent: Press the link in your received email to log in."
+
+#~ msgid "Se bare tabellen nedenfor, over vores længste streaks."
+#~ msgstr "Just look at the table below, of our longest streaks."
+
+#~ msgid "Placering"
+#~ msgstr "Placement"
+
+#~ msgid "Streak"
+#~ msgstr "Streak"
+
+#~ msgid "Start - Slut"
+#~ msgstr "Start - Finish"
 
 #~ msgid "i træk"
 #~ msgstr "in a row"

@@ -163,6 +163,8 @@ html.light {
         padding-bottom: 450px;
         height: 0;
         overflow: hidden;
+        justify-content: center;
+        margin: 0 auto;
     }
 
     .google-maps iframe {
@@ -603,6 +605,8 @@ html.dark {
         padding-bottom: 450px;
         height: 0;
         overflow: hidden;
+        justify-content: center;
+        margin: 0 auto;
     }
 
     .google-maps iframe {
