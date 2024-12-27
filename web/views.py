@@ -62,8 +62,7 @@ class About(TemplateView):
         context = super().get_context_data(**kwargs)
         shifts = BartenderShift.objects.all().filter(end_datetime__lte=timezone.now())
         current_shift = shifts.filter(
-            start_datetime__lte=timezone.now(),
-            end_datetime__gte=timezone.now() - datetime.timedelta(days=7),
+            start_datetime__gte=timezone.now() - datetime.timedelta(days=7),
         )
         shift_streak = 0
         start_date = timezone.now()

@@ -122,7 +122,7 @@ class Barplan(TemplateView):
         show_all_depositshifts = self.request.GET.get("show_all_depositshifts")
         if not show_all_depositshifts:
             depositshifts = depositshifts.filter(
-                start_date__gte=timezone.localdate() - datetime.timedelta(days=2)
+                start_date__gt=timezone.localdate() - datetime.timedelta(days=7)
             )
         context["show_all_depositshifts"] = show_all_depositshifts
 

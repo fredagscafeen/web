@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-25 22:43+0100\n"
+"POT-Creation-Date: 2024-12-27 23:29+0100\n"
 "PO-Revision-Date: 2024-12-23 21:27+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -466,7 +466,7 @@ msgid "for sent"
 msgstr ""
 
 #: events/templates/events.html:38 udlejning/models.py:57
-#: web/templates/about.html:34
+#: web/templates/about.html:37
 msgid "Lokation"
 msgstr ""
 
@@ -1284,21 +1284,21 @@ msgstr ""
 msgid ""
 "\n"
 "Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus "
-"Universitet, \n"
+"Universitet,\n"
 "som siden 1993 har været et socialt samlingspunkt for studerende og ansatte "
 "på instituttet.\n"
 "Vi er kendt for vores store udvalg af specialøl, der kontinuerligt "
 "udskiftes.\n"
 "Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi "
-"har altid \n"
+"har altid\n"
 "et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie "
 "alternativer.\n"
-"Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra \n"
+"Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra\n"
 msgstr ""
 
 #: web/templates/about.html:20
 msgid ""
-" \n"
+"\n"
 "på fad.\n"
 "Tag endelig et kig på vores faste sortiment,\n"
 msgstr ""
@@ -1316,77 +1316,84 @@ msgid ""
 "som også kan ses\n"
 msgstr ""
 
-#: web/templates/about.html:36
+#: web/templates/about.html:32
+msgid ""
+"\n"
+"Baren er non-profit, og overskuddet går til vedligeholdelse af baren og "
+"arrangementer for bartenderene.\n"
+msgstr ""
+
+#: web/templates/about.html:39
 msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
 msgstr ""
 
-#: web/templates/about.html:43
+#: web/templates/about.html:46
 msgid "Åbningstider"
 msgstr ""
 
-#: web/templates/about.html:45
+#: web/templates/about.html:48
 msgid "Baren har åbent"
 msgstr ""
 
-#: web/templates/about.html:45 web/templates/about.html:46
+#: web/templates/about.html:48 web/templates/about.html:49
 msgctxt "Baren har åbent alle fredage..."
 msgid "alle"
 msgstr ""
 
-#: web/templates/about.html:45
+#: web/templates/about.html:48
 msgid "fredage fra klokken 15.00 til vi lukker."
 msgstr ""
 
-#: web/templates/about.html:46
+#: web/templates/about.html:49
 msgid "Når vi siger vi har åbent"
 msgstr ""
 
-#: web/templates/about.html:46
+#: web/templates/about.html:49
 msgid ""
 "fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller "
 "sommerferie, så har vi åbent."
 msgstr ""
 
-#: web/templates/about.html:49
+#: web/templates/about.html:52
 msgid "Pt. har baren været åben"
 msgstr ""
 
-#: web/templates/about.html:49
+#: web/templates/about.html:52
 msgid "uge"
 msgid_plural "uger"
 msgstr[0] ""
 msgstr[1] ""
 
-#: web/templates/about.html:49
+#: web/templates/about.html:52
 msgid "i streg, siden"
 msgstr ""
 
-#: web/templates/about.html:49
+#: web/templates/about.html:52
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr ""
 
-#: web/templates/about.html:54
+#: web/templates/about.html:57
 msgid "Direktion"
 msgstr ""
 
-#: web/templates/about.html:55
+#: web/templates/about.html:58
 msgid "s direktion består af"
 msgstr ""
 
-#: web/templates/about.html:64
+#: web/templates/about.html:67
 msgid "Postadresse"
 msgstr ""
 
-#: web/templates/about.html:66
+#: web/templates/about.html:69
 msgid "Vores postadresse er"
 msgstr ""
 
-#: web/templates/about.html:75
+#: web/templates/about.html:78
 msgid "Bestyrelsen kan kontaktes på"
 msgstr ""
 
-#: web/templates/about.html:80
+#: web/templates/about.html:83
 msgid "Vores CVR-nr er"
 msgstr ""
 
