@@ -88,7 +88,7 @@
     </span>
 </div>
 
-<a href="/barplan/shifts.ics">iCal feed</a>
+<a href="{% url 'shifts_feed' %}">iCal feed</a>
 
 <hr>
 
@@ -172,7 +172,7 @@
     </span>
 </div>
 
-<a href="/barplan/deposit_shifts.ics">iCal feed</a>
+<a href="{% url 'deposit_shifts_feed' %}">iCal feed</a>
 
 <script>
 	$('b').hover(function(e){

@@ -97,7 +97,7 @@ Email: {email}
 Telefonnummer: {phoneNumber}
 {extra_info}
 
-/snek""",
+/Bestyrelsen""",
             text_format={**d},
             html_format={
                 **d,

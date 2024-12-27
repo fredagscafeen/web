@@ -9,7 +9,7 @@
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
-                <a href="/{{ LANGUAGE_CODE }}/">
+                <a href="/">
                     <h1>
                         <img src="{% static 'images/logo.png' %}" height="50" class="logo">
                         Fredagscaféen
@@ -71,46 +71,44 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="/{{ LANGUAGE_CODE }}/">{% translate "Forside" %}</a></li>
-                        <li><a href="/{{ LANGUAGE_CODE }}/barplan">{% translate "Barplan" %}</a></li>
-                        <li><a href="/{{ LANGUAGE_CODE }}/bartenders">{% translate "Bartendere" %}</a></li>
-                        <!--<li><a href="/prices">Sortiment</a></li>-->
+                        <li><a href="/">{% translate "Forside" %}</a></li>
+                        <li><a href="{% url 'barplan' %}">{% translate "Barplan" %}</a></li>
+                        <li><a href="{% url 'bartenders' %}">{% translate "Bartendere" %}</a></li>
+                        <li><a href="{% url 'prices' %}">{% translate "Sortiment" %}</a></li>
 
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Udlejning" %}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/{{ LANGUAGE_CODE }}/udlejning">{% translate "Udlejning af fadølsanlæg" %}</a></li>
-                                <li><a href="/{{ LANGUAGE_CODE }}/udlejningGrill">{% translate "Udlejning af grill" %}</a></li>
-                                <li><a href="/{{ LANGUAGE_CODE }}/udlejningProjector">{% translate "Udlejning af projektor" %} &amp; {% translate "lærred" %}</a></li>
-                                <li><a href="/{{ LANGUAGE_CODE }}/udlejningSpeakers">{% translate "Udlejning af højtalere" %}</a></li>
+                                <li><a href="{% url 'udlejning' %}">{% translate "Udlejning af fadølsanlæg" %}</a></li>
+                                <li><a href="{% url 'udlejningGrill' %}">{% translate "Udlejning af grill" %}</a></li>
+                                <li><a href="{% url 'udlejningProjector' %}">{% translate "Udlejning af projektor" %} &amp; {% translate "lærred" %}</a></li>
+                                <li><a href="{% url 'udlejningSpeakers' %}">{% translate "Udlejning af højtalere" %}</a></li>
                             </ul>
                         </li>
 
-                        <li><a href="/{{ LANGUAGE_CODE }}/guides">{% translate "Guides" %}</a></li>
-                        <!--<li><a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener"><span class="glyphicon glyphicon-new-window"></span> Facebook</a></li>-->
-                        <li><a href="/{{ LANGUAGE_CODE }}/board">{% translate "Bestyrelsen" %}</a></li>
-                        <li><a href="/{{ LANGUAGE_CODE }}/events">{% translate "Events" %}</a></li>
-                        <li><a href="/{{ LANGUAGE_CODE }}/gallery">{% translate "Gallery" %}</a></li>
-                        <li><a href="/{{ LANGUAGE_CODE }}/prices">{% translate "Sortiment" %}</a></li>
-                        <li><a href="/{{ LANGUAGE_CODE }}/about">{% translate "Om baren" %}</a></li>
+                        <li><a href="{% url 'guides' %}">{% translate "Guides" %}</a></li>
+                        <li><a href="{% url 'board' %}">{% translate "Bestyrelsen" %}</a></li>
+                        <li><a href="{% url 'events' %}">{% translate "Events" %}</a></li>
+                        <li><a href="{% url 'gallery_index' %}">{% translate "Gallery" %}</a></li>
+                        <li><a href="{% url 'prices' %}">{% translate "Sortiment" %}</a></li>
+                        <li><a href="{% url 'about' %}">{% translate "Om baren" %}</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/{{ LANGUAGE_CODE }}/bartab">{% translate "Krydlistestatus" %}</a></li>
+                                <li><a href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/{{ LANGUAGE_CODE }}/profile">{% translate "Bartenderprofil" %}</a></li>
+                                <li><a href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
                             </ul>
                         </li>
-                        <li><a href="/{{ LANGUAGE_CODE }}/admin">{% translate "Admin" %}</a></li>
+                        <li><a href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
                     </ul>
                     {% if user.is_authenticated %}
-                    <form action="/{{ LANGUAGE_CODE }}/logout/" method="post">
+                    <form action="{% url 'logout' %}logout" method="post">
                         {% csrf_token %}
                         <button type="submit" style="background-color: None; color: #c3c3c3;" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
                     </form>
                     {% endif %}
                 </div>
-
             </div>
         </nav>
 

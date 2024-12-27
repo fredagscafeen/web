@@ -26,12 +26,12 @@ from udlejning.views import (
 from web.views import About, Login, email_login_view, logout_view
 
 urlpatterns = [
-    path("about/", About.as_view()),
-    path("bartenders/", BartenderList.as_view()),
+    path("about/", About.as_view(), name="about"),
+    path("bartenders/", BartenderList.as_view(), name="bartenders"),
     path("barplan/", Barplan.as_view(), name="barplan"),
-    path("barplan/shifts.ics", UserBarplan()),
+    path("barplan/shifts.ics", UserBarplan(), name="shifts_feed"),
     path("barplan/shifts/<username>.ics", UserBarplan(), name="user_shifts"),
-    path("barplan/deposit_shifts.ics", UserDepositShifts()),
+    path("barplan/deposit_shifts.ics", UserDepositShifts(), name="deposit_shifts_feed"),
     path("barplan/deposit_shifts/<username>.ics", UserDepositShifts()),
     path(
         "barplan/<username>/", RedirectView.as_view(pattern_name="user_shifts")
@@ -49,10 +49,12 @@ urlpatterns = [
     path("login/", Login.as_view(), name="login"),
     path("login/<email>/<token>/", email_login_view, name="email_login"),
     path("logout/", logout_view, name="logout"),
-    path("udlejning/", Udlejninger.as_view()),
-    path("udlejningGrill/", UdlejningerGrill.as_view()),
-    path("udlejningProjector/", UdlejningerProjector.as_view()),
-    path("udlejningSpeakers/", UdlejningerSpeakers.as_view()),
+    path("udlejning/", Udlejninger.as_view(), name="udlejning"),
+    path("udlejningGrill/", UdlejningerGrill.as_view(), name="udlejningGrill"),
+    path(
+        "udlejningProjector/", UdlejningerProjector.as_view(), name="udlejningProjector"
+    ),
+    path("udlejningSpeakers/", UdlejningerSpeakers.as_view(), name="udlejningSpeakers"),
     path("guides/", Guides.as_view(), name="guides"),
     path("gallery/", include("gallery.urls")),
 ]
