@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
+from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -223,3 +224,40 @@ class BartenderShiftPeriodAdmin(admin.ModelAdmin):
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
     pass
+
+
+@custom_admin_view("bartenders", "Bartender shift streaks")
+def streaks_view(admin, request):
+    shifts = BartenderShift.objects.all().filter(end_datetime__lte=timezone.now())
+    shift_streaks = []
+    for shift in shifts:
+        shift_streaks.append(shift.streak())
+    sorted_shift_streaks = sorted(shift_streaks, key=lambda x: x[0], reverse=True)
+    sorted_shift_streaks_short = []
+    for shift in sorted_shift_streaks:
+        found = False
+        for sorted_shift in sorted_shift_streaks_short:
+            if shift[1] == sorted_shift[1]:
+                found = True
+                break
+        if not found:
+            sorted_shift_streaks_short.append(shift)
+
+    current_shift = shifts.filter(
+        start_datetime__lte=timezone.now() + datetime.timedelta(days=2),
+        end_datetime__gte=timezone.now() - datetime.timedelta(days=5),
+    )
+    shift_placement = 0
+    for i, shift in enumerate(sorted_shift_streaks):
+        if shift[2] == current_shift[0].end_datetime:
+            shift_placement = i + 1
+            break
+
+    context = dict(
+        # Include common variables for rendering the admin template.
+        admin.admin_site.each_context(request),
+        # Anything else you want in the context...
+        shift_streaks=sorted_shift_streaks_short,
+        shift_placement=shift_placement,
+    )
+    return TemplateResponse(request, "streak_admin.html", context)

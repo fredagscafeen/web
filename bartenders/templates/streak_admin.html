@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% load bootstrap_icons %}
+{% block content %}
+<div style="overflow: auto;">
+	{% if shift_streaks %}
+	<table>
+		<tr>
+			<th>{% translate "Placering" %}</th>
+			<th>{% translate "Streak" %}</th>
+			<th>{% translate "Start - Slut" %}</th>
+		</tr>
+		<tbody>
+		{% for streak, start_date, end_date in shift_streaks %}
+		<tr>
+			<td class="col-md-1">{{ forloop.counter }}</td>
+			<td class="col-md-1">{{ streak}}{% if forloop.counter == shift_placement %}{% bs_icon 'fire' size='0.8em' %}{% endif%}</td>
+			<td>{{ start_date| date:"d M, Y" }} - {{ end_date| date:"d M, Y" }}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+</div>
+{% endblock %}

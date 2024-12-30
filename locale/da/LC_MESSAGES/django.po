@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 13:04+0100\n"
+"POT-Creation-Date: 2024-12-30 13:27+0100\n"
 "PO-Revision-Date: 2024-12-23 21:27+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -360,6 +360,18 @@ msgstr ""
 
 #: bartenders/templates/index.html:30
 msgid "Bartendertilmeldingen er lukket."
+msgstr ""
+
+#: bartenders/templates/streak_admin.html:10
+msgid "Placering"
+msgstr ""
+
+#: bartenders/templates/streak_admin.html:11
+msgid "Streak"
+msgstr ""
+
+#: bartenders/templates/streak_admin.html:12
+msgid "Start - Slut"
 msgstr ""
 
 #: bartenders/views.py:69
