@@ -36,7 +36,7 @@ class AlbumAdminForm(forms.ModelForm):
             "publish_date",
             "year",
             "thumbnail",
-            "eventalbum",
+            "bartenderalbum",
             "description",
             "slug",
         ]
@@ -47,11 +47,11 @@ class AlbumAdmin(admin.ModelAdmin):
     list_display = ("title", "year", "publish_date", "get_visibility_link")
     ordering = [
         "-year",
-        "eventalbum",
+        "bartenderalbum",
         "-oldFolder",
         "-publish_date",
     ]  # Reverse of models.Album.ordering
-    list_filter = ("year", "eventalbum")
+    list_filter = ("year", "bartenderalbum")
 
     # Form display of single album
     inlines = [InlineBaseMediaAdmin]

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load is_bartender %}
 
 {% load bootstrap5 bootstrap_icons %}
 
@@ -32,14 +33,16 @@
           <div>
             <div class="col-xs-12">
             {% for album, firstFile in albumSets %}
-              {% ifchanged album.eventalbum %}{% if not album.eventalbum %}
+              {% ifchanged album.bartenderalbum %}{% if album.bartenderalbum and user|is_bartender %}
             </div>
             <div class="col-xs-12">
               <hr>
-              <h4>{% translate "Årets gang" %}:</h4>
+              <h4>{% translate "Bartenderarrangementer" %}:</h4>
             </div>
             <div class="col-xs-12">
               {% endif %}{% endifchanged %}
+              {% if album.bartenderalbum and not user|is_bartender %}
+              {% else %}
               <div class="col-xs-6 col-sm-4 col-md-3">
                 <a class="thumbnail" href="{% url 'album' year=album.year album_slug=album.slug %}">
                   <div class="thumbcap">
@@ -63,6 +66,7 @@
                   </div>
                 </a>
               </div> <!-- col-xs-6 thumb -->
+              {% endif %}
               {% endfor %}
             </div>
           </div> <!-- row-->

@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 @python_2_unicode_compatible
 class Album(models.Model):
     class Meta:
-        ordering = ["year", "-eventalbum", "oldFolder", "-publish_date"]
+        ordering = ["year", "bartenderalbum", "oldFolder", "-publish_date"]
         unique_together = (("year", "slug"),)
 
     title = models.CharField(max_length=200, verbose_name=_("Titel"))
@@ -36,7 +36,11 @@ class Album(models.Model):
     thumbnail = models.ImageField(
         upload_to="galleries", blank=True, null=True, verbose_name=_("Thumbnail")
     )
-    eventalbum = models.BooleanField(default=True, verbose_name=_("Arrangement"))
+    bartenderalbum = models.BooleanField(
+        default=False,
+        verbose_name=_("Bartenderarrangement"),
+        help_text=_("Bartenderarrangementer er kun synlige for bartendere"),
+    )
     year = models.PositiveSmallIntegerField(default=get_year, verbose_name=_("Årgang"))
     slug = models.SlugField(verbose_name=_("Kort titel"))
     description = models.TextField(blank=True, verbose_name=_("Beskrivelse"))

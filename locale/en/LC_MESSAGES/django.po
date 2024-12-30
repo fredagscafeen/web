@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-30 13:27+0100\n"
-"PO-Revision-Date: 2024-12-30 13:06+0050\n"
+"POT-Creation-Date: 2024-12-30 21:59+0100\n"
+"PO-Revision-Date: 2024-12-30 22:02+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -76,7 +76,7 @@ msgid "Total forbrug"
 msgstr "Total consumption"
 
 #: bartab/templates/bartab.html:23 bartenders/templates/barplan.html:31
-#: gallery/models.py:101
+#: gallery/models.py:103
 msgid "Dato"
 msgstr "Date"
 
@@ -145,7 +145,7 @@ msgstr "to"
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/models.py:243 gallery/models.py:40
+#: bartenders/models.py:243 gallery/models.py:42
 msgid "Årgang"
 msgstr "Year"
 
@@ -198,7 +198,7 @@ msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
 #: bartenders/templates/barplan.html:50 bartenders/templates/barplan.html:134
-#: bartenders/templates/board.html:34 gallery/templates/gallery.html:24
+#: bartenders/templates/board.html:34 gallery/templates/gallery.html:25
 #: items/templates/items.html:79
 msgid "Edit"
 msgstr "Edit"
@@ -242,7 +242,8 @@ msgstr "Are you sure?"
 #: bartenders/templates/bartender_info.html:49
 #: bartenders/templates/bartender_info.html:56
 msgid ""
-"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
+"Husk at du som inaktiv bartender ikke kan komme til "
+"bartenderarrangementerne."
 msgstr ""
 "Remember that as an inactive bartender you cannot come to the bartender "
 "events."
@@ -350,8 +351,8 @@ msgid ""
 "begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere."
 msgstr ""
 "In addition to this, you are invited to our annual events for bartenders, "
-"such as the Summer Party and the Christmas Lunch. In addition, there will be "
-"ongoing cool events, such as beer tasting and the like. All free for "
+"such as the Summer Party and the Christmas Lunch. In addition, there will be"
+" ongoing cool events, such as beer tasting and the like. All free for "
 "bartenders."
 
 #: bartenders/templates/index.html:16
@@ -512,7 +513,7 @@ msgstr "too late"
 msgid "Lokation"
 msgstr "Location"
 
-#: events/templates/events.html:39 gallery/models.py:42
+#: events/templates/events.html:39 gallery/models.py:44
 msgid "Beskrivelse"
 msgstr "Description"
 
@@ -577,59 +578,65 @@ msgstr "Title"
 msgid "Udgivelsesdato"
 msgstr "Release date"
 
-#: gallery/models.py:37 gallery/models.py:122 gallery/models.py:155
+#: gallery/models.py:37 gallery/models.py:124 gallery/models.py:157
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: gallery/models.py:39
-msgid "Arrangement"
-msgstr "Event"
+#: gallery/models.py:40
+#| msgid "interne arrangementer"
+msgid "Bartenderarrangement"
+msgstr "Bartender event"
 
-#: gallery/models.py:41 gallery/models.py:107
+#: gallery/models.py:41
+#| msgid "arrangementer med tilknytning til baren"
+msgid "Bartenderarrangementer er kun synlige for bartendere"
+msgstr "Bartender events are only visible to bartenders"
+
+#: gallery/models.py:43 gallery/models.py:109
 msgid "Kort titel"
 msgstr "Short title"
 
-#: gallery/models.py:77 items/templates/items.html:55
+#: gallery/models.py:79 items/templates/items.html:55
 msgid "Image"
 msgstr "Image"
 
-#: gallery/models.py:78
+#: gallery/models.py:80
 msgid "Video"
 msgstr "Video"
 
-#: gallery/models.py:79
+#: gallery/models.py:81
 msgid "Audio"
 msgstr "Audio"
 
-#: gallery/models.py:80
+#: gallery/models.py:82
 msgid "Other"
 msgstr "Other"
 
-#: gallery/models.py:89
+#: gallery/models.py:91
 msgid "Synligt"
 msgstr "Visible"
 
-#: gallery/models.py:90
+#: gallery/models.py:92
 msgid "Frasorteret"
 msgstr "Discarded"
 
-#: gallery/models.py:91
+#: gallery/models.py:93
 msgid "Skjult"
 msgstr "Hidden"
 
-#: gallery/models.py:92
+#: gallery/models.py:94
 msgid "Slet"
 msgstr "Delete"
 
-#: gallery/models.py:93
+#: gallery/models.py:95
 msgid "Ubesluttet"
 msgstr "Undecided"
 
-#: gallery/models.py:103
+#: gallery/models.py:105
 msgid "Synlighed"
 msgstr "Visibility"
 
-#: gallery/models.py:105
+#: gallery/models.py:107
 msgid "Overskrift"
 msgstr "Title"
 
@@ -734,11 +741,12 @@ msgstr "has no images yet."
 msgid "Tilbage til"
 msgstr "Back to"
 
-#: gallery/templates/gallery.html:39
-msgid "Årets gang"
-msgstr "The years course"
+#: gallery/templates/gallery.html:40
+#| msgid "interne arrangementer"
+msgid "Bartenderarrangementer"
+msgstr "Bartender events"
 
-#: gallery/templates/gallery.html:55
+#: gallery/templates/gallery.html:58
 msgid ""
 "\n"
 "                          billede\n"
@@ -754,7 +762,7 @@ msgstr[1] ""
 "\n"
 "images"
 
-#: gallery/templates/gallery.html:76
+#: gallery/templates/gallery.html:80
 msgid "Ingen albums med billeder fundet."
 msgstr "No albums with images found."
 
@@ -825,8 +833,8 @@ msgstr "Guides"
 #: guides/templates/guides.html:9
 msgctxt "Fredagscaféen"
 msgid ""
-"Her ligger alle de lækre guides, som er rare at have, når man involverer sig "
-"i driften af"
+"Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
+" i driften af"
 msgstr ""
 "Here are all the delicious guides that are nice to have when you get "
 "involved in the operation of"
@@ -842,22 +850,16 @@ msgstr ""
 #: items/templates/items.html:11
 msgid ""
 "\n"
-"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er "
-"kendte for at sælge.\n"
-"\tMen derudover finder du altid et stort sortiment af spændende og nye "
-"specialøl, for enhver smag, i baren.\n"
-"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor "
-"finder du også flere\n"
+"\tHer kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.\n"
+"\tMen derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.\n"
+"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere\n"
 "\tglutenfrie og alkoholfrie øl.\n"
 "\t"
 msgstr ""
 "\n"
-"Here you can see Fredagscaféen's fixed selection and many of the things we "
-"are known for selling.\n"
-"But in addition, you will always find a large range of exciting and new "
-"specialty beers, for every taste, in the bar.\n"
-"At Fredagscaféen, we have a big focus on having something for everyone, so "
-"you will also find more\n"
+"Here you can see Fredagscaféen's fixed selection and many of the things we are known for selling.\n"
+"But in addition, you will always find a large range of exciting and new specialty beers, for every taste, in the bar.\n"
+"At Fredagscaféen, we have a big focus on having something for everyone, so you will also find more\n"
 "gluten-free and alcohol-free beers."
 
 #: items/templates/items.html:22
@@ -986,8 +988,8 @@ msgstr "Expected consumption"
 
 #: udlejning/models.py:64
 msgid ""
-"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af "
-"hver type?"
+"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af"
+" hver type?"
 msgstr ""
 "What types of beer or other beverages are desired and how many kegs of each "
 "type?"
@@ -1089,8 +1091,8 @@ msgid ""
 "Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde "
 "ansøgninsformularen nederst på denne side."
 msgstr ""
-"If our equipment is not already on loan, you can borrow it by filling in the "
-"application form at the bottom of this page."
+"If our equipment is not already on loan, you can borrow it by filling in the"
+" application form at the bottom of this page."
 
 #: udlejning/templates/udlejning.html:38
 msgid "Anlæg udlånes kun til"
@@ -1114,7 +1116,8 @@ msgstr "Internal events"
 
 #: udlejning/templates/udlejning.html:42
 msgid ""
-"Udelukkende arrangementer der finder sted på universitetet. Dette inkluderer:"
+"Udelukkende arrangementer der finder sted på universitetet. Dette "
+"inkluderer:"
 msgstr "Exclusive events that take place at the university. This includes:"
 
 #: udlejning/templates/udlejning.html:44
@@ -1131,8 +1134,8 @@ msgstr "Events with association"
 
 #: udlejning/templates/udlejning.html:50
 msgid ""
-"Arrangementer der finder sted på universitetet eller andetsteds, kan være af "
-"privat natur. Dette inkluderer:"
+"Arrangementer der finder sted på universitetet eller andetsteds, kan være af"
+" privat natur. Dette inkluderer:"
 msgstr ""
 "Events that take place at the university or elsewhere may be of a private "
 "nature. This includes:"
@@ -1162,9 +1165,9 @@ msgid ""
 "Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre "
 "og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk."
 msgstr ""
-"Precursor as it has been until now, lending includes setting up, carbonation "
-"and rinsing of the system, 50 cups (1 roll) can be purchased for DKK 150 per "
-"PCS."
+"Precursor as it has been until now, lending includes setting up, carbonation"
+" and rinsing of the system, 50 cups (1 roll) can be purchased for DKK 150 "
+"per PCS."
 
 #: udlejning/templates/udlejning.html:66
 msgid ""
@@ -1173,9 +1176,9 @@ msgid ""
 "Afleveringstid af anlægget skal aftales i dialog med den ansvarlige for det "
 "praktiske, og er ikke nødvendigvis samme dag."
 msgstr ""
-"Here, loans only include unlocking and unlocking of the draft beer facility. "
-"This means that the plant must be picked up in Ada-0, and delivered cleaned "
-"in Ada-0. The delivery time of the installation must be agreed in dialogue "
+"Here, loans only include unlocking and unlocking of the draft beer facility."
+" This means that the plant must be picked up in Ada-0, and delivered cleaned"
+" in Ada-0. The delivery time of the installation must be agreed in dialogue "
 "with the person responsible for the practical, and is not necessarily the "
 "same day."
 
@@ -1185,10 +1188,10 @@ msgstr "Request rental in good time"
 
 #: udlejning/templates/udlejning.html:72
 msgid ""
-"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være "
-"et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
-"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi "
-"ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
+"Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være"
+" et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og "
+"har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi"
+" ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed."
 msgstr ""
 "When you borrow a facility, there must be a board member responsible for "
 "practical matters on the day of lending and return. We are all volunteers "
@@ -1209,15 +1212,15 @@ msgid ""
 "mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver "
 "mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt "
 "udlejning er muligt i god tid, dog er det stadig muligt at kunne låne "
-"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at "
-"der kommer et svar i god tid."
+"anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at"
+" der kommer et svar i god tid."
 msgstr ""
 "We will therefore, no later than 5 days before, announce whether someone on "
 "the board has the opportunity to be there during one of the possible times. "
 "If you do not write at least 7 days in advance, we cannot guarantee that we "
 "can announce whether or not renting is possible in good time, however it is "
-"still possible to borrow the facility even if you announce at a bad time, we "
-"just cannot guarantee that there will be an answer in good time."
+"still possible to borrow the facility even if you announce at a bad time, we"
+" just cannot guarantee that there will be an answer in good time."
 
 #: udlejning/templates/udlejning.html:79
 msgid "Generelle informationer"
@@ -1233,7 +1236,8 @@ msgstr "Our primary draft beer is"
 
 #: udlejning/templates/udlejning.html:91
 msgid ""
-", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. "
+"moms)"
 msgstr ""
 ", which comes in 25 liter kegs. The price is DKK 750 per keg (incl. VAT)"
 
@@ -1254,15 +1258,16 @@ msgid ""
 "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
 "(incl. moms)."
 msgstr ""
-"We also sell Magners Cider in kegs, which costs DKK 1250 per keg (incl. VAT)."
+"We also sell Magners Cider in kegs, which costs DKK 1250 per keg (incl. "
+"VAT)."
 
 #: udlejning/templates/udlejning.html:106
 msgid ""
 "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
 "pt. men man kan skrive en mail til"
 msgstr ""
-"We have a range of specialty beers available at: (it is not available at the "
-"moment, but you can write an e-mail to"
+"We have a range of specialty beers available at: (it is not available at the"
+" moment, but you can write an e-mail to"
 
 #: udlejning/templates/udlejning.html:109
 msgid ""
@@ -1398,29 +1403,19 @@ msgstr "General info"
 #: web/templates/about.html:11
 msgid ""
 "\n"
-"Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus "
-"Universitet,\n"
-"som siden 1993 har været et socialt samlingspunkt for studerende og ansatte "
-"på instituttet.\n"
-"Vi er kendt for vores store udvalg af specialøl, der kontinuerligt "
-"udskiftes.\n"
-"Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi "
-"har altid\n"
-"et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie "
-"alternativer.\n"
+"Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet,\n"
+"som siden 1993 har været et socialt samlingspunkt for studerende og ansatte på instituttet.\n"
+"Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.\n"
+"Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi har altid\n"
+"et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.\n"
 "Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra\n"
 msgstr ""
 "\n"
-"Fredagscaféen is a student-run bar at the Department of Computer Science, "
-"Aarhus University,\n"
-"which has been a social gathering place for students and employees at the "
-"department since 1993.\n"
-"We are known for our large selection of specialty beers, which are "
-"constantly being changed.\n"
-"In addition, we focus on having something for every taste and price range, "
-"and we always have\n"
-"a large selection of soda, cider, shots, gluten-free beer and non-alcoholic "
-"alternatives.\n"
+"Fredagscaféen is a student-run bar at the Department of Computer Science, Aarhus University,\n"
+"which has been a social gathering place for students and employees at the department since 1993.\n"
+"We are known for our large selection of specialty beers, which are constantly being changed.\n"
+"In addition, we focus on having something for every taste and price range, and we always have\n"
+"a large selection of soda, cider, shots, gluten-free beer and non-alcoholic alternatives.\n"
 "We are also the only Friday bar in the country that always has lager from\n"
 
 #: web/templates/about.html:20
@@ -1441,24 +1436,20 @@ msgstr "here"
 #: web/templates/about.html:27
 msgid ""
 "\n"
-"Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på "
-"instituttet,\n"
+"Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på instituttet,\n"
 "som også kan ses\n"
 msgstr ""
 "\n"
-"Fredagscaféen is run by a volunteer board of directors consisting of "
-"students at the department,\n"
+"Fredagscaféen is run by a volunteer board of directors consisting of students at the department,\n"
 "which can also be seen\n"
 
 #: web/templates/about.html:32
 msgid ""
 "\n"
-"Baren er non-profit, og overskuddet går til vedligeholdelse af baren og "
-"arrangementer for bartenderene.\n"
+"Baren er non-profit, og overskuddet går til vedligeholdelse af baren og arrangementer for bartenderene.\n"
 msgstr ""
 "\n"
-"The bar is non-profit, and the profits go towards maintaining the bar and "
-"events for the bartenders.\n"
+"The bar is non-profit, and the profits go towards maintaining the bar and events for the bartenders.\n"
 
 #: web/templates/about.html:39
 msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
@@ -1611,8 +1602,15 @@ msgid "Missing from environment"
 msgstr "Missing from environment"
 
 #: web/views.py:52
-msgid "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+msgid ""
+"Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login mail sent: Press the link in your received email to log in."
+
+#~ msgid "Arrangement"
+#~ msgstr "Event"
+
+#~ msgid "Årets gang"
+#~ msgstr "The years course"
 
 #~ msgid "Se bare tabellen nedenfor, over vores længste streaks."
 #~ msgstr "Just look at the table below, of our longest streaks."
