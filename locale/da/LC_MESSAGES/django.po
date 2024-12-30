@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 23:29+0100\n"
+"POT-Creation-Date: 2024-12-30 13:04+0100\n"
 "PO-Revision-Date: 2024-12-23 21:27+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,11 +39,11 @@ msgstr "Skal have enten bartendervagt eller tilpasset datetime"
 msgid "Kontant?"
 msgstr "Kontant?"
 
-#: bartab/models.py:138 bartab/templates/bartab.html:20
+#: bartab/models.py:138 bartab/templates/bartab.html:24
 msgid "Indsat"
 msgstr "Indsat"
 
-#: bartab/models.py:139 bartab/templates/bartab.html:21
+#: bartab/models.py:139 bartab/templates/bartab.html:25
 msgid "Køb"
 msgstr "Køb"
 
@@ -59,24 +59,28 @@ msgstr "Invalid sum"
 msgid "Krydslisteaktivitet"
 msgstr "Krydslisteaktivitet"
 
-#: bartab/templates/bartab.html:10
+#: bartab/templates/bartab.html:11
 msgid "Krydslisten er gjort op til og med barvagten d."
 msgstr "Krydslisten er gjort op til og med barvagten d."
 
-#: bartab/templates/bartab.html:13 bartab/templates/bartab.html:22
+#: bartab/templates/bartab.html:13
+msgid "Krydslisten er endnu ikke opdateret."
+msgstr ""
+
+#: bartab/templates/bartab.html:17 bartab/templates/bartab.html:26
 msgid "Saldo"
 msgstr "Saldo"
 
-#: bartab/templates/bartab.html:14
+#: bartab/templates/bartab.html:18
 msgid "Total forbrug"
 msgstr "Total forbrug"
 
-#: bartab/templates/bartab.html:19 bartenders/templates/barplan.html:31
+#: bartab/templates/bartab.html:23 bartenders/templates/barplan.html:31
 #: gallery/models.py:101
 msgid "Dato"
 msgstr "Dato"
 
-#: bartab/templates/bartab.html:37
+#: bartab/templates/bartab.html:41
 msgid "er ikke på krydslisten."
 msgstr "er ikke på krydslisten."
 
@@ -299,7 +303,7 @@ msgstr ""
 msgid "Tidligere"
 msgstr ""
 
-#: bartenders/templates/board.html:30 web/templates/base.html:91
+#: bartenders/templates/board.html:30 web/templates/base.html:90
 msgid "Bestyrelsen"
 msgstr ""
 
@@ -515,11 +519,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: fredagscafeen/settings/base.py:271
+#: fredagscafeen/settings/base.py:273
 msgid "Danish"
 msgstr "Dansk"
 
-#: fredagscafeen/settings/base.py:272
+#: fredagscafeen/settings/base.py:274
 msgid "English"
 msgstr "Engelsk"
 
@@ -1401,6 +1405,10 @@ msgstr ""
 msgid "Forside"
 msgstr ""
 
+#: web/templates/base.html:77 web/templates/base.html:93
+msgid "Sortiment"
+msgstr ""
+
 #: web/templates/base.html:80
 msgid "Udlejning"
 msgstr ""
@@ -1421,43 +1429,39 @@ msgstr ""
 msgid "Udlejning af højtalere"
 msgstr ""
 
-#: web/templates/base.html:92
+#: web/templates/base.html:91
 msgid "Events"
 msgstr ""
 
-#: web/templates/base.html:93
+#: web/templates/base.html:92
 msgid "Gallery"
 msgstr "Galleri"
 
 #: web/templates/base.html:94
-msgid "Sortiment"
-msgstr ""
-
-#: web/templates/base.html:95
 msgid "Om baren"
 msgstr ""
 
-#: web/templates/base.html:97
+#: web/templates/base.html:96
 msgid "Profil"
 msgstr ""
 
-#: web/templates/base.html:99
+#: web/templates/base.html:98
 msgid "Krydlistestatus"
 msgstr ""
 
-#: web/templates/base.html:101
+#: web/templates/base.html:100
 msgid "Bartenderprofil"
 msgstr ""
 
-#: web/templates/base.html:104
+#: web/templates/base.html:103
 msgid "Admin"
 msgstr ""
 
-#: web/templates/base.html:109
+#: web/templates/base.html:108
 msgid "Log ud"
 msgstr ""
 
-#: web/templates/base.html:148
+#: web/templates/base.html:146
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
 msgstr ""
 

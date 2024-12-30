@@ -38,7 +38,11 @@
 \savebox\innertable{%
 \begin{tabu}{r}
 	{\Large Genereret: {% now "j. F Y" %} } \\
-	{\Large Opgjort til og med vagt: {{ latest_shift|date:"j. F Y" }} }
+	{% if latest_tab_update %}
+	{\Large Opgjort til og med vagt: {{ latest_tab_update.date|date:"j. F Y" }} }
+	{% else %}
+	{\Large Endnu ikke opgjort }
+	{% endif %}
 \end{tabu}%
 }
 	{% else %}\newpage{% endif %}
@@ -64,9 +68,7 @@
 
 {% endfor %}
 
-% Make sure Pizza list is on a even page
-\mbox{~}
-\clearpage
+% Make sure guide is on an even page
 
 \strictpagechecktrue
 \checkoddpage
@@ -80,7 +82,11 @@
 
 \begin{landscape}
 
-\iffalse
+{% if guide_path %}
+\includepdf[pages=1, angle=90]{
+{{ guide_path }}
+}
+{% else %}
 \LARGE
 \section*{Pizzabestilling}
 \begin{tabu} to \linewidth{| X[1] | X[14] |}
@@ -90,11 +96,7 @@
 {% for i in pizza_lines %}& \\ \hline{% endfor %}
 
 \end{tabu}
-\fi
-
-\includepdf[pages=1, angle=90]{
-{{ guide_path }}
-}
+{% endif %}
 
 \end{landscape}
 

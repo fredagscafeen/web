@@ -7,7 +7,11 @@
 
 <h2>{% translate "Krydslisteaktivitet" %}</h2>
 
-<p>{% translate "Krydslisten er gjort op til og med barvagten d." %} {{ update_date }}.</p>
+{% if latest_tab_update %}
+<p>{% translate "Krydslisten er gjort op til og med barvagten d." %} {{ latest_tab_update.date }}.</p>
+{% else %}
+<p>{% translate "Krydslisten er endnu ikke opdateret." %}</p>
+{% endif %}
 
 {% if object %}
 <h3>{% translate "Saldo" %}: {{ object.balance_str }}</h3>

@@ -143,6 +143,8 @@ MESSAGE_TAGS = {
     messages.ERROR: "alert-danger",
 }
 
+TIMEOUT = 600
+
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # ALLOWED_HOSTS = ['*']

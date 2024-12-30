@@ -83,12 +83,20 @@ class BarTabContext:
         for user in BarTabUser.objects.exclude(hidden_from_tab=True):
             tab_parts[not user.is_active][0].append(user)
 
+        latest_tab_update = BarTabSnapshot.objects.first()
+        guide_path = settings.MEDIA_ROOT + f"guides/krydsliste.pdf"
+        try:
+            with open(guide_path, "rb") as f:
+                pass
+        except FileNotFoundError:
+            guide_path = None
+
         return {
             "tab_parts": tab_parts,
             "pizza_lines": range(33),
-            "latest_shift": BarTabSnapshot.objects.first().date,
+            "latest_tab_update": latest_tab_update,
             "logo_path": settings.STATIC_ROOT + f"images/logo_gray.png",
-            "guide_path": settings.MEDIA_ROOT + f"guides/krydsliste.pdf",
+            "guide_path": guide_path,
         }
 
 

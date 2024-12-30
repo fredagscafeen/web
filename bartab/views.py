@@ -17,7 +17,7 @@ class BarTab(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["update_date"] = BarTabSnapshot.objects.first().date
+        context["latest_tab_update"] = BarTabSnapshot.objects.first()
         context["credit_hold_limit"] = BarTabUser.CREDIT_HOLD_LIMIT
 
         if not self.object:
