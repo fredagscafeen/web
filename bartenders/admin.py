@@ -228,7 +228,10 @@ class PollAdmin(admin.ModelAdmin):
 
 @custom_admin_view("bartenders", "Bartender shift streaks")
 def streaks_view(admin, request):
-    shifts = BartenderShift.objects.all().filter(end_datetime__lte=timezone.now())
+    bartender_shifts = BartenderShift.objects.defer(
+        "responsible", "other_bartenders", "period"
+    )
+    shifts = bartender_shifts.filter(end_datetime__lte=timezone.now())
     shift_streaks = []
     for shift in shifts:
         shift_streaks.append(shift.streak())
@@ -248,10 +251,11 @@ def streaks_view(admin, request):
         end_datetime__gte=timezone.now() - datetime.timedelta(days=5),
     )
     shift_placement = 0
-    for i, shift in enumerate(sorted_shift_streaks):
-        if shift[2] == current_shift[0].end_datetime:
-            shift_placement = i + 1
-            break
+    if current_shift:
+        for i, (streak, start_date, end_date) in enumerate(sorted_shift_streaks_short):
+            if end_date == current_shift[0].end_datetime:
+                shift_placement = i + 1
+                break
 
     context = dict(
         # Include common variables for rendering the admin template.

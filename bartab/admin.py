@@ -153,7 +153,8 @@ def count_consumption(admin, request):
 def bartab_graph(admin, request):
     balances = defaultdict(int)
     graph_data = []
-    for snapshot in reversed(BarTabSnapshot.objects.all()):
+    bartab_snapshots = BarTabSnapshot.objects.defer("last_updated", "notes")
+    for snapshot in reversed(bartab_snapshots):
         for entry in snapshot.entries.all():
             balances[entry.user] += entry.added - entry.used
 

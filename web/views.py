@@ -60,7 +60,10 @@ class About(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        shifts = BartenderShift.objects.all().filter(end_datetime__lte=timezone.now())
+        bartender_shifts = BartenderShift.objects.defer(
+            "responsible", "other_bartenders", "period"
+        )
+        shifts = bartender_shifts.filter(end_datetime__lte=timezone.now())
         current_shift = shifts.filter(
             start_datetime__gte=timezone.now() - datetime.timedelta(days=7),
         )
