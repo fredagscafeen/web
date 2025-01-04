@@ -63,9 +63,9 @@ class About(TemplateView):
         bartender_shifts = BartenderShift.objects.defer(
             "responsible", "other_bartenders", "period"
         )
-        shifts = bartender_shifts.filter(end_datetime__lte=timezone.now())
-        current_shift = shifts.filter(
-            start_datetime__gte=timezone.now() - datetime.timedelta(days=7),
+        current_shift = bartender_shifts.filter(
+            start_datetime__lte=timezone.now(),
+            end_datetime__gte=timezone.now() - datetime.timedelta(days=7),
         )
         shift_streak = 0
         start_date = timezone.now()
