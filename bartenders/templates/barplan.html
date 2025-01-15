@@ -38,12 +38,21 @@
 		</thead>
 	<tbody>
     {% for shift in bartendershifts %}
-		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}color:gray;{% endif %}">
+		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}"{% if shift|compare_to_current_week == -1 %}class="gray-out"{% endif %}>
 			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% else %} {{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% endif %}</td>
-            <td class="col-md-3">{{ shift.responsible.name }}</td>
+			{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
+				<td class="col-md-3"><p style="color:red;display:inline;">{{ shift.responsible.name }}</p></td>
+			{% else %}
+				<td class="col-md-3">{{ shift.responsible.name }}</td>
+			{% endif %}
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
-					{% if bartender.first_bartender_shift == shift %}<b alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
+					{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
+						{% cycle 'blue' 'orange' 'green' as color silent %}
+						{% if bartender.first_bartender_shift == shift %}<b style="color:{{ color }};" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}<p style="color:{{ color }};display:inline;">{{ bartender.name }}</p>{% endif %}{% if not forloop.last %},{% endif %}
+					{% else %}
+						{% if bartender.first_bartender_shift == shift %}<b class="gray-out" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
+					{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}

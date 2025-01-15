@@ -370,6 +370,10 @@ html.light {
         border-radius:5px;
         font-weight: lighter;
     }
+
+    .gray-out td, .gray-out b {
+        color: grey;
+    }
 }
 
 /* dark theme */
@@ -824,5 +828,9 @@ html.dark {
         border:1px solid darkgray;
         border-radius:5px;
         font-weight: lighter;
+    }
+
+    .gray-out td, .gray-out b {
+        color: darkgrey;
     }
 }

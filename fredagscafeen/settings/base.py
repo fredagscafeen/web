@@ -36,6 +36,11 @@ CONSTANCE_CONFIG = {
         bool,
     ),
     "BANNER_HTML": ("", "HTML banner", str),
+    "SHOW_COLORED_NAMES_ON_BARPLAN": (
+        False,
+        "Skal der vises farver på bartendernes navne for indeværende uge?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [
