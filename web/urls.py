@@ -19,6 +19,7 @@ from guides.views import Guides
 from items.views import Items, Scanner
 from udlejning.views import (
     Udlejninger,
+    UdlejningerBoardGameCart,
     UdlejningerGrill,
     UdlejningerProjector,
     UdlejningerSpeakers,
@@ -55,6 +56,11 @@ urlpatterns = [
         "udlejningProjector/", UdlejningerProjector.as_view(), name="udlejningProjector"
     ),
     path("udlejningSpeakers/", UdlejningerSpeakers.as_view(), name="udlejningSpeakers"),
+    path(
+        "udlejningBoardGameCart/",
+        UdlejningerBoardGameCart.as_view(),
+        name="udlejningBoardGameCart",
+    ),
     path("guides/", Guides.as_view(), name="guides"),
     path("gallery/", include("gallery.urls")),
 ]

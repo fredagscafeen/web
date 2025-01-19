@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load i18n %}
+
+<h2>{% translate "Reservation af brætspilsvogn" %}</h2>
+
+<h4>{% translate "Brætspilsvognen" %} {% translate "er allerede reserveret følgende dage" %}</h4>
+
+<ul>
+	{% for u in object_list %}
+		<li>{{ u.dateFrom }}, {% translate "reserveret af" %} {{ u.whoReserved }}</li>
+	{% empty %}
+		<li>{% translate "Brætspilsvognen" %} {% translate "er pt ikke reserveret på noget tidspunkt" %}</li>
+	{% endfor %}
+</ul>
+
+<p>
+	{% translate "Hvis vores" %} {% translate "brætspilsvogn" %} {% translate "ikke allerede er udlånt, kan du låne den ved at sende en mail til" %}
+	<a rel="nofollow" class="external text" href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>.
+	{% translate "Brætspilsvognen" %} {% translate "kan kun lånes til arrangementer på instituttet." %}
+</p>
+
+{% endblock %}

@@ -124,6 +124,8 @@ class Udlejning(UdlejningCommon):
 
     class Meta:
         ordering = ("dateFrom",)
+        verbose_name = _("Udlejning")
+        verbose_name_plural = _("Udlejninger")
 
 
 class UdlejningApplication(UdlejningCommon):
@@ -131,6 +133,8 @@ class UdlejningApplication(UdlejningCommon):
 
     class Meta:
         ordering = ("created",)
+        verbose_name = _("Udlejningsansøgning")
+        verbose_name_plural = _("Udlejningsansøgninger")
 
     def accept(self):
         common_fields = super()._meta.get_fields()
@@ -149,6 +153,8 @@ class UdlejningGrill(models.Model):
     bartendersInCharge = models.ManyToManyField(Bartender, blank=True)
 
     class Meta:
+        verbose_name = _("Udlejning af grill")
+        verbose_name_plural = _("Udlejning af grill")
         ordering = ("dateFrom",)
 
 
@@ -160,6 +166,8 @@ class UdlejningProjector(models.Model):
     comments = models.TextField(blank=True)
 
     class Meta:
+        verbose_name = _("Udlejning af projektor")
+        verbose_name_plural = _("Udlejning af projektor")
         ordering = ("dateFrom",)
 
 
@@ -171,4 +179,19 @@ class UdlejningSpeakers(models.Model):
     comments = models.TextField(blank=True)
 
     class Meta:
+        verbose_name = _("Udlejning af højtaler")
+        verbose_name_plural = _("Udlejning af højtalere")
+        ordering = ("dateFrom",)
+
+
+class UdlejningBoardGameCart(models.Model):
+    dateFrom = models.DateTimeField()
+    dateTo = models.DateTimeField()
+    whoReserved = models.TextField(max_length=140, blank=True)
+    contactInfo = models.CharField(max_length=140, blank=True)
+    comments = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name = _("Udlejning af brætspilsvogn")
+        verbose_name_plural = _("Udlejning af brætspilsvogn")
         ordering = ("dateFrom",)

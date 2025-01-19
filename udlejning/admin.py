@@ -13,6 +13,7 @@ from fredagscafeen.email import send_template_email
 from udlejning.models import (
     Udlejning,
     UdlejningApplication,
+    UdlejningBoardGameCart,
     UdlejningGrill,
     UdlejningProjector,
     UdlejningSpeakers,
@@ -173,5 +174,11 @@ class UdlejningProjectorAdmin(admin.ModelAdmin):
 
 @admin.register(UdlejningSpeakers)
 class UdlejningSpeakersAdmin(admin.ModelAdmin):
+    ordering = ("-dateFrom",)
+    list_display = ("dateFrom", "whoReserved")
+
+
+@admin.register(UdlejningBoardGameCart)
+class UdlejningBoardGameCartAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved")

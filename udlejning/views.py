@@ -9,6 +9,7 @@ from .forms import UdlejningApplicationForm
 from .models import (
     Udlejning,
     UdlejningApplication,
+    UdlejningBoardGameCart,
     UdlejningGrill,
     UdlejningProjector,
     UdlejningSpeakers,
@@ -65,5 +66,13 @@ class UdlejningerSpeakers(ListView):
     template_name = "udlejningSpeakers.html"
     allow_empty = True
     queryset = UdlejningSpeakers.objects.filter(
+        dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
+    )
+
+
+class UdlejningerBoardGameCart(ListView):
+    template_name = "udlejningBoardGameCart.html"
+    allow_empty = True
+    queryset = UdlejningBoardGameCart.objects.filter(
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )
