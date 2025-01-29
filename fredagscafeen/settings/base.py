@@ -46,7 +46,7 @@ CONSTANCE_CONFIG = {
 SECRET_ADMIN_KEYS = [
     (
         "GOOGLE_PASSWORD",
-        "Google password",
+        "Google password. OBS: Kontoen har 2FA",
         "datcafe@gmail.com",
         "https://gmail.com/",
     ),
@@ -64,7 +64,7 @@ SECRET_ADMIN_KEYS = [
     ),
     (
         "CONTABO_PASSWORD",
-        "Contabo password",
+        "Contabo password. OBS: Kontoen har 2FA",
         "best@fredagscafeen.dk",
         "https://my.contabo.com/account/login",
     ),
@@ -121,6 +121,18 @@ SECRET_ADMIN_KEYS = [
         "Discord password",
         "datcafe@gmail.com",
         "https://discord.com/channels/@me",
+    ),
+    (
+        "LASERTRYK_PASSWORD",
+        "Lasertryk.dk password",
+        "fredag",
+        "https://lasertryk.dk/login",
+    ),
+    (
+        "ONEPINT_PASSWORD",
+        "OnePint.dk password",
+        None,
+        "https://www.onepint.dk/customer/account/login/",
     ),
 ]
 
