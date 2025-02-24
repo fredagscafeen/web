@@ -9,7 +9,7 @@
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
-                <a href="/">
+                <a href="/{{ LANGUAGE_CODE }}/">
                     <h1>
                         <img src="{% static 'images/logo.png' %}" height="50" class="logo">
                         Fredagscaféen
@@ -45,7 +45,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="center-align">
-                        <a class="navbar-brand visible-xs-inline" href="/" style="color: var(--datblue); font-size: 20px; text-shadow: None;">
+                        <a class="navbar-brand visible-xs-inline" href="/{{ LANGUAGE_CODE }}/" style="color: var(--datblue); font-size: 20px; text-shadow: None;">
                             <img src="{% static 'images/logo.png' %}" height="20" style="display: inline-block;">
                             Fredagscaféen
                         </a>
@@ -71,7 +71,7 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="/">{% translate "Forside" %}</a></li>
+                        <li><a href="/{{ LANGUAGE_CODE }}/">{% translate "Forside" %}</a></li>
                         <li><a href="{% url 'barplan' %}">{% translate "Barplan" %}</a></li>
                         <li><a href="{% url 'bartenders' %}">{% translate "Bartendere" %}</a></li>
                         <li><a href="{% url 'prices' %}">{% translate "Sortiment" %}</a></li>

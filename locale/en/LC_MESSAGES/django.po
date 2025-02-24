@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 08:39+0100\n"
-"PO-Revision-Date: 2025-01-19 08:41+0050\n"
+"POT-Creation-Date: 2025-02-24 19:24+0100\n"
+"PO-Revision-Date: 2025-02-24 19:36+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -558,11 +558,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:278
+#: fredagscafeen/settings/base.py:290
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:279
+#: fredagscafeen/settings/base.py:291
 msgid "English"
 msgstr "English"
 
@@ -1060,17 +1060,14 @@ msgid "Udlejning"
 msgstr "Rental"
 
 #: udlejning/models.py:128
-#| msgid "Udlejning"
 msgid "Udlejninger"
 msgstr "Rentals"
 
 #: udlejning/models.py:136
-#| msgid "Udlejning af grill"
 msgid "Udlejningsansøgning"
 msgstr "Rental application"
 
 #: udlejning/models.py:137
-#| msgid "Udlejning af højtalere"
 msgid "Udlejningsansøgninger"
 msgstr "Rental applications"
 
@@ -1083,7 +1080,6 @@ msgid "Udlejning af projektor"
 msgstr "Rental of projector"
 
 #: udlejning/models.py:182
-#| msgid "Udlejning af højtalere"
 msgid "Udlejning af højtaler"
 msgstr "Rental of speaker"
 
@@ -1092,7 +1088,6 @@ msgid "Udlejning af højtalere"
 msgstr "Rental of speakers"
 
 #: udlejning/models.py:195 udlejning/models.py:196 web/templates/base.html:85
-#| msgid "Udlejning af grill"
 msgid "Udlejning af brætspilsvogn"
 msgstr "Rental of board game cart"
 
@@ -1199,13 +1194,15 @@ msgid "Interne arrangermenter"
 msgstr "Internal events"
 
 #: udlejning/templates/udlejning.html:62
+#| msgid ""
+#| "Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre "
+#| "og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk."
 msgid ""
 "Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre "
-"og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk."
+"og skylning af anlægget, samt opvask af tilhørende kopper."
 msgstr ""
 "Precursor as it has been until now, lending includes setting up, carbonation"
-" and rinsing of the system, 50 cups (1 roll) can be purchased for DKK 150 "
-"per PCS."
+" and rinsing of the system, as well as washing of the accompanying cups."
 
 #: udlejning/templates/udlejning.html:66
 msgid ""
@@ -1320,7 +1317,6 @@ msgid "Ansøgninsformular"
 msgstr "Application form"
 
 #: udlejning/templates/udlejningBoardGameCart.html:6
-#| msgid "Reservation af Grill"
 msgid "Reservation af brætspilsvogn"
 msgstr "Reservation of board game cart"
 

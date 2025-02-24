@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-19 08:39+0100\n"
+"POT-Creation-Date: 2025-02-24 19:24+0100\n"
 "PO-Revision-Date: 2024-12-30 22:02+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -531,11 +531,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: fredagscafeen/settings/base.py:278
+#: fredagscafeen/settings/base.py:290
 msgid "Danish"
 msgstr "Dansk"
 
-#: fredagscafeen/settings/base.py:279
+#: fredagscafeen/settings/base.py:291
 msgid "English"
 msgstr "Engelsk"
 
@@ -1130,7 +1130,7 @@ msgstr ""
 #: udlejning/templates/udlejning.html:62
 msgid ""
 "Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre "
-"og skylning af anlægget, 50 glas (1 rulle) tilkøbes for 150,- pr. stk."
+"og skylning af anlægget, samt opvask af tilhørende kopper."
 msgstr ""
 
 #: udlejning/templates/udlejning.html:66
