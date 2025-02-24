@@ -37,6 +37,12 @@ html.light {
         justify-content: space-between;
     }
 
+    .center-footer {
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 5px;
+    }
+
     ul.navbar-nav {
         margin: 0px !important;
     }
@@ -480,6 +486,12 @@ html.dark {
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    .center-footer {
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 5px;
     }
 
     ul.navbar-nav {
