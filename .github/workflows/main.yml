@@ -36,7 +36,7 @@ jobs:
         run: docker compose pull
 
       - name: Restore docker layer cache
-        uses: satackey/action-docker-layer-caching@v0.0.8
+        uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
 
       - name: Build image
@@ -137,12 +137,11 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.UPLOAD_SSH_KNOWN_HOSTS }}
 
       - name: Pull changes
-        run: git pull && docker-compose pull && docker-compose restart
+        run: cd web && git pull && docker-compose pull && docker-compose restart
 
       - name: Build and start containers
-        run: docker-compose build && docker-compose up -d
+        run: cd web && docker-compose build && docker-compose up -d
 
       - name: Cleanup
         run: |
-          git gc
-          docker system prune -a
+          cd web && git gc && docker system prune -a
