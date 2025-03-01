@@ -125,3 +125,24 @@ jobs:
         run: curl --fail -X POST "$WEBHOOK_URL"
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+
+      - name: Setup ssh
+        run: |
+          mkdir ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 0600 ~/.ssh/id_ed25519
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.UPLOAD_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.UPLOAD_SSH_KNOWN_HOSTS }}
+
+      - name: Pull changes
+        run: git pull && docker-compose pull && docker-compose restart
+
+      - name: Build and start containers
+        run: docker-compose build && docker-compose up -d
+
+      - name: Cleanup
+        run: |
+          git gc
+          docker system prune -a
