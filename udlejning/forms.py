@@ -15,7 +15,7 @@ from .models import UdlejningApplication
 
 
 class UdlejningApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
+    captcha = ReCaptchaField()
 
     class Meta:
         model = UdlejningApplication

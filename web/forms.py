@@ -17,7 +17,7 @@ from fredagscafeen.email import send_template_email
 
 class LoginForm(forms.Form):
     email = forms.EmailField()
-    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
+    captcha = ReCaptchaField()
     captcha.help_text = _("Hjemmesiden er sikret med reCAPTCHAv2")
 
     def clean_email(self):

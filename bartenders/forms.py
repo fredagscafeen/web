@@ -16,7 +16,7 @@ from .models import Bartender, BartenderApplication
 
 
 class BartenderApplicationForm(forms.ModelForm):
-    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
+    captcha = ReCaptchaField()
 
     class Meta:
         model = BartenderApplication
