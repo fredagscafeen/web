@@ -137,4 +137,4 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@fredagscafeen.dk "cd web && git pull origin master && docker compose down && docker compose up -d --build"
+          ssh -i ~/.ssh/id_ed25519 ubuntu@fredagscafeen.dk "cd web && git pull origin master && docker compose down && docker compose up -d --build"

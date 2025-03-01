@@ -15,8 +15,6 @@ from django.utils.translation import gettext_lazy as _
 
 from fredagscafeen.email import send_template_email
 
-from .mailman2 import Mailman
-
 
 def template_render(template_str, context):
     t = Template(template_str)
@@ -123,6 +121,8 @@ class Bartender(BartenderCommon):
     )
 
     def _get_mailman(self, list_and_password):
+        # TODO: Fix mailman implementation
+        return True
         return Mailman(settings.MAILMAN_URL_BASE, *list_and_password)
 
     def is_on_mailing_list(self, list_and_password=MAILMAN_ALL):

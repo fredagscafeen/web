@@ -1,6 +1,3 @@
-from requests_html import HTMLSession
-
-
 class MailmanError(Exception):
     pass
 
@@ -35,7 +32,7 @@ class Mailman:
     def __init__(self, url_base, name, password):
         self.url_prefix = f"{url_base}/admin/{name}"
         self.password = password
-        self.session = HTMLSession()
+        # self.session = HTMLSession()
 
         self._login()
 
