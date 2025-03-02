@@ -39,19 +39,41 @@
 	<tbody>
     {% for shift in bartendershifts %}
 		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}"{% if shift|compare_to_current_week == -1 %}class="gray-out"{% endif %}>
-			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% else %} {{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}{% endif %}</td>
+			<td class="col-md-2">
+				{% if shift|compare_to_current_week == 0 %}
+				<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}</b>
+				{% else %}
+				{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}
+				{% endif %}
+			</td>
 			{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
-				<td class="col-md-3"><p style="color:red;display:inline;">{{ shift.responsible.name }}</p></td>
+				<td class="col-md-3">
+					{% if shift.responsible.first_responsible_shift == shift %}
+					<b class="gray-out" style="color:red;display:inline;" alt="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+					{% else %}
+					<p style="color:red;display:inline;">{{ shift.responsible.name }}</p>
+					{% endif %}
+				</td>
 			{% else %}
-				<td class="col-md-3">{{ shift.responsible.name }}</td>
+				<td class="col-md-3">
+					{% if shift.responsible.first_responsible_shift == shift %}
+					<b class="gray-out" alt="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+					{% else %}
+					{{ shift.responsible.name }}
+					{% endif %}
+				</td>
 			{% endif %}
             <td class="col-md-7">
                 {% for bartender in shift.other_bartenders.all %}
 					{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
 						{% cycle 'blue' 'orange' 'green' as color silent %}
-						{% if bartender.first_bartender_shift == shift %}<b style="color:{{ color }};" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}<p style="color:{{ color }};display:inline;">{{ bartender.name }}</p>{% endif %}{% if not forloop.last %},{% endif %}
+						{% if bartender.first_bartender_shift == shift %}
+						<b style="color:{{ color }};" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
+						<p style="color:{{ color }};display:inline;">{{ bartender.name }}</p>{% endif %}{% if not forloop.last %},{% endif %}
 					{% else %}
-						{% if bartender.first_bartender_shift == shift %}<b class="gray-out" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
+						{% if bartender.first_bartender_shift == shift %}
+						<b class="gray-out" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
+						{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
 					{% endif %}
                 {% endfor %}
             </td>

@@ -111,6 +111,10 @@ class Bartender(BartenderCommon):
     def first_deposit_shift(self):
         return BoardMemberDepositShift.with_bartender(self).first()
 
+    @property
+    def first_responsible_shift(self):
+        return BartenderShift.objects.filter(responsible=self).first()
+
     MAILMAN_ALL = (
         settings.MAILMAN_ALL_LIST,
         getattr(settings, "MAILMAN", None),
