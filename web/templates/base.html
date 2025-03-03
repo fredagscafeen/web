@@ -101,7 +101,7 @@
                         <li><a href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
                     </ul>
                     {% if user.is_authenticated %}
-                    <form action="{% url 'logout' %}logout" method="post">
+                    <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit" style="background-color: None; color: #c3c3c3;" class="btn navbar-btn pull-right">{% translate "Log ud" %}</button>
                     </form>

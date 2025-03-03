@@ -1,22 +1,13 @@
-<html lang="en" style="width: 80%; margin: auto;">
-<head>
-    <title>Fredagscaféen</title>
+{% extends "base.html" %}
+{% block title %}404{% endblock %}
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body align="center" style="margin: auto; margin: 50px;">
-  <div>
-    <h1 style="font-size: 5em; margin: 0;">
-      404
-    </h1>
-    <p>
-      Page not found.
-    </p>
-    <a href="/" style="text-decoration: none; color: white; font-weight: bold; background-color: #152ff5; padding: 7px; border-radius: 5px;">
-      Go to the front page.
-    </a>
-  </div>
-</body>
-</html>
+{% block content %}
+<h1>Ikke fundet</h1>
+
+<p>Du har ikke fundet det du søger.</p>
+
+<p><a href="javascript:history.back()">Kig dybere i dit hjerte</a>,
+eller <a href="/">få dig en helt ny tilværelse</a>. Der er
+<a href="mailto:best@fredagscafeen.dk">sjælestøtte til de værst ramte.</a></p>
+
+{% endblock %}
