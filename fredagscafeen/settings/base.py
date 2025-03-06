@@ -44,109 +44,123 @@ CONSTANCE_CONFIG = {
 }
 
 SECRET_ADMIN_KEYS = [
-    (
-        "GOOGLE_PASSWORD",
-        "Google password. OBS: Kontoen har 2FA",
-        "datcafe@gmail.com",
-        "https://gmail.com/",
-    ),
-    (
-        "MAILMAN",
-        "Alle, Best og Fest mailinglist admin password",
-        "datcafe@gmail.com",
-        "https://maillist.au.dk/postorius/lists/",
-    ),
-    (
-        "INSTAGRAM_PASSWORD",
-        "Instagram password",
-        "fredagscafeen.dk",
-        "https://www.instagram.com/",
-    ),
-    (
-        "CONTABO_PASSWORD",
-        "Contabo password. OBS: Kontoen har 2FA",
-        "best@fredagscafeen.dk",
-        "https://my.contabo.com/account/login",
-    ),
-    (
-        "MIDTTRAFIK_BESTILLING_PASSWORD",
-        "midttrafikbestilling.dk password",
-        "fredagscafeen",
-        "https://midttrafikbestilling.dk/",
-    ),
-    (
-        "CLOUDFLARE_PASSWORD",
-        "Cloudflare password",
-        "best@fredagscafeen.dk",
-        "https://dash.cloudflare.com/",
-    ),
-    (
-        "ZETTLE_PASSWORD",
-        "Zettle password",
-        "best@fredagscafeen.dk",
-        "https://my.zettle.com/",
-    ),
-    (
-        "BEVCO_PASSWORD",
-        "Bevco password",
-        "best@fredagscafeen.dk",
-        "https://www.bevco.dk/login",
-    ),
-    (
-        "DRINX_PASSWORD",
-        "Drinx password, Kunde nr. 27973647",
-        "fredag",
-        "https://drinx.dk/login",
-    ),
-    (
-        "KARET_PASSWORD",
-        "Hængelås-kodeord til karet",
-        None,
-        None,
-    ),
-    (
-        "KOELESKABE_PASSWORD",
-        "Hængelås-kodeord til køleskabene i Nygaardkælderen",
-        "Koden til det ene køleskab er omvendt det andet",
-        None,
-    ),
-    (
-        "BIZAY_PASSWORD",
-        "Bizay password",
-        "best@fredagscafeen.dk",
-        "https://www.bizay.dk/Account/Login",
-    ),
-    (
-        "DISCORD_PASSWORD",
-        "Discord password",
-        "datcafe@gmail.com",
-        "https://discord.com/channels/@me",
-    ),
-    (
-        "LASERTRYK_PASSWORD",
-        "Lasertryk.dk password",
-        "fredag",
-        "https://lasertryk.dk/login",
-    ),
-    (
-        "ONEPINT_PASSWORD",
-        "OnePint.dk password",
-        None,
-        "https://www.onepint.dk/customer/account/login/",
-    ),
+    {
+        "key": "GOOGLE_PASSWORD",
+        "description": "Google password. OBS: Kontoen har 2FA",
+        "username": "datcafe@gmail.com",
+        "url": "https://gmail.com/",
+        "role": "WEB",
+    },
+    {
+        "key": "MAILMAN",
+        "description": "Alle, Best og Fest mailinglist admin password",
+        "username": "datcafe@gmail.com",
+        "url": "https://maillist.au.dk/postorius/lists/",
+        "role": "WEB",
+    },
+    {
+        "key": "CONTABO_PASSWORD",
+        "description": "Contabo password. OBS: Kontoen har 2FA",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://my.contabo.com/account/login",
+        "role": "WEB",
+    },
+    {
+        "key": "CLOUDFLARE_PASSWORD",
+        "description": "Cloudflare password",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://dash.cloudflare.com/",
+        "role": "WEB",
+    },
+    {
+        "key": "DISCORD_PASSWORD",
+        "description": "Discord password",
+        "username": "datcafe@gmail.com",
+        "url": "https://discord.com/channels/@me",
+        "role": "WEB",
+    },
+    {
+        "key": "MIDTTRAFIK_BESTILLING_PASSWORD",
+        "description": "midttrafikbestilling.dk password",
+        "username": "fredagscafeen",
+        "url": "https://midttrafikbestilling.dk/",
+        "role": "EVENT",
+    },
+    {
+        "key": "ZETTLE_PASSWORD",
+        "description": "Zettle password",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://my.zettle.com/",
+        "role": "INDKØB",
+    },
+    {
+        "key": "BEVCO_PASSWORD",
+        "description": "Bevco password",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.bevco.dk/login",
+        "role": "INDKØB",
+    },
+    {
+        "key": "DRINX_PASSWORD",
+        "description": "Drinx password, Kunde nr. 27973647",
+        "username": "fredag",
+        "url": "https://drinx.dk/login",
+        "role": "INDKØB",
+    },
+    {
+        "key": "BIZAY_PASSWORD",
+        "description": "Bizay password",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.bizay.dk/Account/Login",
+        "role": "INDKØB",
+    },
+    {
+        "key": "ONEPINT_PASSWORD",
+        "description": "OnePint.dk password",
+        "username": None,
+        "url": "https://www.onepint.dk/customer/account/login/",
+        "role": "INDKØB",
+    },
+    {
+        "key": "KARET_PASSWORD",
+        "description": "Hængelås-kodeord til karet",
+        "username": None,
+        "url": None,
+        "role": "GENERAL",
+    },
+    {
+        "key": "KOELESKABE_PASSWORD",
+        "description": "Hængelås-kodeord til køleskabene i Nygaardkælderen",
+        "username": "Koden til det ene køleskab er omvendt det andet",
+        "url": None,
+        "role": "GENERAL",
+    },
+    {
+        "key": "LASERTRYK_PASSWORD",
+        "description": "Lasertryk.dk password",
+        "username": "fredag",
+        "url": "https://lasertryk.dk/login",
+        "role": "PR",
+    },
+    {
+        "key": "INSTAGRAM_PASSWORD",
+        "description": "Instagram password",
+        "username": "fredagscafeen.dk",
+        "url": "https://www.instagram.com/",
+        "role": "PR",
+    },
 ]
-
 
 load_dotenv()
 
 # Inject all secret keys
-for k, *_ in SECRET_ADMIN_KEYS:
-    v = os.getenv(k)
+for secret in SECRET_ADMIN_KEYS:
+    key = secret["key"]
+    v = os.getenv(key)
     if v != None:
-        globals()[k] = v
+        globals()[key] = v
     else:
-        print("WARNING: Missing secret key in env:", k)
-
+        print("WARNING: Missing secret key in env:", key)
 
 bootstrap5 = {
     "success_css_class": "",

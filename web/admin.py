@@ -1,8 +1,9 @@
+import os
+
 from django.conf import settings
 from django.contrib import admin, messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
-from django.urls import path
 
 from bartenders.models import BartenderShift
 from fredagscafeen.admin_view import custom_admin_view
@@ -13,9 +14,18 @@ from .forms import SwapForm1, SwapForm2
 @custom_admin_view("admin", "secrets")
 def secrets_view(admin, request):
     secrets = [
-        (key, title, username, getattr(settings, key, None), url)
-        for key, title, username, url in settings.SECRET_ADMIN_KEYS
+        {
+            "key": secret["key"],
+            "description": secret["description"],
+            "username": secret["username"],
+            "value": os.environ.get(secret["key"]),
+            "url": secret["url"],
+            "role": secret["role"],
+        }
+        for secret in settings.SECRET_ADMIN_KEYS
     ]
+    secrets = sorted(secrets, key=lambda x: x["role"])
+    secrets = RemoveDuplicateRoles(secrets)
 
     context = dict(
         # Include common variables for rendering the admin template.
@@ -24,6 +34,16 @@ def secrets_view(admin, request):
         secrets=secrets,
     )
     return TemplateResponse(request, "secrets_admin.html", context)
+
+
+def RemoveDuplicateRoles(secrets):
+    previous = None
+    for secret in secrets:
+        if previous == None or secret["role"] != previous:
+            previous = secret["role"]
+        else:
+            secret["role"] = None
+    return secrets
 
 
 @custom_admin_view("admin", "swap shifts")

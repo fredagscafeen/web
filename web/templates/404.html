@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block title %}404{% endblock %}
 
 {% block content %}
-<h1>Ikke fundet</h1>
+<h1>{% translate "Ikke fundet" %}</h1>
 
-<p>Du har ikke fundet det du søger.</p>
+<p>{% translate "Du har ikke fundet det du søger." %}</p>
 
-<p><a href="javascript:history.back()">Kig dybere i dit hjerte</a>,
-eller <a href="/">få dig en helt ny tilværelse</a>. Der er
-<a href="mailto:best@fredagscafeen.dk">sjælestøtte til de værst ramte.</a></p>
+<p><a href="javascript:history.back()">{% translate "Kig dybere i dit hjerte" %}</a>,
+{% translate "eller" %} <a href="/">{% translate "få dig en helt ny tilværelse" %}</a>. {% translate "Der er" %}
+<a href="mailto:best@fredagscafeen.dk">{% translate "sjælestøtte til de værst ramte." %}</a></p>
 
 {% endblock %}
