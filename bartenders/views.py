@@ -36,8 +36,8 @@ from .models import (
     next_bartender_shift_dates,
 )
 
-default_shifts_pages_per_page = 15
-default_deposit_pages_per_page = 15
+default_shifts_pages_per_page = "15"
+default_deposit_pages_per_page = "15"
 
 
 class Index(CreateView):
