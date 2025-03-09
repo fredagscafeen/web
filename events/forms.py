@@ -17,7 +17,7 @@ class SelectWithDisabledOptions(forms.Select):
 
 class EventResponseForm(forms.Form):
     ATTENDING_CHOICES = (
-        (None, "---------"),
+        (None, _("Vælg")),
         (True, _("Deltager")),
         (False, _("Deltager ikke")),
     )

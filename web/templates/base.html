@@ -10,7 +10,7 @@
             {{ config.BANNER_HTML|safe }}
         </div>
         {% endif %}
-        <header class="banner hidden-xs">
+        <header>
             <div class="row">
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
@@ -28,7 +28,7 @@
                         <input id="themeToggle" class="form-check-input" type="checkbox" onclick="switchTheme()">
                     </div>
                 </div>
-                <div class="col-auto d-none d-lg-block pt-2">
+                <div class="col-auto d-none d-sm-block pt-2">
                     {% if LANGUAGE_CODE == 'da' %}
                     <a href="/en/{{request.get_full_path|slice:"4:"}}">
                         <img src="{% static 'images/unionjac.png' %}" class="rounded" height="25">
@@ -43,20 +43,20 @@
         </header>
         <div class="row">
             <div class="col">
-                <nav class="navbar navbar-expand-lg">
+                <nav class="navbar navbar-expand-md">
                     <div class="container-fluid">
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarToggler">
                             {% with activepage=request.get_full_path|get_active_page %}
-                            <ul class="navbar-nav mb-2">
-                                <li class="nav-item px-2"><a {% if activepage == "" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="/{{ LANGUAGE_CODE }}/">{% translate "Forside" %}</a></li>
-                                <li class="nav-item px-2"><a {% if activepage == "barplan" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'barplan' %}">{% translate "Barplan" %}</a></li>
-                                <li class="nav-item px-2"><a {% if activepage == "bartenders" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'bartenders' %}">{% translate "Bartendere" %}</a></li>
-                                <li class="nav-item px-2"><a {% if activepage == "prices" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'prices' %}">{% translate "Sortiment" %}</a></li>
-                                <li class="nav-item px-2 dropdown">
-                                    <a {% if activepage|first in "udlejning" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Udlejning" %}<span class="caret"></span></a>
+                            <ul class="navbar-nav mb-2 flex-wrap">
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="/{{ LANGUAGE_CODE }}/">{% translate "Forside" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "barplan" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'barplan' %}">{% translate "Barplan" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "bartenders" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'bartenders' %}">{% translate "Bartendere" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "prices" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'prices' %}">{% translate "Sortiment" %}</a></li>
+                                <li class="nav-item px-2 dropdown flex-shrink-1">
+                                    <a {% if activepage != "" and activepage|first in "udlejning" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Udlejning" %}<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a {% if activepage == "udlejning" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejning' %}">{% translate "Udlejning af fadølsanlæg" %}</a></li>
                                         <li><a {% if activepage == "udlejningGrill" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningGrill' %}">{% translate "Udlejning af grill" %}</a></li>
@@ -65,20 +65,20 @@
                                         <li><a {% if activepage == "udlejningBoardGameCart" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningBoardGameCart' %}">{% translate "Udlejning af brætspilsvogn" %}</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item px-2"><a {% if activepage == "guides" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'guides' %}">{% translate "Guides" %}</a></li>
-                                <li class="nav-item px-2"><a {% if activepage == "board" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'board' %}">{% translate "Bestyrelsen" %}</a></li>
-                                <li class="nav-item px-2"><a {% if activepage == "events" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'events' %}">{% translate "Events" %}</a></li>
-                                <li class="nav-item px-2"><a {% if activepage == "gallery" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'gallery_index' %}">{% translate "Gallery" %}</a></li>
-                                <li class="nav-item px-2"><a {% if activepage == "about" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'about' %}">{% translate "Om baren" %}</a></li>
-                                <li class="nav-item px-2 dropdown">
-                                    <a {% if activepage == bartab or activepage == "profile" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "guides" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'guides' %}">{% translate "Guides" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "board" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'board' %}">{% translate "Bestyrelsen" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "events" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'events' %}">{% translate "Events" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "gallery" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'gallery_index' %}">{% translate "Gallery" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "about" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'about' %}">{% translate "Om baren" %}</a></li>
+                                <li class="nav-item px-2 dropdown flex-shrink-1">
+                                    <a {% if activepage != "" and activepage == "bartab" or activepage == "profile" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a {% if activepage == "bartab" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a {% if activepage == "profile" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item px-2"><a {% if activepage == "" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
+                                <li class="nav-item px-2 flex-shrink-1"><a class="nav-link" href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
                             </ul>
                             {% endwith %}
                         </div>
@@ -94,14 +94,11 @@
         </div>
         {% for message in messages %}
             <div class="alert {{ message.tags }} alert-dismissible shadow show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 {{ message | safe }}
             </div>
         {% endfor %}
         {% block content %}{% endblock %}
-
     </div>
 
     <footer>

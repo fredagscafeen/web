@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% load i18n %}
 {% load bootstrap5 bootstrap_icons %}
 
 {% block content %}
-
-{% load static %}
-{% load i18n %}
 
 <p>
 	{% blocktrans %}
@@ -16,78 +14,78 @@
 	{% endblocktrans %}
 </p>
 
-<div class="row" id="sortiment-row">
-	<div class="col-sm-6">
+<div class="row">
+	<div class="col-auto me-auto">
 		<h2>
 			{% translate "Fast sortiment" %}
 			{% if items_data %}
-			<div id="sortiment-count">
-				   ({{ items_data | length }})
-			</div>
+			<span>({{ items_data | length }})</span>
 			{% endif %}
 		</h2>
 	</div>
 
 	{% if items_data %}
-	<div class="col-sm-6" id="sortiment-search">
-		<input type="text" id="itemsSearchInput" placeholder="{% translate "Søg" %}" autofocus>
+	<div class="col-auto">
+		<input class="rounded px-2 fs-5" type="text" id="itemsSearchInput" placeholder="{% translate "Søg i sortimentet" %}" autofocus>
 	</div>
 	{% endif %}
 </div>
 
-{% if show_all %}
-<a href=".">{% translate "Vis kun ting på lager" %}</a>
-{% else %}
-<a href="?show_all">{% translate "Vis også ting ikke på lager" %}</a>
-{% endif %}
-
+<div class="row mt-2">
+	<div class="col">
+		{% if show_all %}
+		<a class="btn btn-primary btn-sm" href="." role="button">{% translate "Vis kun ting på lager" %}</a>
+		{% else %}
+		<a class="btn btn-outline-primary btn-sm" href="?show_all" role="button">{% translate "Vis også ting ikke på lager" %}</a>
+		{% endif %}
+	</div>
+</div>
 
 {% if items_data %}
-<table class="table table-striped tablesorter" id="items">
-	<thead>
-		<tr>
-			<th>{% translate "Bryghus" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></span></th>
-			<th class="filter-select filter-exact">{% translate "Navn" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-			<th class="hidden-xs">{% translate "Type" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-			<th class="hidden-xs">{% translate "Container" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-			<th>{% translate "Pris" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-			<th class="hidden-xs">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-			<th class="hidden-xs">{% translate "Image" %}</i></th>
-			{% if user.is_staff %}
-				<th class="hidden-xs"></th>
-			{% endif %}
-		</tr>
-	</thead>
-	<tbody>
-	{% get_current_language as LANGUAGE_CODE %}
-	{% for item in items_data %}
-		<tr class="{% if not item.inStock %}danger{% endif %}">
-			<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
-			<td>{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
-			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type.name }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}</td>
-			<td class="hidden-xs">{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}</td>
-			<td>{{ item.price|floatformat:-2 }},-</td>
-			<td class="hidden-xs">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
-			<td class="hidden-xs">
-				{% if item.image %}
-				<div class="board-image" style="background-image: url({{ item.image.url }});"></div>
-				{% else %}
-				<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
-				{% endif %}
-			</td>
-			{% if user.is_staff %}
-				<td class="hidden-xs"><a href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
-			{% endif %}
-		</tr>
-	{% endfor %}
-	</tbody>
-</table>
-
-<script src="{% static 'js/sortimentSearch.js' %}"></script>
-
+	<div class="table-responsive-md">
+		<table class="table table-striped tablesorter" id="items">
+			<thead>
+				<tr>
+					<th>{% translate "Bryghus" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></span></th>
+					<th class="filter-select filter-exact">{% translate "Navn" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+					<th class="d-none d-lg-table-cell">{% translate "Type" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+					<th class="d-none d-lg-table-cell">{% translate "Container" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+					<th>{% translate "Pris" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+					<th class="d-none d-lg-table-cell">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+					<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>
+					{% if user.is_staff %}
+						<th class="d-none d-lg-table-cell"></th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+			{% get_current_language as LANGUAGE_CODE %}
+			{% for item in items_data %}
+				<tr class="{% if not item.inStock %}table-danger{% endif %}">
+					<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
+					<td>{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
+					<td class="d-none d-lg-table-cell">{% if item.name_dk %}{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type.name }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}{% endif %}</td>
+					<td class="d-none d-lg-table-cell">{% if item.name_dk %}{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}{% endif %}</td>
+					<td>{{ item.price|floatformat:-2 }},-</td>
+					<td class="d-none d-lg-table-cell">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
+					<td class="d-none d-lg-table-cell">
+						{% if item.image %}
+						<img src="{{ item.image.url }}" style="width: 100px; height: 100px; object-fit: cover;">
+						{% else %}
+						<img src="{% static 'images/logo.png' %}" style="width: 100px; height: 100px; object-fit: cover;">
+						{% endif %}
+					</td>
+					{% if user.is_staff %}
+						<td class="d-none d-lg-table-cell"><a href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<script src="{% static 'js/sortimentSearch.js' %}"></script>
 {% else %}
-
-	<span>{% translate "Sortimentet er desværre tomt" %} &#9785;</span>
-
+	<p>{% translate "Sortimentet er desværre tomt" %} &#9785;</p>
 {% endif %}
+
 {% endblock %}

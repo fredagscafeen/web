@@ -1,7 +1,7 @@
 <!doctype html>
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ LANGUAGE_CODE }}" data-bs-theme="light">
 <head>
     {% load static %}
     <title>Fredagscaféen</title>
@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
 
     {% include "jquery.html" %}
     {% include "bootstrap.html" %}

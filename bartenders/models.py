@@ -2,7 +2,6 @@ import datetime
 from enum import IntEnum
 from urllib.parse import urljoin
 
-from django import forms
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
