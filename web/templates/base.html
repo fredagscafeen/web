@@ -2,13 +2,14 @@
 {% load i18n %}
 {% load static %}
 {% load bootstrap5 %}
+{% load get_active_page %}
 {% block body_content %}
-    {% if config.BANNER_HTML %}
-    <div class="alert alert-warning" role="alert">
-        {{ config.BANNER_HTML|safe }}
-    </div>
-    {% endif %}
     <div class="container pt-3 px-4">
+        {% if config.BANNER_HTML %}
+        <div class="alert alert-warning" role="alert">
+            {{ config.BANNER_HTML|safe }}
+        </div>
+        {% endif %}
         <header class="banner hidden-xs">
             <div class="row">
                 {% get_current_language as LANGUAGE_CODE %}
@@ -23,11 +24,11 @@
                     </a>
                 </div>
                 <div class="col-auto d-none d-sm-block">
-                    <div class="form-check form-switch fs-5">
+                    <div class="form-check form-switch fs-5 pt-2">
                         <input id="themeToggle" class="form-check-input" type="checkbox" onclick="switchTheme()">
                     </div>
                 </div>
-                <div class="col-auto d-none d-lg-block">
+                <div class="col-auto d-none d-lg-block pt-2">
                     {% if LANGUAGE_CODE == 'da' %}
                     <a href="/en/{{request.get_full_path|slice:"4:"}}">
                         <img src="{% static 'images/unionjac.png' %}" class="rounded" height="25">
@@ -48,36 +49,38 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <div class="collapse navbar-collapse" id="navbarToggler">
+                            {% with activepage=request.get_full_path|get_active_page %}
                             <ul class="navbar-nav mb-2">
-                                <li class="nav-item px-2"><a class="nav-link" href="/{{ LANGUAGE_CODE }}/">{% translate "Forside" %}</a></li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'barplan' %}">{% translate "Barplan" %}</a></li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'bartenders' %}">{% translate "Bartendere" %}</a></li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'prices' %}">{% translate "Sortiment" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="/{{ LANGUAGE_CODE }}/">{% translate "Forside" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "barplan" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'barplan' %}">{% translate "Barplan" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "bartenders" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'bartenders' %}">{% translate "Bartendere" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "prices" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'prices' %}">{% translate "Sortiment" %}</a></li>
                                 <li class="nav-item px-2 dropdown">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Udlejning" %}<span class="caret"></span></a>
+                                    <a {% if activepage|first in "udlejning" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Udlejning" %}<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{% url 'udlejning' %}">{% translate "Udlejning af fadølsanlæg" %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'udlejningGrill' %}">{% translate "Udlejning af grill" %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'udlejningProjector' %}">{% translate "Udlejning af projektor" %} &amp; {% translate "lærred" %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'udlejningSpeakers' %}">{% translate "Udlejning af højtalere" %}</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'udlejningBoardGameCart' %}">{% translate "Udlejning af brætspilsvogn" %}</a></li>
+                                        <li><a {% if activepage == "udlejning" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejning' %}">{% translate "Udlejning af fadølsanlæg" %}</a></li>
+                                        <li><a {% if activepage == "udlejningGrill" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningGrill' %}">{% translate "Udlejning af grill" %}</a></li>
+                                        <li><a {% if activepage == "udlejningProjector" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningProjector' %}">{% translate "Udlejning af projektor" %} &amp; {% translate "lærred" %}</a></li>
+                                        <li><a {% if activepage == "udlejningSpeakers" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningSpeakers' %}">{% translate "Udlejning af højtalere" %}</a></li>
+                                        <li><a {% if activepage == "udlejningBoardGameCart" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningBoardGameCart' %}">{% translate "Udlejning af brætspilsvogn" %}</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'guides' %}">{% translate "Guides" %}</a></li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'board' %}">{% translate "Bestyrelsen" %}</a></li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'events' %}">{% translate "Events" %}</a></li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'gallery_index' %}">{% translate "Gallery" %}</a></li>
-                                <li class="nav-item px-2"><a class="nav-link" href="{% url 'about' %}">{% translate "Om baren" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "guides" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'guides' %}">{% translate "Guides" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "board" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'board' %}">{% translate "Bestyrelsen" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "events" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'events' %}">{% translate "Events" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "gallery" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'gallery_index' %}">{% translate "Gallery" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "about" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'about' %}">{% translate "Om baren" %}</a></li>
                                 <li class="nav-item px-2 dropdown">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
+                                    <a {% if activepage == bartab or activepage == "profile" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
+                                        <li><a {% if activepage == "bartab" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
                                         <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
+                                        <li><a {% if activepage == "profile" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item px-2"><a class="nav-link" href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
+                                <li class="nav-item px-2"><a {% if activepage == "" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
                             </ul>
+                            {% endwith %}
                         </div>
                         {% if user.is_authenticated %}
                         <form action="{% url 'logout' %}" method="post" class="d-flex">
@@ -102,26 +105,26 @@
     </div>
 
     <footer>
-        <div class="container">
+        <div class="container-fluid">
             <hr>
-            <div class="row justify-content-md-center pb-2">
-                <div class="col-md-auto">
+            <div class="d-flex justify-content-center">
+                <div class="p-2">
                     <a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="noopener">
                     <img id="facebook-link" src="{% static 'images/facebook.png' %}" height="25">
                     </a>
                 </div>
-                <div class="col-md-auto">
+                <div class="p-2">
                     <a href="https://www.instagram.com/fredagscafeen.dk/" target="_blank" rel="noopener">
                         <img id="instagram-link" src="{% static 'images/instagram.png' %}" height="25">
                     </a>
                 </div>
-                <div class="col-md-auto">
+                <div class="p-2">
                     <a href="https://github.com/fredagscafeen" target="_blank" rel="noopener">
                         <img id="github-link" src="{% static 'images/github.png' %}" height="25">
                     </a>
                 </div>
             </div>
-            <div class="row justify-content-md-center pb-3">
+            <div class="row justify-content-center pb-3">
                 <div class="col-md-auto" align="center">
                     <p>Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
                     1993-{% now "Y" %} Fredagscaféen<p>
