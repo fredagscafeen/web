@@ -12,17 +12,19 @@
 	{% translate "Vi forsøger at opdaterer dem løbende, men forstå at de ikke altid afspejler virkeligheden fuldt ud." %}
 </p>
 
-{% for category, guides in guides %}
-<div class="panel panel-default">
-	<div class="panel-heading">{{ category }}</div>
-	<div class="panel-body">
-		<ul>
-			{% for guide in guides %}
-				<li><a href="{{ guide.document.url }}">{{ guide.name }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
+<div>
+	{% for category, guides in guides %}
+	<ul class="list-group pb-3">
+		<li class="list-group-item list-group-item-secondary">{{ category }}</li>
+		<li class="list-group-item pb-3">
+			<ul>
+				{% for guide in guides %}
+					<li><a href="{{ guide.document.url }}">{{ guide.name }}</a></li>
+				{% endfor %}
+			</ul>
+		</li>
+	</ul>
+	{% endfor %}
 </div>
-{% endfor %}
 
 {% endblock %}

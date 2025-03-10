@@ -70,9 +70,9 @@
 					<td class="d-none d-lg-table-cell">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
 					<td class="d-none d-lg-table-cell">
 						{% if item.image %}
-						<img src="{{ item.image.url }}" style="width: 100px; height: 100px; object-fit: cover;">
+						<div class="board-image" style="background-image: url({{ item.image.url }});"></div>
 						{% else %}
-						<img src="{% static 'images/logo.png' %}" style="width: 100px; height: 100px; object-fit: cover;">
+						<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
 						{% endif %}
 					</td>
 					{% if user.is_staff %}

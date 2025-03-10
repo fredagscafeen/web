@@ -21,50 +21,101 @@
 
 {% load static %}
 
-<div class="panel-group" id="accordion">
-{% for period in periods %}
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-					{% translate "Bestyrelsen" %} {{ period }}
-				</a>
-				{% if user.is_staff %}
-					<a href="/admin/bartenders/boardmemberperiod/{{ period.id }}/change/" class="pull-right">
-						{% translate "Edit" %}
-					</a>
-				{% endif %}
-			</h4>
-		</div>
-	<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse{% if forloop.first %} in{% endif %}">
-			<div class="panel-body">
-				<ul class="list-group">
-				{% for boardmember in period.boardmember_set.all %}
-						<li class="list-group-item col-md-6">
-
-							<div style="display: flex; flex-direction: row; align-items: center;">
-
-								{% if boardmember.image %}
-								<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
-								{% else %}
-								<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
-								{% endif %}
-
-								<div style="margin-left: 1em;">
-									<b>{{ boardmember.responsibilities }}</b>
-									<br>
-									<em>{{ boardmember.title }}</em>
-									<br>
-									{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)
-								</div>
+<div>
+	{% for period in periods %}
+		<ul class="list-group pb-2">
+			<li class="list-group-item list-group-item-secondary">
+				<div class="row">
+					<div class="col-auto me-auto">
+						<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+							{% translate "Bestyrelsen" %} {{ period }}
+						</a>
+					</div>
+					<div class="col-auto">
+						{% if user.is_staff %}
+							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/admin/bartenders/boardmemberperiod/{{ period.id }}/change/">
+								{% translate "Edit" %}
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			</li>
+			<li id="collapse{{ forloop.counter }}" class="list-group-item {% if forloop.first %} in{% endif %}">
+				<div class="row p-2">
+					{% for boardmember in period.boardmember_set.all %}
+						{% if boardmember.is_chairman %}
+						<div class="col-md-6 d-flex border border-primary p-3">
+							{% if boardmember.image %}
+							<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+							{% else %}
+							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+							<div class="ms-3 d-flex flex-column justify-content-center">
+								<b>{{ boardmember.responsibilities }}</b>
+								<em>{{ boardmember.title }}</em>
+								<span>{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)</span>
 							</div>
-						</li>
-				{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</div>
-{% endfor %}
+						</div>
+						{% endif %}
+					{% endfor %}
+					{% for boardmember in period.boardmember_set.all %}
+						{% if boardmember.is_treasurer %}
+						<div class="col-md-6 d-flex border border-primary p-3">
+							{% if boardmember.image %}
+							<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+							{% else %}
+							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+							<div class="ms-3 d-flex flex-column justify-content-center">
+								<b>{{ boardmember.responsibilities }}</b>
+								<em>{{ boardmember.title }}</em>
+								<span>{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)</span>
+							</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+				<!--{% translate "Menige bestyrelsesmedlemmer" %}-->
+				<div class="row p-2">
+					{% for boardmember in period.boardmember_set.all %}
+						{% if boardmember.is_common %}
+						<div class="col-md-6 d-flex border p-3">
+							{% if boardmember.image %}
+							<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+							{% else %}
+							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+							<div class="ms-3 d-flex flex-column justify-content-center">
+								<b>{{ boardmember.responsibilities }}</b>
+								<em>{{ boardmember.title }}</em>
+								<span>{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)</span>
+							</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+				<!--{% translate "Bestyrelsessuppleanter" %}-->
+				<div class="row p-2">
+					{% for boardmember in period.boardmember_set.all %}
+						{% if boardmember.is_substitute %}
+						<div class="col-md-6 d-flex border p-3">
+							{% if boardmember.image %}
+							<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+							{% else %}
+							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+							<div class="ms-3 d-flex flex-column justify-content-center">
+								<b>{{ boardmember.responsibilities }}</b>
+								<em>{{ boardmember.title }}</em>
+								<span>{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)</span>
+							</div>
+						</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</li>
+		</ul>
+	{% endfor %}
 </div>
 
 <h1>{% translate "Bestyrelsen gennem tiden" %}</h1>
