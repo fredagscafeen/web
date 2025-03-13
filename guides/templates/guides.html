@@ -3,7 +3,10 @@
 {% block content %}
 {% load i18n %}
 
-<h2>{% translate "Guides" %}</h2>
+<h2 id="guides">
+	{% translate "Guides" %}
+	<a href="#guides" class="section-link">#</a>
+</h2>
 
 <p>
 	{% translate "Her ligger alle de lækre guides, som er rare at have, når man involverer sig i driften af" context "Fredagscaféen" %} Fredagscaféen.

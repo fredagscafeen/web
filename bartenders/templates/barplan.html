@@ -6,12 +6,15 @@
 {% load bootstrap5 bootstrap_icons %}
 {% load is_with_user compare_to_current_week %}
 
-<h2 id="barplan">{% translate "Barplan" %}</h2>
+<h2 id="barplan">
+	{% translate "Barplan" %}
+	<a href="#barplan" class="section-link">#</a>
+</h2>
 
 <div class="row">
 	<div class="col-auto me-auto">
 		{% if show_all_bartendershifts %}
-		<a class="btn btn-primary btn-sm" href="?shifts_pages_per_page={{ shifts_pages_per_page }}#barplan" role="button">{% translate "Vis kun nuværende" %}</a>
+		<a class="btn btn-primary btn-sm" style="background-color: var(--datblue);" href="?shifts_pages_per_page={{ shifts_pages_per_page }}#barplan" role="button">{% translate "Vis kun nuværende" %}</a>
 		{% else %}
 		<a class="btn btn-outline-primary btn-sm" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&show_all_bartendershifts=true#barplan" role="button">{% translate "Vis også tidligere" %}</a>
 		{% endif %}
@@ -132,7 +135,10 @@
 
 <hr>
 
-<h2 id="pantvagter">{% translate "Pantvagter" %}</h2>
+<h2 id="deposit_shifts">
+	{% translate "Pantvagter" %}
+	<a href="#deposit_shifts" class="section-link">#</a>
+</h2>
 
 <div class="row">
 	<div class="col-auto me-auto">

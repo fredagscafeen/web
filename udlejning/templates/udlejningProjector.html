@@ -3,7 +3,10 @@
 {% block content %}
 {% load i18n %}
 
-<h2>{% translate "Reservation af projektor" %} &amp; {% translate "lærred" %}</h2>
+<h2 id="rental">
+	{% translate "Reservation af projektor" %} &amp; {% translate "lærred" %}
+	<a href="#rental" class="section-link">#</a>
+</h2>
 
 <h4>{% translate "Projektoren/lærredet" %} {% translate "er allerede reserveret følgende dage" %}</h4>
 

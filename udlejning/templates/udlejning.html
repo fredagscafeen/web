@@ -8,8 +8,9 @@
 {% endblock %}
 
 {% block content %}
-<h2>
+<h2 id="rental">
 	{% translate "Reservation af fadølsanlæg" %}
+	<a href="#rental" class="section-link">#</a>
 </h2>
 <h4>
 	{% translate "Fadølsanlæggene er allerede reserveret følgende dage" %}
@@ -27,8 +28,9 @@
 	</li>
 	{% endfor %}
 </ul>
-<h3>
+<h3 id="rules">
 	{% translate "Regler for udlån" %}
+	<a href="#rules" class="section-link">#</a>
 </h3>
 <p>
 	<i>{% translate "Disse regler er under revision, og der kan opstå fejl og mangler..." %}</i>
@@ -74,10 +76,11 @@
 	{% translate "Derfor skal du, for at være sikker på at kunne låne anlægget" %}, <b>{% translate "skrive mindst 7 dage i forvejen" %}</b>.
 	{% translate "Vi vil derfor, senest 5 dage før, melde ud hvorvidt nogen i bestyrelsen har mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt udlejning er muligt i god tid, dog er det stadig muligt at kunne låne anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at der kommer et svar i god tid." %}
 </p>
-<h3>
+<h3 id="info">
 	<span id="Generelle_informationer">
 		{% translate "Generelle informationer" %}
 	</span>
+	<a href="#info" class="section-link">#</a>
 </h3>
 <ul>
 	<li>
@@ -108,10 +111,11 @@
 		{% translate "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og chips koster 20kr/pose, der betales pr. åbnet enhed." %}
 	</li>
 </ul>
-<h3>
+<h3 id="renting">
 	<span id="rentingform">
 		{% translate "Ansøgninsformular" %}
 	</span>
+	<a href="#renting" class="section-link">#</a>
 </h3>
 <form method="post" action="/{{ LANGUAGE_CODE }}/udlejning/#rentingform">
 	{% csrf_token %}
