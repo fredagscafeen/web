@@ -180,28 +180,32 @@ class BoardMember(models.Model):
         Bartender, on_delete=models.CASCADE, related_name="board_members"
     )
     period = models.ForeignKey("BoardMemberPeriod", on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    responsibilities = models.CharField(max_length=255)
+    responsibilities = models.CharField(
+        max_length=255,
+        verbose_name=_("Ansvarsområde"),
+        help_text=_("F.eks. Formand, Kasserer, Suppleant eller andet"),
+    )
+    title = models.CharField(max_length=255, verbose_name=_("Titel"))
     image = models.ImageField(upload_to="boardMembers", blank=True, null=True)
 
     class Meta:
         unique_together = ("bartender", "period")
         ordering = (
             "period",
-            "title",
+            "bartender",
         )
 
     def __str__(self):
         return self.bartender.username
 
     def is_chairman(self):
-        return True if self.title == "Formand" else False
+        return True if self.responsibilities == "Formand" else False
 
     def is_treasurer(self):
-        return True if self.title == "Kasserer" else False
+        return True if self.responsibilities == "Kasserer" else False
 
     def is_substitute(self):
-        return True if self.title == "Suppleant" else False
+        return True if self.responsibilities == "Suppleant" else False
 
     def is_common(self):
         return (

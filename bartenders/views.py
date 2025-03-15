@@ -266,11 +266,31 @@ class Board(ListView):
 
         intervals = {}
 
+        boards = []
+
         for period in periods.all():
+            board = {
+                "period": period,
+                "chairman": None,
+                "treasurer": None,
+                "substitutes": [],
+                "commons": [],
+            }
             for boardmember in period.boardmember_set.all():
                 intervals.setdefault(boardmember.bartender, []).append(
                     (period.start_date, period.approx_end_date)
                 )
+                if boardmember.is_chairman():
+                    board["chairman"] = boardmember
+                elif boardmember.is_treasurer():
+                    board["treasurer"] = boardmember
+                elif boardmember.is_substitute():
+                    board["substitutes"].append(boardmember)
+                else:
+                    board["commons"].append(boardmember)
+            boards.append(board)
+
+        context["boards"] = boards
 
         merged_intervals = []
         for bartender, ints in intervals.items():
@@ -296,10 +316,17 @@ class Board(ListView):
             )
 
         timesheet_data = {
-            "start": periods.last().start_date.year,
-            "end": periods.first().start_date.year + 1,
+            "start": datetime.datetime.now().year - 1,
+            "end": datetime.datetime.now().year + 1,
             "data": data,
         }
+
+        if periods:
+            timesheet_data = {
+                "start": periods.last().start_date.year,
+                "end": periods.first().start_date.year + 1,
+                "data": data,
+            }
 
         context["timesheet_data"] = timesheet_data
 
