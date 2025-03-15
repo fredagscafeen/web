@@ -2,8 +2,11 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from bartenders.models import Bartender, BartenderShiftPeriod, BoardMemberPeriod
+from events.utils import get_year
+from gallery.models import Album
 
 
 class EventChoice(models.Model):
@@ -55,12 +58,32 @@ class Event(models.Model):
     class Meta:
         ordering = ("-start_datetime",)
 
-    name = models.CharField(max_length=255)
-    location = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name"),
+    )
+    location = models.CharField(
+        max_length=255,
+        verbose_name=_("Location"),
+    )
+    description = models.TextField(
+        blank=True,
+        verbose_name=_("Description"),
+    )
+    year = models.PositiveSmallIntegerField(default=get_year, verbose_name=_("Årgang"))
+    event_album = models.ForeignKey(
+        Album,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="album",
+        verbose_name=_("Event album"),
+    )
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
-    response_deadline = models.DateTimeField()
+    response_deadline = models.DateTimeField(
+        verbose_name=_("Response deadline"),
+    )
     bartender_whitelist = models.ManyToManyField(
         Bartender,
         related_name="whitelisted_events",

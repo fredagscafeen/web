@@ -20,3 +20,46 @@ h2:hover .section-link, h3:hover .section-link {
     background-repeat: no-repeat;
     flex-shrink: 0;
 }
+
+.event-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-image-large {
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-image-large:hover {
+    opacity: 0.5;
+}
+
+.timeline {
+    border-left: 1px solid var(--bs-secondary);
+    position: relative;
+    list-style: none;
+}
+
+.timeline .timeline-item {
+    position: relative;
+}
+
+.timeline .timeline-item:after {
+    position: absolute;
+    display: block;
+    top: 0;
+}
+
+.timeline .timeline-item:after {
+    background-color: var(--bs-secondary);
+    left: -18px;
+    border-radius: 50%;
+    height: 11px;
+    width: 11px;
+    content: "";
+}
+
+.timeline .timeline-item-primary:after {
+    background-color: var(--bs-primary);
+}
