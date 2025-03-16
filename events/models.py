@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from bartenders.models import Bartender, BartenderShiftPeriod, BoardMemberPeriod
 from events.utils import get_year
 from gallery.models import Album
+from web.models import TimeStampedModel
 
 
 class EventChoice(models.Model):
@@ -54,7 +55,7 @@ class EventChoiceOption(models.Model):
             return False
 
 
-class Event(models.Model):
+class Event(TimeStampedModel):
     class Meta:
         ordering = ("-start_datetime",)
 

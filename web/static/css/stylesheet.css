@@ -8,7 +8,7 @@
     text-decoration: none;
 }
 
-h2:hover .section-link, h3:hover .section-link {
+h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover .section-link, h6:hover .section-link {
     display: inline;
 }
 
@@ -33,6 +33,51 @@ h2:hover .section-link, h3:hover .section-link {
 
 .event-image-large:hover {
     opacity: 0.5;
+}
+
+.thumbnail {
+    background-color: #151515;
+    border-color: #4d4d4d;
+}
+
+.thumbnail:hover {
+    border-color: #eee;
+}
+
+.thumbcap {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    img, span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        text-align: center;
+        display: block;
+        width:100%;
+        margin-bottom:-100%;
+    }
+    .glyphicon {
+        font-size: 50px;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+    }
+    .caption {
+        background-color: rgba(230, 230, 230, 0.5);
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        h5 small {
+            white-space: nowrap;
+        }
+    }
 }
 
 .timeline {

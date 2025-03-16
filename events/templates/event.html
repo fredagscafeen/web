@@ -17,13 +17,13 @@
 		{% if album.thumbnail %}
 			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
 				<div class="card">
-					<img src="{{ album.thumbnail.url }}" class="event-image-large hover-primary">
+					<img src="{{ album.thumbnail.url }}" class="event-image-large">
 				</div>
 			</a>
 		{% else %}
 			<a href="{% url 'gallery_index' %}">
 				<div class="card">
-					<img src="{% static 'images/logo.png' %}" class="event-image-large hover-primary">
+					<img src="{% static 'images/logo.png' %}" class="event-image-large">
 				</div>
 			</a>
 		{% endif %}
@@ -137,6 +137,15 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="mt-3">
+	<p class="fw-light">
+		{% translate "Created" %} {{ event.created_at | date:"d M, Y" }}
+		{% if event.updated_at.date != event.created_at.date %}
+		<br>
+		{% translate "Updated" %} {{ event.updated_at | date:"d M, Y" }}
+		{% endif %}
+	</p>
 </div>
 
 <script>

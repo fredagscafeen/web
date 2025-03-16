@@ -28,6 +28,8 @@ class Album(models.Model):
     class Meta:
         ordering = ["year", "bartenderalbum", "oldFolder", "-publish_date"]
         unique_together = (("year", "slug"),)
+        verbose_name = _("Album")
+        verbose_name_plural = _("Albummer")
 
     title = models.CharField(max_length=200, verbose_name=_("Titel"))
     publish_date = models.DateField(

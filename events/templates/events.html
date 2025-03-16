@@ -28,7 +28,7 @@
 				<div class="col-lg-6 mb-2">
 					<div class="card">
 						{% if event.event_album.thumbnail %}
-							<img src="{{ event.event_album.thumbnail.url }}" class="card-img-top event-image">
+							<img src="{{ event.event_album.thumbnail.url }}" class="card-img-top event-image" alt="{{ event.name }}">
 						{% endif %}
 						<div class="card-body">
 							<h4 class="card-title">{{ event.name }}</h4>
