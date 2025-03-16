@@ -5,6 +5,7 @@
 {% block content %}
 {% load i18n %}
 {% load static %}
+{% load not_answered %}
 
 <h2 id="events">
 	{% translate "Bartender events" %}
@@ -31,7 +32,13 @@
 							<img src="{{ event.event_album.thumbnail.url }}" class="card-img-top event-image" alt="{{ event.name }}">
 						{% endif %}
 						<div class="card-body">
-							<h4 class="card-title">{{ event.name }}</h4>
+							<h4 class="card-title">
+								{{ event.name }}
+								{% if user|not_answered:event %}
+									<i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
+									<span class="visually-hidden">{% translate "Not answered" %}</span>
+								{% endif %}
+							</h4>
 							<h6 class="card-subtitle mb-2 text-body-secondary"><i>{% bs_icon 'calendar-event' %}</i> <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.</h6>
 							<p class="mb-1"><i>{% bs_icon 'pin-map-fill' %}</i> {{ event.location }}</p>
 							<p><i>{% bs_icon 'people-fill' %}</i> {{ event.attending_count }}</p>
