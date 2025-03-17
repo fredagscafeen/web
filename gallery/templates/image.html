@@ -18,8 +18,8 @@
 					<div class="card-header" style="z-index: 100;">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb m-0">
-								<li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
-								<li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" id="albumlink" href="{% url 'album' year=album.year album_slug=album.slug %}">{{ album.title }}</a></li>
+								<li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
+								<li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" id="albumlink" href="{% url 'album' year=album.year album_slug=album.slug %}">{{ album.title }}</a></li>
 								<li class="breadcrumb-item active">
 									{{ forloop.counter }} {% translate "af" %} {{ file_count }}
 									{% if start_file.type == "I" %}
@@ -53,11 +53,11 @@
 							title="{{ file.caption }}">
 						{% endif %}
 						{% if file_count > 1 %}
-							<a href="{{ prev_file.slug }}" class="carousel-control-prev gal-control gal-prev" rel="prev" type="button" style="z-index: 99;">
+							<a href="{{ prev_file.slug }}#gal-carousel" class="carousel-control-prev gal-control gal-prev" rel="prev" type="button" style="z-index: 99;">
 								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">{% translate "Forrige" %}</span>
 							</a>
-							<a href="{{ next_file.slug }}" class="carousel-control-next gal-control gal-next" rel="next" type="button">
+							<a href="{{ next_file.slug }}#gal-carousel" class="carousel-control-next gal-control gal-next" rel="next" type="button">
 								<span class="carousel-control-next-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">{% translate "Næste" %}</span>
 							</a>
@@ -69,7 +69,7 @@
 								<p class="m-0">{{ start_file.date|default_if_none:"" }}</p>
 							</div>
 							<div class="col-auto hidden-xs">
-								<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ start_file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ start_file.file.size|filesizeformat }})</a>
+								<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{{ start_file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ start_file.file.size|filesizeformat }})</a>
 							</div>
 						</div>
 					</div>

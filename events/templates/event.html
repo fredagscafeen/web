@@ -8,7 +8,7 @@
 {% load not_answered %}
 
 <div class="mb-3">
-	<a href="{% url 'events' %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+	<a href="{% url 'events' %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
 		<i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage" %}
 	</a>
 </div>
@@ -19,12 +19,6 @@
 			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
 				<div class="card">
 					<img src="{{ album.thumbnail.url }}" class="event-image-large">
-				</div>
-			</a>
-		{% else %}
-			<a href="{% url 'gallery_index' %}">
-				<div class="card">
-					<img src="{% static 'images/logo.png' %}" class="event-image-large">
 				</div>
 			</a>
 		{% endif %}
@@ -40,7 +34,7 @@
 			</div>
 			<div class="col-auto">
 				{% if user.is_staff %}
-					<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/admin/events/event/{{ event.id }}/change/">
+					<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/events/event/{{ event.id }}/change/">
 						{% translate "Edit" %}
 					</a>
 				{% endif %}
@@ -65,11 +59,11 @@
 			{% elif not may_attend %}
 			<p><b>{% translate "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen." %}</b></p>
 			<p>{% translate "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav" %}:
-			<ul>
-				<li>{% translate "Man er aktiv bartender." %}</li>
-				<li>{% translate "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år siden." %}</li>
-				<li>{% translate "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden." %}</li>
-			</ul>
+				<ul>
+					<li>{% translate "Man er aktiv bartender." %}</li>
+					<li>{% translate "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år siden." %}</li>
+					<li>{% translate "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden." %}</li>
+				</ul>
 			</p>
 			{% endif %}
 		</div>
@@ -103,7 +97,7 @@
 										{{ response.bartender.email }},
 									{% endif %}
 								{% endfor %}
-								?cc=best@fredagscafeen.dk&bcc=&subject={{ event.name }}&body=" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" target="_top">
+								?cc=best@fredagscafeen.dk&bcc=&subject={{ event.name }}&body=" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" target="_top">
 									<i>{% bs_icon 'envelope-at-fill' size='1.0em' %}</i> {% translate "Send mail" %}
 								</a>
 							{% endif %}

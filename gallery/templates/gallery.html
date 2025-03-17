@@ -17,13 +17,13 @@
 			<div class="card-header">
 				<div class="row">
 					<div class="col-auto me-auto">
-						<a class="fw-medium link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" {% if year == show_year %}data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse{{year}}"{% else %}href="{{year}}"{% endif %} role="button">
+						<a class="fw-medium link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" {% if year == show_year %}data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse{{year}}"{% else %}href="{{year}}"{% endif %} role="button">
 							{{ year }}
 						</a>
 					</div>
 					<div class="col-auto">
 						{% if user.is_staff %}
-							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/admin/gallery/album/{{ period.id }}">
+							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/gallery/album/{{ period.id }}">
 								{% translate "Edit" %}
 							</a>
 						{% endif %}
@@ -46,7 +46,7 @@
                         {% if album.bartenderalbum and not user|is_bartender %}
                         {% else %}
                         <div class="col-xs-6 col-sm-4 col-md-3 mb-3">
-                            <div class="card p-1 hover-border-primary">
+                            <div class="card card-hover p-1 hover-border-primary">
                                 <div class="thumbcap">
                                     {% if album.thumbnail %}
                                         <img src="{{ album.thumbnail.url }}" alt="{{ album.title }}">
@@ -57,7 +57,7 @@
                                         <img src="{% static 'images/logo.png' %}" alt="{{ album.title }}">
                                         {% endif %}
                                     {% endif %}
-                                    <div class="caption p-3">
+                                    <div class="caption ps-2 pt-3 pb-2">
                                         <h5 class="card-title fs-6">
                                             {{ album.title }}
                                             <small class="card-subtitle text-body-secondary fw-light">

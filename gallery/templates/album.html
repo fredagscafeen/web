@@ -58,7 +58,7 @@
             </div>
             <div class="col-auto">
                 {% if user.is_staff %}
-                    <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/admin/gallery/album/{{ album.id }}/change/">
+                    <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/gallery/album/{{ album.id }}/change/">
                         {% translate "Edit" %}
                     </a>
                 {% endif %}
@@ -74,7 +74,7 @@
         <div class="row mt-4">
             {% for file in files %}
             <div class="col-xs-6 col-sm-4 col-md-3 mb-3">
-                <div class="card p-1 hover-border-primary">
+                <div class="card card-hover p-1 hover-border-primary">
                     <div class="thumbcap">
                         {% if file.type == "I" %}
                         <img src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
@@ -97,7 +97,7 @@
             {% endfor %}
         </div>
         <div class="col-xs-12">
-            <a href="{% url 'year' year=album.year  %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+            <a href="{% url 'year' year=album.year  %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
                 <i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage til" %} {{ album.year }}
             </a>
         </div>

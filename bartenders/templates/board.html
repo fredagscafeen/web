@@ -27,13 +27,13 @@
 			<div class="card-header">
 				<div class="row">
 					<div class="col-auto me-auto">
-						<a class="fw-medium link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" data-bs-toggle="collapse" href="#collapse{{ forloop.counter }}" role="button">
+						<a class="fw-medium link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" data-bs-toggle="collapse" href="#collapse{{ forloop.counter }}" role="button">
 							{% translate "Bestyrelsen" %} {{ board.period }}
 						</a>
 					</div>
 					<div class="col-auto">
 						{% if user.is_staff %}
-							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/admin/bartenders/boardmemberperiod/{{ board.period.id }}/change/">
+							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberperiod/{{ board.period.id }}/change/">
 								{% translate "Edit" %}
 							</a>
 						{% endif %}

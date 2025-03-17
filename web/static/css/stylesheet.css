@@ -80,6 +80,15 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     }
 }
 
+.card-hover:hover {
+    border-color: var(--datblue);
+}
+
+.google-maps {
+    margin-bottom: -6px;
+    height: 300px;
+}
+
 .timeline {
     border-left: 1px solid var(--bs-secondary);
     position: relative;
