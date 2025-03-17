@@ -47,29 +47,27 @@
                         {% else %}
                         <div class="col-xs-6 col-sm-4 col-md-3 mb-3">
                             <div class="card card-hover p-1 hover-border-primary">
-                                <div class="thumbcap">
-                                    {% if album.thumbnail %}
-                                        <img src="{{ album.thumbnail.url }}" alt="{{ album.title }}">
+                                {% if album.thumbnail %}
+                                    <img class="card-img" src="{{ album.thumbnail.url }}" alt="{{ album.title }}">
+                                {% else %}
+                                    {% if firstFile.type == "I" %}
+                                    <img class="card-img" src="{{ firstFile.file.crop.253x253.url }}" alt="{{ album.title }}">
                                     {% else %}
-                                        {% if firstFile.type == "I" %}
-                                        <img src="{{ firstFile.file.crop.253x253.url }}" alt="{{ album.title }}">
-                                        {% else %}
-                                        <img src="{% static 'images/logo.png' %}" alt="{{ album.title }}">
-                                        {% endif %}
+                                    <img class="card-img" src="{% static 'images/logo.png' %}" alt="{{ album.title }}">
                                     {% endif %}
-                                    <div class="caption ps-2 pt-3 pb-2">
-                                        <h5 class="card-title fs-6">
-                                            {{ album.title }}
-                                            <small class="card-subtitle text-body-secondary fw-light">
-                                                {{ album.count }}
-                                                {% blocktranslate count c=album.count %}
-                                                billede
-                                                {% plural %}
-                                                billeder
-                                                {% endblocktranslate %}
-                                            </small>
-                                        </h5>
-                                    </div>
+                                {% endif %}
+                                <div class="card-img-overlay p-1">
+                                    <h5 class="card-title fs-6 text-light bg-secondary bg-opacity-50 p-3">
+                                        {{ album.title }}
+                                        <span class="badge text-bg-dark rounded-pill">
+                                            {{ album.count }}
+                                            {% blocktranslate count c=album.count %}
+                                            billede
+                                            {% plural %}
+                                            billeder
+                                            {% endblocktranslate %}
+                                        </span>
+                                    </h5>
                                 </div>
                                 <a class="card-link stretched-link " href="{% url 'album' year=album.year album_slug=album.slug %}"></a>
                             </div>
