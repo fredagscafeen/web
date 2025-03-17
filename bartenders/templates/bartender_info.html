@@ -3,35 +3,6 @@
 {% load static %}
 {% load bootstrap5 bootstrap_icons %}
 
-{% block extrahead %}
-<script type="text/javascript">
-$(function() {
-    const isDarkMode = document.documentElement.classList.contains("dark");
-    $('#unavailable_dates_table input').change(function(e) {
-        if (isDarkMode) {
-            $(this).closest('td').toggleClass('danger-dark', this.checked);
-        } else {
-            $(this).closest('td').toggleClass('danger', this.checked);
-        }
-    });
-
-    var preventUnload = false;
-    $('#info_form').submit(function(e) {
-        preventUnload = false;
-    });
-    $('#info_form').change(function(e) {
-        preventUnload = true;
-    });
-    window.addEventListener('beforeunload', function (e) {
-        if (preventUnload) {
-            e.preventDefault();
-            e.returnValue = '';
-        }
-    });
-});
-</script>
-{% endblock %}
-
 {% block content %}
 
 {% if object %}
@@ -39,57 +10,69 @@ $(function() {
 {% csrf_token %}
 {% buttons %}
     {% translate "Gem" as BUTTON_TEXT %}
-    <button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+    <button type="submit" class="btn btn-primary">
         <i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
     </button>
 {% endbuttons %}
 <p><b>{% translate "Bartender status" %}:</b>
 {% if object.isActiveBartender %}
     {% translate "Aktiv" %}
-    <button type="submit" class="btn btn-danger pull-right" name="deactivate" onclick="return confirm('{% translate "Er du sikker?" %} \n{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}');">{% translate "Bliv inaktiv" %}</button>
+    <div class="d-md-flex ms-auto justify-content-md-end">
+        <button type="submit" class="btn btn-danger" name="deactivate" onclick="return confirm('{% translate "Er du sikker?" %} \n{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}');">
+            {% translate "Bliv inaktiv" %}
+        </button>
+    </div>
 {% else %}
     {% translate "Inaktiv" %}
-    <span class="pull-right">({% translate "Hvis du gerne vil være aktiv igen, så kontakt" %} <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>)</span>
+    <p>{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}</p>
+    <div class="d-md-flex ms-auto justify-content-md-end">
+        <p>({% translate "Hvis du gerne vil være aktiv igen, så kontakt" %}
+            <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>)
+        </p>
+    </div>
 {% endif %}
 </p>
-{% if not object.isActiveBartender %}
-    <p>{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}</p>
-{% endif %}
 <br>
 <p><b>{% translate "Mailinglist status" %}:</b>
 {% if object.is_on_mailing_list %}
     {% translate "På mailinglisten" %}
     {% if not object.isActiveBartender %}
-        <button type="submit" class="btn btn-danger pull-right" name="unsubscribe_maillist">{% translate "Meld dig af mailinglisten" %}</button>
+        <div class="d-md-flex ms-auto justify-content-md-end">
+            <button type="submit" class="btn btn-danger align-items-end" name="unsubscribe_maillist">{% translate "Meld dig af mailinglisten" %}</button>
+        </div>
     {% endif %}
 {% else %}
     {% translate "Ikke på mailinglisten" %}
-    <button type="submit" class="btn btn-success pull-right" name="subscribe_maillist">{% translate "Meld dig på mailinglisten" %}</button>
+    <button type="submit" class="btn btn-success align-items-end" name="subscribe_maillist">{% translate "Meld dig på mailinglisten" %}</button>
 {% endif %}
 </p>
 <br>
 {% bootstrap_form form %}
 
-<label>{% translate "Datoer, hvor du ikke har mulighed for at stå i bar" %}:</label>
-<table id="unavailable_dates_table" class="table table-bordered table-hover">
-<tbody>
-{% for first_date, dates in dates_table %}
-    <tr>
-        <th scope="row">
-            {{ first_date | date:'M Y' }}:
-        </th>
-    {% for id, date, checked in dates %}
-        <td {% if checked %}class="danger"{% endif %}>
-            <label><input type="checkbox" name="unavailable_ordinals" value="{{ id }}" {% if checked %}checked{% endif %}> {{ date.day }}.</label>
-        </td>
-    {% endfor %}
-    </tr>
-{% endfor %}
-</tbody>
-</table>
+<div class="row">
+    <div class="col-auto me-auto">
+        <label>{% translate "Datoer, hvor du ikke har mulighed for at stå i bar" %}:</label>
+        <table id="unavailable_dates_table" class="table table-bordered table-hover border">
+            <tbody>
+            {% for first_date, dates in dates_table %}
+                <tr>
+                    <th scope="row">
+                        {{ first_date | date:'M Y' }}:
+                    </th>
+                {% for id, date, checked in dates %}
+                    <td {% if checked %}class="table-danger"{% endif %}>
+                        <label><input type="checkbox" name="unavailable_ordinals" value="{{ id }}" {% if checked %}checked{% endif %}> {{ date.day }}.</label>
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% buttons %}
     {% translate "Gem" as BUTTON_TEXT %}
-    <button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+    <button type="submit" class="btn btn-primary">
         <i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
     </button>
 {% endbuttons %}
