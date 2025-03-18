@@ -5,7 +5,7 @@
 {% block content %}
 {% load i18n %}
 {% load static %}
-{% load not_answered %}
+{% load is_bartender not_answered first_file %}
 
 <h2 id="events">
 	{% translate "Bartender events" %}
@@ -28,8 +28,19 @@
 			<li class="timeline-item mb-3">
 				<div class="col-lg-6 mb-2">
 					<div class="card card-hover">
-						{% if event.event_album.thumbnail %}
-							<img src="{{ event.event_album.thumbnail.url }}" class="card-img-top event-image" alt="{{ event.name }}">
+						{% if album.bartenderalbum and not user|is_bartender %}
+						{% else %}
+							{% with firstFile=event.event_album|first_file %}
+							{% if event.event_album.thumbnail %}
+								<img src="{{ event.event_album.thumbnail.url }}" class="card-img-top event-image" alt="{{ event.name }}">
+							{% elif firstFile %}
+								{% if firstFile.type == "I" %}
+								<img src="{{ firstFile.file.crop.940x940.url }}" class="card-img-top event-image" alt="{{ event.name }}">
+								{% else %}
+								<img src="{% static "images/logo.png" %}" class="card-img-top event-image" alt="{{ event.name }}">
+								{% endif %}
+							{% endif %}
+							{% endwith %}
 						{% endif %}
 						<div class="card-body">
 							<h4 class="card-title">

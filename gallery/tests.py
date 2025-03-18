@@ -97,4 +97,4 @@ class GalleryViewTest(TestCase):
 
     def test_album_count(self):
         response = self.client.get(reverse("gallery_index"))
-        self.assertEqual(1, len(list(response.context["albumSets"])))
+        self.assertEqual(1, len(list(response.context["albums"])))

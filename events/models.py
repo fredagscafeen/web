@@ -56,9 +56,6 @@ class EventChoiceOption(models.Model):
 
 
 class Event(TimeStampedModel):
-    class Meta:
-        ordering = ("-start_datetime",)
-
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -95,6 +92,10 @@ class Event(TimeStampedModel):
         related_name="blacklisted_events",
         blank=True,
     )
+
+    class Meta:
+        unique_together = ("name", "year")
+        ordering = ("-start_datetime",)
 
     def __str__(self):
         return self.name

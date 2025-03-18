@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
-{% load is_bartender %}
+{% load is_bartender first_file %}
 
 {% load bootstrap5 bootstrap_icons %}
 
@@ -33,7 +33,7 @@
 			<ul id="collapse{{ year }}" class="list-group list-group-flush collapse{% if year == show_year %} show{% endif %}" data-bs-parent="#accordion" aria-labelledby="heading{{year}}">
                 {% if year == show_year %}
                     <div class="row m-4">
-                        {% for album, firstFile in albumSets %}
+                        {% for album in albums %}
                         {% ifchanged album.bartenderalbum %}{% if album.bartenderalbum and user|is_bartender %}
                         <div class="pt-3">
                             <hr>
@@ -50,11 +50,13 @@
                                 {% if album.thumbnail %}
                                     <img class="card-img" src="{{ album.thumbnail.url }}" alt="{{ album.title }}">
                                 {% else %}
+                                    {% with firstFile=album|first_file %}
                                     {% if firstFile.type == "I" %}
                                     <img class="card-img" src="{{ firstFile.file.crop.253x253.url }}" alt="{{ album.title }}">
                                     {% else %}
                                     <img class="card-img" src="{% static 'images/datcafe_logo_blaa_square.png' %}" alt="{{ album.title }}">
                                     {% endif %}
+                                    {% endwith %}
                                 {% endif %}
                                 <div class="card-img-overlay p-1">
                                     <h5 class="card-title fs-6 text-light bg-secondary bg-opacity-50 p-3">

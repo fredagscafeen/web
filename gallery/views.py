@@ -72,15 +72,10 @@ def gallery(request, **kwargs):
     # Hide albums not in show_year
     albums = [a for a in albums if a.year == show_year]
 
-    firstImages = BaseMedia.objects.filter(album__in=albums)
-    firstImages = firstImages.select_subclasses()
-    firstImages = {fi.album_id: fi for fi in firstImages}
-    albumSets = [(a, firstImages.get(a.id)) for a in albums]
-
     context = {
         "years": years,
         "show_year": show_year,
-        "albumSets": albumSets,
+        "albums": albums,
     }
 
     return render(request, "gallery.html", context)

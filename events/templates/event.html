@@ -5,7 +5,7 @@
 {% block content %}
 {% load i18n %}
 {% load static %}
-{% load not_answered %}
+{% load is_bartender not_answered first_file %}
 
 <div class="mb-3">
 	<a href="{% url 'events' %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
@@ -13,17 +13,36 @@
 	</a>
 </div>
 <div>
-	{% if event.event_album %}
-		{% with album=event.event_album %}
-		{% if album.thumbnail %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
-				<div class="card">
-					<img src="{{ album.thumbnail.url }}" class="event-image-large">
-				</div>
-			</a>
+	{% with album=event.event_album %}
+	{% if album %}
+		{% if album.bartenderalbum and not user|is_bartender %}
+		{% else %}
+			{% with firstFile=album|first_file %}
+			{% if album.thumbnail %}
+				<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+					<div class="card">
+						<img src="{{ album.thumbnail.url }}" class="event-image-large">
+					</div>
+				</a>
+			{% elif firstFile %}
+				{% if firstFile.type == "I" %}
+				<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+					<div class="card">
+						<img src="{{ firstFile.file.crop.940x940.url }}" class="event-image-large">
+					</div>
+				</a>
+				{% else %}
+				<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+					<div class="card">
+						<img src="{% static "images/logo.png" %}" class="event-image-large">
+					</div>
+				</a>
+				{% endif %}
+			{% endif %}
+			{% endwith %}
 		{% endif %}
-		{% endwith %}
 	{% endif %}
+	{% endwith %}
 	<div class="mt-3">
 		<div class="row">
 			<div class="col-auto me-auto">
