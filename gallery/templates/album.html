@@ -37,9 +37,7 @@
         <div class="col-auto ms-auto">
             <form onsubmit="return confirm('{% translate "Er du sikker på at du vil offentliggøre alle nye billeder i albummet?" %}')" method="post">
                 {% csrf_token %}
-                <button name="set_all_new_visible" type="submit" class="btn btn-primary">
-                    {% translate "Gør alle nye billeder synlige" %}
-                </button>
+                <input name="set_all_new_visible" type="submit" class="btn btn-primary" value="{% translate "Gør alle nye billeder synlige" %}" />
             </form>
         </div>
     </div>
@@ -70,8 +68,8 @@
         <li class="list-group-item">{{ album.description }}</li>
     </ul>
     {% endif %}
-    <ul>
-        <div class="row mt-4">
+    <ul class="p-0">
+        <div class="row m-4">
             {% for file in files %}
             <div class="col-xs-6 col-sm-4 col-md-3 mb-3">
                 <div class="card card-hover p-1">
@@ -92,11 +90,11 @@
                 <p>{% translate "Albummet" %} '{{ album.title }}' {% translate "har ingen billeder endnu." %}</p>
             </div>
             {% endfor %}
-        </div>
-        <div class="col-xs-12">
-            <a href="{% url 'year' year=album.year  %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
-                <i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage til" %} {{ album.year }}
-            </a>
+            <div class="col-xs-12">
+                <a href="{% url 'year' year=album.year  %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
+                    <i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage til" %} {{ album.year }}
+                </a>
+            </div>
         </div>
     </ul>
     <div class="card-footer">

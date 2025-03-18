@@ -46,7 +46,7 @@
                         {% if album.bartenderalbum and not user|is_bartender %}
                         {% else %}
                         <div class="col-xs-6 col-sm-4 col-md-3 mb-3">
-                            <div class="card card-hover p-1 hover-border-primary">
+                            <div class="card card-hover p-1">
                                 {% if album.thumbnail %}
                                     <img class="card-img" src="{{ album.thumbnail.url }}" alt="{{ album.title }}">
                                 {% else %}
@@ -87,4 +87,5 @@
         </div>
     {% endfor %}
 </div>
-{% endblock content%}
+
+{% endblock content %}
