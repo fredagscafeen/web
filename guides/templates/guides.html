@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
-{% block content %}
 {% load i18n %}
+{% load bootstrap5 bootstrap_icons %}
+
+{% block content %}
 
 <h2 id="guides">
 	{% translate "Guides" %}
@@ -19,10 +21,10 @@
 	{% for category, guides in guides %}
 	<ul class="list-group pb-3">
 		<li class="list-group-item list-group-item-secondary">{{ category }}</li>
-		<li class="list-group-item pb-3">
+		<li class="list-group-item list-group-item-light pb-3">
 			<ul>
 				{% for guide in guides %}
-					<li><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{{ guide.document.url }}">{{ guide.name }}</a></li>
+					<li style="list-style: none;"><i>{% bs_icon 'dot' size='1.0em' %}</i> <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{{ guide.document.url }}">{{ guide.name }}</a></li>
 				{% endfor %}
 			</ul>
 		</li>

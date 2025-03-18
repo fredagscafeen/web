@@ -49,7 +49,7 @@
             <div class="col-auto me-auto">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
+                        <li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
                         <li class="breadcrumb-item active">{{ album.title }}</li>
                     </ol>
                 </nav>
@@ -82,7 +82,7 @@
                     {% elif file.type == "O" %}
                     <span class="m-3">{% bs_icon "file-binary" size='2.0em' %} {{ file.slug }}</span>
                     {% endif %}
-                    <a class="card-link stretched-link " href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede"></a>
+                    <a class="card-link stretched-link" href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede"></a>
                 </div>
             </div>
             {% empty %}

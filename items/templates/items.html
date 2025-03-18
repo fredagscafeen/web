@@ -19,7 +19,7 @@
 		<h2 id="selection">
 			{% translate "Fast sortiment" %}
 			{% if items_data %}
-			<span>({{ items_data | length }})</span>
+			<span class="badge text-bg-secondary">{{ items_data | length }}</span>
 			{% endif %}
 			<a href="#selection" class="section-link">#</a>
 		</h2>
@@ -63,7 +63,7 @@
 			{% get_current_language as LANGUAGE_CODE %}
 			{% for item in items_data %}
 				<tr class="{% if not item.inStock %}table-danger{% endif %}">
-					<td>{% if item.brewery_url %}<a href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
+					<td>{% if item.brewery_url %}<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
 					<td>{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
 					<td class="d-none d-lg-table-cell">{% if item.name_dk %}{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type.name }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}{% endif %}</td>
 					<td class="d-none d-lg-table-cell">{% if item.name_dk %}{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}{% endif %}</td>

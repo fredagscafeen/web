@@ -13,7 +13,7 @@
 		<ul class="list-group">
 			<li class="fw-bold list-group-item list-group-item-primary">{% translate "Nuværende" %} <span class="badge text-bg-primary rounded-pill">{{ bartenders.count }}</span></li>
 			{% for bartender in bartenders %}
-				<li class="list-group-item">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</li>
+				<li class="list-group-item list-group-item-light">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</li>
 			{% endfor %}
 		</ul>
 	</div>
@@ -22,7 +22,7 @@
 		<ul class="list-group">
 			<li class="fw-bold list-group-item list-group-item-danger">{% translate "Tidligere" %} <span class="badge text-bg-danger rounded-pill">{{ inactive_bartenders.count }}</span></li>
 			{% for bartender in inactive_bartenders %}
-				<li class="list-group-item">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
+				<li class="list-group-item list-group-item-light">{{ bartender.name }} (<code>{{ bartender.username }}</code>)</li>
 			{% endfor %}
 		</ul>
 	</div>
