@@ -20,7 +20,7 @@ class Items(ListView):
                 {
                     "brewery": item.brewery.name if item.brewery else None,
                     "brewery_url": item.brewery.website
-                    if item.brewery.website
+                    if item.brewery and item.brewery.website
                     else None,
                     "name": item.name,
                     "name_dk": item.name_dk,

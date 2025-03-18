@@ -2,12 +2,12 @@
 
 function switchTheme() {
     "use strict";
-    const isLightMode = document.documentElement.classList.contains("light");
-    document.documentElement.classList.toggle("light", !isLightMode);
-    document.documentElement.classList.toggle("dark", isLightMode);
+    const isLightMode = document.documentElement.getAttribute('data-bs-theme') == 'light';
     localStorage.setItem("lightMode", !isLightMode);
     localStorage.setItem("darkMode", isLightMode);
     if (isLightMode) {
+        document.documentElement.setAttribute('data-bs-theme','dark')
+
         document.getElementById("facebook-link").setAttribute("class", "image-inverted social-link");
         document.getElementById("instagram-link").setAttribute("class", "image-inverted social-link");
         document.getElementById("github-link").setAttribute("class", "image-inverted social-link");
@@ -21,23 +21,9 @@ function switchTheme() {
         } catch(err) {
             // Page not selected
         }
-        const panels = document.getElementsByClassName("panel");
-        for (let i = 0; i < panels.length; i++) {
-            panels[i].classList = "panel panel-primary";
-        }
-        for (let n = 0; n < 5; n++) {
-            const success = document.getElementsByClassName("success");
-            for (let i = 0; i < success.length; i++) {
-                success[i].classList = "success-dark";
-            }
-        }
-        for (let n = 0; n < 5; n++) {
-            const danger = document.getElementsByClassName("danger");
-            for (let i = 0; i < danger.length; i++) {
-                danger[i].classList = "danger-dark";
-            }
-        }
     } else {
+        document.documentElement.setAttribute('data-bs-theme','light')
+
         document.getElementById("facebook-link").setAttribute("class", "social-link");
         document.getElementById("instagram-link").setAttribute("class", "social-link");
         document.getElementById("github-link").setAttribute("class", "social-link");
@@ -51,18 +37,6 @@ function switchTheme() {
         } catch(err) {
             // Page not selected
         }
-        const panels = document.getElementsByClassName("panel");
-        for (let i = 0; i < panels.length; i++) {
-            panels[i].classList = "panel panel-default";
-        }
-        const success = document.getElementsByClassName("success-dark");
-        for (let i = 0; i < success.length; i++) {
-            success[i].classList = "success";
-        }
-        const danger = document.getElementsByClassName("danger-dark");
-        for (let i = 0; i < danger.length; i++) {
-            danger[i].classList = "danger";
-        }
     }
 }
 
@@ -71,16 +45,28 @@ function setTheme() {
     const prefersLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
     const isDarkMode = localStorage.getItem("darkMode") === "true" || (localStorage.getItem("darkMode") !== "false" && !prefersLightMode);
 
-    document.documentElement.classList.toggle("dark", isDarkMode);
-    document.documentElement.classList.toggle("light", !isDarkMode);
+    if (isDarkMode) {
+        document.documentElement.setAttribute('data-bs-theme','dark')
+    } else {
+        document.documentElement.setAttribute('data-bs-theme','light')
+    }
 }
 
 function setThemeToggle() {
     "use strict";
-    const isDarkMode = document.documentElement.classList.contains("dark");
+    const isDarkMode = document.documentElement.getAttribute('data-bs-theme') == 'dark';
+
     if (isDarkMode) {
-        document.getElementById("themeToggle").checked = true;
-        document.getElementById("themeToggleNav").checked = true;
+        try {
+            document.getElementById("themeToggle").checked = true;
+        } catch(err) {
+            // Page not selected
+        }
+        try {
+            document.getElementById("themeToggleNav").checked = true;
+        } catch(err) {
+            // Page not selected
+        }
         document.getElementById("facebook-link").setAttribute("class", "image-inverted social-link");
         document.getElementById("instagram-link").setAttribute("class", "image-inverted social-link");
         document.getElementById("github-link").setAttribute("class", "image-inverted social-link");
@@ -93,22 +79,6 @@ function setThemeToggle() {
             document.getElementById("timesheet-theme").classList = "black";
         } catch(err) {
             // Page not selected
-        }
-        const panels = document.getElementsByClassName("panel");
-        for (let i = 0; i < panels.length; i++) {
-            panels[i].classList = "panel panel-primary";
-        }
-        for (let n = 0; n < 5; n++) {
-            const success = document.getElementsByClassName("success");
-            for (let i = 0; i < success.length; i++) {
-                success[i].classList = "success-dark";
-            }
-        }
-        for (let n = 0; n < 5; n++) {
-            const danger = document.getElementsByClassName("danger");
-            for (let i = 0; i < danger.length; i++) {
-                danger[i].classList = "danger-dark";
-            }
         }
     }
 }

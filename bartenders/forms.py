@@ -1,7 +1,6 @@
 from urllib.parse import urljoin
 
 from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Invisible
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User

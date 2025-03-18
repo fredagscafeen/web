@@ -3,12 +3,15 @@
 {% block title %}404{% endblock %}
 
 {% block content %}
-<h1>{% translate "Ikke fundet" %}</h1>
+<h2 id="404">
+    {% translate "Ikke fundet" %}
+    <a href="#404" class="section-link">#</a>
+</h2>
 
 <p>{% translate "Du har ikke fundet det du søger." %}</p>
 
-<p><a href="javascript:history.back()">{% translate "Kig dybere i dit hjerte" %}</a>,
-{% translate "eller" %} <a href="/">{% translate "få dig en helt ny tilværelse" %}</a>. {% translate "Der er" %}
-<a href="mailto:best@fredagscafeen.dk">{% translate "sjælestøtte til de værst ramte." %}</a></p>
+<p><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="javascript:history.back()">{% translate "Kig dybere i dit hjerte" %}</a>,
+{% translate "eller" %} <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/">{% translate "få dig en helt ny tilværelse" %}</a>. {% translate "Der er" %}
+<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:best@fredagscafeen.dk">{% translate "sjælestøtte til de værst ramte." %}</a></p>
 
 {% endblock %}

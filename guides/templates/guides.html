@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
-{% block content %}
 {% load i18n %}
+{% load bootstrap5 bootstrap_icons %}
 
-<h2>{% translate "Guides" %}</h2>
+{% block content %}
+
+<h2 id="guides">
+	{% translate "Guides" %}
+	<a href="#guides" class="section-link">#</a>
+</h2>
 
 <p>
 	{% translate "Her ligger alle de lækre guides, som er rare at have, når man involverer sig i driften af" context "Fredagscaféen" %} Fredagscaféen.
@@ -12,17 +17,19 @@
 	{% translate "Vi forsøger at opdaterer dem løbende, men forstå at de ikke altid afspejler virkeligheden fuldt ud." %}
 </p>
 
-{% for category, guides in guides %}
-<div class="panel panel-default">
-	<div class="panel-heading">{{ category }}</div>
-	<div class="panel-body">
-		<ul>
-			{% for guide in guides %}
-				<li><a href="{{ guide.document.url }}">{{ guide.name }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
+<div>
+	{% for category, guides in guides %}
+	<ul class="list-group pb-3">
+		<li class="list-group-item list-group-item-secondary">{{ category }}</li>
+		<li class="list-group-item list-group-item-light pb-3">
+			<ul>
+				{% for guide in guides %}
+					<li style="list-style: none;"><i>{% bs_icon 'dot' size='1.0em' %}</i> <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{{ guide.document.url }}">{{ guide.name }}</a></li>
+				{% endfor %}
+			</ul>
+		</li>
+	</ul>
+	{% endfor %}
 </div>
-{% endfor %}
 
 {% endblock %}

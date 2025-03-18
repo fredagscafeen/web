@@ -6,26 +6,35 @@
 {% load bootstrap5 bootstrap_icons %}
 {% load is_with_user compare_to_current_week %}
 
-<h2 id="barplan">{% translate "Barplan" %}</h2>
+<h2 id="barplan">
+	{% translate "Barplan" %}
+	<a href="#barplan" class="section-link">#</a>
+</h2>
 
-<div class="center-align">
-	{% if show_all_bartendershifts %}
-	<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}#barplan">{% translate "Vis kun nuværende" %}</a>
-	{% else %}
-	<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&show_all_bartendershifts=true#barplan">{% translate "Vis også tidligere" %}</a>
-	{% endif %}
-	<li class="dropdown" style="list-style: none;">
-		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Vagter per side" %}: {{ shifts_pages_per_page }} <span class="caret"></span></a>
-		<ul class="dropdown-menu">
-			<li><a href="?shifts_pages_per_page=15{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">15</a></li>
-			<li><a href="?shifts_pages_per_page=25{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">25</a></li>
-			<li><a href="?shifts_pages_per_page=50{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">50</a></li>
-			<li><a href="?shifts_pages_per_page=100{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">100</a></li>
-		</ul>
-	</li>
+<div class="row">
+	<div class="col-auto me-auto">
+		{% if show_all_bartendershifts %}
+		<a class="btn btn-primary btn-sm" href="?shifts_pages_per_page={{ shifts_pages_per_page }}#barplan" role="button">{% translate "Vis kun nuværende" %}</a>
+		{% else %}
+		<a class="btn btn-outline-primary btn-sm" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&show_all_bartendershifts=true#barplan" role="button">{% translate "Vis også tidligere" %}</a>
+		{% endif %}
+	</div>
+	<div class="col-auto">
+		<div class="dropdown">
+			<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				{% translate "Vagter per side" %}: {{ shifts_pages_per_page }}
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				<li><a class="dropdown-item {% if shifts_pages_per_page == "15" %}active{% endif %}" href="?shifts_pages_per_page=15{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">15</a></li>
+				<li><a class="dropdown-item {% if shifts_pages_per_page == "25" %}active{% endif %}" href="?shifts_pages_per_page=25{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">25</a></li>
+				<li><a class="dropdown-item {% if shifts_pages_per_page == "50" %}active{% endif %}" href="?shifts_pages_per_page=50{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">50</a></li>
+				<li><a class="dropdown-item {% if shifts_pages_per_page == "100" %}active{% endif %}" href="?shifts_pages_per_page=100{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">100</a></li>
+			</ul>
+		</div>
+	</div>
 </div>
 
-<table class="table table-striped tablesorter" id="items">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>{% translate "Dato" %}</th>
@@ -35,114 +44,126 @@
 				<th class="hidden-xs"></th>
 			{% endif %}
 		</tr>
-		</thead>
+	</thead>
 	<tbody>
     {% for shift in bartendershifts %}
-		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}"{% if shift|compare_to_current_week == -1 %}class="gray-out"{% endif %}>
-			<td class="col-md-2">
-				{% if shift|compare_to_current_week == 0 %}
-				<b alt="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}</b>
+		{% with shiftComparedToCurrentWeek=shift|compare_to_current_week shiftIsWithUser=shift|is_with_user:user %}
+		<tr>
+			<td class="col-md-2 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+				{% if shiftComparedToCurrentWeek == 0 %}
+				<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}</b>
 				{% else %}
 				{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}
 				{% endif %}
 			</td>
-			{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
-				<td class="col-md-3">
+			{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
+			<td class="col-md-3 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 					{% if shift.responsible.first_responsible_shift == shift %}
-					<b class="gray-out" style="color:red;display:inline;" alt="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+					<b class="gray-out text-color-danger" style="color:red;display:inline;" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
 					<p style="color:red;display:inline;">{{ shift.responsible.name }}</p>
 					{% endif %}
 				</td>
 			{% else %}
-				<td class="col-md-3">
+				<td class="col-md-3 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 					{% if shift.responsible.first_responsible_shift == shift %}
-					<b class="gray-out" alt="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+					<b class="gray-out" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
 					{{ shift.responsible.name }}
 					{% endif %}
 				</td>
 			{% endif %}
-            <td class="col-md-7">
+            <td class="col-md-7 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
                 {% for bartender in shift.other_bartenders.all %}
 					{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
 						{% cycle 'blue' 'orange' 'green' as color silent %}
 						{% if bartender.first_bartender_shift == shift %}
-						<b style="color:{{ color }};" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
+						<b style="color:{{ color }};" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
 						<p style="color:{{ color }};display:inline;">{{ bartender.name }}</p>{% endif %}{% if not forloop.last %},{% endif %}
 					{% else %}
 						{% if bartender.first_bartender_shift == shift %}
-						<b class="gray-out" alt="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
+						<b class="gray-out" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
 						{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
 					{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="hidden-xs col-md-1 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
+		{% endwith %}
 	{% endfor %}
 	</tbody>
 </table>
 
-<div class="pagination center-align">
-    <span class="step-links">
-        {% if bartendershifts.has_previous %}
-			<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
-
-			{% if bartendershifts.number > 3 %}
-				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page=1{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">1</a>
-				{% if bartendershifts.number > 4 %}
-				<span>...</span>
+<div class="row justify-content-center">
+	<div class="col-auto">
+		<nav>
+			<ul class="pagination">
+				{% if bartendershifts.has_previous %}
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan"><i>{% bs_icon 'chevron-double-left' %}</i></a></li>
+					{% if bartendershifts.number > 3 %}
+						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page=1{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">1</a></li>
+						{% if bartendershifts.number > 4 %}
+							<li class="page-item"><a class="page-link disabled">...</a></li>
+						{% endif %}
+					{% endif %}
 				{% endif %}
-			{% endif %}
-		{% endif %}
-
-		{% for num in bartendershifts.paginator.page_range %}
-			{% if bartendershifts.number == num %}
-				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ num }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan" class="active">{{ num }}</a>
-			{% elif num > bartendershifts.number|add:'-3' and num < bartendershifts.number|add:'3' %}
-				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ num }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ num }}</a>
-			{% endif %}
-		{% endfor %}
-
-		{% if bartendershifts.has_next %}
-			{% if bartendershifts.number < bartendershifts.paginator.num_pages|add:'-3' %}
-				<span>...</span>
-				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ bartendershifts.paginator.num_pages }}</a>
-			{% elif bartendershifts.number < bartendershifts.paginator.num_pages|add:'-2' %}
-				<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ bartendershifts.paginator.num_pages }}</a>
-		{% endif %}
-
-		<a href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.next_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
-		{% endif %}
-    </span>
+				{% for num in bartendershifts.paginator.page_range %}
+					{% if bartendershifts.number == num %}
+					<li class="page-item"><a class="page-link active" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ num }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ num }}</a></li>
+					{% elif num > bartendershifts.number|add:'-3' and num < bartendershifts.number|add:'3' %}
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ num }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ num }}</a></li>
+					{% endif %}
+				{% endfor %}
+				{% if bartendershifts.has_next %}
+					{% if bartendershifts.number < bartendershifts.paginator.num_pages|add:'-3' %}
+						<li class="page-item"><a class="page-link disabled">...</a></li>
+						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ bartendershifts.paginator.num_pages }}</a></li>
+					{% elif bartendershifts.number < bartendershifts.paginator.num_pages|add:'-2' %}
+						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ bartendershifts.paginator.num_pages }}</a></li>
+					{% endif %}
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.next_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{% bs_icon 'chevron-double-right' %}</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</div>
 </div>
-
-<a href="{% url 'shifts_feed' %}">iCal feed</a>
+<div>
+	<a class="btn btn-outline-dark btn-sm" href="{% url 'shifts_feed' %}" role="button">{% bs_icon 'calendar-week' %} iCal feed</a>
+</div>
 
 <hr>
 
-<h2 id="pantvagter">{% translate "Pantvagter" %}</h2>
+<h2 id="deposit_shifts">
+	{% translate "Pantvagter" %}
+	<a href="#deposit_shifts" class="section-link">#</a>
+</h2>
 
-<div class="center-align">
-	{% if show_all_depositshifts %}
-	<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}#pantvagter">{% translate "Vis kun nuværende" %}</a>
-	{% else %}
-	<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&show_all_depositshifts=true#pantvagter">{% translate "Vis også tidligere" %}</a>
-	{% endif %}
-	<li class="dropdown" style="list-style: none;">
-		<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Pantvagter per side" %}: {{ deposit_pages_per_page }} <span class="caret"></span></a>
-		<ul class="dropdown-menu">
-			<li><a href="?deposit_pages_per_page=15{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">15</a></li>
-			<li><a href="?deposit_pages_per_page=25{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">25</a></li>
-			<li><a href="?deposit_pages_per_page=50{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">50</a></li>
-			<li><a href="?deposit_pages_per_page=100{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">100</a></li>
-		</ul>
-	</li>
+<div class="row">
+	<div class="col-auto me-auto">
+		{% if show_all_depositshifts %}
+		<a class="btn btn-primary btn-sm" href="?deposit_pages_per_page={{ deposit_pages_per_page }}#pantvagter" role="button">{% translate "Vis kun nuværende" %}</a>
+		{% else %}
+		<a class="btn btn-outline-primary btn-sm" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&show_all_depositshifts=true#pantvagter" role="button">{% translate "Vis også tidligere" %}</a>
+		{% endif %}
+	</div>
+	<div class="col-auto">
+		<div class="dropdown">
+			<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				{% translate "Pantvagter per side" %}: {{ deposit_pages_per_page }}
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+				<li><a class="dropdown-item {% if deposit_pages_per_page == "15" %}active{% endif %}" href="?deposit_pages_per_page=15{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">15</a></li>
+				<li><a class="dropdown-item {% if deposit_pages_per_page == "25" %}active{% endif %}" href="?deposit_pages_per_page=25{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">25</a></li>
+				<li><a class="dropdown-item {% if deposit_pages_per_page == "50" %}active{% endif %}" href="?deposit_pages_per_page=50{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">50</a></li>
+				<li><a class="dropdown-item {% if deposit_pages_per_page == "100" %}active{% endif %}" href="?deposit_pages_per_page=100{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">100</a></li>
+			</ul>
+		</div>
+	</div>
 </div>
 
-<table class="table table-striped tablesorter" id="items">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>{% translate "Uge" %}</th>
@@ -154,66 +175,67 @@
 		</thead>
 	<tbody>
     {% for shift in boardmemberdepositshifts %}
-		<tr style="{% if shift|is_with_user:user %}background-color: skyblue;{% endif %}{% if shift|compare_to_current_week == -1 %}color:gray;{% endif %}">
-			<td class="col-md-2">{% if shift|compare_to_current_week == 0 %}<b alt="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}{% endif %}</td>
-            <td class="col-md-10">
+		{% with shiftComparedToCurrentWeek=shift|compare_to_current_week shiftIsWithUser=shift|is_with_user:user %}
+		<tr>
+			<td class="col-md-2 {% if shiftIsWithUser %}bg-info bg-gradient{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">{% if shiftComparedToCurrentWeek == 0 %}<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}{% endif %}</td>
+            <td class="col-md-10 {% if shiftIsWithUser %}bg-info bg-gradient{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
                 {% for responsible in shift.responsibles.all %}
-					{% if responsible.first_deposit_shift == shift %}<b alt="{% translate "Bartender's first deposit shift" %}">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
+					{% if responsible.first_deposit_shift == shift %}<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first deposit shift" %}">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs col-md-1"><a href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="hidden-xs col-md-1 {% if shiftIsWithUser %}bg-info bg-gradient{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
+		{% endwith %}
 	{% endfor %}
 	</tbody>
 </table>
 
-<div class="pagination center-align">
-    <span class="step-links">
-        {% if boardmemberdepositshifts.has_previous %}
-			<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter"><i>{% bs_icon 'chevron-double-left' size='0.7em' %}</i></a>
 
-			{% if boardmemberdepositshifts.number > 3 %}
-				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page=1{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">1</a>
-				{% if boardmemberdepositshifts.number > 4 %}
-				<span>...</span>
+<div class="row justify-content-center">
+	<div class="col-auto">
+		<nav>
+			<ul class="pagination">
+				{% if boardmemberdepositshifts.has_previous %}
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter"><i>{% bs_icon 'chevron-double-left' %}</i></a></li>
+					{% if boardmemberdepositshifts.number > 3 %}
+						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page=1{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">1</a></li>
+						{% if boardmemberdepositshifts.number > 4 %}
+							<li class="page-item"><a class="page-link disabled">...</a></li>
+						{% endif %}
+					{% endif %}
 				{% endif %}
-			{% endif %}
-		{% endif %}
-
-		{% for num in boardmemberdepositshifts.paginator.page_range %}
-			{% if boardmemberdepositshifts.number == num %}
-				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ num }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter" class="active">{{ num }}</a>
-			{% elif num > boardmemberdepositshifts.number|add:'-3' and num < boardmemberdepositshifts.number|add:'3' %}
-				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ num }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ num }}</a>
-			{% endif %}
-		{% endfor %}
-
-		{% if boardmemberdepositshifts.has_next %}
-			{% if boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-3' %}
-				<span>...</span>
-				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
-			{% elif boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-2' %}
-				<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a>
-		{% endif %}
-
-		<a href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.next_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter"><i>{% bs_icon 'chevron-double-right' size='0.7em' %}</i></a>
-		{% endif %}
-    </span>
+				{% for num in boardmemberdepositshifts.paginator.page_range %}
+					{% if boardmemberdepositshifts.number == num %}
+					<li class="page-item"><a class="page-link active" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ num }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ num }}</a></li>
+					{% elif num > boardmemberdepositshifts.number|add:'-3' and num < boardmemberdepositshifts.number|add:'3' %}
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ num }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ num }}</a></li>
+					{% endif %}
+				{% endfor %}
+				{% if boardmemberdepositshifts.has_next %}
+					{% if boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-3' %}
+						<li class="page-item"><a class="page-link disabled">...</a></li>
+						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a></li>
+					{% elif boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-2' %}
+						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a></li>
+					{% endif %}
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.next_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{% bs_icon 'chevron-double-right' %}</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</div>
+</div>
+<div>
+	<a class="btn btn-outline-dark btn-sm" href="{% url 'deposit_shifts_feed' %}" role="button">{% bs_icon 'calendar-week' %} iCal feed</a>
 </div>
 
-<a href="{% url 'deposit_shifts_feed' %}">iCal feed</a>
-
 <script>
-	$('b').hover(function(e){
-        title = $(this).attr('alt');
-		if (title != undefined) {
-			$(this).append('<span>'+title+'</span>')
-		}
-    },
-    function(e){
-        $('span', this).remove();
-    });
+	// Enable tooltips
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	return new bootstrap.Tooltip(tooltipTriggerEl)
+	})
 </script>
+
 {% endblock %}

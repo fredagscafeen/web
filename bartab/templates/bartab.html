@@ -3,7 +3,10 @@
 {% block content %}
 {% load i18n %}
 
-<h2>{% translate "Krydslisteaktivitet" %}</h2>
+<h2 id="bartab">
+	{% translate "Krydslisteaktivitet" %}
+    <a href="#bartab" class="section-link">#</a>
+</h2>
 
 {% if latest_tab_update %}
 <p>{% translate "Krydslisten er gjort op til og med barvagten d." %} {{ latest_tab_update.date }}.</p>
@@ -15,26 +18,28 @@
 <h3>{% translate "Saldo" %}: {{ object.balance_str }}</h3>
 <h3>{% translate "Total forbrug" %}: {{ total_used }}</h3>
 
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th>{% translate "Dato" %}</th>
-			<th>{% translate "Indsat" %}</th>
-			<th>{% translate "Køb" %}</th>
-			<th>{% translate "Saldo" %}</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for entry in entries %}
-		<tr{% if entry.added > 0 %} class="success"{% elif entry.balance <= credit_hold_limit %} class="danger"{% endif %}>
-			<td>{{ entry.shift }}</td>
-			<td>{{ entry.added }}</td>
-			<td>{{ entry.used }}</td>
-			<td>{{ entry.balance }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+<div class="card pt-1 pb-1">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{% translate "Dato" %}</th>
+				<th>{% translate "Indsat" %}</th>
+				<th>{% translate "Køb" %}</th>
+				<th>{% translate "Saldo" %}</th>
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+			{% for entry in entries %}
+			<tr>
+				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.shift }}</td>
+				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.added }}</td>
+				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.used }}</td>
+				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.balance }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% else %}
 <p><b>{{ user.email }} {% translate "er ikke på krydslisten." %}</b></p>
 {% endif %}

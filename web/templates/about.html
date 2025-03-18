@@ -5,71 +5,102 @@
 {% load static %}
 {% load bootstrap5 bootstrap_icons %}
 
-<h2>{% translate "Generel info" %}</h2>
+<h2 id="generalinfo">
+    {% translate "Generel info" %}
+    <a href="#generalinfo" class="section-link">#</a>
+</h2>
 
 <p>
-{% blocktranslate %}
-Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet,
-som siden 1993 har været et socialt samlingspunkt for studerende og ansatte på instituttet.
-Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.
-Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi har altid
-et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.
-Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra
-{% endblocktranslate %}
-<a href="https://aarhusbryghus.dk/">Aarhus Bryghus</a>
-{% blocktranslate %}
-på fad.
-Tag endelig et kig på vores faste sortiment,
-{% endblocktranslate %}
-<a href="{% url 'prices' %}">{% translate "her" context "På linket her" %}</a>.
+    {% blocktranslate %}
+    Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet,
+    som siden 1993 har været et socialt samlingspunkt for studerende og ansatte på instituttet.
+    Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.
+    Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi har altid
+    et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.
+    Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra
+    {% endblocktranslate %}
+    <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="https://aarhusbryghus.dk/" target="_blank">Aarhus Bryghus</a>
+    {% blocktranslate %}
+    på fad.
+    Tag endelig et kig på vores faste sortiment,
+    {% endblocktranslate %}
+    <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{% url 'prices' %}">{% translate "her" context "På linket her" %}</a>.
 </p>
 <p>
-{% blocktranslate %}
-Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på instituttet,
-som også kan ses
-{% endblocktranslate %}
-<a href="{% url 'board' %}">{% translate "her" context "På linket her" %}</a>.
-{% blocktranslate %}
-Baren er non-profit, og overskuddet går til vedligeholdelse af baren og arrangementer for bartenderene.
-{% endblocktranslate %}
+    {% blocktranslate %}
+    Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på instituttet,
+    som også kan ses
+    {% endblocktranslate %}
+    <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{% url 'board' %}">{% translate "her" context "På linket her" %}</a>.
+    {% blocktranslate %}
+    Baren er non-profit, og overskuddet går til vedligeholdelse af baren og arrangementer for bartenderene.
+    {% endblocktranslate %}
 </p>
 
-<h3>{% translate "Lokation" %}</h3>
-<p>
-  Fredagscaféen {% translate "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi" %}, <b>Finlandsgade 21, 8200 Aarhus N</b>.
-</p>
-
-<div class="google-maps">
-  <iframe id="google-maps" style="border: 0;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4442.319456514069!2d10.187308076907637!3d56.17163165965389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fc4cda7462f%3A0x4219610040f322c5!2sFredagscaf%C3%A9en!5e0!3m2!1sda!2sdk!4v1716252357825!5m2!1sda!2sdk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<div class="card mb-3">
+    <div class="card-header pb-0">
+        <h5 class="card-title">{% translate "Lokation" %}</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            Fredagscaféen {% translate "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi" %},
+            <b>Finlandsgade 21, 8200 Aarhus N</b>.
+        </p>
+    </div>
+    <div>
+        <iframe class="card-img-bottom google-maps" id="google-maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4442.319456514069!2d10.187308076907637!3d56.17163165965389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fc4cda7462f%3A0x4219610040f322c5!2sFredagscaf%C3%A9en!5e0!3m2!1sda!2sdk!4v1716252357825!5m2!1sda!2sdk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
 </div>
 
-<h3>{% translate "Åbningstider" %}</h3>
-<p>
-  {% translate "Baren har åbent" %} <b><em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage fra klokken 15.00 til vi lukker." %}</b>
-  {% translate "Når vi siger vi har åbent" %} <em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller sommerferie, så har vi åbent." %}
-</p>
-<p>
-  {% translate "Pt. har baren været åben" %} <b><i>{{ shift_streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak_start_date }}</b>.
-</p>
+<div class="card mb-3">
+    <div class="card-header pb-0">
+        <h5 class="card-title">{% translate "Åbningstider" %}</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            {% translate "Baren har åbent" %} <b><em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage fra klokken 15.00 til vi lukker." %}</b>
+            {% translate "Når vi siger vi har åbent" %} <em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller sommerferie, så har vi åbent." %}
+        </p>
+        <p class="card-text">
+            {% translate "Pt. har baren været åben" %} <b><i>{{ shift_streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak_start_date }}</b>.
+        </p>
+    </div>
+</div>
 
-<hr>
+<div class="card mb-3">
+    <div class="card-header pb-0">
+        <h5 class="card-title">{% translate "Postadresse" %}</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            {% translate "Vores postadresse er" %}:<br>
+            Fredagscaféen<br>
+            Åbogade 34<br>
+            8200 Aarhus N
+        </p>
+    </div>
+</div>
 
-<h2>{% translate "Postadresse" %}</h2>
-<p>
-{% translate "Vores postadresse er" %}:<br>
-Fredagscaféen<br>
-Åbogade 34<br>
-8200 Aarhus N
-</p>
+<div class="card mb-3">
+    <div class="card-header pb-0">
+        <h5 class="card-title">{% translate "E-mail" %}</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            {% translate "Bestyrelsen kan kontaktes på" %} <a href="mailto:best@fredagscafeen.dk" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">best@fredagscafeen.dk</a>
+        </p>
+    </div>
+</div>
 
-<hr>
-
-<h2>E-mail</h2>
-<p>{% translate "Bestyrelsen kan kontaktes på" %} <a href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a></p>
-
-<hr>
-
-<h2>CVR</h2>
-<p>{% translate "Vores CVR-nr er" %}: <a href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647">27973647</a></p>
+<div class="card mb-3">
+    <div class="card-header pb-0">
+        <h5 class="card-title">{% translate "CVR" %}</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text">{% translate "Vores CVR-nr er" %}:
+            <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647" target="_blank">27973647</a>
+        </p>
+    </div>
+</div>
 
 {% endblock %}

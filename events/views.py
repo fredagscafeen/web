@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django_ical.views import ICalFeed
@@ -35,9 +37,16 @@ class Events(TemplateView):
 
         bartender = self.get_bartender()
 
+        years = set(a.year for a in list(qs))
+        years = sorted(years, reverse=True)
+        context["years"] = years
+
         events_data = []
         for event in qs:
             data = {"event": event}
+            if event.year in years:
+                years.remove(event.year)
+                data["year"] = event.year
             if bartender and event.may_attend(bartender):
                 data["form"] = EventResponseForm(event=event, bartender=bartender)
             events_data.append(data)
@@ -48,31 +57,6 @@ class Events(TemplateView):
             context["may_attend"] = Event.may_attend_default(bartender)
 
         return context
-
-    def post(self, request, *args, **kwargs):
-        try:
-            event_id = request.POST.get("event_id")
-            event = Event.objects.get(id=event_id)
-        except Event.DoesNotExist:
-            return HttpResponseBadRequest(_("Event with id does not exist"))
-
-        bartender = self.get_bartender()
-        if not bartender or not event.may_attend(bartender):
-            return HttpResponseForbidden(_("Not logged in as an active bartender"))
-
-        form = EventResponseForm(request.POST, event=event, bartender=bartender)
-        if not form.is_valid():
-            for error in form.errors.values():
-                messages.error(request, f"{error}")
-            return redirect("events")
-
-        form.save()
-
-        messages.success(
-            request,
-            _("Opdateret tilmelding til %(event_name)s") % {"event_name": event.name},
-        )
-        return redirect("events")
 
 
 class EventFeed(ICalFeed):
@@ -107,3 +91,59 @@ class EventFeed(ICalFeed):
 
     def item_guid(self, event):
         return f"event-{event.pk}@fredagscafeen.dk"
+
+
+class EventView(TemplateView):
+    template_name = "event.html"
+
+    def get_bartender(self):
+        if not self.request.user.is_authenticated:
+            return None
+
+        try:
+            return Bartender.objects.get(email=self.request.user.email)
+        except Bartender.DoesNotExist:
+            return None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        event_id = self.request.resolver_match.kwargs["event_id"]
+        event = get_object_or_404(Event, id=event_id)
+
+        bartender = self.get_bartender()
+
+        if bartender and event.may_attend(bartender):
+            context["form"] = EventResponseForm(event=event, bartender=bartender)
+
+        context["bartender"] = bartender
+        context["event"] = event
+        if bartender:
+            context["may_attend"] = Event.may_attend_default(bartender)
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        try:
+            event_id = request.POST.get("event_id")
+            event = Event.objects.get(id=event_id)
+        except Event.DoesNotExist:
+            return HttpResponseBadRequest(_("Event with id does not exist"))
+
+        bartender = self.get_bartender()
+        if not bartender or not event.may_attend(bartender):
+            return HttpResponseForbidden(_("Not logged in as an active bartender"))
+
+        form = EventResponseForm(request.POST, event=event, bartender=bartender)
+        if not form.is_valid():
+            for error in form.errors.values():
+                messages.error(request, f"{error}")
+            return redirect("event", event_id)
+
+        form.save()
+
+        messages.success(
+            request,
+            _("Opdateret tilmelding til %(event_name)s") % {"event_name": event.name},
+        )
+        return redirect("event", event_id)

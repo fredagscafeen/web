@@ -8,118 +8,121 @@
 {% endblock %}
 
 {% block content %}
-<h2>
-		{% translate "Reservation af fadølsanlæg" %}
+<h2 id="rental">
+	{% translate "Reservation af fadølsanlæg" %}
+	<a href="#rental" class="section-link">#</a>
 </h2>
 <h4>
-		{% translate "Fadølsanlæggene er allerede reserveret følgende dage" %}
+	{% translate "Fadølsanlæggene er allerede reserveret følgende dage" %}
 </h4>
 <ul>
-		{% for udlejning in udlejninger %}
-		<li>
-				{{ udlejning.dateFrom }},
-                {% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} {% translate "Uspecificeret" %} {% endif %}
-				{% translate "anlæg, reserveret af" %} {{ udlejning.whoReserved }}
-		</li>
-		{% empty %}
-		<li>
-				{% translate "Anlæggene er pt ikke reserveret på noget tidspunkt" %}
-		</li>
-		{% endfor %}
+	{% for udlejning in udlejninger %}
+	<li>
+			{{ udlejning.dateFrom }},
+			{% if udlejning.draftBeerSystem %} {{ udlejning.get_draftBeerSystem_display }} {% else %} {% translate "Uspecificeret" %} {% endif %}
+			{% translate "anlæg, reserveret af" %} {{ udlejning.whoReserved }}
+	</li>
+	{% empty %}
+	<li>
+			{% translate "Anlæggene er pt ikke reserveret på noget tidspunkt" %}
+	</li>
+	{% endfor %}
 </ul>
-<h3>
-		{% translate "Regler for udlån" %}
+<h3 id="rules">
+	{% translate "Regler for udlån" %}
+	<a href="#rules" class="section-link">#</a>
 </h3>
 <p>
-		<i>{% translate "Disse regler er under revision, og der kan opstå fejl og mangler..." %}</i>
+	<i>{% translate "Disse regler er under revision, og der kan opstå fejl og mangler..." %}</i>
 </p>
 <p>
-		{% translate "Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde ansøgninsformularen nederst på denne side." %}
+	{% translate "Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde ansøgninsformularen nederst på denne side." %}
 	{% translate "Anlæg udlånes kun til" %} <b>{% translate "interne arrangementer" %}</b> {% translate "eller til" %} <b>{% translate "arrangementer med tilknytning til baren" %}</b>.
 </p>
 <p>
-		<b>{% translate "Interne arrangementer" %}</b>:
-		{% translate "Udelukkende arrangementer der finder sted på universitetet. Dette inkluderer:" %}
-		<ul>
-				<li>{% translate "Instittutets arrangementer" %}</li>
-				<li>{% translate "Specialereceptioner" %}</li>
-		</ul>
+	<b>{% translate "Interne arrangementer" %}</b>:
+	{% translate "Udelukkende arrangementer der finder sted på universitetet. Dette inkluderer:" %}
+	<ul>
+		<li>{% translate "Instittutets arrangementer" %}</li>
+		<li>{% translate "Specialereceptioner" %}</li>
+	</ul>
 </p>
 <p>
-		<b>{% translate "Arrangementer med tilknytning" %}</b>:
-		{% translate "Arrangementer der finder sted på universitetet eller andetsteds, kan være af privat natur. Dette inkluderer:" %}
-		<ul>
-				<li>{% translate "Eksterne virksomheder, der af en årsag har tilknytning til baren" %}</li>
-				<li>{% translate "Arrangementer af bestyrelsesmedlemmer" %}</li>
-				<li>{% translate "I nogle tilfælde, arrangementer af bartendere" %}</li>
-		</ul>
+	<b>{% translate "Arrangementer med tilknytning" %}</b>:
+	{% translate "Arrangementer der finder sted på universitetet eller andetsteds, kan være af privat natur. Dette inkluderer:" %}
+	<ul>
+		<li>{% translate "Eksterne virksomheder, der af en årsag har tilknytning til baren" %}</li>
+		<li>{% translate "Arrangementer af bestyrelsesmedlemmer" %}</li>
+		<li>{% translate "I nogle tilfælde, arrangementer af bartendere" %}</li>
+	</ul>
 </p>
 <p>
-		{% translate "Indtil videre dækker følgende regler for de to grupper" %}:
+	{% translate "Indtil videre dækker følgende regler for de to grupper" %}:
 </p>
 <p>
-		<b>{% translate "Interne arrangermenter" %}</b>:
+	<b>{% translate "Interne arrangermenter" %}</b>:
 	{% translate "Forløber som det har gjort indtil nu, udlån inkluderer opstilling, kulsyre og skylning af anlægget, samt opvask af tilhørende kopper." %}
 </p>
 <p>
-		<b>{% translate "Arrangementer med tilknytning" %}</b>:
+	<b>{% translate "Arrangementer med tilknytning" %}</b>:
 	{% translate "Her inkluderer udlån udelukkende oplås og aflås af fadølsanlægget. Det vil sige at anlægget skal afhentes i Ada-0, og afleveres rengjort i Ada-0. Afleveringstid af anlægget skal aftales i dialog med den ansvarlige for det praktiske, og er ikke nødvendigvis samme dag." %}
 </p>
 <h4>
-		{% translate "Anmod om udlejning i god tid" %}
+	{% translate "Anmod om udlejning i god tid" %}
 </h4>
 <p>
-		{% translate "Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed." %}
-		<br/>
-		{% translate "Derfor skal du, for at være sikker på at kunne låne anlægget" %}, <b>{% translate "skrive mindst 7 dage i forvejen" %}</b>.
-		{% translate "Vi vil derfor, senest 5 dage før, melde ud hvorvidt nogen i bestyrelsen har mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt udlejning er muligt i god tid, dog er det stadig muligt at kunne låne anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at der kommer et svar i god tid." %}
+	{% translate "Når du låner et anlæg, skal der på udlåningsdagen samt tilbagelevering, være et bestyrelsesmedlem der står for det praktiske. Vi er alle frivillige og har studier og jobs ved siden af vorest bestyrelsesarbejde, og derfor kan vi ikke være sikre på at kunne stille et besyterelsesmedlem til rådighed." %}
+	<br/>
+	{% translate "Derfor skal du, for at være sikker på at kunne låne anlægget" %}, <b>{% translate "skrive mindst 7 dage i forvejen" %}</b>.
+	{% translate "Vi vil derfor, senest 5 dage før, melde ud hvorvidt nogen i bestyrelsen har mulighed for at være der i en af de mulige tidsrum. Hvis ikke du skriver mindst 7 dage i forvejen, kan vi ikke garantere at vi kan melde ud hvorvidt udlejning er muligt i god tid, dog er det stadig muligt at kunne låne anlægget selv hvis man melder ud i dårlig tid, vi kan blot ikke garantere at der kommer et svar i god tid." %}
 </p>
-<h3>
-		<span class="mw-headline" id="Generelle_informationer">
-				{% translate "Generelle informationer" %}
-		</span>
+<h3 id="info">
+	<span id="Generelle_informationer">
+		{% translate "Generelle informationer" %}
+	</span>
+	<a href="#info" class="section-link">#</a>
 </h3>
 <ul>
-		<li>
-				{% translate "Der betales per åbnet fustage." %}
-		</li>
-		<li>
-				{% translate "Vores primære fadøl er" %}
-				<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/extra-pilsner/" rel="nofollow">
-						Aarhus Ekstra Pilsner
-				</a>
-				{% translate ", som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)" %}
-		</li>
-		<li>
-				{% translate "Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' hjemmeside, som fast kan fås på fad. Dvs." %}
-		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/klosterbryg/" rel="nofollow">Klosterbryg</a>,
-		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/foraarsbryg/" rel="nofollow">Forårsbryg</a>,
-		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/celebration/" rel="nofollow">Celebration</a>
+	<li>
+		{% translate "Der betales per åbnet fustage." %}
+	</li>
+	<li>
+		{% translate "Vores primære fadøl er" %}
+		<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/extra-pilsner/" rel="nofollow" target="_blank">
+			Aarhus Ekstra Pilsner</a>,
+		{% translate "som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)" %}
+	</li>
+	<li>
+		{% translate "Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' hjemmeside, som fast kan fås på fad. Dvs." %}
+		<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/klosterbryg/" rel="nofollow" target="_blank">Klosterbryg</a>,
+		<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/foraarsbryg/" rel="nofollow" target="_blank">Forårsbryg</a>,
+		<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/celebration/" rel="nofollow" target="_blank">Celebration</a>
 		{% translate "og" %}
-		<a class="external text" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/blondie/" rel="nofollow">Blondie</a>
+		<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="http://aarhusbryghus.dk/homepage/bestil-aarhus-fadoel/blondie/" rel="nofollow" target="_blank">Blondie</a>
 		{% translate "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)" %}
-		</li>
-		<li>
-				{% translate "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage (incl. moms)." %}
-		</li>
-		<li>
-				{% translate "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig pt. men man kan skrive en mail til" %} <a class="external text" href="mailto:best@fredagscafeen.dk" rel="nofollow">best@fredagscafeen.dk</a> {{ ')' }}
-		</li>
-		<li>
-				{% translate "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og chips koster 20kr/pose, der betales pr. åbnet enhed." %}
-		</li>
+	</li>
+	<li>
+		{% translate "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage (incl. moms)." %}
+	</li>
+	<li>
+		{% translate "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig pt. men man kan skrive en mail til" %} <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:best@fredagscafeen.dk" rel="nofollow">best@fredagscafeen.dk</a>{{ ')' }}
+	</li>
+	<li>
+		{% translate "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og chips koster 20kr/pose, der betales pr. åbnet enhed." %}
+	</li>
 </ul>
-<h3>
-		<span class="mw-headline" id="rentingform">
-				{% translate "Ansøgninsformular" %}
-		</span>
+<h3 id="renting">
+	<span id="rentingform">
+		{% translate "Ansøgninsformular" %}
+	</span>
+	<a href="#renting" class="section-link">#</a>
 </h3>
 <form method="post" action="/{{ LANGUAGE_CODE }}/udlejning/#rentingform">
 	{% csrf_token %}
 	{% bootstrap_form form %}
 	{% buttons %}
 		{% translate "Indsend" as BUTTON_TEXT %}
-		<button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+		<button type="submit" class="btn btn-primary">
 			<i>{% bs_icon 'send-fill' size='1.0em' %}</i> {{ BUTTON_TEXT }}
 		</button>
 	{% endbuttons %}

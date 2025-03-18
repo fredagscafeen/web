@@ -5,117 +5,123 @@
 {% load bootstrap5 bootstrap_icons %}
 
 {% block title %}{{ album.title }}{% endblock title %}
-{% block navbar_class %}navbar-static-top{% endblock navbar_class %}
 
 {% block extrahead %}
-  <script src="{% static 'js/jquery.touchswipe.min.js' %}"></script>
-  <script src="{% static 'js/gal.js' %}"></script>
-  {% if edit_visibility %}
-  <script src="{% static 'js/gal-visibility.js' %}"></script>
-  <style>
-  .select_visibility label { font-weight: normal; }
-  .select_visibility ul { list-style-type: none; }
-  .select_visibility li:nth-child(1) label { font-weight: bold; }
-  .select_visibility li:nth-child(2) label { font-weight: bold; }
-  .select_visibility input[type=radio] { margin: 0 0.2em 0.25em -1.6em; }
-  </style>
-  {% endif %}
+	<script src="{% static 'js/gal.js' %}"></script>
+	{% if edit_visibility %}
+	<script src="{% static 'js/gal-visibility.js' %}"></script>
+	<style>
+		.select_visibility label { font-weight: normal; }
+		.select_visibility ul { list-style-type: none; }
+		.select_visibility li:nth-child(1) label { font-weight: bold; }
+		.select_visibility li:nth-child(2) label { font-weight: bold; }
+		.select_visibility input[type=radio] { margin: 0 0.2em 0.25em -1.6em; }
+	</style>
+	{% endif %}
 {% endblock %}
 
 {% block canonical_url %}{% url 'image' year=album.year album_slug=album.slug image_slug=start_file.slug %}{% endblock canonical_url %}
 
-{% block opengraph %}
-  <meta property="og:type" content="{% if start_file.type == "I" %}image{% elif start_file.type == "V" %}video{% elif start_file.type == "A" %}audio{% else %}website{% endif %}" />
-  <meta property="og:image" content="{% if start_file.type == "I" %}{{ start_file.file.url }}{% else %}{{ STATIC_URL }}TKlogo.jpg{% endif %}" />
-  <meta property="og:description" content="Fra TÅGEKAMMERETs galleri for &#8217;{{ album.title }}&#8217;.{% if start_file.date %} Taget {{ start_file.date }}.{% endif %}" />
-{% endblock opengraph %}
-
 {% block content %}
+
 {% if edit_visibility %}
 <form id="gal-form" style="height: 100%" method="post" action="{% url 'set_image_visibility' %}" onsubmit="$(window).off('beforeunload')">{% csrf_token %}
 {% endif %}
-<div id="gal-container" role="main">
-	{% for file, next_file, prev_file in file_orders %}
-	<div class="{% if file != start_file %}hidden{% endif %}" data-permlink="{{ file.slug }}">
-		<div class="mediawrapper">
-			{% if file.type == "I" %}
-				<img alt="{{ album.slug }}/{{ file.slug }}"
-					{% if file != start_file %}data-{% endif %}srcset=
-						"{{ file.file.thumbnail.400x400.url }} 400w,
-						{{ file.file.thumbnail.720x720.url }} 720w,
-						{{ file.file.thumbnail.940x940.url }} 940w,
-						{{ file.file.thumbnail.1140x1140.url }} 1140w,
-						{{ file.file.thumbnail.2280x2280.url }} 2280w"
-					{% if file != start_file %}data-{% endif %}sizes="100vw"
-					{% if file != start_file %}data-src=
-						"{{ file.file.thumbnail.720x720.url }}"
-					src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-					{% else %}
-					src="{{ file.file.thumbnail.720x720.url }}"
+<div id="gal-carousel">
+	<div class="row justify-content-center">
+		<div class="card w-75 p-0">
+			{% for file, next_file, prev_file in file_orders %}
+				{% if file == start_file %}
+					<div class="card-header" style="z-index: 100;">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb m-0">
+								<li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
+								<li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" id="albumlink" href="{% url 'album' year=album.year album_slug=album.slug %}">{{ album.title }}</a></li>
+								<li class="breadcrumb-item active">
+									{{ forloop.counter }} {% translate "af" %} {{ file_count }}
+									{% if start_file.type == "I" %}
+									<span class="hidden-xs">
+										{% blocktranslate count c=file_count %}
+										billede
+										{% plural %}
+										billeder
+										{% endblocktranslate %}
+									</span>{% endif %}
+								</li>
+							</ol>
+						</nav>
+					</div>
+					{% if edit_visibility %}
+					<ul class="mt-2">
+						<div class="select_visibility">{{ file.visibility_field }}</div>
+						<input type="submit" name="r{{ file.pk }}" value="Gem album" class="btn btn-primary mt-2" />
+					</ul>
 					{% endif %}
-					title="{{ file.caption }}">
-			{% elif file.type == "A" %}
-				<audio controls
-					{% if file != start_file %}data-{% endif %}src=
-					"{{ file.file.url }}">
-					{% translate "Your browser does not support the audio element." %}
-				</audio>
-			{% elif file.type == "V" %}
-				<video controls
-					{% if file != start_file %}data-{% endif %}src=
-					"{{ file.file.url }}">
-					{% translate "Your browser does not support the video tag." %}
-				</video>
-			{% else %}
-				<div class="lg-file-download text-center download-file-button">
-					<a class="btn btn-default btn-lg" href="{{ file.file.url }}">
-						{% bs_icon "download" %}
-						{{ file.slug }}
-						({{ file.file.size|filesizeformat }})
-					</a>
-				</div>
-			{% endif %}
-			<div class="overlay-top">
-        		<ol class="breadcrumb">
-					<li><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
-					<li><a id="albumlink" href="{% url 'album' year=album.year album_slug=album.slug %}">{{ album.title }}</a></li>
-					<li>
-						{{ forloop.counter }} af {{ file_count }}
+					<ul class="carousel m-0 p-0" data-permlink="{{ file.slug }}">
 						{% if file.type == "I" %}
-						<span class="hidden-xs">
-							{% blocktranslate count c=file_count %}
-							billede
-							{% plural %}
-							billeder
-							{% endblocktranslate %}
-						</span>{% endif %}</li>
-				</ol>
-				{% if edit_visibility %}
-				<div class="select_visibility">{{ file.visibility_field }}</div>
-				<input type="submit" name="r{{ file.pk }}" value="Gem album" style="background-color: transparent"/>
-				{% endif %}
-			</div>
-			<div class="overlay-bottom">
-				<div class="row">
-					<div class="col-sm-4 hidden-xs text-left"><p>{{ file.date|default_if_none:"" }}</p></div>
-					<div class="col-sm-4 col-xs-12 text-center">
-						{% if file_count > 1 %}
-								<p>
-									<a class="gal-control gal-prev"
-										rel="prev"
-										href="{{ prev_file.slug }}">{% translate "Forrige" %}</a> |
-									<a class="gal-control gal-next"
-										rel="next"
-										href="{{ next_file.slug }}">{% translate "Næste" %}</a>
-								</p>
+							<img class="w-100" alt="{{ album.slug }}/{{ file.slug }}"
+							{% if file != start_file %}data-{% endif %}srcset=
+								"{{ file.file.thumbnail.400x400.url }} 400w,
+								{{ file.file.thumbnail.720x720.url }} 720w,
+								{{ file.file.thumbnail.940x940.url }} 940w,
+								{{ file.file.thumbnail.1140x1140.url }} 1140w,
+								{{ file.file.thumbnail.2280x2280.url }} 2280w"
+							{% if file != start_file %}data-{% endif %}sizes="100vw"
+							{% if file != start_file %}data-src=
+								"{{ file.file.thumbnail.720x720.url }}"
+							src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+							{% else %}
+							src="{{ file.file.thumbnail.720x720.url }}"
 							{% endif %}
+							title="{{ file.caption }}">
+						{% elif file.type == "A" %}
+						<div class="row justify-content-center">
+							<audio class="col-6" controls
+								{% if file != start_file %}data-{% endif %}src=
+								"{{ file.file.url }}">
+								{% translate "Your browser does not support the audio element." %}
+							</audio>
+						</div>
+						{% elif file.type == "V" %}
+							<video class="w-100" controls
+								{% if file != start_file %}data-{% endif %}src=
+								"{{ file.file.url }}">
+								{% translate "Your browser does not support the video tag." %}
+							</video>
+						{% else %}
+							<div class="lg-file-download text-center download-file-button">
+								<a class="btn btn-default btn-lg" href="{{ file.file.url }}">
+									{% bs_icon "download" size='2.0em' %}
+									{{ file.slug }}
+									({{ file.file.size|filesizeformat }})
+								</a>
 							</div>
-					<div class="col-sm-4 hidden-xs text-right"><a href="{{ file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ file.file.size|filesizeformat }})</a></div>
-				</div>
-			</div>
+						{% endif %}
+						{% if file_count > 1 %}
+							<a href="{{ prev_file.slug }}" class="carousel-control-prev gal-control gal-prev" rel="prev" type="button" style="z-index: 99;">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">{% translate "Forrige" %}</span>
+							</a>
+							<a href="{{ next_file.slug }}" class="carousel-control-next gal-control gal-next" rel="next" type="button">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">{% translate "Næste" %}</span>
+							</a>
+						{% endif %}
+					</ul>
+					<div class="card-footer" style="z-index: 100;">
+						<div class="row">
+							<div class="col-auto hidden-xs me-auto">
+								<p class="m-0">{{ start_file.date|default_if_none:"" }}</p>
+							</div>
+							<div class="col-auto hidden-xs">
+								<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{{ start_file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ start_file.file.size|filesizeformat }})</a>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
 		</div>
 	</div>
-	{% endfor %}
 </div>
 {% if edit_visibility %}</form>{% endif %}
 
@@ -126,4 +132,5 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock content %}

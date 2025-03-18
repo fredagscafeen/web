@@ -120,7 +120,7 @@ def generate_free_beer_list(admin, request):
 
 @admin.register(BoardMember)
 class BoardMemberAdmin(admin.ModelAdmin):
-    list_display = ("thumbnail", "bartender", "title", "period")
+    list_display = ("thumbnail", "bartender", "responsibilities", "title", "period")
     list_display_links = ("thumbnail", "bartender")
     list_select_related = ("bartender",)
     list_filter = ("period",)

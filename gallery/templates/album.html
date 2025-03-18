@@ -8,82 +8,106 @@
 {% block canonical_url %}{% url 'album' year=album.year album_slug=album.slug %}{% endblock canonical_url %}
 
 {% block content %}
-<!--
-{% for file in files %}https://{{ request.get_host }}{{ file.file.url }}
-{% endfor %}
--->
+
 {% if edit_visibility_link %}
-<p><a href="{{ edit_visibility_link }}">{% translate "Udvælg billeder" %}</a></p>
-<p>
-{{ visible_count }}
-{% blocktranslate count visible_count=visible_count %}
-synlig
-{% plural %}
-synlige
-{% endblocktranslate %}
-{% translate "og" %}
-{{ hidden_count }}
-{% blocktranslate count hidden_count=hidden_count %}
-skjult
-{% plural %}
-skjulte
-{% endblocktranslate %}
-{% translate "hvoraf" %}
-{{ new_count }}
-{% blocktranslate count new_count=new_count %}
-er ny
-{% plural %}
-er nye
-{% endblocktranslate %}.
-</p>
-<form onsubmit="return confirm('{% translate "Er du sikker på at du vil offentliggøre alle nye billeder i albummet?" %}')" method="post">
-    {% csrf_token %}
-    <input name="set_all_new_visible" type="submit" value="{% translate "Gør alle nye billeder synlige" %}" style="background-color: transparent" />
-</form>
+<div class="alert alert-primary" role="alert">
+    <div class="row">
+        <div class="col-md-4">
+            <a class="btn btn-primary" href="{{ edit_visibility_link }}">{% translate "Udvælg billeder" %}</a>
+        </div>
+        <div class="col-md-4">
+            <p class="text-center m-0">
+            {{ visible_count }}
+            {% blocktranslate count visible_count=visible_count %}
+            synlig
+            {% plural %}
+            synlige
+            {% endblocktranslate %}
+            {% translate "og" %}
+            {{ hidden_count }}
+            {% blocktranslate count hidden_count=hidden_count %}
+            skjult
+            {% plural %}
+            skjulte
+            {% endblocktranslate %}
+            {% translate "hvoraf" %}
+            {{ new_count }}
+            {% blocktranslate count new_count=new_count %}er ny{% plural %}er nye{% endblocktranslate %}.</p>
+        </div>
+        <div class="col-auto ms-auto">
+            <form onsubmit="return confirm('{% translate "Er du sikker på at du vil offentliggøre alle nye billeder i albummet?" %}')" method="post">
+                {% csrf_token %}
+                <input name="set_all_new_visible" type="submit" class="btn btn-primary" value="{% translate "Gør alle nye billeder synlige" %}" />
+            </form>
+        </div>
+    </div>
+</div>
 {% endif %}
-<div class="row">
-  <div class="col-xs-12 col-sm-7 col-md-6">
-    <ol class="breadcrumb imagetitle">
-      <li><a href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
-      <li class="active">{{ album.title }}</li>
-    </ol>
-  </div>
-  <div class="col-xs-12 col-sm-5 col-md-6 text-right">
-      <p class="imagetitle">
-          {{ files|length }}
-          {% blocktranslate count c=files|length %}
-          billede
-          {% plural %}
-          billeder
-          {% endblocktranslate %}
-          {% if album.publish_date %} {% translate "fra d." %} {{ album.publish_date }}{% endif %}
-      </p>
-  </div>
+<div class="card mb-2">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-auto me-auto">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
+                        <li class="breadcrumb-item active">{{ album.title }}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-auto">
+                {% if user.is_staff %}
+                    <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/gallery/album/{{ album.id }}/change/">
+                        {% translate "Edit" %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if album.description %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ album.description }}</li>
+    </ul>
+    {% endif %}
+    <ul class="p-0">
+        <div class="row m-4">
+            {% for file in files %}
+            <div class="col-xs-6 col-sm-4 col-md-3 mb-3">
+                <div class="card card-hover p-1">
+                    {% if file.type == "I" %}
+                    <img class="card-img" src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
+                    {% elif file.type == "V" %}
+                    <span class="m-3">{% bs_icon "film" size='2.0em' %} {{ file.slug }}</span>
+                    {% elif file.type == "A" %}
+                    <span class="m-3">{% bs_icon "volume-up" size='2.0em' %} {{ file.slug }}</span>
+                    {% elif file.type == "O" %}
+                    <span class="m-3">{% bs_icon "file-binary" size='2.0em' %} {{ file.slug }}</span>
+                    {% endif %}
+                    <a class="card-link stretched-link" href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede"></a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-xs-12">
+                <p>{% translate "Albummet" %} '{{ album.title }}' {% translate "har ingen billeder endnu." %}</p>
+            </div>
+            {% endfor %}
+            <div class="col-xs-12">
+                <a href="{% url 'year' year=album.year  %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
+                    <i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage til" %} {{ album.year }}
+                </a>
+            </div>
+        </div>
+    </ul>
+    <div class="card-footer">
+        <p class="m-0">
+            {{ files|length }}
+            {% blocktranslate count c=files|length %}
+            billede
+            {% plural %}
+            billeder
+            {% endblocktranslate %}
+            {% if album.publish_date %} {% translate "fra d." %} {{ album.publish_date }}{% endif %}
+        </p>
+    </div>
 </div>
-<div class="row">
-  {% for file in files %}
-  <div class="col-xs-6 col-sm-4 col-md-3">
-    <a class="thumbnail" href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede">
-      <div class="thumbcap">
-        {% if file.type == "I" %}
-          <img src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
-        {% elif file.type == "V" %}
-          <span>{% bs_icon "film" size='2.0em' %}</span>
-        {% elif file.type == "A" %}
-          <span>{% bs_icon "volume-up" size='2.0em' %}</span>
-        {% elif file.type == "O" %}
-          <span>{% bs_icon "file-binary" size='2.0em' %}</span>
-        {% endif %}
-      </div>
-    </a>
-  </div> <!-- col-xs-6 -->
-  {% empty %}
-  <div class="col-xs-12">
-    <p>{% translate "Albummet" %} '{{ album.title }}' {% translate "har ingen billeder endnu." %}</p>
-  </div>
-  {% endfor %}
-</div> <!-- row -->
-<div class="col-xs-12">
-  <a href="{% url 'year' year=album.year  %}">{% translate "Tilbage til" %} {{ album.year }}</a>
-</div>
+
 {% endblock content%}

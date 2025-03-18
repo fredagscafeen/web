@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% load bootstrap5 bootstrap_icons %}
+
+{% block content %}
+{% load i18n %}
+{% load static %}
+{% load not_answered %}
+
+<div class="mb-3">
+	<a href="{% url 'events' %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
+		<i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage" %}
+	</a>
+</div>
+<div>
+	{% if event.event_album %}
+		{% with album=event.event_album %}
+		{% if album.thumbnail %}
+			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+				<div class="card">
+					<img src="{{ album.thumbnail.url }}" class="event-image-large">
+				</div>
+			</a>
+		{% endif %}
+		{% endwith %}
+	{% endif %}
+	<div class="mt-3">
+		<div class="row">
+			<div class="col-auto me-auto">
+				<h2 id="{{ event.name }}">
+					{{ event.start_datetime.date }} - {{ event.name }}
+					<a href="#{{ event.name }}" class="section-link">#</a>
+				</h2>
+			</div>
+			<div class="col-auto">
+				{% if user.is_staff %}
+					<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/events/event/{{ event.id }}/change/">
+						{% translate "Edit" %}
+					</a>
+				{% endif %}
+			</div>
+		</div>
+		<p><b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.</p>
+		<p><b>{% translate "Tilmeldingsfrist" %}:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} ({% translate "for sent" %}){% endif %}</p>
+		<p><b>{% translate "Lokation" %}:</b> {{ event.location }}</p>
+		<p><b>{% translate "Beskrivelse" %}:</b></p>
+		<p style="white-space: pre-line;">{{ event.description }}</p>
+
+		<h4 id="signup">
+			{% translate "Tilmelding" %}
+			{% if user|not_answered:event %}
+				<i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
+				<span class="visually-hidden">{% translate "Not answered" %}</span>
+			{% endif %}
+		</h4>
+		<div>
+			{% if not bartender %}
+			<p><b>{% translate "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events." %} <a href="/login/?next=/events/">{% translate "Klik for at logge ind." %}</a></b></p>
+			{% elif not may_attend %}
+			<p><b>{% translate "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen." %}</b></p>
+			<p>{% translate "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav" %}:
+				<ul>
+					<li>{% translate "Man er aktiv bartender." %}</li>
+					<li>{% translate "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år siden." %}</li>
+					<li>{% translate "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden." %}</li>
+				</ul>
+			</p>
+			{% endif %}
+		</div>
+		{% if form %}
+			<form method="post">
+				<fieldset{% if event.deadline_exceeded %} disabled{% endif %}>
+					{% csrf_token %}
+					<input type="hidden" name="event_id" value="{{ event.id }}">
+					{% bootstrap_form form %}
+					{% buttons %}
+						{% translate "Gem" as BUTTON_TEXT %}
+						<button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+							<i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
+						</button>
+					{% endbuttons %}
+				</fieldset>
+			</form>
+		{% endif %}
+		<div role="tablist">
+			<div class="card mb-2">
+				<div class ="card-header" role="tab" id="coll">
+					<div class="row">
+						<div class="col-auto me-auto">
+							{% translate "Tilmeldte" %} <span class="badge text-bg-primary rounded-pill">{{ event.attending_count }}</span>
+						</div>
+						<div class="col-auto">
+							{% if user.is_staff %}
+								<a href="mailto:
+								{% for response in event.sorted_responses %}
+									{% if response.attending %}
+										{{ response.bartender.email }},
+									{% endif %}
+								{% endfor %}
+								?cc=best@fredagscafeen.dk&bcc=&subject={{ event.name }}&body=" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" target="_top">
+									<i>{% bs_icon 'envelope-at-fill' size='1.0em' %}</i> {% translate "Send mail" %}
+								</a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				{% if event.attending_count > 0 %}
+					<div role="tabpanel">
+						<div class="container">
+							<table class="table tablesorter">
+								<thead>
+									<tr>
+										<th>{% translate "Navn" %}</th>
+										{% for choice in event.sorted_choices %}
+											<th>{{ choice.name }}</th>
+										{% endfor %}
+									</tr>
+								</thead>
+								<tbody class="table-group-divider">
+									{% for response in event.sorted_responses %}
+										<tr>
+											{% if response.attending %}
+												<td>{{ response.bartender.name }}</td>
+												{% for option in response.get_sorted_options %}
+													<td>{{ option.option }}</td>
+												{% endfor %}
+											{% endif %}
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="mt-3">
+	<p class="fw-light">
+		{% translate "Created" %} {{ event.created_at | date:"d M, Y" }}
+		{% if event.updated_at.date != event.created_at.date %}
+		<br>
+		{% translate "Updated" %} {{ event.updated_at | date:"d M, Y" }}
+		{% endif %}
+	</p>
+</div>
+
+<script>
+$(function () {
+	$(".tablesorter").tablesorter();
+});
+function updateRequired() {
+	$('form').each(function (i, form) {
+		var attending = $(form).find('[name="attending"]').val() === 'True';
+		$(form).find('select[name!="attending"]').each(function (i, select) {
+			$(select).prop('required', attending);
+			$(select).prop('disabled', !attending);
+		});
+	});
+}
+$('[name="attending"]').change(updateRequired);
+updateRequired();
+</script>
+
+{% endblock %}

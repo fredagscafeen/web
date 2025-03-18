@@ -21,53 +21,107 @@
 
 {% load static %}
 
-<div class="panel-group" id="accordion">
-{% for period in periods %}
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
-					{% translate "Bestyrelsen" %} {{ period }}
-				</a>
-				{% if user.is_staff %}
-					<a href="/admin/bartenders/boardmemberperiod/{{ period.id }}/change/" class="pull-right">
-						{% translate "Edit" %}
-					</a>
-				{% endif %}
-			</h4>
-		</div>
-	<div id="collapse{{ forloop.counter }}" class="panel-collapse collapse{% if forloop.first %} in{% endif %}">
-			<div class="panel-body">
-				<ul class="list-group">
-				{% for boardmember in period.boardmember_set.all %}
-						<li class="list-group-item col-md-6">
-
-							<div style="display: flex; flex-direction: row; align-items: center;">
-
+<div class="mb-3" id="accordion">
+	{% for board in boards %}
+		<div class="card mb-2">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-auto me-auto">
+						<a class="fw-medium link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" data-bs-toggle="collapse" href="#collapse{{ forloop.counter }}" role="button">
+							{% translate "Bestyrelsen" %} {{ board.period }}
+						</a>
+					</div>
+					<div class="col-auto">
+						{% if user.is_staff %}
+							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberperiod/{{ board.period.id }}/change/">
+								{% translate "Edit" %}
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<ul id="collapse{{ forloop.counter }}" class="list-group list-group-flush collapse{% if forloop.first %} show{% endif %}" data-bs-parent="#accordion">
+				<li class="list-group-item">
+					<div class="row p-2">
+						{% if board.chairman %}
+						<div class="col-md-6 d-flex border border-primary p-3">
+							{% if board.chairman.image %}
+							<div class="board-image" style="background-image: url({{ board.chairman.image.url }});"></div>
+							{% else %}
+							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+							<div class="ms-3 d-flex flex-column justify-content-center">
+								<b>{{ board.chairman.responsibilities }}</b>
+								<em>{{ board.chairman.title }}</em>
+								<span>{{ board.chairman.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ board.chairman.bartender.username }}</code>)</span>
+							</div>
+						</div>
+						{% endif %}
+						{% if board.treasurer %}
+						<div class="col-md-6 d-flex border border-primary p-3">
+							{% if board.treasurer.image %}
+							<div class="board-image" style="background-image: url({{ board.treasurer.image.url }});"></div>
+							{% else %}
+							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+							<div class="ms-3 d-flex flex-column justify-content-center">
+								<b>{{ board.treasurer.responsibilities }}</b>
+								<em>{{ board.treasurer.title }}</em>
+								<span>{{ board.treasurer.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ board.treasurer.bartender.username }}</code>)</span>
+							</div>
+						</div>
+						{% endif %}
+					</div>
+					<p class="m-0 fw-light">{% translate "Menige bestyrelsesmedlemmer" %} <span class="badge text-bg-secondary rounded-pill">{{ board.commons|length }}</span></p>
+					<div class="row p-2">
+						{% for boardmember in board.commons %}
+							{% if boardmember.is_common %}
+							<div class="col-md-6 d-flex border p-3">
 								{% if boardmember.image %}
 								<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
 								{% else %}
 								<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
 								{% endif %}
-
-								<div style="margin-left: 1em;">
+								<div class="ms-3 d-flex flex-column justify-content-center">
 									<b>{{ boardmember.responsibilities }}</b>
-									<br>
 									<em>{{ boardmember.title }}</em>
-									<br>
-									{{ boardmember.bartender.name }} (<code>{{ boardmember.bartender.username }}</code>)
+									<span>{{ boardmember.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ boardmember.bartender.username }}</code>)</span>
 								</div>
 							</div>
-						</li>
-				{% endfor %}
-				</ul>
-			</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+					{% if board.substitutes|length > 0 %}
+						<p class="m-0 fw-light">{% translate "Bestyrelsessuppleanter" %} <span class="badge text-bg-secondary rounded-pill">{{ board.substitutes|length }}</span></p>
+						<div class="row p-2">
+							{% for boardmember in board.substitutes %}
+								{% if boardmember.is_substitute %}
+								<div class="col-md-6 d-flex border p-3">
+									{% if boardmember.image %}
+									<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+									{% else %}
+									<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+									{% endif %}
+									<div class="ms-3 d-flex flex-column justify-content-center">
+										<b>{{ boardmember.responsibilities }}</b>
+										<em>{{ boardmember.title }}</em>
+										<span>{{ boardmember.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ boardmember.bartender.username }}</code>)</span>
+									</div>
+								</div>
+								{% endif %}
+							{% endfor %}
+						</div>
+					{% endif %}
+				</li>
+			</ul>
 		</div>
-	</div>
-{% endfor %}
+	{% endfor %}
 </div>
 
-<h1>{% translate "Bestyrelsen gennem tiden" %}</h1>
+<h2 id="board_over_time">
+	{% translate "Bestyrelsen gennem tiden" %}
+	<a href="#board_over_time" class="section-link">#</a>
+</h2>
 
 <div id="timesheet-theme" class="white">
 	<div id="timesheet"></div>
