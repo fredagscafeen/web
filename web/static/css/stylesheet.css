@@ -21,20 +21,6 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     flex-shrink: 0;
 }
 
-.event-image {
-    height: 200px;
-    object-fit: cover;
-}
-
-.event-image-large {
-    height: 200px;
-    object-fit: cover;
-}
-
-.event-image-large:hover {
-    opacity: 0.5;
-}
-
 .card-hover:hover {
     border-color: var(--datblue);
 }

@@ -57,7 +57,7 @@
 						<input type="submit" name="r{{ file.pk }}" value="Gem album" class="btn btn-primary mt-2" />
 					</ul>
 					{% endif %}
-					<ul class="carousel m-0 p-0" data-permlink="{{ image_slug }}">
+					<ul class="carousel m-0 p-0" data-permlink="{{ file.slug }}">
 						{% if file.type == "I" %}
 							<img class="w-100" alt="{{ album.slug }}/{{ file.slug }}"
 							{% if file != start_file %}data-{% endif %}srcset=
@@ -74,6 +74,28 @@
 							src="{{ file.file.thumbnail.720x720.url }}"
 							{% endif %}
 							title="{{ file.caption }}">
+						{% elif file.type == "A" %}
+						<div class="row justify-content-center">
+							<audio class="col-6" controls
+								{% if file != start_file %}data-{% endif %}src=
+								"{{ file.file.url }}">
+								{% translate "Your browser does not support the audio element." %}
+							</audio>
+						</div>
+						{% elif file.type == "V" %}
+							<video class="w-100" controls
+								{% if file != start_file %}data-{% endif %}src=
+								"{{ file.file.url }}">
+								{% translate "Your browser does not support the video tag." %}
+							</video>
+						{% else %}
+							<div class="lg-file-download text-center download-file-button">
+								<a class="btn btn-default btn-lg" href="{{ file.file.url }}">
+									{% bs_icon "download" size='2.0em' %}
+									{{ file.slug }}
+									({{ file.file.size|filesizeformat }})
+								</a>
+							</div>
 						{% endif %}
 						{% if file_count > 1 %}
 							<a href="{{ prev_file.slug }}" class="carousel-control-prev gal-control gal-prev" rel="prev" type="button" style="z-index: 99;">

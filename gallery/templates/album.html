@@ -76,11 +76,11 @@
                     {% if file.type == "I" %}
                     <img class="card-img" src="{{ file.file.crop.253x253.url }}" alt="{{ album.title }}">
                     {% elif file.type == "V" %}
-                    <span>{% bs_icon "film" size='2.0em' %}</span>
+                    <span class="m-3">{% bs_icon "film" size='2.0em' %} {{ file.slug }}</span>
                     {% elif file.type == "A" %}
-                    <span>{% bs_icon "volume-up" size='2.0em' %}</span>
+                    <span class="m-3">{% bs_icon "volume-up" size='2.0em' %} {{ file.slug }}</span>
                     {% elif file.type == "O" %}
-                    <span>{% bs_icon "file-binary" size='2.0em' %}</span>
+                    <span class="m-3">{% bs_icon "file-binary" size='2.0em' %} {{ file.slug }}</span>
                     {% endif %}
                     <a class="card-link stretched-link " href="{% url 'image' year=album.year album_slug=album.slug image_slug=file.slug %}" alt="Se billede"></a>
                 </div>

@@ -9,17 +9,20 @@ $(document).keydown(function(e) {
     switch(e.which) {
     case 37: // left
         var href = $('.gal-prev').attr('href');
-        window.location.href = href;
+        if (href)
+            window.location.href = href;
         break;
     case 39: // right
         var href = $('.gal-next').attr('href');
-        window.location.href = href;
+        if (href)
+            window.location.href = href;
         break;
     case 32: // space
         togglePlay();
         break;
     case 27: // ESC
-        $("#albumlink").eq(0).click();
+        var href = $('#albumlink').attr('href');
+        window.location.href = href;
         break;
     }
     e.preventDefault();
