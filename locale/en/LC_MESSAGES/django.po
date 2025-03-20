@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-18 19:49+0100\n"
-"PO-Revision-Date: 2025-03-18 19:51+0050\n"
+"POT-Creation-Date: 2025-03-20 20:03+0100\n"
+"PO-Revision-Date: 2025-03-20 20:11+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -92,7 +92,7 @@ msgstr "Submit"
 msgid "Result"
 msgstr "Result"
 
-#: bartab/templates/bartab/consumption.html:15 events/templates/event.html:113
+#: bartab/templates/bartab/consumption.html:15 events/templates/event.html:132
 #: items/templates/items.html:51
 msgid "Navn"
 msgstr "Name"
@@ -109,7 +109,7 @@ msgstr "Full name"
 msgid "Brugernavn"
 msgstr "Username"
 
-#: bartenders/models.py:56 web/templates/about.html:86
+#: bartenders/models.py:56 web/templates/about.html:91
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -138,27 +138,27 @@ msgid "Ansvarsområde"
 msgstr "Area of responsibility"
 
 #: bartenders/models.py:186
-msgid "F.eks. Formand, Kasserer, Suppleant eller andet"
-msgstr "For example: Chairman, Treasurer, Deputy or other"
+msgid "(Hvis mere end et ansvarsområde, separer med ' / ')"
+msgstr "(If more than one area of ​​responsibility, separate with ' / ')"
 
 #: bartenders/models.py:188 gallery/models.py:34
 msgid "Titel"
 msgstr "Title"
 
-#: bartenders/models.py:260 events/templates/event.html:43
-#: events/templates/events.html:42
+#: bartenders/models.py:263 events/templates/event.html:62
+#: events/templates/events.html:53
 msgid "til"
 msgstr "to"
 
-#: bartenders/models.py:265
+#: bartenders/models.py:268
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/models.py:266 events/models.py:74 gallery/models.py:46
+#: bartenders/models.py:269 events/models.py:71 gallery/models.py:46
 msgid "Årgang"
 msgstr "Year"
 
-#: bartenders/models.py:270
+#: bartenders/models.py:273
 msgid ""
 "Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være "
 "en god bartender"
@@ -168,7 +168,7 @@ msgstr ""
 
 #: bartenders/templates/ballots_update.html:18
 #: bartenders/templates/bartender_info.html:12
-#: bartenders/templates/bartender_info.html:74 events/templates/event.html:77
+#: bartenders/templates/bartender_info.html:74 events/templates/event.html:96
 msgid "Gem"
 msgstr "Save"
 
@@ -210,7 +210,7 @@ msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
 #: bartenders/templates/barplan.html:91 bartenders/templates/barplan.html:187
-#: bartenders/templates/board.html:37 events/templates/event.html:38
+#: bartenders/templates/board.html:37 events/templates/event.html:57
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
 #: items/templates/items.html:80
 msgid "Edit"
@@ -467,23 +467,23 @@ msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr ""
 "There are too many who have chosen %(option_option)s. Choose something else."
 
-#: events/models.py:64
+#: events/models.py:61
 msgid "Name"
 msgstr "Name"
 
-#: events/models.py:68
+#: events/models.py:65
 msgid "Location"
 msgstr "Location"
 
-#: events/models.py:72
+#: events/models.py:69
 msgid "Description"
 msgstr "Description"
 
-#: events/models.py:81
+#: events/models.py:78
 msgid "Event album"
 msgstr "Event album"
 
-#: events/models.py:86
+#: events/models.py:83
 msgid "Response deadline"
 msgstr "Response deadline"
 
@@ -491,45 +491,45 @@ msgstr "Response deadline"
 msgid "Tilbage"
 msgstr "Go back"
 
-#: events/templates/event.html:44 events/templates/events.html:50
+#: events/templates/event.html:63 events/templates/events.html:61
 #: events/views.py:84
 msgid "Tilmeldingsfrist"
 msgstr "Registration deadline"
 
-#: events/templates/event.html:44 events/templates/events.html:52
+#: events/templates/event.html:63 events/templates/events.html:63
 msgid "for sent"
 msgstr "too late"
 
-#: events/templates/event.html:45 udlejning/models.py:57
+#: events/templates/event.html:64 udlejning/models.py:57
 #: web/templates/about.html:42
 msgid "Lokation"
 msgstr "Location"
 
-#: events/templates/event.html:46 gallery/models.py:48
+#: events/templates/event.html:65 gallery/models.py:48
 #: web/templates/secrets_admin.html:11
 msgid "Beskrivelse"
 msgstr "Description"
 
-#: events/templates/event.html:50
+#: events/templates/event.html:69
 msgid "Tilmelding"
 msgstr "Sign up"
 
-#: events/templates/event.html:53 events/templates/events.html:39
+#: events/templates/event.html:72 events/templates/events.html:50
 msgid "Not answered"
 msgstr "Not answered"
 
-#: events/templates/event.html:58
+#: events/templates/event.html:77
 msgid ""
 "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
 msgstr ""
 "You are not logged in as a bartender and therefore cannot register for "
 "events."
 
-#: events/templates/event.html:58
+#: events/templates/event.html:77
 msgid "Klik for at logge ind."
 msgstr "Click here to log in"
 
-#: events/templates/event.html:60
+#: events/templates/event.html:79
 msgid ""
 "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit "
 "lov af bestyrelsen."
@@ -537,7 +537,7 @@ msgstr ""
 "You are not allowed to register for events, unless you have been given "
 "explicit permission by the board."
 
-#: events/templates/event.html:61
+#: events/templates/event.html:80
 msgid ""
 "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende "
 "krav"
@@ -545,18 +545,18 @@ msgstr ""
 "Normally, you can only register for events if you meet one of the following "
 "requirements"
 
-#: events/templates/event.html:63
+#: events/templates/event.html:82
 msgid "Man er aktiv bartender."
 msgstr "You are an active bartender"
 
-#: events/templates/event.html:64
+#: events/templates/event.html:83
 msgid ""
 "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år "
 "siden."
 msgstr ""
 "You have been on a board that has been active between now and a year ago."
 
-#: events/templates/event.html:65
+#: events/templates/event.html:84
 msgid ""
 "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre "
 "end en måned siden."
@@ -564,19 +564,19 @@ msgstr ""
 "There has been a bar guard during a bar guard plan period that ended less "
 "than a month ago."
 
-#: events/templates/event.html:90
+#: events/templates/event.html:109
 msgid "Tilmeldte"
 msgstr "Registered participant"
 
-#: events/templates/event.html:101
+#: events/templates/event.html:120
 msgid "Send mail"
 msgstr "Send mail"
 
-#: events/templates/event.html:141
+#: events/templates/event.html:160
 msgid "Created"
 msgstr "Created"
 
-#: events/templates/event.html:144
+#: events/templates/event.html:163
 msgid "Updated"
 msgstr "Updated"
 
@@ -584,11 +584,11 @@ msgstr "Updated"
 msgid "Bartender events"
 msgstr "Bartender events"
 
-#: events/templates/events.html:65
+#: events/templates/events.html:76
 msgid "Skjul tidligere"
 msgstr "Hide earlier"
 
-#: events/templates/events.html:67
+#: events/templates/events.html:78
 msgid "Vis tidligere"
 msgstr "Show earlier"
 
@@ -717,14 +717,6 @@ msgid "Cancel upload"
 msgstr "Cancel upload"
 
 #: gallery/templates/album.html:21
-#| msgid ""
-#| "\n"
-#| "          billede\n"
-#| "          "
-#| msgid_plural ""
-#| "\n"
-#| "          billeder\n"
-#| "          "
 msgid ""
 "\n"
 "            synlig\n"
@@ -745,14 +737,6 @@ msgid "og"
 msgstr "and"
 
 #: gallery/templates/album.html:28
-#| msgid ""
-#| "\n"
-#| "          billede\n"
-#| "          "
-#| msgid_plural ""
-#| "\n"
-#| "          billeder\n"
-#| "          "
 msgid ""
 "\n"
 "            skjult\n"
@@ -773,12 +757,6 @@ msgid "hvoraf"
 msgstr "of which"
 
 #: gallery/templates/album.html:35
-#| msgid ""
-#| "\n"
-#| "er ny\n"
-#| msgid_plural ""
-#| "\n"
-#| "er nye\n"
 msgid "er ny"
 msgid_plural "er nye"
 msgstr[0] "is new"
@@ -805,14 +783,6 @@ msgid "Tilbage til"
 msgstr "Back to"
 
 #: gallery/templates/album.html:103
-#| msgid ""
-#| "\n"
-#| "          billede\n"
-#| "          "
-#| msgid_plural ""
-#| "\n"
-#| "          billeder\n"
-#| "          "
 msgid ""
 "\n"
 "            billede\n"
@@ -836,15 +806,7 @@ msgstr "from"
 msgid "Bartenderarrangementer"
 msgstr "Bartender events"
 
-#: gallery/templates/gallery.html:64
-#| msgid ""
-#| "\n"
-#| "                                                billede\n"
-#| "                                                "
-#| msgid_plural ""
-#| "\n"
-#| "                                                billeder\n"
-#| "                                                "
+#: gallery/templates/gallery.html:66
 msgid ""
 "\n"
 "                                            billede\n"
@@ -860,7 +822,7 @@ msgstr[1] ""
 "\n"
 "images"
 
-#: gallery/templates/gallery.html:85
+#: gallery/templates/gallery.html:87
 msgid "Ingen albummer med billeder fundet."
 msgstr "No albums with images found."
 
@@ -869,14 +831,6 @@ msgid "af"
 msgstr "of"
 
 #: gallery/templates/image.html:44
-#| msgid ""
-#| "\n"
-#| "\t\t\t\t\t\t\tbillede\n"
-#| "\t\t\t\t\t\t\t"
-#| msgid_plural ""
-#| "\n"
-#| "\t\t\t\t\t\t\tbilleder\n"
-#| "\t\t\t\t\t\t\t"
 msgid ""
 "\n"
 "\t\t\t\t\t\t\t\t\t\tbillede\n"
@@ -892,27 +846,35 @@ msgstr[1] ""
 "\n"
 "images"
 
-#: gallery/templates/image.html:81
+#: gallery/templates/image.html:82
+msgid "Your browser does not support the audio element."
+msgstr "Your browser does not support the audio element."
+
+#: gallery/templates/image.html:89
+msgid "Your browser does not support the video tag."
+msgstr "Your browser does not support the video tag."
+
+#: gallery/templates/image.html:103
 msgid "Forrige"
 msgstr "Previous"
 
-#: gallery/templates/image.html:85
+#: gallery/templates/image.html:107
 msgid "Næste"
 msgstr "Next"
 
-#: gallery/views.py:144 gallery/views.py:147
+#: gallery/views.py:139 gallery/views.py:142
 msgid "Billedet kan ikke findes"
 msgstr "The image cannot be found"
 
-#: gallery/views.py:248
+#: gallery/views.py:243
 msgid "Synlighed på givne billeder er blevet opdateret"
 msgstr "Visibility on given images has been updated"
 
-#: gallery/views.py:252
+#: gallery/views.py:247
 msgid "Fredagscaféens billedalbummer"
 msgstr "Fredagscaféens photo albums"
 
-#: gallery/views.py:257
+#: gallery/views.py:252
 msgid "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
 msgstr "Feed with new photo albums from Fredagscaféens events."
 
@@ -928,11 +890,11 @@ msgstr "To bartenders"
 msgid "Til bestyrelsesmedlemmer"
 msgstr "To board members"
 
-#: guides/templates/guides.html:7 web/templates/base.html:68
+#: guides/templates/guides.html:9 web/templates/base.html:68
 msgid "Guides"
 msgstr "Guides"
 
-#: guides/templates/guides.html:12
+#: guides/templates/guides.html:14
 msgctxt "Fredagscaféen"
 msgid ""
 "Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
@@ -941,7 +903,7 @@ msgstr ""
 "Here are all the delicious guides that are nice to have when you get "
 "involved in the operation of"
 
-#: guides/templates/guides.html:15
+#: guides/templates/guides.html:17
 msgid ""
 "Vi forsøger at opdaterer dem løbende, men forstå at de ikke altid afspejler "
 "virkeligheden fuldt ud."
@@ -1585,14 +1547,6 @@ msgid "Generel info"
 msgstr "General info"
 
 #: web/templates/about.html:14
-#| msgid ""
-#| "\n"
-#| "Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet,\n"
-#| "som siden 1993 har været et socialt samlingspunkt for studerende og ansatte på instituttet.\n"
-#| "Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.\n"
-#| "Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi har altid\n"
-#| "et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.\n"
-#| "Vi er samtidig den eneste fredagsbar i landet, der fast har pilsner fra\n"
 msgid ""
 "\n"
 "    Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet,\n"
@@ -1612,10 +1566,6 @@ msgstr ""
 "We are also the only Friday bar in the country that always has lager from"
 
 #: web/templates/about.html:23
-#| msgid ""
-#| "\n"
-#| "på fad.\n"
-#| "Tag endelig et kig på vores faste sortiment,\n"
 msgid ""
 "\n"
 "    på fad.\n"
@@ -1632,10 +1582,6 @@ msgid "her"
 msgstr "here"
 
 #: web/templates/about.html:30
-#| msgid ""
-#| "\n"
-#| "Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på instituttet,\n"
-#| "som også kan ses\n"
 msgid ""
 "\n"
 "    Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på instituttet,\n"
@@ -1647,9 +1593,6 @@ msgstr ""
 "which can also be seen"
 
 #: web/templates/about.html:35
-#| msgid ""
-#| "\n"
-#| "Baren er non-profit, og overskuddet går til vedligeholdelse af baren og arrangementer for bartenderene.\n"
 msgid ""
 "\n"
 "    Baren er non-profit, og overskuddet går til vedligeholdelse af baren og arrangementer for bartenderene.\n"
@@ -1693,42 +1636,42 @@ msgstr ""
 "Friday, we mean it. Whether it's public holidays, exam periods or summer "
 "vacation, we're open."
 
-#: web/templates/about.html:65
+#: web/templates/about.html:66
 msgid "Pt. har baren været åben"
 msgstr "At the moment the bar has been open"
 
-#: web/templates/about.html:65
+#: web/templates/about.html:66
 msgid "uge"
 msgid_plural "uger"
 msgstr[0] "week"
 msgstr[1] "weeks"
 
-#: web/templates/about.html:65
+#: web/templates/about.html:66
 msgid "i streg, siden"
 msgstr "in a row, since"
 
-#: web/templates/about.html:65
+#: web/templates/about.html:66
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr " "
 
-#: web/templates/about.html:72
+#: web/templates/about.html:74
 msgid "Postadresse"
 msgstr "Postal address"
 
-#: web/templates/about.html:76
+#: web/templates/about.html:78
 msgid "Vores postadresse er"
 msgstr "Our postal address is"
 
-#: web/templates/about.html:90
+#: web/templates/about.html:95
 msgid "Bestyrelsen kan kontaktes på"
 msgstr "The board can be contacted at"
 
-#: web/templates/about.html:97
+#: web/templates/about.html:102
 msgid "CVR"
 msgstr "CVR"
 
-#: web/templates/about.html:100
+#: web/templates/about.html:105
 msgid "Vores CVR-nr er"
 msgstr "Our CVR number is"
 
@@ -1805,6 +1748,9 @@ msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login mail sent: Press the link in your received email to log in."
 
+#~ msgid "F.eks. Formand, Kasserer, Suppleant eller andet"
+#~ msgstr "For example: Chairman, Treasurer, Deputy or other"
+
 #~ msgid ""
 #~ "\n"
 #~ "synlig\n"
@@ -1845,12 +1791,6 @@ msgstr "Login mail sent: Press the link in your received email to log in."
 #~ msgstr[1] ""
 #~ "\n"
 #~ "images"
-
-#~ msgid "Your browser does not support the audio element."
-#~ msgstr "Your browser does not support the audio element."
-
-#~ msgid "Your browser does not support the video tag."
-#~ msgstr "Your browser does not support the video tag."
 
 #~ msgid "Vis nuværende"
 #~ msgstr "Show current"

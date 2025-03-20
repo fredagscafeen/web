@@ -183,7 +183,7 @@ class BoardMember(models.Model):
     responsibilities = models.CharField(
         max_length=255,
         verbose_name=_("Ansvarsområde"),
-        help_text=_("F.eks. Formand, Kasserer, Suppleant eller andet"),
+        help_text=_("(Hvis mere end et ansvarsområde, separer med ' / ')"),
     )
     title = models.CharField(max_length=255, verbose_name=_("Titel"))
     image = models.ImageField(upload_to="boardMembers", blank=True, null=True)
@@ -198,14 +198,17 @@ class BoardMember(models.Model):
     def __str__(self):
         return self.bartender.username
 
+    def get_responsibilities(self):
+        return self.responsibilities.split(" / ")
+
     def is_chairman(self):
-        return True if self.responsibilities == "Formand" else False
+        return True if "Formand" in self.get_responsibilities() else False
 
     def is_treasurer(self):
-        return True if self.responsibilities == "Kasserer" else False
+        return True if "Kasserer" in self.get_responsibilities() else False
 
     def is_substitute(self):
-        return True if self.responsibilities == "Suppleant" else False
+        return True if "Suppleant" in self.get_responsibilities() else False
 
     def is_common(self):
         return (

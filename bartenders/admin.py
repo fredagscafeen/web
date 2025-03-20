@@ -226,42 +226,57 @@ class PollAdmin(admin.ModelAdmin):
     pass
 
 
+class ShiftStreak:
+    def __init__(self, streak, start_time, end_time=None):
+        self.streak = streak
+        self.start_datetime = start_time
+        self.end_datetime = end_time
+        self.is_current_shift = False
+
+    def __lt__(self, other):
+        return self.streak < other.streak
+
+    def __str__(self):
+        return f"{self.streak} ({self.start_time} - {self.end_time})"
+
+
 @custom_admin_view("bartenders", "Bartender shift streaks")
 def streaks_view(admin, request):
     bartender_shifts = BartenderShift.objects.defer(
         "responsible", "other_bartenders", "period"
     )
-    shifts = bartender_shifts.filter(end_datetime__lte=timezone.now())
+    shifts = bartender_shifts.filter(start_datetime__lte=timezone.now())
     shift_streaks = []
+    current_streak = None
+    found = False
     for shift in shifts:
-        shift_streaks.append(shift.streak())
-    sorted_shift_streaks = sorted(shift_streaks, key=lambda x: x[0], reverse=True)
-    sorted_shift_streaks_short = []
-    for shift in sorted_shift_streaks:
-        found = False
-        for sorted_shift in sorted_shift_streaks_short:
-            if shift[1] == sorted_shift[1]:
-                found = True
-                break
-        if not found:
-            sorted_shift_streaks_short.append(shift)
+        if current_streak == None:
+            current_streak = ShiftStreak(1, shift.start_datetime, shift.start_datetime)
+        elif shift.start_datetime <= current_streak.end_datetime + datetime.timedelta(
+            days=7
+        ):
+            current_streak = ShiftStreak(
+                current_streak.streak + 1,
+                current_streak.start_datetime,
+                shift.start_datetime,
+            )
+        else:
+            shift_streaks.append(current_streak)
+            current_streak = ShiftStreak(1, shift.start_datetime, shift.start_datetime)
+        if (
+            shift.end_datetime >= timezone.now() - datetime.timedelta(days=7)
+            and not found
+        ):
+            current_streak.is_current_shift = True
+            found = True
+    shift_streaks.append(current_streak)
 
-    current_shift = shifts.filter(
-        start_datetime__lte=timezone.now() + datetime.timedelta(days=2),
-        end_datetime__gte=timezone.now() - datetime.timedelta(days=5),
-    )
-    shift_placement = 0
-    if current_shift:
-        for i, (streak, start_date, end_date) in enumerate(sorted_shift_streaks_short):
-            if end_date == current_shift[0].end_datetime:
-                shift_placement = i + 1
-                break
+    sorted_shift_streaks = sorted(shift_streaks, reverse=True)
 
     context = dict(
         # Include common variables for rendering the admin template.
         admin.admin_site.each_context(request),
         # Anything else you want in the context...
-        shift_streaks=sorted_shift_streaks_short,
-        shift_placement=shift_placement,
+        shift_streaks=sorted_shift_streaks,
     )
     return TemplateResponse(request, "streak_admin.html", context)

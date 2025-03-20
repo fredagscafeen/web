@@ -61,9 +61,11 @@
             {% translate "Baren har åbent" %} <b><em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage fra klokken 15.00 til vi lukker." %}</b>
             {% translate "Når vi siger vi har åbent" %} <em>{% translate "alle" context "Baren har åbent alle fredage..." %}</em> {% translate "fredage, mener vi det. Uanset om det er helligdage, eksamensperioder eller sommerferie, så har vi åbent." %}
         </p>
-        <p class="card-text">
-            {% translate "Pt. har baren været åben" %} <b><i>{{ shift_streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak_start_date }}</b>.
-        </p>
+        {% if shift_streak %}
+            <p class="card-text">
+                {% translate "Pt. har baren været åben" %} <b><i>{{ shift_streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak_start_date }}</b>.
+            </p>
+        {% endif %}
     </div>
 </div>
 
@@ -73,9 +75,12 @@
     </div>
     <div class="card-body">
         <p class="card-text">
-            {% translate "Vores postadresse er" %}:<br>
-            Fredagscaféen<br>
-            Åbogade 34<br>
+            {% translate "Vores postadresse er" %}:
+        </p>
+        <p class="card-text">
+            Att. Fredagscaféen<br>
+            C/O Aarhus Universitet<br>
+            Åbogade 34,<br>
             8200 Aarhus N
         </p>
     </div>
