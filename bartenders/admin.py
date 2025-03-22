@@ -253,7 +253,7 @@ def streaks_view(admin, request):
         if current_streak == None:
             current_streak = ShiftStreak(1, shift.start_datetime, shift.start_datetime)
         elif shift.start_datetime <= current_streak.end_datetime + datetime.timedelta(
-            days=7
+            days=8
         ):
             current_streak = ShiftStreak(
                 current_streak.streak + 1,
