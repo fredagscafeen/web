@@ -23,7 +23,7 @@ def custom_admin_view(app_label, name):
                 return False
 
             def has_change_permission(self, *args, **kwargs):
-                return False
+                return True
 
         class FakeModel:
             class Meta:
