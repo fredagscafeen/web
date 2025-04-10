@@ -122,20 +122,6 @@ SECRET_ADMIN_KEYS = [
         "role": "INDKØB",
     },
     {
-        "key": "KARET_PASSWORD",
-        "description": "Hængelås-kodeord til karet",
-        "username": None,
-        "url": None,
-        "role": "GENERAL",
-    },
-    {
-        "key": "KOELESKABE_PASSWORD",
-        "description": "Hængelås-kodeord til køleskabene i Nygaardkælderen",
-        "username": "Koden til det ene køleskab er omvendt det andet",
-        "url": None,
-        "role": "GENERAL",
-    },
-    {
         "key": "LASERTRYK_PASSWORD",
         "description": "Lasertryk.dk password",
         "username": "fredag",

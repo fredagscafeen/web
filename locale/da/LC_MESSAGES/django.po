@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 20:03+0100\n"
-"PO-Revision-Date: 2025-03-20 20:11+0050\n"
+"POT-Creation-Date: 2025-04-10 16:55+0200\n"
+"PO-Revision-Date: 2025-04-10 16:58+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -391,7 +391,7 @@ msgstr ""
 "før du tilmelder dig, så du ved hvad en typisk vagt i Fredagscaféen "
 "indebærer."
 
-#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:124
+#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:114
 msgid "Indsend"
 msgstr "Indsend"
 
@@ -619,11 +619,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: fredagscafeen/settings/base.py:304
+#: fredagscafeen/settings/base.py:297
 msgid "Danish"
 msgstr "Dansk"
 
-#: fredagscafeen/settings/base.py:305
+#: fredagscafeen/settings/base.py:298
 msgid "English"
 msgstr "Engelsk"
 
@@ -732,7 +732,7 @@ msgstr[1] ""
 "\n"
 "billeder"
 
-#: gallery/templates/album.html:26 udlejning/templates/udlejning.html:100
+#: gallery/templates/album.html:26
 msgid "og"
 msgstr "og"
 
@@ -1183,8 +1183,8 @@ msgid "Regler for udlån"
 msgstr "Regler for udlån"
 
 #: udlejning/templates/udlejning.html:36
-msgid "Disse regler er under revision, og der kan opstå fejl og mangler..."
-msgstr "Disse regler er under revision, og der kan opstå fejl og mangler..."
+msgid "Vi tager forbehold for eventuelle fejl, i de anførte regler."
+msgstr "Vi tager forbehold for eventuelle fejl, i de anførte regler."
 
 #: udlejning/templates/udlejning.html:39
 msgid ""
@@ -1331,52 +1331,52 @@ msgid "Der betales per åbnet fustage."
 msgstr "Der betales per åbnet fustage."
 
 #: udlejning/templates/udlejning.html:90
-msgid "Vores primære fadøl er"
-msgstr "Vores primære fadøl er"
-
-#: udlejning/templates/udlejning.html:93
 msgid ""
-"som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+"Vi kan skaffe fustager fra Aarhus Bryghus, så tag et kig på deres udvalg,"
 msgstr ""
-"som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+"Vi kan skaffe fustager fra Aarhus Bryghus, så tag et kig på deres udvalg,"
 
-#: udlejning/templates/udlejning.html:96
+#: udlejning/templates/udlejning.html:91
+#| msgctxt "På linket her"
+#| msgid "her"
+msgid "her"
+msgstr "her"
+
+#: udlejning/templates/udlejning.html:92
+msgid "og check hvad der eventuelt er i sæson."
+msgstr "og check hvad der eventuelt er i sæson."
+
+#: udlejning/templates/udlejning.html:95
 msgid ""
-"Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
-"hjemmeside, som fast kan fås på fad. Dvs."
+"Vores priser følger dem, Aarhus Bryghus har på deres hjemmeside, men vi "
+"tager forbehold for ændringer."
 msgstr ""
-"Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
-"hjemmeside, som fast kan fås på fad. Dvs."
+"Vores priser følger dem, Aarhus Bryghus har på deres hjemmeside, men vi "
+"tager forbehold for ændringer."
 
-#: udlejning/templates/udlejning.html:102
-msgid "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
-msgstr "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
-
-#: udlejning/templates/udlejning.html:105
+#: udlejning/templates/udlejning.html:98
+#| msgid ""
+#| "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
+#| "(incl. moms)."
 msgid ""
-"Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
+"Vi sælger også Magners Cider på fustage, der koster 1500 kr. pr. fustage "
 "(incl. moms)."
 msgstr ""
-"Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
+"Vi sælger også Magners Cider på fustage, der koster 1590 kr. pr. fustage "
 "(incl. moms)."
 
-#: udlejning/templates/udlejning.html:108
+#: udlejning/templates/udlejning.html:101
+#| msgid ""
+#| "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
+#| "chips koster 20kr/pose, der betales pr. åbnet enhed."
 msgid ""
-"Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
-"pt. men man kan skrive en mail til"
+"Derudover kan vi også levere sodavand og chips. Sodavand koster 10 kr. pr. "
+"stk. og chips koster 20kr. pr. pose. Der betales igen pr. åbnet enhed."
 msgstr ""
-"Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
-"pt. men man kan skrive en mail til"
+"Derudover kan vi også levere sodavand og chips. Sodavand koster 10 kr. pr. "
+"stk. og chips koster 20kr. pr. pose. Der betales igen pr. åbnet enhed."
 
-#: udlejning/templates/udlejning.html:111
-msgid ""
-"Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
-"chips koster 20kr/pose, der betales pr. åbnet enhed."
-msgstr ""
-"Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
-"chips koster 20kr/pose, der betales pr. åbnet enhed."
-
-#: udlejning/templates/udlejning.html:116
+#: udlejning/templates/udlejning.html:106
 msgid "Ansøgninsformular"
 msgstr "Ansøgningsformular"
 
@@ -1746,6 +1746,34 @@ msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+
+#~ msgid "Disse regler er under revision, og der kan opstå fejl og mangler..."
+#~ msgstr "Disse regler er under revision, og der kan opstå fejl og mangler..."
+
+#~ msgid "Vores primære fadøl er"
+#~ msgstr "Vores primære fadøl er"
+
+#~ msgid ""
+#~ "som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+#~ msgstr ""
+#~ "som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+
+#~ msgid ""
+#~ "Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
+#~ "hjemmeside, som fast kan fås på fad. Dvs."
+#~ msgstr ""
+#~ "Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
+#~ "hjemmeside, som fast kan fås på fad. Dvs."
+
+#~ msgid "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
+#~ msgstr "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
+
+#~ msgid ""
+#~ "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
+#~ "pt. men man kan skrive en mail til"
+#~ msgstr ""
+#~ "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
+#~ "pt. men man kan skrive en mail til"
 
 #~ msgid "F.eks. Formand, Kasserer, Suppleant eller andet"
 #~ msgstr "F.eks. Formand, Kasserer, Suppleant eller andet"

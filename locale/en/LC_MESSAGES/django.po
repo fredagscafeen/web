@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 20:03+0100\n"
-"PO-Revision-Date: 2025-03-20 20:11+0050\n"
+"POT-Creation-Date: 2025-04-10 16:55+0200\n"
+"PO-Revision-Date: 2025-04-10 16:57+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -392,7 +392,7 @@ msgstr ""
 "before you sign up, so you know what a typical shift in Fredagscaféen "
 "involve."
 
-#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:124
+#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:114
 msgid "Indsend"
 msgstr "Submit"
 
@@ -621,11 +621,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:304
+#: fredagscafeen/settings/base.py:297
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:305
+#: fredagscafeen/settings/base.py:298
 msgid "English"
 msgstr "English"
 
@@ -732,7 +732,7 @@ msgstr[1] ""
 "\n"
 "images"
 
-#: gallery/templates/album.html:26 udlejning/templates/udlejning.html:100
+#: gallery/templates/album.html:26
 msgid "og"
 msgstr "and"
 
@@ -1183,8 +1183,8 @@ msgid "Regler for udlån"
 msgstr "Roles for rental"
 
 #: udlejning/templates/udlejning.html:36
-msgid "Disse regler er under revision, og der kan opstå fejl og mangler..."
-msgstr "These rules are under revision and errors and omissions may occur..."
+msgid "Vi tager forbehold for eventuelle fejl, i de anførte regler."
+msgstr "We reserve the right to any errors in the rules stated."
 
 #: udlejning/templates/udlejning.html:39
 msgid ""
@@ -1330,52 +1330,52 @@ msgid "Der betales per åbnet fustage."
 msgstr "Payment is made per opened keg."
 
 #: udlejning/templates/udlejning.html:90
-msgid "Vores primære fadøl er"
-msgstr "Our primary draft beer is"
-
-#: udlejning/templates/udlejning.html:93
 msgid ""
-"som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+"Vi kan skaffe fustager fra Aarhus Bryghus, så tag et kig på deres udvalg,"
 msgstr ""
-"which comes in 25 liter kegs. The price is DKK 750 per keg (incl. VAT)"
+"We can source kegs from Aarhus Bryghus, so take a look at their selection,"
 
-#: udlejning/templates/udlejning.html:96
+#: udlejning/templates/udlejning.html:91
+#| msgctxt "På linket her"
+#| msgid "her"
+msgid "her"
+msgstr "here"
+
+#: udlejning/templates/udlejning.html:92
+msgid "og check hvad der eventuelt er i sæson."
+msgstr "and check what may be in season."
+
+#: udlejning/templates/udlejning.html:95
 msgid ""
-"Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
-"hjemmeside, som fast kan fås på fad. Dvs."
+"Vores priser følger dem, Aarhus Bryghus har på deres hjemmeside, men vi "
+"tager forbehold for ændringer."
 msgstr ""
-"In addition to the primary draft beer, you can get the beers listed on "
-"Aarhus Bryghus' website, which are always available on draft. That is"
+"Our prices follow those of Aarhus Bryghus on their website, but we reserve "
+"the right to change."
 
-#: udlejning/templates/udlejning.html:102
-msgid "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
-msgstr "(depending on the season). The price is DKK 800 per keg (incl. VAT)"
-
-#: udlejning/templates/udlejning.html:105
+#: udlejning/templates/udlejning.html:98
+#| msgid ""
+#| "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
+#| "(incl. moms)."
 msgid ""
-"Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
+"Vi sælger også Magners Cider på fustage, der koster 1500 kr. pr. fustage "
 "(incl. moms)."
 msgstr ""
-"We also sell Magners Cider in kegs, which costs DKK 1250 per keg (incl. "
+"We also sell Magners Cider in kegs, which costs DKK 1500 per keg (incl. "
 "VAT)."
 
-#: udlejning/templates/udlejning.html:108
+#: udlejning/templates/udlejning.html:101
+#| msgid ""
+#| "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
+#| "chips koster 20kr/pose, der betales pr. åbnet enhed."
 msgid ""
-"Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
-"pt. men man kan skrive en mail til"
+"Derudover kan vi også levere sodavand og chips. Sodavand koster 10 kr. pr. "
+"stk. og chips koster 20kr. pr. pose. Der betales igen pr. åbnet enhed."
 msgstr ""
-"We have a range of specialty beers available at: (it is not available at the"
-" moment, but you can write an e-mail to"
+"In addition, we can also deliver soda and chips. Soda costs DKK 10 per piece"
+" and chips cost DKK 20 per bag. Payment is made again per opened unit."
 
-#: udlejning/templates/udlejning.html:111
-msgid ""
-"Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
-"chips koster 20kr/pose, der betales pr. åbnet enhed."
-msgstr ""
-"In addition, we also deliver soft drinks and chips. Soda costs DKK 10/piece "
-"and chips cost DKK 20/bag, which is paid per opened device."
-
-#: udlejning/templates/udlejning.html:116
+#: udlejning/templates/udlejning.html:106
 msgid "Ansøgninsformular"
 msgstr "Application form"
 
@@ -1747,6 +1747,34 @@ msgstr "Link"
 msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login mail sent: Press the link in your received email to log in."
+
+#~ msgid "Disse regler er under revision, og der kan opstå fejl og mangler..."
+#~ msgstr "These rules are under revision and errors and omissions may occur..."
+
+#~ msgid "Vores primære fadøl er"
+#~ msgstr "Our primary draft beer is"
+
+#~ msgid ""
+#~ "som kommer i 25 liters fustager. Prisen er 750 kr. pr. fustage (incl. moms)"
+#~ msgstr ""
+#~ "which comes in 25 liter kegs. The price is DKK 750 per keg (incl. VAT)"
+
+#~ msgid ""
+#~ "Udover den primære fadøl, kan man få de øl som står inde på Aarhus Bryghus' "
+#~ "hjemmeside, som fast kan fås på fad. Dvs."
+#~ msgstr ""
+#~ "In addition to the primary draft beer, you can get the beers listed on "
+#~ "Aarhus Bryghus' website, which are always available on draft. That is"
+
+#~ msgid "(afhængig af sæson). Prisen er 800 kr. pr. fustage (incl. moms)"
+#~ msgstr "(depending on the season). The price is DKK 800 per keg (incl. VAT)"
+
+#~ msgid ""
+#~ "Vi har et sortiment af special-øl tilgængeligt på: (det er ikke tilgængelig "
+#~ "pt. men man kan skrive en mail til"
+#~ msgstr ""
+#~ "We have a range of specialty beers available at: (it is not available at the"
+#~ " moment, but you can write an e-mail to"
 
 #~ msgid "F.eks. Formand, Kasserer, Suppleant eller andet"
 #~ msgstr "For example: Chairman, Treasurer, Deputy or other"
