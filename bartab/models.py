@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import F, Sum, Value
+from django.db.models import Case, F, Sum, Value, When
 from django.db.models.functions import Coalesce
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -122,6 +122,30 @@ class BarTabSnapshot(models.Model):
     @property
     def total_used(self):
         return self.entries.aggregate(total_used=Sum("used"))["total_used"]
+
+    @property
+    def total_cash_added(self):
+        return self.entries.aggregate(
+            total_cash=Sum(
+                Case(
+                    When(added_cash=True, then="added"),
+                    default=Value(0),
+                    output_field=models.DecimalField(),
+                )
+            )
+        )["total_cash"]
+
+    @property
+    def total_card_added(self):
+        return self.entries.aggregate(
+            total_card=Sum(
+                Case(
+                    When(added_cash=False, then="added"),
+                    default=Value(0),
+                    output_field=models.DecimalField(),
+                )
+            )
+        )["total_card"]
 
     def __str__(self):
         s = f"{self.date}: {self.entries.count()} entries"
