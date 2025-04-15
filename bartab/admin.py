@@ -103,11 +103,22 @@ class BarTabContext:
 @admin.register(BarTabSnapshot)
 class BarTabSnapshotAdmin(admin.ModelAdmin):
     change_form_template = "admin/enhancedinline.html"
-    list_display = ("date", "entry_count", "total_added", "total_used")
-    readonly_fields = ("last_updated", "total_added", "total_used")
-    inlines = [
-        BarTabEntryInline,
-    ]
+    list_display = (
+        "date",
+        "entry_count",
+        "total_added",
+        "total_cash_added",
+        "total_card_added",
+        "total_used",
+    )
+    readonly_fields = (
+        "last_updated",
+        "total_added",
+        "total_used",
+        "total_cash_added",
+        "total_card_added",
+    )
+    inlines = [BarTabEntryInline]
 
     def entry_count(self, obj):
         return obj.entries.count()
