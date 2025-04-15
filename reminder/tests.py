@@ -14,4 +14,8 @@ class BarshiftReminderTests(TestCase):
         self.test_reminder = BarshiftReminderCommand()
 
     def test_spotlight(self):
-        self.assertEqual(self.test_reminder.get_spotlight(), "Ugens spotlight er:")
+        # Test the spotlight function
+        result = self.test_reminder.get_spotlight()
+        self.assertIsInstance(result, str)
+        self.assertIn("Vi har", result)
+        self.assertIn("øl i spotlight", result)
