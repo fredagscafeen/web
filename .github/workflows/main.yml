@@ -23,6 +23,14 @@ jobs:
       - name: Install python dependencies
         run: pip install -r requirements.txt -r dev-requirements.txt
 
+      - name: Cache pre-commit environments
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pre-commit-
+
       - name: Run pre-commit checks
         uses: pre-commit/action@v2.0.0
 
