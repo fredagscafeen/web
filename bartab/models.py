@@ -165,7 +165,7 @@ class BarTabEntry(models.Model):
         BarTabUser,
         on_delete=models.CASCADE,
         related_name="entries",
-        verbose_name="Bruger",
+        verbose_name=_("Bruger"),
     )
     snapshot = models.ForeignKey(
         BarTabSnapshot, on_delete=models.CASCADE, related_name="entries"
