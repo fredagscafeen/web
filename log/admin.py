@@ -1,3 +1,68 @@
-from django.contrib import admin
+from django.conf import settings
+from django.contrib import admin, messages
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 
-# Register your models here.
+from fredagscafeen.admin_view import custom_admin_view
+from log.models import LogBase, LogEntry
+from printer.views import pdf_preview
+
+
+@admin.action(description=_("Copy selected logs"))
+def copy(self, request, queryset):
+    for log in queryset:
+        log.pk = None
+        log.save()
+    self.message_user(
+        request,
+        ngettext(
+            "%d log copied successfully.",
+            "%d logs copied successfully.",
+            queryset.count(),
+        )
+        % queryset.count(),
+        messages.SUCCESS,
+    )
+
+
+@admin.register(LogBase)
+class LogBaseAdmin(admin.ModelAdmin):
+    list_display = (
+        "created_at",
+        "manager",
+        "licensee",
+        "representative",
+        "loan_agreement",
+    )
+    list_filter = ("manager", "licensee", "type")
+    ordering = ("-created_at",)
+    date_hierarchy = "created_at"
+    actions = [copy]
+
+
+class LogEntryContext:
+    file_name = "log"
+    file_path = "log/logbog.tex"
+
+    @staticmethod
+    def get_context():
+        template_path = "log/logbog.pdf"
+        try:
+            with open(template_path, "rb") as f:
+                pass
+        except FileNotFoundError:
+            template_path = None
+
+        return {
+            "template_path": template_path,
+        }
+
+
+@custom_admin_view("log", "generate log")
+def generate_log(admin, request):
+    return pdf_preview(request, admin.admin_site, LogEntryContext)
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    pass

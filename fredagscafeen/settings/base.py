@@ -194,6 +194,7 @@ INSTALLED_APPS = (
     "reminder",
     "udlejning",
     "logentry_admin",
+    "log",
     "bartab",
     "email_auth",
     "guides",

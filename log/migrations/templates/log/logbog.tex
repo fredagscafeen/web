@@ -1,0 +1,50 @@
+{% load latex_trunc %}
+
+\documentclass[letterpaper]{article}
+
+\usepackage{pdfpages}
+
+\pagestyle{empty}
+\begin{document}
+
+\includepdf[pages=1,
+    picturecommand*={
+    \put(310,676){Fredagscaféen}
+    \put(310,653){Nygaard -1, bygning 5335}
+    \put(405,634){Anders Bruun Severinsen}
+    \put(405,622){23 98 94 05}
+    \put(405,612){anders@bruunseverinsen.dk}
+    \put(405,600){202204885}
+    \put(405,578){Jonathan Eilath}
+    \put(405,566){25 39 01 50}
+    \put(405,556){jonathan.eilath@gmail.com}
+    \put(405,544){201804772}
+    \put(405,510){Alexander Friis Sommer}
+    \put(405,498){42 22 33 55}
+    \put(405,488){Andreas H. H. Hansen}
+    \put(405,476){61 30 20 04}
+    \put(405,464){Benjamin Wen}
+    \put(405,452){60 63 13 60}
+    \put(405,440){Kasper Baltzer Overgaard}
+    \put(405,428){20 97 68 48}
+    \put(405,418){Mikkel Ugilt}
+    \put(405,406){42 60 16 08}
+    \put(310,384){Fredagsbar for studerende på Institut for Datalogi.}
+    \put(310,338){Tina Rudolph (rudolph@cs.au.dk)}
+}]{ {{template_path}} }
+
+\includepdf[pages=2,
+    picturecommand*={
+    \put(310,676){Fredagsbar}
+    \put(310,610){Fredagsbar for studerende på Institut for Datalogi.}
+    \put(310,575){Nygaard -1, bygning 5335}
+    \put(310,450){10 - 150}
+    \put(310,320){Anders Bruun Severinsen}
+}]{logbog.pdf}
+
+\includepdf[pages=3,
+    picturecommand*={
+    \put(310,676){}
+}]{logbog.pdf}
+
+\end{document}
