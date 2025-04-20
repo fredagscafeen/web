@@ -1,0 +1,80 @@
+{% load latex_trunc %}
+
+\documentclass[letterpaper]{memoir}
+
+\usepackage{pdfpages}
+\usepackage[breakall,fit]{truncate}
+\usepackage{trimclip}
+
+\pagestyle{empty}
+\begin{document}
+
+{% for log_entry in log_entries %}
+{% with log_base=log_entry.template bartender_shift=log_entry.bartender_shift location=log_entry.location description=log_entry.description %}
+{% with manager=log_base.manager licensee=log_base.licensee key_figures=log_base.key_figures.all purpose=log_base.purpose representative=log_base.representative type=log_base.type guests=log_base.guests loan_agreement=log_base.loan_agreement %}
+{% with shift_responsible=bartender_shift.responsible shift_date=bartender_shift.date %}
+% Make sure log is on an odd page
+\strictpagechecktrue
+\checkoddpage
+\ifoddpage
+\else
+\mbox{~}
+\clearpage
+\fi
+
+\includepdf[pages=1,
+    picturecommand*={
+    \put(75,730){Dato:}
+    \put(105,730){ \textbf{ {{ log_base.created_at|date:"j. F Y" }} } }
+    \put(310,676){Fredagscaféen}
+    \put(307,653){ {{ location }}}
+    \put(402,634){ {{ manager.name | latex_trunc }}}
+    \put(402,622){ {{ manager.phoneNumber }}}
+    \put(402,612){ {{ manager.email | latex_trunc }}}
+    \put(402,600){ {{ manager.studentNumber }}}
+    \put(402,578){ {{ licensee.name | latex_trunc }}}
+    \put(402,566){ {{ licensee.phoneNumber }}}
+    \put(402,556){ {{ licensee.email | latex_trunc }}}
+    \put(402,544){ {{ licensee.studentNumber }}}{% for key_figure in key_figures %}{% if forloop.counter == 1 %}
+    \put(402,510){ {{ key_figure.name | latex_trunc }}}
+    \put(402,498){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 2 %}
+    \put(402,488){ {{ key_figure.name | latex_trunc }}}
+    \put(402,476){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 3 %}
+    \put(402,464){ {{ key_figure.name | latex_trunc }}}
+    \put(402,452){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 4 %}
+    \put(402,440){ {{ key_figure.name | latex_trunc }}}
+    \put(402,428){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 5 %}
+    \put(402,418){ {{ key_figure.name | latex_trunc }}}
+    \put(402,406){ {{ key_figure.phoneNumber }}}{% endif %}{% endfor %}
+    \put(307,384){ {{ purpose | latex_trunc }}}
+    \put(307,338){ {{ representative | latex_trunc }}}
+}]{ {{template_path}} }
+
+\includepdf[pages=2,
+    picturecommand*={
+    \put(75,730){Dato:}
+    \put(105,730){ \textbf{ {{ shift_date|date:"j. F Y" }} } }
+    \put(307,676){ {{ type | latex_trunc }}}
+    \put(345,647){ {{ shift_responsible.name | latex_trunc }}}
+    \put(405,635){ {{ shift_responsible.phoneNumber }}}
+    \put(307,610){ {{ purpose | latex_trunc }}}
+    \put(307,575){ {{ location }}}
+    \put(307,450){ {{ guests | latex_trunc }}}
+    \put(307,320){ {{ loan_agreement.name | latex_trunc }}}
+}]{ {{template_path}} }
+
+\includepdf[pages=3,
+    picturecommand*={
+    \put(75,730){Dato:}
+    \put(105,730){ \textbf{ {{ shift_date|date:"j. F Y" }} } }
+    \put(307,676){ {{ description | latex_trunc }}}
+}]{ {{template_path}} }
+{% endwith %}
+{% endwith %}
+{% endwith %}
+
+{% empty %}
+\includepdf[pages=1-3]{ {{template_path}} }
+{% endfor %}
+
+\end{document}

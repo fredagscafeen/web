@@ -7,7 +7,7 @@ from web.models import TimeStampedModel
 
 class LogBase(TimeStampedModel):
     manager = models.ForeignKey(
-        BoardMember,
+        Bartender,
         on_delete=models.CASCADE,
         related_name="manager",
         verbose_name=_("Bestyrer"),
@@ -19,7 +19,7 @@ class LogBase(TimeStampedModel):
         verbose_name=_("Bevillingshaver"),
     )
     key_figures = models.ManyToManyField(
-        BoardMember,
+        Bartender,
         max_length=5,
         blank=True,
         related_name="key_figures",
@@ -42,14 +42,10 @@ class LogBase(TimeStampedModel):
         verbose_name=_("Forventet antal gæster"),
     )
     loan_agreement = models.ForeignKey(
-        BoardMember,
+        Bartender,
         on_delete=models.CASCADE,
         related_name="loan_agreement",
         verbose_name=_("Låneaftale udfyldt af"),
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name=_("Oprettet den"),
     )
 
     class Meta:

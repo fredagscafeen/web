@@ -41,19 +41,20 @@ class LogBaseAdmin(admin.ModelAdmin):
 
 
 class LogEntryContext:
-    file_name = "log"
+    file_name = "logbog"
     file_path = "log/logbog.tex"
 
     @staticmethod
     def get_context():
-        template_path = "log/logbog.pdf"
+        log_entries = LogEntry.objects.all()
+        template_path = settings.MEDIA_ROOT + f"guides/logbog.pdf"
         try:
             with open(template_path, "rb") as f:
                 pass
         except FileNotFoundError:
             template_path = None
-
         return {
+            "log_entries": log_entries,
             "template_path": template_path,
         }
 
