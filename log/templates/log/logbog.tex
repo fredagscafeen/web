@@ -10,9 +10,6 @@
 \begin{document}
 
 {% for log_entry in log_entries %}
-{% with log_base=log_entry.template bartender_shift=log_entry.bartender_shift location=log_entry.location description=log_entry.description %}
-{% with manager=log_base.manager licensee=log_base.licensee key_figures=log_base.key_figures.all purpose=log_base.purpose representative=log_base.representative type=log_base.type guests=log_base.guests loan_agreement=log_base.loan_agreement %}
-{% with shift_responsible=bartender_shift.responsible shift_date=bartender_shift.date %}
 % Make sure log is on an odd page
 \strictpagechecktrue
 \checkoddpage
@@ -22,6 +19,8 @@
 \clearpage
 \fi
 
+{% with log_base=log_entry.template bartender_shift=log_entry.bartender_shift location=log_entry.location %}
+{% with manager=log_base.manager licensee=log_base.licensee key_figures=log_base.key_figures.all purpose=log_base.purpose representative=log_base.representative type=log_base.type guests=log_base.guests loan_agreement=log_base.loan_agreement %}
 \includepdf[pages=1,
     picturecommand*={
     \put(75,730){Dato:}
@@ -46,10 +45,11 @@
     \put(402,428){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 5 %}
     \put(402,418){ {{ key_figure.name | latex_trunc }}}
     \put(402,406){ {{ key_figure.phoneNumber }}}{% endif %}{% endfor %}
-    \put(307,384){ {{ purpose | latex_trunc }}}
+    \put(307,384){ \parbox[t][2\baselineskip][t]{220pt}{ {{ purpose }}} }
     \put(307,338){ {{ representative | latex_trunc }}}
 }]{ {{template_path}} }
 
+{% with shift_responsible=bartender_shift.responsible shift_date=bartender_shift.date %}
 \includepdf[pages=2,
     picturecommand*={
     \put(75,730){Dato:}
@@ -57,18 +57,26 @@
     \put(307,676){ {{ type | latex_trunc }}}
     \put(345,647){ {{ shift_responsible.name | latex_trunc }}}
     \put(405,635){ {{ shift_responsible.phoneNumber }}}
-    \put(307,610){ {{ purpose | latex_trunc }}}
+    \put(307,610){ \parbox[t][2\baselineskip][t]{220pt}{ {{ purpose }}} }
     \put(307,575){ {{ location }}}
     \put(307,450){ {{ guests | latex_trunc }}}
     \put(307,320){ {{ loan_agreement.name | latex_trunc }}}
 }]{ {{template_path}} }
 
+{% with description=log_entry.description police_contacted=log_entry.police_contacted fire_authority_contacted=log_entry.fire_authority_contacted medic_contacted=log_entry.medic_contacted au_personnel_contacted=log_entry.au_personnel_contacted damages=log_entry.damages collective_evaluation=log_entry.collective_evaluation %}
 \includepdf[pages=3,
     picturecommand*={
     \put(75,730){Dato:}
     \put(105,730){ \textbf{ {{ shift_date|date:"j. F Y" }} } }
-    \put(307,676){ {{ description | latex_trunc }}}
+    \put(307,676){ \parbox[t][2\baselineskip][t]{220pt}{ {{ description }} } }
+    \put(337,613){ {% if police_contacted %}Ja{% else %}Nej{% endif %} }
+    \put(400,602){ {% if fire_authority_contacted %}Ja{% else %}Nej{% endif %} }
+    \put(388,590){ {% if medic_contacted %}Ja{% else %}Nej{% endif %} }
+    \put(307,543){ \parbox[t][2\baselineskip][t]{220pt}{ {{ au_personnel_contacted }} } }
+    \put(307,496){ \parbox[t][2\baselineskip][t]{220pt}{ {{ damages }} } }
+    \put(307,451){ \parbox[t][2\baselineskip][t]{220pt}{ {{ collective_evaluation }} } }
 }]{ {{template_path}} }
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}

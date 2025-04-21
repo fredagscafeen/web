@@ -4,8 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 
 from fredagscafeen.admin_view import custom_admin_view
-from log.models import LogBase, LogEntry
 from printer.views import pdf_preview
+
+from .models import LogBase, LogEntry
 
 
 @admin.action(description=_("Copy selected logs"))
@@ -31,16 +32,30 @@ class LogBaseAdmin(admin.ModelAdmin):
         "created_at",
         "manager",
         "licensee",
-        "representative",
         "loan_agreement",
     )
-    list_filter = ("manager", "licensee", "type")
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
     actions = [copy]
 
 
-class LogEntryContext:
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = (
+        "bartender_shift",
+        "location",
+        "short_description",
+    )
+    ordering = ("-bartender_shift__start_datetime",)
+    date_hierarchy = "bartender_shift__start_datetime"
+
+
+@custom_admin_view("log", _("Generate logs"))
+def generate_log(admin, request):
+    return pdf_preview(request, admin.admin_site, LogEntryContext)
+
+
+class LogEntryContext(LogEntry):
     file_name = "logbog"
     file_path = "log/logbog.tex"
 
@@ -57,13 +72,3 @@ class LogEntryContext:
             "log_entries": log_entries,
             "template_path": template_path,
         }
-
-
-@custom_admin_view("log", "generate log")
-def generate_log(admin, request):
-    return pdf_preview(request, admin.admin_site, LogEntryContext)
-
-
-@admin.register(LogEntry)
-class LogEntryAdmin(admin.ModelAdmin):
-    pass
