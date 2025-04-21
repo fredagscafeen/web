@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib import admin
+from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from bartenders.models import Bartender
@@ -91,11 +93,27 @@ class EventAdminForm(forms.ModelForm):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "year",
+        "start_datetime",
+        "end_datetime",
+        "get_event_album_link",
+    )
     form = EventAdminForm
     inlines = [
         EventChoiceInline,
         EventResponseReadonlyInline,
     ]
+
+    def get_event_album_link(self, event):
+        album = event.event_album
+        if album:
+            kwargs = dict(year=album.year, album_slug=album.slug)
+            html_string = '<a href="{}">' + album.title + "</a>"
+            return format_html(html_string, reverse("album", kwargs=kwargs))
+
+    get_event_album_link.short_description = _("Event Album")
 
 
 @admin.register(EventResponse)
