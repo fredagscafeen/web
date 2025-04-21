@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-10 16:55+0200\n"
-"PO-Revision-Date: 2025-04-10 16:57+0050\n"
+"POT-Creation-Date: 2025-04-21 20:55+0200\n"
+"PO-Revision-Date: 2025-04-21 21:27+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -35,19 +35,24 @@ msgstr "Can't have both bartender shift and custom datetime"
 msgid "Must have either bartender shift or custom datetime"
 msgstr "Must have either bartender shift or custom datetime"
 
-#: bartab/models.py:135
+#: bartab/models.py:159
 msgid "Kontant?"
 msgstr "Cash?"
 
-#: bartab/models.py:138 bartab/templates/bartab.html:26
+#: bartab/models.py:162 bartab/templates/bartab.html:26
 msgid "Indsat"
 msgstr "Deposited"
 
-#: bartab/models.py:139 bartab/templates/bartab.html:27
+#: bartab/models.py:163 bartab/templates/bartab.html:27
 msgid "Køb"
 msgstr "Purchases"
 
-#: bartab/models.py:161
+#: bartab/models.py:168
+#| msgid "Brugernavn"
+msgid "Bruger"
+msgstr "User"
+
+#: bartab/models.py:185
 msgid "Vælg kontant eller ej."
 msgstr "Choose cash or not."
 
@@ -432,17 +437,22 @@ msgstr "Other bartenders"
 msgid "Profil opdateret"
 msgstr "Profil updated"
 
-#: events/admin.py:16
+#: events/admin.py:18
 msgid "Chosen options"
 msgstr "Chosen options"
 
-#: events/admin.py:72
+#: events/admin.py:74
 msgid "Default allowed attendees"
 msgstr "Default allowed attendees"
 
-#: events/admin.py:73
+#: events/admin.py:75
 msgid "Can be overwritten using the whitelist and blacklist above."
 msgstr "Can be overwritten using the whitelist and blacklist above."
+
+#: events/admin.py:116
+#| msgid "Event album"
+msgid "Event Album"
+msgstr "Event album"
 
 #: events/forms.py:20
 msgid "Vælg"
@@ -621,11 +631,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:297
+#: fredagscafeen/settings/base.py:291
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:298
+#: fredagscafeen/settings/base.py:292
 msgid "English"
 msgstr "English"
 
@@ -973,6 +983,115 @@ msgstr "Not in stock"
 #: items/templates/items.html:89
 msgid "Sortimentet er desværre tomt"
 msgstr "The selection is unfortunately empty"
+
+#: log/admin.py:12
+msgid "Copy selected logs"
+msgstr "Copy selected logs"
+
+#: log/admin.py:20
+#, python-format
+msgid "%d log copied successfully."
+msgid_plural "%d logs copied successfully."
+msgstr[0] "%d log copied successfully."
+msgstr[1] "%d logs copied successfully."
+
+#: log/admin.py:53
+#| msgid "Generel info"
+msgid "Generate logs"
+msgstr "Generate logs"
+
+#: log/models.py:14
+#| msgid "Bestyrelsen"
+msgid "Bestyrer"
+msgstr "Manager"
+
+#: log/models.py:20
+msgid "Bevillingshaver"
+msgstr "Licensee"
+
+#: log/models.py:27
+msgid "Foreningens nøglepersoner"
+msgstr "The association's key figures"
+
+#: log/models.py:31
+msgid "Foreningens formål"
+msgstr "The association's purpose"
+
+#: log/models.py:35
+msgid "Husrepræsentant"
+msgstr "House Representative"
+
+#: log/models.py:39
+#| msgid "Arrangement"
+msgid "Arrangementstype"
+msgstr "Event type"
+
+#: log/models.py:43
+msgid "Forventet antal gæster"
+msgstr "Expected number of guests"
+
+#: log/models.py:49
+msgid "Låneaftale udfyldt af"
+msgstr "Loan agreement completed by"
+
+#: log/models.py:54
+msgid "Logbogsskabelon"
+msgstr "Log template"
+
+#: log/models.py:55
+msgid "Logbogsskabeloner"
+msgstr "Log templates"
+
+#: log/models.py:65
+msgid "Skabelon"
+msgstr "Template"
+
+#: log/models.py:70
+#| msgid "Barvagter"
+msgid "Barvagt"
+msgstr "Bar shift"
+
+#: log/models.py:74
+msgid "Lokale"
+msgstr "Location"
+
+#: log/models.py:79
+msgid "Afvigelser fra det normale"
+msgstr "Deviations from normality"
+
+#: log/models.py:83
+#| msgid "Email til kontaktperson"
+msgid "Politi kontaktet"
+msgstr "Police contacted"
+
+#: log/models.py:87
+msgid "Brandmyndigheder kontaktet"
+msgstr "Fire authorities contacted"
+
+#: log/models.py:91
+msgid "Ambulance/læge kontaktet"
+msgstr "Ambulance/doctor contacted"
+
+#: log/models.py:96
+msgid "AU-personale kontaktet og/eller tilkaldt"
+msgstr "AU staff contacted and/or called"
+
+#: log/models.py:101
+msgid "Skader"
+msgstr "Damages"
+
+#: log/models.py:106
+#| msgid "interne arrangementer"
+msgid "Samlet vurdering af arrangementet"
+msgstr "Overall assessment of the event"
+
+#: log/models.py:111
+msgid "Logbog"
+msgstr "Log"
+
+#: log/models.py:112
+msgid "Logbøger"
+msgstr "Logs"
 
 #: udlejning/models.py:12
 msgid "EAN"
@@ -1336,8 +1455,6 @@ msgstr ""
 "We can source kegs from Aarhus Bryghus, so take a look at their selection,"
 
 #: udlejning/templates/udlejning.html:91
-#| msgctxt "På linket her"
-#| msgid "her"
 msgid "her"
 msgstr "here"
 
@@ -1354,9 +1471,6 @@ msgstr ""
 "the right to change."
 
 #: udlejning/templates/udlejning.html:98
-#| msgid ""
-#| "Vi sælger også Magners Cider på fustage, der koster 1250 kr. pr. fustage "
-#| "(incl. moms)."
 msgid ""
 "Vi sælger også Magners Cider på fustage, der koster 1500 kr. pr. fustage "
 "(incl. moms)."
@@ -1365,9 +1479,6 @@ msgstr ""
 "VAT)."
 
 #: udlejning/templates/udlejning.html:101
-#| msgid ""
-#| "Derudover leverer vi også sodavand og chips. Sodavand koster 10 kr/stk og "
-#| "chips koster 20kr/pose, der betales pr. åbnet enhed."
 msgid ""
 "Derudover kan vi også levere sodavand og chips. Sodavand koster 10 kr. pr. "
 "stk. og chips koster 20kr. pr. pose. Der betales igen pr. åbnet enhed."
@@ -1837,9 +1948,6 @@ msgstr "Login mail sent: Press the link in your received email to log in."
 
 #~ msgid "s direktion består af"
 #~ msgstr "'s management consists of"
-
-#~ msgid "Arrangement"
-#~ msgstr "Event"
 
 #~ msgid "Årets gang"
 #~ msgstr "The years course"
