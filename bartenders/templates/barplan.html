@@ -37,11 +37,11 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>{% translate "Dato" %}</th>
-			<th>{% translate "Ansvarlig" %}</th>
-			<th>{% translate "Bartendere" %}</th>
+			<th class="col-md-2">{% translate "Dato" %}</th>
+			<th class="col-md-3">{% translate "Ansvarlig" %}</th>
+			<th class="col-md-7">{% translate "Bartendere" %}</th>
 			{% if user.is_staff %}
-				<th class="hidden-xs"></th>
+				<th class="hidden-xs col-md-1"></th>
 			{% endif %}
 		</tr>
 	</thead>
@@ -49,7 +49,7 @@
     {% for shift in bartendershifts %}
 		{% with shiftComparedToCurrentWeek=shift|compare_to_current_week shiftIsWithUser=shift|is_with_user:user %}
 		<tr>
-			<td class="col-md-2 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+			<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 				{% if shiftComparedToCurrentWeek == 0 %}
 				<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}</b>
 				{% else %}
@@ -57,7 +57,7 @@
 				{% endif %}
 			</td>
 			{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
-			<td class="col-md-3 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+				<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 					{% if shift.responsible.first_responsible_shift == shift %}
 					<b class="gray-out text-color-danger" style="color:red;display:inline;" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
@@ -65,7 +65,7 @@
 					{% endif %}
 				</td>
 			{% else %}
-				<td class="col-md-3 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+				<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 					{% if shift.responsible.first_responsible_shift == shift %}
 					<b class="gray-out" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
@@ -73,7 +73,7 @@
 					{% endif %}
 				</td>
 			{% endif %}
-            <td class="col-md-7 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+            <td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
                 {% for bartender in shift.other_bartenders.all %}
 					{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
 						{% cycle 'blue' 'orange' 'green' as color silent %}
@@ -88,7 +88,7 @@
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs col-md-1 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 		{% endwith %}
@@ -166,10 +166,10 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>{% translate "Uge" %}</th>
-			<th>{% translate "Ansvarlige" %}</th>
+			<th class="col-md-2">{% translate "Uge" %}</th>
+			<th class="col-md-10">{% translate "Ansvarlige" %}</th>
 			{% if user.is_staff %}
-				<th class="hidden-xs"></th>
+				<th class="hidden-xs col-md-1"></th>
 			{% endif %}
 		</tr>
 		</thead>
@@ -177,14 +177,14 @@
     {% for shift in boardmemberdepositshifts %}
 		{% with shiftComparedToCurrentWeek=shift|compare_to_current_week shiftIsWithUser=shift|is_with_user:user %}
 		<tr>
-			<td class="col-md-2 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">{% if shiftComparedToCurrentWeek == 0 %}<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}{% endif %}</td>
-            <td class="col-md-10 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+			<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">{% if shiftComparedToCurrentWeek == 0 %}<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}{% endif %}</td>
+            <td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
                 {% for responsible in shift.responsibles.all %}
 					{% if responsible.first_deposit_shift == shift %}<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first deposit shift" %}">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs col-md-1 {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="hidden-xs {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 		{% endwith %}

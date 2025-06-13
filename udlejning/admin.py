@@ -17,6 +17,7 @@ from udlejning.models import (
     UdlejningGrill,
     UdlejningProjector,
     UdlejningSpeakers,
+    UdlejningTent,
 )
 
 
@@ -169,16 +170,34 @@ class UdlejningGrillAdmin(admin.ModelAdmin):
 @admin.register(UdlejningProjector)
 class UdlejningProjectorAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
-    list_display = ("dateFrom", "whoReserved")
+    list_display = ("dateFrom", "whoReserved", "in_charge")
+
+    def in_charge(self, obj):
+        return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))
 
 
 @admin.register(UdlejningSpeakers)
 class UdlejningSpeakersAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
-    list_display = ("dateFrom", "whoReserved")
+    list_display = ("dateFrom", "whoReserved", "in_charge")
+
+    def in_charge(self, obj):
+        return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))
 
 
 @admin.register(UdlejningBoardGameCart)
 class UdlejningBoardGameCartAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
-    list_display = ("dateFrom", "whoReserved")
+    list_display = ("dateFrom", "whoReserved", "in_charge")
+
+    def in_charge(self, obj):
+        return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))
+
+
+@admin.register(UdlejningTent)
+class UdlejningTentAdmin(admin.ModelAdmin):
+    ordering = ("-dateFrom",)
+    list_display = ("dateFrom", "whoReserved", "in_charge")
+
+    def in_charge(self, obj):
+        return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))

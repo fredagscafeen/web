@@ -5,13 +5,14 @@
 {% load compare_udlejning_to_now is_udlejning_with_user %}
 
 {% block content %}
+
 <h2 id="rental">
-	{% translate "Reservation af projektor" %} &amp; {% translate "lærred" %}
+	{% translate "Reservation af festtelt" %}
 	<a href="#rental" class="section-link">#</a>
 </h2>
-{% if udlejningProjector %}
+{% if udlejningTent %}
 <i>
-	{% translate "Projektoren/lærredet er allerede reserveret følgende dage:" %}
+	{% translate "Festteltet er allerede reserveret følgende dage:" %}
 </i>
 <table class="table table-striped">
 	<thead>
@@ -25,7 +26,7 @@
 		</tr>
 	</thead>
 	<tbody>
-    {% for udlejning in udlejningProjector %}
+    {% for udlejning in udlejningTent %}
 		{% with udlejningComparedToCurrentWeek=udlejning|compare_udlejning_to_now udlejningIsWithUser=udlejning|is_udlejning_with_user:user %}
 		<tr>
 			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
@@ -50,7 +51,7 @@
 			</td>
 			{% if user.is_staff %}
 			<td class="{% if udlejningIsWithUser %}bg-info{% endif %}">
-				<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/udlejning/udlejningprojector/{{ udlejning.id }}">
+				<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/udlejning/udlejningspeakers/{{ udlejning.id }}">
 					{% translate "Edit" %}
 				</a>
 			</td>
@@ -62,14 +63,14 @@
 </table>
 {% else %}
 <div class="alert alert-light" role="alert">
-  	{% translate "Projektoren/lærredet er pt. ikke reserveret på noget tidspunkt." %}
+  	{% translate "Festteltet er pt. ikke reserveret på noget tidspunkt." %}
 </div>
 {% endif %}
 <p>
-	{% translate "Projektoren/lærredet kan kun lånes til arrangementer på instituttet." %}
+	{% translate "Festteltet udlånes kun til interne arrangementer eller til arrangementer med tilknytning til baren." %}
 </p>
 <p>
-	{% translate "Hvis vores projektor/lærred ikke allerede er udlånt, kan du låne den ved at sende en mail til" %}
+	{% translate "Hvis vores festteltet ikke allerede er udlånt, kan du låne den ved at sende en mail til" %}
 	<a rel="nofollow" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>.
 </p>
 {% endblock %}

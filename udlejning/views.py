@@ -13,6 +13,7 @@ from .models import (
     UdlejningGrill,
     UdlejningProjector,
     UdlejningSpeakers,
+    UdlejningTent,
 )
 
 
@@ -25,7 +26,7 @@ class Udlejninger(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["udlejninger"] = Udlejning.objects.filter(
-            dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
+            dateFrom__gte=timezone.now() - datetime.timedelta(days=30),
         )
         return context
 
@@ -51,7 +52,7 @@ class UdlejningerGrill(ListView):
     queryset = UdlejningGrill.objects.filter(
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )
-    context_object_name = "udlejningerGrill"
+    context_object_name = "udlejningGrill"
 
 
 class UdlejningerProjector(ListView):
@@ -60,6 +61,7 @@ class UdlejningerProjector(ListView):
     queryset = UdlejningProjector.objects.filter(
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )
+    context_object_name = "udlejningProjector"
 
 
 class UdlejningerSpeakers(ListView):
@@ -68,6 +70,7 @@ class UdlejningerSpeakers(ListView):
     queryset = UdlejningSpeakers.objects.filter(
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )
+    context_object_name = "udlejningSpeakers"
 
 
 class UdlejningerBoardGameCart(ListView):
@@ -76,3 +79,13 @@ class UdlejningerBoardGameCart(ListView):
     queryset = UdlejningBoardGameCart.objects.filter(
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )
+    context_object_name = "udlejningBoardGameCart"
+
+
+class UdlejningerTent(ListView):
+    template_name = "udlejningTent.html"
+    allow_empty = True
+    queryset = UdlejningTent.objects.filter(
+        dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
+    )
+    context_object_name = "udlejningTent"
