@@ -328,7 +328,7 @@ CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 
 # Server admins (get an email when server errors happen)
 ADMINS = [
-    ("Anders Bruun Severinsen", "anders@bruunseverinsen.com"),
+    ("Anders Bruun Severinsen", "anders@bruunseverinsen.dk"),
     ("Kasper Baltzer Overgaard", "kbo0506@gmail.com"),
 ]
 
