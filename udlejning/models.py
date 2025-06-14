@@ -106,7 +106,7 @@ class Udlejning(UdlejningCommon):
     )
     bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
     billSendTo = models.CharField(
-        max_length=140, default=None, verbose_name=_("Send regning til")
+        max_length=140, blank=True, verbose_name=_("Send regning til")
     )
     status = models.CharField(max_length=16, choices=STATUS_CHOICES, default="notsent")
     invoice_number = models.CharField(
