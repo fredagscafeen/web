@@ -58,11 +58,12 @@
                                 <li class="nav-item px-2 dropdown flex-shrink-1">
                                     <a {% if activepage|startswith:"udlejning" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Udlejning" %}</a>
                                     <ul class="dropdown-menu">
-                                        <li><a {% if activepage == "udlejning" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejning' %}">{% translate "Udlejning af fadølsanlæg" %}</a></li>
-                                        <li><a {% if activepage == "udlejningGrill" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningGrill' %}">{% translate "Udlejning af grill" %}</a></li>
-                                        <li><a {% if activepage == "udlejningProjector" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningProjector' %}">{% translate "Udlejning af projektor" %} &amp; {% translate "lærred" %}</a></li>
-                                        <li><a {% if activepage == "udlejningSpeakers" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningSpeakers' %}">{% translate "Udlejning af højtalere" %}</a></li>
                                         <li><a {% if activepage == "udlejningBoardGameCart" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningBoardGameCart' %}">{% translate "Udlejning af brætspilsvogn" %}</a></li>
+                                        <li><a {% if activepage == "udlejning" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejning' %}">{% translate "Udlejning af fadølsanlæg" %}</a></li>
+                                        <li><a {% if activepage == "udlejningTent" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningTent' %}">{% translate "Udlejning af festtelt" %}</a></li>
+                                        <li><a {% if activepage == "udlejningGrill" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningGrill' %}">{% translate "Udlejning af grill" %}</a></li>
+                                        <li><a {% if activepage == "udlejningSpeakers" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningSpeakers' %}">{% translate "Udlejning af højtalere" %}</a></li>
+                                        <li><a {% if activepage == "udlejningProjector" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'udlejningProjector' %}">{% translate "Udlejning af projektor" %} &amp; {% translate "lærred" %}</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "guides" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'guides' %}">{% translate "Guides" %}</a></li>

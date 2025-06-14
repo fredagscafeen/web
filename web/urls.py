@@ -22,6 +22,7 @@ from udlejning.views import (
     UdlejningerGrill,
     UdlejningerProjector,
     UdlejningerSpeakers,
+    UdlejningerTent,
 )
 from web.views import About, Login, email_login_view, logout_view
 
@@ -59,6 +60,11 @@ urlpatterns = [
         "udlejningBoardGameCart/",
         UdlejningerBoardGameCart.as_view(),
         name="udlejningBoardGameCart",
+    ),
+    path(
+        "udlejningTent/",
+        UdlejningerTent.as_view(),
+        name="udlejningTent",
     ),
     path("guides/", Guides.as_view(), name="guides"),
     path("gallery/", include("gallery.urls")),

@@ -58,13 +58,15 @@ class UdlejningCommon(models.Model):
         help_text=_("Hvor bliver arrangmentet afholdt?"),
     )
     expectedConsummation = models.TextField(
-        max_length=140,
+        max_length=280,
         verbose_name=_("Forventet forbrug"),
         help_text=_(
             "Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?"
         ),
     )
-    comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
+    comments = models.TextField(
+        blank=True, max_length=420, verbose_name=_("Kommentarer")
+    )
 
     def __str__(self):
         return f"{self.dateFrom} {self.whoReserved}"
@@ -90,7 +92,6 @@ class Udlejning(UdlejningCommon):
     draftBeerSystem = models.CharField(
         max_length=16,
         choices=SYSTEM_CHOICES,
-        blank=True,
         verbose_name=_("Fadølsanlæg"),
         help_text=_("Hvilket anlæg vil I låne?"),
     )
@@ -103,10 +104,7 @@ class Udlejning(UdlejningCommon):
     actualConsummation = models.TextField(
         max_length=140, blank=True, verbose_name=_("Faktisk forbrug")
     )
-    bartendersInCharge = models.ManyToManyField(
-        Bartender, blank=True, verbose_name=_("Ansvarlige")
-    )
-    billSendTo = models.CharField(max_length=140, verbose_name=_("Send regning til"))
+    bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
     status = models.CharField(max_length=16, choices=STATUS_CHOICES, default="notsent")
     invoice_number = models.CharField(
         max_length=32, blank=True, verbose_name=_("Fakturanummer")
@@ -127,6 +125,9 @@ class Udlejning(UdlejningCommon):
         verbose_name = _("Udlejning")
         verbose_name_plural = _("Udlejninger")
 
+    def is_with_user(self, bartender):
+        return bartender in self.bartendersInCharge.all()
+
 
 class UdlejningApplication(UdlejningCommon):
     created = models.DateTimeField(auto_now_add=True)
@@ -144,54 +145,110 @@ class UdlejningApplication(UdlejningCommon):
 
 
 class UdlejningGrill(models.Model):
-    dateFrom = models.DateTimeField()
-    dateTo = models.DateTimeField(blank=True, null=True)
-    whoReserved = models.TextField(max_length=140)
-    where = models.TextField(max_length=140)
-    contactInfo = models.CharField(max_length=140)
-    comments = models.TextField(blank=True)
-    bartendersInCharge = models.ManyToManyField(Bartender, blank=True)
+    dateFrom = models.DateTimeField(verbose_name=_("Start dato & tid"))
+    dateTo = models.DateTimeField(
+        blank=True, null=True, verbose_name=_("Slut dato & tid")
+    )
+    whoReserved = models.TextField(max_length=140, verbose_name=_("Hvem er I?"))
+    where = models.TextField(
+        max_length=140, null=True, default=None, verbose_name=_("Lokation")
+    )
+    contactInfo = models.CharField(max_length=140, verbose_name=_("Kontakt info"))
+    comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
+    bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
 
     class Meta:
         verbose_name = _("Udlejning af grill")
         verbose_name_plural = _("Udlejning af grill")
         ordering = ("dateFrom",)
 
+    def is_with_user(self, bartender):
+        return bartender in self.bartendersInCharge.all()
+
 
 class UdlejningProjector(models.Model):
-    dateFrom = models.DateTimeField()
-    dateTo = models.DateTimeField()
-    whoReserved = models.TextField(max_length=140, blank=True)
-    contactInfo = models.CharField(max_length=140, blank=True)
-    comments = models.TextField(blank=True)
+    dateFrom = models.DateTimeField(verbose_name=_("Start dato & tid"))
+    dateTo = models.DateTimeField(
+        blank=True, null=True, verbose_name=_("Slut dato & tid")
+    )
+    whoReserved = models.TextField(max_length=140, verbose_name=_("Hvem er I?"))
+    where = models.TextField(
+        max_length=140, null=True, default=None, verbose_name=_("Lokation")
+    )
+    contactInfo = models.CharField(max_length=140, verbose_name=_("Kontakt info"))
+    comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
+    bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
 
     class Meta:
         verbose_name = _("Udlejning af projektor")
         verbose_name_plural = _("Udlejning af projektor")
         ordering = ("dateFrom",)
 
+    def is_with_user(self, bartender):
+        return bartender in self.bartendersInCharge.all()
+
 
 class UdlejningSpeakers(models.Model):
-    dateFrom = models.DateTimeField()
-    dateTo = models.DateTimeField()
-    whoReserved = models.TextField(max_length=140, blank=True)
-    contactInfo = models.CharField(max_length=140, blank=True)
-    comments = models.TextField(blank=True)
+    dateFrom = models.DateTimeField(verbose_name=_("Start dato & tid"))
+    dateTo = models.DateTimeField(
+        blank=True, null=True, verbose_name=_("Slut dato & tid")
+    )
+    whoReserved = models.TextField(max_length=140, verbose_name=_("Hvem er I?"))
+    where = models.TextField(
+        max_length=140, null=True, default=None, verbose_name=_("Lokation")
+    )
+    contactInfo = models.CharField(max_length=140, verbose_name=_("Kontakt info"))
+    comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
+    bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
 
     class Meta:
         verbose_name = _("Udlejning af højtaler")
         verbose_name_plural = _("Udlejning af højtalere")
         ordering = ("dateFrom",)
 
+    def is_with_user(self, bartender):
+        return bartender in self.bartendersInCharge.all()
+
 
 class UdlejningBoardGameCart(models.Model):
-    dateFrom = models.DateTimeField()
-    dateTo = models.DateTimeField()
-    whoReserved = models.TextField(max_length=140, blank=True)
-    contactInfo = models.CharField(max_length=140, blank=True)
-    comments = models.TextField(blank=True)
+    dateFrom = models.DateTimeField(verbose_name=_("Start dato & tid"))
+    dateTo = models.DateTimeField(
+        blank=True, null=True, verbose_name=_("Slut dato & tid")
+    )
+    whoReserved = models.TextField(max_length=140, verbose_name=_("Hvem er I?"))
+    where = models.TextField(
+        max_length=140, null=True, default=None, verbose_name=_("Lokation")
+    )
+    contactInfo = models.CharField(max_length=140, verbose_name=_("Kontakt info"))
+    comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
+    bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
 
     class Meta:
         verbose_name = _("Udlejning af brætspilsvogn")
         verbose_name_plural = _("Udlejning af brætspilsvogn")
         ordering = ("dateFrom",)
+
+    def is_with_user(self, bartender):
+        return bartender in self.bartendersInCharge.all()
+
+
+class UdlejningTent(models.Model):
+    dateFrom = models.DateTimeField(verbose_name=_("Start dato & tid"))
+    dateTo = models.DateTimeField(
+        blank=True, null=True, verbose_name=_("Slut dato & tid")
+    )
+    whoReserved = models.TextField(max_length=140, verbose_name=_("Hvem er I?"))
+    where = models.TextField(
+        max_length=140, null=True, default=None, verbose_name=_("Lokation")
+    )
+    contactInfo = models.CharField(max_length=140, verbose_name=_("Kontakt info"))
+    comments = models.TextField(blank=True, verbose_name=_("Kommentarer"))
+    bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
+
+    class Meta:
+        verbose_name = _("Udlejning af festtelt")
+        verbose_name_plural = _("Udlejning af festtelt")
+        ordering = ("dateFrom",)
+
+    def is_with_user(self, bartender):
+        return bartender in self.bartendersInCharge.all()

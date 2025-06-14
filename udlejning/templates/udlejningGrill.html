@@ -1,39 +1,78 @@
 {% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% load bootstrap5 bootstrap_icons %}
+{% load compare_udlejning_to_now is_udlejning_with_user %}
 
 {% block content %}
-{% load i18n %}
-
 <h2 id="rental">
 	{% translate "Reservation af Grill" %}
 	<a href="#rental" class="section-link">#</a>
 </h2>
-
-<h4>{% translate "Grillen" %} {% translate "er allerede reserveret følgende dage" %}</h4>
-
-<ul>
-	{% for udlejningGrill in udlejningerGrill %}
-		<li>{{ udlejningGrill.dateFrom }}, {% translate "reserveret af" %} {{ udlejningGrill.whoReserved }}</li>
-	{% empty %}
-		<li>{% translate "Grillen" %} {% translate "er pt ikke reserveret på noget tidspunkt" %}</li>
+{% if udlejningGrill %}
+<i>
+	{% translate "Grillen er allerede reserveret følgende dage:" %}
+</i>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th class="col-md-3">{% translate "Dato" %}</th>
+			<th class="col-md-4">{% translate "Reserveret af" %}</th>
+			<th class="col-md-4">{% translate "Ansvarlige" %}</th>
+			{% if user.is_staff %}
+				<th class="hidden-xs col-md-1"></th>
+			{% endif %}
+		</tr>
+	</thead>
+	<tbody>
+    {% for udlejning in udlejningGrill %}
+		{% with udlejningComparedToCurrentWeek=udlejning|compare_udlejning_to_now udlejningIsWithUser=udlejning|is_udlejning_with_user:user %}
+		<tr>
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+				<p>
+					{{ udlejning.dateFrom }}
+					{% if udlejning.dateTo %}
+						- {{ udlejning.dateTo }}
+					{% endif %}
+				</p>
+			</td>
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+				{{ udlejning.whoReserved }}
+			</td>
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+				{% if udlejning.bartendersInCharge %}
+					{% for bartender in udlejning.bartendersInCharge.all %}
+						{{ bartender.name }}{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+				{% else %}
+					{% translate "Ikke angivet" %}
+				{% endif %}
+			</td>
+			{% if user.is_staff %}
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %}">
+				<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/udlejning/udlejninggrill/{{ udlejning.id }}">
+					{% translate "Edit" %}
+				</a>
+			</td>
+			{% endif %}
+		</tr>
+		{% endwith %}
 	{% endfor %}
-</ul>
-
+	</tbody>
+</table>
+{% else %}
+<div class="alert alert-light" role="alert">
+  	{% translate "Grillen er pt. ikke reserveret på noget tidspunkt." %}
+</div>
+{% endif %}
 <p>
-	{% translate "Hvis vores" %} {% translate "grill" %} {% translate "ikke allerede er udlånt, kan du låne den ved at sende en mail til" %}
+	{% translate "Grillen kan kun lånes til arrangementer på instituttet." %}
+</p>
+<p>
+	{% translate "Pris for gas efter aftale." %}
+</p>
+<p>
+	{% translate "Hvis vores grill ikke allerede er udlånt, kan du låne den ved at sende en mail til" %}
 	<a rel="nofollow" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:best@fredagscafeen.dk">best@fredagscafeen.dk</a>.
-	{% translate "Grillen" %} {% translate "kan kun lånes til arrangementer på instituttet." %}
 </p>
-<p>
-	{% translate "Mere info om grillen kommer senere." %}
-</p>
-<p>
-	<b>{% translate "Indholdet af email med anmodning om udlån" %}</b>:
-	{% translate "Når du kontakter Best for at låne grillen, skal der stå følgende" %}:
-</p>
-<ul>
-	<li> {% translate "Hvor man ønsker grillen opstillet" %}</li>
-	<li> {% translate "Hvornår man ønsker grillen opstiller (fra hvornår til ca. hvornår)" %}</li>
-	<li> {% translate "Kontaktinformation" %}</li>
-</ul>
-
 {% endblock %}
