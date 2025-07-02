@@ -252,8 +252,15 @@ def streaks_view(admin, request):
     for shift in shifts:
         if current_streak == None:
             current_streak = ShiftStreak(1, shift.start_datetime, shift.start_datetime)
-        elif shift.start_datetime <= current_streak.end_datetime + datetime.timedelta(
-            days=8
+        elif int(shift.start_datetime.strftime("%V")) == int(
+            current_streak.end_datetime.strftime("%V")
+        ):
+            continue
+        elif int(shift.start_datetime.strftime("%V")) == int(
+            current_streak.end_datetime.strftime("%V")
+        ) + 1 or (
+            int(current_streak.end_datetime.strftime("%V")) == 52
+            and int(shift.start_datetime.strftime("%V")) == 1
         ):
             current_streak = ShiftStreak(
                 current_streak.streak + 1,
@@ -264,7 +271,7 @@ def streaks_view(admin, request):
             shift_streaks.append(current_streak)
             current_streak = ShiftStreak(1, shift.start_datetime, shift.start_datetime)
         if (
-            shift.end_datetime >= timezone.now() - datetime.timedelta(days=7)
+            shift.start_datetime >= timezone.now() - datetime.timedelta(days=7)
             and not found
         ):
             current_streak.is_current_shift = True
