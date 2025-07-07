@@ -91,7 +91,7 @@ class BartenderApplicationTests(TestCase):
             info="Kill dogs",
         )
 
-        self.client.post("/", data=data)
+        self.client.post("/da/", data=data)
         self.assertFalse(BartenderApplication.objects.exists())
         self.assertEqual(len(mail.outbox), 0)
 

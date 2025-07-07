@@ -1,5 +1,6 @@
 import sys
 
+from django.conf import settings
 from django.core.mail import EmailMessage
 from django.core.management.base import BaseCommand
 from django.db.models import Q
@@ -31,7 +32,7 @@ class Command(BaseCommand):
     def send_mail(self, bartab_user):
         email = EmailMessage(
             subject="Krydsliste i Fredagscaféen",
-            from_email="best@fredagscafeen.dk",
+            from_email=settings.BEST_MAIL,
             to=[bartab_user.email],
             reply_to=["i@kristoffer-strube.dk"],
             body=f"""Hej {bartab_user.name},

@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.contrib import messages
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -54,6 +55,11 @@ class UdlejningerGrill(ListView):
     )
     context_object_name = "udlejningGrill"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["BEST_MAIL"] = settings.BEST_MAIL
+        return context
+
 
 class UdlejningerProjector(ListView):
     template_name = "udlejningProjector.html"
@@ -62,6 +68,11 @@ class UdlejningerProjector(ListView):
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )
     context_object_name = "udlejningProjector"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["BEST_MAIL"] = settings.BEST_MAIL
+        return context
 
 
 class UdlejningerSpeakers(ListView):
@@ -72,6 +83,11 @@ class UdlejningerSpeakers(ListView):
     )
     context_object_name = "udlejningSpeakers"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["BEST_MAIL"] = settings.BEST_MAIL
+        return context
+
 
 class UdlejningerBoardGameCart(ListView):
     template_name = "udlejningBoardGameCart.html"
@@ -81,6 +97,11 @@ class UdlejningerBoardGameCart(ListView):
     )
     context_object_name = "udlejningBoardGameCart"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["BEST_MAIL"] = settings.BEST_MAIL
+        return context
+
 
 class UdlejningerTent(ListView):
     template_name = "udlejningTent.html"
@@ -89,3 +110,8 @@ class UdlejningerTent(ListView):
         dateFrom__gte=timezone.now() - datetime.timedelta(days=30)
     )
     context_object_name = "udlejningTent"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["BEST_MAIL"] = settings.BEST_MAIL
+        return context

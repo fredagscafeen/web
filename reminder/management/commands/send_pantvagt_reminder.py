@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.utils import timezone
 
 from bartenders.models import BoardMemberDepositShift
@@ -29,4 +30,4 @@ I skal tage jer af panten i denne uge!
 /Bestyrelsen"""
 
     def email_reply_to(self):
-        return ["best@fredagscafeen.dk"]
+        return [settings.BEST_MAIL]

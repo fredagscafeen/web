@@ -313,7 +313,7 @@ Ses i baren! :)
             text_format=text_format,
             html_format=html_format,
             to=[self.email],
-            cc=["best@fredagscafeen.dk"],
+            cc=[settings.BEST_MAIL],
         )
 
     def accept(self):

@@ -1,4 +1,5 @@
 from constance import config
+from django.conf import settings
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
 
@@ -32,7 +33,7 @@ class ReminderCommand(BaseCommand):
             text_format={},
             html_format={},
             to=self.filter_with_warning(bartenders),
-            cc=["best@fredagscafeen.dk"],
+            cc=[settings.BEST_MAIL],
             reply_to=self.email_reply_to(),
         )
 
@@ -64,8 +65,8 @@ class ReminderCommand(BaseCommand):
         warning = f"WARNING: Could not find e-mail for bartender {bartender}! Bartender did not get a reminder!"
         send_mail(
             subject=warning,
-            recipient_list=["best@fredagscafeen.dk"],
-            from_email="best@fredagscafeen.dk",
+            recipient_list=[settings.BEST_MAIL],
+            from_email=settings.BEST_MAIL,
             message=warning,
         )
 
