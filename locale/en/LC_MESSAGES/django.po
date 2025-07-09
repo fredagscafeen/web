@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-09 21:25+0200\n"
-"PO-Revision-Date: 2025-07-09 21:25+0050\n"
+"PO-Revision-Date: 2025-07-09 22:33+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -1885,7 +1885,7 @@ msgstr "Department of Computer Science"
 
 #: web/templates/about.html:151
 msgid "Adfærd"
-msgstr "Conduct"
+msgstr "Behavior"
 
 #: web/templates/about.html:156
 msgid ""
@@ -1998,7 +1998,7 @@ msgid ""
 msgstr ""
 "\n"
 "All inquiries will be treated confidentially, and individual wishes for anonymity will be taken into account.\n"
-"Nothing is too small or too big to be addressed, and we encourage everyone to contact us if they experience or observe anything that violates the rules of order."
+"Nothing is too small or too big to be addressed, and we encourage everyone to contact us if they experience or observe anything that violates the code of conduct."
 
 #: web/templates/base.html:54
 msgid "Forside"
