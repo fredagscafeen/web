@@ -98,11 +98,11 @@
 							</div>
 						{% endif %}
 						{% if file_count > 1 %}
-							<a href="{{ prev_file.slug }}" class="carousel-control-prev gal-control gal-prev" rel="prev" type="button" style="z-index: 99;">
+							<a href="{{ prev_file.slug }}{% if edit_visibility %}?v=1{% endif %}" class="carousel-control-prev gal-control gal-prev" rel="prev" type="button" style="z-index: 99;">
 								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">{% translate "Forrige" %}</span>
 							</a>
-							<a href="{{ next_file.slug }}" class="carousel-control-next gal-control gal-next" rel="next" type="button">
+							<a href="{{ next_file.slug }}{% if edit_visibility %}?v=1{% endif %}" class="carousel-control-next gal-control gal-next" rel="next" type="button">
 								<span class="carousel-control-next-icon" aria-hidden="true"></span>
 								<span class="visually-hidden">{% translate "Næste" %}</span>
 							</a>

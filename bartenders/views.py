@@ -348,6 +348,7 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["BEST_MAIL"] = settings.BEST_MAIL
         if self.object:
             future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))
 
@@ -390,7 +391,7 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
 Der er nu {active_count} aktive bartendere.
 
 /snek""",
-                to=["best@fredagscafeen.dk"],
+                to=[settings.BEST_MAIL],
             )
         elif "subscribe_maillist" in self.request.POST:
             self.object.add_to_mailing_list()

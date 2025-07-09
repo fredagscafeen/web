@@ -92,7 +92,7 @@
     </div>
     <div class="card-body">
         <p class="card-text">
-            {% translate "Bestyrelsen kan kontaktes på" %} <a href="mailto:best@fredagscafeen.dk" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">best@fredagscafeen.dk</a>
+            {% translate "Bestyrelsen kan kontaktes på" %} <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>
         </p>
     </div>
 </div>
@@ -105,6 +105,119 @@
         <p class="card-text">{% translate "Vores CVR-nr er" %}:
             <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647" target="_blank">27973647</a>
         </p>
+    </div>
+</div>
+
+<h2 id="codeofconduct">
+    {% translate "Adfærdskodeks" %}
+    <a href="#codeofconduct" class="section-link">#</a>
+</h2>
+
+<div class="accordion" id="accordionCodeOfConduct">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                <h5 class="card-title">1. {% translate "Formål" %}</h5>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                {% blocktranslate %}
+                Fredagsbaren er et socialt arrangement for indskrevne studerende på Aarhus Universitet.
+                Formålet er at skabe et trygt og hyggeligt fællesskab for alle deltagere.
+                {% endblocktranslate %}
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                <h5 class="card-title">2. {% translate "Målgruppe" %}</h5>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                {% blocktranslate %}
+                Fredagsbaren er i udgangspunktet for indskrevne studerende ved Aarhus Universitet.
+                Gæster udefra er også velkomne, så længe de også respekterer retningslinjerne for adfærd herunder, samt dem fra
+                {% endblocktranslate %}
+                <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" target="_blank" href="{% translate "https://cs.au.dk/da/om-institut-for-datalogi/code-of-conduct-adfaerdskodeks/" %}">{% translate "Institut for Datalogi" %}</a>.
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                <h5 class="card-title">3. {% translate "Adfærd" %}</h5>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                {% blocktranslate %}
+                Alle deltagere skal respektere følgende grundlæggende retningslinjer:
+                {% endblocktranslate %}
+                <ul>
+                    <li>{% translate "Opføre sig respektfuldt overfor de andre deltagende gæster og de frivillige bartendere." %}</li>
+                    <li>{% translate "Undlad støjende, truende eller generende adfærd." %}</li>
+                    <li>{% translate "Vær opmærksom på grænser - diskriminerende, krænkende eller på anden måde uacceptabel adfærd tolereres ikke." %}</li>
+                    <li>{% translate "Følg gældende lovgivning, herunder regler om alkohol, rusmidler og rygning." %}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                <h5 class="card-title">4. {% translate "Sanktioner og bortvisning" %}</h5>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                {% blocktranslate %}
+                Arrangørerne forbeholder sig ret til at:
+                {% endblocktranslate %}
+                <ul>
+                    <li>{% translate "Afvise eller bortvise personer, der ikke opfylder retningslinjerne for adfærd ovenfor." %}</li>
+                    <li>{% translate "Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove overtrædelser finder sted." %}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                <h5 class="card-title">5. {% translate "Disciplinære foranstaltninger for studerende" %}</h5>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                {% blocktranslate %}
+                Indskrevne studerende, der forbryder sig mod AU's ordensregler, kan desuden blive omfattet
+                af disciplinære foranstaltninger i henhold til
+                {% endblocktranslate %}
+                <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" target="_blank" href="https://medarbejdere.au.dk/strategi/vedtaegter-og-regler-for-au/disciplinaere-foranstaltninger-overfor-studerende">
+                    {% translate "Aarhus Universitet's ordensregler" %}</a>.
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                <h5 class="card-title">6. {% translate "Rapportering af overtrædelser" %}</h5>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                {% blocktranslate %}
+                Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem
+                {% endblocktranslate %}
+                <a rel="nofollow" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>.<br>
+                {% blocktranslate %}
+                Alle henvendelser vil blive behandlet fortroligt, og der vil blive taget hensyn til den enkeltes ønsker om anonymitet.
+                Intet er for småt eller for stort til at blive taget op, og vi opfordrer alle til at henvende sig, hvis de oplever eller observerer noget, der strider imod ordensreglerne.
+                {% endblocktranslate %}
+            </div>
+        </div>
     </div>
 </div>
 

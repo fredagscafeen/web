@@ -9,9 +9,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from bartab.models import BarTabUser
+from bartenders.models import Bartender, BartenderApplication
 from fredagscafeen.email import send_template_email
-
-from .models import Bartender, BartenderApplication
 
 
 class BartenderApplicationForm(forms.ModelForm):
@@ -63,7 +62,7 @@ Ansøgningen kan blive accepteret eller afvist i {link}.
                 "link": mark_safe(f'<a href="{url}">admin interfacet</a>'),
                 **d,
             },
-            to=["best@fredagscafeen.dk"],
+            to=[settings.BEST_MAIL],
         )
 
     def send_confirmation_email(self, pk):

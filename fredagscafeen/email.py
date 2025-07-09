@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
@@ -8,9 +9,9 @@ def send_template_email(
     to,
     text_format={},
     html_format={},
-    from_email="best@fredagscafeen.dk",
+    from_email=settings.BEST_MAIL,
     cc=[],
-    reply_to=["best@fredagscafeen.dk"],
+    reply_to=[settings.BEST_MAIL],
 ):
     body_text = render_to_string(
         "email.txt", {"content": body_template.format(**text_format)}

@@ -313,7 +313,7 @@ Ses i baren! :)
             text_format=text_format,
             html_format=html_format,
             to=[self.email],
-            cc=["best@fredagscafeen.dk"],
+            cc=[settings.BEST_MAIL],
         )
 
     def accept(self):
@@ -487,31 +487,21 @@ class BartenderShift(models.Model):
 
     def streak(self):
         streak = 0
-        date = self.start_datetime + datetime.timedelta(days=2)
+        week_number = int(self.start_datetime.strftime("%V"))
         start_date = self.start_datetime
-        end_date = self.end_datetime
+        end_date = self.start_datetime
         previous_bartendershifts = BartenderShift.objects.all().filter(
-            start_datetime__lte=date
+            start_datetime__lte=start_date
         )
-        found_shift = False
-        while previous_bartendershifts:
-            for previous_shift in previous_bartendershifts.reverse():
-                if (
-                    previous_shift.start_datetime.date() <= date.date()
-                    and previous_shift.end_datetime.date()
-                    >= date.date() - datetime.timedelta(days=5)
-                ):
-                    streak += 1
-                    found_shift = True
-                    start_date = previous_shift.start_datetime
-                    break
-            if not found_shift:
+        for previous_shift in previous_bartendershifts.reverse():
+            if int(previous_shift.start_datetime.strftime("%V")) == week_number - (
+                streak % 52
+            ):
+                streak += 1
+                start_date = previous_shift.start_datetime
+                continue
+            else:
                 break
-            found_shift = False
-            date -= datetime.timedelta(days=7)
-            previous_bartendershifts = BartenderShift.objects.all().filter(
-                start_datetime__lte=date
-            )
         return streak, start_date, end_date
 
     def replace(self, b1, b2):

@@ -24,6 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+BEST_MAIL = "best@fredagscafeen.dk"
+
 MAILMAN_URL_BASE = "https://maillist.au.dk/mailman"
 MAILMAN_ALL_LIST = "datcafe-alle.cs"
 MAILMAN_BEST_LIST = "datcafe-best.cs"

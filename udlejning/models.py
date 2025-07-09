@@ -125,8 +125,8 @@ class Udlejning(UdlejningCommon):
 
     class Meta:
         ordering = ("dateFrom",)
-        verbose_name = _("Udlejning")
-        verbose_name_plural = _("Udlejninger")
+        verbose_name = _("Udlejning af fadølsanlæg")
+        verbose_name_plural = _("Udlejning af fadølsanlæg")
 
     def is_with_user(self, bartender):
         return bartender in self.bartendersInCharge.all()
