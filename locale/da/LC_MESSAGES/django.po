@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-09 21:25+0200\n"
-"PO-Revision-Date: 2025-07-09 21:25+0050\n"
+"POT-Creation-Date: 2025-07-11 18:51+0200\n"
+"PO-Revision-Date: 2025-07-11 18:51+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -118,7 +118,7 @@ msgstr "Fulde navn"
 msgid "Brugernavn"
 msgstr "Brugernavn"
 
-#: bartenders/models.py:56 web/templates/about.html:91
+#: bartenders/models.py:56 web/templates/about.html:95
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -155,7 +155,7 @@ msgid "Titel"
 msgstr "Titel"
 
 #: bartenders/models.py:263 events/templates/event.html:62
-#: events/templates/events.html:53
+#: events/templates/events.html:53 web/templates/about.html:70
 msgid "til"
 msgstr "til"
 
@@ -1803,7 +1803,7 @@ msgstr ""
 msgid "Pt. har baren været åben"
 msgstr "Pt. har baren været åben"
 
-#: web/templates/about.html:66
+#: web/templates/about.html:66 web/templates/about.html:70
 msgid "uge"
 msgid_plural "uger"
 msgstr[0] "uge"
@@ -1813,40 +1813,49 @@ msgstr[1] "uger"
 msgid "i streg, siden"
 msgstr "i streg, siden"
 
-#: web/templates/about.html:66
+#: web/templates/about.html:66 web/templates/about.html:70
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr "d."
 
-#: web/templates/about.html:74
+#: web/templates/about.html:70
+#| msgid "Den længste streak baren har været åben, er "
+msgid "Den længste streak baren har haft åben, er "
+msgstr "Den længste streak baren har haft åben, er"
+
+#: web/templates/about.html:70
+msgid "i streg, fra"
+msgstr "i streg, fra"
+
+#: web/templates/about.html:78
 msgid "Postadresse"
 msgstr "Postadresse"
 
-#: web/templates/about.html:78
+#: web/templates/about.html:82
 msgid "Vores postadresse er"
 msgstr "Vores postadresse er"
 
-#: web/templates/about.html:95
+#: web/templates/about.html:99
 msgid "Bestyrelsen kan kontaktes på"
 msgstr "Bestyrelsen kan kontaktes på"
 
-#: web/templates/about.html:102
+#: web/templates/about.html:106
 msgid "CVR"
 msgstr "CVR"
 
-#: web/templates/about.html:105
+#: web/templates/about.html:109
 msgid "Vores CVR-nr er"
 msgstr "Vores CVR-nr er"
 
-#: web/templates/about.html:112
+#: web/templates/about.html:116
 msgid "Adfærdskodeks"
 msgstr "Adfærdskodeks"
 
-#: web/templates/about.html:120
+#: web/templates/about.html:124
 msgid "Formål"
 msgstr "Formål"
 
-#: web/templates/about.html:125
+#: web/templates/about.html:129
 msgid ""
 "\n"
 "                Fredagsbaren er et socialt arrangement for indskrevne studerende på Aarhus Universitet.\n"
@@ -1857,11 +1866,11 @@ msgstr ""
 "Fredagsbaren er et socialt arrangement for indskrevne studerende på Aarhus Universitet.\n"
 "Formålet er at skabe et trygt og hyggeligt fællesskab for alle deltagere."
 
-#: web/templates/about.html:135
+#: web/templates/about.html:139
 msgid "Målgruppe"
 msgstr "Målgruppe"
 
-#: web/templates/about.html:140
+#: web/templates/about.html:144
 msgid ""
 "\n"
 "                Fredagsbaren er i udgangspunktet for indskrevne studerende ved Aarhus Universitet.\n"
@@ -1872,21 +1881,21 @@ msgstr ""
 "Fredagsbaren er i udgangspunktet for indskrevne studerende ved Aarhus Universitet.\n"
 "Gæster udefra er også velkomne, så længe de også respekterer retningslinjerne for adfærd herunder, samt dem fra"
 
-#: web/templates/about.html:144
+#: web/templates/about.html:148
 msgid ""
 "https://cs.au.dk/da/om-institut-for-datalogi/code-of-conduct-adfaerdskodeks/"
 msgstr ""
 "https://cs.au.dk/da/om-institut-for-datalogi/code-of-conduct-adfaerdskodeks/"
 
-#: web/templates/about.html:144
+#: web/templates/about.html:148
 msgid "Institut for Datalogi"
 msgstr "Institut for Datalogi"
 
-#: web/templates/about.html:151
+#: web/templates/about.html:155
 msgid "Adfærd"
 msgstr "Adfærd"
 
-#: web/templates/about.html:156
+#: web/templates/about.html:160
 msgid ""
 "\n"
 "                Alle deltagere skal respektere følgende grundlæggende retningslinjer:\n"
@@ -1895,7 +1904,7 @@ msgstr ""
 "\n"
 "Alle deltagere skal respektere følgende grundlæggende retningslinjer:"
 
-#: web/templates/about.html:160
+#: web/templates/about.html:164
 msgid ""
 "Opføre sig respektfuldt overfor de andre deltagende gæster og de frivillige "
 "bartendere."
@@ -1903,11 +1912,11 @@ msgstr ""
 "Opføre sig respektfuldt overfor de andre deltagende gæster og de frivillige "
 "bartendere."
 
-#: web/templates/about.html:161
+#: web/templates/about.html:165
 msgid "Undlad støjende, truende eller generende adfærd."
 msgstr "Undlad støjende, truende eller generende adfærd."
 
-#: web/templates/about.html:162
+#: web/templates/about.html:166
 msgid ""
 "Vær opmærksom på grænser - diskriminerende, krænkende eller på anden måde "
 "uacceptabel adfærd tolereres ikke."
@@ -1915,17 +1924,17 @@ msgstr ""
 "Vær opmærksom på grænser - diskriminerende, krænkende eller på anden måde "
 "uacceptabel adfærd tolereres ikke."
 
-#: web/templates/about.html:163
+#: web/templates/about.html:167
 msgid ""
 "Følg gældende lovgivning, herunder regler om alkohol, rusmidler og rygning."
 msgstr ""
 "Følg gældende lovgivning, herunder regler om alkohol, rusmidler og rygning."
 
-#: web/templates/about.html:171
+#: web/templates/about.html:175
 msgid "Sanktioner og bortvisning"
 msgstr "Sanktioner og bortvisning"
 
-#: web/templates/about.html:176
+#: web/templates/about.html:180
 msgid ""
 "\n"
 "                Arrangørerne forbeholder sig ret til at:\n"
@@ -1934,7 +1943,7 @@ msgstr ""
 "\n"
 "Arrangørerne forbeholder sig ret til at:"
 
-#: web/templates/about.html:180
+#: web/templates/about.html:184
 msgid ""
 "Afvise eller bortvise personer, der ikke opfylder retningslinjerne for "
 "adfærd ovenfor."
@@ -1942,7 +1951,7 @@ msgstr ""
 "Afvise eller bortvise personer, der ikke opfylder retningslinjerne for "
 "adfærd ovenfor."
 
-#: web/templates/about.html:181
+#: web/templates/about.html:185
 msgid ""
 "Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove"
 " overtrædelser finder sted."
@@ -1950,11 +1959,11 @@ msgstr ""
 "Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove"
 " overtrædelser finder sted."
 
-#: web/templates/about.html:189
+#: web/templates/about.html:193
 msgid "Disciplinære foranstaltninger for studerende"
 msgstr "Disciplinære foranstaltninger for studerende"
 
-#: web/templates/about.html:194
+#: web/templates/about.html:198
 msgid ""
 "\n"
 "                Indskrevne studerende, der forbryder sig mod AU's ordensregler, kan desuden blive omfattet\n"
@@ -1965,15 +1974,15 @@ msgstr ""
 "Indskrevne studerende, der forbryder sig mod AU's ordensregler, kan desuden blive omfattet\n"
 "af disciplinære foranstaltninger i henhold til"
 
-#: web/templates/about.html:199
+#: web/templates/about.html:203
 msgid "Aarhus Universitet's ordensregler"
 msgstr "Aarhus Universitets ordensregler"
 
-#: web/templates/about.html:206
+#: web/templates/about.html:210
 msgid "Rapportering af overtrædelser"
 msgstr "Rapportering af overtrædelser"
 
-#: web/templates/about.html:211
+#: web/templates/about.html:215
 msgid ""
 "\n"
 "                Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem\n"
@@ -1982,7 +1991,7 @@ msgstr ""
 "\n"
 "Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem"
 
-#: web/templates/about.html:215
+#: web/templates/about.html:219
 msgid ""
 "\n"
 "                Alle henvendelser vil blive behandlet fortroligt, og der vil blive taget hensyn til den enkeltes ønsker om anonymitet.\n"

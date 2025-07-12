@@ -10,7 +10,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from bartenders.models import BartenderShift, date_format
+from bartenders.models import BartenderShift, ShiftStreak
 from email_auth.auth import EmailTokenBackend
 from web.forms import LoginForm
 
@@ -64,15 +64,52 @@ class About(TemplateView):
         bartender_shifts = BartenderShift.objects.defer(
             "responsible", "other_bartenders", "period"
         )
-        current_shift = bartender_shifts.filter(
-            start_datetime__lte=timezone.now(),
-            end_datetime__gte=timezone.now() - datetime.timedelta(days=7),
-        )
-        shift_streak = 0
-        start_date = timezone.now()
-        if current_shift:
-            shift_streak, start_date, _ = current_shift[0].streak()
+        shifts = bartender_shifts.filter(start_datetime__lte=timezone.now())
+        shift_streaks = []
+        current_streak = None
+        found = False
+        for shift in shifts:
+            if current_streak == None:
+                current_streak = ShiftStreak(
+                    1, shift.start_datetime, shift.start_datetime
+                )
+            elif int(shift.start_datetime.strftime("%V")) == int(
+                current_streak.end_datetime.strftime("%V")
+            ):
+                continue
+            elif int(shift.start_datetime.strftime("%V")) == int(
+                current_streak.end_datetime.strftime("%V")
+            ) + 1 or (
+                int(current_streak.end_datetime.strftime("%V")) == 52
+                and int(shift.start_datetime.strftime("%V")) == 1
+            ):
+                current_streak = ShiftStreak(
+                    current_streak.streak + 1,
+                    current_streak.start_datetime,
+                    shift.start_datetime,
+                )
+            else:
+                shift_streaks.append(current_streak)
+                current_streak = ShiftStreak(
+                    1, shift.start_datetime, shift.start_datetime
+                )
+            if (
+                shift.start_datetime >= timezone.now() - datetime.timedelta(days=7)
+                and not found
+            ):
+                current_streak.is_current_shift = True
+                found = True
+        shift_streaks.append(current_streak)
+        shift_streak = None
+        longest_streak = None
+        if found:
+            for shift in shift_streaks:
+                if shift.is_current_shift:
+                    shift_streak = shift
+                    break
+        else:
+            longest_streak = max(shift_streaks, key=lambda x: x.streak, default=None)
         context["shift_streak"] = shift_streak
-        context["shift_streak_start_date"] = start_date.date()
+        context["longest_streak"] = longest_streak
 
         return context
