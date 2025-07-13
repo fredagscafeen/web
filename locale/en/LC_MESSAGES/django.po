@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-11 18:51+0200\n"
+"POT-Creation-Date: 2025-07-13 11:08+0200\n"
 "PO-Revision-Date: 2025-07-11 18:51+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1865,101 +1865,100 @@ msgstr "CVR"
 msgid "Vores CVR-nr er"
 msgstr "Our CVR number is"
 
-#: web/templates/about.html:112
+#: web/templates/about.html:116
 msgid "Adfærdskodeks"
 msgstr "Code of Conduct"
 
-#: web/templates/about.html:120
+#: web/templates/about.html:124
 msgid "Formål"
 msgstr "Purpose"
 
-#: web/templates/about.html:125
+#: web/templates/about.html:129
 msgid ""
 "\n"
-"                Fredagsbaren er et socialt arrangement for indskrevne studerende på Aarhus Universitet.\n"
-"                Formålet er at skabe et trygt og hyggeligt fællesskab for alle deltagere.\n"
+"                Fredagsbaren er et socialt arrangement for indskrevne "
+"studerende på Aarhus Universitet.\n"
+"                Formålet er at skabe et trygt og hyggeligt fællesskab for "
+"alle deltagere.\n"
 "                "
 msgstr ""
 "\n"
-"The Friday Bar is a social event for enrolled students at Aarhus University.\n"
+"The Friday Bar is a social event for enrolled students at Aarhus "
+"University.\n"
 "The purpose is to create a safe and cozy community for all participants."
 
-#: web/templates/about.html:135
+#: web/templates/about.html:139
 msgid "Målgruppe"
 msgstr "Target audience"
 
-#: web/templates/about.html:140
+#: web/templates/about.html:144
 msgid ""
 "\n"
-"                Fredagsbaren er i udgangspunktet for indskrevne studerende ved Aarhus Universitet.\n"
-"                Gæster udefra er også velkomne, så længe de også respekterer retningslinjerne for adfærd herunder, samt dem fra\n"
+"                Fredagsbaren er i udgangspunktet for indskrevne studerende "
+"ved Aarhus Universitet.\n"
+"                Gæster udefra er også velkomne, så længe de også respekterer "
+"retningslinjerne for adfærd herunder, samt dem fra\n"
 "                "
 msgstr ""
 "\n"
 "The Friday bar is primarily for enrolled students at Aarhus University.\n"
-"Guests from outside are also welcome, as long as they also respect the guidelines for behavior below, as well as those from"
+"Guests from outside are also welcome, as long as they also respect the "
+"guidelines for behavior below, as well as those from"
 
-#: web/templates/about.html:144
+#: web/templates/about.html:148
 msgid ""
 "https://cs.au.dk/da/om-institut-for-datalogi/code-of-conduct-adfaerdskodeks/"
 msgstr "https://cs.au.dk/conduct/"
 
-#: web/templates/about.html:144
+#: web/templates/about.html:148
 msgid "Institut for Datalogi"
 msgstr "Department of Computer Science"
 
-#: web/templates/about.html:151
+#: web/templates/about.html:155
 msgid "Adfærd"
 msgstr "Behavior"
 
-#: web/templates/about.html:156
+#: web/templates/about.html:160
 msgid ""
 "\n"
-"                Alle deltagere skal respektere følgende grundlæggende retningslinjer:\n"
+"                Alle deltagere skal respektere følgende grundlæggende "
+"retningslinjer:\n"
 "                "
 msgstr ""
 "\n"
 "All participants must respect the following ground rules:"
 
-#: web/templates/about.html:160
+#: web/templates/about.html:164
 msgid ""
 "Opføre sig respektfuldt overfor de andre deltagende gæster og de frivillige "
 "bartendere."
 msgstr ""
-"Behave respectfully towards the other participating guests and the volunteer"
-" bartenders."
+"Behave respectfully towards the other participating guests and the volunteer "
+"bartenders."
 
-#: web/templates/about.html:161
+#: web/templates/about.html:165
 msgid "Undlad støjende, truende eller generende adfærd."
 msgstr "Avoid noisy, threatening or disruptive behavior."
 
-#: web/templates/about.html:162
+#: web/templates/about.html:166
 msgid ""
 "Vær opmærksom på grænser - diskriminerende, krænkende eller på anden måde "
 "uacceptabel adfærd tolereres ikke."
 msgstr ""
-"Be aware of boundaries - discriminatory, offensive or otherwise unacceptable"
-" behavior will not be tolerated."
+"Be aware of boundaries - discriminatory, offensive or otherwise unacceptable "
+"behavior will not be tolerated."
 
-#: web/templates/about.html:163
+#: web/templates/about.html:167
 msgid ""
 "Følg gældende lovgivning, herunder regler om alkohol, rusmidler og rygning."
 msgstr ""
 "Follow applicable laws, including regulations on alcohol, drugs and smoking."
 
-#: web/templates/about.html:171
+#: web/templates/about.html:175
 msgid "Sanktioner og bortvisning"
 msgstr "Sanctions and expulsion"
 
-#: web/templates/about.html:176
-#| msgid ""
-#| "\n"
-#| "                    billede\n"
-#| "                    "
-#| msgid_plural ""
-#| "\n"
-#| "                    billeder\n"
-#| "                    "
+#: web/templates/about.html:180
 msgid ""
 "\n"
 "                Arrangørerne forbeholder sig ret til at:\n"
@@ -1968,62 +1967,74 @@ msgstr ""
 "\n"
 "The organizers reserve the right to:"
 
-#: web/templates/about.html:180
+#: web/templates/about.html:184
 msgid ""
 "Afvise eller bortvise personer, der ikke opfylder retningslinjerne for "
 "adfærd ovenfor."
 msgstr ""
 "Reject or expel individuals who do not meet the behavioral guidelines above."
 
-#: web/templates/about.html:181
+#: web/templates/about.html:185
 msgid ""
-"Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove"
-" overtrædelser finder sted."
+"Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove "
+"overtrædelser finder sted."
 msgstr ""
 "Deny access to future events if repeated or particularly serious violations "
 "occur."
 
-#: web/templates/about.html:189
+#: web/templates/about.html:193
 msgid "Disciplinære foranstaltninger for studerende"
 msgstr "Disciplinary measures for students"
 
-#: web/templates/about.html:194
+#: web/templates/about.html:198
 msgid ""
 "\n"
-"                Indskrevne studerende, der forbryder sig mod AU's ordensregler, kan desuden blive omfattet\n"
+"                Indskrevne studerende, der forbryder sig mod AU's "
+"ordensregler, kan desuden blive omfattet\n"
 "                af disciplinære foranstaltninger i henhold til\n"
 "                "
 msgstr ""
 "\n"
-"Enrolled students who violate AU's rules of conduct may also be subject to disciplinary measures in accordance with"
+"Enrolled students who violate AU's rules of conduct may also be subject to "
+"disciplinary measures in accordance with"
 
-#: web/templates/about.html:199
+#: web/templates/about.html:203
 msgid "Aarhus Universitet's ordensregler"
 msgstr "Aarhus University's code of conduct"
 
-#: web/templates/about.html:206
+#: web/templates/about.html:210
 msgid "Rapportering af overtrædelser"
 msgstr "Reporting Violations"
-
-#: web/templates/about.html:211
-msgid ""
-"\n"
-"                Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem\n"
-"                "
-msgstr ""
-"\n"
-"Inquiries regarding the rules of procedure or specific incidents can be directed to the organizers of the Friday bar, or directly to the board of directors through"
 
 #: web/templates/about.html:215
 msgid ""
 "\n"
-"                Alle henvendelser vil blive behandlet fortroligt, og der vil blive taget hensyn til den enkeltes ønsker om anonymitet.\n"
-"                Intet er for småt eller for stort til at blive taget op, og vi opfordrer alle til at henvende sig, hvis de oplever eller observerer noget, der strider imod ordensreglerne.\n"
+"                Henvendelser vedrørende ordensreglementet eller konkrete "
+"hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til "
+"bestyrelsen gennem\n"
 "                "
 msgstr ""
 "\n"
-"All inquiries will be treated confidentially, and individual wishes for anonymity will be taken into account.\n"
-"Nothing is too small or too big to be addressed, and we encourage everyone to contact us if they experience or observe anything that violates the code of conduct."
+"Inquiries regarding the rules of procedure or specific incidents can be "
+"directed to the organizers of the Friday bar, or directly to the board of "
+"directors through"
+
+#: web/templates/about.html:219
+msgid ""
+"\n"
+"                Alle henvendelser vil blive behandlet fortroligt, og der vil "
+"blive taget hensyn til den enkeltes ønsker om anonymitet.\n"
+"                Intet er for småt eller for stort til at blive taget op, og "
+"vi opfordrer alle til at henvende sig, hvis de oplever eller observerer "
+"noget, der strider imod ordensreglerne.\n"
+"                "
+msgstr ""
+"\n"
+"All inquiries will be treated confidentially, and individual wishes for "
+"anonymity will be taken into account.\n"
+"Nothing is too small or too big to be addressed, and we encourage everyone "
+"to contact us if they experience or observe anything that violates the code "
+"of conduct."
 
 #: web/templates/base.html:54
 msgid "Forside"
