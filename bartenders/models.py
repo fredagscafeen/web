@@ -485,25 +485,6 @@ class BartenderShift(models.Model):
         else:
             return 1
 
-    def streak(self):
-        streak = 0
-        week_number = int(self.start_datetime.strftime("%V"))
-        start_date = self.start_datetime
-        end_date = self.start_datetime
-        previous_bartendershifts = BartenderShift.objects.all().filter(
-            start_datetime__lte=start_date
-        )
-        for previous_shift in previous_bartendershifts.reverse():
-            if int(previous_shift.start_datetime.strftime("%V")) == week_number - (
-                streak % 52
-            ):
-                streak += 1
-                start_date = previous_shift.start_datetime
-                continue
-            else:
-                break
-        return streak, start_date, end_date
-
     def replace(self, b1, b2):
         if self.responsible == b1:
             self.responsible = b2
@@ -581,3 +562,17 @@ class BallotLink(models.Model):
     poll = models.ForeignKey(Poll, models.CASCADE)
     bartender = models.ForeignKey(Bartender, models.CASCADE)
     url = models.URLField()
+
+
+class ShiftStreak:
+    def __init__(self, streak, start_time, end_time=None):
+        self.streak = streak
+        self.start_datetime = start_time
+        self.end_datetime = end_time
+        self.is_current_shift = False
+
+    def __lt__(self, other):
+        return self.streak < other.streak
+
+    def __str__(self):
+        return f"{self.streak} ({self.start_time} - {self.end_time})"

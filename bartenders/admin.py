@@ -21,6 +21,7 @@ from bartenders.models import (
     BoardMemberDepositShift,
     BoardMemberPeriod,
     Poll,
+    ShiftStreak,
 )
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 from fredagscafeen.admin_view import custom_admin_view
@@ -224,20 +225,6 @@ class BartenderShiftPeriodAdmin(admin.ModelAdmin):
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
     pass
-
-
-class ShiftStreak:
-    def __init__(self, streak, start_time, end_time=None):
-        self.streak = streak
-        self.start_datetime = start_time
-        self.end_datetime = end_time
-        self.is_current_shift = False
-
-    def __lt__(self, other):
-        return self.streak < other.streak
-
-    def __str__(self):
-        return f"{self.streak} ({self.start_time} - {self.end_time})"
 
 
 @custom_admin_view("bartenders", "Bartender shift streaks")

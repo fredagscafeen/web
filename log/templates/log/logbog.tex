@@ -20,11 +20,12 @@
 \fi
 
 {% with log_base=log_entry.template bartender_shift=log_entry.bartender_shift location=log_entry.location %}
+{% with shift_date=bartender_shift.date %}
 {% with manager=log_base.manager licensee=log_base.licensee key_figures=log_base.key_figures.all purpose=log_base.purpose representative=log_base.representative type=log_base.type guests=log_base.guests loan_agreement=log_base.loan_agreement %}
 \includepdf[pages=1,
     picturecommand*={
     \put(75,730){Dato:}
-    \put(105,730){ \textbf{ {{ log_base.created_at|date:"j. F Y" }} } }
+    \put(105,730){ \textbf{ {{ shift_date|date:"j. F Y" }} } }
     \put(310,676){Fredagscaféen}
     \put(307,653){ {{ location }}}
     \put(402,634){ {{ manager.name | latex_trunc }}}
@@ -49,7 +50,7 @@
     \put(307,338){ {{ representative | latex_trunc }}}
 }]{ {{template_path}} }
 
-{% with shift_responsible=bartender_shift.responsible shift_date=bartender_shift.date %}
+{% with shift_responsible=bartender_shift.responsible %}
 \includepdf[pages=2,
     picturecommand*={
     \put(75,730){Dato:}
@@ -76,6 +77,7 @@
     \put(307,496){ \parbox[t][2\baselineskip][t]{220pt}{ {{ damages }} } }
     \put(307,451){ \parbox[t][2\baselineskip][t]{220pt}{ {{ collective_evaluation }} } }
 }]{ {{template_path}} }
+{% endwith %}
 {% endwith %}
 {% endwith %}
 {% endwith %}
