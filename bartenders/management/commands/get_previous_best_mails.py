@@ -11,8 +11,8 @@ class Command(BaseCommand):
         best = []
         for member in board_members:
             bartender = member.bartender
-            print(f"{bartender.name} <{bartender.email}>")
-            best.append(bartender)
+            if bartender not in best:
+                best.append(bartender)
 
         if not best:
             print("No board members found.")
