@@ -11,24 +11,51 @@
         </div>
         {% endif %}
         <header>
-            <div class="row">
+            <div class="row align-items-center">
                 {% get_current_language as LANGUAGE_CODE %}
                 {% get_available_languages as LANGUAGES %}
                 {% get_language_info_list for LANGUAGES as languages %}
+                <div class="col-auto">
+                    <a href="/{{ LANGUAGE_CODE }}/" class="text-decoration-none">
+                        <img src="{% static 'images/logo.png' %}" height="50" {% if config.SHOW_OPEN_EVERY_FRIDAY %}style="margin-bottom: 10px;"{% endif %}>
+                    </a>
+                </div>
                 <div class="col-auto me-auto">
                     <a href="/{{ LANGUAGE_CODE }}/" class="text-decoration-none">
-                        <h1 style="font-family: Times New Roman; color: var(--datblue);">
-                            <img src="{% static 'images/logo.png' %}" height="50">
-                            Fredagscaféen
-                        </h1>
+                        <div>
+                            <h1 style="font-family: Times New Roman; color: var(--datblue); display: inline;">
+                                Fredagscaféen
+                            </h1>
+                            {% if config.SHOW_OPEN_EVERY_FRIDAY %}
+                            <p class="text-body-secondary"><i>...{% translate "Åben" %} <u>{% translate "hver" %}</u> {% translate "fredag" %}!</i></p>
+                            {% endif %}
+                        </div>
                     </a>
                 </div>
                 <div class="col-auto d-none d-sm-block">
-                    <div class="form-check form-switch fs-5 pt-2">
-                        <input id="themeToggle" class="form-check-input" type="checkbox" onclick="switchTheme()">
+                    <div class="form-check form-switch fs-5">
+                        <input id="themeToggle1" class="form-check-input" type="checkbox" onclick="switchTheme()">
                     </div>
                 </div>
-                <div class="col-auto d-none d-sm-block pt-2">
+                <div class="col-auto d-none d-sm-block">
+                    {% if LANGUAGE_CODE == 'da' %}
+                    <a href="/en/{{request.get_full_path|slice:"4:"}}">
+                        <img src="{% static 'images/unionjac.png' %}" class="rounded" height="25">
+                    </a>
+                    {% elif LANGUAGE_CODE == 'en' %}
+                    <a href="/da/{{request.get_full_path|slice:"4:"}}">
+                        <img src="{% static 'images/dannebro.png' %}" class="rounded" height="25">
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-auto d-block d-sm-none ms-auto">
+                    <div class="form-check form-switch fs-5">
+                        <input id="themeToggle2" class="form-check-input" type="checkbox" onclick="switchTheme()">
+                    </div>
+                </div>
+                <div class="col-auto d-block d-sm-none me-auto">
                     {% if LANGUAGE_CODE == 'da' %}
                     <a href="/en/{{request.get_full_path|slice:"4:"}}">
                         <img src="{% static 'images/unionjac.png' %}" class="rounded" height="25">

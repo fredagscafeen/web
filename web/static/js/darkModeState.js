@@ -58,12 +58,8 @@ function setThemeToggle() {
 
     if (isDarkMode) {
         try {
-            document.getElementById("themeToggle").checked = true;
-        } catch(err) {
-            // Page not selected
-        }
-        try {
-            document.getElementById("themeToggleNav").checked = true;
+            document.getElementById("themeToggle1").checked = true;
+            document.getElementById("themeToggle2").checked = true;
         } catch(err) {
             // Page not selected
         }

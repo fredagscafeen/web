@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-13 11:08+0200\n"
-"PO-Revision-Date: 2025-07-13 11:53+0050\n"
+"POT-Creation-Date: 2025-07-19 13:42+0200\n"
+"PO-Revision-Date: 2025-07-19 13:43+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -181,15 +181,15 @@ msgstr ""
 msgid "Gem"
 msgstr "Save"
 
-#: bartenders/templates/barplan.html:10 web/templates/base.html:55
+#: bartenders/templates/barplan.html:10 web/templates/base.html:82
 msgid "Barplan"
 msgstr "Bar Plan"
 
-#: bartenders/templates/barplan.html:17 bartenders/templates/barplan.html:146
+#: bartenders/templates/barplan.html:17 bartenders/templates/barplan.html:147
 msgid "Vis kun nuværende"
 msgstr "Show only current"
 
-#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:148
+#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:149
 msgid "Vis også tidligere"
 msgstr "Also show earlier"
 
@@ -202,7 +202,7 @@ msgid "Ansvarlig"
 msgstr "Responsible"
 
 #: bartenders/templates/barplan.html:42 bartenders/templates/bartenders.html:7
-#: web/templates/base.html:56
+#: web/templates/base.html:83
 msgid "Bartendere"
 msgstr "Bartenders"
 
@@ -214,11 +214,11 @@ msgstr "This week's Friday"
 msgid "Bartender's first responsible shift"
 msgstr "Bartender's first responsible shift"
 
-#: bartenders/templates/barplan.html:81 bartenders/templates/barplan.html:85
+#: bartenders/templates/barplan.html:84 bartenders/templates/barplan.html:87
 msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
-#: bartenders/templates/barplan.html:91 bartenders/templates/barplan.html:187
+#: bartenders/templates/barplan.html:92 bartenders/templates/barplan.html:188
 #: bartenders/templates/board.html:37 events/templates/event.html:57
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
 #: items/templates/items.html:80 udlejning/templates/udlejning.html:62
@@ -230,19 +230,19 @@ msgstr "Bartender's first shift"
 msgid "Edit"
 msgstr "Edit"
 
-#: bartenders/templates/barplan.html:139 bartenders/views.py:217
+#: bartenders/templates/barplan.html:140 bartenders/views.py:217
 msgid "Pantvagter"
 msgstr "Deposit shifts"
 
-#: bartenders/templates/barplan.html:154
+#: bartenders/templates/barplan.html:155
 msgid "Pantvagter per side"
 msgstr "Deposit shifts per page"
 
-#: bartenders/templates/barplan.html:169
+#: bartenders/templates/barplan.html:170
 msgid "Uge"
 msgstr "Week"
 
-#: bartenders/templates/barplan.html:170 udlejning/models.py:107
+#: bartenders/templates/barplan.html:171 udlejning/models.py:107
 #: udlejning/models.py:161 udlejning/models.py:183 udlejning/models.py:205
 #: udlejning/models.py:227 udlejning/models.py:249
 #: udlejning/templates/udlejning.html:26
@@ -254,11 +254,11 @@ msgstr "Week"
 msgid "Ansvarlige"
 msgstr "Responsible"
 
-#: bartenders/templates/barplan.html:180
+#: bartenders/templates/barplan.html:181
 msgid "Current week"
 msgstr "Current week"
 
-#: bartenders/templates/barplan.html:183
+#: bartenders/templates/barplan.html:184
 msgid "Bartender's first deposit shift"
 msgstr "Bartender's first deposit shift"
 
@@ -343,7 +343,7 @@ msgstr "Current"
 msgid "Tidligere"
 msgstr "Earlier"
 
-#: bartenders/templates/board.html:31 web/templates/base.html:70
+#: bartenders/templates/board.html:31 web/templates/base.html:97
 msgid "Bestyrelsen"
 msgstr "Board"
 
@@ -648,11 +648,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:293
+#: fredagscafeen/settings/base.py:298
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:294
+#: fredagscafeen/settings/base.py:299
 msgid "English"
 msgstr "English"
 
@@ -917,7 +917,7 @@ msgstr "To bartenders"
 msgid "Til bestyrelsesmedlemmer"
 msgstr "To board members"
 
-#: guides/templates/guides.html:9 web/templates/base.html:69
+#: guides/templates/guides.html:9 web/templates/base.html:96
 msgid "Guides"
 msgstr "Guides"
 
@@ -1256,7 +1256,7 @@ msgstr "Total price"
 msgid "Betalingsdato"
 msgstr "Payment date"
 
-#: udlejning/models.py:128 udlejning/models.py:129 web/templates/base.html:62
+#: udlejning/models.py:128 udlejning/models.py:129 web/templates/base.html:89
 msgid "Udlejning af fadølsanlæg"
 msgstr "Rental of kegerator"
 
@@ -1273,11 +1273,11 @@ msgstr "Rental applications"
 msgid "Kontakt info"
 msgstr "Contact info"
 
-#: udlejning/models.py:164 udlejning/models.py:165 web/templates/base.html:64
+#: udlejning/models.py:164 udlejning/models.py:165 web/templates/base.html:91
 msgid "Udlejning af grill"
 msgstr "Rental of grill"
 
-#: udlejning/models.py:186 udlejning/models.py:187 web/templates/base.html:66
+#: udlejning/models.py:186 udlejning/models.py:187 web/templates/base.html:93
 msgid "Udlejning af projektor"
 msgstr "Rental of projector"
 
@@ -1285,15 +1285,15 @@ msgstr "Rental of projector"
 msgid "Udlejning af højtaler"
 msgstr "Rental of speaker"
 
-#: udlejning/models.py:209 web/templates/base.html:65
+#: udlejning/models.py:209 web/templates/base.html:92
 msgid "Udlejning af højtalere"
 msgstr "Rental of speakers"
 
-#: udlejning/models.py:230 udlejning/models.py:231 web/templates/base.html:61
+#: udlejning/models.py:230 udlejning/models.py:231 web/templates/base.html:88
 msgid "Udlejning af brætspilsvogn"
 msgstr "Rental of board game cart"
 
-#: udlejning/models.py:252 udlejning/models.py:253 web/templates/base.html:63
+#: udlejning/models.py:252 udlejning/models.py:253 web/templates/base.html:90
 msgid "Udlejning af festtelt"
 msgstr "Rental of tent"
 
@@ -1594,7 +1594,7 @@ msgstr ""
 msgid "Reservation af projektor"
 msgstr "Rental of projector"
 
-#: udlejning/templates/udlejningProjector.html:9 web/templates/base.html:66
+#: udlejning/templates/udlejningProjector.html:9 web/templates/base.html:93
 msgid "lærred"
 msgstr "screen"
 
@@ -1821,7 +1821,6 @@ msgid "d."
 msgstr " "
 
 #: web/templates/about.html:70
-#| msgid "Den længste streak baren har været åben, er "
 msgid "Den længste streak baren har haft åben, er "
 msgstr "The longest streak the bar has been open for is"
 
@@ -2001,55 +2000,67 @@ msgstr ""
 "All inquiries will be treated confidentially, and individual wishes for anonymity will be taken into account.\n"
 "Nothing is too small or too big to be addressed, and we encourage everyone to contact us if they experience or observe anything that violates the code of conduct."
 
-#: web/templates/base.html:54
+#: web/templates/base.html:30
+msgid "Åben"
+msgstr "Open"
+
+#: web/templates/base.html:30
+msgid "hver"
+msgstr "every"
+
+#: web/templates/base.html:30
+msgid "fredag"
+msgstr "Friday"
+
+#: web/templates/base.html:81
 msgid "Forside"
 msgstr "Home"
 
-#: web/templates/base.html:57
+#: web/templates/base.html:84
 msgid "Sortiment"
 msgstr "Selection"
 
-#: web/templates/base.html:59
+#: web/templates/base.html:86
 msgid "Udlejning"
 msgstr "Rental"
 
-#: web/templates/base.html:71
+#: web/templates/base.html:98
 msgid "Events"
 msgstr "Events"
 
-#: web/templates/base.html:75
+#: web/templates/base.html:102
 msgid "New events"
 msgstr "New events"
 
-#: web/templates/base.html:79
+#: web/templates/base.html:106
 msgid "Gallery"
 msgstr "Gallery"
 
-#: web/templates/base.html:80
+#: web/templates/base.html:107
 msgid "Om baren"
 msgstr "About"
 
-#: web/templates/base.html:82
+#: web/templates/base.html:109
 msgid "Profil"
 msgstr "Profile"
 
-#: web/templates/base.html:84
+#: web/templates/base.html:111
 msgid "Krydlistestatus"
 msgstr "Tab status"
 
-#: web/templates/base.html:86
+#: web/templates/base.html:113
 msgid "Bartenderprofil"
 msgstr "Bartender profile"
 
-#: web/templates/base.html:89
+#: web/templates/base.html:116
 msgid "Admin"
 msgstr "Admin"
 
-#: web/templates/base.html:96
+#: web/templates/base.html:123
 msgid "Log ud"
 msgstr "Log out"
 
-#: web/templates/base.html:134
+#: web/templates/base.html:161
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
 msgstr "is a Friday bar for computer science and IT at Aarhus University."
 
