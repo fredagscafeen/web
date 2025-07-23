@@ -4,7 +4,7 @@
 {% load i18n %}
 {% load static %}
 {% load bootstrap5 bootstrap_icons %}
-{% load is_with_user compare_to_current_week %}
+{% load is_with_user compare_to_current_week released_shift %}
 
 <h2 id="barplan">
 	{% translate "Barplan" %}
@@ -34,6 +34,9 @@
 	</div>
 </div>
 
+<form method="post" id="info_form">
+{% csrf_token %}
+
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -46,7 +49,7 @@
 		</tr>
 	</thead>
 	<tbody>
-    {% for shift in bartendershifts %}
+	{% for shift in bartendershifts %}
 		{% with shiftComparedToCurrentWeek=shift|compare_to_current_week shiftIsWithUser=shift|is_with_user:user %}
 		<tr>
 			<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
@@ -58,6 +61,20 @@
 			</td>
 			{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
 				<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+					{% with released_bartender_shift=shift.responsible|released_shift:shift %}
+						{% if shiftComparedToCurrentWeek != -1 %}
+							{% if shift.responsible.email == user.email and released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-danger btn-sm" name="withdraw" value="{{ released_bartender_shift.pk }}" onclick="return confirm('{% translate "Du er ved at trække din vagt tilbage igen. Det betyder at andre bartender ikke kan tage din vagt." %}');">
+									<i>{% bs_icon 'check' %}</i>
+							{% elif shift.responsible.email == user.email and not released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-primary btn-sm" name="release" value="{{ shift.pk }}" onclick="return confirm('{% translate "Du er ved at frigøre din vagt. Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt indtil da." %}');">
+									<i>{% bs_icon 'x' %}</i>
+							{% elif released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-danger btn-sm" name="swap" value="{{ released_bartender_shift.pk }}" onclick="return confirm('{% translate "Du er ved at tage en andens barvagt." %}');">
+									<i>{% bs_icon 'repeat' %}</i>
+							{% endif %}
+						{% endif %}
+					{% endwith %}
 					{% if shift.responsible.first_responsible_shift == shift %}
 					<b class="gray-out text-color-danger" style="color:red;display:inline;" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
@@ -66,6 +83,20 @@
 				</td>
 			{% else %}
 				<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+					{% with released_bartender_shift=shift.responsible|released_shift:shift %}
+						{% if shiftComparedToCurrentWeek != -1 %}
+							{% if shift.responsible.email == user.email and released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-danger btn-sm" name="withdraw" value="{{ released_bartender_shift.pk }}" onclick="return confirm('{% translate "Du er ved at trække din vagt tilbage igen. Det betyder at andre bartender ikke kan tage din vagt." %}');">
+									<i>{% bs_icon 'check' %}</i>
+							{% elif shift.responsible.email == user.email and not released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-primary btn-sm" name="release" value="{{ shift.pk }}" onclick="return confirm('{% translate "Du er ved at frigøre din vagt. Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt indtil da." %}');">
+									<i>{% bs_icon 'x' %}</i>
+							{% elif released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-danger btn-sm" name="swap" value="{{ released_bartender_shift.pk }}" onclick="return confirm('{% translate "Du er ved at tage en andens barvagt." %}');">
+									<i>{% bs_icon 'repeat' %}</i>
+							{% endif %}
+						{% endif %}
+					{% endwith %}
 					{% if shift.responsible.first_responsible_shift == shift %}
 					<b class="gray-out" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
@@ -75,16 +106,28 @@
 			{% endif %}
             <td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
                 {% for bartender in shift.other_bartenders.all %}
+					{% with released_bartender_shift=bartender|released_shift:shift %}
+						{% if shiftComparedToCurrentWeek != -1 %}
+							{% if bartender.email == user.email and released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-danger btn-sm" name="withdraw" value="{{ released_bartender_shift.pk }}" onclick="return confirm('{% translate "Du er ved at trække din vagt tilbage igen. Det betyder at andre bartender ikke kan tage din vagt." %}');">
+									<i>{% bs_icon 'check' %}</i>
+							{% elif bartender.email == user.email and not released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-primary btn-sm" name="release" value="{{ shift.pk }}" onclick="return confirm('{% translate "Du er ved at frigøre din vagt. Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt indtil da." %}');">
+									<i>{% bs_icon 'x' %}</i>
+							{% elif released_bartender_shift %}
+								<button type="submit" class="btn btn-outline-danger btn-sm" name="swap" value="{{ released_bartender_shift.pk }}" onclick="return confirm('{% translate "Du er ved at tage en andens barvagt." %}');">
+									<i>{% bs_icon 'repeat' %}</i>
+							{% endif %}
+						{% endif %}
+					{% endwith %}
 					{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
 						{% cycle 'blue' 'orange' 'green' as color silent %}
 						{% if bartender.first_bartender_shift == shift %}
 						<b style="color:{{ color }};" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
-						<p style="color:{{ color }};display:inline;">{{ bartender.name }}</p>{% endif %}{% if not forloop.last %},{% endif %}
-					{% else %}
+						<p style="color:{{ color }};display:inline;">{{ bartender.name }}</p>{% endif %}{% else %}
 						{% if bartender.first_bartender_shift == shift %}
 						<b class="gray-out" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
-						{{ bartender.name }}{% endif %}{% if not forloop.last %},{% endif %}
-					{% endif %}
+						{{ bartender.name }}{% endif %}{% endif %}</i></button>{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
@@ -95,6 +138,8 @@
 	{% endfor %}
 	</tbody>
 </table>
+
+</form>
 
 <div class="row justify-content-center">
 	<div class="col-auto">
@@ -191,7 +236,6 @@
 	{% endfor %}
 	</tbody>
 </table>
-
 
 <div class="row justify-content-center">
 	<div class="col-auto">

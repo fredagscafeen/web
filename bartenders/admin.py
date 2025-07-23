@@ -21,6 +21,7 @@ from bartenders.models import (
     BoardMemberDepositShift,
     BoardMemberPeriod,
     Poll,
+    ReleasedBartenderShift,
     ShiftStreak,
 )
 from fredagscafeen.admin_filters import NonNullFieldListFilter
@@ -170,6 +171,11 @@ class BartenderShiftAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Bartender.shift_ordered()
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(ReleasedBartenderShift)
+class ReleasedBartenderShiftAdmin(admin.ModelAdmin):
+    list_display = ("bartender", "bartender_shift")
 
 
 @admin.register(BoardMemberDepositShift)

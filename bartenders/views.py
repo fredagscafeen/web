@@ -33,6 +33,7 @@ from .models import (
     BoardMemberDepositShift,
     BoardMemberPeriod,
     Poll,
+    ReleasedBartenderShift,
     next_bartender_shift_dates,
 )
 
@@ -155,6 +156,40 @@ class Barplan(TemplateView):
         context["boardmemberdepositshifts"] = depositshifts_page_obj
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        redirect_url = redirect("/barplan/")
+        try:
+            user_bartender = Bartender.objects.get(email=request.user.email)
+            if "release" in request.POST:
+                bartender_shift_pk = request.POST.get("release")
+                bartender_shift = BartenderShift.objects.get(pk=bartender_shift_pk)
+                ReleasedBartenderShift(
+                    bartender=user_bartender, bartender_shift=bartender_shift
+                ).save()
+            elif "withdraw" in request.POST:
+                released_bartender_shift_pk = request.POST.get("withdraw")
+                released_shift = ReleasedBartenderShift.objects.get(
+                    pk=released_bartender_shift_pk
+                )
+                released_shift.delete()
+            elif "swap" in request.POST:
+                released_bartender_shift_pk = request.POST.get("swap")
+                released_shift = ReleasedBartenderShift.objects.get(
+                    pk=released_bartender_shift_pk
+                )
+                bartender_shift = released_shift.bartender_shift
+                if user_bartender in bartender_shift.all_bartenders():
+                    messages.error(request, _("Du har allerede en barvagt der!"))
+                    return redirect_url
+                bartender_shift.replace(released_shift.bartender, user_bartender)
+                released_shift.delete()
+        except ReleasedBartenderShift.DoesNotExist:
+            messages.error(request, _("An error occurred."))
+            return redirect_url
+
+        messages.info(request, _("Barplan opdateret."))
+        return redirect_url
 
     def current_week_page_number(self, paginator):
         for i in range(1, paginator.num_pages + 1):
