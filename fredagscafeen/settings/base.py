@@ -48,6 +48,11 @@ CONSTANCE_CONFIG = {
         "Skal der vises at vi har åbent hver fredag ved siden af logoet?",
         bool,
     ),
+    "ALLOW_SHIFT_SWAPING": (
+        False,
+        "Skal det være muligt at bytte vagter?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [
