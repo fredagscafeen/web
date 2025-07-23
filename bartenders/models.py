@@ -502,6 +502,20 @@ class BartenderShift(models.Model):
         return f'{self.date}: Responsible: {self.responsible.name}, Other bartenders: {", ".join(b.name for b in self.other_bartenders.all())}'
 
 
+class ReleasedBartenderShift(models.Model):
+    bartender = models.ForeignKey(
+        Bartender, on_delete=models.CASCADE, related_name="released_bartender_shift"
+    )
+    bartender_shift = models.ForeignKey(
+        BartenderShift,
+        on_delete=models.CASCADE,
+        related_name="released_bartender_shift",
+    )
+
+    class Meta:
+        unique_together = ("bartender_shift", "bartender")
+
+
 class BoardMemberDepositShiftPeriod(models.Model):
     generation_datetime = models.DateTimeField(default=timezone.now)
 

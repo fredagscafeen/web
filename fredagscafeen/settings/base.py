@@ -43,6 +43,16 @@ CONSTANCE_CONFIG = {
         "Skal der vises farver på bartendernes navne for indeværende uge?",
         bool,
     ),
+    "SHOW_OPEN_EVERY_FRIDAY": (
+        False,
+        "Skal der vises at vi har åbent hver fredag ved siden af logoet?",
+        bool,
+    ),
+    "ALLOW_SHIFT_SWAPING": (
+        False,
+        "Skal det være muligt at bytte vagter?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [
