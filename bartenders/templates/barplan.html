@@ -222,14 +222,14 @@
     {% for shift in boardmemberdepositshifts %}
 		{% with shiftComparedToCurrentWeek=shift|compare_to_current_week shiftIsWithUser=shift|is_with_user:user %}
 		<tr>
-			<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">{% if shiftComparedToCurrentWeek == 0 %}<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}{% endif %}</td>
-            <td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+			<td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">{% if shiftComparedToCurrentWeek == 0 %}<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "Current week" %}">{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %} {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}</b>{% else %}{{ shift.start_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.start_date.year }}{% endif %} - {{ shift.end_date | date:"d M" }}{% if show_all_depositshifts %}, {{ shift.end_date.year }}{% endif %}{% endif %}</td>
+            <td class="{% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
                 {% for responsible in shift.responsibles.all %}
 					{% if responsible.first_deposit_shift == shift %}<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first deposit shift" %}">{{ responsible.name }}</b>{% else %}{{ responsible.name }}{% endif %}{% if not forloop.last %},{% endif %}
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs {% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="hidden-xs {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 		{% endwith %}
