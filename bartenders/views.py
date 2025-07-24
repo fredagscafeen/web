@@ -167,12 +167,14 @@ class Barplan(TemplateView):
                 ReleasedBartenderShift(
                     bartender=user_bartender, bartender_shift=bartender_shift
                 ).save()
+                messages.info(request, _("Vagt tilgængelig for andre til at tage."))
             elif "withdraw" in request.POST:
                 released_bartender_shift_pk = request.POST.get("withdraw")
                 released_shift = ReleasedBartenderShift.objects.get(
                     pk=released_bartender_shift_pk
                 )
                 released_shift.delete()
+                messages.info(request, _("Vagt ikke længere tilgængelig for andre."))
             elif "swap" in request.POST:
                 released_bartender_shift_pk = request.POST.get("swap")
                 released_shift = ReleasedBartenderShift.objects.get(
@@ -184,11 +186,11 @@ class Barplan(TemplateView):
                     return redirect_url
                 bartender_shift.replace(released_shift.bartender, user_bartender)
                 released_shift.delete()
+                messages.info(request, _("Barplan opdateret."))
         except ReleasedBartenderShift.DoesNotExist:
             messages.error(request, _("An error occurred."))
             return redirect_url
 
-        messages.info(request, _("Barplan opdateret."))
         return redirect_url
 
     def current_week_page_number(self, paginator):
