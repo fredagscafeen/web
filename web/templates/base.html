@@ -7,7 +7,7 @@
     <div class="container pt-3 px-4">
         {% if config.BANNER_HTML %}
         <div class="alert alert-warning" role="alert">
-            {{ config.BANNER_HTML|safe }}
+            {% bs_icon 'exclamation-triangle' size='1.2em' %} {{ config.BANNER_HTML|safe }}
         </div>
         {% endif %}
         <header>

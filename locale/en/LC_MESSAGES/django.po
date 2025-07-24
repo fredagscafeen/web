@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-24 18:01+0200\n"
-"PO-Revision-Date: 2025-07-24 18:03+0050\n"
+"POT-Creation-Date: 2025-07-24 20:20+0200\n"
+"PO-Revision-Date: 2025-07-24 20:21+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -221,7 +221,6 @@ msgstr "Withdraw"
 
 #: bartenders/templates/barplan.html:92 bartenders/templates/barplan.html:169
 #: bartenders/templates/barplan.html:250
-#| msgid "Du er ved at tage en andens barvagt."
 msgid "Du er ved at trække din vagt"
 msgstr "You're about to withdraw your shift"
 
@@ -237,16 +236,13 @@ msgstr " "
 
 #: bartenders/templates/barplan.html:92 bartenders/templates/barplan.html:169
 #: bartenders/templates/barplan.html:250
-#| msgid "Tilbage"
 msgid " tilbage."
 msgstr "."
 
 #: bartenders/templates/barplan.html:93 bartenders/templates/barplan.html:170
 #: bartenders/templates/barplan.html:251
-#| msgid ""
-#| "Du er ved at trække din vagt tilbage. Det betyder at andre bartender ikke "
-#| "kan tage din vagt."
-msgid "Det betyder at andre bartender ikke kan tage din vagt."
+#| msgid "Det betyder at andre bartender ikke kan tage din vagt."
+msgid "Det betyder, at andre bartender ikke kan tage din vagt."
 msgstr "This means that other bartenders cannot take your shift."
 
 #: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:114
@@ -272,18 +268,17 @@ msgstr "Release"
 
 #: bartenders/templates/barplan.html:110 bartenders/templates/barplan.html:187
 #: bartenders/templates/barplan.html:268
-#| msgid "Du er ved at tage en andens barvagt."
 msgid "Du er ved at frigøre din vagt"
 msgstr "You're about to release your shift"
 
 #: bartenders/templates/barplan.html:111 bartenders/templates/barplan.html:188
 #: bartenders/templates/barplan.html:269
 #| msgid ""
-#| "Du er ved at frigøre din vagt. Det betyder at andre bartender kan tage din "
-#| "vagt, men det er stadig din vagt indtil da."
+#| "Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt"
+#| " indtil da."
 msgid ""
-"Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt"
-" indtil da."
+"Det betyder, at andre bartender kan tage din vagt, men det er stadig din "
+"vagt indtil da."
 msgstr ""
 "This means that other bartenders can take your shift, but it is still your "
 "shift until then."
@@ -295,7 +290,6 @@ msgstr "Shift Swap"
 
 #: bartenders/templates/barplan.html:128 bartenders/templates/barplan.html:205
 #: bartenders/templates/barplan.html:286
-#| msgid "Du er ved at tage en andens barvagt."
 msgid "Du er ved at tage en andens barvagt"
 msgstr "You're taking someone else's shift"
 
@@ -524,7 +518,6 @@ msgid "Din ansøgning er blevet indsendt."
 msgstr "Your application has been submitted."
 
 #: bartenders/views.py:170
-#| msgid "Vagt tilgængelig for andre."
 msgid "Vagt tilgængelig for andre til at tage."
 msgstr "Shift available for others to take."
 

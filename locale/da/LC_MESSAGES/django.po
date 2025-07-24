@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-24 18:01+0200\n"
-"PO-Revision-Date: 2025-07-24 18:01+0050\n"
+"POT-Creation-Date: 2025-07-24 20:20+0200\n"
+"PO-Revision-Date: 2025-07-24 20:21+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -236,14 +236,14 @@ msgstr "d."
 
 #: bartenders/templates/barplan.html:92 bartenders/templates/barplan.html:169
 #: bartenders/templates/barplan.html:250
-#| msgid "tilbage"
 msgid " tilbage."
 msgstr " tilbage."
 
 #: bartenders/templates/barplan.html:93 bartenders/templates/barplan.html:170
 #: bartenders/templates/barplan.html:251
-msgid "Det betyder at andre bartender ikke kan tage din vagt."
-msgstr "Det betyder at andre bartender ikke kan tage din vagt."
+#| msgid "Det betyder at andre bartender ikke kan tage din vagt."
+msgid "Det betyder, at andre bartender ikke kan tage din vagt."
+msgstr "Det betyder, at andre bartender ikke kan tage din vagt."
 
 #: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:114
 #: bartenders/templates/barplan.html:131 bartenders/templates/barplan.html:173
@@ -273,12 +273,15 @@ msgstr "Du er ved at frigøre din vagt"
 
 #: bartenders/templates/barplan.html:111 bartenders/templates/barplan.html:188
 #: bartenders/templates/barplan.html:269
+#| msgid ""
+#| "Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt"
+#| " indtil da."
 msgid ""
-"Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt"
-" indtil da."
+"Det betyder, at andre bartender kan tage din vagt, men det er stadig din "
+"vagt indtil da."
 msgstr ""
-"Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt"
-" indtil da."
+"Det betyder, at andre bartender kan tage din vagt, men det er stadig din "
+"vagt indtil da."
 
 #: bartenders/templates/barplan.html:124 bartenders/templates/barplan.html:201
 #: bartenders/templates/barplan.html:282
