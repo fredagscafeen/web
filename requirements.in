@@ -12,6 +12,7 @@ django-ical
 django-object-actions
 django-extensions
 ipython>=8.10.0
+requests>=2.32.4
 requests-html
 django-logentry-admin
 django-cors-headers
@@ -33,3 +34,4 @@ Pygments>=2.15.0
 sqlparse>=0.5.0
 tqdm>=4.66.3
 idna>=3.7
+virtualenv>=20.26.6
