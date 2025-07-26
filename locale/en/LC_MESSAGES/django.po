@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-24 20:20+0200\n"
-"PO-Revision-Date: 2025-07-24 20:21+0050\n"
+"POT-Creation-Date: 2025-07-26 09:09+0200\n"
+"PO-Revision-Date: 2025-07-26 09:11+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -142,32 +142,56 @@ msgstr "T-shirt size"
 msgid "Jeg foretrækker ikke at have nogle sene barvagter"
 msgstr "I prefer to not have any late shifts"
 
-#: bartenders/models.py:185
+#: bartenders/models.py:81
+msgid "Red"
+msgstr "Red"
+
+#: bartenders/models.py:82
+msgid "Yellow"
+msgstr "Yellow"
+
+#: bartenders/models.py:83
+msgid "Green"
+msgstr "Green"
+
+#: bartenders/models.py:84
+msgid "Blue"
+msgstr "Blue"
+
+#: bartenders/models.py:85
+msgid "Orange"
+msgstr "Orange"
+
+#: bartenders/models.py:92
+msgid "Color"
+msgstr "Color"
+
+#: bartenders/models.py:199
 msgid "Ansvarsområde"
 msgstr "Area of responsibility"
 
-#: bartenders/models.py:186
+#: bartenders/models.py:200
 msgid "(Hvis mere end et ansvarsområde, separer med ' / ')"
 msgstr "(If more than one area of ​​responsibility, separate with ' / ')"
 
-#: bartenders/models.py:188 gallery/models.py:34
+#: bartenders/models.py:202 gallery/models.py:34
 msgid "Titel"
 msgstr "Title"
 
-#: bartenders/models.py:263 events/templates/event.html:62
+#: bartenders/models.py:277 events/templates/event.html:62
 #: events/templates/events.html:53 web/templates/about.html:70
 msgid "til"
 msgstr "to"
 
-#: bartenders/models.py:268
+#: bartenders/models.py:282
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/models.py:269 events/models.py:71 gallery/models.py:46
+#: bartenders/models.py:283 events/models.py:71 gallery/models.py:46
 msgid "Årgang"
 msgstr "Year"
 
-#: bartenders/models.py:273
+#: bartenders/models.py:287
 msgid ""
 "Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være "
 "en god bartender"
@@ -176,8 +200,8 @@ msgstr ""
 "bartender."
 
 #: bartenders/templates/ballots_update.html:18
-#: bartenders/templates/bartender_info.html:12
-#: bartenders/templates/bartender_info.html:74 events/templates/event.html:96
+#: bartenders/templates/bartender_info.html:15
+#: bartenders/templates/bartender_info.html:62 events/templates/event.html:96
 msgid "Gem"
 msgstr "Save"
 
@@ -241,7 +265,6 @@ msgstr "."
 
 #: bartenders/templates/barplan.html:93 bartenders/templates/barplan.html:170
 #: bartenders/templates/barplan.html:251
-#| msgid "Det betyder at andre bartender ikke kan tage din vagt."
 msgid "Det betyder, at andre bartender ikke kan tage din vagt."
 msgstr "This means that other bartenders cannot take your shift."
 
@@ -250,6 +273,8 @@ msgstr "This means that other bartenders cannot take your shift."
 #: bartenders/templates/barplan.html:191 bartenders/templates/barplan.html:208
 #: bartenders/templates/barplan.html:254 bartenders/templates/barplan.html:272
 #: bartenders/templates/barplan.html:289
+#: bartenders/templates/bartender_info.html:80
+#: bartenders/templates/bartender_info.html:98
 msgid "Close"
 msgstr "Close"
 
@@ -258,6 +283,7 @@ msgstr "Close"
 #: bartenders/templates/barplan.html:192 bartenders/templates/barplan.html:209
 #: bartenders/templates/barplan.html:255 bartenders/templates/barplan.html:273
 #: bartenders/templates/barplan.html:290
+#: bartenders/templates/bartender_info.html:81
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -273,9 +299,6 @@ msgstr "You're about to release your shift"
 
 #: bartenders/templates/barplan.html:111 bartenders/templates/barplan.html:188
 #: bartenders/templates/barplan.html:269
-#| msgid ""
-#| "Det betyder at andre bartender kan tage din vagt, men det er stadig din vagt"
-#| " indtil da."
 msgid ""
 "Det betyder, at andre bartender kan tage din vagt, men det er stadig din "
 "vagt indtil da."
@@ -341,20 +364,43 @@ msgstr "Current week"
 msgid "Bartender's first deposit shift"
 msgstr "Bartender's first deposit shift"
 
-#: bartenders/templates/bartender_info.html:17
-msgid "Bartender status"
-msgstr "Bartender status"
+#: bartenders/templates/bartender_info.html:22
+msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
+msgstr "Dates when you do not have the opportunity to stand at the bar"
 
-#: bartenders/templates/bartender_info.html:19
-msgid "Aktiv"
-msgstr "Active"
+#: bartenders/templates/bartender_info.html:42
+msgid "Meld dig af mailinglisten"
+msgstr "Sign up for the mailing list"
 
-#: bartenders/templates/bartender_info.html:21
+#: bartenders/templates/bartender_info.html:46
+msgid "Ikke på mailinglisten"
+msgstr "Not on the mailing list"
+
+#: bartenders/templates/bartender_info.html:48
+msgid "Meld dig på mailinglisten"
+msgstr "Sign up for the mailing list"
+
+#: bartenders/templates/bartender_info.html:53
+#: bartenders/templates/bartender_info.html:71
+msgid "Bliv inaktiv"
+msgstr "Become inactive"
+
+#: bartenders/templates/bartender_info.html:57
+#: bartenders/templates/bartender_info.html:90
+#| msgid "Bliv inaktiv"
+msgid "Bliv aktiv"
+msgstr "Become active"
+
+#: bartenders/templates/bartender_info.html:75
+#| msgid "Du er ved at trække din vagt"
+msgid "Du er ved at melde dig inaktiv."
+msgstr "You're about to declare yourself inactive."
+
+#: bartenders/templates/bartender_info.html:76
 msgid "Er du sikker?"
 msgstr "Are you sure?"
 
-#: bartenders/templates/bartender_info.html:21
-#: bartenders/templates/bartender_info.html:27
+#: bartenders/templates/bartender_info.html:77
 msgid ""
 "Husk at du som inaktiv bartender ikke kan komme til "
 "bartenderarrangementerne."
@@ -362,43 +408,11 @@ msgstr ""
 "Remember that as an inactive bartender you cannot come to the bartender "
 "events."
 
-#: bartenders/templates/bartender_info.html:22
-msgid "Bliv inaktiv"
-msgstr "Become inactive"
-
-#: bartenders/templates/bartender_info.html:26
-msgid "Inaktiv"
-msgstr "Inactive"
-
-#: bartenders/templates/bartender_info.html:29
+#: bartenders/templates/bartender_info.html:94
 msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr "If you wish to become active again, please contact"
 
-#: bartenders/templates/bartender_info.html:36
-msgid "Mailinglist status"
-msgstr "Mailing list status"
-
-#: bartenders/templates/bartender_info.html:38
-msgid "På mailinglisten"
-msgstr "On the mailing list"
-
-#: bartenders/templates/bartender_info.html:41
-msgid "Meld dig af mailinglisten"
-msgstr "Sign up for the mailing list"
-
-#: bartenders/templates/bartender_info.html:45
-msgid "Ikke på mailinglisten"
-msgstr "Not on the mailing list"
-
-#: bartenders/templates/bartender_info.html:46
-msgid "Meld dig på mailinglisten"
-msgstr "Sign up for the mailing list"
-
-#: bartenders/templates/bartender_info.html:54
-msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
-msgstr "Dates when you do not have the opportunity to stand at the bar"
-
-#: bartenders/templates/bartender_info.html:81
+#: bartenders/templates/bartender_info.html:108
 msgid "er ikke bartender."
 msgstr "is not a bartender."
 
@@ -2178,6 +2192,21 @@ msgstr "Link"
 msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login mail sent: Press the link in your received email to log in."
+
+#~ msgid "Bartender status"
+#~ msgstr "Bartender status"
+
+#~ msgid "Aktiv"
+#~ msgstr "Active"
+
+#~ msgid "Inaktiv"
+#~ msgstr "Inactive"
+
+#~ msgid "Mailinglist status"
+#~ msgstr "Mailing list status"
+
+#~ msgid "På mailinglisten"
+#~ msgstr "On the mailing list"
 
 #~ msgid ""
 #~ "Du er ved at trække din vagt tilbage. Det betyder at andre bartendere ikke "
