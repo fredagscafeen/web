@@ -77,6 +77,20 @@ class Bartender(BartenderCommon):
         default=False,
         verbose_name=_("Jeg foretrækker ikke at have nogle sene barvagter"),
     )
+    COLOR_CHOICES = (
+        ("red", _("Red")),
+        ("yellow", _("Yellow")),
+        ("green", _("Green")),
+        ("blue", _("Blue")),
+        ("orange", _("Orange")),
+    )
+    color = models.CharField(
+        max_length=10,
+        choices=COLOR_CHOICES,
+        blank=True,
+        null=True,
+        verbose_name=_("Color"),
+    )
 
     @property
     def isBoardMember(self):
@@ -468,6 +482,36 @@ class BartenderShift(models.Model):
             s += f' ({date_format(self.start_datetime, "H")} - {date_format(self.end_datetime, "H")})'
 
         return s
+
+    def responsible_color(self):
+        responsible_color = self.responsible.color
+        if not responsible_color:
+            responsible_color = "red"
+        return responsible_color
+
+    def distribute_colors(self):
+        available_colors = ["red", "orange", "green", "blue", "yellow"]
+        responsible_color = self.responsible_color()
+        available_colors.remove(responsible_color)
+        other_bartender_colors = []
+        for other_bartender in self.other_bartenders.all():
+            color = "gray"
+            if other_bartender.color in available_colors:
+                color = other_bartender.color
+                available_colors.remove(other_bartender.color)
+            other_bartender_colors.append(color)
+        for i in range(len(other_bartender_colors)):
+            if other_bartender_colors[i] == "gray" and len(available_colors) != 0:
+                available_color = available_colors[0]
+                other_bartender_colors[i] = available_color
+                available_colors.remove(available_color)
+        return other_bartender_colors
+
+    def other_bartender_color(self, index):
+        colors = self.distribute_colors()
+        if len(colors) == 0 or len(colors) < index:
+            return "gray"
+        return colors[index - 1]
 
     def is_with_bartender(self, bartender):
         return bartender in self.all_bartenders()

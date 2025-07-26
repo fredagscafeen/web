@@ -114,6 +114,7 @@ class BartenderInfoForm(forms.ModelForm):
             "phoneNumber",
             "tshirt_size",
             "prefer_only_early_shifts",
+            "color",
         )
 
     def __init__(self, *args, **kwargs):
@@ -121,6 +122,43 @@ class BartenderInfoForm(forms.ModelForm):
 
         self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         self.fields["username"].disabled = True
+        # Add color options with visual preview
+        COLOR_CHOICES = (
+            ("red", ""),
+            ("yellow", ""),
+            ("green", ""),
+            ("blue", ""),
+            ("orange", ""),
+        )
+        self.fields["color"].widget = forms.RadioSelect(choices=COLOR_CHOICES)
+        self.fields["color"].widget.attrs.update({"class": "color-selector"})
+
+        # Add CSS styling for color visualization
+        color_css = """
+        <style>
+        .color-selector { display: flex; gap: 10px; }
+        .color-selector label { display: flex; align-items: center; margin: 0; }
+        .color-selector input[type="radio"] {
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .color-selector input[value="red"] { background-color: #ff0000; }
+        .color-selector input[value="yellow"] { background-color: #ffff00; }
+        .color-selector input[value="green"] { background-color: #54db32; }
+        .color-selector input[value="blue"] { background-color: #0000ff; }
+        .color-selector input[value="orange"] { background-color: #ffa500; }
+        .color-selector input[type="radio"]:checked {
+            border-color: #000;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .color-selector label .form-check-label { display: none; }
+        </style>
+        """
+        self.fields["color"].help_text = mark_safe(color_css)
 
     def save(self, *args, **kwargs):
         old_obj = type(self.instance).objects.get(id=self.instance.id)

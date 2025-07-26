@@ -6,51 +6,19 @@
 {% block content %}
 
 {% if object %}
-<form method="post" id="info_form">
-{% csrf_token %}
-{% buttons %}
-    {% translate "Gem" as BUTTON_TEXT %}
-    <button type="submit" class="btn btn-primary">
-        <i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
-    </button>
-{% endbuttons %}
-<p><b>{% translate "Bartender status" %}:</b>
-{% if object.isActiveBartender %}
-    {% translate "Aktiv" %}
-    <div class="d-md-flex ms-auto justify-content-md-end">
-        <button type="submit" class="btn btn-danger" name="deactivate" onclick="return confirm('{% translate "Er du sikker?" %} \n{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}');">
-            {% translate "Bliv inaktiv" %}
-        </button>
-    </div>
-{% else %}
-    {% translate "Inaktiv" %}
-    <p>{% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}</p>
-    <div class="d-md-flex ms-auto justify-content-md-end">
-        <p>({% translate "Hvis du gerne vil være aktiv igen, så kontakt" %}
-            <a rel="nofollow" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>)
-        </p>
-    </div>
-{% endif %}
-</p>
-<br>
-<p><b>{% translate "Mailinglist status" %}:</b>
-{% if object.is_on_mailing_list %}
-    {% translate "På mailinglisten" %}
-    {% if not object.isActiveBartender %}
-        <div class="d-md-flex ms-auto justify-content-md-end">
-            <button type="submit" class="btn btn-danger align-items-end" name="unsubscribe_maillist">{% translate "Meld dig af mailinglisten" %}</button>
-        </div>
-    {% endif %}
-{% else %}
-    {% translate "Ikke på mailinglisten" %}
-    <button type="submit" class="btn btn-success align-items-end" name="subscribe_maillist">{% translate "Meld dig på mailinglisten" %}</button>
-{% endif %}
-</p>
-<br>
-{% bootstrap_form form %}
-
-<div class="row">
-    <div class="col-auto me-auto">
+<div class="row justify-content-center">
+    <div class="col-auto d-none d-sm-block"></div>
+    <div class="col-auto">
+        <form method="post" id="info_form">
+        {% csrf_token %}
+        {% buttons %}
+            {% translate "Gem" as BUTTON_TEXT %}
+            <button type="submit" class="btn btn-primary w-100">
+                {% bs_icon 'floppy2' size='1.0em' %} {{ BUTTON_TEXT }}
+            </button>
+        {% endbuttons %}
+        <hr>
+        {% bootstrap_form form %}
         <label>{% translate "Datoer, hvor du ikke har mulighed for at stå i bar" %}:</label>
         <table id="unavailable_dates_table" class="table table-bordered table-hover border">
             <tbody>
@@ -68,15 +36,74 @@
             {% endfor %}
             </tbody>
         </table>
+        {% if object.is_on_mailing_list %}
+            {% if not object.isActiveBartender %}
+                <button type="submit" class="btn btn-danger w-100 mb-3" name="unsubscribe_maillist" disabled>
+                    {% translate "Meld dig af mailinglisten" %}
+                </button>
+            {% endif %}
+        {% else %}
+            {% translate "Ikke på mailinglisten" %}
+            <button type="submit" class="btn btn-success w-100 mb-3" name="subscribe_maillist" disabled>
+                {% translate "Meld dig på mailinglisten" %}
+            </button>
+        {% endif %}
+        {% if object.isActiveBartender %}
+            <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#becomeInActiveModal">
+                {% translate "Bliv inaktiv" %}
+            </button>
+        {% else %}
+            <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#becomeActiveModal">
+                {% translate "Bliv aktiv" %}
+            </button>
+        {% endif %}
+        <hr>
+        {% buttons %}
+            {% translate "Gem" as BUTTON_TEXT %}
+            <button type="submit" class="btn btn-primary w-100">
+                {% bs_icon 'floppy2' size='1.0em' %} {{ BUTTON_TEXT }}
+            </button>
+        {% endbuttons %}
+        <div class="modal fade" id="becomeInActiveModal" tabindex="-1" aria-labelledby="becomeInActiveModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="becomeInActiveModalLabel">{% translate "Bliv inaktiv" %}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% translate "Du er ved at melde dig inaktiv." %}
+                        {% translate "Er du sikker?" %}
+                        {% translate "Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne." %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+                        <button type="submit" class="btn btn-danger" name="deactivate">{% translate "Confirm" %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="becomeActiveModal" tabindex="-1" aria-labelledby="becomeActiveModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="becomeActiveModalLabel">{% translate "Bliv aktiv" %}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% translate "Hvis du gerne vil være aktiv igen, så kontakt" %}
+                        <a rel="nofollow" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
     </div>
+    <div class="col-auto d-none d-sm-block"></div>
 </div>
-{% buttons %}
-    {% translate "Gem" as BUTTON_TEXT %}
-    <button type="submit" class="btn btn-primary">
-        <i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
-    </button>
-{% endbuttons %}
-</form>
 {% else %}
 <p><b>{{ user.email }} {% translate "er ikke bartender." %}</b></p>
 {% endif %}
