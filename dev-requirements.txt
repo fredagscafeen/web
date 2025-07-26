@@ -10,9 +10,9 @@ appdirs==1.4.4
     #   virtualenv
 cfgv==3.3.0
     # via pre-commit
-distlib==0.3.2
+distlib==0.4.0
     # via virtualenv
-filelock==3.0.12
+filelock==3.16.1
     # via virtualenv
 identify==2.2.10
     # via pre-commit
@@ -28,5 +28,5 @@ six==1.16.0
     #   virtualenv
 toml==0.10.2
     # via pre-commit
-virtualenv>=20.26.6
+virtualenv==20.32.0
     # via pre-commit
