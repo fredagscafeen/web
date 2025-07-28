@@ -73,10 +73,6 @@ class BartenderCommon(models.Model):
 
 class Bartender(BartenderCommon):
     isActiveBartender = models.BooleanField(default=True)
-    prefer_only_early_shifts = models.BooleanField(
-        default=False,
-        verbose_name=_("Jeg foretrækker ikke at have nogle sene barvagter"),
-    )
     COLOR_CHOICES = (
         ("red", _("Red")),
         ("yellow", _("Yellow")),

@@ -113,7 +113,6 @@ class BartenderInfoForm(forms.ModelForm):
             "studentNumber",
             "phoneNumber",
             "tshirt_size",
-            "prefer_only_early_shifts",
             "color",
         )
 
