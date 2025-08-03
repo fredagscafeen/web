@@ -113,7 +113,6 @@ class BartenderInfoForm(forms.ModelForm):
             "studentNumber",
             "phoneNumber",
             "tshirt_size",
-            "prefer_only_early_shifts",
             "color",
         )
 
@@ -146,11 +145,11 @@ class BartenderInfoForm(forms.ModelForm):
             border-radius: 50%;
             cursor: pointer;
         }
-        .color-selector input[value="red"] { background-color: #ff0000; }
-        .color-selector input[value="yellow"] { background-color: #ffff00; }
-        .color-selector input[value="green"] { background-color: #54db32; }
-        .color-selector input[value="blue"] { background-color: #0000ff; }
-        .color-selector input[value="orange"] { background-color: #ffa500; }
+        .color-selector input[value="red"] { background-color: red; }
+        .color-selector input[value="yellow"] { background-color: yellow; }
+        .color-selector input[value="green"] { background-color: green; }
+        .color-selector input[value="blue"] { background-color: blue; }
+        .color-selector input[value="orange"] { background-color: orange; }
         .color-selector input[type="radio"]:checked {
             border-color: #000;
             box-shadow: 0 0 5px rgba(0,0,0,0.5);

@@ -39,23 +39,7 @@ class LogBaseAdmin(admin.ModelAdmin):
     actions = [copy]
 
 
-@admin.register(LogEntry)
-class LogEntryAdmin(admin.ModelAdmin):
-    list_display = (
-        "bartender_shift",
-        "location",
-        "short_description",
-    )
-    ordering = ("-bartender_shift__start_datetime",)
-    date_hierarchy = "bartender_shift__start_datetime"
-
-
-@custom_admin_view("log", _("Generate logs"))
-def generate_log(admin, request):
-    return pdf_preview(request, admin.admin_site, LogEntryContext)
-
-
-class LogEntryContext(LogEntry):
+class LogEntryContext:
     file_name = "logbog"
     file_path = "log/logbog.tex"
 
@@ -72,3 +56,43 @@ class LogEntryContext(LogEntry):
             "log_entries": log_entries,
             "template_path": template_path,
         }
+
+
+@admin.action(description=_("Print selected log entries"))
+def printer(self, request, queryset):
+    class SelectedLogEntryContext:
+        file_name = "logbog"
+        file_path = "log/logbog.tex"
+
+        @staticmethod
+        def get_context():
+            log_entries = queryset
+            template_path = settings.MEDIA_ROOT + f"guides/logbog.pdf"
+            try:
+                with open(template_path, "rb") as f:
+                    pass
+            except FileNotFoundError:
+                template_path = None
+            return {
+                "log_entries": log_entries,
+                "template_path": template_path,
+            }
+
+    return pdf_preview(request, self.admin_site, SelectedLogEntryContext)
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = (
+        "bartender_shift",
+        "location",
+        "short_description",
+    )
+    ordering = ("-bartender_shift__start_datetime",)
+    date_hierarchy = "bartender_shift__start_datetime"
+    actions = [printer]
+
+
+@custom_admin_view("log", _("Generate logs"))
+def generate_log(admin, request):
+    return pdf_preview(request, admin.admin_site, LogEntryContext)

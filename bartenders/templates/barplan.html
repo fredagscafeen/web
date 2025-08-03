@@ -52,7 +52,7 @@
 	{% for shift in bartendershifts %}
 		{% with shiftComparedToCurrentWeek=shift|compare_to_current_week shiftIsWithUser=shift|is_with_user:user responsibleColor=shift.responsible_color %}
 		<tr>
-			<td class="{% if shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+			<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 				{% if shiftComparedToCurrentWeek == 0 %}
 				<b data-bs-toggle="tooltip" data-bs-placement="left" title="{% translate "This weeks friday" %}">{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}</b>
 				{% else %}
@@ -60,7 +60,7 @@
 				{% endif %}
 			</td>
 			{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
-				<td class="{% if shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 					{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
 						{% with released_bartender_shift=shift.responsible|released_shift:shift %}
 							{% if shift.responsible.email == user.email and released_bartender_shift %}
@@ -137,7 +137,7 @@
 					{% endwith %}
 				</td>
 			{% else %}
-				<td class="{% if shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 					{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
 						{% with released_bartender_shift=shift.responsible|released_shift:shift %}
 							{% if shift.responsible.email == user.email and released_bartender_shift %}
@@ -214,7 +214,7 @@
 					{% endwith %}
 				</td>
 			{% endif %}
-            <td class="{% if shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+            <td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
                 {% for bartender in shift.other_bartenders.all %}
 					{% with otherBartenderColor=shift|other_bartender_color:forloop.counter%}
 						{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
@@ -297,7 +297,7 @@
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="{% if shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 		{% endwith %}

@@ -84,9 +84,7 @@ class Command(BaseCommand):
 
         return shifts
 
-    def get_shifts_score(
-        self, bartenders, shifts, last_shifts, shifts_per_bartender, late_shift_indices
-    ):
+    def get_shifts_score(self, bartenders, shifts, last_shifts, shifts_per_bartender):
         """
         A shifts score is based on 5 factors, with the following priorities:
         - The maximum amount of new bartenders on the same shift.
@@ -116,8 +114,6 @@ class Command(BaseCommand):
         s = -1
         for os, bs in enumerate(shifts):
             s += 1
-            if os in late_shift_indices:
-                s -= 1
             new_bartenders_in_shift = 0
             for b in bs:
                 if last_shifts[b] != None:
@@ -162,7 +158,6 @@ class Command(BaseCommand):
         max_tries,
         last_shifts,
         shifts_per_bartender,
-        late_shift_indices,
     ):
         best = (((float("inf"),),), None)
 
@@ -199,7 +194,6 @@ class Command(BaseCommand):
                             result,
                             last_shifts,
                             shifts_per_bartender,
-                            late_shift_indices,
                         ),
                         result,
                     ),
@@ -243,7 +237,6 @@ class Command(BaseCommand):
 
         shift_start = last_shift.start_datetime
         shift_periods = []
-        late_shift_indices = set()
         double_shifts_used = 0
         i = 0
         while i < total_shifts:
@@ -261,8 +254,6 @@ class Command(BaseCommand):
 
                 shift_periods[-1] = (shift_start, second_start)
                 shift_periods.append((second_start, second_end))
-
-                late_shift_indices.add(i)
 
                 double_shifts_used += 1
                 i += 1
@@ -337,11 +328,6 @@ class Command(BaseCommand):
                 del all_bartenders[i][b - j]
                 del available_shifts[i][b - j]
 
-        for board_member, bartenders in enumerate(all_bartenders):
-            for i, bartender in enumerate(bartenders):
-                if bartender.prefer_only_early_shifts:
-                    available_shifts[board_member][i] -= late_shift_indices
-
         shifts = []
         for board_member, (bartenders, ls) in enumerate(
             zip(all_bartenders, last_shifts)
@@ -356,7 +342,6 @@ class Command(BaseCommand):
                     options["max_tries"],
                     ls,
                     shifts_per_bartender,
-                    late_shift_indices,
                 )
             )
 
