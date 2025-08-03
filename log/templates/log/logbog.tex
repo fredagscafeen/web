@@ -1,16 +1,20 @@
-{% load latex_trunc %}
+\documentclass[a4paper, 11pt]{article}
 
-\documentclass[letterpaper]{memoir}
+\usepackage[strict]{changepage}
+\usepackage[legalpaper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields\fancyhead{} % clear all header fields
+\fancyhead[L]{ \small{LOGBOG ARRANGEMENTER I AU'S LOKALER} }
+\renewcommand{\headrulewidth}{0pt} % no line in header area
+\fancyfoot{} % clear all footer fields
 
-\usepackage{pdfpages}
-\usepackage[breakall,fit]{truncate}
-\usepackage{trimclip}
-
-\pagestyle{empty}
 \begin{document}
 
 {% for log_entry in log_entries %}
-% Make sure log is on an odd page
+\newpage
+
+% Make sure log starts on an odd page
 \strictpagechecktrue
 \checkoddpage
 \ifoddpage
@@ -22,61 +26,279 @@
 {% with log_base=log_entry.template bartender_shift=log_entry.bartender_shift location=log_entry.location %}
 {% with shift_date=bartender_shift.date %}
 {% with manager=log_base.manager licensee=log_base.licensee key_figures=log_base.key_figures.all purpose=log_base.purpose representative=log_base.representative type=log_base.type guests=log_base.guests loan_agreement=log_base.loan_agreement %}
-\includepdf[pages=1,
-    picturecommand*={
-    \put(75,730){Dato:}
-    \put(105,730){ \textbf{ {{ shift_date|date:"j. F Y" }} } }
-    \put(310,676){Fredagscaféen}
-    \put(307,653){ {{ location }}}
-    \put(402,634){ {{ manager.name | latex_trunc }}}
-    \put(402,622){ {{ manager.phoneNumber }}}
-    \put(402,612){ {{ manager.email | latex_trunc }}}
-    \put(402,600){ {{ manager.studentNumber }}}
-    \put(402,578){ {{ licensee.name | latex_trunc }}}
-    \put(402,566){ {{ licensee.phoneNumber }}}
-    \put(402,556){ {{ licensee.email | latex_trunc }}}
-    \put(402,544){ {{ licensee.studentNumber }}}{% for key_figure in key_figures %}{% if forloop.counter == 1 %}
-    \put(402,510){ {{ key_figure.name | latex_trunc }}}
-    \put(402,498){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 2 %}
-    \put(402,488){ {{ key_figure.name | latex_trunc }}}
-    \put(402,476){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 3 %}
-    \put(402,464){ {{ key_figure.name | latex_trunc }}}
-    \put(402,452){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 4 %}
-    \put(402,440){ {{ key_figure.name | latex_trunc }}}
-    \put(402,428){ {{ key_figure.phoneNumber }}}{% elif forloop.counter == 5 %}
-    \put(402,418){ {{ key_figure.name | latex_trunc }}}
-    \put(402,406){ {{ key_figure.phoneNumber }}}{% endif %}{% endfor %}
-    \put(307,384){ \parbox[t][2\baselineskip][t]{220pt}{ {{ purpose }}} }
-    \put(307,338){ {{ representative | latex_trunc }}}
-}]{ {{template_path}} }
+
+\noindent
+\small{Dato: \textbf{ {{ shift_date|date:"j. F Y" }} } }
+
+\subsection*{Foreningen - udfyldes inden arrangementet}
+
+\begin{tabular}{|l|l|}
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Fredagscaféen
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Lokale
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ location }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Bestyrer
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        For- og efternavn: {{ manager.name }} \\
+        Tlf.: {{ manager.phoneNumber }} \\
+        Mail: {{ manager.email }} \\
+        Evt. studienummer: {{ manager.studentNumber }} \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Bevillingshaver
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        For- og efternavn: {{ licensee.name }} \\
+        Tlf.: {{ licensee.phoneNumber }} \\
+        Mail: {{ licensee.email }} \\
+        Evt. studienummer: {{ licensee.studentNumber }} \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Foreningens nøglepersoner
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {% for key_figure in key_figures %}
+        For- og efternavn: {{ key_figure.name }} \\
+        Tlf.: {{ key_figure.phoneNumber }} \\
+        {% endfor %}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Foreningens formål
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ purpose }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Husrepræsentant
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ representative }}
+    \end{minipage} \\
+    \hline
+\end{tabular}
+
+\vfill
+
+\begin{center}
+    Side \textbf{1} af \textbf{3}
+\end{center}
+
+\newpage
 
 {% with shift_responsible=bartender_shift.responsible %}
-\includepdf[pages=2,
-    picturecommand*={
-    \put(75,730){Dato:}
-    \put(105,730){ \textbf{ {{ shift_date|date:"j. F Y" }} } }
-    \put(307,676){ {{ type | latex_trunc }}}
-    \put(345,647){ {{ shift_responsible.name | latex_trunc }}}
-    \put(405,635){ {{ shift_responsible.phoneNumber }}}
-    \put(307,610){ \parbox[t][2\baselineskip][t]{220pt}{ {{ purpose }}} }
-    \put(307,575){ {{ location }}}
-    \put(307,450){ {{ guests | latex_trunc }}}
-    \put(307,320){ {{ loan_agreement.name | latex_trunc }}}
-}]{ {{template_path}} }
+
+\noindent
+\small{Dato: \textbf{ {{ shift_date|date:"j. F Y" }} } }
+
+\subsection*{Arrangementet - udfyldes inden arrangementet}
+
+\begin{tabular}{|l|l|}
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Arrangementstype
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ type }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Arrangementsansvarlige
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn: {{ shift_responsible.name }} \\
+        Kontaktoplysninger: {{ shift_responsible.phoneNumber }} \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Formål
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ purpose }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Lokale/lokaler
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ location }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Evt. lejlighedsbevilling \\
+        \textit{(kopi af lejlighedsbevilling bedes vedlagt)}
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn på ansøger: \\
+        Kontaktoplysninger: \\
+        \\
+        \noindent
+        Gyldighed af lejlighedsbevilling:\\
+        \vspace{1cm}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Forventet antal gæster
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ guests }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Evt. professionelle vagter tilknyttet
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Antal: \\
+        Firma: \\
+        Kontaktperson ved vagtbureau: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Evt. driftsperson tilknyttet arrangementet
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Låneaftale (ved ad hoc-arrangementer) \\
+        \textit{(kopi bedes vedlagt)}
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Udfyldt af: {{ loan_agreement.name }} \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Sikkerhedskrav godkendt
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn: \\
+    \end{minipage} \\
+    \hline
+\end{tabular}
+
+\vfill
+
+\begin{center}
+    Side \textbf{2} af \textbf{3}
+\end{center}
+
+\newpage
 
 {% with description=log_entry.description police_contacted=log_entry.police_contacted fire_authority_contacted=log_entry.fire_authority_contacted medic_contacted=log_entry.medic_contacted au_personnel_contacted=log_entry.au_personnel_contacted damages=log_entry.damages collective_evaluation=log_entry.collective_evaluation %}
-\includepdf[pages=3,
-    picturecommand*={
-    \put(75,730){Dato:}
-    \put(105,730){ \textbf{ {{ shift_date|date:"j. F Y" }} } }
-    \put(307,676){ \parbox[t][2\baselineskip][t]{220pt}{ {{ description }} } }
-    \put(337,613){ {% if police_contacted %}Ja{% else %}Nej{% endif %} }
-    \put(400,602){ {% if fire_authority_contacted %}Ja{% else %}Nej{% endif %} }
-    \put(388,590){ {% if medic_contacted %}Ja{% else %}Nej{% endif %} }
-    \put(307,543){ \parbox[t][2\baselineskip][t]{220pt}{ {{ au_personnel_contacted }} } }
-    \put(307,496){ \parbox[t][2\baselineskip][t]{220pt}{ {{ damages }} } }
-    \put(307,451){ \parbox[t][2\baselineskip][t]{220pt}{ {{ collective_evaluation }} } }
-}]{ {{template_path}} }
+
+\noindent
+\small{Dato: \textbf{ {{ shift_date|date:"j. F Y" }} } }
+
+\subsection*{Arrangementets forløb - udfyldes umiddelbart efter arrangementet}
+
+\begin{tabular}{|l|l|}
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Afvigelser fra det normale \\
+        \textit{(beskrivelse)}
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ description }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Myndighedspersonaler kontaktet og/eller tilkaldt
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Politi: {% if police_contacted %}\textbf{Ja}{% else %}Nej{% endif %} \\
+        Brandmyndigheder: {% if fire_authority_contacted %}\textbf{Ja}{% else %}Nej{% endif %} \\
+        Ambulance/læge: {% if medic_contacted %}\textbf{Ja}{% else %}Nej{% endif %} \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        AU-personale kontaktet og/eller tilkaldt
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ au_personnel_contacted }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Skader på bygninger eller inventar \\
+        \textit{(beskrivelse)}
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ damages }}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Samlet vurdering af arrangementet
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        {{ collective_evaluation }}
+    \end{minipage} \\
+    \hline
+\end{tabular}
+
+\vfill
+
+\noindent
+Udfyldt af:\\
+\begin{tabular}{ll}
+    & \\
+    & \\
+    & \\
+    \hline
+    Dato \hspace{3cm} & Navn \hspace{3cm}
+\end{tabular}
+
+\vfill
+
+\begin{center}
+    Side \textbf{3} af \textbf{3}
+\end{center}
+
 {% endwith %}
 {% endwith %}
 {% endwith %}
@@ -84,7 +306,282 @@
 {% endwith %}
 
 {% empty %}
-\includepdf[pages=1-3]{ {{template_path}} }
+
+\noindent
+\small{Dato: \textbf{\today} }
+
+\subsection*{Foreningen - udfyldes inden arrangementet}
+
+\begin{tabular}{|l|l|}
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Lokale
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Bestyrer
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        For- og efternavn: \\
+        Tlf.: \\
+        Mail: \\
+        Evt. studienummer: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Bevillingshaver
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        For- og efternavn: \\
+        Tlf.: \\
+        Mail: \\
+        Evt. studienummer: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Foreningens nøglepersoner
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        For- og efternavn: \\
+        Tlf.: \\
+        For- og efternavn: \\
+        Tlf.: \\
+        For- og efternavn: \\
+        Tlf.: \\
+        For- og efternavn: \\
+        Tlf.: \\
+        For- og efternavn: \\
+        Tlf.: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Foreningens formål
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Husrepræsentant
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+\end{tabular}
+
+\vfill
+
+\begin{center}
+    Side \textbf{1} af \textbf{3}
+\end{center}
+
+\newpage
+
+
+\noindent
+\small{Dato: \textbf{\today} }
+
+\subsection*{Arrangementet - udfyldes inden arrangementet}
+
+\begin{tabular}{|l|l|}
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Arrangementstype
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Arrangementsansvarlige
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn: \\
+        Kontaktoplysninger: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Formål
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Lokale/lokaler
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Evt. lejlighedsbevilling \\
+        \textit{(kopi af lejlighedsbevilling bedes vedlagt)}
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn på ansøger: \\
+        Kontaktoplysninger: \\
+        \\
+        \noindent
+        Gyldighed af lejlighedsbevilling:\\
+        \vspace{1cm}
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Forventet antal gæster
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Evt. professionelle vagter tilknyttet
+        \newline
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Antal: \\
+        Firma: \\
+        Kontaktperson ved vagtbureau: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Evt. driftsperson tilknyttet arrangementet
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Låneaftale (ved ad hoc-arrangementer) \\
+        \textit{(kopi bedes vedlagt)}
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Udfyldt af: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Sikkerhedskrav godkendt
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Navn: \\
+    \end{minipage} \\
+    \hline
+\end{tabular}
+
+\vfill
+
+\begin{center}
+    Side \textbf{2} af \textbf{3}
+\end{center}
+
+\newpage
+
+
+\noindent
+\small{Dato: \textbf{\today} }
+
+\subsection*{Arrangementets forløb - udfyldes umiddelbart efter arrangementet}
+
+\begin{tabular}{|l|l|}
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Afvigelser fra det normale \\
+        \textit{(beskrivelse)}
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Myndighedspersonaler kontaktet og/eller tilkaldt
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+        Politi: \\
+        Brandmyndigheder: \\
+        Ambulance/læge: \\
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        AU-personale kontaktet og/eller tilkaldt
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Skader på bygninger eller inventar \\
+        \textit{(beskrivelse)}
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+    \begin{minipage}[t]{0.475\textwidth}
+        Samlet vurdering af arrangementet
+        \newline
+        \vspace{1cm}
+    \end{minipage} &
+    \begin{minipage}[t]{0.475\textwidth}
+
+    \end{minipage} \\
+    \hline
+\end{tabular}
+
+\vfill
+
+\noindent
+Udfyldt af:\\
+\begin{tabular}{ll}
+    & \\
+    & \\
+    & \\
+    \hline
+    Dato \hspace{3cm} & Navn \hspace{3cm}
+\end{tabular}
+
+\vfill
+
+\begin{center}
+    Side \textbf{3} af \textbf{3}
+\end{center}
 {% endfor %}
 
 \end{document}
