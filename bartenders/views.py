@@ -5,6 +5,7 @@ from itertools import groupby
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.paginator import Paginator
 from django.db import IntegrityError
@@ -30,12 +31,15 @@ from .models import (
     BartenderApplication,
     BartenderShift,
     BartenderUnavailableDate,
+    BoardMember,
     BoardMemberDepositShift,
     BoardMemberPeriod,
     Poll,
     ReleasedBartenderShift,
     next_bartender_shift_dates,
 )
+
+User = get_user_model()
 
 default_shifts_pages_per_page = "15"
 default_deposit_pages_per_page = "15"
@@ -385,7 +389,9 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["DOMAIN"] = settings.DOMAIN
         context["BEST_MAIL"] = settings.BEST_MAIL
+
         if self.object:
             future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))
 
@@ -431,9 +437,11 @@ Der er nu {active_count} aktive bartendere.
                 to=[settings.BEST_MAIL],
             )
         elif "subscribe_maillist" in self.request.POST:
-            self.object.add_to_mailing_list()
+            self.object.isOnTheMailingLists = True
+            self.object.save()
         elif "unsubscribe_maillist" in self.request.POST:
-            self.object.remove_from_mailing_list()
+            self.object.isOnTheMailingLists = False
+            self.object.save()
 
         self.object.unavailable_dates.all().delete()
         for ordinal in self.request.POST.getlist("unavailable_ordinals"):

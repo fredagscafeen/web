@@ -36,18 +36,35 @@
             {% endfor %}
             </tbody>
         </table>
-        {% if object.is_on_mailing_list %}
+        <hr>
+        {% if object.isOnTheMailingLists %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% translate "Your mailing lists" %}</th>
+                        <th>{% translate "Modtagere" %}</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for list_name, list_members in object.getSubscribedMailingLists %}
+                        <tr>
+                            <td>{{ list_name }}<span class="text-secondary">@{{ DOMAIN }}</span></td>
+                            <td>{{ list_members }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% if not object.isActiveBartender %}
-                <button type="submit" class="btn btn-danger w-100 mb-3" name="unsubscribe_maillist" disabled>
+                <button type="submit" class="btn btn-danger w-100" name="unsubscribe_maillist">
                     {% translate "Meld dig af mailinglisten" %}
                 </button>
             {% endif %}
         {% else %}
-            {% translate "Ikke på mailinglisten" %}
-            <button type="submit" class="btn btn-success w-100 mb-3" name="subscribe_maillist" disabled>
+            <button type="submit" class="btn btn-warning w-100" name="subscribe_maillist">
                 {% translate "Meld dig på mailinglisten" %}
             </button>
         {% endif %}
+        <hr>
         {% if object.isActiveBartender %}
             <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#becomeInActiveModal">
                 {% translate "Bliv inaktiv" %}

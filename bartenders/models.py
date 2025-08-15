@@ -3,6 +3,7 @@ from enum import IntEnum
 from urllib.parse import urljoin
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Q
 from django.db.models.expressions import Case, Value, When
@@ -13,6 +14,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from fredagscafeen.email import send_template_email
+
+User = get_user_model()
 
 
 def template_render(template_str, context):
@@ -87,17 +90,42 @@ class Bartender(BartenderCommon):
         null=True,
         verbose_name=_("Color"),
     )
-
-    @property
-    def isBoardMember(self):
-        period = BoardMemberPeriod.get_current_period()
-        return self.board_members.filter(period=period).exists()
+    isOnTheMailingLists = models.BooleanField(default=False)
 
     class Meta:
         ordering = (
             "-isActiveBartender",
             "name",
         )
+
+    @property
+    def isBoardMember(self):
+        period = BoardMemberPeriod.get_current_period()
+        return self.board_members.filter(period=period).exists()
+
+    @property
+    def isAdmin(self):
+        admins = User.objects.filter(is_superuser=True)
+        return admins.filter(email=self.email).exists()
+
+    @property
+    def getSubscribedMailingLists(self):
+        mailing_lists = []
+        if not self.isOnTheMailingLists:
+            return mailing_lists
+        mailing_lists.append(
+            MailingList(
+                name="alle",
+                members=len(Bartender.objects.filter(isOnTheMailingLists=True)),
+            )
+        )
+        if self.isBoardMember:
+            period = BoardMemberPeriod.get_current_period()
+            board_members = BoardMember.objects.filter(period=period)
+            # mailing_list_dict["best"] = len(board_members)
+        # if (self.isAdmin):
+        # mailing_list_dict["admin"] = len(User.objects.filter(is_superuser=True))
+        return mailing_lists
 
     @property
     def symbol(self):
@@ -123,40 +151,6 @@ class Bartender(BartenderCommon):
     @property
     def first_responsible_shift(self):
         return BartenderShift.objects.filter(responsible=self).first()
-
-    MAILMAN_ALL = (
-        settings.MAILMAN_ALL_LIST,
-        getattr(settings, "MAILMAN", None),
-    )
-    MAILMAN_BEST = (
-        settings.MAILMAN_BEST_LIST,
-        getattr(settings, "MAILMAN", None),
-    )
-
-    def _get_mailman(self, list_and_password):
-        # TODO: Fix mailman implementation
-        return True
-        return Mailman(settings.MAILMAN_URL_BASE, *list_and_password)
-
-    def is_on_mailing_list(self, list_and_password=MAILMAN_ALL):
-        # TODO: Fix mailman implementation
-        return True
-        """
-        mailman = self._get_mailman(list_and_password)
-        return self.email in mailman.get_subscribers()
-        """
-
-    def add_to_mailing_list(self, list_and_password=MAILMAN_ALL):
-        # TODO: Fix mailman implementation
-        return
-        mailman = self._get_mailman(list_and_password)
-        mailman.add_subscriptions([f"{self.name} <{self.email}>"])
-
-    def remove_from_mailing_list(self, list_and_password=MAILMAN_ALL):
-        # TODO: Fix mailman implementation
-        return
-        mailman = self._get_mailman(list_and_password)
-        mailman.remove_subscriptions([self.email])
 
     @classmethod
     def shift_ordered(cls):
@@ -333,9 +327,6 @@ Ses i baren! :)
         b = Bartender.objects.create(**value_dict)
 
         try:
-            if settings.MAILMAN_MUTABLE:
-                b.add_to_mailing_list()
-
             self._send_accept_email()
         except:
             # Delete as something went wrong
