@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import MailingList
+
+
+@admin.register(MailingList)
+class MailingListAdmin(admin.ModelAdmin):
+    list_display = ("name", "count")

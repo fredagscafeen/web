@@ -23,6 +23,7 @@ from django_ical.views import ICalFeed
 
 from fredagscafeen.email import send_template_email
 from guides.models import Guide
+from mail.models import MailingList
 
 from .forms import BallotsUpdateForm, BartenderApplicationForm, BartenderInfoForm
 from .models import (
@@ -417,7 +418,7 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        messages.success(self.request, _("Profil opdateret"))
+        update_message = _("Profil opdateret")
         redirect_url = super().form_valid(form)
 
         if "deactivate" in self.request.POST:
@@ -436,18 +437,27 @@ Der er nu {active_count} aktive bartendere.
 /snek""",
                 to=[settings.BEST_MAIL],
             )
-        elif "subscribe_maillist" in self.request.POST:
-            self.object.isOnTheMailingLists = True
-            self.object.save()
+
         elif "unsubscribe_maillist" in self.request.POST:
-            self.object.isOnTheMailingLists = False
-            self.object.save()
+            mailinglist_id = self.request.POST.get("unsubscribe_maillist")
+            mailinglist = get_object_or_404(MailingList, pk=mailinglist_id)
+            if self.object in mailinglist.members.all():
+                mailinglist.members.remove(self.object)
+                update_message = (
+                    _("Du er nu afmeldt")
+                    + " <b>"
+                    + mailinglist.name
+                    + "</b> "
+                    + _("mailinglisten")
+                )
 
         self.object.unavailable_dates.all().delete()
+
         for ordinal in self.request.POST.getlist("unavailable_ordinals"):
             date = datetime.date.fromordinal(int(ordinal))
             BartenderUnavailableDate(date=date, bartender=self.object).save()
 
+        messages.success(self.request, update_message)
         return redirect_url
 
     def get_success_url(self):

@@ -75,7 +75,6 @@ class BartenderCommon(models.Model):
 
 
 class Bartender(BartenderCommon):
-    isActiveBartender = models.BooleanField(default=True)
     COLOR_CHOICES = (
         ("red", _("Red")),
         ("yellow", _("Yellow")),
@@ -90,7 +89,7 @@ class Bartender(BartenderCommon):
         null=True,
         verbose_name=_("Color"),
     )
-    isOnTheMailingLists = models.BooleanField(default=False)
+    isActiveBartender = models.BooleanField(default=True)
 
     class Meta:
         ordering = (
@@ -107,25 +106,6 @@ class Bartender(BartenderCommon):
     def isAdmin(self):
         admins = User.objects.filter(is_superuser=True)
         return admins.filter(email=self.email).exists()
-
-    @property
-    def getSubscribedMailingLists(self):
-        mailing_lists = []
-        if not self.isOnTheMailingLists:
-            return mailing_lists
-        mailing_lists.append(
-            MailingList(
-                name="alle",
-                members=len(Bartender.objects.filter(isOnTheMailingLists=True)),
-            )
-        )
-        if self.isBoardMember:
-            period = BoardMemberPeriod.get_current_period()
-            board_members = BoardMember.objects.filter(period=period)
-            # mailing_list_dict["best"] = len(board_members)
-        # if (self.isAdmin):
-        # mailing_list_dict["admin"] = len(User.objects.filter(is_superuser=True))
-        return mailing_lists
 
     @property
     def symbol(self):
@@ -164,6 +144,10 @@ class Bartender(BartenderCommon):
                 output_field=models.IntegerField(),
             )
         ).order_by("order", "name")
+
+    def save(self, *args, **kwargs):
+        self.email = self.email.lower()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.symbol}{self.name} ({self.username})"
@@ -321,7 +305,6 @@ Ses i baren! :)
         )
 
     def accept(self):
-        self.email = self.email if self.email is None else self.email.lower()
         common_fields = super()._meta.get_fields()
         value_dict = {f.name: getattr(self, f.name) for f in common_fields}
         b = Bartender.objects.create(**value_dict)
@@ -334,6 +317,10 @@ Ses i baren! :)
             raise
 
         return b.pk
+
+    def save(self, *args, **kwargs):
+        self.email = self.email.lower()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username
