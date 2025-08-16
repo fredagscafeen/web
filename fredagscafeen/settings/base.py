@@ -27,9 +27,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
 
-MAILMAN_ALL_LIST = "datcafe-alle.cs"
-MAILMAN_BEST_LIST = "datcafe-best.cs"
-
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
     "SEND_REMINDERS": (
