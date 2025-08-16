@@ -28,8 +28,6 @@ from fredagscafeen.admin_filters import NonNullFieldListFilter
 from fredagscafeen.admin_view import custom_admin_view
 from printer.views import pdf_preview
 
-from .mailman2 import MailmanError
-
 User = get_user_model()
 
 
@@ -63,37 +61,7 @@ class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
     search_fields = ("name", "username", "email")
     list_filter = ("isActiveBartender", ("board_members", NonNullFieldListFilter))
 
-    change_actions = (
-        "add_to_mailing_list",
-        "remove_from_mailing_list",
-        "create_admin_user",
-    )
-
-    def add_to_mailing_list(self, request, obj):
-        if not settings.MAILMAN_MUTABLE:
-            messages.error(request, "MAILMAN_MUTABLE is false!")
-            return
-
-        try:
-            obj.add_to_mailing_list()
-            messages.info(request, "Successfully added to mailing list")
-        except MailmanError as e:
-            messages.error(request, f"Got Mailman error: {e}")
-
-    add_to_mailing_list.label = "Add to mailing list"
-
-    def remove_from_mailing_list(self, request, obj):
-        if not settings.MAILMAN_MUTABLE:
-            messages.error(request, "MAILMAN_MUTABLE is false!")
-            return
-
-        try:
-            obj.remove_from_mailing_list()
-            messages.info(request, "Successfully removed from mailing list")
-        except MailmanError as e:
-            messages.error(request, f"Got Mailman error: {e}")
-
-    remove_from_mailing_list.label = "Remove from mailing list"
+    change_actions = ("create_admin_user",)
 
     def create_admin_user(self, request, obj):
         first_name, last_name = obj.name.rsplit(" ", maxsplit=1)

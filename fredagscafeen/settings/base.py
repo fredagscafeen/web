@@ -24,11 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
-
-MAILMAN_URL_BASE = "https://maillist.au.dk/mailman"
-MAILMAN_ALL_LIST = "datcafe-alle.cs"
-MAILMAN_BEST_LIST = "datcafe-best.cs"
 
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
@@ -207,6 +204,7 @@ INSTALLED_APPS = (
     "udlejning",
     "logentry_admin",
     "log",
+    "mail",
     "bartab",
     "email_auth",
     "guides",

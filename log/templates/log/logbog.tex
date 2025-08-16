@@ -34,68 +34,68 @@
 
 \begin{tabular}{|l|l|}
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Navn
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Fredagscaféen
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Lokale
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ location }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Bestyrer
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         For- og efternavn: {{ manager.name }} \\
         Tlf.: {{ manager.phoneNumber }} \\
         Mail: {{ manager.email }} \\
-        Evt. studienummer: {{ manager.studentNumber }} \\
+        Evt. studienummer: {{ manager.studentNumber }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Bevillingshaver
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         For- og efternavn: {{ licensee.name }} \\
         Tlf.: {{ licensee.phoneNumber }} \\
         Mail: {{ licensee.email }} \\
-        Evt. studienummer: {{ licensee.studentNumber }} \\
+        Evt. studienummer: {{ licensee.studentNumber }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Foreningens nøglepersoner
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {% for key_figure in key_figures %}
         For- og efternavn: {{ key_figure.name }} \\
-        Tlf.: {{ key_figure.phoneNumber }} \\
+        Tlf.: {{ key_figure.phoneNumber }}
         {% endfor %}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Foreningens formål
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ purpose }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Husrepræsentant
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ representative }}
     \end{minipage} \\
     \hline
@@ -118,97 +118,95 @@
 
 \begin{tabular}{|l|l|}
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Arrangementstype
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ type }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Arrangementsansvarlige
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Navn: {{ shift_responsible.name }} \\
-        Kontaktoplysninger: {{ shift_responsible.phoneNumber }} \\
+        Kontaktoplysninger: {{ shift_responsible.phoneNumber }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Formål
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ purpose }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Lokale/lokaler
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ location }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Evt. lejlighedsbevilling \\
         \textit{(kopi af lejlighedsbevilling bedes vedlagt)}
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Navn på ansøger: \\
-        Kontaktoplysninger: \\
-        \\
+        Kontaktoplysninger:
+
+        \vspace{0.5cm}
         \noindent
-        Gyldighed af lejlighedsbevilling:\\
+        Gyldighed af lejlighedsbevilling:
         \vspace{1cm}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Forventet antal gæster
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ guests }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Evt. professionelle vagter tilknyttet
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Antal: \\
         Firma: \\
-        Kontaktperson ved vagtbureau: \\
+        Kontaktperson ved vagtbureau:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Evt. driftsperson tilknyttet arrangementet
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
-        Navn: \\
+    \begin{minipage}[t]{0.47\textwidth}
+        Navn:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Låneaftale (ved ad hoc-arrangementer) \\
         \textit{(kopi bedes vedlagt)}
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
-        Udfyldt af: {{ loan_agreement.name }} \\
+    \begin{minipage}[t]{0.47\textwidth}
+        Udfyldt af: {{ loan_agreement.name }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Sikkerhedskrav godkendt
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
-        Navn: \\
+    \begin{minipage}[t]{0.47\textwidth}
+        Navn:
     \end{minipage} \\
     \hline
 \end{tabular}
@@ -230,52 +228,47 @@
 
 \begin{tabular}{|l|l|}
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Afvigelser fra det normale \\
         \textit{(beskrivelse)}
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ description }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Myndighedspersonaler kontaktet og/eller tilkaldt
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Politi: {% if police_contacted %}\textbf{Ja}{% else %}Nej{% endif %} \\
         Brandmyndigheder: {% if fire_authority_contacted %}\textbf{Ja}{% else %}Nej{% endif %} \\
-        Ambulance/læge: {% if medic_contacted %}\textbf{Ja}{% else %}Nej{% endif %} \\
+        Ambulance/læge: {% if medic_contacted %}\textbf{Ja}{% else %}Nej{% endif %}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         AU-personale kontaktet og/eller tilkaldt
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ au_personnel_contacted }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Skader på bygninger eller inventar \\
         \textit{(beskrivelse)}
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ damages }}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Samlet vurdering af arrangementet
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         {{ collective_evaluation }}
     \end{minipage} \\
     \hline
@@ -314,49 +307,49 @@ Udfyldt af:\\
 
 \begin{tabular}{|l|l|}
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Navn
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Lokale
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Bestyrer
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         For- og efternavn: \\
         Tlf.: \\
         Mail: \\
-        Evt. studienummer: \\
+        Evt. studienummer:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Bevillingshaver
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         For- og efternavn: \\
         Tlf.: \\
         Mail: \\
-        Evt. studienummer: \\
+        Evt. studienummer:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Foreningens nøglepersoner
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         For- og efternavn: \\
         Tlf.: \\
         For- og efternavn: \\
@@ -366,22 +359,22 @@ Udfyldt af:\\
         For- og efternavn: \\
         Tlf.: \\
         For- og efternavn: \\
-        Tlf.: \\
+        Tlf.:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Foreningens formål
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Husrepræsentant
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
@@ -403,97 +396,96 @@ Udfyldt af:\\
 
 \begin{tabular}{|l|l|}
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Arrangementstype
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Arrangementsansvarlige
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Navn: \\
-        Kontaktoplysninger: \\
+        Kontaktoplysninger:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Formål
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Lokale/lokaler
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Evt. lejlighedsbevilling \\
         \textit{(kopi af lejlighedsbevilling bedes vedlagt)}
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Navn på ansøger: \\
-        Kontaktoplysninger: \\
-        \\
+        Kontaktoplysninger:
+
+        \vspace{0.5cm}
         \noindent
-        Gyldighed af lejlighedsbevilling:\\
+        Gyldighed af lejlighedsbevilling:
         \vspace{1cm}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Forventet antal gæster
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Evt. professionelle vagter tilknyttet
-        \newline
+        \vspace{0.5cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Antal: \\
         Firma: \\
-        Kontaktperson ved vagtbureau: \\
+        Kontaktperson ved vagtbureau:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Evt. driftsperson tilknyttet arrangementet
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
-        Navn: \\
+    \begin{minipage}[t]{0.47\textwidth}
+        Navn:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Låneaftale (ved ad hoc-arrangementer) \\
         \textit{(kopi bedes vedlagt)}
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
-        Udfyldt af: \\
+    \begin{minipage}[t]{0.47\textwidth}
+        Udfyldt af:
+        \vspace{0.5cm}
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Sikkerhedskrav godkendt
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
-        Navn: \\
+    \begin{minipage}[t]{0.47\textwidth}
+        Navn:
     \end{minipage} \\
     \hline
 \end{tabular}
@@ -514,52 +506,47 @@ Udfyldt af:\\
 
 \begin{tabular}{|l|l|}
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Afvigelser fra det normale \\
         \textit{(beskrivelse)}
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Myndighedspersonaler kontaktet og/eller tilkaldt
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Politi: \\
         Brandmyndigheder: \\
-        Ambulance/læge: \\
+        Ambulance/læge:
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         AU-personale kontaktet og/eller tilkaldt
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Skader på bygninger eller inventar \\
         \textit{(beskrivelse)}
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
         Samlet vurdering af arrangementet
-        \newline
         \vspace{1cm}
     \end{minipage} &
-    \begin{minipage}[t]{0.475\textwidth}
+    \begin{minipage}[t]{0.47\textwidth}
 
     \end{minipage} \\
     \hline

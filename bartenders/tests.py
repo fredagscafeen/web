@@ -17,8 +17,6 @@ from bartenders.models import (
     BoardMemberPeriod,
 )
 
-from .mailman2 import Mailman
-
 
 class BartenderApplicationTests(TestCase):
     def setUp(self):
@@ -154,31 +152,3 @@ class BartenderApplicationTests(TestCase):
         )
 
         self.assertTrue(bartender.isBoardMember)
-
-    @skipUnless(
-        getattr(settings, "MAILMAN_ALL_PASSWORD", None),
-        "Mailman password for all list not set",
-    )
-    def test_mailman_all_list_members(self):
-        mailman = Mailman(
-            settings.MAILMAN_URL_BASE,
-            settings.MAILMAN_ALL_LIST,
-            settings.MAILMAN_ALL_PASSWORD,
-        )
-
-        subscribers = mailman.get_subscribers()
-        self.assertFalse(len(subscribers) == 0)
-
-    @skipUnless(
-        getattr(settings, "MAILMAN_BEST_PASSWORD", None),
-        "Mailman password for best list not set",
-    )
-    def test_mailman_best_list_members(self):
-        mailman = Mailman(
-            settings.MAILMAN_URL_BASE,
-            settings.MAILMAN_BEST_LIST,
-            settings.MAILMAN_BEST_PASSWORD,
-        )
-
-        subscribers = mailman.get_subscribers()
-        self.assertFalse(len(subscribers) == 0)
