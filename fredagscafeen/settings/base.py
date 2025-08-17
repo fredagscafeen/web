@@ -28,9 +28,9 @@ DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
 
 CONSTANCE_CONFIG = {
-    "REGISTRATION_OPEN": (True, "Er bartendertilmelding åben?", bool),
+    "REGISTRATION_OPEN": (False, "Er bartendertilmelding åben?", bool),
     "SEND_REMINDERS": (
-        True,
+        False,
         "Skal der sendes ugentlige barvagt og pantvagt reminders?",
         bool,
     ),

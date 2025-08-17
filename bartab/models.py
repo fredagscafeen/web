@@ -55,7 +55,8 @@ class BarTabUser(models.Model):
         return timezone.now() - latest_entry.snapshot.datetime < self.ACTIVE_TIME_LIMIT
 
     def __str__(self):
-        return self.name
+        is_in_active_str = "(Inaktiv) " if not self.is_active else ""
+        return is_in_active_str + self.name
 
 
 def bar_tab_snapshot_ordering(related_name=None):

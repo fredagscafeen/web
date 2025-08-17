@@ -11,6 +11,9 @@ class MailingList(models.Model):
         Bartender, related_name="mailing_lists", verbose_name=_("Medlemmer")
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = _("Mailingliste")
         verbose_name_plural = _("Mailinglister")
