@@ -42,8 +42,8 @@ from .models import (
 
 User = get_user_model()
 
-default_shifts_pages_per_page = "15"
-default_deposit_pages_per_page = "15"
+DEFAULT_SHIFTS_PER_PAGE = 15
+DEFAULT_DEPOSIT_SHIFTS_PER_PAGE = 15
 
 
 class Index(CreateView):
@@ -102,18 +102,18 @@ class Barplan(TemplateView):
             or bartendershifts_pages_per_page == ""
             or not bartendershifts_pages_per_page.isdigit()
         ):
-            bartendershifts_pages_per_page = default_shifts_pages_per_page
+            bartendershifts_pages_per_page = DEFAULT_SHIFTS_PER_PAGE
         context["shifts_pages_per_page"] = bartendershifts_pages_per_page
 
-        depositshifts_pages_per_page = self.request.GET.get("deposit_pages_per_page")
+        deposit_shifts_pages_per_page = self.request.GET.get("deposit_pages_per_page")
         if (
-            not depositshifts_pages_per_page
-            or depositshifts_pages_per_page == "0"
-            or depositshifts_pages_per_page == ""
-            or not depositshifts_pages_per_page.isdigit()
+            not deposit_shifts_pages_per_page
+            or deposit_shifts_pages_per_page == "0"
+            or deposit_shifts_pages_per_page == ""
+            or not deposit_shifts_pages_per_page.isdigit()
         ):
-            depositshifts_pages_per_page = default_deposit_pages_per_page
-        context["deposit_pages_per_page"] = depositshifts_pages_per_page
+            deposit_shifts_pages_per_page = DEFAULT_DEPOSIT_SHIFTS_PER_PAGE
+        context["deposit_pages_per_page"] = deposit_shifts_pages_per_page
 
         bartendershifts = BartenderShift.objects.all()
         depositshifts = BoardMemberDepositShift.objects.all()
@@ -135,7 +135,9 @@ class Barplan(TemplateView):
         paginator_bartendershifts = Paginator(
             bartendershifts, bartendershifts_pages_per_page
         )
-        paginator_depositshifts = Paginator(depositshifts, depositshifts_pages_per_page)
+        paginator_depositshifts = Paginator(
+            depositshifts, deposit_shifts_pages_per_page
+        )
 
         bartendershifts_page_number = self.request.GET.get(
             "shifts_page", self.current_week_page_number(paginator_bartendershifts)

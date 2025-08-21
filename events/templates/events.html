@@ -75,29 +75,12 @@
 					{% if show_all %}
 						<a class="btn btn-primary btn-sm" href=".">{% translate "Skjul tidligere" %}</a>
 					{% else %}
-						<a class="btn btn-outline-primary btn-sm" href="?show_all">{% translate "Vis tidligere" %}</a>
+						<a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ next_page_count }}">{% translate "Vis tidligere" %}</a>
 					{% endif %}
 				</p>
 			</div>
 		</li>
 	</ul>
 </div>
-
-<script>
-$(function () {
-	$(".tablesorter").tablesorter();
-});
-function updateRequired() {
-	$('form').each(function (i, form) {
-		var attending = $(form).find('[name="attending"]').val() === 'True';
-		$(form).find('select[name!="attending"]').each(function (i, select) {
-			$(select).prop('required', attending);
-			$(select).prop('disabled', !attending);
-		});
-	});
-}
-$('[name="attending"]').change(updateRequired);
-updateRequired();
-</script>
 
 {% endblock %}

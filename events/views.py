@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
@@ -12,6 +10,8 @@ from bartenders.models import Bartender
 
 from .forms import EventResponseForm
 from .models import Event
+
+DEFAULT_EVENTS_PER_PAGE = 3
 
 
 class Events(TemplateView):
@@ -29,32 +29,43 @@ class Events(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        show_all = "show_all" in self.request.GET
-        context["show_all"] = show_all
-        qs = Event.objects.all()
-        if not show_all:
-            qs = qs[:3]
+        events_per_page = self.request.GET.get("events_per_page")
+        if (
+            not events_per_page
+            or events_per_page == "0"
+            or events_per_page == ""
+            or not events_per_page.isdigit()
+            or int(events_per_page) <= 0
+        ):
+            events_per_page = DEFAULT_EVENTS_PER_PAGE
+        events_per_page = int(events_per_page)
+
+        qs = Event.objects.defer(
+            "description", "bartender_whitelist", "bartender_blacklist"
+        )
+        total_count = qs.count()
+        if events_per_page >= total_count:
+            events_per_page = total_count
+        events = qs[:events_per_page]
+        events_per_page += DEFAULT_EVENTS_PER_PAGE
+        if events_per_page > total_count:
+            events_per_page = total_count
+        context["next_page_count"] = events_per_page
 
         bartender = self.get_bartender()
 
-        years = set(a.year for a in list(qs))
-        years = sorted(years, reverse=True)
-        context["years"] = years
-
+        seen_years = set()
         events_data = []
-        for event in qs:
+
+        for event in events:
             data = {"event": event}
-            if event.year in years:
-                years.remove(event.year)
+            if event.year not in seen_years:
                 data["year"] = event.year
-            if bartender and event.may_attend(bartender):
-                data["form"] = EventResponseForm(event=event, bartender=bartender)
+                seen_years.add(event.year)
             events_data.append(data)
 
         context["bartender"] = bartender
         context["events_data"] = events_data
-        if bartender:
-            context["may_attend"] = Event.may_attend_default(bartender)
 
         return context
 
