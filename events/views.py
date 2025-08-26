@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import gettext_lazy as _
@@ -38,26 +39,24 @@ class Events(TemplateView):
             or int(events_per_page) <= 0
         ):
             events_per_page = DEFAULT_EVENTS_PER_PAGE
-        events_per_page = int(events_per_page)
+        context["events_per_page"] = events_per_page
 
-        qs = Event.objects.defer(
+        events = Event.objects.defer(
             "description", "bartender_whitelist", "bartender_blacklist"
         )
-        total_count = qs.count()
-        if events_per_page >= total_count:
-            events_per_page = total_count
-        events = qs[:events_per_page]
-        events_per_page += DEFAULT_EVENTS_PER_PAGE
-        if events_per_page > total_count:
-            events_per_page = total_count
-        context["next_page_count"] = events_per_page
+
+        paginator_events = Paginator(events, events_per_page)
+
+        event_page = self.request.GET.get("event_page", 1)
+        event_page_obj = paginator_events.get_page(event_page)
+        context["event_page_obj"] = event_page_obj
 
         bartender = self.get_bartender()
 
         seen_years = set()
         events_data = []
 
-        for event in events:
+        for event in event_page_obj:
             data = {"event": event}
             if event.year not in seen_years:
                 data["year"] = event.year

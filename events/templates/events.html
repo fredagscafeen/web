@@ -12,12 +12,22 @@
 	<a href="#events" class="section-link">#</a>
 </h2>
 
-<div class="mb-2">
-	<a class="btn btn-outline-dark btn-sm" href="{% url 'event_feed' %}" role="button">{% bs_icon 'calendar-week' %} iCal feed</a>
-</div>
-
 <div class="row m-2">
 	<ul class="timeline">
+		{% if event_page_obj.has_previous %}
+			<li>
+				<div>
+					<p></p>
+				</div>
+			</li>
+			<li class="timeline-item">
+				<div>
+					<p>
+						<a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
+					</p>
+				</div>
+			</li>
+		{% endif %}
 		{% for events_data in events_data %}
 			{% with events_data.event as event %}
 			{% if events_data.year %}
@@ -68,19 +78,27 @@
 				</div>
 			</li>
 			{% endwith %}
+		{% empty %}
+			<li class="timeline-item">
+				<div>
+					<p>{% translate "Ingen events endnu." %}</p>
+				</div>
+			</li>
 		{% endfor %}
 		<li class="timeline-item">
 			<div>
 				<p>
-					{% if show_all %}
-						<a class="btn btn-primary btn-sm" href=".">{% translate "Skjul tidligere" %}</a>
-					{% else %}
-						<a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ next_page_count }}">{% translate "Vis tidligere" %}</a>
+					{% if event_page_obj.has_next %}
+						<a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.next_page_number }}">{% translate "Vis tidligere" %}</a>
 					{% endif %}
 				</p>
 			</div>
 		</li>
 	</ul>
+</div>
+
+<div class="mb-2">
+	<a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">{% bs_icon 'calendar-week' %} iCal feed</a>
 </div>
 
 {% endblock %}
