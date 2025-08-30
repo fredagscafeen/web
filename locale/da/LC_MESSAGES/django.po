@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-26 20:43+0200\n"
-"PO-Revision-Date: 2025-08-26 20:44+0050\n"
+"POT-Creation-Date: 2025-08-30 20:50+0200\n"
+"PO-Revision-Date: 2025-08-30 20:51+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
+
+#: bartab/admin.py:173
+msgid "Top 10 listen"
+msgstr "Top 10 listen"
 
 #: bartab/forms.py:9
 msgid "First to include"
@@ -93,20 +97,20 @@ msgstr "Dato"
 msgid "er ikke på krydslisten."
 msgstr "er ikke på krydslisten."
 
-#: bartab/templates/bartab/consumption.html:7
+#: bartab/templates/bartab/consumption.html:8
 msgid "Submit"
 msgstr "Indsend"
 
-#: bartab/templates/bartab/consumption.html:10
+#: bartab/templates/bartab/consumption.html:12
 msgid "Result"
 msgstr "Resultat"
 
-#: bartab/templates/bartab/consumption.html:15 events/templates/event.html:132
+#: bartab/templates/bartab/consumption.html:20 events/templates/event.html:132
 #: items/templates/items.html:51 mail/models.py:8
 msgid "Navn"
 msgstr "Navn"
 
-#: bartab/templates/bartab/consumption.html:16
+#: bartab/templates/bartab/consumption.html:21
 msgid "Forbrug"
 msgstr "Forbrug"
 
@@ -123,8 +127,8 @@ msgid "E-mail"
 msgstr "E-mail"
 
 #: bartenders/models.py:60
-msgid "Ikke en uni mail"
-msgstr "Ikke en uni mail"
+msgid "En post.au mail fungerer ikke"
+msgstr "En post.au mail fungerer ikke"
 
 #: bartenders/models.py:63
 msgid "Studienummer"
@@ -641,7 +645,7 @@ msgid "Tilbage"
 msgstr "Tilbage"
 
 #: events/templates/event.html:63 events/templates/events.html:71
-#: events/views.py:100
+#: events/views.py:94
 msgid "Tilmeldingsfrist"
 msgstr "Tilmeldingsfrist"
 
@@ -735,12 +739,10 @@ msgid "Bartender events"
 msgstr "Bartender events"
 
 #: events/templates/events.html:26
-#| msgid "Vis tidligere"
 msgid "Vis nyere"
 msgstr "Vis nyere"
 
 #: events/templates/events.html:84
-#| msgid "har ingen billeder endnu."
 msgid "Ingen events endnu."
 msgstr "Ingen events endnu."
 
@@ -748,19 +750,19 @@ msgstr "Ingen events endnu."
 msgid "Vis tidligere"
 msgstr "Vis tidligere"
 
-#: events/views.py:82
+#: events/views.py:76
 msgid "Bartender Events"
 msgstr "Bartender Events"
 
-#: events/views.py:147
+#: events/views.py:141
 msgid "Event with id does not exist"
 msgstr "Begivenhed med id findes ikke"
 
-#: events/views.py:151
+#: events/views.py:145
 msgid "Not logged in as an active bartender"
 msgstr "Ikke logget ind som aktiv bartender"
 
-#: events/views.py:163
+#: events/views.py:157
 #, python-format
 msgid "Opdateret tilmelding til %(event_name)s"
 msgstr "Opdateret tilmelding til %(event_name)s"
@@ -2227,8 +2229,8 @@ msgid ""
 msgstr ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 
-#~ msgid "En post.au mail fungerer ikke"
-#~ msgstr "En post.au mail fungerer ikke"
+#~ msgid "Ikke en uni mail"
+#~ msgstr "Ikke en uni mail"
 
 #~ msgid "Skjul tidligere"
 #~ msgstr "Skjul tidligere"

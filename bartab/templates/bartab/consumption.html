@@ -1,13 +1,18 @@
 {% extends "admin/base_site.html" %}
 {% block content %}
 {% load i18n %}
+{% if form %}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
 	<input type="submit" value="{% translate "Submit" %}">
 </form>
+{% endif %}
 {% if result %}
-<h2>{% translate "Result" %}</h1>
+<h2>{% translate "Result" %}</h2>
+{% if start %}
+<p>{{ start }} - {{ end }}</p>
+{% endif %}
 <table>
 	<thead>
 		<tr>

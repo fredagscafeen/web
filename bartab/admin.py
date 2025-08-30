@@ -1,5 +1,6 @@
 import json
 from collections import Counter, defaultdict
+from datetime import datetime
 from decimal import Decimal
 
 from django.conf import settings
@@ -8,7 +9,9 @@ from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from django.forms.widgets import TextInput
 from django.template.response import TemplateResponse
+from django.utils.translation import gettext_lazy as _
 
+from bartenders.models import BoardMemberPeriod
 from fredagscafeen.admin_view import custom_admin_view
 from printer.views import pdf_preview
 
@@ -127,6 +130,37 @@ class BarTabSnapshotAdmin(admin.ModelAdmin):
 @custom_admin_view("bartab", "generate bartab")
 def generate_bartab(admin, request):
     return pdf_preview(request, admin.admin_site, BarTabContext)
+
+
+@custom_admin_view("bartab", "top 10 list")
+def top_10_consumption(admin, request):
+    result = None
+
+    counter = Counter()
+
+    current_period = BoardMemberPeriod.get_current_period()
+    if current_period:
+        start = current_period.start_date
+        end = datetime.now().date()
+
+        for snapshot in BarTabSnapshot.objects.all():
+            if start <= snapshot.datetime.date() <= end:
+                for entry in snapshot.entries.all():
+                    counter[entry.user] += entry.used
+                    snapshot_end = snapshot.datetime.date()
+
+    result = counter.most_common()
+
+    context = dict(
+        # Include common variables for rendering the admin template.
+        admin.admin_site.each_context(request),
+        # Anything else you want in the context...
+        title=_("Top 10 listen"),
+        start=start,
+        end=snapshot_end,
+        result=result[:10],
+    )
+    return TemplateResponse(request, "bartab/consumption.html", context)
 
 
 @custom_admin_view("bartab", "count consumption")
