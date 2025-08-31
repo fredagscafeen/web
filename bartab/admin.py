@@ -142,11 +142,14 @@ def top_10_consumption(admin, request):
     if current_period:
         start = current_period.start_date
         end = datetime.now().date()
+        snapshot_end = None
 
         for snapshot in BarTabSnapshot.objects.all():
             if start <= snapshot.datetime.date() <= end:
                 for entry in snapshot.entries.all():
                     counter[entry.user] += entry.used
+
+                if snapshot_end is None:
                     snapshot_end = snapshot.datetime.date()
 
     result = counter.most_common()
