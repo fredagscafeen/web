@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-30 20:50+0200\n"
-"PO-Revision-Date: 2025-08-30 20:51+0050\n"
+"POT-Creation-Date: 2025-09-09 19:52+0200\n"
+"PO-Revision-Date: 2025-09-09 19:53+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: bartab/admin.py:173
+#: bartab/admin.py:161
 msgid "Top 10 listen"
 msgstr "The top 10 list"
 
@@ -105,7 +105,7 @@ msgstr "Submit"
 msgid "Result"
 msgstr "Result"
 
-#: bartab/templates/bartab/consumption.html:20 events/templates/event.html:132
+#: bartab/templates/bartab/consumption.html:20 events/templates/event.html:129
 #: items/templates/items.html:51 mail/models.py:8
 msgid "Navn"
 msgstr "Name"
@@ -178,7 +178,7 @@ msgstr "(If more than one area of ​​responsibility, separate with ' / ')"
 msgid "Titel"
 msgstr "Title"
 
-#: bartenders/models.py:251 events/templates/event.html:62
+#: bartenders/models.py:251 events/templates/event.html:59
 #: events/templates/events.html:63 web/templates/about.html:69
 msgid "til"
 msgstr "to"
@@ -201,7 +201,7 @@ msgstr ""
 
 #: bartenders/templates/ballots_update.html:18
 #: bartenders/templates/bartender_info.html:16
-#: bartenders/templates/bartender_info.html:42 events/templates/event.html:96
+#: bartenders/templates/bartender_info.html:42 events/templates/event.html:93
 msgid "Gem"
 msgstr "Save"
 
@@ -322,7 +322,7 @@ msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
 #: bartenders/templates/barplan.html:300 bartenders/templates/barplan.html:398
-#: bartenders/templates/board.html:37 events/templates/event.html:57
+#: bartenders/templates/board.html:37 events/templates/event.html:54
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
 #: items/templates/items.html:80 udlejning/templates/udlejning.html:62
 #: udlejning/templates/udlejningBoardGameCart.html:54
@@ -646,46 +646,46 @@ msgstr "Response deadline"
 msgid "Tilbage"
 msgstr "Go back"
 
-#: events/templates/event.html:63 events/templates/events.html:71
+#: events/templates/event.html:60 events/templates/events.html:71
 #: events/views.py:94
 msgid "Tilmeldingsfrist"
 msgstr "Registration deadline"
 
-#: events/templates/event.html:63 events/templates/events.html:73
+#: events/templates/event.html:60 events/templates/events.html:73
 msgid "for sent"
 msgstr "too late"
 
-#: events/templates/event.html:64 udlejning/models.py:57
+#: events/templates/event.html:61 udlejning/models.py:57
 #: udlejning/models.py:157 udlejning/models.py:179 udlejning/models.py:201
 #: udlejning/models.py:223 udlejning/models.py:245 web/templates/about.html:41
 msgid "Lokation"
 msgstr "Location"
 
-#: events/templates/event.html:65 gallery/models.py:48
+#: events/templates/event.html:62 gallery/models.py:48
 #: web/templates/secrets_admin.html:11
 msgid "Beskrivelse"
 msgstr "Description"
 
-#: events/templates/event.html:69
+#: events/templates/event.html:66
 msgid "Tilmelding"
 msgstr "Sign up"
 
-#: events/templates/event.html:72 events/templates/events.html:60
+#: events/templates/event.html:69 events/templates/events.html:60
 msgid "Not answered"
 msgstr "Not answered"
 
-#: events/templates/event.html:77
+#: events/templates/event.html:74
 msgid ""
 "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
 msgstr ""
 "You are not logged in as a bartender and therefore cannot register for "
 "events."
 
-#: events/templates/event.html:77
+#: events/templates/event.html:74
 msgid "Klik for at logge ind."
 msgstr "Click here to log in"
 
-#: events/templates/event.html:79
+#: events/templates/event.html:76
 msgid ""
 "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit "
 "lov af bestyrelsen."
@@ -693,7 +693,7 @@ msgstr ""
 "You are not allowed to register for events, unless you have been given "
 "explicit permission by the board."
 
-#: events/templates/event.html:80
+#: events/templates/event.html:77
 msgid ""
 "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende "
 "krav"
@@ -701,18 +701,18 @@ msgstr ""
 "Normally, you can only register for events if you meet one of the following "
 "requirements"
 
-#: events/templates/event.html:82
+#: events/templates/event.html:79
 msgid "Man er aktiv bartender."
 msgstr "You are an active bartender"
 
-#: events/templates/event.html:83
+#: events/templates/event.html:80
 msgid ""
 "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år "
 "siden."
 msgstr ""
 "You have been on a board that has been active between now and a year ago."
 
-#: events/templates/event.html:84
+#: events/templates/event.html:81
 msgid ""
 "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre "
 "end en måned siden."
@@ -720,19 +720,19 @@ msgstr ""
 "There has been a bar guard during a bar guard plan period that ended less "
 "than a month ago."
 
-#: events/templates/event.html:109
+#: events/templates/event.html:106
 msgid "Tilmeldte"
 msgstr "Registered participant"
 
-#: events/templates/event.html:120
+#: events/templates/event.html:117
 msgid "Send mail"
 msgstr "Send mail"
 
-#: events/templates/event.html:160
+#: events/templates/event.html:157
 msgid "Created"
 msgstr "Created"
 
-#: events/templates/event.html:163
+#: events/templates/event.html:160
 msgid "Updated"
 msgstr "Updated"
 
@@ -781,11 +781,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:301
+#: fredagscafeen/settings/base.py:306
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:302
+#: fredagscafeen/settings/base.py:307
 msgid "English"
 msgstr "English"
 
@@ -966,7 +966,7 @@ msgstr "from"
 msgid "Bartenderarrangementer"
 msgstr "Bartender events"
 
-#: gallery/templates/gallery.html:66
+#: gallery/templates/gallery.html:64
 msgid ""
 "\n"
 "                                            billede\n"
@@ -982,7 +982,7 @@ msgstr[1] ""
 "\n"
 "images"
 
-#: gallery/templates/gallery.html:87
+#: gallery/templates/gallery.html:84
 msgid "Ingen albummer med billeder fundet."
 msgstr "No albums with images found."
 
@@ -1022,19 +1022,19 @@ msgstr "Previous"
 msgid "Næste"
 msgstr "Next"
 
-#: gallery/views.py:139 gallery/views.py:142
+#: gallery/views.py:157 gallery/views.py:160
 msgid "Billedet kan ikke findes"
 msgstr "The image cannot be found"
 
-#: gallery/views.py:243
+#: gallery/views.py:261
 msgid "Synlighed på givne billeder er blevet opdateret"
 msgstr "Visibility on given images has been updated"
 
-#: gallery/views.py:247
+#: gallery/views.py:265
 msgid "Fredagscaféens billedalbummer"
 msgstr "Fredagscaféens photo albums"
 
-#: gallery/views.py:252
+#: gallery/views.py:270
 msgid "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
 msgstr "Feed with new photo albums from Fredagscaféens events."
 
@@ -1828,6 +1828,37 @@ msgstr ""
 "Your request to borrow the draft beer system has been received. We will get "
 "back to you with an answer as soon as possible."
 
+#: web/templates/403.html:7
+msgid "Adgang nægtet"
+msgstr "Permission denied"
+
+#: web/templates/403.html:11
+msgid "Kun bartendere har adgang til dette."
+msgstr "Only bartenders have access to this."
+
+#: web/templates/403.html:13
+#| msgid " tilbage."
+msgid "Gå tilbage"
+msgstr "Go back"
+
+#: web/templates/403.html:14 web/templates/404.html:14
+msgid "eller"
+msgstr "or"
+
+#: web/templates/403.html:14
+#| msgid "Log ind"
+msgid "log ind"
+msgstr "log in"
+
+#: web/templates/403.html:14
+#| msgid "Hvis du gerne vil på mailinglisten igen, så kontakt"
+msgid "Hvis du mener du alligevel skal have adgang, så kontakt"
+msgstr "If you still think you should have access, please contact"
+
+#: web/templates/403.html:15
+msgid "best"
+msgstr "best"
+
 #: web/templates/404.html:7
 msgid "Ikke fundet"
 msgstr "Not found"
@@ -1839,10 +1870,6 @@ msgstr "You haven't found what you're looking for."
 #: web/templates/404.html:13
 msgid "Kig dybere i dit hjerte"
 msgstr "Look deeper into your heart"
-
-#: web/templates/404.html:14
-msgid "eller"
-msgstr "or"
 
 #: web/templates/404.html:14
 msgid "få dig en helt ny tilværelse"
