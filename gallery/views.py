@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from constance import config
 from django.contrib.auth.decorators import permission_required
 from django.contrib.syndication.views import Feed
 from django.core.exceptions import ValidationError
@@ -15,10 +16,12 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
+from django.views.defaults import page_not_found
 from jfu.http import JFUResponse, UploadResponse, upload_receive
 
 from gallery.forms import EditVisibilityForm
 from gallery.models import Album, BaseMedia, GenericFile, Image
+from web.templatetags.is_bartender import is_bartender
 
 GALLERY_PERMISSION = "gallery.change_image"
 
@@ -83,6 +86,14 @@ def gallery(request, **kwargs):
 
 def album(request, year, album_slug):
     album = get_object_or_404(Album, year=year, slug=album_slug)
+
+    if (
+        album.bartenderalbum
+        and not is_bartender(request.user)
+        and not config.SHOW_BARTENDER_EVENTS_TO_EVERYONE
+    ):
+        return page_not_found(request, None)
+
     files = album.basemedia.filter(visibility=BaseMedia.PUBLIC).select_subclasses()
     context = {"album": album, "files": files}
 
@@ -116,6 +127,13 @@ def album(request, year, album_slug):
 
 def image(request, year, album_slug, image_slug, **kwargs):
     album = get_object_or_404(Album, year=year, slug=album_slug)
+
+    if (
+        album.bartenderalbum
+        and not is_bartender(request.user)
+        and not config.SHOW_BARTENDER_EVENTS_TO_EVERYONE
+    ):
+        return page_not_found(request, None)
 
     edit_visibility = bool(request.GET.get("v")) and request.user.has_perm(
         GALLERY_PERMISSION

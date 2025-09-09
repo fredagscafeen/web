@@ -28,7 +28,7 @@
     {% for udlejning in udlejningBoardGameCart %}
 		{% with udlejningComparedToCurrentWeek=udlejning|compare_udlejning_to_now udlejningIsWithUser=udlejning|is_udlejning_with_user:user %}
 		<tr>
-			<td class="{% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
 				<p>
 					{{ udlejning.dateFrom }}
 					{% if udlejning.dateTo %}
@@ -36,10 +36,10 @@
 					{% endif %}
 				</p>
 			</td>
-			<td class="{% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
 				{{ udlejning.whoReserved }}
 			</td>
-			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
 				{% if udlejning.bartendersInCharge %}
 					{% for bartender in udlejning.bartendersInCharge.all %}
 						{{ bartender.name }}{% if not forloop.last %}, {% endif %}
@@ -49,7 +49,7 @@
 				{% endif %}
 			</td>
 			{% if user.is_staff %}
-			<td>
+			<td class="{% if udlejningIsWithUser %}bg-info{% endif %}">
 				<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/udlejning/udlejningboardgamecart/{{ udlejning.id }}">
 					{% translate "Edit" %}
 				</a>

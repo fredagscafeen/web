@@ -50,6 +50,11 @@ CONSTANCE_CONFIG = {
         "Skal det være muligt at bytte vagter?",
         bool,
     ),
+    "SHOW_BARTENDER_EVENTS_TO_EVERYONE": (
+        False,
+        "Skal alle kunne se bartender events?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [

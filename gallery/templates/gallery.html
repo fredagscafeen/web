@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
-{% load is_bartender first_file %}
+{% load first_file %}
 
 {% load bootstrap5 bootstrap_icons %}
 
@@ -34,7 +34,7 @@
                 {% if year == show_year %}
                     <div class="row m-4">
                         {% for album in albums %}
-                        {% ifchanged album.bartenderalbum %}{% if album.bartenderalbum and user|is_bartender %}
+                        {% ifchanged album.bartenderalbum %}{% if album.bartenderalbum %}
                         <div class="pt-3">
                             <hr>
                             <h4 class="" id="bartenderalbums">
@@ -43,8 +43,6 @@
                             </h4>
                         </div>
                         {% endif %}{% endifchanged %}
-                        {% if album.bartenderalbum and not user|is_bartender %}
-                        {% else %}
                         <div class="col-xs-6 col-sm-4 col-md-3 mb-3">
                             <div class="card card-hover p-1">
                                 {% if album.thumbnail %}
@@ -74,7 +72,6 @@
                                 <a class="card-link stretched-link " href="{% url 'album' year=album.year album_slug=album.slug %}"></a>
                             </div>
                         </div>
-                        {% endif %}
                         {% endfor %}
                         </div>
                     </div>
