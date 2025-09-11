@@ -407,13 +407,17 @@ class BartenderShift(models.Model):
     other_bartenders = models.ManyToManyField(
         Bartender, related_name="shifts", blank=True
     )
-
     period = models.ForeignKey(
         BartenderShiftPeriod,
         on_delete=models.PROTECT,
         blank=True,
         null=True,
         related_name="shifts",
+    )
+    info = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name=_("Additional information about the shift"),
     )
 
     class Meta:

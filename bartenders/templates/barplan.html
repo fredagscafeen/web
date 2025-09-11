@@ -58,6 +58,9 @@
 				{% else %}
 				{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}
 				{% endif %}
+				{% if shift.info %}
+				<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-secondary{% else %}text-bg-info{% endif %}">{{ shift.info }}</span>
+				{% endif %}
 			</td>
 			{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
 				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
@@ -76,7 +79,7 @@
 						{% endwith %}
 					{% endif %}
 					{% if shift.responsible.first_responsible_shift == shift %}
-					<b class="gray-out" style="color:{{ responsibleColor }};display:inline;" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+					<b style="color:{{ responsibleColor }};display:inline;" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
 					<p style="color:{{ responsibleColor }};display:inline;">{{ shift.responsible.name }}</p>
 					{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}
