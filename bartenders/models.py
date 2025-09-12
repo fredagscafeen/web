@@ -419,6 +419,12 @@ class BartenderShift(models.Model):
         max_length=255,
         verbose_name=_("Additional information about the shift"),
     )
+    info_url = models.URLField(
+        blank=True, verbose_name=_("Link to additional information")
+    )
+    info_url_is_external = models.BooleanField(
+        default=False, verbose_name=_("Is the link to an external site?")
+    )
 
     class Meta:
         ordering = ("start_datetime",)

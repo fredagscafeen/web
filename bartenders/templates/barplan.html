@@ -59,7 +59,7 @@
 				{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}
 				{% endif %}
 				{% if shift.info %}
-				<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-secondary{% else %}text-bg-info{% endif %}">{{ shift.info }}</span>
+				<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-secondary{% else %}text-bg-info{% endif %}">{% if shift.info_url %}<a href="{{ shift.info_url }}" {% if shift.info_url_is_external %}target="_blank"{% endif %} class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">{{ shift.info }}{% if shift.info_url_is_external %} {% bs_icon 'box-arrow-up-right' size='1.0em' %}{% endif %}</a>{% else %}{{ shift.info }}{% endif %}</span>
 				{% endif %}
 			</td>
 			{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
@@ -156,7 +156,7 @@
 						{% endwith %}
 					{% endif %}
 					{% if shift.responsible.first_responsible_shift == shift %}
-					<b class="gray-out" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+					<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
 					{% else %}
 					{{ shift.responsible.name }}
 					{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}
@@ -239,7 +239,7 @@
 							<b style="color:{{ otherBartenderColor }};" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
 							<p style="color:{{ otherBartenderColor }};display:inline;">{{ bartender.name }}</p>{% endif %}{% else %}
 							{% if bartender.first_bartender_shift == shift %}
-							<b class="gray-out" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
+							<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
 							{{ bartender.name }}{% endif %}{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}{% if not forloop.last %},{% endif %}
 							{% with released_bartender_shift=bartender|released_shift:shift %}
 								<div class="modal fade" id="withdrawModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="withdrawModal{{ released_bartender_shift.pk }}" aria-hidden="true">
