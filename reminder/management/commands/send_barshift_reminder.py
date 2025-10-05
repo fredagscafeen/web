@@ -24,6 +24,11 @@ class Command(ReminderCommand):
     def email_body(self, humanized_bartenders, event):
         start = event.start_datetime - datetime.timedelta(minutes=30)
         start_time = date_format(start, "H:i")
+        event_info = ""
+        if event.info:
+            event_info = f"""
+Husk at der på fredag er {event.info}!
+"""
 
         return f"""Hej {humanized_bartenders}.
 
@@ -32,7 +37,7 @@ Dette er en automatisk email sendt til jer og bestyrelsen.
 Emailen er hovedsageligt sendt så I kan finde en anden at bytte vagt med,
 hvis en af jer ikke har mulighed for selv at tage den.
 Husk at jeres vagt starter kl. {start_time}.
-
+{event_info}
 Ses i baren!
 
 /Bestyrelsen"""

@@ -98,7 +98,7 @@ class Event(TimeStampedModel):
         ordering = ("-start_datetime",)
 
     def __str__(self):
-        return self.name
+        return f"{self.year}: {self.name}"
 
     def deadline_exceeded(self):
         return timezone.now() > self.response_deadline

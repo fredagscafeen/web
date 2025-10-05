@@ -12,12 +12,12 @@ class ReminderCommand(BaseCommand):
     def handle(self, *args, **options):
         events = self.get_next_events()
 
-        if not events:
-            print("No upcoming events found.")
-            return
-
         if not config.SEND_REMINDERS:
             print("SEND_REMINDERS is false, not sending any reminders.")
+            return
+
+        if not events:
+            print("No upcoming events found.")
             return
 
         for event in events:

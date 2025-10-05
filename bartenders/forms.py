@@ -124,7 +124,7 @@ class BartenderInfoForm(forms.ModelForm):
         # Add color options with visual preview
         COLOR_CHOICES = (
             ("red", ""),
-            ("yellow", ""),
+            ("gold", ""),
             ("green", ""),
             ("blue", ""),
             ("orange", ""),
@@ -146,7 +146,7 @@ class BartenderInfoForm(forms.ModelForm):
             cursor: pointer;
         }
         .color-selector input[value="red"] { background-color: red; }
-        .color-selector input[value="yellow"] { background-color: yellow; }
+        .color-selector input[value="gold"] { background-color: gold; }
         .color-selector input[value="green"] { background-color: green; }
         .color-selector input[value="blue"] { background-color: blue; }
         .color-selector input[value="orange"] { background-color: orange; }

@@ -77,7 +77,7 @@ class BartenderCommon(models.Model):
 class Bartender(BartenderCommon):
     COLOR_CHOICES = (
         ("red", _("Red")),
-        ("yellow", _("Yellow")),
+        ("gold", _("Gold")),
         ("green", _("Green")),
         ("blue", _("Blue")),
         ("orange", _("Orange")),
@@ -474,7 +474,7 @@ class BartenderShift(models.Model):
         return responsible_color
 
     def distribute_colors(self):
-        available_colors = ["red", "orange", "green", "blue", "yellow"]
+        available_colors = ["red", "orange", "green", "blue", "gold"]
         responsible_color = self.responsible_color()
         available_colors.remove(responsible_color)
         other_bartender_colors = []
