@@ -171,6 +171,7 @@ class UdlejningGrillAdmin(admin.ModelAdmin):
 class UdlejningProjectorAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
+    filter_horizontal = ("bartendersInCharge",)
 
     def in_charge(self, obj):
         return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))
@@ -180,6 +181,7 @@ class UdlejningProjectorAdmin(admin.ModelAdmin):
 class UdlejningSpeakersAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
+    filter_horizontal = ("bartendersInCharge",)
 
     def in_charge(self, obj):
         return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))
@@ -189,6 +191,7 @@ class UdlejningSpeakersAdmin(admin.ModelAdmin):
 class UdlejningBoardGameCartAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
+    filter_horizontal = ("bartendersInCharge",)
 
     def in_charge(self, obj):
         return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))
@@ -198,6 +201,7 @@ class UdlejningBoardGameCartAdmin(admin.ModelAdmin):
 class UdlejningTentAdmin(admin.ModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
+    filter_horizontal = ("bartendersInCharge",)
 
     def in_charge(self, obj):
         return ", ".join(obj.bartendersInCharge.values_list("username", flat=True))

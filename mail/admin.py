@@ -6,3 +6,4 @@ from .models import MailingList
 @admin.register(MailingList)
 class MailingListAdmin(admin.ModelAdmin):
     list_display = ("name", "count")
+    filter_horizontal = ("members",)

@@ -34,6 +34,7 @@ class LogBaseAdmin(admin.ModelAdmin):
         "licensee",
         "loan_agreement",
     )
+    filter_horizontal = ("key_figures",)
     ordering = ("-created_at",)
     date_hierarchy = "created_at"
     actions = [copy]

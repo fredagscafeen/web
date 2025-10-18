@@ -100,6 +100,10 @@ class EventAdmin(admin.ModelAdmin):
         "end_datetime",
         "get_event_album_link",
     )
+    filter_horizontal = (
+        "bartender_whitelist",
+        "bartender_blacklist",
+    )
     form = EventAdminForm
     inlines = [
         EventChoiceInline,
