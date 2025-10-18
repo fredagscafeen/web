@@ -47,6 +47,7 @@
             <hr>
             {% with mailing_lists=object|get_subscribed_mailing_lists %}
             {% if mailing_lists %}
+            <div class="container" style="overflow: scroll;">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -73,6 +74,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
             {% else %}
                 <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#subscribeMailingListModal">
                     {% translate "Meld dig på mailinglisten" %}
@@ -86,7 +88,7 @@
                             </div>
                             <div class="modal-body">
                                 {% translate "Hvis du gerne vil på mailinglisten igen, så kontakt" %}
-                                <a rel="nofollow" class="common" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>.
+                                <a rel="nofollow" class="common" href="mailto:webmaster@{{ DOMAIN }}">webmaster@{{ DOMAIN }}</a>.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>

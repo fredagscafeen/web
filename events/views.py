@@ -131,6 +131,8 @@ class EventView(TemplateView):
         if bartender:
             context["may_attend"] = Event.may_attend_default(bartender)
 
+        context["DOMAIN"] = settings.DOMAIN
+
         return context
 
     def post(self, request, *args, **kwargs):

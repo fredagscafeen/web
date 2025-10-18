@@ -57,7 +57,7 @@ class UdlejningerGrill(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["BEST_MAIL"] = settings.BEST_MAIL
+        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -71,7 +71,7 @@ class UdlejningerProjector(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["BEST_MAIL"] = settings.BEST_MAIL
+        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -85,7 +85,7 @@ class UdlejningerSpeakers(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["BEST_MAIL"] = settings.BEST_MAIL
+        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -99,7 +99,7 @@ class UdlejningerBoardGameCart(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["BEST_MAIL"] = settings.BEST_MAIL
+        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -113,5 +113,5 @@ class UdlejningerTent(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["BEST_MAIL"] = settings.BEST_MAIL
+        context["DOMAIN"] = settings.DOMAIN
         return context

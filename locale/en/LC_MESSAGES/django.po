@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-05 11:07+0200\n"
-"PO-Revision-Date: 2025-10-05 11:08+0050\n"
+"POT-Creation-Date: 2025-10-18 15:25+0200\n"
+"PO-Revision-Date: 2025-10-18 15:26+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -178,20 +178,24 @@ msgstr "(If more than one area of ​​responsibility, separate with ' / ')"
 msgid "Titel"
 msgstr "Title"
 
-#: bartenders/models.py:251 events/templates/event.html:59
+#: bartenders/models.py:177
+msgid "Alias"
+msgstr "Alias"
+
+#: bartenders/models.py:252 events/templates/event.html:59
 #: events/templates/events.html:63 web/templates/about.html:69
 msgid "til"
 msgstr "to"
 
-#: bartenders/models.py:256
+#: bartenders/models.py:257
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/models.py:257 events/models.py:71 gallery/models.py:46
+#: bartenders/models.py:258 events/models.py:71 gallery/models.py:46
 msgid "Årgang"
 msgstr "Year"
 
-#: bartenders/models.py:261
+#: bartenders/models.py:262
 msgid ""
 "Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være "
 "en god bartender"
@@ -199,15 +203,15 @@ msgstr ""
 "Tell us a little bit about yourself and why you think you would be a good "
 "bartender."
 
-#: bartenders/models.py:420
+#: bartenders/models.py:421
 msgid "Additional information about the shift"
 msgstr "Additional information about the shift"
 
-#: bartenders/models.py:423
+#: bartenders/models.py:424
 msgid "Link to additional information"
 msgstr "Link to additional information"
 
-#: bartenders/models.py:426
+#: bartenders/models.py:427
 msgid "Is the link to an external site?"
 msgstr "Is the link to an external site?"
 
@@ -334,7 +338,7 @@ msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
 #: bartenders/templates/barplan.html:303 bartenders/templates/barplan.html:401
-#: bartenders/templates/board.html:37 events/templates/event.html:54
+#: bartenders/templates/board.html:39 events/templates/event.html:54
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
 #: items/templates/items.html:80 udlejning/templates/udlejning.html:60
 #: udlejning/templates/udlejningBoardGameCart.html:54
@@ -456,19 +460,19 @@ msgstr "Current"
 msgid "Tidligere"
 msgstr "Earlier"
 
-#: bartenders/templates/board.html:31 web/templates/base.html:97
+#: bartenders/templates/board.html:33 web/templates/base.html:97
 msgid "Bestyrelsen"
 msgstr "Board"
 
-#: bartenders/templates/board.html:75
+#: bartenders/templates/board.html:79
 msgid "Menige bestyrelsesmedlemmer"
 msgstr "Common board members"
 
-#: bartenders/templates/board.html:95
+#: bartenders/templates/board.html:100
 msgid "Bestyrelsessuppleanter"
 msgstr "Board substitutes"
 
-#: bartenders/templates/board.html:122
+#: bartenders/templates/board.html:129
 msgid "Bestyrelsen gennem tiden"
 msgstr "The board over time"
 
@@ -583,15 +587,15 @@ msgstr "Responsible"
 msgid "Other bartenders"
 msgstr "Other bartenders"
 
-#: bartenders/views.py:423
+#: bartenders/views.py:425
 msgid "Profil opdateret"
 msgstr "Profil updated"
 
-#: bartenders/views.py:449
+#: bartenders/views.py:451
 msgid "Du er nu afmeldt"
 msgstr "You are now unsubscribed from"
 
-#: bartenders/views.py:453
+#: bartenders/views.py:455
 msgid "mailinglisten"
 msgstr "mailing list"
 
@@ -607,7 +611,7 @@ msgstr "Default allowed attendees"
 msgid "Can be overwritten using the whitelist and blacklist above."
 msgstr "Can be overwritten using the whitelist and blacklist above."
 
-#: events/admin.py:116
+#: events/admin.py:120
 msgid "Event Album"
 msgstr "Event album"
 
@@ -768,15 +772,15 @@ msgstr "Show earlier"
 msgid "Bartender Events"
 msgstr "Bartender Events"
 
-#: events/views.py:141
+#: events/views.py:143
 msgid "Event with id does not exist"
 msgstr "Event with id does not exist"
 
-#: events/views.py:145
+#: events/views.py:147
 msgid "Not logged in as an active bartender"
 msgstr "Not logged in as an active bartender"
 
-#: events/views.py:157
+#: events/views.py:159
 #, python-format
 msgid "Opdateret tilmelding til %(event_name)s"
 msgstr "Updated registration for %(event_name)s"
@@ -1076,9 +1080,6 @@ msgstr ""
 "involved in the operation of"
 
 #: guides/templates/guides.html:17
-#| msgid ""
-#| "Vi forsøger at opdaterer dem løbende, men forstå at de ikke altid afspejler "
-#| "virkeligheden fuldt ud."
 msgid ""
 "Vi forsøger at opdatere dem løbende, men forstå at de ikke altid afspejler "
 "virkeligheden fuldt ud."
@@ -1160,11 +1161,11 @@ msgid_plural "%d logs copied successfully."
 msgstr[0] "%d log copied successfully."
 msgstr[1] "%d logs copied successfully."
 
-#: log/admin.py:61
+#: log/admin.py:62
 msgid "Print selected log entries"
 msgstr "Print selected log entries"
 
-#: log/admin.py:96
+#: log/admin.py:97
 msgid "Generate logs"
 msgstr "Generate logs"
 
@@ -1703,6 +1704,7 @@ msgid "Ansøgninsformular"
 msgstr "Application form"
 
 #: udlejning/templates/udlejningBoardGameCart.html:9
+#: udlejning/templates/udlejningBoardGameCart.html:73
 msgid "Reservation af brætspilsvogn"
 msgstr "Reservation of board game cart"
 
@@ -1727,8 +1729,10 @@ msgstr ""
 " an e-mail to"
 
 #: udlejning/templates/udlejningGrill.html:9
-msgid "Reservation af Grill"
-msgstr "Rental of Grill"
+#: udlejning/templates/udlejningGrill.html:76
+#| msgid "Reservation af Grill"
+msgid "Reservation af grill"
+msgstr "Rental of grill"
 
 #: udlejning/templates/udlejningGrill.html:14
 msgid "Grillen er allerede reserveret følgende dage:"
@@ -1755,6 +1759,7 @@ msgstr ""
 " to"
 
 #: udlejning/templates/udlejningProjector.html:9
+#: udlejning/templates/udlejningProjector.html:73
 msgid "Reservation af projektor"
 msgstr "Rental of projector"
 
@@ -1784,6 +1789,7 @@ msgstr ""
 "sending an e-mail to"
 
 #: udlejning/templates/udlejningSpeakers.html:10
+#: udlejning/templates/udlejningSpeakers.html:74
 msgid "Reservation af højtalere"
 msgstr "Rental of speakers"
 
@@ -1808,6 +1814,7 @@ msgstr ""
 "e-mail to"
 
 #: udlejning/templates/udlejningTent.html:10
+#: udlejning/templates/udlejningTent.html:74
 msgid "Reservation af festtelt"
 msgstr "Rental of tent"
 
@@ -1928,6 +1935,7 @@ msgstr ""
 "Finally, feel free to take a look at our fixed selection,"
 
 #: web/templates/about.html:26 web/templates/about.html:33
+#: web/templates/about.html:221
 msgctxt "På linket her"
 msgid "her"
 msgstr "here"
@@ -2171,6 +2179,15 @@ msgstr ""
 "Inquiries regarding the rules of procedure or specific incidents can be directed to the organizers of the Friday bar, or directly to the board of directors through"
 
 #: web/templates/about.html:218
+msgid ""
+"\n"
+"                eller specifikke medlemmer, hvis kontaktoplysninger kan findes \n"
+"                "
+msgstr ""
+"\n"
+"or specific members whose contact information can be found"
+
+#: web/templates/about.html:222
 msgid ""
 "\n"
 "                Alle henvendelser vil blive behandlet fortroligt, og der vil blive taget hensyn til den enkeltes ønsker om anonymitet.\n"

@@ -214,7 +214,11 @@
                 {% blocktranslate %}
                 Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem
                 {% endblocktranslate %}
-                <a rel="nofollow" class="common" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>.<br>
+                <a rel="nofollow" class="common" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>,
+                {% blocktranslate %}
+                eller specifikke medlemmer, hvis kontaktoplysninger kan findes
+                {% endblocktranslate %}
+                <a class="common" href="{% url 'board' %}">{% translate "her" context "På linket her" %}</a>.<br>
                 {% blocktranslate %}
                 Alle henvendelser vil blive behandlet fortroligt, og der vil blive taget hensyn til den enkeltes ønsker om anonymitet.
                 Intet er for småt eller for stort til at blive taget op, og vi opfordrer alle til at henvende sig, hvis de oplever eller observerer noget, der strider imod ordensreglerne.
