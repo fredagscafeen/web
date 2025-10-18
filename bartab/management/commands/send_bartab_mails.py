@@ -12,10 +12,6 @@ class Command(BaseCommand):
     help = "Send bartab mails"
 
     def should_send_mail(self, bartab_user):
-        name = bartab_user.name
-        if name in ["Actua", "Jeppe Welling Hansen"]:
-            return False
-
         if bartab_user.balance > -50:
             return False
 
@@ -32,18 +28,20 @@ class Command(BaseCommand):
     def send_mail(self, bartab_user):
         email = EmailMessage(
             subject="Krydsliste i Fredagscaféen",
-            from_email=settings.BEST_MAIL,
+            from_email="form@fredagscafeen.dk",
             to=[bartab_user.email],
-            reply_to=["i@kristoffer-strube.dk"],
+            reply_to=["form@fredagscafeen.dk"],
             body=f"""Hej {bartab_user.name},
 
-Vi er i øjeblikket i gang med at indkræve gammel krydslistegæld i Fredagscaféen, da vi ikke længere tillader negative balancer.
+Jeg er i gang med at indkræve gammel krydslistegæld i Fredagscaféen, da vi ikke tillader negative balancer, men har meget udestående gæld.
 Din balance er {round(bartab_user.balance, 2)} kr. på vores krydsliste.
-Det letteste ville være hvis du kom i fredagscaféen en fredag og betalte din gæld med kort eller kontanter,
-hvis dette ikke er muligt så skriv endelig tilbage, så kan vi finde ud af noget med at mobilepaye mig personligt eller at vi laver en faktura.
 
-Mvh.
-Kristoffer Strube - kasserer i fredagscaféen""",
+Det letteste ville være hvis du kom i fredagscaféen en fredag og betalte din gæld med kort eller kontanter.
+Hvis dette ikke er muligt så skriv endelig tilbage, så kan vi finde ud af noget med at mobilepaye mig personligt,
+eller at du sender direkte til vores bankkonto.
+
+Venlig hilsen,
+Anders Bruun Severinsen - formand i fredagscaféen""",
         )
         email.send()
 
