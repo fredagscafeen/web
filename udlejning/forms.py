@@ -75,5 +75,5 @@ men husk at kontakte personen efter dette.
                 "link": mark_safe(f'<a href="{url}">admin interfacet</a>'),
                 **d,
             },
-            to=["best@fredagscafeen.dk"],
+            to=["udlejning@fredagscafeen.dk"],
         )

@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 
 from fredagscafeen.settings.base import *
 
@@ -14,9 +13,11 @@ MEDIA_URL = "https://media.fredagscafeen.dk/"
 # Only send session cookie when using https
 SESSION_COOKIE_SECURE = True
 
-EMAIL_HOST = "0.0.0.0"
+EMAIL_HOST = "localhost"
 EMAIL_PORT = 25
-EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+EMAIL_USE_TLS = False
 
 DATABASES = {
     "default": {
