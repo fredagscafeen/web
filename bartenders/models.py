@@ -174,6 +174,7 @@ class BoardMember(models.Model):
         help_text=_("(Hvis mere end et ansvarsområde, separer med ' / ')"),
     )
     title = models.CharField(max_length=255, verbose_name=_("Titel"))
+    alias = models.CharField(max_length=50, default="best", verbose_name=_("Alias"))
     image = models.ImageField(upload_to="boardMembers", blank=True, null=True)
 
     class Meta:

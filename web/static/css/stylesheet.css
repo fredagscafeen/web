@@ -87,3 +87,28 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
 .timeline .timeline-item-primary:after {
     background-color: var(--bs-primary);
 }
+
+/* Instead of the below Vootstrap classes one can use the class 'common' on links */
+/* link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary */
+a.common {
+    color: var(--bs-primary);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    position: relative;
+}
+a.common::before {
+    content: "";
+    position: absolute;
+    left: -0.25em;
+    top: 0;
+    width: 0.5em;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+}
+a.common:hover::before {
+    left: -0.5em;
+}
+a.common:hover {
+    text-decoration-color: var(--datblue);
+}

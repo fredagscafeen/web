@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load bootstrap5 bootstrap_icons %}
 
 {% block extrahead %}
 <script src="{% static 'js/timesheet.min.js' %}"></script>
@@ -23,17 +24,18 @@
 
 <div class="mb-3" id="accordion">
 	{% for board in boards %}
+	{% with active_board=forloop.first %}
 		<div class="card mb-2">
 			<div class="card-header">
 				<div class="row">
 					<div class="col-auto me-auto">
-						<a class="fw-medium link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" data-bs-toggle="collapse" href="#collapse{{ forloop.counter }}" role="button">
+						<a class="fw-medium common" data-bs-toggle="collapse" href="#collapse{{ forloop.counter }}" role="button">
 							{% translate "Bestyrelsen" %} {{ board.period }}
 						</a>
 					</div>
 					<div class="col-auto">
 						{% if user.is_staff %}
-							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberperiod/{{ board.period.id }}/change/">
+							<a class="common" href="/admin/bartenders/boardmemberperiod/{{ board.period.id }}/change/">
 								{% translate "Edit" %}
 							</a>
 						{% endif %}
@@ -54,6 +56,7 @@
 								<b>{{ board.chairman.responsibilities }}</b>
 								<em>{{ board.chairman.title }}</em>
 								<span>{{ board.chairman.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ board.chairman.bartender.username }}</code>)</span>
+								{% if active_board %}<a class="common" href="mailto:{{ board.chairman.alias }}@{{ DOMAIN }}">{{ board.chairman.alias }}@{{ DOMAIN }}</a>{% endif %}
 							</div>
 						</div>
 						{% endif %}
@@ -68,6 +71,7 @@
 								<b>{{ board.treasurer.responsibilities }}</b>
 								<em>{{ board.treasurer.title }}</em>
 								<span>{{ board.treasurer.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ board.treasurer.bartender.username }}</code>)</span>
+								{% if active_board %}<a class="common" href="mailto:{{ board.treasurer.alias }}@{{ DOMAIN }}">{{ board.treasurer.alias }}@{{ DOMAIN }}</a>{% endif %}
 							</div>
 						</div>
 						{% endif %}
@@ -86,6 +90,7 @@
 									<b>{{ boardmember.responsibilities }}</b>
 									<em>{{ boardmember.title }}</em>
 									<span>{{ boardmember.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ boardmember.bartender.username }}</code>)</span>
+									{% if active_board %}<a class="common" href="mailto:{{ boardmember.alias }}@{{ DOMAIN }}">{{ boardmember.alias }}@{{ DOMAIN }}</a>{% endif %}
 								</div>
 							</div>
 							{% endif %}
@@ -106,6 +111,7 @@
 										<b>{{ boardmember.responsibilities }}</b>
 										<em>{{ boardmember.title }}</em>
 										<span>{{ boardmember.bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ boardmember.bartender.username }}</code>)</span>
+										{% if active_board %}<a class="common" href="mailto:{{ boardmember.alias }}@{{ DOMAIN }}">{{ boardmember.alias }}@{{ DOMAIN }}</a>{% endif %}
 									</div>
 								</div>
 								{% endif %}
@@ -115,6 +121,7 @@
 				</li>
 			</ul>
 		</div>
+	{% endwith %}
 	{% endfor %}
 </div>
 

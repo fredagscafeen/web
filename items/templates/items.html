@@ -63,7 +63,7 @@
 			{% get_current_language as LANGUAGE_CODE %}
 			{% for item in items_data %}
 				<tr>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{% if item.brewery_url %}<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
+					<td class="{% if not item.inStock %}bg-danger{% endif %}">{% if item.brewery_url %}<a class="common" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
 					<td class="{% if not item.inStock %}bg-danger{% endif %}">{% if LANGUAGE_CODE == 'da' %}{{ item.name_dk|default_if_none:item.name }}{% else %}{{ item.name|default_if_none:"" }}{% endif %}</td>
 					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{% if item.name_dk %}{% if LANGUAGE_CODE == 'da' %}{{ item.type.name_dk|default_if_none:item.type.name }}{% else %}{{ item.type|default_if_none:"" }}{% endif %}{% endif %}</td>
 					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{% if item.name_dk %}{% if LANGUAGE_CODE == 'da' %}{{ item.container_dk|default_if_none:item.container }}{% else %}{{ item.container|default_if_none:"" }}{% endif %}{% endif %}</td>
@@ -77,7 +77,7 @@
 						{% endif %}
 					</td>
 					{% if user.is_staff %}
-						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
+						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
 					{% endif %}
 				</tr>
 			{% endfor %}

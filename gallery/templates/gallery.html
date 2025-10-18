@@ -17,13 +17,13 @@
 			<div class="card-header">
 				<div class="row">
 					<div class="col-auto me-auto">
-						<a class="fw-medium link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" {% if year == show_year %}data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse{{year}}"{% else %}href="{{year}}"{% endif %} role="button">
+						<a class="fw-medium common" {% if year == show_year %}data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse{{year}}"{% else %}href="{{year}}"{% endif %} role="button">
 							{{ year }}
 						</a>
 					</div>
 					<div class="col-auto">
 						{% if user.is_staff %}
-							<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/gallery/album/{{ period.id }}">
+							<a class="common" href="/admin/gallery/album/{{ period.id }}">
 								{% translate "Edit" %}
 							</a>
 						{% endif %}

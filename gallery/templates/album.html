@@ -49,14 +49,14 @@
             <div class="col-auto me-auto">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
+                        <li class="breadcrumb-item"><a class="common" href="{% url 'year' year=album.year  %}">{{ album.year }}</a></li>
                         <li class="breadcrumb-item active">{{ album.title }}</li>
                     </ol>
                 </nav>
             </div>
             <div class="col-auto">
                 {% if user.is_staff %}
-                    <a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/gallery/album/{{ album.id }}/change/">
+                    <a class="common" href="/admin/gallery/album/{{ album.id }}/change/">
                         {% translate "Edit" %}
                     </a>
                 {% endif %}
@@ -91,7 +91,7 @@
             </div>
             {% endfor %}
             <div class="col-xs-12">
-                <a href="{% url 'year' year=album.year  %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
+                <a href="{% url 'year' year=album.year  %}" class="common">
                     <i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage til" %} {{ album.year }}
                 </a>
             </div>

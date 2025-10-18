@@ -59,7 +59,7 @@
 				{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}
 				{% endif %}
 				{% if shift.info %}
-				<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-secondary{% else %}text-bg-info{% endif %}">{% if shift.info_url %}<a href="{{ shift.info_url }}" {% if shift.info_url_is_external %}target="_blank"{% endif %} class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">{{ shift.info }}{% if shift.info_url_is_external %} {% bs_icon 'box-arrow-up-right' size='1.0em' %}{% endif %}</a>{% else %}{{ shift.info }}{% endif %}</span>
+				<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-secondary{% else %}text-bg-info{% endif %}">{% if shift.info_url %}<a href="{{ shift.info_url }}" {% if shift.info_url_is_external %}target="_blank"{% endif %} class="common">{{ shift.info }}{% if shift.info_url_is_external %} {% bs_icon 'box-arrow-up-right' size='1.0em' %}{% endif %}</a>{% else %}{{ shift.info }}{% endif %}</span>
 				{% endif %}
 			</td>
 			{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
@@ -300,7 +300,7 @@
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="common" href="/admin/bartenders/bartendershift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 		{% endwith %}
@@ -398,7 +398,7 @@
                 {% endfor %}
             </td>
 			{% if user.is_staff %}
-				<td class="hidden-xs {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
+				<td class="hidden-xs {% if shiftIsWithUser %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}"><a class="common" href="/admin/bartenders/boardmemberdepositshift/{{ shift.id }}">{% translate "Edit" %}</a></td>
 			{% endif %}
 		</tr>
 		{% endwith %}

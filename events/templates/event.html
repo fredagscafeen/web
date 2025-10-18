@@ -8,7 +8,7 @@
 {% load not_answered first_file %}
 
 <div class="mb-3">
-	<a href="{% url 'events' %}" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary">
+	<a href="{% url 'events' %}" class="common">
 		<i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage" %}
 	</a>
 </div>
@@ -50,7 +50,7 @@
 			</div>
 			<div class="col-auto">
 				{% if user.is_staff %}
-					<a class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" href="/admin/events/event/{{ event.id }}/change/">
+					<a class="common" href="/admin/events/event/{{ event.id }}/change/">
 						{% translate "Edit" %}
 					</a>
 				{% endif %}
@@ -113,7 +113,7 @@
 										{{ response.bartender.email }},
 									{% endif %}
 								{% endfor %}
-								?cc={{ BEST_MAIL }}&bcc=&subject={{ event.name }}&body=" class="link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary" target="_top">
+								?cc={{ BEST_MAIL }}&bcc=&subject={{ event.name }}&body=" class="common" target="_top">
 									<i>{% bs_icon 'envelope-at-fill' size='1.0em' %}</i> {% translate "Send mail" %}
 								</a>
 							{% endif %}

@@ -374,6 +374,8 @@ class Board(ListView):
 
         context["timesheet_data"] = timesheet_data
 
+        context["DOMAIN"] = settings.DOMAIN
+
         return context
 
 
