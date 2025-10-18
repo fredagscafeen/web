@@ -9,7 +9,6 @@ def send_template_email(
     to,
     text_format={},
     html_format={},
-    from_email=settings.BEST_MAIL,
     cc=[],
     reply_to=[settings.BEST_MAIL],
 ):
@@ -23,7 +22,6 @@ def send_template_email(
     email = EmailMultiAlternatives(
         subject=subject,
         body=body_text,
-        from_email=from_email,
         to=to,
         cc=cc,
         reply_to=reply_to,

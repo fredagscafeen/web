@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
+DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk"
 
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (False, "Er bartendertilmelding åben?", bool),

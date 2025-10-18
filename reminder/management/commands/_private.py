@@ -66,7 +66,6 @@ class ReminderCommand(BaseCommand):
         send_mail(
             subject=warning,
             recipient_list=[settings.BEST_MAIL],
-            from_email=settings.BEST_MAIL,
             message=warning,
         )
 
