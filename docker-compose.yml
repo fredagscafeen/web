@@ -5,6 +5,8 @@ services:
     networks:
       - traefik
       - default
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./media:/app/media
       - ./.env:/app/.env
@@ -22,6 +24,8 @@ services:
     image: *app
     restart: always
     command: ["celery", "--app=fredagscafeen", "worker", "--loglevel=INFO"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./.env:/app/.env
     depends_on:

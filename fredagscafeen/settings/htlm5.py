@@ -14,12 +14,13 @@ MEDIA_URL = "https://media.fredagscafeen.dk/"
 SESSION_COOKIE_SECURE = True
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "localhost"
+EMAIL_HOST = "host.docker.internal"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = "admin@fredagscafeen.dk <admin@fredagscafeen.dk>"
+EMAIL_USE_SSL = False
+DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk <noreply@fredagscafeen.dk>"
 
 DATABASES = {
     "default": {
