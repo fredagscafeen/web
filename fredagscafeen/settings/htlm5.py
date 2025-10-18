@@ -14,11 +14,9 @@ MEDIA_URL = "https://media.fredagscafeen.dk/"
 # Only send session cookie when using https
 SESSION_COOKIE_SECURE = True
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
-EMAIL_HOST_USER = "datcafe@gmail.com"
+EMAIL_HOST = "0.0.0.0"
+EMAIL_PORT = 25
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
 
 DATABASES = {
     "default": {
