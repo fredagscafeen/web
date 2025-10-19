@@ -15,10 +15,6 @@ class Command(BaseCommand):
         if bartab_user.balance > -50:
             return False
 
-        real_snapshots = bartab_user.entries.filter(~Q(snapshot__bartender_shift=None))
-        if real_snapshots.exists():
-            return False
-
         if not bartab_user.email:
             print(f"No email for: {bartab_user.name}", file=sys.stderr)
             return False
@@ -30,6 +26,7 @@ class Command(BaseCommand):
             subject="Krydsliste i Fredagscaféen",
             from_email="form@fredagscafeen.dk",
             to=[bartab_user.email],
+            bcc=["form@fredagscafeen.dk"],
             reply_to=["form@fredagscafeen.dk"],
             body=f"""Hej {bartab_user.name},
 

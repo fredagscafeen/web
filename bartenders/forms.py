@@ -63,6 +63,7 @@ Ansøgningen kan blive accepteret eller afvist i {link}.
                 **d,
             },
             to=[settings.BEST_MAIL],
+            reply_to=[{d["email"]}],
         )
 
     def send_confirmation_email(self, pk):
