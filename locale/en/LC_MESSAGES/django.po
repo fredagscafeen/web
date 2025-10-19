@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-18 15:25+0200\n"
-"PO-Revision-Date: 2025-10-18 15:26+0050\n"
+"POT-Creation-Date: 2025-10-19 15:59+0200\n"
+"PO-Revision-Date: 2025-10-19 16:01+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,7 +19,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.9.9\n"
 
-#: bartab/admin.py:161
+#: bartab/admin.py:39
+msgid "Hide users from tab"
+msgstr "Hide users from tab"
+
+#: bartab/admin.py:47
+#, python-format
+msgid "%d user hidden from tab."
+msgid_plural "%d users hidden from tab."
+msgstr[0] "%d user hidden from tab."
+msgstr[1] "%d users hidden from tab."
+
+#: bartab/admin.py:56
+msgid "Show users on tab"
+msgstr "Show users on tab"
+
+#: bartab/admin.py:64
+#, python-format
+msgid "%d user shown on tab."
+msgid_plural "%d users shown on tab."
+msgstr[0] "%d user shown on tab."
+msgstr[1] "%d users shown on tab."
+
+#: bartab/admin.py:197
 msgid "Top 10 listen"
 msgstr "The top 10 list"
 
@@ -289,9 +311,9 @@ msgstr "This means that other bartenders cannot take your shift."
 #: bartenders/templates/barplan.html:194 bartenders/templates/barplan.html:211
 #: bartenders/templates/barplan.html:257 bartenders/templates/barplan.html:275
 #: bartenders/templates/barplan.html:292
-#: bartenders/templates/bartender_info.html:92
-#: bartenders/templates/bartender_info.html:123
-#: bartenders/templates/bartender_info.html:141
+#: bartenders/templates/bartender_info.html:94
+#: bartenders/templates/bartender_info.html:125
+#: bartenders/templates/bartender_info.html:143
 msgid "Close"
 msgstr "Close"
 
@@ -300,7 +322,7 @@ msgstr "Close"
 #: bartenders/templates/barplan.html:195 bartenders/templates/barplan.html:212
 #: bartenders/templates/barplan.html:258 bartenders/templates/barplan.html:276
 #: bartenders/templates/barplan.html:293
-#: bartenders/templates/bartender_info.html:124
+#: bartenders/templates/bartender_info.html:126
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -385,46 +407,46 @@ msgstr "Bartender's first deposit shift"
 msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
 msgstr "Dates when you do not have the opportunity to stand at the bar"
 
-#: bartenders/templates/bartender_info.html:53
+#: bartenders/templates/bartender_info.html:54
 msgid "Your mailing lists"
 msgstr "Your mailing lists"
 
-#: bartenders/templates/bartender_info.html:54
+#: bartenders/templates/bartender_info.html:55
 msgid "Modtagere"
 msgstr "Recipients"
 
-#: bartenders/templates/bartender_info.html:69
+#: bartenders/templates/bartender_info.html:70
 msgid "Afmeld"
 msgstr "Unsubscribe"
 
-#: bartenders/templates/bartender_info.html:78
-#: bartenders/templates/bartender_info.html:84
+#: bartenders/templates/bartender_info.html:80
+#: bartenders/templates/bartender_info.html:86
 msgid "Meld dig på mailinglisten"
 msgstr "Join the mailing list"
 
-#: bartenders/templates/bartender_info.html:88
+#: bartenders/templates/bartender_info.html:90
 msgid "Hvis du gerne vil på mailinglisten igen, så kontakt"
 msgstr "If you wish to be added to the mailing list again, please contact"
 
-#: bartenders/templates/bartender_info.html:102
-#: bartenders/templates/bartender_info.html:114
+#: bartenders/templates/bartender_info.html:104
+#: bartenders/templates/bartender_info.html:116
 msgid "Bliv inaktiv"
 msgstr "Become inactive"
 
-#: bartenders/templates/bartender_info.html:106
-#: bartenders/templates/bartender_info.html:133
+#: bartenders/templates/bartender_info.html:108
+#: bartenders/templates/bartender_info.html:135
 msgid "Bliv aktiv"
 msgstr "Become active"
 
-#: bartenders/templates/bartender_info.html:118
+#: bartenders/templates/bartender_info.html:120
 msgid "Du er ved at melde dig inaktiv."
 msgstr "You're about to declare yourself inactive."
 
-#: bartenders/templates/bartender_info.html:119
+#: bartenders/templates/bartender_info.html:121
 msgid "Er du sikker?"
 msgstr "Are you sure?"
 
-#: bartenders/templates/bartender_info.html:120
+#: bartenders/templates/bartender_info.html:122
 msgid ""
 "Husk at du som inaktiv bartender ikke kan komme til "
 "bartenderarrangementerne."
@@ -432,11 +454,11 @@ msgstr ""
 "Remember that as an inactive bartender you cannot come to the bartender "
 "events."
 
-#: bartenders/templates/bartender_info.html:137
+#: bartenders/templates/bartender_info.html:139
 msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr "If you wish to become active again, please contact"
 
-#: bartenders/templates/bartender_info.html:151
+#: bartenders/templates/bartender_info.html:153
 msgid "er ikke bartender."
 msgstr "is not a bartender."
 
@@ -797,11 +819,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:306
+#: fredagscafeen/settings/base.py:307
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:307
+#: fredagscafeen/settings/base.py:308
 msgid "English"
 msgstr "English"
 
@@ -1730,7 +1752,6 @@ msgstr ""
 
 #: udlejning/templates/udlejningGrill.html:9
 #: udlejning/templates/udlejningGrill.html:76
-#| msgid "Reservation af Grill"
 msgid "Reservation af grill"
 msgstr "Rental of grill"
 
@@ -2179,9 +2200,13 @@ msgstr ""
 "Inquiries regarding the rules of procedure or specific incidents can be directed to the organizers of the Friday bar, or directly to the board of directors through"
 
 #: web/templates/about.html:218
+#| msgid ""
+#| "\n"
+#| "                eller specifikke medlemmer, hvis kontaktoplysninger kan findes \n"
+#| "                "
 msgid ""
 "\n"
-"                eller specifikke medlemmer, hvis kontaktoplysninger kan findes \n"
+"                eller specifikke medlemmer, hvis kontaktoplysninger kan findes\n"
 "                "
 msgstr ""
 "\n"

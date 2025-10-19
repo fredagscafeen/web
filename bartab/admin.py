@@ -4,12 +4,13 @@ from datetime import datetime
 from decimal import Decimal
 
 from django.conf import settings
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import F, Sum, Value
 from django.db.models.functions import Coalesce
 from django.forms.widgets import TextInput
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 
 from bartenders.models import BoardMemberPeriod
 from fredagscafeen.admin_view import custom_admin_view
@@ -35,6 +36,40 @@ class BarTabEntryReadonlyInline(admin.TabularInline):
         return False
 
 
+@admin.action(description=_("Hide users from tab"))
+def hide_from_tab(self, request, queryset):
+    for user in queryset:
+        user.hidden_from_tab = True
+        user.save()
+    self.message_user(
+        request,
+        ngettext(
+            "%d user hidden from tab.",
+            "%d users hidden from tab.",
+            queryset.count(),
+        )
+        % queryset.count(),
+        messages.SUCCESS,
+    )
+
+
+@admin.action(description=_("Show users on tab"))
+def show_on_tab(self, request, queryset):
+    for user in queryset:
+        user.hidden_from_tab = False
+        user.save()
+    self.message_user(
+        request,
+        ngettext(
+            "%d user shown on tab.",
+            "%d users shown on tab.",
+            queryset.count(),
+        )
+        % queryset.count(),
+        messages.SUCCESS,
+    )
+
+
 @admin.register(BarTabUser)
 class BarTabUserAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "current_balance", "hidden_from_tab")
@@ -43,6 +78,7 @@ class BarTabUserAdmin(admin.ModelAdmin):
     inlines = [
         BarTabEntryReadonlyInline,
     ]
+    actions = [hide_from_tab, show_on_tab]
 
     def current_balance(self, obj):
         return obj.balance_str
