@@ -30,12 +30,10 @@
 		{% with udlejningComparedToCurrentWeek=udlejning|compare_udlejning_to_now udlejningIsWithUser=udlejning|is_udlejning_with_user:user %}
 		<tr>
 			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
-				<p>
-					{{ udlejning.dateFrom }}
-					{% if udlejning.dateTo %}
-						- {{ udlejning.dateTo }}
-					{% endif %}
-				</p>
+				{{ udlejning.dateFrom }}
+				{% if udlejning.dateTo %}
+					- {{ udlejning.dateTo }}
+				{% endif %}
 			</td>
 			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
 				{{ udlejning.whoReserved }}

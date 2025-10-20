@@ -51,9 +51,11 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>{% translate "Your mailing lists" %}</th>
+                            <th>{% translate "Your mailing lists" %} <span class="badge text-bg-secondary rounded-pill">{{ mailing_lists|length }}</span></th>
                             <th>{% translate "Modtagere" %}</th>
-                            <th></th>
+                            {% if not object.isActiveBartender %}
+                                <th></th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
@@ -65,11 +67,13 @@
                                 <td>
                                     {{ mailinglist.count }}
                                 </td>
-                                <td>
-                                    <button type="submit" class="btn btn-sm btn-link link-underline-danger link-underline-opacity-0 link-underline-opacity-75-hover text-danger float-end" value="{{ mailinglist.id }}" name="unsubscribe_maillist" {% if object.isActiveBartender %}disabled{% endif %}>
-                                        {% translate "Afmeld" %}
-                                    </button>
-                                </td>
+                                {% if not object.isActiveBartender %}
+                                    <td>
+                                        <button type="submit" class="btn btn-sm btn-link link-underline-danger link-underline-opacity-0 link-underline-opacity-75-hover text-danger float-end" value="{{ mailinglist.id }}" name="unsubscribe_maillist">
+                                            {% translate "Afmeld" %}
+                                        </button>
+                                    </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
