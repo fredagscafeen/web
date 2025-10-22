@@ -3,7 +3,9 @@ from django.contrib import admin
 from django.core.exceptions import FieldError
 from django.utils.safestring import mark_safe
 
+from fredagscafeen.admin_view import custom_admin_view
 from items.models import BeerType, Brewery, InventoryEntry, InventorySnapshot, Item
+from printer.views import pdf_preview
 
 
 def filter_by_amount(qs, positive):
@@ -125,3 +127,20 @@ class InventoryAdmin(admin.ModelAdmin):
 
     def changed_items(self, obj):
         return obj.entries.count()
+
+
+class BarMenuContext:
+    file_name = "barmenu"
+    file_path = "barmenu/barmenu.tex"
+
+    @staticmethod
+    def get_context():
+        items = Item.objects.all()
+        return {
+            "items": items,
+        }
+
+
+@custom_admin_view("items", "generate barmenu")
+def generate_bartab(admin, request):
+    return pdf_preview(request, admin.admin_site, BarMenuContext)
