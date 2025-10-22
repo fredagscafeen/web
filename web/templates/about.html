@@ -62,7 +62,7 @@
         </p>
         {% if shift_streak %}
             <p class="card-text">
-                {% translate "Pt. har baren været åben" %} <b><i>{{ shift_streak.streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak.streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak.start_datetime| date:"d M, Y" }}</b>.
+                {% translate "P.t. har baren været åben" %} <b><i>{{ shift_streak.streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak.streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak.start_datetime| date:"d M, Y" }}</b>.
             </p>
         {% else %}
             <p class="card-text">

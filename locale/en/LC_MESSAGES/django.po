@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-19 15:59+0200\n"
-"PO-Revision-Date: 2025-10-19 16:01+0050\n"
+"POT-Creation-Date: 2025-10-22 19:53+0200\n"
+"PO-Revision-Date: 2025-10-22 19:53+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -105,7 +105,7 @@ msgstr "Balance"
 msgid "Total forbrug"
 msgstr "Total consumption"
 
-#: bartab/templates/bartab.html:25 bartenders/templates/barplan.html:43
+#: bartab/templates/bartab.html:25 bartenders/templates/barplan.html:44
 #: gallery/models.py:107 udlejning/templates/udlejning.html:23
 #: udlejning/templates/udlejningBoardGameCart.html:19
 #: udlejning/templates/udlejningGrill.html:19
@@ -247,11 +247,11 @@ msgstr "Save"
 msgid "Barplan"
 msgstr "Bar Plan"
 
-#: bartenders/templates/barplan.html:17 bartenders/templates/barplan.html:360
+#: bartenders/templates/barplan.html:17 bartenders/templates/barplan.html:362
 msgid "Vis kun nuværende"
 msgstr "Show only current"
 
-#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:362
+#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:364
 msgid "Vis også tidligere"
 msgstr "Also show earlier"
 
@@ -259,85 +259,85 @@ msgstr "Also show earlier"
 msgid "Vagter per side"
 msgstr "Shifts per page"
 
-#: bartenders/templates/barplan.html:44
+#: bartenders/templates/barplan.html:45
 msgid "Ansvarlig"
 msgstr "Responsible"
 
-#: bartenders/templates/barplan.html:45 bartenders/templates/bartenders.html:7
+#: bartenders/templates/barplan.html:46 bartenders/templates/bartenders.html:7
 #: web/templates/base.html:83
 msgid "Bartendere"
 msgstr "Bartenders"
 
-#: bartenders/templates/barplan.html:57
+#: bartenders/templates/barplan.html:58
 msgid "This weeks friday"
 msgstr "This week's Friday"
 
-#: bartenders/templates/barplan.html:82 bartenders/templates/barplan.html:159
+#: bartenders/templates/barplan.html:83 bartenders/templates/barplan.html:160
 msgid "Bartender's first responsible shift"
 msgstr "Bartender's first responsible shift"
 
-#: bartenders/templates/barplan.html:91 bartenders/templates/barplan.html:168
-#: bartenders/templates/barplan.html:249
+#: bartenders/templates/barplan.html:92 bartenders/templates/barplan.html:169
+#: bartenders/templates/barplan.html:250
 msgid "Withdraw"
 msgstr "Withdraw"
 
-#: bartenders/templates/barplan.html:95 bartenders/templates/barplan.html:172
-#: bartenders/templates/barplan.html:253
+#: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:173
+#: bartenders/templates/barplan.html:254
 msgid "Du er ved at trække din vagt"
 msgstr "You're about to withdraw your shift"
 
-#: bartenders/templates/barplan.html:95 bartenders/templates/barplan.html:113
-#: bartenders/templates/barplan.html:131 bartenders/templates/barplan.html:172
-#: bartenders/templates/barplan.html:190 bartenders/templates/barplan.html:208
-#: bartenders/templates/barplan.html:253 bartenders/templates/barplan.html:271
-#: bartenders/templates/barplan.html:289 web/templates/about.html:65
+#: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:114
+#: bartenders/templates/barplan.html:132 bartenders/templates/barplan.html:173
+#: bartenders/templates/barplan.html:191 bartenders/templates/barplan.html:209
+#: bartenders/templates/barplan.html:254 bartenders/templates/barplan.html:272
+#: bartenders/templates/barplan.html:290 web/templates/about.html:65
 #: web/templates/about.html:69
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr " "
 
-#: bartenders/templates/barplan.html:95 bartenders/templates/barplan.html:172
-#: bartenders/templates/barplan.html:253
+#: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:173
+#: bartenders/templates/barplan.html:254
 msgid " tilbage."
 msgstr "."
 
-#: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:173
-#: bartenders/templates/barplan.html:254
+#: bartenders/templates/barplan.html:97 bartenders/templates/barplan.html:174
+#: bartenders/templates/barplan.html:255
 msgid "Det betyder, at andre bartender ikke kan tage din vagt."
 msgstr "This means that other bartenders cannot take your shift."
-
-#: bartenders/templates/barplan.html:99 bartenders/templates/barplan.html:117
-#: bartenders/templates/barplan.html:134 bartenders/templates/barplan.html:176
-#: bartenders/templates/barplan.html:194 bartenders/templates/barplan.html:211
-#: bartenders/templates/barplan.html:257 bartenders/templates/barplan.html:275
-#: bartenders/templates/barplan.html:292
-#: bartenders/templates/bartender_info.html:94
-#: bartenders/templates/bartender_info.html:125
-#: bartenders/templates/bartender_info.html:143
-msgid "Close"
-msgstr "Close"
 
 #: bartenders/templates/barplan.html:100 bartenders/templates/barplan.html:118
 #: bartenders/templates/barplan.html:135 bartenders/templates/barplan.html:177
 #: bartenders/templates/barplan.html:195 bartenders/templates/barplan.html:212
 #: bartenders/templates/barplan.html:258 bartenders/templates/barplan.html:276
 #: bartenders/templates/barplan.html:293
-#: bartenders/templates/bartender_info.html:126
+#: bartenders/templates/bartender_info.html:98
+#: bartenders/templates/bartender_info.html:129
+#: bartenders/templates/bartender_info.html:147
+msgid "Close"
+msgstr "Close"
+
+#: bartenders/templates/barplan.html:101 bartenders/templates/barplan.html:119
+#: bartenders/templates/barplan.html:136 bartenders/templates/barplan.html:178
+#: bartenders/templates/barplan.html:196 bartenders/templates/barplan.html:213
+#: bartenders/templates/barplan.html:259 bartenders/templates/barplan.html:277
+#: bartenders/templates/barplan.html:294
+#: bartenders/templates/bartender_info.html:130
 msgid "Confirm"
 msgstr "Confirm"
 
-#: bartenders/templates/barplan.html:109 bartenders/templates/barplan.html:186
-#: bartenders/templates/barplan.html:267
+#: bartenders/templates/barplan.html:110 bartenders/templates/barplan.html:187
+#: bartenders/templates/barplan.html:268
 msgid "Release"
 msgstr "Release"
 
-#: bartenders/templates/barplan.html:113 bartenders/templates/barplan.html:190
-#: bartenders/templates/barplan.html:271
+#: bartenders/templates/barplan.html:114 bartenders/templates/barplan.html:191
+#: bartenders/templates/barplan.html:272
 msgid "Du er ved at frigøre din vagt"
 msgstr "You're about to release your shift"
 
-#: bartenders/templates/barplan.html:114 bartenders/templates/barplan.html:191
-#: bartenders/templates/barplan.html:272
+#: bartenders/templates/barplan.html:115 bartenders/templates/barplan.html:192
+#: bartenders/templates/barplan.html:273
 msgid ""
 "Det betyder, at andre bartender kan tage din vagt, men det er stadig din "
 "vagt indtil da."
@@ -345,45 +345,45 @@ msgstr ""
 "This means that other bartenders can take your shift, but it is still your "
 "shift until then."
 
-#: bartenders/templates/barplan.html:127 bartenders/templates/barplan.html:204
-#: bartenders/templates/barplan.html:285
+#: bartenders/templates/barplan.html:128 bartenders/templates/barplan.html:205
+#: bartenders/templates/barplan.html:286
 msgid "Shift Swap"
 msgstr "Shift Swap"
 
-#: bartenders/templates/barplan.html:131 bartenders/templates/barplan.html:208
-#: bartenders/templates/barplan.html:289
+#: bartenders/templates/barplan.html:132 bartenders/templates/barplan.html:209
+#: bartenders/templates/barplan.html:290
 msgid "Du er ved at tage en andens barvagt"
 msgstr "You're taking someone else's shift"
 
-#: bartenders/templates/barplan.html:239 bartenders/templates/barplan.html:242
+#: bartenders/templates/barplan.html:240 bartenders/templates/barplan.html:243
 msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
-#: bartenders/templates/barplan.html:303 bartenders/templates/barplan.html:401
+#: bartenders/templates/barplan.html:304 bartenders/templates/barplan.html:404
 #: bartenders/templates/board.html:39 events/templates/event.html:54
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
 #: items/templates/items.html:80 udlejning/templates/udlejning.html:60
-#: udlejning/templates/udlejningBoardGameCart.html:54
-#: udlejning/templates/udlejningGrill.html:54
-#: udlejning/templates/udlejningProjector.html:54
-#: udlejning/templates/udlejningSpeakers.html:55
-#: udlejning/templates/udlejningTent.html:55
+#: udlejning/templates/udlejningBoardGameCart.html:52
+#: udlejning/templates/udlejningGrill.html:52
+#: udlejning/templates/udlejningProjector.html:52
+#: udlejning/templates/udlejningSpeakers.html:53
+#: udlejning/templates/udlejningTent.html:53
 msgid "Edit"
 msgstr "Edit"
 
-#: bartenders/templates/barplan.html:353 bartenders/views.py:261
+#: bartenders/templates/barplan.html:355 bartenders/views.py:261
 msgid "Pantvagter"
 msgstr "Deposit shifts"
 
-#: bartenders/templates/barplan.html:368
+#: bartenders/templates/barplan.html:370
 msgid "Pantvagter per side"
 msgstr "Deposit shifts per page"
 
-#: bartenders/templates/barplan.html:383
+#: bartenders/templates/barplan.html:386
 msgid "Uge"
 msgstr "Week"
 
-#: bartenders/templates/barplan.html:384 udlejning/models.py:107
+#: bartenders/templates/barplan.html:387 udlejning/models.py:107
 #: udlejning/models.py:161 udlejning/models.py:183 udlejning/models.py:205
 #: udlejning/models.py:227 udlejning/models.py:249
 #: udlejning/templates/udlejning.html:26
@@ -395,11 +395,11 @@ msgstr "Week"
 msgid "Ansvarlige"
 msgstr "Responsible"
 
-#: bartenders/templates/barplan.html:394
+#: bartenders/templates/barplan.html:397
 msgid "Current week"
 msgstr "Current week"
 
-#: bartenders/templates/barplan.html:397
+#: bartenders/templates/barplan.html:400
 msgid "Bartender's first deposit shift"
 msgstr "Bartender's first deposit shift"
 
@@ -415,38 +415,38 @@ msgstr "Your mailing lists"
 msgid "Modtagere"
 msgstr "Recipients"
 
-#: bartenders/templates/bartender_info.html:70
+#: bartenders/templates/bartender_info.html:73
 msgid "Afmeld"
 msgstr "Unsubscribe"
 
-#: bartenders/templates/bartender_info.html:80
-#: bartenders/templates/bartender_info.html:86
+#: bartenders/templates/bartender_info.html:84
+#: bartenders/templates/bartender_info.html:90
 msgid "Meld dig på mailinglisten"
 msgstr "Join the mailing list"
 
-#: bartenders/templates/bartender_info.html:90
+#: bartenders/templates/bartender_info.html:94
 msgid "Hvis du gerne vil på mailinglisten igen, så kontakt"
 msgstr "If you wish to be added to the mailing list again, please contact"
 
-#: bartenders/templates/bartender_info.html:104
-#: bartenders/templates/bartender_info.html:116
+#: bartenders/templates/bartender_info.html:108
+#: bartenders/templates/bartender_info.html:120
 msgid "Bliv inaktiv"
 msgstr "Become inactive"
 
-#: bartenders/templates/bartender_info.html:108
-#: bartenders/templates/bartender_info.html:135
+#: bartenders/templates/bartender_info.html:112
+#: bartenders/templates/bartender_info.html:139
 msgid "Bliv aktiv"
 msgstr "Become active"
 
-#: bartenders/templates/bartender_info.html:120
+#: bartenders/templates/bartender_info.html:124
 msgid "Du er ved at melde dig inaktiv."
 msgstr "You're about to declare yourself inactive."
 
-#: bartenders/templates/bartender_info.html:121
+#: bartenders/templates/bartender_info.html:125
 msgid "Er du sikker?"
 msgstr "Are you sure?"
 
-#: bartenders/templates/bartender_info.html:122
+#: bartenders/templates/bartender_info.html:126
 msgid ""
 "Husk at du som inaktiv bartender ikke kan komme til "
 "bartenderarrangementerne."
@@ -454,11 +454,11 @@ msgstr ""
 "Remember that as an inactive bartender you cannot come to the bartender "
 "events."
 
-#: bartenders/templates/bartender_info.html:139
+#: bartenders/templates/bartender_info.html:143
 msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr "If you wish to become active again, please contact"
 
-#: bartenders/templates/bartender_info.html:153
+#: bartenders/templates/bartender_info.html:157
 msgid "er ikke bartender."
 msgstr "is not a bartender."
 
@@ -475,10 +475,12 @@ msgid "Antal vagter"
 msgstr "Number of shifts"
 
 #: bartenders/templates/bartenders.html:14
+#: bartenders/templates/bartenders.html:16
+#: bartenders/templates/bartenders.html:20
 msgid "Nuværende"
 msgstr "Current"
 
-#: bartenders/templates/bartenders.html:23
+#: bartenders/templates/bartenders.html:45
 msgid "Tidligere"
 msgstr "Earlier"
 
@@ -1514,16 +1516,17 @@ msgid "anlæg"
 msgstr "kegerator"
 
 #: udlejning/templates/udlejning.html:54
-#: udlejning/templates/udlejningBoardGameCart.html:48
-#: udlejning/templates/udlejningGrill.html:48
-#: udlejning/templates/udlejningProjector.html:48
-#: udlejning/templates/udlejningSpeakers.html:49
-#: udlejning/templates/udlejningTent.html:49
+#: udlejning/templates/udlejningBoardGameCart.html:46
+#: udlejning/templates/udlejningGrill.html:46
+#: udlejning/templates/udlejningProjector.html:46
+#: udlejning/templates/udlejningSpeakers.html:47
+#: udlejning/templates/udlejningTent.html:47
 msgid "Ikke angivet"
 msgstr "Not specified"
 
 #: udlejning/templates/udlejning.html:71
-msgid "Anlæggene er pt. ikke reserveret på noget tidspunkt."
+#| msgid "Anlæggene er pt. ikke reserveret på noget tidspunkt."
+msgid "Anlæggene er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The kegerators are currently not booked at any time."
 
 #: udlejning/templates/udlejning.html:72
@@ -1726,7 +1729,7 @@ msgid "Ansøgninsformular"
 msgstr "Application form"
 
 #: udlejning/templates/udlejningBoardGameCart.html:9
-#: udlejning/templates/udlejningBoardGameCart.html:73
+#: udlejning/templates/udlejningBoardGameCart.html:71
 msgid "Reservation af brætspilsvogn"
 msgstr "Reservation of board game cart"
 
@@ -1734,15 +1737,16 @@ msgstr "Reservation of board game cart"
 msgid "Brætspilsvognen er allerede reserveret følgende dage:"
 msgstr "The board game cart is already reserved the following days:"
 
-#: udlejning/templates/udlejningBoardGameCart.html:65
-msgid "Brætspilsvognen er pt. ikke reserveret på noget tidspunkt."
+#: udlejning/templates/udlejningBoardGameCart.html:63
+#| msgid "Brætspilsvognen er pt. ikke reserveret på noget tidspunkt."
+msgid "Brætspilsvognen er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The board game cart is currently not reserved at any time."
 
-#: udlejning/templates/udlejningBoardGameCart.html:69
+#: udlejning/templates/udlejningBoardGameCart.html:67
 msgid "Brætspilsvognen kan kun lånes til arrangementer på instituttet."
 msgstr "The board game cart can only be borrowed for events at the institute."
 
-#: udlejning/templates/udlejningBoardGameCart.html:72
+#: udlejning/templates/udlejningBoardGameCart.html:70
 msgid ""
 "Hvis vores brætspilsvogn ikke allerede er udlånt, kan du låne den ved at "
 "sende en mail til"
@@ -1751,7 +1755,7 @@ msgstr ""
 " an e-mail to"
 
 #: udlejning/templates/udlejningGrill.html:9
-#: udlejning/templates/udlejningGrill.html:76
+#: udlejning/templates/udlejningGrill.html:74
 msgid "Reservation af grill"
 msgstr "Rental of grill"
 
@@ -1759,19 +1763,20 @@ msgstr "Rental of grill"
 msgid "Grillen er allerede reserveret følgende dage:"
 msgstr "The grill is already reserved the following days"
 
-#: udlejning/templates/udlejningGrill.html:65
-msgid "Grillen er pt. ikke reserveret på noget tidspunkt."
+#: udlejning/templates/udlejningGrill.html:63
+#| msgid "Grillen er pt. ikke reserveret på noget tidspunkt."
+msgid "Grillen er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The grill is currently not booked at any time"
 
-#: udlejning/templates/udlejningGrill.html:69
+#: udlejning/templates/udlejningGrill.html:67
 msgid "Grillen kan kun lånes til arrangementer på instituttet."
 msgstr "The grill can only be borrowed for events at the institute."
 
-#: udlejning/templates/udlejningGrill.html:72
+#: udlejning/templates/udlejningGrill.html:70
 msgid "Pris for gas efter aftale."
 msgstr "Price for gas by agreement."
 
-#: udlejning/templates/udlejningGrill.html:75
+#: udlejning/templates/udlejningGrill.html:73
 msgid ""
 "Hvis vores grill ikke allerede er udlånt, kan du låne den ved at sende en "
 "mail til"
@@ -1780,7 +1785,7 @@ msgstr ""
 " to"
 
 #: udlejning/templates/udlejningProjector.html:9
-#: udlejning/templates/udlejningProjector.html:73
+#: udlejning/templates/udlejningProjector.html:71
 msgid "Reservation af projektor"
 msgstr "Rental of projector"
 
@@ -1792,16 +1797,18 @@ msgstr "screen"
 msgid "Projektoren/lærredet er allerede reserveret følgende dage:"
 msgstr "The projector & screen is already reserved the following days:"
 
-#: udlejning/templates/udlejningProjector.html:65
-msgid "Projektoren/lærredet er pt. ikke reserveret på noget tidspunkt."
+#: udlejning/templates/udlejningProjector.html:63
+#| msgid ""
+#| "Projektoren/lærredet er pt. ikke reserveret på noget tidspunkt."
+msgid "Projektoren/lærredet er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The projector & screen is currently not booked at any time."
 
-#: udlejning/templates/udlejningProjector.html:69
+#: udlejning/templates/udlejningProjector.html:67
 msgid "Projektoren/lærredet kan kun lånes til arrangementer på instituttet."
 msgstr ""
 "The projector & screen can only be borrowed for events at the institute."
 
-#: udlejning/templates/udlejningProjector.html:72
+#: udlejning/templates/udlejningProjector.html:70
 msgid ""
 "Hvis vores projektor/lærred ikke allerede er udlånt, kan du låne den ved at "
 "sende en mail til"
@@ -1810,7 +1817,7 @@ msgstr ""
 "sending an e-mail to"
 
 #: udlejning/templates/udlejningSpeakers.html:10
-#: udlejning/templates/udlejningSpeakers.html:74
+#: udlejning/templates/udlejningSpeakers.html:72
 msgid "Reservation af højtalere"
 msgstr "Rental of speakers"
 
@@ -1818,15 +1825,16 @@ msgstr "Rental of speakers"
 msgid "Højtalerne er allerede reserveret følgende dage:"
 msgstr "The speakers are already reserved the following days"
 
-#: udlejning/templates/udlejningSpeakers.html:66
-msgid "Højtalerne er pt. ikke reserveret på noget tidspunkt."
+#: udlejning/templates/udlejningSpeakers.html:64
+#| msgid "Højtalerne er pt. ikke reserveret på noget tidspunkt."
+msgid "Højtalerne er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The speakers are currently not booked at any time."
 
-#: udlejning/templates/udlejningSpeakers.html:70
+#: udlejning/templates/udlejningSpeakers.html:68
 msgid "Højtalerne kan kun lånes til arrangementer på instituttet."
 msgstr "The speakers can only be borrowed for events at the institute."
 
-#: udlejning/templates/udlejningSpeakers.html:73
+#: udlejning/templates/udlejningSpeakers.html:71
 msgid ""
 "Hvis vores højtalere ikke allerede er udlånt, kan du låne den ved at sende "
 "en mail til"
@@ -1835,7 +1843,7 @@ msgstr ""
 "e-mail to"
 
 #: udlejning/templates/udlejningTent.html:10
-#: udlejning/templates/udlejningTent.html:74
+#: udlejning/templates/udlejningTent.html:72
 msgid "Reservation af festtelt"
 msgstr "Rental of tent"
 
@@ -1843,11 +1851,12 @@ msgstr "Rental of tent"
 msgid "Festteltet er allerede reserveret følgende dage:"
 msgstr "The tent is already reserved the following days:"
 
-#: udlejning/templates/udlejningTent.html:66
-msgid "Festteltet er pt. ikke reserveret på noget tidspunkt."
+#: udlejning/templates/udlejningTent.html:64
+#| msgid "Festteltet er pt. ikke reserveret på noget tidspunkt."
+msgid "Festteltet er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The tent is currently not booked at any time."
 
-#: udlejning/templates/udlejningTent.html:70
+#: udlejning/templates/udlejningTent.html:68
 msgid ""
 "Festteltet udlånes kun til interne arrangementer eller til arrangementer med"
 " tilknytning til baren."
@@ -1855,7 +1864,7 @@ msgstr ""
 "The tent is only rented out for internal events or for events related to the"
 " bar."
 
-#: udlejning/templates/udlejningTent.html:73
+#: udlejning/templates/udlejningTent.html:71
 msgid ""
 "Hvis vores festteltet ikke allerede er udlånt, kan du låne den ved at sende "
 "en mail til"
@@ -2017,7 +2026,8 @@ msgstr ""
 "vacation, we're open."
 
 #: web/templates/about.html:65
-msgid "Pt. har baren været åben"
+#| msgid "Pt. har baren været åben"
+msgid "P.t. har baren været åben"
 msgstr "At the moment the bar has been open"
 
 #: web/templates/about.html:65 web/templates/about.html:69
@@ -2200,10 +2210,6 @@ msgstr ""
 "Inquiries regarding the rules of procedure or specific incidents can be directed to the organizers of the Friday bar, or directly to the board of directors through"
 
 #: web/templates/about.html:218
-#| msgid ""
-#| "\n"
-#| "                eller specifikke medlemmer, hvis kontaktoplysninger kan findes \n"
-#| "                "
 msgid ""
 "\n"
 "                eller specifikke medlemmer, hvis kontaktoplysninger kan findes\n"
