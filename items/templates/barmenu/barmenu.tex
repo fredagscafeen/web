@@ -1,0 +1,35 @@
+{% load latex_trunc %}
+
+\documentclass[a4paper,oneside,article,11pt,english,landscape]{memoir}
+\usepackage[margin=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{longtable}[=v4.13]%
+\usepackage{tabu}
+\usepackage[breakall,fit]{truncate}
+\usepackage{trimclip}
+% Using lscape instead of pdflscape, ensures that all pages
+% have the same orientation in the generated pdf.
+% This is intentional as Old can't always print pdf's,
+% containing pages of different orientation, correctly.
+\usepackage{lscape}
+\usepackage{icomma}
+\usepackage{tikz}
+\usepackage{pdfpages}
+
+\newcommand*\coins[1]{\tikz[baseline=(char.base)]{
+			\node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.15, 0) (char) {\phantom{#1}};
+			\node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.075, 0) (char) {\phantom{#1}};
+            \node[shape=circle,draw,fill=white,inner sep=1pt] (char) {#1};}}
+\newcommand\krcoins{\coins{\tiny kr}}
+
+\renewcommand\TruncateMarker{}
+
+\pagestyle{empty}
+
+\begin{document}
+
+TODO
+
+\end{document}
