@@ -9,20 +9,23 @@
 \usepackage{tabu}
 \usepackage[breakall,fit]{truncate}
 \usepackage{trimclip}
-% Using lscape instead of pdflscape, ensures that all pages
-% have the same orientation in the generated pdf.
-% This is intentional as Old can't always print pdf's,
-% containing pages of different orientation, correctly.
 \usepackage{lscape}
 \usepackage{icomma}
 \usepackage{tikz}
 \usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
 
 \newcommand*\coins[1]{\tikz[baseline=(char.base)]{
-			\node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.15, 0) (char) {\phantom{#1}};
-			\node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.075, 0) (char) {\phantom{#1}};
+          \node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.15, 0) (char) {\phantom{#1}};
+          \node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.075, 0) (char) {\phantom{#1}};
             \node[shape=circle,draw,fill=white,inner sep=1pt] (char) {#1};}}
 \newcommand\krcoins{\coins{\tiny kr}}
+
+% Define commands for icons
+\newcommand{\glutenfreeicon}{\raisebox{-0.2\height}{\includegraphics[height=1em]{{ "{" }}{{ gluten_free_icon }}{{ "}" }}}}
+\newcommand{\nonalcoholicicon}{\raisebox{-0.2\height}{\includegraphics[height=1em]{{ "{" }}{{ non_alcoholic_icon }}{{ "}" }}}}
 
 \renewcommand\TruncateMarker{}
 
@@ -30,6 +33,49 @@
 
 \begin{document}
 
-TODO
+{% for shelf in shelves %}
+\section*{ {{ shelf.name }} }
+
+\begin{longtable}{p{2cm}p{5cm}rc}
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Price} &  \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Price} &  \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+{% for shelf_item in shelf.shelf_items.all %}
+{% with item=shelf_item.item %}
+{{ item.type.name|default:"" }} &
+{{ item.name }} &
+{{ item.priceInDKK|floatformat:0 }} kr &
+{% if item.glutenFree %}\glutenfreeicon{% endif %}{% if item.nonAlcoholic %}{% if item.glutenFree %} {% endif %}\nonalcoholicicon{% endif %} \\
+{% endwith %}
+{% endfor %}
+
+\end{longtable}
+
+{% if not forloop.last %}
+\vspace{1cm}
+{% endif %}
+
+{% endfor %}
+
+% Legend at the bottom of the last page
+\vspace{2cm}
+\section*{Legend}
+
+\begin{tabular}{cl}
+\toprule
+\glutenfreeicon & Gluten Free \\
+\nonalcoholicicon & Non-Alcoholic \\
+\bottomrule
+\end{tabular}
 
 \end{document}

@@ -152,10 +152,24 @@ class BarMenuContext:
 
     @staticmethod
     def get_context():
-        items = Item.objects.all()
+        import os
+        from django.conf import settings
+
+        shelves = Shelf.objects.all().prefetch_related(
+            'shelf_items__item__brewery',
+            'shelf_items__item__type'
+        ).order_by('name')
+
+        gluten_free_icon = settings.STATIC_ROOT + "images/no-gluten.png"
+        non_alcoholic_icon = settings.STATIC_ROOT + "images/no-alcohol.png"
+
         return {
-            "items": items,
+            'shelves': shelves,
+            'gluten_free_icon': gluten_free_icon,
+            'non_alcoholic_icon': non_alcoholic_icon,
         }
+
+
 
 
 @custom_admin_view("items", "generate barmenu")
