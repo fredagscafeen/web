@@ -56,6 +56,11 @@ CONSTANCE_CONFIG = {
         "Skal alle kunne se bartender events?",
         bool,
     ),
+    "SHOW_BARTENDER_STATS": (
+        False,
+        "Skal bartender statistikker vises på bartender info siden?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [

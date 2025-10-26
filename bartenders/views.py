@@ -2,6 +2,7 @@ import datetime
 import random
 from itertools import groupby
 
+from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -85,56 +86,67 @@ class BartenderList(TemplateView):
         bartenders = Bartender.objects.all()
         total_shift_leaderboard = []
 
-        active_bartender_stats = []
-        for bartender in bartenders.filter(isActiveBartender=True):
-            shifts = BartenderShift.with_bartender(bartender).filter(
-                start_datetime__lte=timezone.now()
+        if config.SHOW_BARTENDER_STATS:
+            active_bartender_stats = []
+            for bartender in bartenders.filter(isActiveBartender=True):
+                shifts = BartenderShift.with_bartender(bartender).filter(
+                    start_datetime__lte=timezone.now()
+                )
+                total_shift_leaderboard.append((bartender.pk, shifts.count()))
+                stat = {
+                    "bartender": bartender,
+                    "total_shifts": shifts.count(),
+                    "responsible_shifts": shifts.filter(responsible=bartender).count(),
+                    "first_shift": shifts.first().start_datetime
+                    if shifts.exists()
+                    else None,
+                    "last_shift": shifts.last().start_datetime
+                    if shifts.exists()
+                    else None,
+                }
+                active_bartender_stats.append(stat)
+
+            inactive_bartender_stats = []
+            for bartender in bartenders.filter(isActiveBartender=False):
+                shifts = BartenderShift.with_bartender(bartender).filter(
+                    start_datetime__lte=timezone.now()
+                )
+                total_shift_leaderboard.append((bartender.pk, shifts.count()))
+                stat = {
+                    "bartender": bartender,
+                    "total_shifts": shifts.count(),
+                    "responsible_shifts": shifts.filter(responsible=bartender).count(),
+                    "first_shift": shifts.first().start_datetime
+                    if shifts.exists()
+                    else None,
+                    "last_shift": shifts.last().start_datetime
+                    if shifts.exists()
+                    else None,
+                }
+                inactive_bartender_stats.append(stat)
+
+            total_shift_leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+            for active_bartender_stat in active_bartender_stats:
+                for rank, (b_pk, _) in enumerate(total_shift_leaderboard, start=1):
+                    if active_bartender_stat["bartender"].pk == b_pk:
+                        active_bartender_stat["total_rank"] = rank
+                        break
+
+            for inactive_bartender_stat in inactive_bartender_stats:
+                for rank, (b_pk, _) in enumerate(total_shift_leaderboard, start=1):
+                    if inactive_bartender_stat["bartender"].pk == b_pk:
+                        inactive_bartender_stat["total_rank"] = rank
+                        break
+
+            context["active_bartender_stats"] = active_bartender_stats
+            context["inactive_bartender_stats"] = inactive_bartender_stats
+        else:
+            context["bartenders"] = Bartender.objects.filter(isActiveBartender=True)
+            context["inactive_bartenders"] = Bartender.objects.filter(
+                isActiveBartender=False
             )
-            total_shift_leaderboard.append((bartender.pk, shifts.count()))
-            stat = {
-                "bartender": bartender,
-                "total_shifts": shifts.count(),
-                "responsible_shifts": shifts.filter(responsible=bartender).count(),
-                "first_shift": shifts.first().start_datetime
-                if shifts.exists()
-                else None,
-                "last_shift": shifts.last().start_datetime if shifts.exists() else None,
-            }
-            active_bartender_stats.append(stat)
 
-        inactive_bartender_stats = []
-        for bartender in bartenders.filter(isActiveBartender=False):
-            shifts = BartenderShift.with_bartender(bartender).filter(
-                start_datetime__lte=timezone.now()
-            )
-            total_shift_leaderboard.append((bartender.pk, shifts.count()))
-            stat = {
-                "bartender": bartender,
-                "total_shifts": shifts.count(),
-                "responsible_shifts": shifts.filter(responsible=bartender).count(),
-                "first_shift": shifts.first().start_datetime
-                if shifts.exists()
-                else None,
-                "last_shift": shifts.last().start_datetime if shifts.exists() else None,
-            }
-            inactive_bartender_stats.append(stat)
-
-        total_shift_leaderboard.sort(key=lambda x: x[1], reverse=True)
-
-        for active_bartender_stat in active_bartender_stats:
-            for rank, (b_pk, _) in enumerate(total_shift_leaderboard, start=1):
-                if active_bartender_stat["bartender"].pk == b_pk:
-                    active_bartender_stat["total_rank"] = rank
-                    break
-
-        for inactive_bartender_stat in inactive_bartender_stats:
-            for rank, (b_pk, _) in enumerate(total_shift_leaderboard, start=1):
-                if inactive_bartender_stat["bartender"].pk == b_pk:
-                    inactive_bartender_stat["total_rank"] = rank
-                    break
-
-        context["active_bartender_stats"] = active_bartender_stats
-        context["inactive_bartender_stats"] = inactive_bartender_stats
         return context
 
 
