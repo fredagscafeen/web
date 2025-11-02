@@ -8,72 +8,26 @@
 	<a href="#bartenders" class="section-link">#</a>
 </h2>
 
-{% if active_bartender_stats %}
+{% if bartender_stats %}
 <div class="row">
 	<div class="col-md-6 mb-3">
 		<ul class="list-group">
-			<li class="fw-bold list-group-item list-group-item-primary">{% translate "Nuværende" %} <span class="badge text-bg-primary rounded-pill">{{ active_bartender_stats.count }}</span></li>
+			<li class="fw-bold list-group-item list-group-item-primary" style="margin-bottom:-1px;">{% translate "Nuværende" %} <span class="badge text-bg-primary rounded-pill">{{ number_of_active_bartenders }}</span></li>
 			<div class="accordion">
-				{% for active_bartender_stat in active_bartender_stats %}
-				{% with bartender=active_bartender_stat.bartender %}
-					<div class="accordion-item" style="{% if forloop.first and not active_bartender_stats|length == 1 %}border-radius:0px; margin-top:-1px;{% endif %}">
-						<div class="accordion-header">
-							<button class="accordion-button collapsed pb-2 pt-2 ps-3 pe-3" style="{% if forloop.first and not bartenders|length == 1 %}border-radius:0px;{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-{{ bartender.pk }}" aria-expanded="false" aria-controls="panelsStayOpen-{{ bartender.pk }}">
-								<p class="card-title">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</p>
-							</button>
-						</div>
-						<div id="panelsStayOpen-{{ bartender.pk }}" class="accordion-collapse collapse">
-							<div class="accordion-body p-2">
-								<table class="table table-bordered m-0">
-									<tbody>
-										<tr>
-											<th scope="row">{% translate "Totale antal barvagter" %}</th>
-											<td class="w-100">{{ active_bartender_stat.total_shifts }} (#{{ active_bartender_stat.total_rank }})</td>
-										</tr>
-										<tr>
-											<th class="ps-4" scope="row">{% translate "Ansvarligvagter" %}</th>
-											<td>{{ active_bartender_stat.responsible_shifts }}</td>
-										</tr>
-										<tr>
-											<th scope="row">{% translate "Første barvagt" %}</th>
-											<td>
-												{% if active_bartender_stat.first_shift %}
-													{{ active_bartender_stat.first_shift|date:"j. F Y" }}
-												{% else %}
-													N/A
-												{% endif %}
-											</td>
-										</tr>
-										<tr>
-											<th scope="row">{% translate "Sidste barvagt" %}</th>
-											<td>
-												{% if active_bartender_stat.last_shift %}
-													{{ active_bartender_stat.last_shift|date:"j. F Y" }}
-												{% else %}
-													N/A
-												{% endif %}
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				{% endwith %}
-				{% endfor %}
+				{% for bartender_stat in bartender_stats %}
+				{% with bartender=bartender_stat.bartender %}
+					{% ifchanged bartender.isActiveBartender %}{% if not bartender.isActiveBartender %}
 			</div>
 		</ul>
 	</div>
-
 	<div class="col-md-6 mb-3">
-		<ul class="list-group">
-			<li class="fw-bold list-group-item list-group-item-danger">{% translate "Tidligere" %} <span class="badge text-bg-danger rounded-pill">{{ inactive_bartenders.count }}</span></li>
-			<div class="accordion">
-				{% for inactive_bartender_stat in inactive_bartender_stats %}
-				{% with bartender=inactive_bartender_stat.bartender %}
-					<div class="accordion-item" style="{% if forloop.first and not inactive_bartender_stat|length == 1 %}border-radius:0px; margin-top:-1px;{% endif %}">
+	<ul class="list-group">
+		<li class="fw-bold list-group-item list-group-item-danger" style="margin-bottom:-1px;">{% translate "Tidligere" %} <span class="badge text-bg-danger rounded-pill">{{ number_of_inactive_bartenders }}</span></li>
+		<div class="accordion">
+					{% endif %}{% endifchanged %}
+					<div class="accordion-item" style="border-top-left-radius:0px; border-top-right-radius:0px;">
 						<div class="accordion-header">
-							<button class="accordion-button accordion-custom collapsed pb-2 pt-2 ps-3 pe-3" style="{% if forloop.first and not bartenders|length == 1 %}border-radius:0px;{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-{{ bartender.pk }}" aria-expanded="false" aria-controls="panelsStayOpen-{{ bartender.pk }}">
+							<button class="accordion-button collapsed pb-2 pt-2 ps-3 pe-3" style="border-top-left-radius:0px; border-top-right-radius:0px;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-{{ bartender.pk }}" aria-expanded="false" aria-controls="panelsStayOpen-{{ bartender.pk }}">
 								<p class="card-title">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</p>
 							</button>
 						</div>
@@ -83,17 +37,17 @@
 									<tbody>
 										<tr>
 											<th scope="row">{% translate "Totale antal barvagter" %}</th>
-											<td class="w-100">{{ inactive_bartender_stat.total_shifts }} (#{{ inactive_bartender_stat.total_rank }})</td>
+											<td class="w-100">{{ bartender_stat.total_shifts }} (#{{ bartender_stat.total_rank }})</td>
 										</tr>
 										<tr>
 											<th class="ps-4" scope="row">{% translate "Ansvarligvagter" %}</th>
-											<td>{{ inactive_bartender_stat.responsible_shifts }}</td>
+											<td>{{ bartender_stat.responsible_shifts }}</td>
 										</tr>
 										<tr>
 											<th scope="row">{% translate "Første barvagt" %}</th>
 											<td>
-												{% if inactive_bartender_stat.first_shift %}
-													{{ inactive_bartender_stat.first_shift|date:"j. F Y" }}
+												{% if bartender_stat.first_shift %}
+													{{ bartender_stat.first_shift|date:"j. F Y" }}
 												{% else %}
 													N/A
 												{% endif %}
@@ -102,8 +56,8 @@
 										<tr>
 											<th scope="row">{% translate "Sidste barvagt" %}</th>
 											<td>
-												{% if inactive_bartender_stat.last_shift %}
-													{{ inactive_bartender_stat.last_shift|date:"j. F Y" }}
+												{% if bartender_stat.last_shift %}
+													{{ bartender_stat.last_shift|date:"j. F Y" }}
 												{% else %}
 													N/A
 												{% endif %}
