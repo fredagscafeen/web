@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load bootstrap5 bootstrap_icons %}
+{% load is_newly_updated %}
 
 {% block content %}
 
@@ -30,28 +31,30 @@
 							<th class="col-3 text-secondary" scope="col">{% translate "Opdateret" %}</th>
 							<th class="col-1 text-secondary" scope="col">{% translate "Link" %}</th>
 							{% if user.is_staff %}
-								<th class="col-1 text-secondary"></th>
+								<th class="col-1"></th>
 							{% endif %}
 						</tr>
 					</thead>
 					<tbody>
 						{% for guide in guides %}
-							{% if LANGUAGE_CODE == guide.language %}
-								<tr>
-									<td>{{ guide.name }}</td>
-									<td>{{ guide.updated_at|date:"d-m-Y" }}</td>
-									<td>
-										<a class="ps-1" href="{{ guide.document.url }}">
-											{% bs_icon 'filetype-pdf' size='1.3em' %}
-										</a>
-									</td>
-									{% if user.is_staff %}
-										<td class="">
-											<a class="common" href="/admin/guides/guide/{{ guide.id }}">{% translate "Edit" %}</a>
+							{% with guideIsNewlyUpdated=guide|is_newly_updated %}
+								{% if LANGUAGE_CODE == guide.language %}
+									<tr>
+										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.name }}</td>
+										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.updated_at|date:"j. F, Y" }}</td>
+										<td>
+											<a class="ps-1" href="{{ guide.document.url }}">
+												{% bs_icon 'filetype-pdf' size='1.3em' %}
+											</a>
 										</td>
-									{% endif %}
-								</tr>
-							{% endif %}
+										{% if user.is_staff %}
+											<td>
+												<a class="common" href="/admin/guides/guide/{{ guide.id }}">{% translate "Edit" %}</a>
+											</td>
+										{% endif %}
+									</tr>
+								{% endif %}
+							{% endwith %}
 						{% endfor %}
 					</tbody>
 				</table>
