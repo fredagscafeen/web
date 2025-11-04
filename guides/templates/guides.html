@@ -17,6 +17,10 @@
 <p>
 	{% translate "Vi forsøger at opdatere dem løbende, men forstå at de ikke altid afspejler virkeligheden fuldt ud." %}
 </p>
+<p>
+	{% translate "Har du tilføjelser eller foreslag til ændringer, kan du lave et Pull Request på GitHub " %}
+	<a class="common" href="https://github.com/fredagscafeen/guides" rel="external" target="_blank">{% translate "her" context "På linket her" %} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+</p>
 
 <div>
 	{% for category, guides in guides %}
@@ -41,7 +45,7 @@
 								{% if LANGUAGE_CODE == guide.language %}
 									<tr>
 										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.name }}</td>
-										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.updated_at|date:"j. F, Y" }}</td>
+										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.updated_at|date:"d/m/Y" }}</td>
 										<td>
 											<a class="ps-1" href="{{ guide.document.url }}">
 												{% bs_icon 'filetype-pdf' size='1.3em' %}

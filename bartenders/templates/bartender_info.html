@@ -25,7 +25,7 @@
                 {% for first_date, dates in dates_table %}
                     <tr>
                         <th scope="row">
-                            {{ first_date | date:'M Y' }}:
+                            {{ first_date|date:'M Y' }}:
                         </th>
                     {% for id, date, checked in dates %}
                         <td {% if checked %}class="bg-danger"{% endif %}>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="modal-body">
                                 {% translate "Hvis du gerne vil på mailinglisten igen, så kontakt" %}
-                                <a rel="nofollow" class="common" href="mailto:webmaster@{{ DOMAIN }}">webmaster@{{ DOMAIN }}</a>.
+                                <a class="common" href="mailto:webmaster@{{ DOMAIN }}">webmaster@{{ DOMAIN }}</a>.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
@@ -140,7 +140,7 @@
                         </div>
                         <div class="modal-body">
                             {% translate "Hvis du gerne vil være aktiv igen, så kontakt" %}
-                            <a rel="nofollow" class="common" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>.
+                            <a class="common" href="mailto:{{ BEST_MAIL }}">{{ BEST_MAIL }}</a>.
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
