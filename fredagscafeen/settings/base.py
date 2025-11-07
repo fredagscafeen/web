@@ -137,7 +137,7 @@ SECRET_ADMIN_KEYS = [
     {
         "key": "ONEPINT_PASSWORD",
         "description": "OnePint.dk password",
-        "username": None,
+        "username": "fredagscafeen@joachimhorshauge.com",
         "url": "https://www.onepint.dk/customer/account/login/",
         "role": "INDKØB",
     },
