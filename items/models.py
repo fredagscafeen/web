@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_noop
 
+
 class Item(models.Model):
     brewery = models.ForeignKey(
         "Brewery", on_delete=models.SET_NULL, null=True, blank=True
@@ -49,6 +50,7 @@ class Item(models.Model):
                 if old_item.inStock and not self.inStock:
                     # Import here to avoid circular import
                     from items.models import ShelfItem
+
                     ShelfItem.objects.filter(item=self).delete()
             except Item.DoesNotExist:
                 pass
@@ -70,15 +72,18 @@ class Shelf(models.Model):
     def __str__(self):
         return self.name
 
+
 class ShelfItem(models.Model):
-    shelf = models.ForeignKey(Shelf, on_delete=models.CASCADE, related_name='shelf_items')
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='shelf_items')
+    shelf = models.ForeignKey(
+        Shelf, on_delete=models.CASCADE, related_name="shelf_items"
+    )
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="shelf_items")
     order = models.PositiveIntegerField(default=0)
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('order', 'item__name')
-        unique_together = ('shelf', 'item')
+        ordering = ("order", "item__name")
+        unique_together = ("shelf", "item")
 
     @property
     def glutenFree(self):
@@ -87,6 +92,7 @@ class ShelfItem(models.Model):
     @property
     def nonAlcoholic(self):
         return self.item.nonAlcoholic
+
 
 class BeerType(models.Model):
     name = models.CharField(max_length=140)
