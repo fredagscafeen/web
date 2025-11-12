@@ -14,6 +14,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from fredagscafeen.email import send_template_email
+from fredagscafeen.settings.base import LANGUAGES
 
 User = get_user_model()
 
@@ -64,6 +65,20 @@ class BartenderCommon(models.Model):
     )
     phoneNumber = models.IntegerField(
         blank=True, null=True, verbose_name=_("Telefonnummer")
+    )
+    birthday = models.DateField(
+        blank=False,
+        null=True,
+        verbose_name=_("Fødselsdato"),
+        help_text=_("DD.MM.YYYY"),
+    )
+    prefered_language = models.CharField(
+        max_length=2,
+        choices=LANGUAGES,
+        blank=False,
+        null=True,
+        default="da",
+        verbose_name=_("Preferred language"),
     )
     tshirt_size = models.CharField(
         max_length=140,

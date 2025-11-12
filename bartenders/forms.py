@@ -113,6 +113,8 @@ class BartenderInfoForm(forms.ModelForm):
             "email",
             "studentNumber",
             "phoneNumber",
+            "birthday",
+            "prefered_language",
             "tshirt_size",
             "color",
         )

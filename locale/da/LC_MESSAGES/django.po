@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-02 14:58+0100\n"
-"PO-Revision-Date: 2025-11-02 14:58+0050\n"
+"POT-Creation-Date: 2025-11-12 20:08+0100\n"
+"PO-Revision-Date: 2025-11-12 20:09+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -128,7 +128,7 @@ msgid "Result"
 msgstr "Resultat"
 
 #: bartab/templates/bartab/consumption.html:20 events/templates/event.html:129
-#: guides/templates/guides.html:29 items/templates/items.html:51
+#: guides/templates/guides.html:42 items/templates/items.html:51
 #: mail/models.py:8
 msgid "Navn"
 msgstr "Navn"
@@ -137,88 +137,101 @@ msgstr "Navn"
 msgid "Forbrug"
 msgstr "Forbrug"
 
-#: bartenders/models.py:52
+#: bartenders/models.py:53
 msgid "Fulde navn"
 msgstr "Fulde navn"
 
-#: bartenders/models.py:54 web/templates/secrets_admin.html:12
+#: bartenders/models.py:55 web/templates/secrets_admin.html:12
 msgid "Brugernavn"
 msgstr "Brugernavn"
 
-#: bartenders/models.py:59 web/templates/about.html:94
+#: bartenders/models.py:60 web/templates/about.html:94
 msgid "E-mail"
 msgstr "E-mail"
 
-#: bartenders/models.py:60
+#: bartenders/models.py:61
 msgid "En post.au mail fungerer ikke"
 msgstr "En post.au mail fungerer ikke"
 
-#: bartenders/models.py:63
+#: bartenders/models.py:64
 msgid "Studienummer"
 msgstr "Studienummer"
 
-#: bartenders/models.py:66
+#: bartenders/models.py:67
 msgid "Telefonnummer"
 msgstr "Telefonnummer"
 
+#: bartenders/models.py:72
+#| msgid "Udgivelsesdato"
+msgid "Fødselsdato"
+msgstr "Fødselsdato"
+
 #: bartenders/models.py:73
+msgid "DD.MM.YYYY"
+msgstr "DD.MM.YYYY"
+
+#: bartenders/models.py:81
+msgid "Preferred language"
+msgstr "Foretrukket sprog"
+
+#: bartenders/models.py:88
 msgid "T-shirt størrelse"
 msgstr "T-shirt størrelse"
 
-#: bartenders/models.py:79
+#: bartenders/models.py:94
 msgid "Red"
 msgstr "Rød"
 
-#: bartenders/models.py:80
+#: bartenders/models.py:95
 msgid "Gold"
 msgstr "Guld"
 
-#: bartenders/models.py:81
+#: bartenders/models.py:96
 msgid "Green"
 msgstr "Grøn"
 
-#: bartenders/models.py:82
+#: bartenders/models.py:97
 msgid "Blue"
 msgstr "Blå"
 
-#: bartenders/models.py:83
+#: bartenders/models.py:98
 msgid "Orange"
 msgstr "Orange"
 
-#: bartenders/models.py:90
+#: bartenders/models.py:105
 msgid "Color"
 msgstr "Farve"
 
-#: bartenders/models.py:173
+#: bartenders/models.py:188
 msgid "Ansvarsområde"
 msgstr "Ansvarsområde"
 
-#: bartenders/models.py:174
+#: bartenders/models.py:189
 msgid "(Hvis mere end et ansvarsområde, separer med ' / ')"
 msgstr "(Hvis mere end et ansvarsområde, separer med ' / ')"
 
-#: bartenders/models.py:176 gallery/models.py:34
+#: bartenders/models.py:191 gallery/models.py:34
 msgid "Titel"
 msgstr "Titel"
 
-#: bartenders/models.py:177
+#: bartenders/models.py:192
 msgid "Alias"
 msgstr "Alias"
 
-#: bartenders/models.py:252 events/templates/event.html:59
+#: bartenders/models.py:267 events/templates/event.html:59
 #: events/templates/events.html:63 web/templates/about.html:69
 msgid "til"
 msgstr "til"
 
-#: bartenders/models.py:257
+#: bartenders/models.py:272
 msgid "Studie"
 msgstr "Studie"
 
-#: bartenders/models.py:258 events/models.py:71 gallery/models.py:46
+#: bartenders/models.py:273 events/models.py:71 gallery/models.py:46
 msgid "Årgang"
 msgstr "Årgang"
 
-#: bartenders/models.py:262
+#: bartenders/models.py:277
 msgid ""
 "Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være "
 "en god bartender"
@@ -226,15 +239,15 @@ msgstr ""
 "Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være "
 "en god bartender"
 
-#: bartenders/models.py:421
+#: bartenders/models.py:436
 msgid "Additional information about the shift"
 msgstr "Yderligere information om barvagten"
 
-#: bartenders/models.py:424
+#: bartenders/models.py:439
 msgid "Link to additional information"
 msgstr "Link til yderligere information"
 
-#: bartenders/models.py:427
+#: bartenders/models.py:442
 msgid "Is the link to an external site?"
 msgstr "Er linket til en ekstern side?"
 
@@ -363,7 +376,7 @@ msgstr "Bartenderens første vagt"
 #: bartenders/templates/barplan.html:304 bartenders/templates/barplan.html:404
 #: bartenders/templates/board.html:39 events/templates/event.html:54
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
-#: guides/templates/guides.html:50 items/templates/items.html:80
+#: guides/templates/guides.html:69 items/templates/items.html:80
 #: udlejning/templates/udlejning.html:60
 #: udlejning/templates/udlejningBoardGameCart.html:52
 #: udlejning/templates/udlejningGrill.html:52
@@ -373,7 +386,7 @@ msgstr "Bartenderens første vagt"
 msgid "Edit"
 msgstr "Rediger"
 
-#: bartenders/templates/barplan.html:355 bartenders/views.py:301
+#: bartenders/templates/barplan.html:355 bartenders/views.py:303
 msgid "Pantvagter"
 msgstr "Pantvagter"
 
@@ -596,47 +609,47 @@ msgstr "Start - Slut"
 msgid "Din ansøgning er blevet indsendt."
 msgstr "Din ansøgning er blevet indsendt."
 
-#: bartenders/views.py:217
+#: bartenders/views.py:219
 msgid "Vagt tilgængelig for andre til at tage."
 msgstr "Vagt tilgængelig for andre til at tage."
 
-#: bartenders/views.py:224
+#: bartenders/views.py:226
 msgid "Vagt ikke længere tilgængelig for andre."
 msgstr "Vagt ikke længere tilgængelig for andre."
 
-#: bartenders/views.py:232
+#: bartenders/views.py:234
 msgid "Du har allerede en barvagt der!"
 msgstr "Du har allerede en barvagt der!"
 
-#: bartenders/views.py:236
+#: bartenders/views.py:238
 msgid "Barplan opdateret."
 msgstr "Barplan opdateret."
 
-#: bartenders/views.py:238
+#: bartenders/views.py:240
 msgid "An error occurred."
 msgstr "Der opstod en fejl."
 
-#: bartenders/views.py:262
+#: bartenders/views.py:264
 msgid "Barvagter"
 msgstr "Barvagter"
 
-#: bartenders/views.py:285 bartenders/views.py:324
+#: bartenders/views.py:287 bartenders/views.py:326
 msgid "Responsible"
 msgstr "Ansvarlig"
 
-#: bartenders/views.py:286
+#: bartenders/views.py:288
 msgid "Other bartenders"
 msgstr "Andre bartendere"
 
-#: bartenders/views.py:465
+#: bartenders/views.py:467
 msgid "Profil opdateret"
 msgstr "Profil opdateret"
 
-#: bartenders/views.py:491
+#: bartenders/views.py:493
 msgid "Du er nu afmeldt"
 msgstr "Du er nu afmeldt"
 
-#: bartenders/views.py:495
+#: bartenders/views.py:497
 msgid "mailinglisten"
 msgstr "mailinglisten"
 
@@ -678,7 +691,7 @@ msgstr "Du skal udfylde %(choice_name)s, når du deltager"
 msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 
-#: events/models.py:61 guides/models.py:22
+#: events/models.py:61 guides/models.py:19
 msgid "Name"
 msgstr "Navn"
 
@@ -1096,47 +1109,39 @@ msgstr "Fredagscaféens billedalbumer"
 msgid "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
 msgstr "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
 
-#: guides/models.py:11
+#: guides/models.py:12
 msgid "Til alle"
 msgstr "Til alle"
 
-#: guides/models.py:12
+#: guides/models.py:13
 msgid "Til bartendere"
 msgstr "Til bartendere"
 
-#: guides/models.py:13
+#: guides/models.py:14
 msgid "Til bestyrelsesmedlemmer"
 msgstr "Til bestyrelsesmedlemmer"
 
-#: guides/models.py:16
-msgid "Dansk"
-msgstr "Dansk"
-
-#: guides/models.py:17
-msgid "Engelsk"
-msgstr "Engelsk"
-
-#: guides/models.py:27
+#: guides/models.py:24
 msgid "Kategori"
 msgstr "Kategori"
 
-#: guides/models.py:33
+#: guides/models.py:30
 msgid "Sprog"
 msgstr "Sprog"
 
-#: guides/models.py:37
+#: guides/models.py:34
 msgid "Dokument"
 msgstr "Dokument"
 
-#: guides/models.py:41 guides/templates/guides.html:30
+#: guides/models.py:38 guides/templates/guides.html:43
 msgid "Opdateret"
 msgstr "Opdateret"
 
-#: guides/templates/guides.html:9 web/templates/base.html:96
+#: guides/templates/guides.html:10 web/templates/base.html:96
 msgid "Guides"
 msgstr "Guides"
 
-#: guides/templates/guides.html:14
+#: guides/templates/guides.html:15
 msgctxt "Fredagscaféen"
 msgid ""
 "Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
@@ -1145,7 +1150,7 @@ msgstr ""
 "Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
 " i driften af"
 
-#: guides/templates/guides.html:17
+#: guides/templates/guides.html:18
 msgid ""
 "Vi forsøger at opdatere dem løbende, men forstå at de ikke altid afspejler "
 "virkeligheden fuldt ud."
@@ -1153,7 +1158,21 @@ msgstr ""
 "Vi forsøger at opdatere dem løbende, men forstå at de ikke altid afspejler "
 "virkeligheden fuldt ud."
 
-#: guides/templates/guides.html:31 web/templates/secrets_admin.html:14
+#: guides/templates/guides.html:21
+msgid ""
+"Har du tilføjelser eller foreslag til ændringer, kan du lave et Pull Request"
+" på GitHub "
+msgstr ""
+"Har du tilføjelser eller foreslag til ændringer, kan du lave et Pull Request"
+" på GitHub"
+
+#: guides/templates/guides.html:22 web/templates/about.html:26
+#: web/templates/about.html:33 web/templates/about.html:221
+msgctxt "På linket her"
+msgid "her"
+msgstr "her"
+
+#: guides/templates/guides.html:44 web/templates/secrets_admin.html:14
 msgid "Link"
 msgstr "Link"
 
@@ -2007,12 +2026,6 @@ msgstr ""
 "\n"
 "Tag endelig et kig på vores faste sortiment,"
 
-#: web/templates/about.html:26 web/templates/about.html:33
-#: web/templates/about.html:221
-msgctxt "På linket her"
-msgid "her"
-msgstr "her"
-
 #: web/templates/about.html:29
 msgid ""
 "\n"
@@ -2353,6 +2366,12 @@ msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+
+#~ msgid "Dansk"
+#~ msgstr "Dansk"
+
+#~ msgid "Engelsk"
+#~ msgstr "Engelsk"
 
 #~ msgid "Yellow"
 #~ msgstr "Gul"
