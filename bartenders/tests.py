@@ -64,6 +64,8 @@ class BartenderApplicationTests(TestCase):
             email="abe@cs.au.dk",
             studentNumber=123123,
             phoneNumber=12312312,
+            birthday=datetime.datetime(1993, 1, 1).date(),
+            prefered_language="da",
             tshirt_size="L",
             study="Datalogi",
             study_year=1,
