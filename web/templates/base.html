@@ -136,23 +136,33 @@
         {% block content %}{% endblock %}
     </div>
 
-    <footer>
+    <footer class="text-primary-emphasis">
         <div class="container">
             <hr>
             <div class="d-flex justify-content-center">
                 <div class="p-2">
-                    <a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="external">
-                    <img id="facebook-link" src="{% static 'images/facebook.png' %}" height="25">
+                    <a href="https://www.facebook.com/fredagscafeen.dk/" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'facebook' size='1.35em' %}
                     </a>
                 </div>
                 <div class="p-2">
-                    <a href="https://www.instagram.com/fredagscafeen.dk/" target="_blank" rel="external">
-                        <img id="instagram-link" src="{% static 'images/instagram.png' %}" height="25">
+                    <a href="https://www.instagram.com/fredagscafeen.dk/" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'instagram' size='1.35em' %}
                     </a>
                 </div>
                 <div class="p-2">
-                    <a href="https://github.com/fredagscafeen" target="_blank" rel="external">
-                        <img id="github-link" src="{% static 'images/github.png' %}" height="25">
+                    <a href="https://github.com/fredagscafeen" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'github' size='1.35em' %}
+                    </a>
+                </div>
+                <div class="p-2">
+                    <a href="https://gitlab.au.dk/fredagscafeen" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'gitlab' size='1.35em' %}
+                    </a>
+                </div>
+                <div class="p-2">
+                    <a href="https://www.linkedin.com/company/fredagscafeen/" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'linkedin' size='1.35em' %}
                     </a>
                 </div>
             </div>

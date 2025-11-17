@@ -44,20 +44,6 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     opacity: 0.5;
 }
 
-.social-link {
-    flex: right;
-    padding: 0px;
-    height: 25px;
-    border: solid;
-    border-width: 0px;
-    border-radius: 5px;
-    border-color: #151515;
-}
-
-.social-link:hover {
-    opacity: 0.6;
-}
-
 .image-inverted {
     filter: brightness(0) invert(1);
 }
