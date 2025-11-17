@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 16:53+0100\n"
-"PO-Revision-Date: 2025-11-17 16:53+0050\n"
+"POT-Creation-Date: 2025-11-17 20:58+0100\n"
+"PO-Revision-Date: 2025-11-17 20:59+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -1166,7 +1166,7 @@ msgstr ""
 " på GitHub"
 
 #: guides/templates/guides.html:22 web/templates/about.html:26
-#: web/templates/about.html:33 web/templates/about.html:240
+#: web/templates/about.html:33 web/templates/about.html:245
 msgctxt "På linket her"
 msgid "her"
 msgstr "her"
@@ -2125,7 +2125,6 @@ msgid "Logo"
 msgstr "Logo"
 
 #: web/templates/about.html:120
-#| msgid "Fredagscaféen's logo"
 msgid "Fredagscaféens logo"
 msgstr "Fredagscaféens logo"
 
@@ -2140,15 +2139,19 @@ msgstr ""
 "Vores logo forestiller <i>Kaffeturingmaskinen</i>. En kaffekande, som bliver varmet af\n"
 "den turingmaskine den står på. Ud af siderne løber det uendelige bånd fra turingmaskinen."
 
-#: web/templates/about.html:134
+#: web/templates/about.html:129
+msgid "Logoet er originalt tegnet af"
+msgstr "Logoet er originalt tegnet af"
+
+#: web/templates/about.html:139
 msgid "Adfærdskodeks"
 msgstr "Adfærdskodeks"
 
-#: web/templates/about.html:142
+#: web/templates/about.html:147
 msgid "Formål"
 msgstr "Formål"
 
-#: web/templates/about.html:147
+#: web/templates/about.html:152
 msgid ""
 "\n"
 "                Fredagsbaren er et socialt arrangement for indskrevne studerende på Aarhus Universitet.\n"
@@ -2159,11 +2162,11 @@ msgstr ""
 "Fredagsbaren er et socialt arrangement for indskrevne studerende på Aarhus Universitet.\n"
 "Formålet er at skabe et trygt og hyggeligt fællesskab for alle deltagere."
 
-#: web/templates/about.html:157
+#: web/templates/about.html:162
 msgid "Målgruppe"
 msgstr "Målgruppe"
 
-#: web/templates/about.html:162
+#: web/templates/about.html:167
 msgid ""
 "\n"
 "                Fredagsbaren er i udgangspunktet for indskrevne studerende ved Aarhus Universitet.\n"
@@ -2174,21 +2177,21 @@ msgstr ""
 "Fredagsbaren er i udgangspunktet for indskrevne studerende ved Aarhus Universitet.\n"
 "Gæster udefra er også velkomne, så længe de også respekterer retningslinjerne for adfærd herunder, samt dem fra"
 
-#: web/templates/about.html:166
+#: web/templates/about.html:171
 msgid ""
 "https://cs.au.dk/da/om-institut-for-datalogi/code-of-conduct-adfaerdskodeks/"
 msgstr ""
 "https://cs.au.dk/da/om-institut-for-datalogi/code-of-conduct-adfaerdskodeks/"
 
-#: web/templates/about.html:166
+#: web/templates/about.html:171
 msgid "Institut for Datalogi"
 msgstr "Institut for Datalogi"
 
-#: web/templates/about.html:173
+#: web/templates/about.html:178
 msgid "Adfærd"
 msgstr "Adfærd"
 
-#: web/templates/about.html:178
+#: web/templates/about.html:183
 msgid ""
 "\n"
 "                Alle deltagere skal respektere følgende grundlæggende retningslinjer:\n"
@@ -2197,7 +2200,7 @@ msgstr ""
 "\n"
 "Alle deltagere skal respektere følgende grundlæggende retningslinjer:"
 
-#: web/templates/about.html:182
+#: web/templates/about.html:187
 msgid ""
 "Opføre sig respektfuldt overfor de andre deltagende gæster og de frivillige "
 "bartendere."
@@ -2205,11 +2208,11 @@ msgstr ""
 "Opføre sig respektfuldt overfor de andre deltagende gæster og de frivillige "
 "bartendere."
 
-#: web/templates/about.html:183
+#: web/templates/about.html:188
 msgid "Undlad støjende, truende eller generende adfærd."
 msgstr "Undlad støjende, truende eller generende adfærd."
 
-#: web/templates/about.html:184
+#: web/templates/about.html:189
 msgid ""
 "Vær opmærksom på grænser - diskriminerende, krænkende eller på anden måde "
 "uacceptabel adfærd tolereres ikke."
@@ -2217,17 +2220,17 @@ msgstr ""
 "Vær opmærksom på grænser - diskriminerende, krænkende eller på anden måde "
 "uacceptabel adfærd tolereres ikke."
 
-#: web/templates/about.html:185
+#: web/templates/about.html:190
 msgid ""
 "Følg gældende lovgivning, herunder regler om alkohol, rusmidler og rygning."
 msgstr ""
 "Følg gældende lovgivning, herunder regler om alkohol, rusmidler og rygning."
 
-#: web/templates/about.html:193
+#: web/templates/about.html:198
 msgid "Sanktioner og bortvisning"
 msgstr "Sanktioner og bortvisning"
 
-#: web/templates/about.html:198
+#: web/templates/about.html:203
 msgid ""
 "\n"
 "                Arrangørerne forbeholder sig ret til at:\n"
@@ -2236,7 +2239,7 @@ msgstr ""
 "\n"
 "Arrangørerne forbeholder sig ret til at:"
 
-#: web/templates/about.html:202
+#: web/templates/about.html:207
 msgid ""
 "Afvise eller bortvise personer, der ikke opfylder retningslinjerne for "
 "adfærd ovenfor."
@@ -2244,7 +2247,7 @@ msgstr ""
 "Afvise eller bortvise personer, der ikke opfylder retningslinjerne for "
 "adfærd ovenfor."
 
-#: web/templates/about.html:203
+#: web/templates/about.html:208
 msgid ""
 "Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove"
 " overtrædelser finder sted."
@@ -2252,11 +2255,11 @@ msgstr ""
 "Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove"
 " overtrædelser finder sted."
 
-#: web/templates/about.html:211
+#: web/templates/about.html:216
 msgid "Disciplinære foranstaltninger for studerende"
 msgstr "Disciplinære foranstaltninger for studerende"
 
-#: web/templates/about.html:216
+#: web/templates/about.html:221
 msgid ""
 "\n"
 "                Indskrevne studerende, der forbryder sig mod AU's ordensregler, kan desuden blive omfattet\n"
@@ -2267,15 +2270,15 @@ msgstr ""
 "Indskrevne studerende, der forbryder sig mod AU's ordensregler, kan desuden blive omfattet\n"
 "af disciplinære foranstaltninger i henhold til"
 
-#: web/templates/about.html:221
+#: web/templates/about.html:226
 msgid "Aarhus Universitet's ordensregler"
 msgstr "Aarhus Universitets ordensregler"
 
-#: web/templates/about.html:228
+#: web/templates/about.html:233
 msgid "Rapportering af overtrædelser"
 msgstr "Rapportering af overtrædelser"
 
-#: web/templates/about.html:233
+#: web/templates/about.html:238
 msgid ""
 "\n"
 "                Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem\n"
@@ -2284,7 +2287,7 @@ msgstr ""
 "\n"
 "Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem"
 
-#: web/templates/about.html:237
+#: web/templates/about.html:242
 msgid ""
 "\n"
 "                eller specifikke medlemmer, hvis kontaktoplysninger kan findes\n"
@@ -2293,7 +2296,7 @@ msgstr ""
 "\n"
 "eller specifikke medlemmer, hvis kontaktoplysninger kan findes"
 
-#: web/templates/about.html:241
+#: web/templates/about.html:246
 msgid ""
 "\n"
 "                Alle henvendelser vil blive behandlet fortroligt, og der vil blive taget hensyn til den enkeltes ønsker om anonymitet.\n"
