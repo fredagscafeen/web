@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 20:58+0100\n"
-"PO-Revision-Date: 2025-11-17 20:59+0050\n"
+"POT-Creation-Date: 2025-11-19 21:42+0100\n"
+"PO-Revision-Date: 2025-11-19 21:45+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -85,6 +85,24 @@ msgstr "Vælg kontant eller ej."
 msgid "Invalid sum"
 msgstr "Invalid sum"
 
+#: bartab/templates/admin/consumption.html:8
+msgid "Submit"
+msgstr "Indsend"
+
+#: bartab/templates/admin/consumption.html:12
+msgid "Result"
+msgstr "Resultat"
+
+#: bartab/templates/admin/consumption.html:20 events/templates/event.html:129
+#: guides/templates/guides.html:42 items/templates/items.html:51
+#: mail/models.py:18
+msgid "Navn"
+msgstr "Navn"
+
+#: bartab/templates/admin/consumption.html:21
+msgid "Forbrug"
+msgstr "Forbrug"
+
 #: bartab/templates/bartab.html:7
 msgid "Krydslisteaktivitet"
 msgstr "Krydslisteaktivitet"
@@ -119,24 +137,6 @@ msgstr "Dato"
 msgid "er ikke på krydslisten."
 msgstr "er ikke på krydslisten."
 
-#: bartab/templates/bartab/consumption.html:8
-msgid "Submit"
-msgstr "Indsend"
-
-#: bartab/templates/bartab/consumption.html:12
-msgid "Result"
-msgstr "Resultat"
-
-#: bartab/templates/bartab/consumption.html:20 events/templates/event.html:129
-#: guides/templates/guides.html:42 items/templates/items.html:51
-#: mail/models.py:8
-msgid "Navn"
-msgstr "Navn"
-
-#: bartab/templates/bartab/consumption.html:21
-msgid "Forbrug"
-msgstr "Forbrug"
-
 #: bartenders/models.py:53
 msgid "Fulde navn"
 msgstr "Fulde navn"
@@ -145,9 +145,11 @@ msgstr "Fulde navn"
 msgid "Brugernavn"
 msgstr "Brugernavn"
 
-#: bartenders/models.py:60 web/templates/about.html:94
-msgid "E-mail"
-msgstr "E-mail"
+#: bartenders/models.py:60
+#: bartenders/templates/bartender_shift_period_change_form.html:8
+#: web/templates/about.html:94
+msgid "Email"
+msgstr "Email"
 
 #: bartenders/models.py:61
 msgid "En post.au mail fungerer ikke"
@@ -385,7 +387,7 @@ msgstr "Bartenderens første vagt"
 msgid "Edit"
 msgstr "Rediger"
 
-#: bartenders/templates/barplan.html:355 bartenders/views.py:303
+#: bartenders/templates/barplan.html:355 bartenders/views.py:309
 msgid "Pantvagter"
 msgstr "Pantvagter"
 
@@ -480,10 +482,6 @@ msgstr "er ikke bartender."
 msgid "Bartender"
 msgstr "Bartender"
 
-#: bartenders/templates/bartender_shift_period_change_form.html:8
-msgid "Email"
-msgstr "E-mail"
-
 #: bartenders/templates/bartender_shift_period_change_form.html:9
 msgid "Antal vagter"
 msgstr "Antal vagter"
@@ -538,28 +536,28 @@ msgstr ""
 "Velkommen til Fredagscaféens webside, her kan du finde information om "
 "åbningstider, sortiment, udlejning af fadølsanlæg og grill mm."
 
-#: bartenders/templates/index.html:13
+#: bartenders/templates/index.html:14
 msgid "Bartendertilmelding"
 msgstr "Bartendertilmelding"
 
-#: bartenders/templates/index.html:16
-msgid ""
-"Er du interesseret i at være med i et fedt fællesskab hvor vi hygger bag "
-"baren og serverer nogle kolde drikkevarer?"
-msgstr ""
-"Er du interesseret i at være med i et fedt fællesskab hvor vi hygger bag "
-"baren og serverer nogle kolde drikkevarer?"
-
 #: bartenders/templates/index.html:17
 msgid ""
-"Du vil som bartender få ca. 2 vagter pr. semester, hvor du er med til at "
-"sikre at alle får slukket tørsten."
+"Er du interesseret i at være med i et fedt fællesskab hvor vi hygger bag "
+"baren og serverer nogle kolde drikkevarer?"
 msgstr ""
-"Du vil som bartender få ca. 2 vagter pr. semester, hvor du er med til at "
-"sikre at alle får slukket tørsten."
+"Er du interesseret i at være med i et fedt fællesskab hvor vi hygger bag "
+"baren og serverer nogle kolde drikkevarer?"
 
 #: bartenders/templates/index.html:18
 msgid ""
+"Du vil som bartender få ca. 2 vagter pr. semester, hvor du er med til at "
+"sikre at alle får slukket tørsten."
+msgstr ""
+"Du vil som bartender få ca. 2 vagter pr. semester, hvor du er med til at "
+"sikre at alle får slukket tørsten."
+
+#: bartenders/templates/index.html:19
+msgid ""
 "Udover dette inviteres du til vores årlige arrangementer for bartendere, "
 "såsom Sommerfesten og Julefrokosten. Derudover vil der løbende være fede "
 "begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere."
@@ -568,15 +566,15 @@ msgstr ""
 "såsom Sommerfesten og Julefrokosten. Derudover vil der løbende være fede "
 "begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere."
 
-#: bartenders/templates/index.html:19
+#: bartenders/templates/index.html:20
 msgid "Det er en god idé at læse"
 msgstr "Det er en god idé at læse"
 
-#: bartenders/templates/index.html:19
+#: bartenders/templates/index.html:20
 msgid "barvagt-guiden"
 msgstr "barvagt-guiden"
 
-#: bartenders/templates/index.html:20
+#: bartenders/templates/index.html:21
 msgid ""
 "før du tilmelder dig, så du ved hvad en typisk vagt i Fredagscaféen "
 "indebærer."
@@ -584,11 +582,11 @@ msgstr ""
 "før du tilmelder dig, så du ved hvad en typisk vagt i Fredagscaféen "
 "indebærer."
 
-#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:160
+#: bartenders/templates/index.html:27 udlejning/templates/udlejning.html:160
 msgid "Indsend"
 msgstr "Indsend"
 
-#: bartenders/templates/index.html:33
+#: bartenders/templates/index.html:34
 msgid "Bartendertilmeldingen er lukket."
 msgstr "Bartendertilmeldingen er lukket."
 
@@ -604,51 +602,51 @@ msgstr "Streak"
 msgid "Start - Slut"
 msgstr "Start - Slut"
 
-#: bartenders/views.py:76
+#: bartenders/views.py:82
 msgid "Din ansøgning er blevet indsendt."
 msgstr "Din ansøgning er blevet indsendt."
 
-#: bartenders/views.py:219
+#: bartenders/views.py:225
 msgid "Vagt tilgængelig for andre til at tage."
 msgstr "Vagt tilgængelig for andre til at tage."
 
-#: bartenders/views.py:226
+#: bartenders/views.py:232
 msgid "Vagt ikke længere tilgængelig for andre."
 msgstr "Vagt ikke længere tilgængelig for andre."
 
-#: bartenders/views.py:234
+#: bartenders/views.py:240
 msgid "Du har allerede en barvagt der!"
 msgstr "Du har allerede en barvagt der!"
 
-#: bartenders/views.py:238
+#: bartenders/views.py:244
 msgid "Barplan opdateret."
 msgstr "Barplan opdateret."
 
-#: bartenders/views.py:240
+#: bartenders/views.py:246
 msgid "An error occurred."
 msgstr "Der opstod en fejl."
 
-#: bartenders/views.py:264
+#: bartenders/views.py:270
 msgid "Barvagter"
 msgstr "Barvagter"
 
-#: bartenders/views.py:287 bartenders/views.py:326
+#: bartenders/views.py:293 bartenders/views.py:332
 msgid "Responsible"
 msgstr "Ansvarlig"
 
-#: bartenders/views.py:288
+#: bartenders/views.py:294
 msgid "Other bartenders"
 msgstr "Andre bartendere"
 
-#: bartenders/views.py:467
+#: bartenders/views.py:473
 msgid "Profil opdateret"
 msgstr "Profil opdateret"
 
-#: bartenders/views.py:493
+#: bartenders/views.py:499
 msgid "Du er nu afmeldt"
 msgstr "Du er nu afmeldt"
 
-#: bartenders/views.py:497
+#: bartenders/views.py:503
 msgid "mailinglisten"
 msgstr "mailinglisten"
 
@@ -690,7 +688,8 @@ msgstr "Du skal udfylde %(choice_name)s, når du deltager"
 msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 
-#: events/models.py:61 guides/models.py:20
+#: events/models.py:61 guides/models.py:20 mail/models.py:46
+#: mail/models.py:204
 msgid "Name"
 msgstr "Navn"
 
@@ -698,7 +697,7 @@ msgstr "Navn"
 msgid "Location"
 msgstr "Lokation"
 
-#: events/models.py:69
+#: events/models.py:69 mail/models.py:50
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -1345,21 +1344,161 @@ msgstr "Logbog"
 msgid "Logbøger"
 msgstr "Logbøger"
 
-#: mail/models.py:11
+#: mail/admin.py:55 mail/models.py:214
+msgid "Attachment"
+msgstr "Vedhæftning"
+
+#: mail/admin.py:56 mail/models.py:215
+msgid "Attachments"
+msgstr "Vedhæftninger"
+
+#: mail/admin.py:95
+msgid "Fra email"
+msgstr "Fra email"
+
+#: mail/admin.py:100 mail/models.py:116
+msgid "Til email(s)"
+msgstr "Til email(s)"
+
+#: mail/admin.py:105 mail/models.py:130
+msgid "Emne"
+msgstr "Emne"
+
+#: mail/fields.py:9
+msgid "Comma-separated emails"
+msgstr "Kommaseparerede emails"
+
+#: mail/fields.py:18
+msgid "Only comma separated emails are allowed."
+msgstr "Kun kommaseparerede emails er tilladt."
+
+#: mail/forms.py:13
+msgid "Send email"
+msgstr "Send email"
+
+#: mail/forms.py:14
+msgid "Send emails"
+msgstr "Send emails"
+
+#: mail/models.py:21
 msgid "Only list members can send to this mailing list"
 msgstr "Kun listemedlemmer kan sende til denne mailingliste"
 
-#: mail/models.py:14
+#: mail/models.py:24
 msgid "Medlemmer"
 msgstr "Medlemmer"
 
-#: mail/models.py:21
+#: mail/models.py:31
 msgid "Mailingliste"
 msgstr "Mailingliste"
 
-#: mail/models.py:22
+#: mail/models.py:32
 msgid "Mailinglister"
 msgstr "Mailinglister"
+
+#: mail/models.py:54
+msgid "Subject"
+msgstr "Emne"
+
+#: mail/models.py:60
+msgid "Email HTML text"
+msgstr "Email HTML text"
+
+#: mail/models.py:66
+msgid "Email template"
+msgstr "Email-skabelon"
+
+#: mail/models.py:67
+msgid "Email templates"
+msgstr "Email skabeloner"
+
+#: mail/models.py:83
+msgid "Template variable"
+msgstr "Template variable"
+
+#: mail/models.py:84
+msgid "Template variables"
+msgstr "Template variables"
+
+#: mail/models.py:94
+msgid "Variable name"
+msgstr "Variable name"
+
+#: mail/models.py:100
+msgid "Variable value"
+msgstr "Variable value"
+
+#: mail/models.py:112
+msgid "Fra mailingliste"
+msgstr "Fra mailingliste"
+
+#: mail/models.py:117
+msgid "Cc"
+msgstr "Cc"
+
+#: mail/models.py:118
+msgid "Bcc"
+msgstr "Bcc"
+
+#: mail/models.py:119
+msgid "Svar til"
+msgstr "Svar til"
+
+#: mail/models.py:122
+msgid "Template"
+msgstr "Skabelon"
+
+#: mail/models.py:125
+msgid ""
+"If template is selected, HTML message and subject fields will not be used - "
+"they will be populated from template"
+msgstr ""
+"Hvis skabelonen er valgt, vil HTML-besked- og emnefelterne ikke blive brugt "
+"- de vil blive udfyldt fra skabelonen"
+
+#: mail/models.py:135
+msgid "Besked"
+msgstr "Besked"
+
+#: mail/models.py:139
+msgid "HTML besked"
+msgstr "HTML besked"
+
+#: mail/models.py:141
+msgid "Used only if template is not selected"
+msgstr "Bruges kun, hvis skabelonen ikke er valgt"
+
+#: mail/models.py:145
+msgid "Udgående mail"
+msgstr "Udgående mail"
+
+#: mail/models.py:146
+msgid "Udgående mails"
+msgstr "Udgående mails"
+
+#: mail/models.py:203
+msgid "File"
+msgstr "Fil"
+
+#: mail/models.py:204
+msgid "The original filename"
+msgstr "Det oprindelige filnavn"
+
+#: mail/models.py:209
+msgid "Emails"
+msgstr "Emails"
+
+#: mail/templates/admin/send_mail.html:10
+msgid "Send"
+msgstr "Send"
+
+#: mail/validators.py:20
+msgid "Error in email address name - more than one \"<\" or \">\" symbols"
+msgstr "Fejl i emailadressenavn - mere end ét \"<\" eller \">\" symbol"
+
+#: mail/validators.py:26
+msgid "Error in email address name - \">\" is before \"<\""
+msgstr "Fejl i emailadressens navn - \">\" er før \"<\""
 
 #: udlejning/models.py:12
 msgid "EAN"
@@ -1398,7 +1537,7 @@ msgstr "Hvem er I?"
 
 #: udlejning/models.py:29
 msgid "Email til kontaktperson"
-msgstr "E-mail til kontaktperson"
+msgstr "Mail til kontaktperson"
 
 #: udlejning/models.py:31
 msgid "Telefonnummer til kontaktperson"
@@ -2388,6 +2527,9 @@ msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+
+#~ msgid "E-mail"
+#~ msgstr "E-mail"
 
 #~ msgid "Dansk"
 #~ msgstr "Dansk"
