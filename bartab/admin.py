@@ -114,7 +114,7 @@ class BarTabEntryInline(admin.TabularInline):
 
 class BarTabContext:
     file_name = "bartab"
-    file_path = "bartab/bartab.tex"
+    file_path = "admin/bartab.tex"
 
     @staticmethod
     def get_context():
@@ -199,7 +199,7 @@ def top_10_consumption(admin, request):
         end=snapshot_end,
         result=result[:10],
     )
-    return TemplateResponse(request, "bartab/consumption.html", context)
+    return TemplateResponse(request, "admin/consumption.html", context)
 
 
 @custom_admin_view("bartab", "count consumption")
@@ -230,7 +230,7 @@ def count_consumption(admin, request):
         form=form,
         result=result,
     )
-    return TemplateResponse(request, "bartab/consumption.html", context)
+    return TemplateResponse(request, "admin/consumption.html", context)
 
 
 @custom_admin_view("bartab", "bartab balance graph")
@@ -260,4 +260,4 @@ def bartab_graph(admin, request):
         # Anything else you want in the context...
         graph_data=json.dumps(graph_data),
     )
-    return TemplateResponse(request, "bartab/graph.html", context)
+    return TemplateResponse(request, "admin/graph.html", context)

@@ -57,7 +57,13 @@ class Index(CreateView):
         context = super().get_context_data(**kwargs)
 
         try:
-            barshift_guide = Guide.objects.get(name="Guide til en standard barvagt")
+            barvagt_guide = Guide.objects.get(name="Guide til en standard barvagt")
+            context["barvagt_guide_url"] = barvagt_guide.document.url
+        except Guide.DoesNotExist:
+            context["barvagt_guide_url"] = "<missing>"
+
+        try:
+            barshift_guide = Guide.objects.get(name="Guide to a standard bar shift")
             context["barshift_guide_url"] = barshift_guide.document.url
         except Guide.DoesNotExist:
             context["barshift_guide_url"] = "<missing>"
