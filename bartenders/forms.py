@@ -72,18 +72,42 @@ Ansøgningen kan blive accepteret eller afvist i {link}.
         extra_info = ""
         if d["info"]:
             extra_info = f"""
+Additional information:
+{d["info"]}
+"""
+            if d["prefered_language"] == "da":
+                extra_info = f"""
 Ekstra information:
 {d["info"]}
 """
         d["extra_info"] = extra_info
 
-        return send_template_email(
-            subject=f"Kvittering for bartendertilmelding til fredagscaféen",
-            body_template="""Dette er en automatisk email.
+        subject = (f"Receipt for bartender registration for Fredagscaféen",)
+        body_template = """This is an automated email.
+
+Hi {name},
+
+Thank you for your application to become a bartender at Fredagscaféen!
+We will review your application at the next board meeting, so please expect a little wait before you hear from us.
+
+Copy of your application:
+
+Name: {name}
+Username: {username}
+Study number: {studentNumber}
+Email: {email}
+Phone number: {phoneNumber}
+{extra_info}
+
+/The board"""
+
+        if d["prefered_language"] == "da":
+            subject = (f"Kvittering for bartendertilmelding til Fredagscaféen",)
+            body_template = """Dette er en automatisk email.
 
 Hej {name},
 
-Tak for din ansøgning om at blive bartender i fredagscaféen!
+Tak for din ansøgning om at blive bartender i Fredagscaféen!
 Vi gennemgår din ansøgning på næste bestyrelsesmøde, så forvent lidt ventetid, før du hører fra os.
 
 Kopi af din ansøgning:
@@ -95,7 +119,11 @@ Email: {email}
 Telefonnummer: {phoneNumber}
 {extra_info}
 
-/Bestyrelsen""",
+/Bestyrelsen"""
+
+        return send_template_email(
+            subject=subject,
+            body_template=body_template,
             text_format={**d},
             html_format={
                 **d,

@@ -5,12 +5,11 @@ from itertools import groupby
 from constance import config
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.shortcuts import get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import (
@@ -137,6 +136,41 @@ class BartenderList(TemplateView):
         return context
 
 
+def send_shift_swap_reminder_email(released_shift, user):
+    date = released_shift.bartender_shift.start_datetime.strftime("%d %b, %Y")
+
+    text_format = {"old": released_shift.bartender.name, "new": user.name, "date": date}
+    html_format = {"old": released_shift.bartender.name, "new": user.name, "date": date}
+
+    subject = f"Shift swap {date}"
+    body_template = """This is an automated email.
+
+Hi {old},
+
+{new} have taken your bar shift {date}.
+
+/snek"""
+
+    if released_shift.bartender.prefered_language == "da":
+        subject = f"Vagtbytte d. {date}"
+        body_template = """Dette er en automatisk email.
+
+Hej {old},
+
+{new} har taget din barvagt d. {date}.
+
+/snek"""
+
+    return send_template_email(
+        subject=subject,
+        body_template=body_template,
+        text_format=text_format,
+        html_format=html_format,
+        to=[released_shift.bartender.email],
+        cc=[settings.BEST_MAIL],
+    )
+
+
 class Barplan(TemplateView):
     template_name = "barplan.html"
 
@@ -240,8 +274,11 @@ class Barplan(TemplateView):
                     messages.error(request, _("Du har allerede en barvagt der!"))
                     return redirect_url
                 bartender_shift.replace(released_shift.bartender, user_bartender)
+
+                send_shift_swap_reminder_email(released_shift, user_bartender)
+
                 released_shift.delete()
-                messages.info(request, _("Barplan opdateret."))
+                messages.info(request, _("Barplan opdateret. Mail sendt."))
         except ReleasedBartenderShift.DoesNotExist:
             messages.error(request, _("An error occurred."))
             return redirect_url

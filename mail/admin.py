@@ -1,7 +1,7 @@
 from django.conf import settings
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.forms.widgets import TextInput
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import reverse
 from django.template import Context
 from django.utils.safestring import mark_safe
@@ -125,12 +125,24 @@ class OutgoingEmailAdmin(DjangoObjectActions, admin.ModelAdmin):
 
     subject_display.short_description = _("Emne")
 
-    change_actions = ("send", "delete")
+    change_actions = ("send", "send_test")
 
     def send(self, request, obj):
         mail = obj.prepare_email_message()
         mail.send()
+        subject = mail.subject if mail.subject else "'<missing>'"
+        self.message_user(
+            request,
+            f"{subject} mail sendt.",
+            messages.SUCCESS,
+        )
 
-    def delete(self, request, obj):
-        obj.delete()
-        return HttpResponseRedirect(reverse("admin:mail_outgoingemail_changelist"))
+    def send_test(self, request, obj):
+        mail = obj.prepare_email_message(request.user.email)
+        mail.send()
+        subject = mail.subject if mail.subject else "'<missing>'"
+        self.message_user(
+            request,
+            f"{subject} test mail sendt til {request.user.email}.",
+            messages.SUCCESS,
+        )

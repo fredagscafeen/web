@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-19 21:42+0100\n"
-"PO-Revision-Date: 2025-11-19 21:45+0050\n"
+"POT-Creation-Date: 2025-11-22 19:47+0100\n"
+"PO-Revision-Date: 2025-11-22 19:48+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -145,11 +145,9 @@ msgstr "Fulde navn"
 msgid "Brugernavn"
 msgstr "Brugernavn"
 
-#: bartenders/models.py:60
-#: bartenders/templates/bartender_shift_period_change_form.html:8
-#: web/templates/about.html:94
-msgid "Email"
-msgstr "Email"
+#: bartenders/models.py:60 web/templates/about.html:94
+msgid "E-mail"
+msgstr "E-mail"
 
 #: bartenders/models.py:61
 msgid "En post.au mail fungerer ikke"
@@ -240,15 +238,15 @@ msgstr ""
 "Fortæl lidt om dig selv, og hvorfor du tror at lige præcist du, ville være "
 "en god bartender"
 
-#: bartenders/models.py:436
+#: bartenders/models.py:462
 msgid "Additional information about the shift"
 msgstr "Yderligere information om barvagten"
 
-#: bartenders/models.py:439
+#: bartenders/models.py:465
 msgid "Link to additional information"
 msgstr "Link til yderligere information"
 
-#: bartenders/models.py:442
+#: bartenders/models.py:468
 msgid "Is the link to an external site?"
 msgstr "Er linket til en ekstern side?"
 
@@ -387,7 +385,7 @@ msgstr "Bartenderens første vagt"
 msgid "Edit"
 msgstr "Rediger"
 
-#: bartenders/templates/barplan.html:355 bartenders/views.py:309
+#: bartenders/templates/barplan.html:355 bartenders/views.py:350
 msgid "Pantvagter"
 msgstr "Pantvagter"
 
@@ -481,6 +479,10 @@ msgstr "er ikke bartender."
 #: bartenders/templates/bartender_shift_period_change_form.html:7
 msgid "Bartender"
 msgstr "Bartender"
+
+#: bartenders/templates/bartender_shift_period_change_form.html:8
+msgid "Email"
+msgstr "Email"
 
 #: bartenders/templates/bartender_shift_period_change_form.html:9
 msgid "Antal vagter"
@@ -602,51 +604,52 @@ msgstr "Streak"
 msgid "Start - Slut"
 msgstr "Start - Slut"
 
-#: bartenders/views.py:82
+#: bartenders/views.py:81
 msgid "Din ansøgning er blevet indsendt."
 msgstr "Din ansøgning er blevet indsendt."
 
-#: bartenders/views.py:225
+#: bartenders/views.py:263
 msgid "Vagt tilgængelig for andre til at tage."
 msgstr "Vagt tilgængelig for andre til at tage."
 
-#: bartenders/views.py:232
+#: bartenders/views.py:270
 msgid "Vagt ikke længere tilgængelig for andre."
 msgstr "Vagt ikke længere tilgængelig for andre."
 
-#: bartenders/views.py:240
+#: bartenders/views.py:278
 msgid "Du har allerede en barvagt der!"
 msgstr "Du har allerede en barvagt der!"
 
-#: bartenders/views.py:244
-msgid "Barplan opdateret."
-msgstr "Barplan opdateret."
+#: bartenders/views.py:285
+#| msgid "Barplan opdateret."
+msgid "Barplan opdateret. Mail sendt."
+msgstr "Barplan opdateret. Mail sendt."
 
-#: bartenders/views.py:246
+#: bartenders/views.py:287
 msgid "An error occurred."
 msgstr "Der opstod en fejl."
 
-#: bartenders/views.py:270
+#: bartenders/views.py:311
 msgid "Barvagter"
 msgstr "Barvagter"
 
-#: bartenders/views.py:293 bartenders/views.py:332
+#: bartenders/views.py:334 bartenders/views.py:373
 msgid "Responsible"
 msgstr "Ansvarlig"
 
-#: bartenders/views.py:294
+#: bartenders/views.py:335
 msgid "Other bartenders"
 msgstr "Andre bartendere"
 
-#: bartenders/views.py:473
+#: bartenders/views.py:514
 msgid "Profil opdateret"
 msgstr "Profil opdateret"
 
-#: bartenders/views.py:499
+#: bartenders/views.py:540
 msgid "Du er nu afmeldt"
 msgstr "Du er nu afmeldt"
 
-#: bartenders/views.py:503
+#: bartenders/views.py:544
 msgid "mailinglisten"
 msgstr "mailinglisten"
 
@@ -688,8 +691,8 @@ msgstr "Du skal udfylde %(choice_name)s, når du deltager"
 msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 
-#: events/models.py:61 guides/models.py:20 mail/models.py:46
-#: mail/models.py:204
+#: events/models.py:61 guides/models.py:20 mail/models.py:45
+#: mail/models.py:202
 msgid "Name"
 msgstr "Navn"
 
@@ -697,7 +700,7 @@ msgstr "Navn"
 msgid "Location"
 msgstr "Lokation"
 
-#: events/models.py:69 mail/models.py:50
+#: events/models.py:69 mail/models.py:46
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -1344,23 +1347,23 @@ msgstr "Logbog"
 msgid "Logbøger"
 msgstr "Logbøger"
 
-#: mail/admin.py:55 mail/models.py:214
+#: mail/admin.py:69 mail/models.py:210
 msgid "Attachment"
 msgstr "Vedhæftning"
 
-#: mail/admin.py:56 mail/models.py:215
+#: mail/admin.py:70 mail/models.py:211
 msgid "Attachments"
 msgstr "Vedhæftninger"
 
-#: mail/admin.py:95
+#: mail/admin.py:116
 msgid "Fra email"
 msgstr "Fra email"
 
-#: mail/admin.py:100 mail/models.py:116
+#: mail/admin.py:121 mail/models.py:102
 msgid "Til email(s)"
 msgstr "Til email(s)"
 
-#: mail/admin.py:105 mail/models.py:130
+#: mail/admin.py:126 mail/models.py:117
 msgid "Emne"
 msgstr "Emne"
 
@@ -1396,59 +1399,59 @@ msgstr "Mailingliste"
 msgid "Mailinglister"
 msgstr "Mailinglister"
 
-#: mail/models.py:54
+#: mail/models.py:48
 msgid "Subject"
 msgstr "Emne"
 
-#: mail/models.py:60
+#: mail/models.py:54
 msgid "Email HTML text"
 msgstr "Email HTML text"
 
-#: mail/models.py:66
+#: mail/models.py:60
 msgid "Email template"
 msgstr "Email-skabelon"
 
-#: mail/models.py:67
+#: mail/models.py:61
 msgid "Email templates"
 msgstr "Email skabeloner"
 
-#: mail/models.py:83
+#: mail/models.py:77
 msgid "Template variable"
 msgstr "Template variable"
 
-#: mail/models.py:84
+#: mail/models.py:78
 msgid "Template variables"
 msgstr "Template variables"
 
-#: mail/models.py:94
+#: mail/models.py:85
 msgid "Variable name"
 msgstr "Variable name"
 
-#: mail/models.py:100
+#: mail/models.py:88
 msgid "Variable value"
 msgstr "Variable value"
 
-#: mail/models.py:112
+#: mail/models.py:98
 msgid "Fra mailingliste"
 msgstr "Fra mailingliste"
 
-#: mail/models.py:117
+#: mail/models.py:103
 msgid "Cc"
 msgstr "Cc"
 
-#: mail/models.py:118
+#: mail/models.py:104
 msgid "Bcc"
 msgstr "Bcc"
 
-#: mail/models.py:119
+#: mail/models.py:105
 msgid "Svar til"
 msgstr "Svar til"
 
-#: mail/models.py:122
+#: mail/models.py:108
 msgid "Template"
 msgstr "Skabelon"
 
-#: mail/models.py:125
+#: mail/models.py:112
 msgid ""
 "If template is selected, HTML message and subject fields will not be used - "
 "they will be populated from template"
@@ -1456,35 +1459,35 @@ msgstr ""
 "Hvis skabelonen er valgt, vil HTML-besked- og emnefelterne ikke blive brugt "
 "- de vil blive udfyldt fra skabelonen"
 
-#: mail/models.py:135
+#: mail/models.py:118
 msgid "Besked"
 msgstr "Besked"
 
-#: mail/models.py:139
+#: mail/models.py:120
 msgid "HTML besked"
 msgstr "HTML besked"
 
-#: mail/models.py:141
+#: mail/models.py:122
 msgid "Used only if template is not selected"
 msgstr "Bruges kun, hvis skabelonen ikke er valgt"
 
-#: mail/models.py:145
+#: mail/models.py:126
 msgid "Udgående mail"
 msgstr "Udgående mail"
 
-#: mail/models.py:146
+#: mail/models.py:127
 msgid "Udgående mails"
 msgstr "Udgående mails"
 
-#: mail/models.py:203
+#: mail/models.py:200
 msgid "File"
 msgstr "Fil"
 
-#: mail/models.py:204
+#: mail/models.py:202
 msgid "The original filename"
 msgstr "Det oprindelige filnavn"
 
-#: mail/models.py:209
+#: mail/models.py:205
 msgid "Emails"
 msgstr "Emails"
 
@@ -1492,11 +1495,11 @@ msgstr "Emails"
 msgid "Send"
 msgstr "Send"
 
-#: mail/validators.py:20
+#: mail/validators.py:21
 msgid "Error in email address name - more than one \"<\" or \">\" symbols"
 msgstr "Fejl i emailadressenavn - mere end ét \"<\" eller \">\" symbol"
 
-#: mail/validators.py:26
+#: mail/validators.py:28
 msgid "Error in email address name - \">\" is before \"<\""
 msgstr "Fejl i emailadressens navn - \">\" er før \"<\""
 
@@ -2080,6 +2083,11 @@ msgstr ""
 "Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til "
 "dig med et svar hurtigst muligt."
 
+#: web/forms.py:25
+#| msgid "Send email"
+msgid "Ukendt email"
+msgstr "Ukendt email"
+
 #: web/templates/403.html:7
 msgid "Adgang nægtet"
 msgstr "Adgang nægtet"
@@ -2527,9 +2535,6 @@ msgid ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
-
-#~ msgid "E-mail"
-#~ msgstr "E-mail"
 
 #~ msgid "Dansk"
 #~ msgstr "Dansk"

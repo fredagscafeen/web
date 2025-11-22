@@ -45,7 +45,7 @@ class Login(FormView):
     success_url = settings.LOGIN_URL
 
     def form_valid(self, form):
-        form.send_email(self.request.GET.get("next"))
+        form.send_email(self.request.GET.get("next"), self.request.path)
         messages.success(
             self.request,
             _(

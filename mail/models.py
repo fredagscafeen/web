@@ -129,7 +129,7 @@ class OutgoingEmail(models.Model):
     def __str__(self):
         return self.subject if self.subject else f"Mail ({self.pk})"
 
-    def prepare_email_message(self):
+    def prepare_email_message(self, to_mail=None):
         """
         Returns a django ``EmailMessage`` or ``EmailMultiAlternatives`` object,
         depending on whether html_message is empty.
@@ -144,13 +144,14 @@ class OutgoingEmail(models.Model):
             html_message = self.html_message
 
         from_mail = f"{self.from_mailing_list}@{settings.DOMAIN}"
+        to_mail = to_mail if to_mail != None else self.to
 
         if html_message:
             msg = EmailMultiAlternatives(
                 subject=subject,
                 body=message,
                 from_email=from_mail,
-                to=self.to,
+                to=to_mail,
                 bcc=self.bcc,
                 cc=self.cc,
             )
@@ -160,7 +161,7 @@ class OutgoingEmail(models.Model):
                 subject=subject,
                 body=message,
                 from_email=from_mail,
-                to=self.to,
+                to=to_mail,
                 bcc=self.bcc,
                 cc=self.cc,
             )

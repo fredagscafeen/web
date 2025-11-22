@@ -296,12 +296,34 @@ class BartenderApplication(BartenderCommon):
         for url_name in URLS:
             url = urljoin(settings.SELF_URL, reverse(url_name))
             link_name = f"{url_name}_link"
-            text_format[link_name] = f"her: {url}"
-            html_format[link_name] = mark_safe(f'<a href="{url}">her</a>')
+            text_format[link_name] = f"here: {url}"
+            html_format[link_name] = mark_safe(f'<a href="{url}">here</a>')
 
-        return send_template_email(
-            subject=f"Bartendertilmelding: {self.name}",
-            body_template="""Hej {name},
+            if self.prefered_language == "da":
+                text_format[link_name] = f"her: {url}"
+                html_format[link_name] = mark_safe(f'<a href="{url}">her</a>')
+
+        subject = f"Bartender registration: {self.name}"
+        body_template = """This is an automated email.
+
+Hi {name},
+
+Your application to become a bartender at Fredagscafeen has been accepted.
+The scheduler will assign you bar shifts when the new bar schedule is created.
+You can see the bar schedule {barplan_link} and you can mark which days you can't stand at the bar {profile_link}.
+You have been added to our mailing list (alle@fredagscafeen.dk).
+
+Remember to read the bartender guides, which can be seen {guides_link}.
+
+See you at the bar! :)
+
+/The board"""
+
+        if self.prefered_language == "da":
+            subject = f"Bartendertilmelding: {self.name}"
+            body_template = """Dette er en automatisk email.
+
+Hej {name},
 
 Din ansøgning om at blive bartender ved Fredagscaféen er blevet accepteret.
 Scheduleren vil tildele dig barvagter, når den nye barplan bliver lavet.
@@ -313,7 +335,11 @@ Husk at læse bartenderguides'ne, som kan ses {guides_link}.
 
 Ses i baren! :)
 
-/Bestyrelsen""",
+/Bestyrelsen"""
+
+        return send_template_email(
+            subject=subject,
+            body_template=body_template,
             text_format=text_format,
             html_format=html_format,
             to=[self.email],
