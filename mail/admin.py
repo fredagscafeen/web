@@ -138,7 +138,8 @@ class OutgoingEmailAdmin(DjangoObjectActions, admin.ModelAdmin):
         )
 
     def send_test(self, request, obj):
-        mail = obj.prepare_email_message(request.user.email)
+        to_mails = [request.user.email]
+        mail = obj.prepare_email_message(to_mails)
         mail.send()
         subject = mail.subject if mail.subject else "'<missing>'"
         self.message_user(

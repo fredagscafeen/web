@@ -543,14 +543,17 @@ class BartenderShift(models.Model):
         return bartender in self.all_bartenders()
 
     def compare_to_current_week(self):
-        iso_year, iso_week_number, iso_weekday = timezone.now().isocalendar()
+        current_iso_year, current_iso_week_number, _ = timezone.now().isocalendar()
+        start_iso_year, start_iso_week_number, _ = self.start_datetime.isocalendar()
+        end_iso_year, end_iso_week_number, _ = self.end_datetime.isocalendar()
+
         less_than_week = (
-            self.start_datetime.isocalendar()[1] <= iso_week_number
-            and self.start_datetime.isocalendar()[0] <= iso_year
+            start_iso_week_number <= current_iso_week_number
+            and start_iso_year <= current_iso_year
         )
         greater_than_week = (
-            self.end_datetime.isocalendar()[1] >= iso_week_number
-            and self.end_datetime.isocalendar()[0] >= iso_year
+            end_iso_week_number >= current_iso_week_number
+            and end_iso_year >= current_iso_year
         )
 
         if less_than_week and greater_than_week:
@@ -624,14 +627,17 @@ class BoardMemberDepositShift(models.Model):
         return bartender in self.responsibles.all()
 
     def compare_to_current_week(self):
-        iso_year, iso_week_number, iso_weekday = timezone.now().isocalendar()
+        current_iso_year, current_iso_week_number, _ = timezone.now().isocalendar()
+        start_iso_year, start_iso_week_number, _ = self.start_date.isocalendar()
+        end_iso_year, end_iso_week_number, _ = self.start_date.isocalendar()
+
         less_than_week = (
-            self.start_date.isocalendar()[1] <= iso_week_number
-            and self.start_date.isocalendar()[0] <= iso_year
+            start_iso_week_number <= current_iso_week_number
+            and start_iso_year <= current_iso_year
         )
         greater_than_week = (
-            self.end_date.isocalendar()[1] >= iso_week_number
-            and self.end_date.isocalendar()[0] >= iso_year
+            end_iso_week_number >= current_iso_week_number
+            and end_iso_year >= current_iso_year
         )
 
         if less_than_week and greater_than_week:
