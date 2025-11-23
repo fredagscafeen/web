@@ -64,7 +64,7 @@
             <p class="card-text">
                 {% translate "P.t. har baren været åben" %} <b><i>{{ shift_streak.streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak.streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak.start_datetime|date:"j. F, Y" }}</b>.
             </p>
-        {% else %}
+        {% elif longest_streak %}
             <p class="card-text">
                 {% translate "Den længste streak baren har haft åben, er " %} <b>{{ longest_streak.streak }}</b> {% blocktranslate count c=longest_streak.streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, fra" %} <b>{% translate "d." context "d. 1. i 1." %} {{ longest_streak.start_datetime|date:"j. F, Y" }}</b> {% translate "til" %} <b>{% translate "d." context "d. 1. i 1." %} {{ longest_streak.end_datetime|date:"j. F, Y" }}</b>.
             </p>

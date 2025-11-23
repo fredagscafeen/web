@@ -99,7 +99,8 @@ class About(TemplateView):
             ):
                 current_streak.is_current_shift = True
                 found = True
-        shift_streaks.append(current_streak)
+        if current_streak:
+            shift_streaks.append(current_streak)
         shift_streak = None
         longest_streak = None
         if found:
@@ -107,7 +108,7 @@ class About(TemplateView):
                 if shift.is_current_shift:
                     shift_streak = shift
                     break
-        else:
+        elif len(shift_streaks) != 0:
             longest_streak = max(shift_streaks, key=lambda x: x.streak, default=None)
         context["shift_streak"] = shift_streak
         context["longest_streak"] = longest_streak

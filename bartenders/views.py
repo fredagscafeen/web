@@ -167,7 +167,6 @@ Hej {old},
         text_format=text_format,
         html_format=html_format,
         to=[released_shift.bartender.email],
-        cc=[settings.BEST_MAIL],
     )
 
 
@@ -246,16 +245,16 @@ class Barplan(TemplateView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         redirect_url = redirect("/barplan/")
         try:
             user_bartender = Bartender.objects.get(email=request.user.email)
             if "release" in request.POST:
                 bartender_shift_pk = request.POST.get("release")
                 bartender_shift = BartenderShift.objects.get(pk=bartender_shift_pk)
-                ReleasedBartenderShift(
+                ReleasedBartenderShift.objects.get_or_create(
                     bartender=user_bartender, bartender_shift=bartender_shift
-                ).save()
+                )
                 messages.info(request, _("Vagt tilgængelig for andre til at tage."))
             elif "withdraw" in request.POST:
                 released_bartender_shift_pk = request.POST.get("withdraw")

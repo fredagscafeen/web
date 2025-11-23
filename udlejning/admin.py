@@ -135,7 +135,7 @@ Se {{link}} for mere info.
             html_format={
                 "link": mark_safe(f'<a href="{url}">{url}</a>'),
             },
-            to=["best@fredagscafeen.dk"],
+            to=[settings.BEST_MAIL],
         )
 
     def accept(self, request, obj):
