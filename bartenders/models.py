@@ -543,11 +543,10 @@ class BartenderShift(models.Model):
         return bartender in self.all_bartenders()
 
     def compare_to_current_week(self):
-        date = timezone.now().date()
-        less_than_week = self.start_datetime.date() <= date + datetime.timedelta(days=4)
-        greater_than_week = self.end_datetime.date() >= date - datetime.timedelta(
-            days=2
-        )
+        iso_year, iso_week_number, iso_weekday = timezone.now().isocalendar()
+        less_than_week = self.start_datetime.isocalendar()[1] <= iso_week_number
+        greater_than_week = self.end_datetime.isocalendar()[1] >= iso_week_number
+
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:
@@ -619,9 +618,10 @@ class BoardMemberDepositShift(models.Model):
         return bartender in self.responsibles.all()
 
     def compare_to_current_week(self):
-        date = timezone.now().date()
-        less_than_week = self.start_date <= date
-        greater_than_week = self.end_date >= date
+        iso_year, iso_week_number, iso_weekday = timezone.now().isocalendar()
+        less_than_week = self.start_date.isocalendar()[1] <= iso_week_number
+        greater_than_week = self.end_date.isocalendar()[1] >= iso_week_number
+
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:

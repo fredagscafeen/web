@@ -167,6 +167,7 @@ Hej {old},
         text_format=text_format,
         html_format=html_format,
         to=[released_shift.bartender.email],
+        cc=[settings.BEST_MAIL],
     )
 
 
@@ -289,14 +290,14 @@ class Barplan(TemplateView):
             page = paginator.get_page(i)
             if any(shift.compare_to_current_week() == 0 for shift in page):
                 return i
-        return None
+        return 1
 
     def current_deposit_week_page_number(self, paginator):
         for i in range(1, paginator.num_pages + 1):
             page = paginator.get_page(i)
             if any(shift.compare_to_current_week() == 0 for shift in page):
                 return i
-        return None
+        return 1
 
 
 class UserBarplan(ICalFeed):
