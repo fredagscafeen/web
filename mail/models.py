@@ -161,7 +161,7 @@ class OutgoingEmail(models.Model):
                 subject=subject,
                 body=message,
                 from_email=from_mail,
-                to=to_mail,
+                to=to_mails,
                 bcc=self.bcc,
                 cc=self.cc,
             )
