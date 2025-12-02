@@ -133,7 +133,7 @@ class OutgoingEmailAdmin(DjangoObjectActions, admin.ModelAdmin):
         subject = mail.subject if mail.subject else "'<missing>'"
         self.message_user(
             request,
-            f"{subject} mail sendt.",
+            f"'{subject}' mail sendt.",
             messages.SUCCESS,
         )
 
@@ -144,6 +144,6 @@ class OutgoingEmailAdmin(DjangoObjectActions, admin.ModelAdmin):
         subject = mail.subject if mail.subject else "'<missing>'"
         self.message_user(
             request,
-            f"{subject} test mail sendt til {request.user.email}.",
+            f"'{subject}' test mail sendt til {request.user.email}.",
             messages.SUCCESS,
         )
