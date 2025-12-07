@@ -58,14 +58,14 @@ class UdlejningCommon(models.Model):
         help_text=_("Hvor bliver arrangmentet afholdt?"),
     )
     expectedConsummation = models.TextField(
-        max_length=280,
+        max_length=2048,
         verbose_name=_("Forventet forbrug"),
         help_text=_(
             "Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af hver type?"
         ),
     )
     comments = models.TextField(
-        blank=True, max_length=420, verbose_name=_("Kommentarer")
+        blank=True, max_length=1024, verbose_name=_("Kommentarer")
     )
 
     def __str__(self):
@@ -101,9 +101,7 @@ class Udlejning(UdlejningCommon):
         blank=True,
         verbose_name=_("Tilknytning"),
     )
-    actualConsummation = models.TextField(
-        max_length=140, blank=True, verbose_name=_("Faktisk forbrug")
-    )
+    actualConsummation = models.TextField(blank=True, verbose_name=_("Faktisk forbrug"))
     bartendersInCharge = models.ManyToManyField(Bartender, verbose_name=_("Ansvarlige"))
     billSendTo = models.CharField(
         max_length=140, blank=True, verbose_name=_("Send regning til")
