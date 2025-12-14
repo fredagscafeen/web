@@ -60,9 +60,11 @@
 									<span class="visually-hidden">{% translate "Not answered" %}</span>
 								{% endif %}
 							</h4>
-							<h6 class="card-subtitle mb-2 text-body-secondary"><i>{% bs_icon 'calendar-event' %}</i> <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.</h6>
-							<p class="mb-1"><i>{% bs_icon 'pin-map-fill' %}</i> {{ event.location }}</p>
-							<p><i>{% bs_icon 'people-fill' %}</i> {{ event.attending_count }}</p>
+							<p class="card-text mb-1">
+								{% bs_icon 'calendar-event-fill' size='1.1em' %} <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.<br>
+								{% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}<br>
+								{% bs_icon 'people-fill' size='1.1em' %} {{ event.attending_count }}
+							</p>
 							<a href="{{ event.id }}" class="card-link stretched-link"></a>
 						</div>
 						{% if not event.deadline_exceeded %}

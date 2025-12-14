@@ -547,13 +547,13 @@ class BartenderShift(models.Model):
         start_iso_year, start_iso_week_number, _ = self.start_datetime.isocalendar()
         end_iso_year, end_iso_week_number, _ = self.end_datetime.isocalendar()
 
-        less_than_week = (
-            start_iso_week_number <= current_iso_week_number
-            and start_iso_year <= current_iso_year
+        less_than_week = start_iso_year < current_iso_year or (
+            start_iso_year == current_iso_year
+            and start_iso_week_number <= current_iso_week_number
         )
-        greater_than_week = (
-            end_iso_week_number >= current_iso_week_number
-            and end_iso_year >= current_iso_year
+        greater_than_week = end_iso_year > current_iso_year or (
+            end_iso_year == current_iso_year
+            and end_iso_week_number >= current_iso_week_number
         )
 
         if less_than_week and greater_than_week:
@@ -631,13 +631,13 @@ class BoardMemberDepositShift(models.Model):
         start_iso_year, start_iso_week_number, _ = self.start_date.isocalendar()
         end_iso_year, end_iso_week_number, _ = self.start_date.isocalendar()
 
-        less_than_week = (
-            start_iso_week_number <= current_iso_week_number
-            and start_iso_year <= current_iso_year
+        less_than_week = start_iso_year < current_iso_year or (
+            start_iso_year == current_iso_year
+            and start_iso_week_number <= current_iso_week_number
         )
-        greater_than_week = (
-            end_iso_week_number >= current_iso_week_number
-            and end_iso_year >= current_iso_year
+        greater_than_week = end_iso_year > current_iso_year or (
+            end_iso_year == current_iso_year
+            and end_iso_week_number >= current_iso_week_number
         )
 
         if less_than_week and greater_than_week:
