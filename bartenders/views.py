@@ -253,6 +253,8 @@ class Barplan(TemplateView):
             if "release" in request.POST:
                 bartender_shift_pk = request.POST.get("release")
                 bartender_shift = BartenderShift.objects.get(pk=bartender_shift_pk)
+                if bartender_shift.compare_to_current_week == -1:
+                    raise ValueError("Barvagten burde ikke være tilgængelig længere!")
                 ReleasedBartenderShift.objects.get_or_create(
                     bartender=user_bartender, bartender_shift=bartender_shift
                 )
@@ -262,6 +264,8 @@ class Barplan(TemplateView):
                 released_shift = ReleasedBartenderShift.objects.get(
                     pk=released_bartender_shift_pk
                 )
+                if released_shift.compare_to_current_week == -1:
+                    raise ValueError("Barvagten burde ikke være tilgængelig længere!")
                 released_shift.delete()
                 messages.info(request, _("Vagt ikke længere tilgængelig for andre."))
             elif "swap" in request.POST:
@@ -269,6 +273,8 @@ class Barplan(TemplateView):
                 released_shift = ReleasedBartenderShift.objects.get(
                     pk=released_bartender_shift_pk
                 )
+                if released_shift.compare_to_current_week == -1:
+                    raise ValueError("Barvagten burde ikke være tilgængelig længere!")
                 bartender_shift = released_shift.bartender_shift
                 if user_bartender in bartender_shift.all_bartenders():
                     messages.error(request, _("Du har allerede en barvagt der!"))
