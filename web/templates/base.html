@@ -168,10 +168,22 @@
                     </a>
                 </div>
             </div>
-            <div class="row justify-content-center pb-3">
+            <div class="row justify-content-center">
                 <div class="col-md-auto" align="center">
-                    <p>Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
-                    © 1993-{% now "Y" %} Fredagscaféen<p>
+                    Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
+                    &copy; 1993-{% now "Y" %} Fredagscaféen
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-auto" align="center">
+                    <small>
+                        {% if GIT_COMMIT_HASH %}
+                        {% translate "Running version" %}
+                        <a class="common" href="https://github.com/fredagscafeen/web/commit/{{ GIT_COMMIT_HASH }}" target="_blank" rel="external">{{ GIT_COMMIT_HASH }} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+                        {% else %}
+                        {% translate "Running unknown version." %}
+                        {% endif %}
+                    </small>
                 </div>
             </div>
         </div>

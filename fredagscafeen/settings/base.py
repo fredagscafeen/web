@@ -159,6 +159,8 @@ SECRET_ADMIN_KEYS = [
 
 load_dotenv()
 
+GIT_COMMIT_HASH = os.getenv("GIT_COMMIT_HASH")
+
 # Inject all secret keys
 for secret in SECRET_ADMIN_KEYS:
     key = secret["key"]
@@ -272,6 +274,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "web.context_processors.constants",
             ],
         },
     },

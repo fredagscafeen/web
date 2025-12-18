@@ -11,4 +11,7 @@ COPY . /app
 
 ENV DJANGO_SETTINGS_MODULE=fredagscafeen.settings.htlm5
 
+ARG GIT_COMMIT_HASH
+ENV GIT_COMMIT_HASH="$GIT_COMMIT_HASH"
+
 CMD ["./setup_and_run"]

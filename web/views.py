@@ -60,7 +60,6 @@ class About(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["BEST_MAIL"] = settings.BEST_MAIL
         bartender_shifts = BartenderShift.objects.defer(
             "responsible", "other_bartenders", "period"
         )

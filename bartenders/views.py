@@ -465,8 +465,6 @@ class Board(ListView):
 
         context["timesheet_data"] = timesheet_data
 
-        context["DOMAIN"] = settings.DOMAIN
-
         return context
 
 
@@ -485,8 +483,6 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["DOMAIN"] = settings.DOMAIN
-        context["BEST_MAIL"] = settings.BEST_MAIL
 
         if self.object:
             future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))
