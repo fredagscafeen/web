@@ -64,11 +64,21 @@
 </div>
 {% endif %}
 <p>
-	{% translate "Brætspilsvognen kan kun lånes til arrangementer på instituttet." %}
-</p>
-<p>
 	{% translate "Hvis vores brætspilsvogn ikke allerede er udlånt, kan du låne den ved at sende en mail til" %}
 	<a class="common" href="mailto:udlejning@{{ DOMAIN }}?subject={% translate "Reservation af brætspilsvogn" %}">udlejning@{{ DOMAIN }}</a>.
 </p>
+
+<h3 id="rules">
+	{% translate "Regler for udlån" %}
+	<a href="#rules" class="section-link">#</a>
+</h3>
+
+<div class="card">
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">{% translate "Kan kun lånes til arrangementer på instituttet." %}</li>
+		<li class="list-group-item">{% translate "Skal afleveres pænt tilbage." %}</li>
+		<li class="list-group-item">{% translate "Manglende eller ødelagte spil kvitteres for." %}</li>
+	</ul>
+</div>
 
 {% endblock %}

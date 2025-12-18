@@ -27,7 +27,9 @@
                                 Fredagscaféen
                             </h1>
                             {% if config.SHOW_OPEN_EVERY_FRIDAY %}
-                            <p class="text-body-secondary"><i>...{% translate "Åben" %} <u>{% translate "hver" %}</u> {% translate "fredag" %}!</i></p>
+                            <p class="text-primary-emphasis">
+                                <i>{% translate "Åben" %} <u>{% translate "hver" %}</u> {% translate "fredag" %}!</i>
+                            </p>
                             {% endif %}
                         </div>
                     </a>
@@ -169,7 +171,7 @@
             <div class="row justify-content-center pb-3">
                 <div class="col-md-auto" align="center">
                     <p>Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
-                    1993-{% now "Y" %} Fredagscaféen<p>
+                    © 1993-{% now "Y" %} Fredagscaféen<p>
                 </div>
             </div>
         </div>

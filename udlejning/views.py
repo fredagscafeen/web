@@ -29,6 +29,7 @@ class Udlejninger(CreateView):
         context["udlejninger"] = Udlejning.objects.filter(
             dateFrom__gte=timezone.now() - datetime.timedelta(days=30),
         )
+        context["DOMAIN"] = settings.DOMAIN
         return context
 
     def form_valid(self, form):
@@ -39,9 +40,7 @@ class Udlejninger(CreateView):
         form.send_email(self.object.pk)
         messages.success(
             self.request,
-            _(
-                "Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til dig med et svar hurtigst muligt."
-            ),
+            _("Din anmodning om at låne fadølsanlægget er modtaget."),
         )
 
         return response
