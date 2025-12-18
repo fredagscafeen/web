@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 23:46+0100\n"
-"PO-Revision-Date: 2025-12-18 23:48+0050\n"
+"POT-Creation-Date: 2025-12-19 00:40+0100\n"
+"PO-Revision-Date: 2025-12-19 00:41+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -585,7 +585,7 @@ msgstr ""
 "before you sign up, so you know what a typical shift in Fredagscaféen "
 "involve."
 
-#: bartenders/templates/index.html:27 udlejning/templates/udlejning.html:204
+#: bartenders/templates/index.html:27 udlejning/templates/udlejning.html:208
 msgid "Indsend"
 msgstr "Submit"
 
@@ -1916,37 +1916,43 @@ msgid "Vi kan også skaffe Magners Cider på fustage for"
 msgstr "We can also provide Magners Cider on keg for"
 
 #: udlejning/templates/udlejning.html:182
-#| msgid "pr. fustage."
 msgid "kr. pr. fustage."
 msgstr "DKK per keg."
 
 #: udlejning/templates/udlejning.html:185
+msgid "Der kan tilkøbes engangs plastikkopper for"
+msgstr "Disposable plastic cups can be purchased for"
+
+#: udlejning/templates/udlejning.html:185
+msgid "kr. pr. rulle af 50 stk.."
+msgstr "DKK per roll of 50 cups."
+
+#: udlejning/templates/udlejning.html:186
+msgid "Ellers kan man få lov at låne vores genanvendelige plastikkopper."
+msgstr "Otherwise, you can borrow our reusable plastic cups."
+
+#: udlejning/templates/udlejning.html:189
 #: udlejning/templates/udlejningGrill.html:80
 msgid "Pris for gas efter aftale."
 msgstr "Price for gas by agreement."
 
-#: udlejning/templates/udlejning.html:188
-#| msgid ""
-#| "Derudover kan vi også levere sodavand og chips. Sodavand koster 10 kr. pr. "
-#| "stk. og chips koster 20kr. pr. pose. Der betales igen pr. åbnet enhed."
+#: udlejning/templates/udlejning.html:192
 msgid "Derudover kan vi også levere sodavand og chips. Sodavand koster "
 msgstr "In addition, we can also deliver soda and chips. Soda costs"
 
-#: udlejning/templates/udlejning.html:188
-#| msgid "pr. stk. og chips koster "
+#: udlejning/templates/udlejning.html:192
 msgid "kr. pr. stk. og chips koster "
 msgstr "DKK per item and chips cost"
 
-#: udlejning/templates/udlejning.html:188
-#| msgid "pr. pose."
+#: udlejning/templates/udlejning.html:192
 msgid "kr. pr. pose."
 msgstr "DKK per bag."
 
-#: udlejning/templates/udlejning.html:192
+#: udlejning/templates/udlejning.html:196
 msgid "Priser er inklusiv moms."
 msgstr "Prices include VAT."
 
-#: udlejning/templates/udlejning.html:197
+#: udlejning/templates/udlejning.html:201
 msgid "Ansøgninsformular"
 msgstr "Application form"
 
@@ -1975,7 +1981,6 @@ msgstr ""
 #: udlejning/templates/udlejningGrill.html:78
 #: udlejning/templates/udlejningProjector.html:78
 #: udlejning/templates/udlejningSpeakers.html:79
-#| msgid "Grillen kan kun lånes til arrangementer på instituttet."
 msgid "Kan kun lånes til arrangementer på instituttet."
 msgstr "Can only be borrowed for events at the department."
 
@@ -2082,9 +2087,6 @@ msgid "Festteltet er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The tent is currently not booked at any time."
 
 #: udlejning/templates/udlejningTent.html:68
-#| msgid ""
-#| "Hvis vores festteltet ikke allerede er udlånt, kan du låne den ved at sende "
-#| "en mail til"
 msgid ""
 "Hvis vores festteltet ikke allerede er udlånt, kan du låne det ved at sende "
 "en mail til"
@@ -2093,9 +2095,6 @@ msgstr ""
 "to"
 
 #: udlejning/templates/udlejningTent.html:79
-#| msgid ""
-#| "Festteltet udlånes kun til interne arrangementer eller til arrangementer med"
-#| " tilknytning til baren."
 msgid ""
 "Kan kun lånes til arrangementer på instituttet eller til arrangementer med "
 "tilknytning til baren."
@@ -2115,9 +2114,6 @@ msgstr ""
 "received."
 
 #: udlejning/views.py:42
-#| msgid ""
-#| "Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til "
-#| "dig med et svar hurtigst muligt."
 msgid "Din anmodning om at låne fadølsanlægget er modtaget."
 msgstr "Your request to borrow the draft beer system has been received."
 
@@ -2329,7 +2325,6 @@ msgid "Logoet er originalt tegnet af"
 msgstr "The logo was originally designed by"
 
 #: web/templates/about.html:139
-#| msgid "Fødselsdato"
 msgid "Fødselsdag"
 msgstr "Birthday"
 

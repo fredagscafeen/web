@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 23:46+0100\n"
-"PO-Revision-Date: 2025-12-18 23:48+0050\n"
+"POT-Creation-Date: 2025-12-19 00:40+0100\n"
+"PO-Revision-Date: 2025-12-19 00:40+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -584,7 +584,7 @@ msgstr ""
 "før du tilmelder dig, så du ved hvad en typisk vagt i Fredagscaféen "
 "indebærer."
 
-#: bartenders/templates/index.html:27 udlejning/templates/udlejning.html:204
+#: bartenders/templates/index.html:27 udlejning/templates/udlejning.html:208
 msgid "Indsend"
 msgstr "Indsend"
 
@@ -1918,34 +1918,43 @@ msgid "Vi kan også skaffe Magners Cider på fustage for"
 msgstr "Vi kan også skaffe Magners Cider på fustage for"
 
 #: udlejning/templates/udlejning.html:182
-#| msgid "pr. fustage."
 msgid "kr. pr. fustage."
 msgstr "kr. pr. fustage."
 
 #: udlejning/templates/udlejning.html:185
+msgid "Der kan tilkøbes engangs plastikkopper for"
+msgstr "Der kan tilkøbes engangs plastikkopper for"
+
+#: udlejning/templates/udlejning.html:185
+msgid "kr. pr. rulle af 50 stk.."
+msgstr "kr. pr. rulle af 50 stk.."
+
+#: udlejning/templates/udlejning.html:186
+msgid "Ellers kan man få lov at låne vores genanvendelige plastikkopper."
+msgstr "Ellers kan man få lov at låne vores genanvendelige plastikkopper."
+
+#: udlejning/templates/udlejning.html:189
 #: udlejning/templates/udlejningGrill.html:80
 msgid "Pris for gas efter aftale."
 msgstr "Pris for gas efter aftale."
 
-#: udlejning/templates/udlejning.html:188
+#: udlejning/templates/udlejning.html:192
 msgid "Derudover kan vi også levere sodavand og chips. Sodavand koster "
 msgstr "Derudover kan vi også levere sodavand og chips. Sodavand koster"
 
-#: udlejning/templates/udlejning.html:188
-#| msgid "pr. stk. og chips koster "
+#: udlejning/templates/udlejning.html:192
 msgid "kr. pr. stk. og chips koster "
 msgstr "kr. pr. stk. og chips koster"
 
-#: udlejning/templates/udlejning.html:188
-#| msgid "pr. pose."
+#: udlejning/templates/udlejning.html:192
 msgid "kr. pr. pose."
 msgstr "kr. pr. pose."
 
-#: udlejning/templates/udlejning.html:192
+#: udlejning/templates/udlejning.html:196
 msgid "Priser er inklusiv moms."
 msgstr "Priser er inklusiv moms."
 
-#: udlejning/templates/udlejning.html:197
+#: udlejning/templates/udlejning.html:201
 msgid "Ansøgninsformular"
 msgstr "Ansøgningsformular"
 
@@ -1983,7 +1992,6 @@ msgid "Skal afleveres pænt tilbage."
 msgstr "Skal afleveres pænt tilbage."
 
 #: udlejning/templates/udlejningBoardGameCart.html:80
-#| msgid "Manglende eller ødelagte spil kvitteres for."
 msgid "Manglende eller ødelagte spil faktureres for."
 msgstr "Manglende eller ødelagte spil faktureres for."
 
@@ -2043,7 +2051,6 @@ msgstr "Skal afleveres pænt pakket sammen."
 
 #: udlejning/templates/udlejningProjector.html:80
 #: udlejning/templates/udlejningSpeakers.html:81
-#| msgid "Manglende eller ødelagte kabler og udstyr kvitteres for."
 msgid "Manglende eller ødelagte kabler og udstyr faktureres for."
 msgstr "Manglende eller ødelagte kabler og udstyr faktureres for."
 
