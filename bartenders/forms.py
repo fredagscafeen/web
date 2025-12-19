@@ -26,13 +26,15 @@ class BartenderApplicationForm(forms.ModelForm):
         self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name != "info"
-    
+
     def clean_email(self):
         """Validate the email doesn't end with au.dk"""
-        email = self.cleaned_data.get('email')
-        if email and email.lower().endswith('au.dk'):
+        email = self.cleaned_data.get("email")
+        if email and email.lower().endswith("au.dk"):
             raise forms.ValidationError(
-                _("E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet.")
+                _(
+                    "E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet."
+                )
             )
         return email
 
@@ -201,10 +203,12 @@ class BartenderInfoForm(forms.ModelForm):
 
     def clean_email(self):
         """Validate the email doesn't end with au.dk"""
-        email = self.cleaned_data.get('email')
-        if email and email.lower().endswith('au.dk'):
+        email = self.cleaned_data.get("email")
+        if email and email.lower().endswith("au.dk"):
             raise forms.ValidationError(
-               _("E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet.")
+                _(
+                    "E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet."
+                )
             )
         return email
 
