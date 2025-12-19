@@ -27,6 +27,17 @@ class BartenderApplicationForm(forms.ModelForm):
         for name in self.fields:
             self.fields[name].required = name != "info"
 
+    def clean_email(self):
+        """Validate the email doesn't end with au.dk"""
+        email = self.cleaned_data.get("email")
+        if email and email.lower().endswith("au.dk"):
+            raise forms.ValidationError(
+                _(
+                    "E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet."
+                )
+            )
+        return email
+
     def send_email(self, pk):
         d = self.cleaned_data
 
@@ -189,6 +200,17 @@ class BartenderInfoForm(forms.ModelForm):
         </style>
         """
         self.fields["color"].help_text = mark_safe(color_css)
+
+    def clean_email(self):
+        """Validate the email doesn't end with au.dk"""
+        email = self.cleaned_data.get("email")
+        if email and email.lower().endswith("au.dk"):
+            raise forms.ValidationError(
+                _(
+                    "E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet."
+                )
+            )
+        return email
 
     def save(self, *args, **kwargs):
         old_obj = type(self.instance).objects.get(id=self.instance.id)
