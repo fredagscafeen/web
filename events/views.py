@@ -123,6 +123,7 @@ class EventView(TemplateView):
 
         bartender = self.get_bartender()
 
+        may_attend = False
         if bartender:
             may_attend = event.may_attend(bartender)
 
