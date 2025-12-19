@@ -26,6 +26,15 @@ class BartenderApplicationForm(forms.ModelForm):
         self.fields["tshirt_size"].widget.attrs.update({"class": "form-control"})
         for name in self.fields:
             self.fields[name].required = name != "info"
+    
+    def clean_email(self):
+        """Validate that email doesn't end with post.au.dk or au.dk"""
+        email = self.cleaned_data.get('email')
+        if email and (email.lower().endswith('post.au.dk') or email.lower().endswith('au.dk')):
+            raise forms.ValidationError(
+                _("Emails ending with 'post.au.dk' or 'au.dk' are not allowed. Please use your personal email instead.")
+            )
+        return email
 
     def send_email(self, pk):
         d = self.cleaned_data
@@ -189,6 +198,15 @@ class BartenderInfoForm(forms.ModelForm):
         </style>
         """
         self.fields["color"].help_text = mark_safe(color_css)
+
+    def clean_email(self):
+        """Validate that email doesn't end with post.au.dk or au.dk"""
+        email = self.cleaned_data.get('email')
+        if email and (email.lower().endswith('post.au.dk') or email.lower().endswith('au.dk')):
+            raise forms.ValidationError(
+                _("Emails ending with 'post.au.dk' or 'au.dk' are not allowed. Please use your personal email instead.")
+            )
+        return email
 
     def save(self, *args, **kwargs):
         old_obj = type(self.instance).objects.get(id=self.instance.id)
