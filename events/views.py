@@ -123,13 +123,15 @@ class EventView(TemplateView):
 
         bartender = self.get_bartender()
 
-        if bartender and event.may_attend(bartender):
+        if bartender:
+            may_attend = event.may_attend(bartender)
+
+        if may_attend:
             context["form"] = EventResponseForm(event=event, bartender=bartender)
 
         context["bartender"] = bartender
         context["event"] = event
-        if bartender:
-            context["may_attend"] = Event.may_attend_default(bartender)
+        context["may_attend"] = may_attend
 
         return context
 
