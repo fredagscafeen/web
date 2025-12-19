@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-19 00:40+0100\n"
-"PO-Revision-Date: 2025-12-19 00:40+0050\n"
+"PO-Revision-Date: 2025-12-19 01:11+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -2567,7 +2567,7 @@ msgstr "er en fredagsbar for datalogi og IT på Aarhus Universitet."
 
 #: web/templates/base.html:181
 msgid "Running version"
-msgstr "Kørende version"
+msgstr "Kører version"
 
 #: web/templates/base.html:184
 msgid "Running unknown version."
