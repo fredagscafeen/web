@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-19 19:16+0100\n"
+"POT-Creation-Date: 2025-12-19 19:38+0100\n"
 "PO-Revision-Date: 2025-12-19 00:41+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -138,12 +138,8 @@ msgid "er ikke på krydslisten."
 msgstr "is not on the tab."
 
 #: bartenders/forms.py:35 bartenders/forms.py:207
-msgid ""
-"Emails ending with 'post.au.dk' or 'au.dk' are not allowed. Please use your "
-"personal email instead."
-msgstr ""
-"Emails ending with 'post.au.dk' or 'au.dk' are not allowed. Please use your "
-"personal email instead."
+msgid "email.not_valid"
+msgstr "Emails ending with 'au.dk' are not allowed. Please use your personal email instead."
 
 #: bartenders/models.py:53
 msgid "Fulde navn"
@@ -2652,6 +2648,13 @@ msgstr "Password"
 #: web/views.py:52
 msgid "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
 msgstr "Login mail sent: Press the link in your received email to log in."
+
+#~ msgid ""
+#~ "Emails ending with 'au.dk' are not allowed. Please use your personal "
+#~ "email instead."
+#~ msgstr ""
+#~ "Emails ending with 'au.dk' are not allowed. Please use your personal "
+#~ "email instead."
 
 #~ msgid "Reservér et til dit arrangement"
 #~ msgstr "Reserve one for your event"

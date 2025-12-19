@@ -28,11 +28,11 @@ class BartenderApplicationForm(forms.ModelForm):
             self.fields[name].required = name != "info"
     
     def clean_email(self):
-        """Validate that email doesn't end with post.au.dk or au.dk"""
+        """Validate the email doesn't end with au.dk"""
         email = self.cleaned_data.get('email')
-        if email and (email.lower().endswith('post.au.dk') or email.lower().endswith('au.dk')):
+        if email and email.lower().endswith('au.dk'):
             raise forms.ValidationError(
-                _("Emails ending with 'post.au.dk' or 'au.dk' are not allowed. Please use your personal email instead.")
+                _("email.not_valid")
             )
         return email
 
@@ -200,11 +200,11 @@ class BartenderInfoForm(forms.ModelForm):
         self.fields["color"].help_text = mark_safe(color_css)
 
     def clean_email(self):
-        """Validate that email doesn't end with post.au.dk or au.dk"""
+        """Validate the email doesn't end with au.dk"""
         email = self.cleaned_data.get('email')
-        if email and (email.lower().endswith('post.au.dk') or email.lower().endswith('au.dk')):
+        if email and email.lower().endswith('au.dk'):
             raise forms.ValidationError(
-                _("Emails ending with 'post.au.dk' or 'au.dk' are not allowed. Please use your personal email instead.")
+                _("email.not_valid")
             )
         return email
 
