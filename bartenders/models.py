@@ -58,7 +58,6 @@ class BartenderCommon(models.Model):
         unique=True,
         blank=False,
         verbose_name=_("E-mail"),
-        help_text=_("En post.au mail fungerer ikke"),
     )
     studentNumber = models.IntegerField(
         blank=False, null=True, verbose_name=_("Studienummer")
