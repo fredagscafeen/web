@@ -32,7 +32,7 @@ class BartenderApplicationForm(forms.ModelForm):
         email = self.cleaned_data.get('email')
         if email and email.lower().endswith('au.dk'):
             raise forms.ValidationError(
-                _("email.not_valid")
+                _("E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet.")
             )
         return email
 
@@ -204,7 +204,7 @@ class BartenderInfoForm(forms.ModelForm):
         email = self.cleaned_data.get('email')
         if email and email.lower().endswith('au.dk'):
             raise forms.ValidationError(
-                _("email.not_valid")
+               _("E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet.")
             )
         return email
 
