@@ -100,54 +100,133 @@
 		{% endif %}
 		<div role="tablist">
 			<div class="card mb-2">
-				<div class ="card-header" role="tab" id="coll">
-					<div class="row">
-						<div class="col-auto me-auto">
-							{% translate "Tilmeldte" %} <span class="badge text-bg-primary rounded-pill">{{ event.attending_count }}</span>
-						</div>
-						<div class="col-auto">
+				<div class="card-header" role="tab">
+					<ul class="nav nav-tabs card-header-tabs">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="true" data-bs-toggle="tab" data-bs-target="#attending" type="button" role="tab">{% translate "Deltager" %} <span class="badge text-bg-primary rounded-pill">{{ event.attending_count }}</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-body" data-bs-toggle="tab" data-bs-target="#notAttending" type="button" role="tab">{% translate "Deltager ikke" %} <span class="badge text-bg-secondary rounded-pill">{{ event.not_attending_count }}</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-body" data-bs-toggle="tab" data-bs-target="#noAnswer" type="button" role="tab">{% translate "Intet svar" %} <span class="badge text-bg-secondary rounded-pill">{{ event.no_answer_count }}</span></a>
+						</li>
+					</ul>
+				</div>
+				<div class="tab-content">
+					<div id="attending" class="tab-pane fade show active" role="tabpanel">
+						{% if event.attending_count > 0 %}
+							<div role="tabpanel">
+								<div class="container" style="overflow: scroll;">
+									<table class="table tablesorter">
+										<thead>
+											<tr>
+												<th>{% translate "Navn" %}</th>
+												{% for choice in event.sorted_choices %}
+													<th>{{ choice.name }}</th>
+												{% endfor %}
+											</tr>
+										</thead>
+										<tbody class="table-group-divider">
+											{% for response in event.sorted_responses %}
+												<tr>
+													{% if response.attending %}
+														<td>{{ response.bartender.name }}</td>
+														{% for option in response.get_sorted_options %}
+															<td>{{ option.option }}</td>
+														{% endfor %}
+													{% endif %}
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
 							{% if user.is_staff %}
-								<a href="mailto:
-								{% for response in event.sorted_responses %}
-									{% if response.attending %}
-										{{ response.bartender.email }},
-									{% endif %}
-								{% endfor %}
-								?cc=event@{{ DOMAIN }}&bcc=&subject={{ event.name }}&body=" class="common" target="_top">
-									<i>{% bs_icon 'envelope-at-fill' size='1.0em' %}</i> {% translate "Send mail" %}
-								</a>
+							<div class="card-body pt-0">
+									<a href="mailto:
+									{% for response in event.sorted_responses %}
+										{% if response.attending %}
+											{{ response.bartender.email }},
+										{% endif %}
+									{% endfor %}
+									?cc=event@{{ DOMAIN }}&bcc=&subject={{ event.name }}&body=" class="btn btn-primary" target="_top">
+										<i>{% bs_icon 'envelope-at-fill' size='1.0em' %}</i> {% translate "Send mail" %}
+									</a>
+							</div>
 							{% endif %}
+						{% else %}
+						<div class="card-body">
+							<p class="card-text">{% translate "Ingen tilmeldte endnu." %}</p>
 						</div>
+						{% endif %}
+					</div>
+					<div id="notAttending" class="tab-pane fade" role="tabpanel">
+						{% if event.not_attending_count > 0 %}
+							<div role="tabpanel">
+								<div class="container" style="overflow: scroll;">
+									<table class="table tablesorter">
+										<thead>
+											<tr>
+												<th>{% translate "Navn" %}</th>
+											</tr>
+										</thead>
+										<tbody class="table-group-divider">
+											{% for response in event.sorted_responses %}
+												<tr>
+													{% if not response.attending %}
+														<td>{{ response.bartender.name }}</td>
+													{% endif %}
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						{% else %}
+						<div class="card-body">
+							<p class="card-text">{% translate "Ingen ikke-deltager endnu." %}</p>
+						</div>
+						{% endif %}
+					</div>
+					<div id="noAnswer" class="tab-pane fade" role="tabpanel">
+						{% if event.no_answer_count > 0 %}
+							<div role="tabpanel">
+								<div class="container" style="overflow: scroll;">
+									<table class="table tablesorter">
+										<thead>
+											<tr>
+												<th>{% translate "Navn" %}</th>
+											</tr>
+										</thead>
+										<tbody class="table-group-divider">
+											{% for bartender in event.sorted_no_answer %}
+												<tr>
+													<td>{{ bartender.name }}</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{% if user.is_staff %}
+							<div class="card-body pt-0">
+									<a href="mailto:
+									{% for bartender in event.sorted_no_answer %}
+										{{ bartender.email }},
+									{% endfor %}
+									?cc=event@{{ DOMAIN }}&bcc=&subject={{ event.name }}&body=" class="btn btn-secondary" target="_top">
+										<i>{% bs_icon 'envelope-at-fill' size='1.0em' %}</i> {% translate "Send mail" %}
+									</a>
+							</div>
+							{% endif %}
+						{% else %}
+						<div class="card-body">
+							<p class="card-text">{% translate "Alle inviterede har svaret." %}</p>
+						</div>
+						{% endif %}
 					</div>
 				</div>
-				{% if event.attending_count > 0 %}
-					<div role="tabpanel">
-						<div class="container" style="overflow: scroll;">
-							<table class="table tablesorter">
-								<thead>
-									<tr>
-										<th>{% translate "Navn" %}</th>
-										{% for choice in event.sorted_choices %}
-											<th>{{ choice.name }}</th>
-										{% endfor %}
-									</tr>
-								</thead>
-								<tbody class="table-group-divider">
-									{% for response in event.sorted_responses %}
-										<tr>
-											{% if response.attending %}
-												<td>{{ response.bartender.name }}</td>
-												{% for option in response.get_sorted_options %}
-													<td>{{ option.option }}</td>
-												{% endfor %}
-											{% endif %}
-										</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				{% endif %}
 			</div>
 		</div>
 	</div>
