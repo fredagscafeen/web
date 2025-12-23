@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
 
-{% load bootstrap5 bootstrap_icons %}
-
-{% block content %}
 {% load i18n %}
 {% load static %}
+{% load bootstrap5 bootstrap_icons %}
 {% load not_answered first_file %}
 
-<div class="mb-3">
-	<a href="{% url 'events' %}" class="common">
-		<i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage" %}
-	</a>
+{% block content %}
+<div class="my-3">
+	<div class="row">
+		<div class="col-auto me-auto">
+			<a href="{% url 'events' %}" class="common">
+				<i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage" %}
+			</a>
+		</div>
+		<div class="col-auto">
+			{% if user.is_staff %}
+				<a class="common" href="/admin/events/event/{{ event.id }}/change/">
+					{% translate "Edit" %}
+				</a>
+			{% endif %}
+		</div>
+	</div>
 </div>
 <div>
 	{% with album=event.event_album %}
@@ -41,34 +51,24 @@
 	{% endif %}
 	{% endwith %}
 	<div class="mt-3">
-		<div class="row">
-			<div class="col-auto me-auto">
-				<h2 id="{{ event.name }}">
-					{{ event.start_datetime.date }} - {{ event.name }}
-					<a href="#{{ event.name }}" class="section-link">#</a>
-				</h2>
-			</div>
-			<div class="col-auto">
-				{% if user.is_staff %}
-					<a class="common" href="/admin/events/event/{{ event.id }}/change/">
-						{% translate "Edit" %}
-					</a>
-				{% endif %}
-			</div>
-		</div>
-		<p><b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.</p>
-		<p><b>{% translate "Tilmeldingsfrist" %}:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} ({% translate "for sent" %}){% endif %}</p>
-		<p><b>{% translate "Lokation" %}:</b> {{ event.location }}</p>
-		<p><b>{% translate "Beskrivelse" %}:</b></p>
-		<p style="white-space: pre-line;">{{ event.description }}</p>
-
-		<h4 id="signup">
+		<p class="mb-1"><b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.</p>
+		<h2 id="{{ event.name }}">
+			{{ event.start_datetime.date }} - {{ event.name }}
+			<a href="#{{ event.name }}" class="section-link">#</a>
+		</h2>
+		<p class="text-primary">{% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}</p>
+		<p class="mb-0" style="white-space: pre-line;">{{ event.description }}</p>
+		<h3 class="mt-4" id="signup">
 			{% translate "Tilmelding" %}
 			{% if user|not_answered:event %}
 				<i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
 				<span class="visually-hidden">{% translate "Not answered" %}</span>
 			{% endif %}
+			<a href="#signup" class="section-link">#</a>
 		</h4>
+		<div class="alert {% if event.deadline_exceeded %}alert-secondary{% else %}alert-primary{% endif %}" role="alert">
+			<span class="me-1"><span class="me-1">{% bs_icon 'exclamation-circle' %}</span> <b>{% translate "Tilmeldingsfrist" %}:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} <i>({% translate "for sent" %})</i>{% endif %}.
+		</div>
 		<div>
 			{% if not bartender %}
 			<p><b>{% translate "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events." %} <a href="/login/?next=/events/">{% translate "Klik for at logge ind." %}</a></b></p>

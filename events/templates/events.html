@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
-
-{% load bootstrap5 bootstrap_icons %}
-
-{% block content %}
 {% load i18n %}
 {% load static %}
+{% load bootstrap5 bootstrap_icons %}
 {% load is_bartender not_answered first_file %}
 
+{% block content %}
 <h2 id="events">
 	{% translate "Bartender events" %}
 	<a href="#events" class="section-link">#</a>
