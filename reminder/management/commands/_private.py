@@ -30,8 +30,8 @@ class ReminderCommand(BaseCommand):
         send_template_email(
             subject=self.email_subject(humanized_bartenders, event),
             body_template=self.email_body(humanized_bartenders, event),
-            text_format={},
-            html_format={},
+            text_format=self.text_format(humanized_bartenders, event),
+            html_format=self.html_format(humanized_bartenders, event),
             to=self.filter_with_warning(bartenders),
             cc=self.email_cc(),
             reply_to=self.email_reply_to(),
@@ -80,6 +80,12 @@ class ReminderCommand(BaseCommand):
 
     def email_body(self, humanized_bartenders, event):
         raise NotImplementedError
+
+    def text_format(self, humanized_bartenders, event):
+        return {}
+
+    def html_format(self, humanized_bartenders, event):
+        return {}
 
     def email_cc(self):
         return [settings.BEST_MAIL]

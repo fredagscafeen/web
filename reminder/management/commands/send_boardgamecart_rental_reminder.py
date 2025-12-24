@@ -7,14 +7,14 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 
 from reminder.management.commands._private import ReminderCommand
-from udlejning.models import Udlejning
+from udlejning.models import UdlejningBoardGameCart
 
 
 class Command(ReminderCommand):
-    help = "Sends rental reminders to responsible board members"
+    help = "Sends board game cart rental reminders to responsible board members"
 
     def get_next_events(self):
-        return Udlejning.objects.filter(
+        return UdlejningBoardGameCart.objects.filter(
             dateFrom__gte=timezone.now(),
             dateFrom__lte=timezone.now() + datetime.timedelta(7),
         )
@@ -23,7 +23,7 @@ class Command(ReminderCommand):
         return event.bartendersInCharge.all()
 
     def email_subject(self, humanized_bartenders, event):
-        return f"Du er ansvarlig for en udlejning i denne uge!"
+        return f"Du er ansvarlig for en udlejning af brætspilsvognen i denne uge!"
 
     def email_body(self, humanized_bartenders, event):
         link = """Se mere på {link}."""
@@ -31,14 +31,7 @@ class Command(ReminderCommand):
 
 Hej {humanized_bartenders}.
 
-Du/I er ansvarlige for at leje {event.get_draftBeerSystem_display()} anlæg ud til {event.whoReserved}, {event.dateFrom.strftime("d. %-d. %B, kl. %H:%M")}.
-
-1. Husk at sætte strøm til anlægget mindst 12 timer inden arrangementet.
-
-2. Husk at få bestilt ind.
-
-Forventet forbrug:
-{event.expectedConsummation}
+Du/I er ansvarlige for at leje brætspilsvognen ud til {event.whoReserved}, {event.dateFrom.strftime("d. %-d. %B, kl. %H:%M")}.
 
 {link}
 
@@ -47,14 +40,14 @@ Forventet forbrug:
     def text_format(self, humanized_bartenders, event):
         url = urljoin(
             settings.SELF_URL,
-            reverse("admin:udlejning_udlejning_change", args=(event.pk,)),
+            reverse("admin:udlejning_udlejningboardgamecart_change", args=(event.pk,)),
         )
         return {"link": f"admin interfacet: {url}"}
 
     def html_format(self, humanized_bartenders, event):
         url = urljoin(
             settings.SELF_URL,
-            reverse("admin:udlejning_udlejning_change", args=(event.pk,)),
+            reverse("admin:udlejning_udlejningboardgamecart_change", args=(event.pk,)),
         )
         return {
             "link": mark_safe(f'<a href="{url}">admin interfacet</a>'),
