@@ -26,12 +26,12 @@ class Command(ReminderCommand):
         return f"Du er ansvarlig for en udlejning af projektor og lærred i denne uge!"
 
     def email_body(self, humanized_bartenders, event):
-        link = """Se mere på {link}."""
+        link = """Se mere i {link}."""
         return f"""Dette er en automatisk email.
 
 Hej {humanized_bartenders}.
 
-Du/I er ansvarlige for at leje projektor og lærred ud til {event.whoReserved}, {event.dateFrom.strftime("d. %-d. %B, kl. %H:%M")}.
+Du/I er ansvarlige for at leje projektor og lærred ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d. %B, kl. %H:%M")}.
 
 {link}
 
