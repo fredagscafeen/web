@@ -31,7 +31,7 @@ class Command(ReminderCommand):
 
 Hej {humanized_bartenders}.
 
-Du/I er ansvarlige for at leje {event.get_draftBeerSystem_display()} anlæg ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d. %B, kl. %H:%M")}.
+Du/I er ansvarlige for at leje {event.get_draftBeerSystem_display()} anlæg ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d/%-m, kl. %H:%M")}.
 
 1. Husk at sætte strøm til anlægget mindst 12 timer inden arrangementet.
 

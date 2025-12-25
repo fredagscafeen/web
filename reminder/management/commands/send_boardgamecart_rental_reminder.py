@@ -31,7 +31,7 @@ class Command(ReminderCommand):
 
 Hej {humanized_bartenders}.
 
-Du/I er ansvarlige for at leje brætspilsvognen ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d. %B, kl. %H:%M")}.
+Du/I er ansvarlige for at leje brætspilsvognen ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d/%-m, kl. %H:%M")}.
 
 {link}
 

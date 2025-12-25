@@ -239,7 +239,7 @@ class BoardMemberPeriod(models.Model):
     def approx_end_date(self):
         end_date = self.end_date
         if end_date == None:
-            end_date = self.start_date.replace(year=self.start_date.year + 1)
+            end_date = timezone.localdate()
         return end_date
 
     @property
