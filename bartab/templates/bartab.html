@@ -67,7 +67,7 @@
 						<th>{% translate "Saldo" %}</th>
 					</tr>
 				</thead>
-				{% for entry in entries %}
+				{% for entry in bartab_entries %}
 				<tr>
 					<td>{{ entry.shift }}</td>
 					<td {% if entry.added > 0 %}class="text-primary"{% endif %}>{{ entry.added }}</td>
