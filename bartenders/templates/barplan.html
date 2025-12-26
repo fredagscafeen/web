@@ -317,7 +317,7 @@
 		<nav>
 			<ul class="pagination">
 				{% if bartendershifts.has_previous %}
-					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan"><i>{% bs_icon 'chevron-double-left' %}</i></a></li>
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan"><i>{% bs_icon 'chevron-left' %}</i></a></li>
 					{% if bartendershifts.number > 3 %}
 						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page=1{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">1</a></li>
 						{% if bartendershifts.number > 4 %}
@@ -339,7 +339,7 @@
 					{% elif bartendershifts.number < bartendershifts.paginator.num_pages|add:'-2' %}
 						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ bartendershifts.paginator.num_pages }}</a></li>
 					{% endif %}
-					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.next_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{% bs_icon 'chevron-double-right' %}</a></li>
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.next_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{% bs_icon 'chevron-right' %}</a></li>
 				{% endif %}
 			</ul>
 		</nav>
@@ -415,7 +415,7 @@
 		<nav>
 			<ul class="pagination">
 				{% if boardmemberdepositshifts.has_previous %}
-					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter"><i>{% bs_icon 'chevron-double-left' %}</i></a></li>
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter"><i>{% bs_icon 'chevron-left' %}</i></a></li>
 					{% if boardmemberdepositshifts.number > 3 %}
 						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page=1{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">1</a></li>
 						{% if boardmemberdepositshifts.number > 4 %}
@@ -437,7 +437,7 @@
 					{% elif boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-2' %}
 						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a></li>
 					{% endif %}
-					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.next_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{% bs_icon 'chevron-double-right' %}</a></li>
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.next_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{% bs_icon 'chevron-right' %}</a></li>
 				{% endif %}
 			</ul>
 		</nav>

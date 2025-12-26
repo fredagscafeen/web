@@ -28,7 +28,7 @@
                             {{ first_date|date:'M Y' }}:
                         </th>
                     {% for id, date, checked in dates %}
-                        <td {% if checked %}class="bg-danger"{% endif %}>
+                        <td {% if checked %}class="text-bg-danger"{% endif %}>
                             <label><input type="checkbox" name="unavailable_ordinals" value="{{ id }}" {% if checked %}checked{% endif %}> {{ date.day }}.</label>
                         </td>
                     {% endfor %}

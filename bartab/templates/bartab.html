@@ -1,44 +1,116 @@
 {% extends 'base.html' %}
-{% load sub %}
-{% block content %}
+
 {% load i18n %}
+{% load sub %}
+{% load bootstrap5 bootstrap_icons %}
+{% block content %}
 
 <h2 id="bartab">
-	{% translate "Krydslisteaktivitet" %}
+	{% translate "Krydslistestatus" %}
     <a href="#bartab" class="section-link">#</a>
 </h2>
 
 {% if latest_tab_update %}
-<p>{% translate "Krydslisten er gjort op til og med barvagten d." %} {{ latest_tab_update.date }}.</p>
+<p>{% translate "Krydslisten er gjort op til og med barvagten" %} <b>{% translate "d." context "d. 1. i 1." %} {{ latest_tab_update.date }}</b>.</p>
 {% else %}
 <p>{% translate "Krydslisten er endnu ikke opdateret." %}</p>
 {% endif %}
 
 {% if object %}
-<h3>{% translate "Saldo" %}: {{ object.balance_str }}</h3>
-<h3>{% translate "Total forbrug" %}: {{ total_used }}</h3>
-
-<div class="card pt-1 pb-1">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>{% translate "Dato" %}</th>
-				<th>{% translate "Indsat" %}</th>
-				<th>{% translate "Køb" %}</th>
-				<th>{% translate "Saldo" %}</th>
-			</tr>
-		</thead>
-		<tbody class="table-group-divider">
-			{% for entry in entries %}
-			<tr>
-				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.shift }}</td>
-				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.added }}</td>
-				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.used }}</td>
-				<td{% if entry.added > 0 %} class="bg-success"{% elif entry.balance <= credit_hold_limit %} class="bg-danger"{% endif %}>{{ entry.balance }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+<div class="row">
+	<div class="col-lg-6 pb-3">
+		<div class="card text-bg-{% if object.balance > 0 %}primary{% else %}danger{% endif %}">
+			<div class="card-body">
+				<p class="card-text mb-1">{% translate "Din saldo er" %}:</p>
+				<h3 class="card-title">{{ object.balance }}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6 pb-3">
+		<div class="card">
+			<div class="card-body">
+				<p class="card-text mb-1">{% translate "Total forbrug" %}:</p>
+				<h3 class="card-title">{{ total_used }}</h3>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="card">
+	<div class="card-body pb-1">
+		<div class="row">
+			<div class="col-auto me-auto">
+				<p class="card-text mb-0"><b>{% translate "Transaktioner" %}</b></p>
+			</div>
+			<div class="col-auto">
+				<div class="dropdown">
+					<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{% translate "Transaktioner per side" %}: {{ bartab_entries_pages_per_page }}
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "15" %}active{% endif %}" href="?bartab_entries_pages_per_page=15#barplan">15</a></li>
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "25" %}active{% endif %}" href="?bartab_entries_pages_per_page=25#barplan">25</a></li>
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "50" %}active{% endif %}" href="?bartab_entries_pages_per_page=50#barplan">50</a></li>
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "100" %}active{% endif %}" href="?bartab_entries_pages_per_page=100#barplan">100</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="overflow: scroll;">
+		<table class="table table-striped">
+			<tbody>
+				<thead>
+					<tr>
+						<th>{% translate "Dato" %}</th>
+						<th>{% translate "Indsat" %}</th>
+						<th>{% translate "Køb" %}</th>
+						<th>{% translate "Saldo" %}</th>
+					</tr>
+				</thead>
+				{% for entry in entries %}
+				<tr>
+					<td>{{ entry.shift }}</td>
+					<td {% if entry.added > 0 %}class="text-primary"{% endif %}>{{ entry.added }}</td>
+					<td>{{ entry.used }}</td>
+					<td {% if entry.balance <= credit_hold_limit > 0 %}class="text-danger"{% endif %}>{{ entry.balance }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-auto">
+			<nav>
+				<ul class="pagination">
+					{% if bartab_entries.has_previous %}
+						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.previous_page_number }}#barplan"><i>{% bs_icon 'chevron-left' %}</i></a></li>
+						{% if bartab_entries.number > 3 %}
+							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page=1#barplan">1</a></li>
+							{% if bartab_entries.number > 4 %}
+								<li class="page-item"><a class="page-link disabled">...</a></li>
+							{% endif %}
+						{% endif %}
+					{% endif %}
+					{% for num in bartab_entries.paginator.page_range %}
+						{% if bartab_entries.number == num %}
+						<li class="page-item"><a class="page-link active" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ num }}#barplan">{{ num }}</a></li>
+						{% elif num > bartab_entries.number|add:'-3' and num < bartab_entries.number|add:'3' %}
+						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ num }}#barplan">{{ num }}</a></li>
+						{% endif %}
+					{% endfor %}
+					{% if bartab_entries.has_next %}
+						{% if bartab_entries.number < bartab_entries.paginator.num_pages|add:'-3' %}
+							<li class="page-item"><a class="page-link disabled">...</a></li>
+							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.paginator.num_pages }}#barplan">{{ bartab_entries.paginator.num_pages }}</a></li>
+						{% elif bartab_entries.number < bartab_entries.paginator.num_pages|add:'-2' %}
+							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.paginator.num_pages }}#barplan">{{ bartab_entries.paginator.num_pages }}</a></li>
+						{% endif %}
+						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.next_page_number }}#barplan">{% bs_icon 'chevron-right' %}</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+		</div>
+	</div>
 </div>
 {% else %}
 <p><b>{{ user.email }} {% translate "er ikke på krydslisten." %}</b></p>
