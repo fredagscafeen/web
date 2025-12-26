@@ -177,7 +177,7 @@ bootstrap5 = {
 MESSAGE_TAGS = {
     messages.DEBUG: "alert-info",
     messages.INFO: "alert-info",
-    messages.SUCCESS: "alert-success",
+    messages.SUCCESS: "alert-primary",
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }

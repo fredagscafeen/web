@@ -39,7 +39,7 @@
 	<div class="card-body pb-1">
 		<div class="row">
 			<div class="col-auto me-auto">
-				<p class="card-text mb-0"><b>{% translate "Transaktioner" %}</b></p>
+				<p class="card-text mb-0"><b>{% translate "Krydslisteaktivitet" %}</b></p>
 			</div>
 			<div class="col-auto">
 				<div class="dropdown">
@@ -47,10 +47,10 @@
 						{% translate "Transaktioner per side" %}: {{ bartab_entries_pages_per_page }}
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "15" %}active{% endif %}" href="?bartab_entries_pages_per_page=15#barplan">15</a></li>
-						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "25" %}active{% endif %}" href="?bartab_entries_pages_per_page=25#barplan">25</a></li>
-						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "50" %}active{% endif %}" href="?bartab_entries_pages_per_page=50#barplan">50</a></li>
-						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "100" %}active{% endif %}" href="?bartab_entries_pages_per_page=100#barplan">100</a></li>
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "15" %}active{% endif %}" href="?bartab_entries_pages_per_page=15#bartab">15</a></li>
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "25" %}active{% endif %}" href="?bartab_entries_pages_per_page=25#bartab">25</a></li>
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "50" %}active{% endif %}" href="?bartab_entries_pages_per_page=50#bartab">50</a></li>
+						<li><a class="dropdown-item {% if bartab_entries_pages_per_page == "100" %}active{% endif %}" href="?bartab_entries_pages_per_page=100#bartab">100</a></li>
 					</ul>
 				</div>
 			</div>
@@ -83,9 +83,9 @@
 			<nav>
 				<ul class="pagination">
 					{% if bartab_entries.has_previous %}
-						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.previous_page_number }}#barplan"><i>{% bs_icon 'chevron-left' %}</i></a></li>
+						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.previous_page_number }}#bartab"><i>{% bs_icon 'chevron-left' %}</i></a></li>
 						{% if bartab_entries.number > 3 %}
-							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page=1#barplan">1</a></li>
+							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page=1#bartab">1</a></li>
 							{% if bartab_entries.number > 4 %}
 								<li class="page-item"><a class="page-link disabled">...</a></li>
 							{% endif %}
@@ -93,19 +93,19 @@
 					{% endif %}
 					{% for num in bartab_entries.paginator.page_range %}
 						{% if bartab_entries.number == num %}
-						<li class="page-item"><a class="page-link active" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ num }}#barplan">{{ num }}</a></li>
+						<li class="page-item"><a class="page-link active" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ num }}#bartab">{{ num }}</a></li>
 						{% elif num > bartab_entries.number|add:'-3' and num < bartab_entries.number|add:'3' %}
-						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ num }}#barplan">{{ num }}</a></li>
+						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ num }}#bartab">{{ num }}</a></li>
 						{% endif %}
 					{% endfor %}
 					{% if bartab_entries.has_next %}
 						{% if bartab_entries.number < bartab_entries.paginator.num_pages|add:'-3' %}
 							<li class="page-item"><a class="page-link disabled">...</a></li>
-							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.paginator.num_pages }}#barplan">{{ bartab_entries.paginator.num_pages }}</a></li>
+							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.paginator.num_pages }}#bartab">{{ bartab_entries.paginator.num_pages }}</a></li>
 						{% elif bartab_entries.number < bartab_entries.paginator.num_pages|add:'-2' %}
-							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.paginator.num_pages }}#barplan">{{ bartab_entries.paginator.num_pages }}</a></li>
+							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.paginator.num_pages }}#bartab">{{ bartab_entries.paginator.num_pages }}</a></li>
 						{% endif %}
-						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.next_page_number }}#barplan">{% bs_icon 'chevron-right' %}</a></li>
+						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.next_page_number }}#bartab">{% bs_icon 'chevron-right' %}</a></li>
 					{% endif %}
 				</ul>
 			</nav>
