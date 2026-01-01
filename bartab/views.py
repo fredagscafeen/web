@@ -4,7 +4,7 @@ from django.views.generic import DetailView
 
 from .models import BarTabSnapshot, BarTabUser
 
-DEFAULT_ENTRIES_PER_PAGE = 10
+DEFAULT_ENTRIES_PER_PAGE = "10"
 
 
 class BarTab(LoginRequiredMixin, DetailView):

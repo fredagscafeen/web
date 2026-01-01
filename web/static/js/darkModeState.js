@@ -1,5 +1,3 @@
-/*jshint esversion: 11 */
-
 function switchTheme() {
     "use strict";
     const isLightMode = document.documentElement.getAttribute('data-bs-theme') == 'light';

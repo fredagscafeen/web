@@ -42,8 +42,8 @@ from .models import (
 
 User = get_user_model()
 
-DEFAULT_SHIFTS_PER_PAGE = 15
-DEFAULT_DEPOSIT_SHIFTS_PER_PAGE = 15
+DEFAULT_SHIFTS_PER_PAGE = "15"
+DEFAULT_DEPOSIT_SHIFTS_PER_PAGE = "15"
 
 
 class Index(CreateView):
