@@ -117,18 +117,22 @@ class Bartender(BartenderCommon):
         return self.board_members.filter(period=period).exists()
 
     @property
+    def isPreviousBoardMember(self):
+        return self.board_members.exists()
+
+    @property
     def isAdmin(self):
         admins = User.objects.filter(is_superuser=True)
         return admins.filter(email=self.email).exists()
 
     @property
     def symbol(self):
+        prefix = "✝ " if not self.isActiveBartender else ""
         if self.isBoardMember:
-            return "★ "
-        elif self.isActiveBartender:
-            return ""
-        else:
-            return "✝ "
+            prefix += "★ "
+        elif self.isPreviousBoardMember:
+            prefix += "♥︎ "
+        return prefix
 
     @property
     def first_bartender_shift(self):
