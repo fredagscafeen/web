@@ -114,7 +114,7 @@
 								<p class="m-0">{{ start_file.date|default_if_none:"" }}</p>
 							</div>
 							<div class="col-auto hidden-xs">
-								<a class="common" href="{{ start_file.file.url }}" download><i>{% bs_icon 'download' size='1.0em' %}</i> ({{ start_file.file.size|filesizeformat }})</a>
+								<a class="common" href="{{ start_file.file.url }}" download>{% bs_icon 'download' size='1.0em' %} ({{ start_file.file.size|filesizeformat }})</a>
 							</div>
 						</div>
 					</div>

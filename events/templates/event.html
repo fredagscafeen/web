@@ -10,7 +10,7 @@
 	<div class="row">
 		<div class="col-auto me-auto">
 			<a href="{% url 'events' %}" class="common">
-				<i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage" %}
+				{% bs_icon 'arrow-left' %}{% translate "Tilbage" %}
 			</a>
 		</div>
 		<div class="col-auto">
@@ -92,7 +92,7 @@
 					{% buttons %}
 						{% translate "Gem" as BUTTON_TEXT %}
 						<button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
-							<i>{% bs_icon 'floppy2' size='1.0em' %}</i> {{ BUTTON_TEXT }}
+							{% bs_icon 'floppy2' size='1.0em' %} {{ BUTTON_TEXT }}
 						</button>
 					{% endbuttons %}
 				</fieldset>
@@ -103,18 +103,18 @@
 				<div class="card-header" role="tab">
 					<ul class="nav nav-tabs card-header-tabs">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="true" data-bs-toggle="tab" data-bs-target="#attending" type="button" role="tab">{% translate "Deltager" %} <span class="badge text-bg-primary rounded-pill">{{ event.attending_count }}</span></a>
+							<a class="nav-link {% if not load_no_answers %}active{% endif %}" {% if not load_no_answers %}aria-current="true"{% endif %} data-bs-toggle="tab" data-bs-target="#attending" type="button" role="tab">{% translate "Deltager" %} <span class="badge text-bg-primary rounded-pill">{{ event.attending_count }}</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link text-body" data-bs-toggle="tab" data-bs-target="#notAttending" type="button" role="tab">{% translate "Deltager ikke" %} <span class="badge text-bg-secondary rounded-pill">{{ event.not_attending_count }}</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link disabled" aria-disabled="true">{% translate "Intet svar" %} <span class="badge text-bg-secondary rounded-pill">{{ event.no_answer_count }}</span></a>
+							<a class="nav-link text-body {% if load_no_answers %}active{% endif %}" {% if load_no_answers %}aria-current="true" data-bs-toggle="tab" data-bs-target="#noAnswer" type="button" role="tab"{% else %}href="?load_no_answers=true#signup" type="submit"{% endif %}> {% if not load_no_answers %}{% bs_icon 'arrow-clockwise' %}{% endif %}{% translate "Intet svar" %} <span class="badge text-bg-secondary rounded-pill">{{ event.no_answer_count }}</span></a>
 						</li>
 					</ul>
 				</div>
 				<div class="tab-content">
-					<div id="attending" class="tab-pane fade show active" role="tabpanel">
+					<div id="attending" class="tab-pane fade show {% if not load_no_answers %}active{% endif %}" role="tabpanel">
 						{% if event.attending_count > 0 %}
 							<div role="tabpanel">
 								<div class="container" style="overflow: scroll;">
@@ -151,7 +151,7 @@
 										{% endif %}
 									{% endfor %}
 									?cc=event@{{ DOMAIN }}&bcc=&subject={{ event.name }}&body=" class="btn btn-primary" target="_top">
-										<i>{% bs_icon 'envelope-at-fill' size='1.0em' %}</i> {% translate "Send mail" %}
+										{% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
 									</a>
 							</div>
 							{% endif %}
@@ -189,6 +189,45 @@
 						</div>
 						{% endif %}
 					</div>
+					{% if load_no_answers %}
+						<div id="noAnswer" class="tab-pane fade {% if load_no_answers %}show active{% endif %}" role="tabpanel">
+							{% if event.no_answer_count > 0 %}
+								<div role="tabpanel">
+									<div class="container" style="overflow: scroll;">
+										<table class="table tablesorter">
+											<thead>
+												<tr>
+													<th>{% translate "Navn" %}</th>
+												</tr>
+											</thead>
+											<tbody class="table-group-divider">
+												{% for bartender in event.sorted_no_answer %}
+													<tr>
+														<td>{{ bartender.name }}</td>
+													</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+									</div>
+								</div>
+								{% if user.is_staff %}
+								<div class="card-body pt-0">
+										<a href="mailto:
+										{% for bartender in event.sorted_no_answer %}
+											{{ bartender.email }},
+										{% endfor %}
+										?cc=event@{{ DOMAIN }}&bcc=&subject={{ event.name }}&body=" class="btn btn-secondary" target="_top">
+											{% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
+										</a>
+								</div>
+								{% endif %}
+							{% else %}
+							<div class="card-body">
+								<p class="card-text">{% translate "Alle inviterede har svaret." %}</p>
+							</div>
+							{% endif %}
+						</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>

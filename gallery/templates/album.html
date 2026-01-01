@@ -92,7 +92,7 @@
             {% endfor %}
             <div class="col-xs-12">
                 <a href="{% url 'year' year=album.year  %}" class="common">
-                    <i>{% bs_icon 'arrow-left' %}</i>{% translate "Tilbage til" %} {{ album.year }}
+                    {% bs_icon 'arrow-left' %}{% translate "Tilbage til" %} {{ album.year }}
                 </a>
             </div>
         </div>

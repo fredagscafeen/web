@@ -118,6 +118,8 @@ class EventView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        context["load_no_answers"] = self.request.GET.get("load_no_answers")
+
         event_id = self.request.resolver_match.kwargs["event_id"]
         event = get_object_or_404(Event, id=event_id)
 

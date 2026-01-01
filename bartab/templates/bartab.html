@@ -83,7 +83,7 @@
 			<nav>
 				<ul class="pagination">
 					{% if bartab_entries.has_previous %}
-						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.previous_page_number }}#bartab"><i>{% bs_icon 'chevron-left' %}</i></a></li>
+						<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page={{ bartab_entries.previous_page_number }}#bartab">{% bs_icon 'chevron-left' %}</a></li>
 						{% if bartab_entries.number > 3 %}
 							<li class="page-item"><a class="page-link" href="?bartab_entries_pages_per_page={{ bartab_entries_pages_per_page }}&bartab_entries_page=1#bartab">1</a></li>
 							{% if bartab_entries.number > 4 %}

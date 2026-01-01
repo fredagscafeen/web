@@ -69,13 +69,13 @@
 							{% with released_bartender_shift=shift.responsible|released_shift:shift %}
 								{% if shift.responsible.email == user.email and released_bartender_shift %}
 									<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'shuffle' %}</i>
+										{% bs_icon 'shuffle' %}
 								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
 									<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
-										<i>{% bs_icon 'x-lg' %}</i>
+										{% bs_icon 'x-lg' %}
 								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
 									<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'repeat' %}</i>
+										{% bs_icon 'repeat' %}
 								{% endif %}
 							{% endwith %}
 						{% endif %}
@@ -146,13 +146,13 @@
 							{% with released_bartender_shift=shift.responsible|released_shift:shift %}
 								{% if shift.responsible.email == user.email and released_bartender_shift %}
 									<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'shuffle' %}</i>
+										{% bs_icon 'shuffle' %}
 								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
 									<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
-										<i>{% bs_icon 'x-lg' %}</i>
+										{% bs_icon 'x-lg' %}
 								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
 									<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'repeat' %}</i>
+										{% bs_icon 'repeat' %}
 								{% endif %}
 							{% endwith %}
 						{% endif %}
@@ -225,13 +225,13 @@
 								{% with released_bartender_shift=bartender|released_shift:shift %}
 									{% if bartender.email == user.email and released_bartender_shift %}
 										<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
-											<i>{% bs_icon 'shuffle' %}</i>
+											{% bs_icon 'shuffle' %}
 									{% elif bartender.email == user.email and not released_bartender_shift %}
 										<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
-											<i>{% bs_icon 'x-lg' %}</i>
+											{% bs_icon 'x-lg' %}
 									{% elif released_bartender_shift and user|is_bartender %}
 										<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
-											<i>{% bs_icon 'repeat' %}</i>
+											{% bs_icon 'repeat' %}
 									{% endif %}
 								{% endwith %}
 							{% endif %}
@@ -317,7 +317,7 @@
 		<nav>
 			<ul class="pagination">
 				{% if bartendershifts.has_previous %}
-					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan"><i>{% bs_icon 'chevron-left' %}</i></a></li>
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{% bs_icon 'chevron-left' %}</a></li>
 					{% if bartendershifts.number > 3 %}
 						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page=1{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">1</a></li>
 						{% if bartendershifts.number > 4 %}
@@ -415,7 +415,7 @@
 		<nav>
 			<ul class="pagination">
 				{% if boardmemberdepositshifts.has_previous %}
-					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter"><i>{% bs_icon 'chevron-left' %}</i></a></li>
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{% bs_icon 'chevron-left' %}</a></li>
 					{% if boardmemberdepositshifts.number > 3 %}
 						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page=1{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">1</a></li>
 						{% if boardmemberdepositshifts.number > 4 %}
