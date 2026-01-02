@@ -49,7 +49,7 @@ class Login(FormView):
         messages.success(
             self.request,
             _(
-                "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+                "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind. Husk også at checke din spam mappe."
             ),
         )
         return super().form_valid(form)

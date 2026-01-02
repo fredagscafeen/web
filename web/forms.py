@@ -38,7 +38,6 @@ class LoginForm(forms.Form):
         if next:
             url += f"?next={next}"
 
-        subject = ("Fredagscafeen.dk login",)
         body_template = """{link} to log in.
 
 /snek"""
@@ -46,7 +45,6 @@ class LoginForm(forms.Form):
         html_format = {"link": mark_safe(f'<a href="{url}">Click here</a>')}
 
         if "/da/" in path:
-            subject = ("Fredagscafeen.dk login",)
             body_template = """{link} for at logge ind.
 
 /snek"""
@@ -54,7 +52,7 @@ class LoginForm(forms.Form):
             html_format = {"link": mark_safe(f'<a href="{url}">Klik her</a>')}
 
         return send_template_email(
-            subject=subject,
+            subject="Fredagscafeen.dk login",
             body_template=body_template,
             text_format=text_format,
             html_format=html_format,
