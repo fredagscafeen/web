@@ -253,42 +253,49 @@ class Barplan(TemplateView):
             if "release" in request.POST:
                 bartender_shift_pk = request.POST.get("release")
                 bartender_shift = BartenderShift.objects.get(pk=bartender_shift_pk)
-                if bartender_shift.compare_to_current_week == -1:
-                    raise ValueError("Barvagten burde ikke være tilgængelig længere!")
                 ReleasedBartenderShift.objects.get_or_create(
                     bartender=user_bartender, bartender_shift=bartender_shift
                 )
                 messages.info(request, _("Vagt tilgængelig for andre til at tage."))
             elif "withdraw" in request.POST:
                 released_bartender_shift_pk = request.POST.get("withdraw")
-                released_shift = ReleasedBartenderShift.objects.get(
+                released_bartender_shift = ReleasedBartenderShift.objects.get(
                     pk=released_bartender_shift_pk
                 )
-                if released_shift.bartender_shift.compare_to_current_week == -1:
-                    raise ValueError("Barvagten burde ikke være tilgængelig længere!")
-                released_shift.delete()
+                if not released_bartender_shift.bartender_shift.with_bartender(
+                    user_bartender
+                ):
+                    messages.error(
+                        request,
+                        _("Du kan ikke trække vagter tilbage for andre end dig selv!"),
+                    )
+                    return redirect_url
+                released_bartender_shift.delete()
                 messages.info(request, _("Vagt ikke længere tilgængelig for andre."))
             elif "swap" in request.POST:
                 released_bartender_shift_pk = request.POST.get("swap")
-                released_shift = ReleasedBartenderShift.objects.get(
+                released_bartender_shift = ReleasedBartenderShift.objects.get(
                     pk=released_bartender_shift_pk
                 )
-                if released_shift.bartender_shift.compare_to_current_week == -1:
+                if (
+                    released_bartender_shift.bartender_shift.compare_to_current_week
+                    == -1
+                ):
                     raise ValueError("Barvagten burde ikke være tilgængelig længere!")
-                bartender_shift = released_shift.bartender_shift
+                bartender_shift = released_bartender_shift.bartender_shift
                 if user_bartender in bartender_shift.all_bartenders():
                     messages.error(request, _("Du har allerede en barvagt der!"))
                     return redirect_url
-                bartender_shift.replace(released_shift.bartender, user_bartender)
-
-                send_shift_swap_reminder_email(released_shift, user_bartender)
-
-                released_shift.delete()
+                bartender_shift.replace(
+                    released_bartender_shift.bartender, user_bartender
+                )
+                send_shift_swap_reminder_email(released_bartender_shift, user_bartender)
+                released_bartender_shift.delete()
                 messages.info(request, _("Barplan opdateret. Mail sendt."))
         except ReleasedBartenderShift.DoesNotExist:
             messages.error(request, _("An error occurred."))
-            return redirect_url
-
+        except ValueError as err:
+            messages.error(request, err)
         return redirect_url
 
     def current_week_page_number(self, paginator):

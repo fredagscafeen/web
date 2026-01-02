@@ -591,6 +591,13 @@ class ReleasedBartenderShift(models.Model):
     class Meta:
         unique_together = ("bartender_shift", "bartender")
 
+    def save(self, *args, **kwargs):
+        if not self.bartender_shift.with_bartender(self.bartender):
+            raise ValueError(_("Bartenderen har ikke en barvagt der!"))
+        if self.bartender_shift.compare_to_current_week == -1:
+            raise ValueError(_("Barvagten burde ikke være tilgængelig længere!"))
+        super().save(*args, **kwargs)
+
 
 class BoardMemberDepositShiftPeriod(models.Model):
     generation_datetime = models.DateTimeField(default=timezone.now)
