@@ -155,6 +155,13 @@ SECRET_ADMIN_KEYS = [
         "url": "https://www.instagram.com/",
         "role": "PR",
     },
+    {
+        "key": "HOLTEC_SOLUTIONS_PASSWORD",
+        "description": "Holtec Solutions password",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://holtecsolutions.dk/log-ind/",
+        "role": "DRIFT",
+    },
 ]
 
 load_dotenv()

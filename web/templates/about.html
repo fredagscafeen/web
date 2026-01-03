@@ -115,6 +115,24 @@
     <div class="col-md-6 col-xl-4 mb-3">
         <div class="card">
             <div class="card-header pb-0">
+                <h5 class="card-title">{% translate "Fødevarestyrelsen" %}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {% translate "Find fødevarestyrelsens kontrolrapporter" %}
+                    <a class="common" href="https://www.findsmiley.dk/1200966">her {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+                    <p class="card-text pt-2">
+                        <small class="text-body-secondary">
+                            {% translate "ID-nummer" %}: 1200966.
+                        </small>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4 mb-3">
+        <div class="card">
+            <div class="card-header pb-0">
                 <h5 class="card-title">{% translate "Logo" %}</h5>
             </div>
             <img src="{% static 'images/logo.png' %}" class="card-img-top p-5" alt="{% translate "Fredagscaféens logo" %}">
@@ -141,7 +159,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     {% translate "Det er Fredagscaféen's fødselsdag den fredag russerne tager på" %}
-                    <a class="common" href="https://matfystutor.dk/events/">rustur</a>.
+                    <a class="common" href="https://matfystutor.dk/events/">rustur {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
                     {% translate "Dette er typisk første fredag i september." %}
                 </li>
                 <li class="list-group-item">
