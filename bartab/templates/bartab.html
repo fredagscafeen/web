@@ -35,7 +35,7 @@
 		</div>
 	</div>
 </div>
-<div class="card">
+<div class="card mb-3">
 	<div class="card-body pb-1">
 		<div class="row">
 			<div class="col-auto me-auto">
@@ -112,6 +112,65 @@
 		</div>
 	</div>
 </div>
+
+<hr>
+
+<h3 id="top_ten">
+	{% translate "Top 10 listen" %}
+    <a href="#top_ten" class="section-link">#</a>
+</h3>
+
+<p>
+	{% translate "Siden sidste generalforsamling" %} <b>{% translate "d." context "d. 1. i 1." %} {{ current_period.start_date }}</b> {% translate "til krydslisten er gjort op" %} <b>{% translate "d." context "d. 1. i 1." %} {{ latest_tab_update.date }}</b>.<br>
+	{% translate "Slutter og offentliggøres til næste generalforsamling." %}
+</p>
+
+{% if top_ten %}
+<div class="row justify-content-center">
+	<div class="col-lg-8 col-lg-auto" style="overflow: scroll;">
+		<table class="table table-borderless text-center">
+			<tbody>
+				<thead>
+					<tr>
+						<th class="col-2">#</th>
+						<th class="col-7">{% translate "Navn" %}</th>
+						<th class="col-3">{% translate "Forbrug" %}</th>
+					</tr>
+				</thead>
+				{% for name, value in top_ten %}
+					{% if forloop.counter == user_position %}
+						<tr>
+							<td class="text-primary">{{ forloop.counter }}</td>
+							<td class="text-primary">{{ name }}</td>
+							<td class="text-primary">{{ value }}</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ name }}</td>
+							<td>-</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+				{% if is_outside_top_ten %}
+					<tr>
+						<td class="text-primary">{{ user_position }}</td>
+						<td class="text-primary">{{ user_name }}</td>
+						<td class="text-primary">{{ user_value }}</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+    <div class="col-auto d-none d-sm-block"></div>
+</div>
+{% else %}
+<div class="row justify-content-center">
+	<div class="col-auto">
+		<button type="button" class="btn btn-outline-secondary btn-lg" disabled><span class="pe-1">{% bs_icon 'eye-slash-fill' size='1.25em' %}</span>{% translate "Krydslistens top 10 liste er p.t. skjult." %}</button>
+	</div>
+</div>
+{% endif %}
 {% else %}
 <p><b>{{ user.email }} {% translate "er ikke på krydslisten." %}</b></p>
 {% endif %}

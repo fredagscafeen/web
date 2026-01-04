@@ -61,6 +61,11 @@ CONSTANCE_CONFIG = {
         "Skal bartender statistikker vises på bartender info siden?",
         bool,
     ),
+    "SHOW_BARTAB_TOP_TEN": (
+        False,
+        "Skal krydslistens top 10 vises for brugere?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [
