@@ -51,7 +51,7 @@
                     <thead>
                         <tr>
                             <th>{% translate "Your mailing lists" %} <span class="badge text-bg-secondary rounded-pill">{{ mailing_lists|length }}</span></th>
-                            <th>{% translate "Modtagere" %}</th>
+                            <th># {% translate "Modtagere" %}</th>
                             {% if not object.isActiveBartender %}
                                 <th></th>
                             {% endif %}

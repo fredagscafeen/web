@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load bootstrap5 bootstrap_icons %}
-{% load get_active_page startswith open_events %}
+{% load is_bartender is_bartab_user get_active_page startswith open_events %}
 {% block body_content %}
     <div class="container pt-3 px-4">
         {% if config.BANNER_HTML %}
@@ -109,22 +109,29 @@
                                 <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "about" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'about' %}">{% translate "Om baren" %}</a></li>
                                 <li class="nav-item px-2 dropdown flex-shrink-1">
                                     <a {% if activepage != "" and activepage == "bartab" or activepage == "profile" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a {% if activepage == "bartab" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a {% if activepage == "profile" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        {% if user.is_authenticated %}
+                                            <li><h6 class="dropdown-header">{{ user.email }}</h6></li>
+                                            {% if user|is_bartab_user %}
+                                                <li><a {% if activepage == "bartab" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
+                                            {% endif %}
+                                            {% if user|is_bartender %}
+                                                <li><a {% if activepage == "profile" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
+                                            {% endif %}
+                                            <div class="dropdown-divider"></div>
+                                            <form action="{% url 'logout' %}" method="post" class="px-2 py-1">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-danger w-100 py-1"><span class="pe-1">{% bs_icon 'box-arrow-right' %}</span>{% translate "Log ud" %}</button>
+                                            </form>
+                                        {% else %}
+                                            <li><a {% if activepage == "login" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'login' %}"><span class="pe-1">{% bs_icon 'box-arrow-in-right' %}</span>{% translate "Log ind" %}</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 <li class="nav-item px-2 flex-shrink-1"><a class="nav-link" href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
                             </ul>
                             {% endwith %}
                         </div>
-                        {% if user.is_authenticated %}
-                        <form action="{% url 'logout' %}" method="post" class="d-flex">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-secondary">{% translate "Log ud" %}</button>
-                        </form>
-                        {% endif %}
                     </div>
                 </nav>
             </div>
