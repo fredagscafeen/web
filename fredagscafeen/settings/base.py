@@ -171,7 +171,7 @@ SECRET_ADMIN_KEYS = [
     },
     {
         "key": "WEB_REGNSKAB_PASSWORD",
-        "description": "Salling Group Business",
+        "description": "Web Regnskab",
         "username": "best@fredagscafeen.dk",
         "url": "https://web-regnskab.dk/",
         "role": "KASSERER",
