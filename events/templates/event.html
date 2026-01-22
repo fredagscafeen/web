@@ -9,7 +9,7 @@
 <div class="my-3">
 	<div class="row">
 		<div class="col-auto me-auto">
-			<a href="{% url 'events' %}" class="common">
+			<a class="common" href="{% url 'events' %}">
 				{% bs_icon 'arrow-left' %}{% translate "Tilbage" %}
 			</a>
 		</div>
@@ -71,7 +71,7 @@
 		</div>
 		<div>
 			{% if not bartender %}
-			<p><b>{% translate "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events." %} <a href="/login/?next=/events/">{% translate "Klik for at logge ind." %}</a></b></p>
+			<p><b>{% translate "Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events, eller se hvem der deltager." %} <a class="common" href="/login/?next=/events/">{% translate "Klik her for at logge ind." %}</a></b></p>
 			{% elif not may_attend %}
 			<p><b>{% translate "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen." %}</b></p>
 			<p>{% translate "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav" %}:
@@ -98,6 +98,7 @@
 				</fieldset>
 			</form>
 		{% endif %}
+		{% if bartender %}
 		<div role="tablist">
 			<div class="card mb-2">
 				<div class="card-header" role="tab">
@@ -144,13 +145,13 @@
 							</div>
 							{% if user.is_staff %}
 							<div class="card-body pt-0">
-									<a href="mailto:
-									{% for response in event.sorted_responses %}
-										{% if response.attending %}
-											{{ response.bartender.email }},
-										{% endif %}
-									{% endfor %}
-									?cc=event@{{ DOMAIN }}&bcc=&subject={{ event.name }}&body=" class="btn btn-primary" target="_top">
+									<a href="mailto:event@{{ DOMAIN }}?cc=&bcc=
+										{% for response in event.sorted_responses %}
+											{% if response.attending %}
+												{{ response.bartender.email }},
+											{% endif %}
+										{% endfor %}
+										&subject=Fredagscaféen's {{ event.name }} {{ event.start_datetime.date.year }}&body=" class="btn btn-primary" target="_top">
 										{% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
 									</a>
 							</div>
@@ -212,11 +213,11 @@
 								</div>
 								{% if user.is_staff %}
 								<div class="card-body pt-0">
-										<a href="mailto:
+										<a href="mailto:event@{{ DOMAIN }}?cc=&bcc=
 										{% for bartender in event.sorted_no_answer %}
 											{{ bartender.email }},
 										{% endfor %}
-										?cc=event@{{ DOMAIN }}&bcc=&subject={{ event.name }}&body=" class="btn btn-secondary" target="_top">
+										&subject=Fredagscaféen's {{ event.name }} {{ event.start_datetime.date.year }}&body=" class="btn btn-secondary" target="_top">
 											{% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
 										</a>
 								</div>
@@ -231,6 +232,7 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	</div>
 </div>
 <div class="mt-3">

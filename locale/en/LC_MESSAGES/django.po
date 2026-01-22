@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-03 13:42+0100\n"
-"PO-Revision-Date: 2026-01-03 13:43+0050\n"
+"POT-Creation-Date: 2026-01-22 14:52+0100\n"
+"PO-Revision-Date: 2026-01-22 14:53+0050\n"
 "Last-Translator:   <ml@ml.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -93,8 +93,8 @@ msgstr "Submit"
 msgid "Result"
 msgstr "Result"
 
-#: bartab/templates/admin/consumption.html:20 events/templates/event.html:124
-#: events/templates/event.html:171 events/templates/event.html:200
+#: bartab/templates/admin/consumption.html:20 events/templates/event.html:125
+#: events/templates/event.html:172 events/templates/event.html:201
 #: guides/templates/guides.html:42 items/templates/items.html:51
 #: mail/models.py:18
 msgid "Navn"
@@ -112,11 +112,11 @@ msgstr "Tab status"
 msgid "Krydslisten er gjort op til og med barvagten"
 msgstr "The tab is done up to and including the bar shift"
 
-#: bartab/templates/bartab.html:14 bartenders/templates/barplan.html:97
-#: bartenders/templates/barplan.html:116 bartenders/templates/barplan.html:135
-#: bartenders/templates/barplan.html:178 bartenders/templates/barplan.html:197
-#: bartenders/templates/barplan.html:216 bartenders/templates/barplan.html:263
-#: bartenders/templates/barplan.html:282 bartenders/templates/barplan.html:301
+#: bartab/templates/bartab.html:14 bartenders/templates/barplan.html:96
+#: bartenders/templates/barplan.html:115 bartenders/templates/barplan.html:134
+#: bartenders/templates/barplan.html:175 bartenders/templates/barplan.html:194
+#: bartenders/templates/barplan.html:213 bartenders/templates/barplan.html:260
+#: bartenders/templates/barplan.html:279 bartenders/templates/barplan.html:298
 #: web/templates/about.html:65 web/templates/about.html:69
 msgctxt "d. 1. i 1."
 msgid "d."
@@ -278,12 +278,10 @@ msgid "Is the link to an external site?"
 msgstr "Is the link to an external site?"
 
 #: bartenders/models.py:596
-#| msgid "Du har allerede en barvagt der!"
 msgid "Bartenderen har ikke en barvagt der!"
 msgstr "The bartender doesn't have a bar shift there!"
 
 #: bartenders/models.py:598
-#| msgid "Vagt ikke længere tilgængelig for andre."
 msgid "Barvagten burde ikke være tilgængelig længere!"
 msgstr "The bar shift shouldn't be available anymore!"
 
@@ -297,11 +295,11 @@ msgstr "Save"
 msgid "Barplan"
 msgstr "Bar Plan"
 
-#: bartenders/templates/barplan.html:17 bartenders/templates/barplan.html:374
+#: bartenders/templates/barplan.html:17 bartenders/templates/barplan.html:372
 msgid "Vis kun nuværende"
 msgstr "Show only current"
 
-#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:376
+#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:374
 msgid "Vis også tidligere"
 msgstr "Also show earlier"
 
@@ -322,62 +320,62 @@ msgstr "Bartenders"
 msgid "This weeks friday"
 msgstr "This week's Friday"
 
-#: bartenders/templates/barplan.html:83 bartenders/templates/barplan.html:164
+#: bartenders/templates/barplan.html:82 bartenders/templates/barplan.html:161
 msgid "Bartender's first responsible shift"
 msgstr "Bartender's first responsible shift"
 
-#: bartenders/templates/barplan.html:93 bartenders/templates/barplan.html:174
-#: bartenders/templates/barplan.html:259
+#: bartenders/templates/barplan.html:92 bartenders/templates/barplan.html:171
+#: bartenders/templates/barplan.html:256
 msgid "Withdraw"
 msgstr "Withdraw"
 
-#: bartenders/templates/barplan.html:97 bartenders/templates/barplan.html:178
-#: bartenders/templates/barplan.html:263
+#: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:175
+#: bartenders/templates/barplan.html:260
 msgid "Du er ved at trække din vagt"
 msgstr "You're about to withdraw your shift"
 
-#: bartenders/templates/barplan.html:97 bartenders/templates/barplan.html:178
-#: bartenders/templates/barplan.html:263
+#: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:175
+#: bartenders/templates/barplan.html:260
 msgid " tilbage."
 msgstr "."
 
-#: bartenders/templates/barplan.html:98 bartenders/templates/barplan.html:179
-#: bartenders/templates/barplan.html:264
+#: bartenders/templates/barplan.html:97 bartenders/templates/barplan.html:176
+#: bartenders/templates/barplan.html:261
 msgid "Det betyder, at andre bartender ikke kan tage din vagt."
 msgstr "This means that other bartenders cannot take your shift."
 
-#: bartenders/templates/barplan.html:101 bartenders/templates/barplan.html:120
-#: bartenders/templates/barplan.html:138 bartenders/templates/barplan.html:182
-#: bartenders/templates/barplan.html:201 bartenders/templates/barplan.html:219
-#: bartenders/templates/barplan.html:267 bartenders/templates/barplan.html:286
-#: bartenders/templates/barplan.html:304
+#: bartenders/templates/barplan.html:100 bartenders/templates/barplan.html:119
+#: bartenders/templates/barplan.html:137 bartenders/templates/barplan.html:179
+#: bartenders/templates/barplan.html:198 bartenders/templates/barplan.html:216
+#: bartenders/templates/barplan.html:264 bartenders/templates/barplan.html:283
+#: bartenders/templates/barplan.html:301
 #: bartenders/templates/bartender_info.html:97
 #: bartenders/templates/bartender_info.html:128
 #: bartenders/templates/bartender_info.html:146
 msgid "Close"
 msgstr "Close"
 
-#: bartenders/templates/barplan.html:102 bartenders/templates/barplan.html:121
-#: bartenders/templates/barplan.html:139 bartenders/templates/barplan.html:183
-#: bartenders/templates/barplan.html:202 bartenders/templates/barplan.html:220
-#: bartenders/templates/barplan.html:268 bartenders/templates/barplan.html:287
-#: bartenders/templates/barplan.html:305
+#: bartenders/templates/barplan.html:101 bartenders/templates/barplan.html:120
+#: bartenders/templates/barplan.html:138 bartenders/templates/barplan.html:180
+#: bartenders/templates/barplan.html:199 bartenders/templates/barplan.html:217
+#: bartenders/templates/barplan.html:265 bartenders/templates/barplan.html:284
+#: bartenders/templates/barplan.html:302
 #: bartenders/templates/bartender_info.html:129
 msgid "Confirm"
 msgstr "Confirm"
 
-#: bartenders/templates/barplan.html:112 bartenders/templates/barplan.html:193
-#: bartenders/templates/barplan.html:278
+#: bartenders/templates/barplan.html:111 bartenders/templates/barplan.html:190
+#: bartenders/templates/barplan.html:275
 msgid "Release"
 msgstr "Release"
 
-#: bartenders/templates/barplan.html:116 bartenders/templates/barplan.html:197
-#: bartenders/templates/barplan.html:282
+#: bartenders/templates/barplan.html:115 bartenders/templates/barplan.html:194
+#: bartenders/templates/barplan.html:279
 msgid "Du er ved at frigøre din vagt"
 msgstr "You're about to release your shift"
 
-#: bartenders/templates/barplan.html:117 bartenders/templates/barplan.html:198
-#: bartenders/templates/barplan.html:283
+#: bartenders/templates/barplan.html:116 bartenders/templates/barplan.html:195
+#: bartenders/templates/barplan.html:280
 msgid ""
 "Det betyder, at andre bartender kan tage din vagt, men det er stadig din "
 "vagt indtil da."
@@ -385,21 +383,21 @@ msgstr ""
 "This means that other bartenders can take your shift, but it is still your "
 "shift until then."
 
-#: bartenders/templates/barplan.html:131 bartenders/templates/barplan.html:212
-#: bartenders/templates/barplan.html:297
+#: bartenders/templates/barplan.html:130 bartenders/templates/barplan.html:209
+#: bartenders/templates/barplan.html:294
 msgid "Shift Swap"
 msgstr "Shift Swap"
 
-#: bartenders/templates/barplan.html:135 bartenders/templates/barplan.html:216
-#: bartenders/templates/barplan.html:301
+#: bartenders/templates/barplan.html:134 bartenders/templates/barplan.html:213
+#: bartenders/templates/barplan.html:298
 msgid "Du er ved at tage en andens barvagt"
 msgstr "You're taking someone else's shift"
 
-#: bartenders/templates/barplan.html:248 bartenders/templates/barplan.html:251
+#: bartenders/templates/barplan.html:245 bartenders/templates/barplan.html:248
 msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
-#: bartenders/templates/barplan.html:316 bartenders/templates/barplan.html:416
+#: bartenders/templates/barplan.html:314 bartenders/templates/barplan.html:414
 #: bartenders/templates/board.html:39 events/templates/event.html:19
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
 #: guides/templates/guides.html:69 items/templates/items.html:80
@@ -412,19 +410,19 @@ msgstr "Bartender's first shift"
 msgid "Edit"
 msgstr "Edit"
 
-#: bartenders/templates/barplan.html:367 bartenders/views.py:359
+#: bartenders/templates/barplan.html:365 bartenders/views.py:359
 msgid "Pantvagter"
 msgstr "Deposit shifts"
 
-#: bartenders/templates/barplan.html:382
+#: bartenders/templates/barplan.html:380
 msgid "Pantvagter per side"
 msgstr "Deposit shifts per page"
 
-#: bartenders/templates/barplan.html:398
+#: bartenders/templates/barplan.html:396
 msgid "Uge"
 msgstr "Week"
 
-#: bartenders/templates/barplan.html:399 udlejning/models.py:105
+#: bartenders/templates/barplan.html:397 udlejning/models.py:105
 #: udlejning/models.py:159 udlejning/models.py:181 udlejning/models.py:203
 #: udlejning/models.py:225 udlejning/models.py:247
 #: udlejning/templates/udlejning.html:26
@@ -436,11 +434,11 @@ msgstr "Week"
 msgid "Ansvarlige"
 msgstr "Responsible"
 
-#: bartenders/templates/barplan.html:409
+#: bartenders/templates/barplan.html:407
 msgid "Current week"
 msgstr "Current week"
 
-#: bartenders/templates/barplan.html:412
+#: bartenders/templates/barplan.html:410
 msgid "Bartender's first deposit shift"
 msgstr "Bartender's first deposit shift"
 
@@ -704,11 +702,11 @@ msgstr "Event album"
 msgid "Vælg"
 msgstr "Choose"
 
-#: events/forms.py:21 events/forms.py:59 events/templates/event.html:106
+#: events/forms.py:21 events/forms.py:59 events/templates/event.html:107
 msgid "Deltager"
 msgstr "Attending"
 
-#: events/forms.py:22 events/templates/event.html:109
+#: events/forms.py:22 events/templates/event.html:110
 msgid "Deltager ikke"
 msgstr "Not attending"
 
@@ -766,15 +764,19 @@ msgid "for sent"
 msgstr "too late"
 
 #: events/templates/event.html:74
+#| msgid ""
+#| "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
 msgid ""
-"Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
+"Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events,"
+" eller se hvem der deltager."
 msgstr ""
-"You are not logged in as a bartender and therefore cannot register for "
-"events."
+"You are not logged in as a bartender, and therefore cannot register for "
+"events or see who is participating."
 
 #: events/templates/event.html:74
-msgid "Klik for at logge ind."
-msgstr "Click here to log in"
+#| msgid "Klik for at logge ind."
+msgid "Klik her for at logge ind."
+msgstr "Click here to log in."
 
 #: events/templates/event.html:76
 msgid ""
@@ -811,31 +813,31 @@ msgstr ""
 "There has been a bar guard during a bar guard plan period that ended less "
 "than a month ago."
 
-#: events/templates/event.html:112
+#: events/templates/event.html:113
 msgid "Intet svar"
 msgstr "No answer"
 
-#: events/templates/event.html:154 events/templates/event.html:220
+#: events/templates/event.html:155 events/templates/event.html:221
 msgid "Send mail"
 msgstr "Send mail"
 
-#: events/templates/event.html:160
+#: events/templates/event.html:161
 msgid "Ingen tilmeldte endnu."
 msgstr "No one signed up yet."
 
-#: events/templates/event.html:188
+#: events/templates/event.html:189
 msgid "Ingen ikke-deltager endnu."
 msgstr "No non-participants yet."
 
-#: events/templates/event.html:226
+#: events/templates/event.html:227
 msgid "Alle inviterede har svaret."
 msgstr "All invitees have responded."
 
-#: events/templates/event.html:238
+#: events/templates/event.html:240
 msgid "Created"
 msgstr "Created"
 
-#: events/templates/event.html:241
+#: events/templates/event.html:243
 msgid "Updated"
 msgstr "Updated"
 
@@ -884,11 +886,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:322
+#: fredagscafeen/settings/base.py:336
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:323
+#: fredagscafeen/settings/base.py:337
 msgid "English"
 msgstr "English"
 
@@ -1093,11 +1095,11 @@ msgstr[1] ""
 msgid "Ingen albummer med billeder fundet."
 msgstr "No albums with images found."
 
-#: gallery/templates/image.html:41
+#: gallery/templates/image.html:43
 msgid "af"
 msgstr "of"
 
-#: gallery/templates/image.html:44
+#: gallery/templates/image.html:46
 msgid ""
 "\n"
 "\t\t\t\t\t\t\t\t\t\tbillede\n"
@@ -1113,19 +1115,19 @@ msgstr[1] ""
 "\n"
 "images"
 
-#: gallery/templates/image.html:82
+#: gallery/templates/image.html:84
 msgid "Your browser does not support the audio element."
 msgstr "Your browser does not support the audio element."
 
-#: gallery/templates/image.html:89
+#: gallery/templates/image.html:91
 msgid "Your browser does not support the video tag."
 msgstr "Your browser does not support the video tag."
 
-#: gallery/templates/image.html:103
+#: gallery/templates/image.html:105
 msgid "Forrige"
 msgstr "Previous"
 
-#: gallery/templates/image.html:107
+#: gallery/templates/image.html:109
 msgid "Næste"
 msgstr "Next"
 
@@ -2345,17 +2347,14 @@ msgid "Vores CVR-nr er"
 msgstr "Our CVR number is"
 
 #: web/templates/about.html:118
-#| msgid "Bestyrelsen"
 msgid "Fødevarestyrelsen"
 msgstr "The Danish Food Safety Authority"
 
 #: web/templates/about.html:122
-#| msgid "Find fødevarestyrelsen's kontrolrapporter"
 msgid "Find fødevarestyrelsens kontrolrapporter"
 msgstr "Find the Danish Food Safety Authority's inspection reports"
 
 #: web/templates/about.html:126
-#| msgid "EAN-nummer"
 msgid "ID-nummer"
 msgstr "ID number"
 
@@ -2610,37 +2609,37 @@ msgstr "About"
 msgid "Profil"
 msgstr "Profile"
 
-#: web/templates/base.html:113
+#: web/templates/base.html:116
 msgid "Krydlistestatus"
 msgstr "Tab status"
 
-#: web/templates/base.html:115
+#: web/templates/base.html:119
 msgid "Bartenderprofil"
 msgstr "Bartender profile"
 
-#: web/templates/base.html:118
-msgid "Admin"
-msgstr "Admin"
-
-#: web/templates/base.html:125
+#: web/templates/base.html:124
 msgid "Log ud"
 msgstr "Log out"
 
-#: web/templates/base.html:173
+#: web/templates/base.html:127 web/templates/login.html:12
+msgid "Log ind"
+msgstr "Log in"
+
+#: web/templates/base.html:131
+msgid "Admin"
+msgstr "Admin"
+
+#: web/templates/base.html:180
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
 msgstr "is a Friday bar for computer science and IT at Aarhus University."
 
-#: web/templates/base.html:181
+#: web/templates/base.html:188
 msgid "Running version"
 msgstr "Running version"
 
-#: web/templates/base.html:184
+#: web/templates/base.html:191
 msgid "Running unknown version."
 msgstr "Running unknown version."
-
-#: web/templates/login.html:12
-msgid "Log ind"
-msgstr "Log in"
 
 #: web/templates/secrets_admin.html:10
 msgid "Django key"
