@@ -63,186 +63,28 @@
 					<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-secondary{% else %}text-bg-info{% endif %}">{% if shift.info_url %}<a href="{{ shift.info_url }}" {% if shift.info_url_is_external %}target="_blank"{% endif %} class="common">{{ shift.info }}{% if shift.info_url_is_external %} {% bs_icon 'box-arrow-up-right' size='1.0em' %}{% endif %}</a>{% else %}{{ shift.info }}{% endif %}</span>
 					{% endif %}
 				</td>
-				{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
-					<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
-						{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
-							{% with released_bartender_shift=shift.responsible|released_shift:shift %}
-								{% if shift.responsible.email == user.email and released_bartender_shift %}
-									<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'shuffle' %}</i>
-								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
-									<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
-										<i>{% bs_icon 'x-lg' %}</i>
-								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
-									<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'repeat' %}</i>
-								{% endif %}
-							{% endwith %}
-						{% endif %}
-						{% if shift.responsible.first_responsible_shift == shift %}
-						<b style="color:{{ responsibleColor }};display:inline;" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
-						{% else %}
-						<p style="color:{{ responsibleColor }};display:inline;">{{ shift.responsible.name }}</p>
-						{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}
-						{% with released_bartender_shift=shift.responsible|released_shift:shift %}
-						<div class="modal fade" id="withdrawModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="withdrawModal{{ released_bartender_shift.pk }}" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="withdrawModal{{ released_bartender_shift.pk }}">{% translate "Withdraw" %}</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								<div class="modal-body">
-									{% translate "Du er ved at trække din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>{% translate " tilbage." %}<br>
-									{% translate "Det betyder, at andre bartender ikke kan tage din vagt." %}
-								</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
-										<button type="submit" class="btn btn-primary" name="withdraw" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal fade" id="releaseModal{{ shift.pk }}" tabindex="-1" aria-labelledby="releaseModal{{ shift.pk }}" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="releaseModal{{ shift.pk }}">{% translate "Release" %}</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								<div class="modal-body">
-									{% translate "Du er ved at frigøre din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
-									{% translate "Det betyder, at andre bartender kan tage din vagt, men det er stadig din vagt indtil da." %}
-								</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
-										<button type="submit" class="btn btn-danger" name="release" value="{{ shift.pk }}">{% translate "Confirm" %}</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal fade" id="swapModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="swapModal{{ released_bartender_shift.pk }}" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="swapModal{{ released_bartender_shift.pk }}">{% translate "Shift Swap" %}</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								<div class="modal-body">
-									{% translate "Du er ved at tage en andens barvagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
-								</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
-										<button type="submit" class="btn btn-warning" name="swap" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						{% endwith %}
-					</td>
-				{% else %}
-					<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
-						{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
-							{% with released_bartender_shift=shift.responsible|released_shift:shift %}
-								{% if shift.responsible.email == user.email and released_bartender_shift %}
-									<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'shuffle' %}</i>
-								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
-									<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
-										<i>{% bs_icon 'x-lg' %}</i>
-								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
-									<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
-										<i>{% bs_icon 'repeat' %}</i>
-								{% endif %}
-							{% endwith %}
-						{% endif %}
-						{% if shift.responsible.first_responsible_shift == shift %}
-						<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
-						{% else %}
-						{{ shift.responsible.name }}
-						{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}
-						{% with released_bartender_shift=shift.responsible|released_shift:shift %}
-						<div class="modal fade" id="withdrawModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="withdrawModal{{ released_bartender_shift.pk }}" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="withdrawModal{{ released_bartender_shift.pk }}">{% translate "Withdraw" %}</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								<div class="modal-body">
-									{% translate "Du er ved at trække din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>{% translate " tilbage." %}<br>
-									{% translate "Det betyder, at andre bartender ikke kan tage din vagt." %}
-								</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
-										<button type="submit" class="btn btn-primary" name="withdraw" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal fade" id="releaseModal{{ shift.pk }}" tabindex="-1" aria-labelledby="releaseModal{{ shift.pk }}" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="releaseModal{{ shift.pk }}">{% translate "Release" %}</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								<div class="modal-body">
-									{% translate "Du er ved at frigøre din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
-									{% translate "Det betyder, at andre bartender kan tage din vagt, men det er stadig din vagt indtil da." %}
-								</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
-										<button type="submit" class="btn btn-danger" name="release" value="{{ shift.pk }}">{% translate "Confirm" %}</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="modal fade" id="swapModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="swapModal{{ released_bartender_shift.pk }}" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h1 class="modal-title fs-5" id="swapModal{{ released_bartender_shift.pk }}">{% translate "Shift Swap" %}</h1>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-								<div class="modal-body">
-									{% translate "Du er ved at tage en andens barvagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
-								</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
-										<button type="submit" class="btn btn-warning" name="swap" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						{% endwith %}
-					</td>
-				{% endif %}
-				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
-					{% for bartender in shift.other_bartenders.all %}
-						{% with otherBartenderColor=shift|other_bartender_color:forloop.counter%}
+				{% with released_bartender_shift=shift.responsible|released_shift:shift %}
+					{% if shiftComparedToCurrentWeek == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
+						<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
 							{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
-								{% with released_bartender_shift=bartender|released_shift:shift %}
-									{% if bartender.email == user.email and released_bartender_shift %}
-										<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
-											<i>{% bs_icon 'shuffle' %}</i>
-									{% elif bartender.email == user.email and not released_bartender_shift %}
-										<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
-											<i>{% bs_icon 'x-lg' %}</i>
-									{% elif released_bartender_shift and user|is_bartender %}
-										<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
-											<i>{% bs_icon 'repeat' %}</i>
-									{% endif %}
-								{% endwith %}
+								{% if shift.responsible.email == user.email and released_bartender_shift %}
+									<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
+										{% bs_icon 'shuffle' %}
+								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
+									<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
+										{% bs_icon 'x-lg' %}
+								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
+									<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
+										{% bs_icon 'repeat' %}
+								{% endif %}
 							{% endif %}
-							{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
-								{% if bartender.first_bartender_shift == shift %}
-								<b style="color:{{ otherBartenderColor }};" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
-								<p style="color:{{ otherBartenderColor }};display:inline;">{{ bartender.name }}</p>{% endif %}{% else %}
-								{% if bartender.first_bartender_shift == shift %}
-								<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
-								{{ bartender.name }}{% endif %}{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}{% if not forloop.last %},{% endif %}
-								{% with released_bartender_shift=bartender|released_shift:shift %}
+							{% if shift.responsible.first_responsible_shift == shift %}
+							<b style="color:{{ responsibleColor }};display:inline;" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+							{% else %}
+							<p style="color:{{ responsibleColor }};display:inline;">{{ shift.responsible.name }}</p>
+							{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}
+							{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
+								{% if shift.responsible.email == user.email and released_bartender_shift %}
 									<div class="modal fade" id="withdrawModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="withdrawModal{{ released_bartender_shift.pk }}" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -261,6 +103,7 @@
 											</div>
 										</div>
 									</div>
+								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
 									<div class="modal fade" id="releaseModal{{ shift.pk }}" tabindex="-1" aria-labelledby="releaseModal{{ shift.pk }}" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -279,6 +122,7 @@
 											</div>
 										</div>
 									</div>
+								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
 									<div class="modal fade" id="swapModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="swapModal{{ released_bartender_shift.pk }}" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
@@ -296,7 +140,173 @@
 											</div>
 										</div>
 									</div>
-								{% endwith %}
+								{% endif %}
+							{% endif %}
+						</td>
+					{% else %}
+						<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+							{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
+								{% if shift.responsible.email == user.email and released_bartender_shift %}
+									<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
+										{% bs_icon 'shuffle' %}
+								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
+									<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
+										{% bs_icon 'x-lg' %}
+								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
+									<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
+										{% bs_icon 'repeat' %}
+								{% endif %}
+							{% endif %}
+							{% if shift.responsible.first_responsible_shift == shift %}
+							<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first responsible shift" %}">{{ shift.responsible.name }}</b>
+							{% else %}
+							{{ shift.responsible.name }}
+							{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}
+							{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
+								{% if shift.responsible.email == user.email and released_bartender_shift %}
+									<div class="modal fade" id="withdrawModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="withdrawModal{{ released_bartender_shift.pk }}" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="withdrawModal{{ released_bartender_shift.pk }}">{% translate "Withdraw" %}</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+											<div class="modal-body">
+												{% translate "Du er ved at trække din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>{% translate " tilbage." %}<br>
+												{% translate "Det betyder, at andre bartender ikke kan tage din vagt." %}
+											</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+													<button type="submit" class="btn btn-primary" name="withdraw" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% elif shift.responsible.email == user.email and not released_bartender_shift %}
+									<div class="modal fade" id="releaseModal{{ shift.pk }}" tabindex="-1" aria-labelledby="releaseModal{{ shift.pk }}" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="releaseModal{{ shift.pk }}">{% translate "Release" %}</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+											<div class="modal-body">
+												{% translate "Du er ved at frigøre din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
+												{% translate "Det betyder, at andre bartender kan tage din vagt, men det er stadig din vagt indtil da." %}
+											</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+													<button type="submit" class="btn btn-danger" name="release" value="{{ shift.pk }}">{% translate "Confirm" %}</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% elif released_bartender_shift and user|is_bartender and user.is_staff %}
+									<div class="modal fade" id="swapModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="swapModal{{ released_bartender_shift.pk }}" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="swapModal{{ released_bartender_shift.pk }}">{% translate "Shift Swap" %}</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+											<div class="modal-body">
+												{% translate "Du er ved at tage en andens barvagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
+											</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+													<button type="submit" class="btn btn-warning" name="swap" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% endif %}
+							{% endif %}
+						</td>
+					{% endif %}
+				{% endwith %}
+				<td class="{% if shiftIsWithUser and not config.ALLOW_SHIFT_SWAPING or shiftIsWithUser and shiftComparedToCurrentWeek == -1 %}bg-info{% endif %} {% if shiftComparedToCurrentWeek == -1 %}text-secondary{% endif %}">
+					{% for bartender in shift.other_bartenders.all %}
+						{% with otherBartenderColor=shift|other_bartender_color:forloop.counter%}
+						{% with released_bartender_shift=bartender|released_shift:shift %}
+							{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
+								{% if bartender.email == user.email and released_bartender_shift %}
+									<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#withdrawModal{{ released_bartender_shift.pk }}">
+										{% bs_icon 'shuffle' %}
+								{% elif bartender.email == user.email and not released_bartender_shift %}
+									<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#releaseModal{{ shift.pk }}">
+										{% bs_icon 'x-lg' %}
+								{% elif released_bartender_shift and user|is_bartender %}
+									<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#swapModal{{ released_bartender_shift.pk }}">
+										{% bs_icon 'repeat' %}
+								{% endif %}
+							{% endif %}
+							{% if shift|compare_to_current_week == 0 and config.SHOW_COLORED_NAMES_ON_BARPLAN %}
+								{% if bartender.first_bartender_shift == shift %}
+								<b style="color:{{ otherBartenderColor }};" data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
+								<p style="color:{{ otherBartenderColor }};display:inline;">{{ bartender.name }}</p>{% endif %}{% else %}
+								{% if bartender.first_bartender_shift == shift %}
+								<b data-bs-toggle="tooltip" data-bs-placement="top" title="{% translate "Bartender's first shift" %}">{{ bartender.name }}</b>{% else %}
+								{{ bartender.name }}{% endif %}{% endif %}{% if config.ALLOW_SHIFT_SWAPING %}</button>{% endif %}{% if not forloop.last %},{% endif %}
+							{% if config.ALLOW_SHIFT_SWAPING and shiftComparedToCurrentWeek != -1 %}
+								{% if bartender.email == user.email and released_bartender_shift %}
+									<div class="modal fade" id="withdrawModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="withdrawModal{{ released_bartender_shift.pk }}" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="withdrawModal{{ released_bartender_shift.pk }}">{% translate "Withdraw" %}</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+											<div class="modal-body">
+												{% translate "Du er ved at trække din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>{% translate " tilbage." %}<br>
+												{% translate "Det betyder, at andre bartender ikke kan tage din vagt." %}
+											</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+													<button type="submit" class="btn btn-primary" name="withdraw" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% elif bartender.email == user.email and not released_bartender_shift %}
+									<div class="modal fade" id="releaseModal{{ shift.pk }}" tabindex="-1" aria-labelledby="releaseModal{{ shift.pk }}" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="releaseModal{{ shift.pk }}">{% translate "Release" %}</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+											<div class="modal-body">
+												{% translate "Du er ved at frigøre din vagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
+												{% translate "Det betyder, at andre bartender kan tage din vagt, men det er stadig din vagt indtil da." %}
+											</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+													<button type="submit" class="btn btn-danger" name="release" value="{{ shift.pk }}">{% translate "Confirm" %}</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% elif released_bartender_shift and user|is_bartender %}
+									<div class="modal fade" id="swapModal{{ released_bartender_shift.pk }}" tabindex="-1" aria-labelledby="swapModal{{ released_bartender_shift.pk }}" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="swapModal{{ released_bartender_shift.pk }}">{% translate "Shift Swap" %}</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+											<div class="modal-body">
+												{% translate "Du er ved at tage en andens barvagt" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift.start_datetime|date:"d M, Y" }}</b>.<br>
+											</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+													<button type="submit" class="btn btn-warning" name="swap" value="{{ released_bartender_shift.pk }}">{% translate "Confirm" %}</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								{% endif %}
+							{% endif %}
+						{% endwith %}
 						{% endwith %}
 					{% endfor %}
 				</td>
@@ -317,7 +327,7 @@
 		<nav>
 			<ul class="pagination">
 				{% if bartendershifts.has_previous %}
-					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan"><i>{% bs_icon 'chevron-double-left' %}</i></a></li>
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.previous_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{% bs_icon 'chevron-left' %}</a></li>
 					{% if bartendershifts.number > 3 %}
 						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page=1{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">1</a></li>
 						{% if bartendershifts.number > 4 %}
@@ -339,7 +349,7 @@
 					{% elif bartendershifts.number < bartendershifts.paginator.num_pages|add:'-2' %}
 						<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.paginator.num_pages }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{{ bartendershifts.paginator.num_pages }}</a></li>
 					{% endif %}
-					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.next_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{% bs_icon 'chevron-double-right' %}</a></li>
+					<li class="page-item"><a class="page-link" href="?shifts_pages_per_page={{ shifts_pages_per_page }}&shifts_page={{ bartendershifts.next_page_number }}{% if show_all_bartendershifts %}&show_all_bartendershifts=true{% endif %}#barplan">{% bs_icon 'chevron-right' %}</a></li>
 				{% endif %}
 			</ul>
 		</nav>
@@ -415,7 +425,7 @@
 		<nav>
 			<ul class="pagination">
 				{% if boardmemberdepositshifts.has_previous %}
-					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter"><i>{% bs_icon 'chevron-double-left' %}</i></a></li>
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.previous_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{% bs_icon 'chevron-left' %}</a></li>
 					{% if boardmemberdepositshifts.number > 3 %}
 						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page=1{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">1</a></li>
 						{% if boardmemberdepositshifts.number > 4 %}
@@ -437,7 +447,7 @@
 					{% elif boardmemberdepositshifts.number < boardmemberdepositshifts.paginator.num_pages|add:'-2' %}
 						<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.paginator.num_pages }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{{ boardmemberdepositshifts.paginator.num_pages }}</a></li>
 					{% endif %}
-					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.next_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{% bs_icon 'chevron-double-right' %}</a></li>
+					<li class="page-item"><a class="page-link" href="?deposit_pages_per_page={{ deposit_pages_per_page }}&deposit_page={{ boardmemberdepositshifts.next_page_number }}{% if show_all_depositshifts %}&show_all_depositshifts=true{% endif %}#pantvagter">{% bs_icon 'chevron-right' %}</a></li>
 				{% endif %}
 			</ul>
 		</nav>

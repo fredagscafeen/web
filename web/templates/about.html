@@ -17,7 +17,7 @@
     Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.
     Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi har altid
     et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.
-    Vi er samtidig den eneste fredagsbar, der fast har fadøl fra
+    Vi er samtidig en af de eneste fredagsbarer, der fast har fadøl fra
     {% endblocktranslate %}
     <a class="common" href="https://aarhusbryghus.dk/" rel="external" target="_blank">Aarhus Bryghus {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
     {% blocktranslate %}
@@ -40,12 +40,12 @@
     <div class="card-header pb-0">
         <h5 class="card-title">{% translate "Lokation" %}</h5>
     </div>
-    <div class="card-body">
-        <p class="card-text">
+    <ul class="list-group list-group-flush py-2">
+        <li class="list-group-item">
             Fredagscaféen {% translate "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi" %},
             <b>Finlandsgade 21, 8200 Aarhus N</b>.
-        </p>
-    </div>
+        </li>
+    </ul>
     <div>
         <iframe class="card-img-bottom google-maps" id="google-maps" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4442.319456514069!2d10.187308076907637!3d56.17163165965389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464c3fc4cda7462f%3A0x4219610040f322c5!2sFredagscaf%C3%A9en!5e0!3m2!1sda!2sdk!4v1716252357825!5m2!1sda!2sdk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
@@ -64,7 +64,7 @@
             <p class="card-text">
                 {% translate "P.t. har baren været åben" %} <b><i>{{ shift_streak.streak }}{% bs_icon 'fire' size='0.8em' %}</i></b> {% blocktranslate count c=shift_streak.streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, siden" %} <b>{% translate "d." context "d. 1. i 1." %} {{ shift_streak.start_datetime|date:"j. F, Y" }}</b>.
             </p>
-        {% else %}
+        {% elif longest_streak %}
             <p class="card-text">
                 {% translate "Den længste streak baren har haft åben, er " %} <b>{{ longest_streak.streak }}</b> {% blocktranslate count c=longest_streak.streak %}uge{% plural %}uger{% endblocktranslate %} {% translate "i streg, fra" %} <b>{% translate "d." context "d. 1. i 1." %} {{ longest_streak.start_datetime|date:"j. F, Y" }}</b> {% translate "til" %} <b>{% translate "d." context "d. 1. i 1." %} {{ longest_streak.end_datetime|date:"j. F, Y" }}</b>.
             </p>
@@ -108,6 +108,69 @@
         <p class="card-text">{% translate "Vores CVR-nr er" %}:
             <a class="common" href="https://datacvr.virk.dk/data/visenhed?enhedstype=virksomhed&id=27973647" rel="external" target="_blank">27973647 {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
         </p>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-6 col-xl-4 mb-3">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h5 class="card-title">{% translate "Fødevarestyrelsen" %}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {% translate "Find fødevarestyrelsens kontrolrapporter" %}
+                    <a class="common" href="https://www.findsmiley.dk/1200966">her {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+                    <p class="card-text pt-2">
+                        <small class="text-body-secondary">
+                            {% translate "ID-nummer" %}: 1200966.
+                        </small>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4 mb-3">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h5 class="card-title">{% translate "Logo" %}</h5>
+            </div>
+            <img src="{% static 'images/logo.png' %}" class="card-img-top p-5" alt="{% translate "Fredagscaféens logo" %}">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {% blocktranslate %}
+                    Vores logo forestiller <i>Kaffeturingmaskinen</i>. En kaffekande, som bliver varmet af
+                    den turingmaskine den står på. Ud af siderne løber det uendelige bånd fra turingmaskinen.
+                    {% endblocktranslate %}
+                    <p class="card-text pt-2">
+                        <small class="text-body-secondary">
+                            {% translate "Logoet er originalt tegnet af" %} <a class="common" href="https://thorehusfeldt.com/" target="_blank" rel="external">Thore Husfeldt {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+                        </small>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4 mb-3">
+        <div class="card">
+            <div class="card-header pb-0">
+                <h5 class="card-title">{% translate "Fødselsdag" %}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {% translate "Det er Fredagscaféen's fødselsdag den fredag russerne tager på" %}
+                    <a class="common" href="https://matfystutor.dk/events/">rustur {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+                    {% translate "Dette er typisk første fredag i september." %}
+                </li>
+                <li class="list-group-item">
+                    {% blocktranslate %}
+                    Det er ikke den officielle fødselsdato, da der ikke er enighed om hvornår baren
+                    blev til, da vi er en sammensætning af Åbobaren og den originale datalogiske bar
+                    på Ny Munkegade.
+                    {% endblocktranslate %}
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 

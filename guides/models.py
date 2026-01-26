@@ -2,6 +2,8 @@ from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 
+from fredagscafeen.settings.base import LANGUAGES
+
 
 class Guide(models.Model):
     class Meta:
@@ -11,10 +13,6 @@ class Guide(models.Model):
         ("ALL", _("Til alle")),
         ("BT", _("Til bartendere")),
         ("BM", _("Til bestyrelsesmedlemmer")),
-    )
-    LANGUAGES = (
-        ("da", _("Dansk")),
-        ("en", _("Engelsk")),
     )
 
     name = models.CharField(

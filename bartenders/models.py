@@ -14,6 +14,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from fredagscafeen.email import send_template_email
+from fredagscafeen.settings.base import LANGUAGES
 
 User = get_user_model()
 
@@ -57,13 +58,26 @@ class BartenderCommon(models.Model):
         unique=True,
         blank=False,
         verbose_name=_("E-mail"),
-        help_text=_("En post.au mail fungerer ikke"),
     )
     studentNumber = models.IntegerField(
         blank=False, null=True, verbose_name=_("Studienummer")
     )
     phoneNumber = models.IntegerField(
         blank=True, null=True, verbose_name=_("Telefonnummer")
+    )
+    birthday = models.DateField(
+        blank=False,
+        null=True,
+        verbose_name=_("Fødselsdato"),
+        help_text=_("DD.MM.YYYY"),
+    )
+    prefered_language = models.CharField(
+        max_length=2,
+        choices=LANGUAGES,
+        blank=False,
+        null=True,
+        default="da",
+        verbose_name=_("Preferred language"),
     )
     tshirt_size = models.CharField(
         max_length=140,
@@ -103,18 +117,22 @@ class Bartender(BartenderCommon):
         return self.board_members.filter(period=period).exists()
 
     @property
+    def isPreviousBoardMember(self):
+        return self.board_members.exists()
+
+    @property
     def isAdmin(self):
         admins = User.objects.filter(is_superuser=True)
         return admins.filter(email=self.email).exists()
 
     @property
     def symbol(self):
+        prefix = "✝ " if not self.isActiveBartender else ""
         if self.isBoardMember:
-            return "★ "
-        elif self.isActiveBartender:
-            return ""
-        else:
-            return "✝ "
+            prefix += "★ "
+        elif self.isPreviousBoardMember:
+            prefix += "♥︎ "
+        return prefix
 
     @property
     def first_bartender_shift(self):
@@ -223,14 +241,9 @@ class BoardMemberPeriod(models.Model):
 
     @property
     def approx_end_date(self):
-        GENERAL_ASSEMBLY_MONTH = 3
-
         end_date = self.end_date
         if end_date == None:
-            end_date = self.start_date.replace(month=GENERAL_ASSEMBLY_MONTH)
-            if end_date <= self.start_date:
-                end_date = end_date.replace(year=end_date.year + 1)
-
+            end_date = timezone.localdate()
         return end_date
 
     @property
@@ -281,12 +294,34 @@ class BartenderApplication(BartenderCommon):
         for url_name in URLS:
             url = urljoin(settings.SELF_URL, reverse(url_name))
             link_name = f"{url_name}_link"
-            text_format[link_name] = f"her: {url}"
-            html_format[link_name] = mark_safe(f'<a href="{url}">her</a>')
+            text_format[link_name] = f"here: {url}"
+            html_format[link_name] = mark_safe(f'<a href="{url}">here</a>')
 
-        return send_template_email(
-            subject=f"Bartendertilmelding: {self.name}",
-            body_template="""Hej {name},
+            if self.prefered_language == "da":
+                text_format[link_name] = f"her: {url}"
+                html_format[link_name] = mark_safe(f'<a href="{url}">her</a>')
+
+        subject = f"Bartender registration: {self.name}"
+        body_template = """This is an automated email.
+
+Hi {name},
+
+Your application to become a bartender at Fredagscafeen has been accepted.
+The scheduler will assign you bar shifts when the new bar schedule is created.
+You can see the bar schedule {barplan_link} and you can mark which days you can't stand at the bar {profile_link}.
+You have been added to our mailing list (alle@fredagscafeen.dk).
+
+Remember to read the bartender guides, which can be seen {guides_link}.
+
+See you at the bar! :)
+
+/The board"""
+
+        if self.prefered_language == "da":
+            subject = f"Bartendertilmelding: {self.name}"
+            body_template = """Dette er en automatisk email.
+
+Hej {name},
 
 Din ansøgning om at blive bartender ved Fredagscaféen er blevet accepteret.
 Scheduleren vil tildele dig barvagter, når den nye barplan bliver lavet.
@@ -298,7 +333,11 @@ Husk at læse bartenderguides'ne, som kan ses {guides_link}.
 
 Ses i baren! :)
 
-/Bestyrelsen""",
+/Bestyrelsen"""
+
+        return send_template_email(
+            subject=subject,
+            body_template=body_template,
             text_format=text_format,
             html_format=html_format,
             to=[self.email],
@@ -502,11 +541,19 @@ class BartenderShift(models.Model):
         return bartender in self.all_bartenders()
 
     def compare_to_current_week(self):
-        date = timezone.now().date()
-        less_than_week = self.start_datetime.date() <= date + datetime.timedelta(days=4)
-        greater_than_week = self.end_datetime.date() >= date - datetime.timedelta(
-            days=2
+        current_iso_year, current_iso_week_number, _ = timezone.now().isocalendar()
+        start_iso_year, start_iso_week_number, _ = self.start_datetime.isocalendar()
+        end_iso_year, end_iso_week_number, _ = self.end_datetime.isocalendar()
+
+        less_than_week = start_iso_year < current_iso_year or (
+            start_iso_year == current_iso_year
+            and start_iso_week_number <= current_iso_week_number
         )
+        greater_than_week = end_iso_year > current_iso_year or (
+            end_iso_year == current_iso_year
+            and end_iso_week_number >= current_iso_week_number
+        )
+
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:
@@ -544,6 +591,13 @@ class ReleasedBartenderShift(models.Model):
     class Meta:
         unique_together = ("bartender_shift", "bartender")
 
+    def save(self, *args, **kwargs):
+        if not self.bartender_shift.with_bartender(self.bartender):
+            raise ValueError(_("Bartenderen har ikke en barvagt der!"))
+        if self.bartender_shift.compare_to_current_week == -1:
+            raise ValueError(_("Barvagten burde ikke være tilgængelig længere!"))
+        super().save(*args, **kwargs)
+
 
 class BoardMemberDepositShiftPeriod(models.Model):
     generation_datetime = models.DateTimeField(default=timezone.now)
@@ -578,9 +632,19 @@ class BoardMemberDepositShift(models.Model):
         return bartender in self.responsibles.all()
 
     def compare_to_current_week(self):
-        date = timezone.now().date()
-        less_than_week = self.start_date <= date
-        greater_than_week = self.end_date >= date
+        current_iso_year, current_iso_week_number, _ = timezone.now().isocalendar()
+        start_iso_year, start_iso_week_number, _ = self.start_date.isocalendar()
+        end_iso_year, end_iso_week_number, _ = self.start_date.isocalendar()
+
+        less_than_week = start_iso_year < current_iso_year or (
+            start_iso_year == current_iso_year
+            and start_iso_week_number <= current_iso_week_number
+        )
+        greater_than_week = end_iso_year > current_iso_year or (
+            end_iso_year == current_iso_year
+            and end_iso_week_number >= current_iso_week_number
+        )
+
         if less_than_week and greater_than_week:
             return 0
         elif less_than_week:

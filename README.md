@@ -7,10 +7,10 @@ It is maintained by the current voluntary webmaster of Fredagscaféen, but contr
 
 ## To run project locally
 
-A prerequisite here, is to have **Python 3.8.10** installed and in PATH. Having this exact version ensures
+> [!WARNING]
+> A prerequisite here, is to have **Python 3.8.10** installed and in PATH. Having this exact version ensures
 smooth compatibility with the dependencies and the server, working with and running that version.
-A tip is to install [pyenv](https://github.com/pyenv/pyenv), which makes it easy to install the specific version, and toggle between
-versions.
+A tip is to install [pyenv](https://github.com/pyenv/pyenv), which makes it easy to install the specific version, and toggle between versions.
 
 After that, you are ready to follow the steps below:
 

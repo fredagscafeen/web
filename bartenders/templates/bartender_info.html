@@ -28,7 +28,7 @@
                             {{ first_date|date:'M Y' }}:
                         </th>
                     {% for id, date, checked in dates %}
-                        <td {% if checked %}class="bg-danger"{% endif %}>
+                        <td {% if checked %}class="text-bg-danger"{% endif %}>
                             <label><input type="checkbox" name="unavailable_ordinals" value="{{ id }}" {% if checked %}checked{% endif %}> {{ date.day }}.</label>
                         </td>
                     {% endfor %}
@@ -51,7 +51,7 @@
                     <thead>
                         <tr>
                             <th>{% translate "Your mailing lists" %} <span class="badge text-bg-secondary rounded-pill">{{ mailing_lists|length }}</span></th>
-                            <th>{% translate "Modtagere" %}</th>
+                            <th># {% translate "Modtagere" %}</th>
                             {% if not object.isActiveBartender %}
                                 <th></th>
                             {% endif %}

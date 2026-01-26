@@ -45,11 +45,11 @@ class Login(FormView):
     success_url = settings.LOGIN_URL
 
     def form_valid(self, form):
-        form.send_email(self.request.GET.get("next"))
+        form.send_email(self.request.GET.get("next"), self.request.path)
         messages.success(
             self.request,
             _(
-                "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind."
+                "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind. Husk også at checke din spam mappe."
             ),
         )
         return super().form_valid(form)
@@ -60,7 +60,6 @@ class About(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["BEST_MAIL"] = settings.BEST_MAIL
         bartender_shifts = BartenderShift.objects.defer(
             "responsible", "other_bartenders", "period"
         )
@@ -99,7 +98,8 @@ class About(TemplateView):
             ):
                 current_streak.is_current_shift = True
                 found = True
-        shift_streaks.append(current_streak)
+        if current_streak:
+            shift_streaks.append(current_streak)
         shift_streak = None
         longest_streak = None
         if found:
@@ -107,7 +107,7 @@ class About(TemplateView):
                 if shift.is_current_shift:
                     shift_streak = shift
                     break
-        else:
+        elif len(shift_streaks) != 0:
             longest_streak = max(shift_streaks, key=lambda x: x.streak, default=None)
         context["shift_streak"] = shift_streak
         context["longest_streak"] = longest_streak

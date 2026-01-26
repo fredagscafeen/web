@@ -61,9 +61,11 @@ class BartenderApplicationTests(TestCase):
         data = dict(
             name="Kat",
             username="Abe",
-            email="abe@cs.au.dk",
+            email="abe@kat.dk",
             studentNumber=123123,
             phoneNumber=12312312,
+            birthday=datetime.datetime(1993, 1, 1).date(),
+            prefered_language="da",
             tshirt_size="L",
             study="Datalogi",
             study_year=1,
@@ -87,6 +89,25 @@ class BartenderApplicationTests(TestCase):
             studentNumber="NaN",
             phoneNumber=123,
             info="Kill dogs",
+        )
+
+        self.client.post("/da/", data=data)
+        self.assertFalse(BartenderApplication.objects.exists())
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_invalid_au_dk_email_application(self):
+        data = dict(
+            name="Kat",
+            username="Abe",
+            email="abe@post.au.dk",
+            studentNumber=123123,
+            phoneNumber=12312312,
+            birthday=datetime.datetime(1993, 1, 1).date(),
+            prefered_language="da",
+            tshirt_size="L",
+            study="Datalogi",
+            study_year=1,
+            info="Hkll",
         )
 
         self.client.post("/da/", data=data)

@@ -46,7 +46,7 @@
 				<li class="list-group-item">
 					<div class="row p-2">
 						{% if board.chairman %}
-						<div class="col-md-6 d-flex border border-primary p-3">
+						<div class="col-md-6 d-flex border border-primary p-3" style="overflow: auto;">
 							{% if board.chairman.image %}
 							<div class="board-image" style="background-image: url({{ board.chairman.image.url }});"></div>
 							{% else %}
@@ -61,7 +61,7 @@
 						</div>
 						{% endif %}
 						{% if board.treasurer %}
-						<div class="col-md-6 d-flex border border-primary p-3">
+						<div class="col-md-6 d-flex border border-primary p-3" style="overflow: auto;">
 							{% if board.treasurer.image %}
 							<div class="board-image" style="background-image: url({{ board.treasurer.image.url }});"></div>
 							{% else %}
@@ -80,7 +80,7 @@
 					<div class="row p-2">
 						{% for boardmember in board.commons %}
 							{% if boardmember.is_common %}
-							<div class="col-md-6 d-flex border p-3">
+							<div class="col-md-6 d-flex border p-3" style="overflow: auto;">
 								{% if boardmember.image %}
 								<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
 								{% else %}
@@ -101,7 +101,7 @@
 						<div class="row p-2">
 							{% for boardmember in board.substitutes %}
 								{% if boardmember.is_substitute %}
-								<div class="col-md-6 d-flex border p-3">
+								<div class="col-md-6 d-flex border p-3" style="overflow: auto;">
 									{% if boardmember.image %}
 									<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
 									{% else %}

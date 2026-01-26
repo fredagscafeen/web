@@ -124,7 +124,9 @@ class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
         )
         return send_template_email(
             subject=f"Reservation af fadølsanlæg til {u.whoReserved} accepteret",
-            body_template=f"""Reservationen af fadølsanlægget til {u.whoReserved} er blevet accepteret.
+            body_template=f"""Dette er en automatisk email.
+
+Reservationen af fadølsanlægget til {u.whoReserved} er blevet accepteret.
 
 Se {{link}} for mere info.
 
@@ -135,7 +137,7 @@ Se {{link}} for mere info.
             html_format={
                 "link": mark_safe(f'<a href="{url}">{url}</a>'),
             },
-            to=["best@fredagscafeen.dk"],
+            to=["udlejning@fredagscafeen.dk"],
         )
 
     def accept(self, request, obj):

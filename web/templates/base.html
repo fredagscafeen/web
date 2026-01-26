@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% load bootstrap5 bootstrap_icons %}
-{% load get_active_page startswith open_events %}
+{% load is_bartender is_bartab_user get_active_page startswith open_events %}
 {% block body_content %}
     <div class="container pt-3 px-4">
         {% if config.BANNER_HTML %}
@@ -27,7 +27,9 @@
                                 Fredagscaféen
                             </h1>
                             {% if config.SHOW_OPEN_EVERY_FRIDAY %}
-                            <p class="text-body-secondary"><i>...{% translate "Åben" %} <u>{% translate "hver" %}</u> {% translate "fredag" %}!</i></p>
+                            <p class="text-primary-emphasis">
+                                <i>{% translate "Åben" %} <u>{% translate "hver" %}</u> {% translate "fredag" %}!</i>
+                            </p>
                             {% endif %}
                         </div>
                     </a>
@@ -107,22 +109,29 @@
                                 <li class="nav-item px-2 flex-shrink-1"><a {% if activepage == "about" %}class="nav-link active"{% else %}class="nav-link"{% endif %} href="{% url 'about' %}">{% translate "Om baren" %}</a></li>
                                 <li class="nav-item px-2 dropdown flex-shrink-1">
                                     <a {% if activepage != "" and activepage == "bartab" or activepage == "profile" %}class="nav-link dropdown-toggle active"{% else %}class="nav-link dropdown-toggle"{% endif %} data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% translate "Profil" %}</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a {% if activepage == "bartab" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a {% if activepage == "profile" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        {% if user.is_authenticated %}
+                                            <li><h6 class="dropdown-header">{{ user.email }}</h6></li>
+                                            {% if user|is_bartab_user %}
+                                                <li><a {% if activepage == "bartab" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'bartab' %}">{% translate "Krydlistestatus" %}</a></li>
+                                            {% endif %}
+                                            {% if user|is_bartender %}
+                                                <li><a {% if activepage == "profile" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'profile' %}">{% translate "Bartenderprofil" %}</a></li>
+                                            {% endif %}
+                                            <div class="dropdown-divider"></div>
+                                            <form action="{% url 'logout' %}" method="post" class="px-2 py-1">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-danger w-100 py-1"><span class="pe-1">{% bs_icon 'box-arrow-right' %}</span>{% translate "Log ud" %}</button>
+                                            </form>
+                                        {% else %}
+                                            <li><a {% if activepage == "login" %}class="dropdown-item active"{% else %}class="dropdown-item"{% endif %} href="{% url 'login' %}"><span class="pe-1">{% bs_icon 'box-arrow-in-right' %}</span>{% translate "Log ind" %}</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 <li class="nav-item px-2 flex-shrink-1"><a class="nav-link" href="/{{ LANGUAGE_CODE }}/admin/">{% translate "Admin" %}</a></li>
                             </ul>
                             {% endwith %}
                         </div>
-                        {% if user.is_authenticated %}
-                        <form action="{% url 'logout' %}" method="post" class="d-flex">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-secondary">{% translate "Log ud" %}</button>
-                        </form>
-                        {% endif %}
                     </div>
                 </nav>
             </div>
@@ -136,30 +145,52 @@
         {% block content %}{% endblock %}
     </div>
 
-    <footer>
+    <footer class="text-primary-emphasis pb-4">
         <div class="container">
             <hr>
             <div class="d-flex justify-content-center">
                 <div class="p-2">
-                    <a href="https://www.facebook.com/fredagscafeen.dk/" target="_blank" rel="external">
-                    <img id="facebook-link" src="{% static 'images/facebook.png' %}" height="25">
+                    <a href="https://www.facebook.com/fredagscafeen.dk/" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'facebook' size='1.35em' %}
                     </a>
                 </div>
                 <div class="p-2">
-                    <a href="https://www.instagram.com/fredagscafeen.dk/" target="_blank" rel="external">
-                        <img id="instagram-link" src="{% static 'images/instagram.png' %}" height="25">
+                    <a href="https://www.instagram.com/fredagscafeen.dk/" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'instagram' size='1.35em' %}
                     </a>
                 </div>
                 <div class="p-2">
-                    <a href="https://github.com/fredagscafeen" target="_blank" rel="external">
-                        <img id="github-link" src="{% static 'images/github.png' %}" height="25">
+                    <a href="https://github.com/fredagscafeen" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'github' size='1.35em' %}
+                    </a>
+                </div>
+                <div class="p-2">
+                    <a href="https://gitlab.au.dk/fredagscafeen" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'gitlab' size='1.35em' %}
+                    </a>
+                </div>
+                <div class="p-2">
+                    <a href="https://www.linkedin.com/company/fredagscafeen/" class="text-primary-emphasis" target="_blank" rel="external">
+                        {% bs_icon 'linkedin' size='1.35em' %}
                     </a>
                 </div>
             </div>
-            <div class="row justify-content-center pb-3">
+            <div class="row justify-content-center">
                 <div class="col-md-auto" align="center">
-                    <p>Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
-                    1993-{% now "Y" %} Fredagscaféen<p>
+                    Fredagscaféen {% translate "er en fredagsbar for datalogi og IT på Aarhus Universitet." %}<br>
+                    &copy; 1993-{% now "Y" %} Fredagscaféen
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-auto" align="center">
+                    <small>
+                        {% if GIT_COMMIT_HASH %}
+                        {% translate "Running version" %}
+                        <a class="common" href="https://github.com/fredagscafeen/web/commit/{{ GIT_COMMIT_HASH }}" target="_blank" rel="external">{{ GIT_COMMIT_HASH }} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+                        {% else %}
+                        {% translate "Running unknown version." %}
+                        {% endif %}
+                    </small>
                 </div>
             </div>
         </div>

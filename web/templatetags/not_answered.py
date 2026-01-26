@@ -13,6 +13,8 @@ def not_answered(user, event):
     if not is_bartender(user):
         return False
     bartender = Bartender.objects.get(email=user.email)
+    if not event.may_attend(bartender):
+        return False
     events = Event.objects.filter(
         pk=event.pk,
         response_deadline__gte=timezone.now(),

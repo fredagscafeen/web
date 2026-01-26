@@ -39,9 +39,7 @@ class Udlejninger(CreateView):
         form.send_email(self.object.pk)
         messages.success(
             self.request,
-            _(
-                "Din anmodning om at låne fadølsanlægget er modtaget. Vi vender tilbage til dig med et svar hurtigst muligt."
-            ),
+            _("Din anmodning om at låne fadølsanlægget er modtaget."),
         )
 
         return response
@@ -57,7 +55,6 @@ class UdlejningerGrill(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -71,7 +68,6 @@ class UdlejningerProjector(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -85,7 +81,6 @@ class UdlejningerSpeakers(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -99,7 +94,6 @@ class UdlejningerBoardGameCart(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["DOMAIN"] = settings.DOMAIN
         return context
 
 
@@ -113,5 +107,4 @@ class UdlejningerTent(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["DOMAIN"] = settings.DOMAIN
         return context

@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.utils import timezone
 
 from bartenders.models import BartenderShift, date_format
@@ -43,4 +44,4 @@ Ses i baren!
 /Bestyrelsen"""
 
     def email_reply_to(self):
-        return ["alle@fredagscafeen.dk"]
+        return [f"alle@{settings.DOMAIN}"]

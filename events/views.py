@@ -118,20 +118,23 @@ class EventView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        context["load_no_answers"] = self.request.GET.get("load_no_answers")
+
         event_id = self.request.resolver_match.kwargs["event_id"]
         event = get_object_or_404(Event, id=event_id)
 
         bartender = self.get_bartender()
 
-        if bartender and event.may_attend(bartender):
+        may_attend = False
+        if bartender:
+            may_attend = event.may_attend(bartender)
+
+        if may_attend:
             context["form"] = EventResponseForm(event=event, bartender=bartender)
 
         context["bartender"] = bartender
         context["event"] = event
-        if bartender:
-            context["may_attend"] = Event.may_attend_default(bartender)
-
-        context["DOMAIN"] = settings.DOMAIN
+        context["may_attend"] = may_attend
 
         return context
 

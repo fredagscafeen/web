@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
+{% load static %}
 {% load bootstrap5 bootstrap_icons %}
-{% load is_newly_updated %}
 
 {% block content %}
 
@@ -24,28 +24,41 @@
 
 <div>
 	{% for category, guides in guides %}
-	<ul class="list-group pb-3">
-		<li class="list-group-item list-group-item-secondary">{{ category }}</li>
-		<li class="list-group-item pb-3">
-			<div style="overflow: scroll;">
-				<table class="table table-hover m-0">
-					<thead>
-						<tr>
-							<th class="col-8 text-secondary" scope="col">{% translate "Navn" %}</th>
-							<th class="col-3 text-secondary" scope="col">{% translate "Opdateret" %}</th>
-							<th class="col-1 text-secondary" scope="col">{% translate "Link" %}</th>
-							{% if user.is_staff %}
-								<th class="col-1"></th>
-							{% endif %}
-						</tr>
-					</thead>
-					<tbody>
-						{% for guide in guides %}
-							{% with guideIsNewlyUpdated=guide|is_newly_updated %}
-								{% if LANGUAGE_CODE == guide.language %}
+		<div role="tablist">
+			<div class="card mb-3">
+				<div class ="card-header" role="tab" id="coll">
+					<div class="row">
+						<div class="col-auto me-auto">
+							{{ category }} <span class="badge text-bg-primary rounded-pill">{{ guides|length }}</span></li>
+						</div>
+					</div>
+				</div>
+				<div role="tabpanel">
+					<div class="container" style="overflow: scroll;">
+						<table class="table table-hover tablesorter">
+							<thead>
+								<tr>
+									<th></th>
+									<th class="col-8 text-secondary" scope="col">{% translate "Navn" %}</th>
+									<th class="col-3 text-secondary" scope="col">{% translate "Opdateret" %}</th>
+									<th class="col-1 text-secondary" scope="col">{% translate "Link" %}</th>
+									{% if user.is_staff %}
+										<th class="col-1"></th>
+									{% endif %}
+								</tr>
+							</thead>
+							<tbody>
+								{% for guide in guides %}
 									<tr>
-										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.name }}</td>
-										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.updated_at|date:"d/m/Y" }}</td>
+										<td>
+											{% if guide.language == 'en' %}
+											<img src="{% static 'images/unionjac.png' %}" class="rounded" height="15">
+											{% elif guide.language == 'da' %}
+											<img src="{% static 'images/dannebro.png' %}" class="rounded" height="15">
+											{% endif %}
+										</td>
+										<td>{{ guide.name }}</td>
+										<td>{{ guide.updated_at|date:"d/m/Y" }}</td>
 										<td>
 											<a class="ps-1" href="{{ guide.document.url }}">
 												{% bs_icon 'filetype-pdf' size='1.3em' %}
@@ -57,15 +70,31 @@
 											</td>
 										{% endif %}
 									</tr>
-								{% endif %}
-							{% endwith %}
-						{% endfor %}
-					</tbody>
-				</table>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
-		</li>
-	</ul>
+		</div>
 	{% endfor %}
 </div>
+
+<script>
+$(function () {
+	$(".tablesorter").tablesorter();
+});
+function updateRequired() {
+	$('form').each(function (i, form) {
+		var attending = $(form).find('[name="attending"]').val() === 'True';
+		$(form).find('select[name!="attending"]').each(function (i, select) {
+			$(select).prop('required', attending);
+			$(select).prop('disabled', !attending);
+		});
+	});
+}
+$('[name="attending"]').change(updateRequired);
+updateRequired();
+</script>
 
 {% endblock %}

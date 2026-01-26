@@ -106,8 +106,26 @@ class Event(TimeStampedModel):
     def attending_count(self):
         return sum(r.attending for r in self.responses.all())
 
+    def not_attending_count(self):
+        return sum(not r.attending for r in self.responses.all())
+
+    def no_answer_count(self):
+        return (
+            sum(self.may_attend(b) for b in Bartender.objects.all())
+            - self.not_attending_count()
+            - self.attending_count()
+        )
+
     def sorted_responses(self):
         return sorted(self.responses.all(), key=lambda r: r.bartender.name)
+
+    def sorted_no_answer(self):
+        no_answer = [
+            b
+            for b in Bartender.objects.all()
+            if self.may_attend(b) and not self.responses.filter(bartender=b).exists()
+        ]
+        return sorted(no_answer, key=lambda r: r.name)
 
     def sorted_choices(self):
         return self.event_choices.order_by("id")

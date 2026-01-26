@@ -2,7 +2,6 @@ from constance import config
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
-from django.utils import timezone
 
 from fredagscafeen.email import send_template_email
 
@@ -16,10 +15,6 @@ class ReminderCommand(BaseCommand):
         if not config.SEND_REMINDERS:
             print("SEND_REMINDERS is false, not sending any reminders.")
             return
-
-        isMonday = timezone.now().isoweekday == 1
-        if not isMonday:
-            print("Not monday, so not sending any reminders.")
 
         if not events:
             print("No upcoming events found.")
@@ -35,10 +30,10 @@ class ReminderCommand(BaseCommand):
         send_template_email(
             subject=self.email_subject(humanized_bartenders, event),
             body_template=self.email_body(humanized_bartenders, event),
-            text_format={},
-            html_format={},
+            text_format=self.text_format(humanized_bartenders, event),
+            html_format=self.html_format(humanized_bartenders, event),
             to=self.filter_with_warning(bartenders),
-            cc=[settings.BEST_MAIL],
+            cc=self.email_cc(),
             reply_to=self.email_reply_to(),
         )
 
@@ -70,7 +65,7 @@ class ReminderCommand(BaseCommand):
         warning = f"WARNING: Could not find e-mail for bartender {bartender}! Bartender did not get a reminder!"
         send_mail(
             subject=warning,
-            recipient_list=[settings.BEST_MAIL],
+            recipient_list=[f"web@{settings.DOMAIN}"],
             message=warning,
         )
 
@@ -85,6 +80,15 @@ class ReminderCommand(BaseCommand):
 
     def email_body(self, humanized_bartenders, event):
         raise NotImplementedError
+
+    def text_format(self, humanized_bartenders, event):
+        return {}
+
+    def html_format(self, humanized_bartenders, event):
+        return {}
+
+    def email_cc(self):
+        return [settings.BEST_MAIL]
 
     def email_reply_to(self):
         raise NotImplementedError

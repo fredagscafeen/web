@@ -1,5 +1,3 @@
-/*jshint esversion: 11 */
-
 function switchTheme() {
     "use strict";
     const isLightMode = document.documentElement.getAttribute('data-bs-theme') == 'light';
@@ -8,9 +6,6 @@ function switchTheme() {
     if (isLightMode) {
         document.documentElement.setAttribute('data-bs-theme','dark')
 
-        document.getElementById("facebook-link").setAttribute("class", "image-inverted social-link");
-        document.getElementById("instagram-link").setAttribute("class", "image-inverted social-link");
-        document.getElementById("github-link").setAttribute("class", "image-inverted social-link");
         try {
             document.getElementById("google-maps").setAttribute("style", "filter: invert(90%) hue-rotate(180deg); border: 0;");
         } catch(err) {
@@ -24,9 +19,6 @@ function switchTheme() {
     } else {
         document.documentElement.setAttribute('data-bs-theme','light')
 
-        document.getElementById("facebook-link").setAttribute("class", "social-link");
-        document.getElementById("instagram-link").setAttribute("class", "social-link");
-        document.getElementById("github-link").setAttribute("class", "social-link");
         try {
             document.getElementById("google-maps").setAttribute("style", "border: 0;");
         } catch(err) {
@@ -63,9 +55,6 @@ function setThemeToggle() {
         } catch(err) {
             // Page not selected
         }
-        document.getElementById("facebook-link").setAttribute("class", "image-inverted social-link");
-        document.getElementById("instagram-link").setAttribute("class", "image-inverted social-link");
-        document.getElementById("github-link").setAttribute("class", "image-inverted social-link");
         try {
             document.getElementById("google-maps").setAttribute("style", "filter: invert(90%) hue-rotate(180deg); border: 0;");
         } catch(err) {

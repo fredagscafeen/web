@@ -66,98 +66,121 @@ CONSTANCE_CONFIG = {
 SECRET_ADMIN_KEYS = [
     {
         "key": "GOOGLE_PASSWORD",
-        "description": "Google password. OBS: Kontoen har 2FA",
+        "description": "Google. OBS: Kontoen har 2FA",
         "username": "datcafe@gmail.com",
         "url": "https://gmail.com/",
         "role": "WEB",
     },
     {
         "key": "MAILMAN",
-        "description": "Alle, Best og Fest mailinglist admin password",
+        "description": "AU Maillist",
         "username": "datcafe@gmail.com",
         "url": "https://maillist.au.dk/postorius/lists/",
         "role": "WEB",
     },
     {
         "key": "CONTABO_PASSWORD",
-        "description": "Contabo password. OBS: Kontoen har 2FA",
+        "description": "Contabo. OBS: Kontoen har 2FA",
         "username": "best@fredagscafeen.dk",
         "url": "https://my.contabo.com/account/login",
         "role": "WEB",
     },
     {
         "key": "CLOUDFLARE_PASSWORD",
-        "description": "Cloudflare password",
+        "description": "Cloudflare",
         "username": "best@fredagscafeen.dk",
         "url": "https://dash.cloudflare.com/",
         "role": "WEB",
     },
     {
         "key": "DISCORD_PASSWORD",
-        "description": "Discord password",
+        "description": "Discord",
         "username": "datcafe@gmail.com",
         "url": "https://discord.com/channels/@me",
         "role": "WEB",
     },
     {
         "key": "MIDTTRAFIK_BESTILLING_PASSWORD",
-        "description": "midttrafikbestilling.dk password",
+        "description": "midttrafikbestilling.dk",
         "username": "fredagscafeen",
         "url": "https://midttrafikbestilling.dk/",
         "role": "EVENT",
     },
     {
         "key": "ZETTLE_PASSWORD",
-        "description": "Zettle password",
+        "description": "Zettle",
         "username": "best@fredagscafeen.dk",
-        "url": "https://my.zettle.com/",
+        "url": "https://login.zettle.com/",
         "role": "INDKØB",
     },
     {
         "key": "BEVCO_PASSWORD",
-        "description": "Bevco password",
+        "description": "Bevco",
         "username": "best@fredagscafeen.dk",
         "url": "https://www.bevco.dk/login",
         "role": "INDKØB",
     },
     {
         "key": "DRINX_PASSWORD",
-        "description": "Drinx password, Kunde nr. 27973647",
+        "description": "Drinx, Kunde nr. 27973647",
         "username": "fredag",
         "url": "https://drinx.dk/login",
         "role": "INDKØB",
     },
     {
         "key": "BIZAY_PASSWORD",
-        "description": "Bizay password",
+        "description": "Bizay",
         "username": "best@fredagscafeen.dk",
         "url": "https://www.bizay.dk/Account/Login",
         "role": "INDKØB",
     },
     {
         "key": "ONEPINT_PASSWORD",
-        "description": "OnePint.dk password",
+        "description": "OnePint",
         "username": "fredagscafeen@joachimhorshauge.com",
         "url": "https://www.onepint.dk/customer/account/login/",
         "role": "INDKØB",
     },
     {
         "key": "LASERTRYK_PASSWORD",
-        "description": "Lasertryk.dk password",
+        "description": "LaserTryk",
         "username": "fredag",
         "url": "https://lasertryk.dk/login",
         "role": "PR",
     },
     {
         "key": "INSTAGRAM_PASSWORD",
-        "description": "Instagram password",
+        "description": "Instagram",
         "username": "fredagscafeen.dk",
         "url": "https://www.instagram.com/",
         "role": "PR",
     },
+    {
+        "key": "HOLTEC_SOLUTIONS_PASSWORD",
+        "description": "Holtec Solutions",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://holtecsolutions.dk/log-ind/",
+        "role": "DRIFT",
+    },
+    {
+        "key": "SALLING_GROUP_BUSINESS_PASSWORD",
+        "description": "Salling Group Business",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://business.sallinggroup.com/",
+        "role": "KASSERER",
+    },
+    {
+        "key": "WEB_REGNSKAB_PASSWORD",
+        "description": "Web Regnskab",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://web-regnskab.dk/",
+        "role": "KASSERER",
+    },
 ]
 
 load_dotenv()
+
+GIT_COMMIT_HASH = os.getenv("GIT_COMMIT_HASH")
 
 # Inject all secret keys
 for secret in SECRET_ADMIN_KEYS:
@@ -175,7 +198,7 @@ bootstrap5 = {
 MESSAGE_TAGS = {
     messages.DEBUG: "alert-info",
     messages.INFO: "alert-info",
-    messages.SUCCESS: "alert-success",
+    messages.SUCCESS: "alert-primary",
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }
@@ -272,6 +295,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "web.context_processors.constants",
             ],
         },
     },

@@ -5,12 +5,11 @@ from itertools import groupby
 from constance import config
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.shortcuts import get_object_or_404, redirect, reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import (
@@ -43,8 +42,8 @@ from .models import (
 
 User = get_user_model()
 
-DEFAULT_SHIFTS_PER_PAGE = 15
-DEFAULT_DEPOSIT_SHIFTS_PER_PAGE = 15
+DEFAULT_SHIFTS_PER_PAGE = "15"
+DEFAULT_DEPOSIT_SHIFTS_PER_PAGE = "15"
 
 
 class Index(CreateView):
@@ -57,7 +56,13 @@ class Index(CreateView):
         context = super().get_context_data(**kwargs)
 
         try:
-            barshift_guide = Guide.objects.get(name="Guide til en standard barvagt")
+            barvagt_guide = Guide.objects.get(name="Guide til en standard barvagt")
+            context["barvagt_guide_url"] = barvagt_guide.document.url
+        except Guide.DoesNotExist:
+            context["barvagt_guide_url"] = "<missing>"
+
+        try:
+            barshift_guide = Guide.objects.get(name="Guide to a standard bar shift")
             context["barshift_guide_url"] = barshift_guide.document.url
         except Guide.DoesNotExist:
             context["barshift_guide_url"] = "<missing>"
@@ -129,6 +134,41 @@ class BartenderList(TemplateView):
             )
 
         return context
+
+
+def send_shift_swap_reminder_email(released_shift, user):
+    date = released_shift.bartender_shift.start_datetime.strftime("%d %b, %Y")
+
+    text_format = {"old": released_shift.bartender.name, "new": user.name, "date": date}
+    html_format = {"old": released_shift.bartender.name, "new": user.name, "date": date}
+
+    subject = f"Shift swap {date}"
+    body_template = """This is an automated email.
+
+Hi {old},
+
+{new} have taken your bar shift {date}.
+
+/snek"""
+
+    if released_shift.bartender.prefered_language == "da":
+        subject = f"Vagtbytte d. {date}"
+        body_template = """Dette er en automatisk email.
+
+Hej {old},
+
+{new} har taget din barvagt d. {date}.
+
+/snek"""
+
+    return send_template_email(
+        subject=subject,
+        body_template=body_template,
+        text_format=text_format,
+        html_format=html_format,
+        to=[released_shift.bartender.email],
+        cc=[settings.BEST_MAIL],
+    )
 
 
 class Barplan(TemplateView):
@@ -206,40 +246,56 @@ class Barplan(TemplateView):
 
         return context
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         redirect_url = redirect("/barplan/")
         try:
             user_bartender = Bartender.objects.get(email=request.user.email)
             if "release" in request.POST:
                 bartender_shift_pk = request.POST.get("release")
                 bartender_shift = BartenderShift.objects.get(pk=bartender_shift_pk)
-                ReleasedBartenderShift(
+                ReleasedBartenderShift.objects.get_or_create(
                     bartender=user_bartender, bartender_shift=bartender_shift
-                ).save()
+                )
                 messages.info(request, _("Vagt tilgængelig for andre til at tage."))
             elif "withdraw" in request.POST:
                 released_bartender_shift_pk = request.POST.get("withdraw")
-                released_shift = ReleasedBartenderShift.objects.get(
+                released_bartender_shift = ReleasedBartenderShift.objects.get(
                     pk=released_bartender_shift_pk
                 )
-                released_shift.delete()
+                if not released_bartender_shift.bartender_shift.with_bartender(
+                    user_bartender
+                ):
+                    messages.error(
+                        request,
+                        _("Du kan ikke trække vagter tilbage for andre end dig selv!"),
+                    )
+                    return redirect_url
+                released_bartender_shift.delete()
                 messages.info(request, _("Vagt ikke længere tilgængelig for andre."))
             elif "swap" in request.POST:
                 released_bartender_shift_pk = request.POST.get("swap")
-                released_shift = ReleasedBartenderShift.objects.get(
+                released_bartender_shift = ReleasedBartenderShift.objects.get(
                     pk=released_bartender_shift_pk
                 )
-                bartender_shift = released_shift.bartender_shift
+                if (
+                    released_bartender_shift.bartender_shift.compare_to_current_week
+                    == -1
+                ):
+                    raise ValueError("Barvagten burde ikke være tilgængelig længere!")
+                bartender_shift = released_bartender_shift.bartender_shift
                 if user_bartender in bartender_shift.all_bartenders():
                     messages.error(request, _("Du har allerede en barvagt der!"))
                     return redirect_url
-                bartender_shift.replace(released_shift.bartender, user_bartender)
-                released_shift.delete()
-                messages.info(request, _("Barplan opdateret."))
+                bartender_shift.replace(
+                    released_bartender_shift.bartender, user_bartender
+                )
+                send_shift_swap_reminder_email(released_bartender_shift, user_bartender)
+                released_bartender_shift.delete()
+                messages.info(request, _("Barplan opdateret. Mail sendt."))
         except ReleasedBartenderShift.DoesNotExist:
             messages.error(request, _("An error occurred."))
-            return redirect_url
-
+        except ValueError as err:
+            messages.error(request, err)
         return redirect_url
 
     def current_week_page_number(self, paginator):
@@ -247,14 +303,14 @@ class Barplan(TemplateView):
             page = paginator.get_page(i)
             if any(shift.compare_to_current_week() == 0 for shift in page):
                 return i
-        return None
+        return 1
 
     def current_deposit_week_page_number(self, paginator):
         for i in range(1, paginator.num_pages + 1):
             page = paginator.get_page(i)
             if any(shift.compare_to_current_week() == 0 for shift in page):
                 return i
-        return None
+        return 1
 
 
 class UserBarplan(ICalFeed):
@@ -416,8 +472,6 @@ class Board(ListView):
 
         context["timesheet_data"] = timesheet_data
 
-        context["DOMAIN"] = settings.DOMAIN
-
         return context
 
 
@@ -436,8 +490,6 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["DOMAIN"] = settings.DOMAIN
-        context["BEST_MAIL"] = settings.BEST_MAIL
 
         if self.object:
             future_dates = list(next_bartender_shift_dates(self.UNAVAILABLE_DATES))

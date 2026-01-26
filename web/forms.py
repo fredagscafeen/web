@@ -22,11 +22,11 @@ class LoginForm(forms.Form):
     def clean_email(self):
         email = self.cleaned_data["email"]
         if not EmailTokenBackend.is_user(email):
-            raise forms.ValidationError("Ukendt email")
+            raise forms.ValidationError(_("Ukendt email"))
 
         return email
 
-    def send_email(self, next):
+    def send_email(self, next, path):
         email_address = self.cleaned_data["email"]
 
         email_token, _ = EmailToken.objects.get_or_create(email=email_address)
@@ -38,13 +38,24 @@ class LoginForm(forms.Form):
         if next:
             url += f"?next={next}"
 
-        return send_template_email(
-            subject="fredagscafeen.dk login",
-            body_template="""{link} for at logge ind.
+        body_template = """{link} to log in.
 
-/snek""",
-            text_format={"link": f"Gå ind på {url}"},
-            html_format={"link": mark_safe(f'<a href="{url}">Klik her</a>')},
+/snek"""
+        text_format = {"link": f"Go to {url}"}
+        html_format = {"link": mark_safe(f'<a href="{url}">Click here</a>')}
+
+        if "/da/" in path:
+            body_template = """{link} for at logge ind.
+
+/snek"""
+            text_format = {"link": f"Gå ind på {url}"}
+            html_format = {"link": mark_safe(f'<a href="{url}">Klik her</a>')}
+
+        return send_template_email(
+            subject="Fredagscafeen.dk login",
+            body_template=body_template,
+            text_format=text_format,
+            html_format=html_format,
             to=[email_address],
         )
 

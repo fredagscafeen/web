@@ -16,4 +16,5 @@ def open_events(user):
     events = Event.objects.all()
     events = events.filter(response_deadline__gte=timezone.now())
     events = events.exclude(responses__bartender=bartender)
+    events = [event for event in events if event.may_attend(bartender)]
     return len(events)
