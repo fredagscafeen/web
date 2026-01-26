@@ -2,6 +2,7 @@ from constance import config
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
+from django.utils import timezone
 
 from fredagscafeen.email import send_template_email
 
@@ -15,6 +16,10 @@ class ReminderCommand(BaseCommand):
         if not config.SEND_REMINDERS:
             print("SEND_REMINDERS is false, not sending any reminders.")
             return
+
+        isMonday = timezone.now().isoweekday == 1
+        if not isMonday:
+            print("Not monday, so not sending any reminders.")
 
         if not events:
             print("No upcoming events found.")

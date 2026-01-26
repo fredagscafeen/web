@@ -154,10 +154,10 @@
 </div>
 <div class="mt-3">
 	<p class="fw-light">
-		{% translate "Created" %} {{ event.created_at | date:"d M, Y" }}
+		{% translate "Created" %} {{ event.created_at|date:"j. F, Y" }}
 		{% if event.updated_at.date != event.created_at.date %}
 		<br>
-		{% translate "Updated" %} {{ event.updated_at | date:"d M, Y" }}
+		{% translate "Updated" %} {{ event.updated_at|date:"j. F, Y" }}
 		{% endif %}
 	</p>
 </div>

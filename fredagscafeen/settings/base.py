@@ -56,6 +56,11 @@ CONSTANCE_CONFIG = {
         "Skal alle kunne se bartender events?",
         bool,
     ),
+    "SHOW_BARTENDER_STATS": (
+        False,
+        "Skal bartender statistikker vises på bartender info siden?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [
@@ -132,7 +137,7 @@ SECRET_ADMIN_KEYS = [
     {
         "key": "ONEPINT_PASSWORD",
         "description": "OnePint.dk password",
-        "username": None,
+        "username": "fredagscafeen@joachimhorshauge.com",
         "url": "https://www.onepint.dk/customer/account/login/",
         "role": "INDKØB",
     },

@@ -1,10 +1,21 @@
 from django import forms
 from django.contrib import admin
-from django.core.exceptions import FieldError
+from django.core.exceptions import FieldError, ValidationError
+from django.db import models
+from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from fredagscafeen.admin_view import custom_admin_view
-from items.models import BeerType, Brewery, InventoryEntry, InventorySnapshot, Item
+from items.models import (
+    BeerType,
+    Brewery,
+    InventoryEntry,
+    InventorySnapshot,
+    Item,
+    Shelf,
+    ShelfItem,
+)
 from printer.views import pdf_preview
 
 
@@ -44,6 +55,8 @@ class ItemAdmin(admin.ModelAdmin):
         "container",
         "type",
         "brewery",
+        "glutenFree",
+        "nonAlcoholic",
     )
     empty_value_display = ""
     ordering = ("name",)
@@ -71,6 +84,18 @@ class ItemAdmin(admin.ModelAdmin):
             pass
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def get_search_results(self, request, queryset, search_term):
+        """Filter autocomplete to only show in-stock items"""
+        queryset, may_have_duplicates = super().get_search_results(
+            request, queryset, search_term
+        )
+
+        # Only filter for autocomplete requests from ShelfItem inline
+        if "autocomplete" in request.path:
+            queryset = queryset.filter(inStock=True)
+
+        return queryset, may_have_duplicates
 
 
 @admin.register(BeerType)
@@ -135,12 +160,98 @@ class BarMenuContext:
 
     @staticmethod
     def get_context():
-        items = Item.objects.all()
+        import os
+
+        from django.conf import settings
+
+        shelves = (
+            Shelf.objects.all()
+            .prefetch_related("shelf_items__item__brewery", "shelf_items__item__type")
+            .order_by("name")
+        )
+
+        gluten_free_icon = settings.STATIC_ROOT + "images/no-gluten.png"
+        non_alcoholic_icon = settings.STATIC_ROOT + "images/no-alcohol.png"
+
         return {
-            "items": items,
+            "shelves": shelves,
+            "gluten_free_icon": gluten_free_icon,
+            "non_alcoholic_icon": non_alcoholic_icon,
         }
 
 
 @custom_admin_view("items", "generate barmenu")
 def generate_bartab(admin, request):
     return pdf_preview(request, admin.admin_site, BarMenuContext)
+
+
+class ShelfItemInlineFormSet(forms.models.BaseInlineFormSet):
+    def clean(self):
+        """Check that the same item isn't added twice to the shelf"""
+        if any(self.errors):
+            return
+
+        items = []
+        for form in self.forms:
+            if form.cleaned_data and not form.cleaned_data.get("DELETE", False):
+                item = form.cleaned_data.get("item")
+                if item:
+                    if item in items:
+                        raise ValidationError(
+                            f'The item "{item}" is already on this shelf.'
+                        )
+                    items.append(item)
+
+
+class ShelfItemInline(admin.TabularInline):
+    model = ShelfItem
+    formset = ShelfItemInlineFormSet
+    extra = 1
+    autocomplete_fields = ["item"]
+    fields = ("item", "gluten_free_display", "non_alcoholic_display")
+    readonly_fields = ("gluten_free_display", "non_alcoholic_display")
+
+    def gluten_free_display(self, obj):
+        if obj.item and obj.item.glutenFree:
+            return mark_safe('<span style="color: green;">✓ GF</span>')
+        return ""
+
+    gluten_free_display.short_description = "Gluten Free"
+
+    def non_alcoholic_display(self, obj):
+        if obj.item and obj.item.nonAlcoholic:
+            return mark_safe('<span style="color: blue;">✓ NA</span>')
+        return ""
+
+    non_alcoholic_display.short_description = "Non-Alcoholic"
+
+
+@admin.register(Shelf)
+class ShelfAdmin(admin.ModelAdmin):
+    list_display = ("name", "item_count", "items_list")
+    inlines = [ShelfItemInline]
+
+    def item_count(self, obj):
+        return obj.shelf_items.filter(item__inStock=True).count()
+
+    item_count.short_description = "Items"
+
+    def items_list(self, obj):
+        """Display list of items on this shelf with links"""
+        shelf_items = (
+            obj.shelf_items.filter(item__inStock=True)
+            .select_related("item", "item__brewery")
+            .order_by("order", "item__name")
+        )
+
+        if not shelf_items:
+            return "-"
+
+        links = []
+        for si in shelf_items:
+            url = reverse("admin:items_item_change", args=[si.item.id])
+            links.append(f'<li><a href="{url}">{si.item}</a></li>')
+
+        return mark_safe(f'<ul>{"".join(links)}</ul>')
+
+    items_list.short_description = "Items on Shelf"

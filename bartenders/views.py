@@ -2,6 +2,7 @@ import datetime
 import random
 from itertools import groupby
 
+from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -82,10 +83,51 @@ class BartenderList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["bartenders"] = Bartender.objects.filter(isActiveBartender=True)
-        context["inactive_bartenders"] = Bartender.objects.filter(
-            isActiveBartender=False
-        )
+        bartenders = Bartender.objects.all()
+        total_shift_leaderboard = []
+
+        if config.SHOW_BARTENDER_STATS:
+            bartender_stats = []
+            number_of_active_bartenders = 0
+            for bartender in bartenders:
+                shifts = BartenderShift.with_bartender(bartender).filter(
+                    start_datetime__lte=timezone.now()
+                )
+                total_shift_leaderboard.append((bartender.pk, shifts.count()))
+                stat = {
+                    "bartender": bartender,
+                    "total_shifts": shifts.count(),
+                    "responsible_shifts": shifts.filter(responsible=bartender).count(),
+                    "first_shift": shifts.first().start_datetime
+                    if shifts.exists()
+                    else None,
+                    "last_shift": shifts.last().start_datetime
+                    if shifts.exists()
+                    else None,
+                }
+                bartender_stats.append(stat)
+                if bartender.isActiveBartender:
+                    number_of_active_bartenders += 1
+
+            total_shift_leaderboard.sort(key=lambda x: x[1], reverse=True)
+
+            for bartender_stat in bartender_stats:
+                for rank, (b_pk, _) in enumerate(total_shift_leaderboard, start=1):
+                    if bartender_stat["bartender"].pk == b_pk:
+                        bartender_stat["total_rank"] = rank
+                        break
+
+            context["bartender_stats"] = bartender_stats
+            context["number_of_active_bartenders"] = number_of_active_bartenders
+            context["number_of_inactive_bartenders"] = (
+                len(bartender_stats) - number_of_active_bartenders
+            )
+        else:
+            context["bartenders"] = Bartender.objects.filter(isActiveBartender=True)
+            context["inactive_bartenders"] = Bartender.objects.filter(
+                isActiveBartender=False
+            )
+
         return context
 
 

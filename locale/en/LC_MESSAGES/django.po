@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-22 19:53+0200\n"
-"PO-Revision-Date: 2025-10-22 19:53+0050\n"
+"POT-Creation-Date: 2025-11-02 14:58+0100\n"
+"PO-Revision-Date: 2025-11-02 14:59+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -128,7 +128,8 @@ msgid "Result"
 msgstr "Result"
 
 #: bartab/templates/bartab/consumption.html:20 events/templates/event.html:129
-#: items/templates/items.html:51 mail/models.py:8
+#: guides/templates/guides.html:29 items/templates/items.html:51
+#: mail/models.py:8
 msgid "Navn"
 msgstr "Name"
 
@@ -238,8 +239,8 @@ msgid "Is the link to an external site?"
 msgstr "Is the link to an external site?"
 
 #: bartenders/templates/ballots_update.html:18
-#: bartenders/templates/bartender_info.html:16
-#: bartenders/templates/bartender_info.html:42 events/templates/event.html:93
+#: bartenders/templates/bartender_info.html:15
+#: bartenders/templates/bartender_info.html:41 events/templates/event.html:93
 msgid "Gem"
 msgstr "Save"
 
@@ -311,9 +312,9 @@ msgstr "This means that other bartenders cannot take your shift."
 #: bartenders/templates/barplan.html:195 bartenders/templates/barplan.html:212
 #: bartenders/templates/barplan.html:258 bartenders/templates/barplan.html:276
 #: bartenders/templates/barplan.html:293
-#: bartenders/templates/bartender_info.html:98
-#: bartenders/templates/bartender_info.html:129
-#: bartenders/templates/bartender_info.html:147
+#: bartenders/templates/bartender_info.html:97
+#: bartenders/templates/bartender_info.html:128
+#: bartenders/templates/bartender_info.html:146
 msgid "Close"
 msgstr "Close"
 
@@ -322,7 +323,7 @@ msgstr "Close"
 #: bartenders/templates/barplan.html:196 bartenders/templates/barplan.html:213
 #: bartenders/templates/barplan.html:259 bartenders/templates/barplan.html:277
 #: bartenders/templates/barplan.html:294
-#: bartenders/templates/bartender_info.html:130
+#: bartenders/templates/bartender_info.html:129
 msgid "Confirm"
 msgstr "Confirm"
 
@@ -362,7 +363,8 @@ msgstr "Bartender's first shift"
 #: bartenders/templates/barplan.html:304 bartenders/templates/barplan.html:404
 #: bartenders/templates/board.html:39 events/templates/event.html:54
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
-#: items/templates/items.html:80 udlejning/templates/udlejning.html:60
+#: guides/templates/guides.html:50 items/templates/items.html:80
+#: udlejning/templates/udlejning.html:60
 #: udlejning/templates/udlejningBoardGameCart.html:52
 #: udlejning/templates/udlejningGrill.html:52
 #: udlejning/templates/udlejningProjector.html:52
@@ -371,7 +373,7 @@ msgstr "Bartender's first shift"
 msgid "Edit"
 msgstr "Edit"
 
-#: bartenders/templates/barplan.html:355 bartenders/views.py:261
+#: bartenders/templates/barplan.html:355 bartenders/views.py:301
 msgid "Pantvagter"
 msgstr "Deposit shifts"
 
@@ -403,50 +405,50 @@ msgstr "Current week"
 msgid "Bartender's first deposit shift"
 msgstr "Bartender's first deposit shift"
 
-#: bartenders/templates/bartender_info.html:23
+#: bartenders/templates/bartender_info.html:22
 msgid "Datoer, hvor du ikke har mulighed for at stå i bar"
 msgstr "Dates when you do not have the opportunity to stand at the bar"
 
-#: bartenders/templates/bartender_info.html:54
+#: bartenders/templates/bartender_info.html:53
 msgid "Your mailing lists"
 msgstr "Your mailing lists"
 
-#: bartenders/templates/bartender_info.html:55
+#: bartenders/templates/bartender_info.html:54
 msgid "Modtagere"
 msgstr "Recipients"
 
-#: bartenders/templates/bartender_info.html:73
+#: bartenders/templates/bartender_info.html:72
 msgid "Afmeld"
 msgstr "Unsubscribe"
 
-#: bartenders/templates/bartender_info.html:84
-#: bartenders/templates/bartender_info.html:90
+#: bartenders/templates/bartender_info.html:83
+#: bartenders/templates/bartender_info.html:89
 msgid "Meld dig på mailinglisten"
 msgstr "Join the mailing list"
 
-#: bartenders/templates/bartender_info.html:94
+#: bartenders/templates/bartender_info.html:93
 msgid "Hvis du gerne vil på mailinglisten igen, så kontakt"
 msgstr "If you wish to be added to the mailing list again, please contact"
 
-#: bartenders/templates/bartender_info.html:108
-#: bartenders/templates/bartender_info.html:120
+#: bartenders/templates/bartender_info.html:107
+#: bartenders/templates/bartender_info.html:119
 msgid "Bliv inaktiv"
 msgstr "Become inactive"
 
-#: bartenders/templates/bartender_info.html:112
-#: bartenders/templates/bartender_info.html:139
+#: bartenders/templates/bartender_info.html:111
+#: bartenders/templates/bartender_info.html:138
 msgid "Bliv aktiv"
 msgstr "Become active"
 
-#: bartenders/templates/bartender_info.html:124
+#: bartenders/templates/bartender_info.html:123
 msgid "Du er ved at melde dig inaktiv."
 msgstr "You're about to declare yourself inactive."
 
-#: bartenders/templates/bartender_info.html:125
+#: bartenders/templates/bartender_info.html:124
 msgid "Er du sikker?"
 msgstr "Are you sure?"
 
-#: bartenders/templates/bartender_info.html:126
+#: bartenders/templates/bartender_info.html:125
 msgid ""
 "Husk at du som inaktiv bartender ikke kan komme til "
 "bartenderarrangementerne."
@@ -454,11 +456,11 @@ msgstr ""
 "Remember that as an inactive bartender you cannot come to the bartender "
 "events."
 
-#: bartenders/templates/bartender_info.html:143
+#: bartenders/templates/bartender_info.html:142
 msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr "If you wish to become active again, please contact"
 
-#: bartenders/templates/bartender_info.html:157
+#: bartenders/templates/bartender_info.html:156
 msgid "er ikke bartender."
 msgstr "is not a bartender."
 
@@ -474,15 +476,31 @@ msgstr "E-mail"
 msgid "Antal vagter"
 msgstr "Number of shifts"
 
-#: bartenders/templates/bartenders.html:14
-#: bartenders/templates/bartenders.html:16
-#: bartenders/templates/bartenders.html:20
+#: bartenders/templates/bartenders.html:15
+#: bartenders/templates/bartenders.html:81
 msgid "Nuværende"
 msgstr "Current"
 
-#: bartenders/templates/bartenders.html:45
+#: bartenders/templates/bartenders.html:25
+#: bartenders/templates/bartenders.html:90
 msgid "Tidligere"
 msgstr "Earlier"
+
+#: bartenders/templates/bartenders.html:39
+msgid "Totale antal barvagter"
+msgstr "Total number of shifts"
+
+#: bartenders/templates/bartenders.html:43
+msgid "Ansvarligvagter"
+msgstr "Responsible shifts"
+
+#: bartenders/templates/bartenders.html:47
+msgid "Første barvagt"
+msgstr "First shift"
+
+#: bartenders/templates/bartenders.html:57
+msgid "Sidste barvagt"
+msgstr "Last shift"
 
 #: bartenders/templates/board.html:33 web/templates/base.html:97
 msgid "Bestyrelsen"
@@ -575,51 +593,51 @@ msgstr "Streak"
 msgid "Start - Slut"
 msgstr "Start - Finish"
 
-#: bartenders/views.py:75
+#: bartenders/views.py:76
 msgid "Din ansøgning er blevet indsendt."
 msgstr "Your application has been submitted."
 
-#: bartenders/views.py:177
+#: bartenders/views.py:217
 msgid "Vagt tilgængelig for andre til at tage."
 msgstr "Shift available for others to take."
 
-#: bartenders/views.py:184
+#: bartenders/views.py:224
 msgid "Vagt ikke længere tilgængelig for andre."
 msgstr "Shift no longer available to others."
 
-#: bartenders/views.py:192
+#: bartenders/views.py:232
 msgid "Du har allerede en barvagt der!"
 msgstr "You already have a shift there!"
 
-#: bartenders/views.py:196
+#: bartenders/views.py:236
 msgid "Barplan opdateret."
 msgstr "Bar plan updated."
 
-#: bartenders/views.py:198
+#: bartenders/views.py:238
 msgid "An error occurred."
 msgstr "An error occurred."
 
-#: bartenders/views.py:222
+#: bartenders/views.py:262
 msgid "Barvagter"
 msgstr "Bar Shifts"
 
-#: bartenders/views.py:245 bartenders/views.py:284
+#: bartenders/views.py:285 bartenders/views.py:324
 msgid "Responsible"
 msgstr "Responsible"
 
-#: bartenders/views.py:246
+#: bartenders/views.py:286
 msgid "Other bartenders"
 msgstr "Other bartenders"
 
-#: bartenders/views.py:425
+#: bartenders/views.py:465
 msgid "Profil opdateret"
 msgstr "Profil updated"
 
-#: bartenders/views.py:451
+#: bartenders/views.py:491
 msgid "Du er nu afmeldt"
 msgstr "You are now unsubscribed from"
 
-#: bartenders/views.py:455
+#: bartenders/views.py:495
 msgid "mailinglisten"
 msgstr "mailing list"
 
@@ -662,7 +680,7 @@ msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr ""
 "There are too many who have chosen %(option_option)s. Choose something else."
 
-#: events/models.py:61
+#: events/models.py:61 guides/models.py:22
 msgid "Name"
 msgstr "Name"
 
@@ -821,11 +839,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:307
+#: fredagscafeen/settings/base.py:312
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:308
+#: fredagscafeen/settings/base.py:313
 msgid "English"
 msgstr "English"
 
@@ -1078,17 +1096,41 @@ msgstr "Fredagscaféens photo albums"
 msgid "Feed med nye billedalbummer fra Fredagscaféens begivenheder."
 msgstr "Feed with new photo albums from Fredagscaféens events."
 
-#: guides/models.py:10
+#: guides/models.py:11
 msgid "Til alle"
 msgstr "To all"
 
-#: guides/models.py:11
+#: guides/models.py:12
 msgid "Til bartendere"
 msgstr "To bartenders"
 
-#: guides/models.py:12
+#: guides/models.py:13
 msgid "Til bestyrelsesmedlemmer"
 msgstr "To board members"
+
+#: guides/models.py:16
+msgid "Dansk"
+msgstr "Danish"
+
+#: guides/models.py:17
+msgid "Engelsk"
+msgstr "English"
+
+#: guides/models.py:27
+msgid "Kategori"
+msgstr "Category"
+
+#: guides/models.py:33
+msgid "Sprog"
+msgstr "Language"
+
+#: guides/models.py:37
+msgid "Dokument"
+msgstr "Document"
+
+#: guides/models.py:41 guides/templates/guides.html:30
+msgid "Opdateret"
+msgstr "Updated"
 
 #: guides/templates/guides.html:9 web/templates/base.html:96
 msgid "Guides"
@@ -1110,6 +1152,10 @@ msgid ""
 msgstr ""
 "We try to update them continuously, but understand that they do not always "
 "fully reflect reality."
+
+#: guides/templates/guides.html:31 web/templates/secrets_admin.html:14
+msgid "Link"
+msgstr "Link"
 
 #: items/templates/items.html:9
 msgid ""
@@ -1282,14 +1328,18 @@ msgid "Logbøger"
 msgstr "Logs"
 
 #: mail/models.py:11
+msgid "Only list members can send to this mailing list"
+msgstr "Only list members can send to this mailing list"
+
+#: mail/models.py:14
 msgid "Medlemmer"
 msgstr "Members"
 
-#: mail/models.py:18
+#: mail/models.py:21
 msgid "Mailingliste"
 msgstr "Mailing list"
 
-#: mail/models.py:19
+#: mail/models.py:22
 msgid "Mailinglister"
 msgstr "Mailing lists"
 
@@ -1525,7 +1575,6 @@ msgid "Ikke angivet"
 msgstr "Not specified"
 
 #: udlejning/templates/udlejning.html:71
-#| msgid "Anlæggene er pt. ikke reserveret på noget tidspunkt."
 msgid "Anlæggene er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The kegerators are currently not booked at any time."
 
@@ -1738,7 +1787,6 @@ msgid "Brætspilsvognen er allerede reserveret følgende dage:"
 msgstr "The board game cart is already reserved the following days:"
 
 #: udlejning/templates/udlejningBoardGameCart.html:63
-#| msgid "Brætspilsvognen er pt. ikke reserveret på noget tidspunkt."
 msgid "Brætspilsvognen er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The board game cart is currently not reserved at any time."
 
@@ -1764,7 +1812,6 @@ msgid "Grillen er allerede reserveret følgende dage:"
 msgstr "The grill is already reserved the following days"
 
 #: udlejning/templates/udlejningGrill.html:63
-#| msgid "Grillen er pt. ikke reserveret på noget tidspunkt."
 msgid "Grillen er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The grill is currently not booked at any time"
 
@@ -1798,8 +1845,6 @@ msgid "Projektoren/lærredet er allerede reserveret følgende dage:"
 msgstr "The projector & screen is already reserved the following days:"
 
 #: udlejning/templates/udlejningProjector.html:63
-#| msgid ""
-#| "Projektoren/lærredet er pt. ikke reserveret på noget tidspunkt."
 msgid "Projektoren/lærredet er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The projector & screen is currently not booked at any time."
 
@@ -1826,7 +1871,6 @@ msgid "Højtalerne er allerede reserveret følgende dage:"
 msgstr "The speakers are already reserved the following days"
 
 #: udlejning/templates/udlejningSpeakers.html:64
-#| msgid "Højtalerne er pt. ikke reserveret på noget tidspunkt."
 msgid "Højtalerne er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The speakers are currently not booked at any time."
 
@@ -1852,7 +1896,6 @@ msgid "Festteltet er allerede reserveret følgende dage:"
 msgstr "The tent is already reserved the following days:"
 
 #: udlejning/templates/udlejningTent.html:64
-#| msgid "Festteltet er pt. ikke reserveret på noget tidspunkt."
 msgid "Festteltet er p.t. ikke reserveret på noget tidspunkt."
 msgstr "The tent is currently not booked at any time."
 
@@ -2026,7 +2069,6 @@ msgstr ""
 "vacation, we're open."
 
 #: web/templates/about.html:65
-#| msgid "Pt. har baren været åben"
 msgid "P.t. har baren været åben"
 msgstr "At the moment the bar has been open"
 
@@ -2304,10 +2346,6 @@ msgstr "Django key"
 #: web/templates/secrets_admin.html:13
 msgid "Kode"
 msgstr "Password"
-
-#: web/templates/secrets_admin.html:14
-msgid "Link"
-msgstr "Link"
 
 #: web/views.py:52
 msgid ""

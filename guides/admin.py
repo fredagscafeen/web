@@ -5,4 +5,8 @@ from .models import Guide
 
 @admin.register(Guide)
 class GuideAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        "name",
+        "category",
+        "updated_at",
+    )

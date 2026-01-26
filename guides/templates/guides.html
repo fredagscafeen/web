@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load bootstrap5 bootstrap_icons %}
+{% load is_newly_updated %}
 
 {% block content %}
 
@@ -16,17 +17,52 @@
 <p>
 	{% translate "Vi forsøger at opdatere dem løbende, men forstå at de ikke altid afspejler virkeligheden fuldt ud." %}
 </p>
+<p>
+	{% translate "Har du tilføjelser eller foreslag til ændringer, kan du lave et Pull Request på GitHub " %}
+	<a class="common" href="https://github.com/fredagscafeen/guides" rel="external" target="_blank">{% translate "her" context "På linket her" %} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+</p>
 
 <div>
 	{% for category, guides in guides %}
 	<ul class="list-group pb-3">
 		<li class="list-group-item list-group-item-secondary">{{ category }}</li>
-		<li class="list-group-item list-group-item-light pb-3">
-			<ul>
-				{% for guide in guides %}
-					<li style="list-style: none;"><i>{% bs_icon 'dot' size='1.0em' %}</i> <a class="common" href="{{ guide.document.url }}">{{ guide.name }}</a></li>
-				{% endfor %}
-			</ul>
+		<li class="list-group-item pb-3">
+			<div style="overflow: scroll;">
+				<table class="table table-hover m-0">
+					<thead>
+						<tr>
+							<th class="col-8 text-secondary" scope="col">{% translate "Navn" %}</th>
+							<th class="col-3 text-secondary" scope="col">{% translate "Opdateret" %}</th>
+							<th class="col-1 text-secondary" scope="col">{% translate "Link" %}</th>
+							{% if user.is_staff %}
+								<th class="col-1"></th>
+							{% endif %}
+						</tr>
+					</thead>
+					<tbody>
+						{% for guide in guides %}
+							{% with guideIsNewlyUpdated=guide|is_newly_updated %}
+								{% if LANGUAGE_CODE == guide.language %}
+									<tr>
+										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.name }}</td>
+										<td class="{% if guideIsNewlyUpdated %}fw-semibold{% endif %}">{{ guide.updated_at|date:"d/m/Y" }}</td>
+										<td>
+											<a class="ps-1" href="{{ guide.document.url }}">
+												{% bs_icon 'filetype-pdf' size='1.3em' %}
+											</a>
+										</td>
+										{% if user.is_staff %}
+											<td>
+												<a class="common" href="/admin/guides/guide/{{ guide.id }}">{% translate "Edit" %}</a>
+											</td>
+										{% endif %}
+									</tr>
+								{% endif %}
+							{% endwith %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</li>
 	</ul>
 	{% endfor %}

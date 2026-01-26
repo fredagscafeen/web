@@ -16,7 +16,7 @@
 					<tr>
 						<td class="col-md-1">{{ forloop.counter }}</td>
 						<td class="col-md-1">{{ shift_streak.streak }}{% if shift_streak.is_current_shift %}{% bs_icon 'fire' size='0.8em' %}{% endif%}</td>
-						<td>{{ shift_streak.start_datetime| date:"d M, Y" }} - {{ shift_streak.end_datetime| date:"d M, Y" }}</td>
+						<td>{{ shift_streak.start_datetime|date:"d M, Y" }} - {{ shift_streak.end_datetime|date:"d M, Y" }}</td>
 					</tr>
 				{% endfor %}
 			</tbody>

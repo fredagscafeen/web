@@ -8,12 +8,79 @@
 	<a href="#bartenders" class="section-link">#</a>
 </h2>
 
+{% if bartender_stats %}
+<div class="row">
+	<div class="col-md-6 mb-3">
+		<ul class="list-group">
+			<li class="fw-bold list-group-item list-group-item-primary" style="margin-bottom:-1px;">{% translate "Nuværende" %} <span class="badge text-bg-primary rounded-pill">{{ number_of_active_bartenders }}</span></li>
+			<div class="accordion">
+				{% for bartender_stat in bartender_stats %}
+				{% with bartender=bartender_stat.bartender %}
+					{% ifchanged bartender.isActiveBartender %}{% if not bartender.isActiveBartender %}
+			</div>
+		</ul>
+	</div>
+	<div class="col-md-6 mb-3">
+	<ul class="list-group">
+		<li class="fw-bold list-group-item list-group-item-danger" style="margin-bottom:-1px;">{% translate "Tidligere" %} <span class="badge text-bg-danger rounded-pill">{{ number_of_inactive_bartenders }}</span></li>
+		<div class="accordion">
+					{% endif %}{% endifchanged %}
+					<div class="accordion-item" style="border-top-left-radius:0px; border-top-right-radius:0px;">
+						<div class="accordion-header">
+							<button class="accordion-button collapsed py-2 px-3" style="border-top-left-radius:0px; border-top-right-radius:0px;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-{{ bartender.pk }}" aria-expanded="false" aria-controls="panelsStayOpen-{{ bartender.pk }}">
+								<p class="card-title">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</p>
+							</button>
+						</div>
+						<div id="panelsStayOpen-{{ bartender.pk }}" class="accordion-collapse collapse">
+							<div class="accordion-body p-2">
+								<table class="table table-bordered m-0">
+									<tbody>
+										<tr>
+											<th scope="row">{% translate "Totale antal barvagter" %}</th>
+											<td class="w-100">{{ bartender_stat.total_shifts }} (#{{ bartender_stat.total_rank }})</td>
+										</tr>
+										<tr>
+											<th class="ps-4" scope="row">{% translate "Ansvarligvagter" %}</th>
+											<td>{{ bartender_stat.responsible_shifts }}</td>
+										</tr>
+										<tr>
+											<th scope="row">{% translate "Første barvagt" %}</th>
+											<td>
+												{% if bartender_stat.first_shift %}
+													{{ bartender_stat.first_shift|date:"j. F Y" }}
+												{% else %}
+													N/A
+												{% endif %}
+											</td>
+										</tr>
+										<tr>
+											<th scope="row">{% translate "Sidste barvagt" %}</th>
+											<td>
+												{% if bartender_stat.last_shift %}
+													{{ bartender_stat.last_shift|date:"j. F Y" }}
+												{% else %}
+													N/A
+												{% endif %}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				{% endwith %}
+				{% endfor %}
+			</div>
+		</ul>
+	</div>
+</div>
+{% else %}
 <div class="row">
 	<div class="col-md-6 mb-3">
 		<ul class="list-group">
 			<li class="fw-bold list-group-item list-group-item-primary">{% translate "Nuværende" %} <span class="badge text-bg-primary rounded-pill">{{ bartenders.count }}</span></li>
 			{% for bartender in bartenders %}
-				<li class="list-group-item list-group-item-light">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</li>
+				<li class="list-group-item">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</li>
 			{% endfor %}
 		</ul>
 	</div>
@@ -22,10 +89,11 @@
 		<ul class="list-group">
 			<li class="fw-bold list-group-item list-group-item-danger">{% translate "Tidligere" %} <span class="badge text-bg-danger rounded-pill">{{ inactive_bartenders.count }}</span></li>
 			{% for bartender in inactive_bartenders %}
-				<li class="list-group-item list-group-item-light">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</li>
+				<li class="list-group-item">{{ bartender.name }} (<code class="bg-danger-subtle px-1 rounded">{{ bartender.username }}</code>)</li>
 			{% endfor %}
 		</ul>
 	</div>
 </div>
+{% endif %}
 
 {% endblock %}
