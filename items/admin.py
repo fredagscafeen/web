@@ -1,13 +1,15 @@
 from django import forms
+from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import FieldError, ValidationError
 from django.db import models
 from django.urls import reverse
-from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from fredagscafeen.admin_view import custom_admin_view
-from items.models import (
+from printer.views import pdf_preview
+
+from .models import (
     BeerType,
     Brewery,
     InventoryEntry,
@@ -16,7 +18,6 @@ from items.models import (
     Shelf,
     ShelfItem,
 )
-from printer.views import pdf_preview
 
 
 def filter_by_amount(qs, positive):
@@ -160,10 +161,6 @@ class BarMenuContext:
 
     @staticmethod
     def get_context():
-        import os
-
-        from django.conf import settings
-
         shelves = (
             Shelf.objects.all()
             .prefetch_related("shelf_items__item__brewery", "shelf_items__item__type")
