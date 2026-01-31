@@ -23,9 +23,9 @@
             \node[shape=circle,draw,fill=white,inner sep=1pt] (char) {#1};}}
 \newcommand\krcoins{\coins{\tiny kr}}
 
-% Define commands for icons
-\newcommand{\glutenfreeicon}{\raisebox{-0.2\height}{\includegraphics[height=1em]{{ "{" }}{{ gluten_free_icon }}{{ "}" }}}}
-\newcommand{\nonalcoholicicon}{\raisebox{-0.2\height}{\includegraphics[height=1em]{{ "{" }}{{ non_alcoholic_icon }}{{ "}" }}}}
+% Define commands for abbreviations
+\newcommand{\glutenfree}{GF}
+\newcommand{\nonalcoholic}{NA}
 
 \renewcommand\TruncateMarker{}
 
@@ -34,9 +34,10 @@
 \begin{document}
 
 {% for shelf in shelves %}
-\section*{ {{ shelf.name }} }
 
-\begin{longtable}{p{2cm}p{5cm}rc}
+\begin{minipage}{0.45\linewidth}
+\begin{longtable}{p{2.2cm}p{6cm}rc}
+\large {{ shelf.name }} & & &  \\
 \toprule
 \textbf{Type} & \textbf{Name} & \textbf{Price} &  \\
 \midrule
@@ -55,11 +56,12 @@
 {{ item.type.name|default:"" }} &
 {{ item.name }} &
 {{ item.priceInDKK|floatformat:0 }} kr &
-{% if item.glutenFree %}\glutenfreeicon{% endif %}{% if item.nonAlcoholic %}{% if item.glutenFree %} {% endif %}\nonalcoholicicon{% endif %} \\
+{% if item.glutenFree %}\glutenfree{% endif %}{% if item.nonAlcoholic %}{% if item.glutenFree %}, {% endif %}\nonalcoholic{% endif %} \\
 {% endwith %}
 {% endfor %}
 
 \end{longtable}
+\end{minipage}
 
 {% if not forloop.last %}
 \vspace{1cm}
@@ -69,12 +71,12 @@
 
 % Legend at the bottom of the last page
 \vspace{2cm}
-\section*{Legend}
+\section*{Abbreviations}
 
 \begin{tabular}{cl}
 \toprule
-\glutenfreeicon & Gluten Free \\
-\nonalcoholicicon & Non-Alcoholic \\
+\glutenfree & Gluten Free \\
+\nonalcoholic & Non-Alcoholic \\
 \bottomrule
 \end{tabular}
 

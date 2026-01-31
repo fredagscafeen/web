@@ -161,10 +161,8 @@ class BarMenuContext:
 
     @staticmethod
     def get_context():
-        shelves = (
-            Shelf.objects.all()
-            .prefetch_related("shelf_items__item__brewery", "shelf_items__item__type")
-            .order_by("name")
+        shelves = Shelf.objects.all().prefetch_related(
+            "shelf_items__item__brewery", "shelf_items__item__type"
         )
 
         gluten_free_icon = settings.STATIC_ROOT + "images/no-gluten.png"

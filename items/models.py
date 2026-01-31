@@ -10,13 +10,11 @@ class Item(models.Model):
         "BeerType", on_delete=models.SET_NULL, null=True, blank=True
     )
     name = models.CharField(max_length=140)
-    name_dk = models.CharField(max_length=140, null=True, blank=True)
     description = models.TextField(blank=True)
     country = models.CharField(blank=True, max_length=140)
     priceInDKK = models.DecimalField(max_digits=9 + 2, decimal_places=0)
     abv = models.FloatField(null=True, blank=True)
     container = models.CharField(null=True, blank=True, max_length=140)
-    container_dk = models.CharField(null=True, blank=True, max_length=140)
     volumeInCentiliters = models.IntegerField(null=True, blank=True)
     inStock = models.BooleanField(default=True)
     glutenFree = models.BooleanField(default=False)
@@ -68,6 +66,9 @@ class Item(models.Model):
 class Shelf(models.Model):
     name = models.CharField(max_length=140)
 
+    class Meta:
+        ordering = ("name",)
+
     def __str__(self):
         return self.name
 
@@ -95,7 +96,6 @@ class ShelfItem(models.Model):
 
 class BeerType(models.Model):
     name = models.CharField(max_length=140)
-    name_dk = models.CharField(max_length=140, null=True, blank=True)
     description = models.TextField(blank=True)
     link = models.CharField(blank=True, max_length=255)
 
