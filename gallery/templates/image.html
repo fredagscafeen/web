@@ -7,9 +7,11 @@
 {% block title %}{{ album.title }}{% endblock title %}
 
 {% block extrahead %}
-	<script src="{% static 'js/gal.js' %}"></script>
+	<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+	<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+	<script defer src="{% static 'js/gal.js' %}"></script>
 	{% if edit_visibility %}
-	<script src="{% static 'js/gal-visibility.js' %}"></script>
+	<script defer src="{% static 'js/gal-visibility.js' %}"></script>
 	<style>
 		.select_visibility label { font-weight: normal; }
 		.select_visibility ul { list-style-type: none; }
@@ -67,23 +69,23 @@
 								{{ file.file.thumbnail.1140x1140.url }} 1140w,
 								{{ file.file.thumbnail.2280x2280.url }} 2280w"
 							{% if file != start_file %}data-{% endif %}sizes="100vw"
-							{% if file != start_file %}data-src=
+							loading="{% if file == start_file %}eager{% else %}lazy{% endif %}" decoding="async"
+							{% if file != start_file %}data-{% endif %}src=
 								"{{ file.file.thumbnail.720x720.url }}"
-							src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-							{% else %}
-							src="{{ file.file.thumbnail.720x720.url }}"
-							{% endif %}
+							{% if file == start_file %}fetchpriority="high"{% endif %}
+							{% if file != start_file %}src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"{% endif %}
+							{% if file == start_file %}src="{{ file.file.thumbnail.720x720.url }}"{% endif %}
 							title="{{ file.caption }}">
 						{% elif file.type == "A" %}
 						<div class="row justify-content-center">
-							<audio class="col-6" controls
+							<audio class="col-6" controls preload="metadata"
 								{% if file != start_file %}data-{% endif %}src=
 								"{{ file.file.url }}">
 								{% translate "Your browser does not support the audio element." %}
 							</audio>
 						</div>
 						{% elif file.type == "V" %}
-							<video class="w-100" controls
+							<video class="w-100" controls preload="metadata" playsinline
 								{% if file != start_file %}data-{% endif %}src=
 								"{{ file.file.url }}">
 								{% translate "Your browser does not support the video tag." %}

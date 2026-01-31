@@ -8,8 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2026-01-04 20:40+0100\n"
 "PO-Revision-Date: 2026-01-04 20:43+0050\n"
+=======
+"POT-Creation-Date: 2026-01-22 14:52+0100\n"
+"PO-Revision-Date: 2026-01-22 14:53+0050\n"
+>>>>>>> master
 "Last-Translator:   <ml@ml.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -93,10 +98,17 @@ msgstr "Submit"
 msgid "Result"
 msgstr "Result"
 
+<<<<<<< HEAD
 #: bartab/templates/admin/consumption.html:20 bartab/templates/bartab.html:136
 #: events/templates/event.html:124 events/templates/event.html:171
 #: events/templates/event.html:200 guides/templates/guides.html:42
 #: items/templates/items.html:51 mail/models.py:18
+=======
+#: bartab/templates/admin/consumption.html:20 events/templates/event.html:125
+#: events/templates/event.html:172 events/templates/event.html:201
+#: guides/templates/guides.html:42 items/templates/items.html:51
+#: mail/models.py:18
+>>>>>>> master
 msgid "Navn"
 msgstr "Name"
 
@@ -112,6 +124,7 @@ msgstr "Tab status"
 msgid "Krydslisten er gjort op til og med barvagten"
 msgstr "The tab is done up to and including the bar shift"
 
+<<<<<<< HEAD
 #: bartab/templates/bartab.html:14 bartab/templates/bartab.html:124
 #: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:115
 #: bartenders/templates/barplan.html:134 bartenders/templates/barplan.html:175
@@ -119,6 +132,14 @@ msgstr "The tab is done up to and including the bar shift"
 #: bartenders/templates/barplan.html:260 bartenders/templates/barplan.html:279
 #: bartenders/templates/barplan.html:298 web/templates/about.html:65
 #: web/templates/about.html:69
+=======
+#: bartab/templates/bartab.html:14 bartenders/templates/barplan.html:96
+#: bartenders/templates/barplan.html:115 bartenders/templates/barplan.html:134
+#: bartenders/templates/barplan.html:175 bartenders/templates/barplan.html:194
+#: bartenders/templates/barplan.html:213 bartenders/templates/barplan.html:260
+#: bartenders/templates/barplan.html:279 bartenders/templates/barplan.html:298
+#: web/templates/about.html:65 web/templates/about.html:69
+>>>>>>> master
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr " "
@@ -720,11 +741,11 @@ msgstr "Event album"
 msgid "Vælg"
 msgstr "Choose"
 
-#: events/forms.py:21 events/forms.py:59 events/templates/event.html:106
+#: events/forms.py:21 events/forms.py:59 events/templates/event.html:107
 msgid "Deltager"
 msgstr "Attending"
 
-#: events/forms.py:22 events/templates/event.html:109
+#: events/forms.py:22 events/templates/event.html:110
 msgid "Deltager ikke"
 msgstr "Not attending"
 
@@ -782,15 +803,19 @@ msgid "for sent"
 msgstr "too late"
 
 #: events/templates/event.html:74
+#| msgid ""
+#| "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
 msgid ""
-"Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
+"Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events,"
+" eller se hvem der deltager."
 msgstr ""
-"You are not logged in as a bartender and therefore cannot register for "
-"events."
+"You are not logged in as a bartender, and therefore cannot register for "
+"events or see who is participating."
 
 #: events/templates/event.html:74
-msgid "Klik for at logge ind."
-msgstr "Click here to log in"
+#| msgid "Klik for at logge ind."
+msgid "Klik her for at logge ind."
+msgstr "Click here to log in."
 
 #: events/templates/event.html:76
 msgid ""
@@ -827,31 +852,31 @@ msgstr ""
 "There has been a bar guard during a bar guard plan period that ended less "
 "than a month ago."
 
-#: events/templates/event.html:112
+#: events/templates/event.html:113
 msgid "Intet svar"
 msgstr "No answer"
 
-#: events/templates/event.html:154 events/templates/event.html:220
+#: events/templates/event.html:155 events/templates/event.html:221
 msgid "Send mail"
 msgstr "Send mail"
 
-#: events/templates/event.html:160
+#: events/templates/event.html:161
 msgid "Ingen tilmeldte endnu."
 msgstr "No one signed up yet."
 
-#: events/templates/event.html:188
+#: events/templates/event.html:189
 msgid "Ingen ikke-deltager endnu."
 msgstr "No non-participants yet."
 
-#: events/templates/event.html:226
+#: events/templates/event.html:227
 msgid "Alle inviterede har svaret."
 msgstr "All invitees have responded."
 
-#: events/templates/event.html:238
+#: events/templates/event.html:240
 msgid "Created"
 msgstr "Created"
 
-#: events/templates/event.html:241
+#: events/templates/event.html:243
 msgid "Updated"
 msgstr "Updated"
 
@@ -900,11 +925,19 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
+<<<<<<< HEAD
 #: fredagscafeen/settings/base.py:327
 msgid "Danish"
 msgstr "Danish"
 
 #: fredagscafeen/settings/base.py:328
+=======
+#: fredagscafeen/settings/base.py:336
+msgid "Danish"
+msgstr "Danish"
+
+#: fredagscafeen/settings/base.py:337
+>>>>>>> master
 msgid "English"
 msgstr "English"
 
@@ -1109,11 +1142,11 @@ msgstr[1] ""
 msgid "Ingen albummer med billeder fundet."
 msgstr "No albums with images found."
 
-#: gallery/templates/image.html:41
+#: gallery/templates/image.html:43
 msgid "af"
 msgstr "of"
 
-#: gallery/templates/image.html:44
+#: gallery/templates/image.html:46
 msgid ""
 "\n"
 "\t\t\t\t\t\t\t\t\t\tbillede\n"
@@ -1129,19 +1162,19 @@ msgstr[1] ""
 "\n"
 "images"
 
-#: gallery/templates/image.html:82
+#: gallery/templates/image.html:84
 msgid "Your browser does not support the audio element."
 msgstr "Your browser does not support the audio element."
 
-#: gallery/templates/image.html:89
+#: gallery/templates/image.html:91
 msgid "Your browser does not support the video tag."
 msgstr "Your browser does not support the video tag."
 
-#: gallery/templates/image.html:103
+#: gallery/templates/image.html:105
 msgid "Forrige"
 msgstr "Previous"
 
-#: gallery/templates/image.html:107
+#: gallery/templates/image.html:109
 msgid "Næste"
 msgstr "Next"
 

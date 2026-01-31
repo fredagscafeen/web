@@ -8,8 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2026-01-04 20:40+0100\n"
 "PO-Revision-Date: 2026-01-04 20:40+0050\n"
+=======
+"POT-Creation-Date: 2026-01-22 14:52+0100\n"
+"PO-Revision-Date: 2026-01-22 14:52+0050\n"
+>>>>>>> master
 "Last-Translator:   <ml@ml.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -93,10 +98,17 @@ msgstr "Indsend"
 msgid "Result"
 msgstr "Resultat"
 
+<<<<<<< HEAD
 #: bartab/templates/admin/consumption.html:20 bartab/templates/bartab.html:136
 #: events/templates/event.html:124 events/templates/event.html:171
 #: events/templates/event.html:200 guides/templates/guides.html:42
 #: items/templates/items.html:51 mail/models.py:18
+=======
+#: bartab/templates/admin/consumption.html:20 events/templates/event.html:125
+#: events/templates/event.html:172 events/templates/event.html:201
+#: guides/templates/guides.html:42 items/templates/items.html:51
+#: mail/models.py:18
+>>>>>>> master
 msgid "Navn"
 msgstr "Navn"
 
@@ -112,6 +124,7 @@ msgstr "Krydslistestatus"
 msgid "Krydslisten er gjort op til og med barvagten"
 msgstr "Krydslisten er gjort op til og med barvagten"
 
+<<<<<<< HEAD
 #: bartab/templates/bartab.html:14 bartab/templates/bartab.html:124
 #: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:115
 #: bartenders/templates/barplan.html:134 bartenders/templates/barplan.html:175
@@ -119,6 +132,14 @@ msgstr "Krydslisten er gjort op til og med barvagten"
 #: bartenders/templates/barplan.html:260 bartenders/templates/barplan.html:279
 #: bartenders/templates/barplan.html:298 web/templates/about.html:65
 #: web/templates/about.html:69
+=======
+#: bartab/templates/bartab.html:14 bartenders/templates/barplan.html:96
+#: bartenders/templates/barplan.html:115 bartenders/templates/barplan.html:134
+#: bartenders/templates/barplan.html:175 bartenders/templates/barplan.html:194
+#: bartenders/templates/barplan.html:213 bartenders/templates/barplan.html:260
+#: bartenders/templates/barplan.html:279 bartenders/templates/barplan.html:298
+#: web/templates/about.html:65 web/templates/about.html:69
+>>>>>>> master
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr "d."
@@ -719,11 +740,11 @@ msgstr "Event album"
 msgid "Vælg"
 msgstr "Vælg"
 
-#: events/forms.py:21 events/forms.py:59 events/templates/event.html:106
+#: events/forms.py:21 events/forms.py:59 events/templates/event.html:107
 msgid "Deltager"
 msgstr "Deltager"
 
-#: events/forms.py:22 events/templates/event.html:109
+#: events/forms.py:22 events/templates/event.html:110
 msgid "Deltager ikke"
 msgstr "Deltager ikke"
 
@@ -780,14 +801,19 @@ msgid "for sent"
 msgstr "for sent"
 
 #: events/templates/event.html:74
+#| msgid ""
+#| "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
 msgid ""
-"Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
+"Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events,"
+" eller se hvem der deltager."
 msgstr ""
-"Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
+"Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events,"
+" eller se hvem der deltager."
 
 #: events/templates/event.html:74
-msgid "Klik for at logge ind."
-msgstr "Klik for at logge ind."
+#| msgid "Klik for at logge ind."
+msgid "Klik her for at logge ind."
+msgstr "Klik her for at logge ind."
 
 #: events/templates/event.html:76
 msgid ""
@@ -825,31 +851,31 @@ msgstr ""
 "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre "
 "end en måned siden."
 
-#: events/templates/event.html:112
+#: events/templates/event.html:113
 msgid "Intet svar"
 msgstr "Intet svar"
 
-#: events/templates/event.html:154 events/templates/event.html:220
+#: events/templates/event.html:155 events/templates/event.html:221
 msgid "Send mail"
 msgstr "Send mail"
 
-#: events/templates/event.html:160
+#: events/templates/event.html:161
 msgid "Ingen tilmeldte endnu."
 msgstr "Ingen tilmeldte endnu."
 
-#: events/templates/event.html:188
+#: events/templates/event.html:189
 msgid "Ingen ikke-deltager endnu."
 msgstr "Ingen ikke-deltager endnu."
 
-#: events/templates/event.html:226
+#: events/templates/event.html:227
 msgid "Alle inviterede har svaret."
 msgstr "Alle inviterede har svaret."
 
-#: events/templates/event.html:238
+#: events/templates/event.html:240
 msgid "Created"
 msgstr "Oprettet"
 
-#: events/templates/event.html:241
+#: events/templates/event.html:243
 msgid "Updated"
 msgstr "Opdateret"
 
@@ -898,11 +924,19 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
+<<<<<<< HEAD
 #: fredagscafeen/settings/base.py:327
 msgid "Danish"
 msgstr "Dansk"
 
 #: fredagscafeen/settings/base.py:328
+=======
+#: fredagscafeen/settings/base.py:336
+msgid "Danish"
+msgstr "Dansk"
+
+#: fredagscafeen/settings/base.py:337
+>>>>>>> master
 msgid "English"
 msgstr "Engelsk"
 
@@ -1109,11 +1143,11 @@ msgstr[1] ""
 msgid "Ingen albummer med billeder fundet."
 msgstr "Ingen albummer med billeder fundet."
 
-#: gallery/templates/image.html:41
+#: gallery/templates/image.html:43
 msgid "af"
 msgstr "af"
 
-#: gallery/templates/image.html:44
+#: gallery/templates/image.html:46
 msgid ""
 "\n"
 "\t\t\t\t\t\t\t\t\t\tbillede\n"
@@ -1129,19 +1163,19 @@ msgstr[1] ""
 "\n"
 "billeder"
 
-#: gallery/templates/image.html:82
+#: gallery/templates/image.html:84
 msgid "Your browser does not support the audio element."
 msgstr "Din browser understøtter ikke lydelementet."
 
-#: gallery/templates/image.html:89
+#: gallery/templates/image.html:91
 msgid "Your browser does not support the video tag."
 msgstr "Din browser understøtter ikke videomærket."
 
-#: gallery/templates/image.html:103
+#: gallery/templates/image.html:105
 msgid "Forrige"
 msgstr "Forrige"
 
-#: gallery/templates/image.html:107
+#: gallery/templates/image.html:109
 msgid "Næste"
 msgstr "billede"
 
