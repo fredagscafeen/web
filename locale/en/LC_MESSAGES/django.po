@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 14:52+0100\n"
-"PO-Revision-Date: 2026-01-22 14:53+0050\n"
+"POT-Creation-Date: 2026-01-31 23:13+0100\n"
+"PO-Revision-Date: 2026-01-31 23:16+0050\n"
 "Last-Translator:   <ml@ml.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -41,7 +41,7 @@ msgid_plural "%d users shown on tab."
 msgstr[0] "%d user shown on tab."
 msgstr[1] "%d users shown on tab."
 
-#: bartab/admin.py:197
+#: bartab/admin.py:197 bartab/templates/bartab.html:119
 msgid "Top 10 listen"
 msgstr "The top 10 list"
 
@@ -93,14 +93,14 @@ msgstr "Submit"
 msgid "Result"
 msgstr "Result"
 
-#: bartab/templates/admin/consumption.html:20 events/templates/event.html:125
-#: events/templates/event.html:172 events/templates/event.html:201
-#: guides/templates/guides.html:42 items/templates/items.html:51
-#: mail/models.py:18
+#: bartab/templates/admin/consumption.html:20 bartab/templates/bartab.html:136
+#: events/templates/event.html:125 events/templates/event.html:172
+#: events/templates/event.html:201 guides/templates/guides.html:42
+#: items/templates/items.html:51 mail/models.py:18
 msgid "Navn"
 msgstr "Name"
 
-#: bartab/templates/admin/consumption.html:21
+#: bartab/templates/admin/consumption.html:21 bartab/templates/bartab.html:137
 msgid "Forbrug"
 msgstr "Consumption"
 
@@ -112,12 +112,13 @@ msgstr "Tab status"
 msgid "Krydslisten er gjort op til og med barvagten"
 msgstr "The tab is done up to and including the bar shift"
 
-#: bartab/templates/bartab.html:14 bartenders/templates/barplan.html:96
-#: bartenders/templates/barplan.html:115 bartenders/templates/barplan.html:134
-#: bartenders/templates/barplan.html:175 bartenders/templates/barplan.html:194
-#: bartenders/templates/barplan.html:213 bartenders/templates/barplan.html:260
-#: bartenders/templates/barplan.html:279 bartenders/templates/barplan.html:298
-#: web/templates/about.html:65 web/templates/about.html:69
+#: bartab/templates/bartab.html:14 bartab/templates/bartab.html:124
+#: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:115
+#: bartenders/templates/barplan.html:134 bartenders/templates/barplan.html:175
+#: bartenders/templates/barplan.html:194 bartenders/templates/barplan.html:213
+#: bartenders/templates/barplan.html:260 bartenders/templates/barplan.html:279
+#: bartenders/templates/barplan.html:298 web/templates/about.html:65
+#: web/templates/about.html:69
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr " "
@@ -156,7 +157,24 @@ msgstr "Date"
 msgid "Saldo"
 msgstr "Balance"
 
-#: bartab/templates/bartab.html:116
+#: bartab/templates/bartab.html:124
+msgid "Siden sidste generalforsamling"
+msgstr "Since the last general assembly"
+
+#: bartab/templates/bartab.html:124
+#| msgid "Krydslisten er gjort op til og med barvagten"
+msgid "til krydslisten er gjort op"
+msgstr "until the tab has been done up"
+
+#: bartab/templates/bartab.html:125
+msgid "Slutter og offentliggøres til næste generalforsamling."
+msgstr "Ends and will be published at the next general assembly."
+
+#: bartab/templates/bartab.html:170
+msgid "Krydslistens top 10 liste er p.t. skjult."
+msgstr "The tab top 10 list is currently hidden."
+
+#: bartab/templates/bartab.html:175
 msgid "er ikke på krydslisten."
 msgstr "is not on the tab."
 
@@ -497,7 +515,7 @@ msgstr ""
 msgid "Hvis du gerne vil være aktiv igen, så kontakt"
 msgstr "If you wish to become active again, please contact"
 
-#: bartenders/templates/bartender_info.html:156
+#: bartenders/templates/bartender_info.html:155
 msgid "er ikke bartender."
 msgstr "is not a bartender."
 
@@ -764,8 +782,6 @@ msgid "for sent"
 msgstr "too late"
 
 #: events/templates/event.html:74
-#| msgid ""
-#| "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
 msgid ""
 "Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events,"
 " eller se hvem der deltager."
@@ -774,7 +790,6 @@ msgstr ""
 "events or see who is participating."
 
 #: events/templates/event.html:74
-#| msgid "Klik for at logge ind."
 msgid "Klik her for at logge ind."
 msgstr "Click here to log in."
 
@@ -886,11 +901,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:336
+#: fredagscafeen/settings/base.py:341
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:337
+#: fredagscafeen/settings/base.py:342
 msgid "English"
 msgstr "English"
 

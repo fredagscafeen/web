@@ -1,6 +1,12 @@
+from collections import Counter
+from datetime import datetime
+
+from constance import config
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.views.generic import DetailView
+
+from bartenders.models import BoardMemberPeriod
 
 from .models import BarTabSnapshot, BarTabUser
 
@@ -72,5 +78,35 @@ class BarTab(LoginRequiredMixin, DetailView):
         context["bartab_entries"] = bartab_entries_page_obj
 
         context["total_used"] = total_used
+
+        counter = Counter()
+        current_period = BoardMemberPeriod.get_current_period()
+        context["current_period"] = current_period
+
+        if config.SHOW_BARTAB_TOP_TEN:
+            if current_period:
+                start = current_period.start_date
+                end = datetime.now().date()
+                snapshot_end = None
+
+                for snapshot in BarTabSnapshot.objects.all():
+                    if start <= snapshot.date <= end:
+                        for entry in snapshot.entries.all():
+                            counter[entry.user] += entry.used
+
+                        if snapshot_end is None:
+                            snapshot_end = snapshot.datetime.date()
+
+            result = counter.most_common()
+            context["top_ten"] = result[:10]
+            user_name = self.get_object().name
+            context["user_name"] = user_name
+            for i in range(len(result)):
+                name, value = result[i]
+                if str(name) == user_name:
+                    context["is_outside_top_ten"] = i + 1 > 10
+                    context["user_position"] = i + 1
+                    context["user_value"] = value
+                    break
 
         return context

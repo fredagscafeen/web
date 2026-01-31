@@ -23,11 +23,9 @@ class Items(ListView):
                     if item.brewery and item.brewery.website
                     else None,
                     "name": item.name,
-                    "name_dk": item.name_dk,
                     "inStock": item.inStock,
                     "type": item.type,
                     "container": item.container,
-                    "container_dk": item.container_dk,
                     "price": item.priceInDKK,
                     "barcode": item.barcode,
                     "id": item.id,
