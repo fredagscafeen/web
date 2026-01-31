@@ -8,13 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2026-01-04 20:40+0100\n"
-"PO-Revision-Date: 2026-01-04 20:40+0050\n"
-=======
-"POT-Creation-Date: 2026-01-22 14:52+0100\n"
-"PO-Revision-Date: 2026-01-22 14:52+0050\n"
->>>>>>> master
+"POT-Creation-Date: 2026-01-31 23:13+0100\n"
+"PO-Revision-Date: 2026-01-31 23:13+0050\n"
 "Last-Translator:   <ml@ml.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -98,17 +93,10 @@ msgstr "Indsend"
 msgid "Result"
 msgstr "Resultat"
 
-<<<<<<< HEAD
 #: bartab/templates/admin/consumption.html:20 bartab/templates/bartab.html:136
-#: events/templates/event.html:124 events/templates/event.html:171
-#: events/templates/event.html:200 guides/templates/guides.html:42
+#: events/templates/event.html:125 events/templates/event.html:172
+#: events/templates/event.html:201 guides/templates/guides.html:42
 #: items/templates/items.html:51 mail/models.py:18
-=======
-#: bartab/templates/admin/consumption.html:20 events/templates/event.html:125
-#: events/templates/event.html:172 events/templates/event.html:201
-#: guides/templates/guides.html:42 items/templates/items.html:51
-#: mail/models.py:18
->>>>>>> master
 msgid "Navn"
 msgstr "Navn"
 
@@ -124,7 +112,6 @@ msgstr "Krydslistestatus"
 msgid "Krydslisten er gjort op til og med barvagten"
 msgstr "Krydslisten er gjort op til og med barvagten"
 
-<<<<<<< HEAD
 #: bartab/templates/bartab.html:14 bartab/templates/bartab.html:124
 #: bartenders/templates/barplan.html:96 bartenders/templates/barplan.html:115
 #: bartenders/templates/barplan.html:134 bartenders/templates/barplan.html:175
@@ -132,14 +119,6 @@ msgstr "Krydslisten er gjort op til og med barvagten"
 #: bartenders/templates/barplan.html:260 bartenders/templates/barplan.html:279
 #: bartenders/templates/barplan.html:298 web/templates/about.html:65
 #: web/templates/about.html:69
-=======
-#: bartab/templates/bartab.html:14 bartenders/templates/barplan.html:96
-#: bartenders/templates/barplan.html:115 bartenders/templates/barplan.html:134
-#: bartenders/templates/barplan.html:175 bartenders/templates/barplan.html:194
-#: bartenders/templates/barplan.html:213 bartenders/templates/barplan.html:260
-#: bartenders/templates/barplan.html:279 bartenders/templates/barplan.html:298
-#: web/templates/about.html:65 web/templates/about.html:69
->>>>>>> master
 msgctxt "d. 1. i 1."
 msgid "d."
 msgstr "d."
@@ -801,8 +780,6 @@ msgid "for sent"
 msgstr "for sent"
 
 #: events/templates/event.html:74
-#| msgid ""
-#| "Du er ikke logget ind som bartender og kan derfor ikke tilmelde dig events."
 msgid ""
 "Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events,"
 " eller se hvem der deltager."
@@ -811,7 +788,6 @@ msgstr ""
 " eller se hvem der deltager."
 
 #: events/templates/event.html:74
-#| msgid "Klik for at logge ind."
 msgid "Klik her for at logge ind."
 msgstr "Klik her for at logge ind."
 
@@ -924,19 +900,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-<<<<<<< HEAD
-#: fredagscafeen/settings/base.py:327
+#: fredagscafeen/settings/base.py:341
 msgid "Danish"
 msgstr "Dansk"
 
-#: fredagscafeen/settings/base.py:328
-=======
-#: fredagscafeen/settings/base.py:336
-msgid "Danish"
-msgstr "Dansk"
-
-#: fredagscafeen/settings/base.py:337
->>>>>>> master
+#: fredagscafeen/settings/base.py:342
 msgid "English"
 msgstr "Engelsk"
 
