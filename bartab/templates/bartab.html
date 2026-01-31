@@ -22,7 +22,7 @@
 		<div class="card text-bg-{% if object.balance > 0 %}primary{% else %}danger{% endif %}">
 			<div class="card-body">
 				<p class="card-text mb-1">{% translate "Din saldo er" %}:</p>
-				<h3 class="card-title">{{ balance }}</h3>
+				<h3 class="card-title">{{ object.balance }}</h3>
 			</div>
 		</div>
 	</div>

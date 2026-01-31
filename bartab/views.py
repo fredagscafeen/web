@@ -33,9 +33,6 @@ class BarTab(LoginRequiredMixin, DetailView):
             return context
 
         balance = self.object.balance
-
-        context["balance"] = self.format_amount(balance)
-
         total_used = 0
         context["entries"] = []
         for entry in self.object.entries.all():
@@ -45,8 +42,8 @@ class BarTab(LoginRequiredMixin, DetailView):
                 {
                     "shift": "Epoch" if not shift else shift.date,
                     "added": entry.added,
-                    "used": self.format_amount(entry.used),
-                    "balance": self.format_amount(balance),
+                    "used": entry.used,
+                    "balance": balance,
                 }
             )
 
@@ -80,7 +77,7 @@ class BarTab(LoginRequiredMixin, DetailView):
 
         context["bartab_entries"] = bartab_entries_page_obj
 
-        context["total_used"] = self.format_amount(total_used)
+        context["total_used"] = total_used
 
         counter = Counter()
         current_period = BoardMemberPeriod.get_current_period()
@@ -113,6 +110,3 @@ class BarTab(LoginRequiredMixin, DetailView):
                     break
 
         return context
-
-    def format_amount(self, amount):
-        return f"{amount:,}".replace(",", "'").replace(".", ",")
