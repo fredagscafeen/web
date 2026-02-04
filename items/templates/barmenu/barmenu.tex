@@ -1,0 +1,83 @@
+{% load latex_trunc %}
+
+\documentclass[a4paper,oneside,article,11pt,english,landscape]{memoir}
+\usepackage[margin=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{longtable}[=v4.13]%
+\usepackage{tabu}
+\usepackage[breakall,fit]{truncate}
+\usepackage{trimclip}
+\usepackage{lscape}
+\usepackage{icomma}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+
+\newcommand*\coins[1]{\tikz[baseline=(char.base)]{
+          \node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.15, 0) (char) {\phantom{#1}};
+          \node[shape=circle,draw,fill=white,inner sep=1pt] at (-0.075, 0) (char) {\phantom{#1}};
+            \node[shape=circle,draw,fill=white,inner sep=1pt] (char) {#1};}}
+\newcommand\krcoins{\coins{\tiny kr}}
+
+% Define commands for abbreviations
+\newcommand{\glutenfree}{GF}
+\newcommand{\nonalcoholic}{NA}
+
+\renewcommand\TruncateMarker{}
+
+\pagestyle{empty}
+
+\begin{document}
+
+{% for shelf in shelves %}
+
+\begin{minipage}{0.45\linewidth}
+\begin{longtable}{p{2.2cm}p{6cm}rc}
+\large {{ shelf.name }} & & &  \\
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Price} &  \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Type} & \textbf{Name} & \textbf{Price} &  \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+{% for shelf_item in shelf.shelf_items.all %}
+{% with item=shelf_item.item %}
+{{ item.type.name|default:"" }} &
+{{ item.name }} &
+{{ item.priceInDKK|floatformat:0 }} kr &
+{% if item.glutenFree %}\glutenfree{% endif %}{% if item.nonAlcoholic %}{% if item.glutenFree %}, {% endif %}\nonalcoholic{% endif %} \\
+{% endwith %}
+{% endfor %}
+
+\end{longtable}
+\end{minipage}
+
+{% if not forloop.last %}
+\vspace{1cm}
+{% endif %}
+
+{% endfor %}
+
+% Legend at the bottom of the last page
+\vspace{2cm}
+\section*{Abbreviations}
+
+\begin{tabular}{cl}
+\toprule
+\glutenfree & Gluten Free \\
+\nonalcoholic & Non-Alcoholic \\
+\bottomrule
+\end{tabular}
+
+\end{document}
