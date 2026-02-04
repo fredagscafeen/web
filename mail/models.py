@@ -154,6 +154,7 @@ class OutgoingEmail(models.Model):
                 to=to_mails,
                 bcc=self.bcc,
                 cc=self.cc,
+                reply_to=self.reply_to,
             )
             msg.attach_alternative(html_message, "text/html")
         else:
@@ -164,6 +165,7 @@ class OutgoingEmail(models.Model):
                 to=to_mails,
                 bcc=self.bcc,
                 cc=self.cc,
+                reply_to=self.reply_to,
             )
 
         for attachment in self.attachments.all():
