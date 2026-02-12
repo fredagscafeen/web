@@ -62,7 +62,6 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     position: absolute;
     display: block;
     top: 0;
-    background-color: var(--bs-secondary);
     left: -18px;
     border-radius: 50%;
     height: 11px;

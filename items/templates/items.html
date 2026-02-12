@@ -7,8 +7,8 @@
 
 <p>
 	{% blocktrans %}
-	Her kan du se Fredagscaféens faste sortiment, og mange af de ting vi er kendte for at sælge.
-	Men derudover finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
+	Her kan du se Fredagscaféens sortiment, samt mange af de ting vi er kendte for at sælge.
+	Du finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
 	Vi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere
 	glutenfrie og alkoholfrie øl.
 	{% endblocktrans %}
@@ -17,7 +17,7 @@
 <div class="row">
 	<div class="col-auto me-auto">
 		<h2 id="selection">
-			{% translate "Fast sortiment" %}
+			{% translate "Sortiment" %}
 			{% if items_data %}
 			<span class="badge text-bg-secondary">{{ items_data | length }}</span>
 			{% endif %}
@@ -53,7 +53,7 @@
 					<th class="d-none d-lg-table-cell">{% translate "Container" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
 					<th>{% translate "Pris" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
 					<th class="d-none d-lg-table-cell">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-					<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>
+					<!--<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>-->
 					{% if user.is_staff %}
 						<th class="d-none d-lg-table-cell"></th>
 					{% endif %}
@@ -69,13 +69,13 @@
 					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.container|default_if_none:"" }}</td>
 					<td class="{% if not item.inStock %}bg-danger{% endif %}">{{ item.price|floatformat:-2 }},-</td>
 					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
-					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">
+					<!--<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">
 						{% if item.image %}
 						<div class="board-image" style="background-image: url({{ item.image.url }});"></div>
 						{% else %}
 						<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
 						{% endif %}
-					</td>
+					</td>-->
 					{% if user.is_staff %}
 						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
 					{% endif %}
