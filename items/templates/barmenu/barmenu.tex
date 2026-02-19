@@ -27,6 +27,9 @@
 \newcommand{\glutenfree}{GF}
 \newcommand{\nonalcoholic}{NA}
 
+% Command for ampersand in item name
+\newcommand\amp{\&}
+
 \renewcommand\TruncateMarker{}
 
 \pagestyle{empty}
@@ -54,7 +57,7 @@
 {% for shelf_item in shelf.shelf_items.all %}
 {% with item=shelf_item.item %}
 {{ item.type.name|default:"--" }} &
-{{ item.name|replace:"&":"\&"|replace:"'":"`" }} &
+{{ item.latex_safe_name }} &
 {{ item.priceInDKK|floatformat:0 }} kr &
 {% if item.glutenFree %}\glutenfree{% endif %}{% if item.nonAlcoholic %}{% if item.glutenFree %}, {% endif %}\nonalcoholic{% endif %} \\
 {% endwith %}

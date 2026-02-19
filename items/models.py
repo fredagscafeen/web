@@ -12,7 +12,7 @@ class Item(models.Model):
     name = models.CharField(max_length=140)
     description = models.TextField(blank=True)
     country = models.CharField(blank=True, max_length=140)
-    priceInDKK = models.DecimalField(max_digits=9 + 2, decimal_places=0)
+    priceInDKK = models.DecimalField(max_digits=9 + 2, decimal_places=2)
     abv = models.FloatField(null=True, blank=True)
     container = models.CharField(null=True, blank=True, max_length=140)
     volumeInCentiliters = models.IntegerField(null=True, blank=True)
@@ -33,6 +33,9 @@ class Item(models.Model):
         if self.brewery:
             return f"{self.brewery} - {self.name}"
         return self.name
+
+    def latex_safe_name(self):
+        return self.name.replace("&", "\\amp").replace("'", "`")
 
     def save(self, *args, **kwargs):
         # Ensure empty barcode is represented as NULL and not ''
