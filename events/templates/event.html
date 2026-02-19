@@ -27,7 +27,7 @@
 	{% if album %}
 		{% with firstFile=album|first_file %}
 		{% if album.thumbnail %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+			<a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
 				<div class="card">
 					<img src="{{ album.thumbnail.url }}" class="event-image-large">
 				</div>

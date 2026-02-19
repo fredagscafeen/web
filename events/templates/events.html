@@ -5,9 +5,63 @@
 {% load is_bartender not_answered first_file %}
 
 {% block content %}
+
 <h2 id="events">
-	{% translate "Bartender events" %}
+	{% translate "Kommende events" %}
 	<a href="#events" class="section-link">#</a>
+</h2>
+
+{% for event in events %}
+<div class="row">
+    <div class="col-xs-12 visible-xs-block">
+        <h4>
+            {{ event.title }}
+            {% if event.facebook %}
+            <a href="{{ event.facebook }}" class="text-primary-emphasis" target="_blank" rel="external">
+                {% bs_icon 'facebook' size='1.35em' %}
+            </a>
+            {% endif %}
+            <span class="pull-right">
+                <small>
+                    {{ event.date }}
+                </small>
+            </span>
+        </h4>
+    </div>
+    <div class="col-sm-4 hidden-xs col-lg-offset-1">
+        <h4>
+            {{ event.title }}
+            {% if event.facebook %}
+            <a href="{{ event.facebook }}" class="cal-facebook-icon">
+                <svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+                    <path d="M18.768,7.465H14.5V5.56c0-0.896,0.594-1.105,1.012-1.105s2.988,0,2.988,0V0.513L14.171,0.5C10.244,0.5,9.5,3.438,9.5,5.32 v2.145h-3v4h3c0,5.212,0,12,0,12h5c0,0,0-6.85,0-12h3.851L18.768,7.465z"/>
+                </svg>
+            </a>
+            {% endif %}
+        <br/>
+        <small>
+            {{ event.date }}
+        </small>
+        </h4>
+    </div>
+    <div class="col-xs-12 col-sm-8 col-lg-6">
+        <div class="hidden-xs cal-baseline-fix"></div>
+        <p class="">
+            {{ event.description }}
+        </p>
+    </div>
+</div>
+{% endfor %}
+
+<div class="mb-2">
+	<a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">
+		{% bs_icon 'calendar-week' %} iCal feed
+	</a>
+</div>
+
+<h2 id="bartender-events">
+	{% translate "Bartender events" %}
+	<a href="#bartender-events" class="section-link">#</a>
 </h2>
 
 <div class="row m-2">
@@ -98,7 +152,9 @@
 </div>
 
 <div class="mb-2">
-	<a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">{% bs_icon 'calendar-week' %} iCal feed</a>
+	<a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">
+		{% bs_icon 'calendar-week' %} iCal feed
+	</a>
 </div>
 
 {% endblock %}
