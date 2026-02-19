@@ -27,20 +27,20 @@
 	{% if album %}
 		{% with firstFile=album|first_file %}
 		{% if album.thumbnail %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+			<a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
 				<div class="card">
 					<img src="{{ album.thumbnail.url }}" class="event-image-large">
 				</div>
 			</a>
 		{% elif firstFile %}
 			{% if firstFile.type == "I" %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+			<a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
 				<div class="card">
 					<img src="{{ firstFile.file.crop.940x940.url }}" class="event-image-large">
 				</div>
 			</a>
 			{% else %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}">
+			<a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
 				<div class="card">
 					<img src="{% static "images/logo.png" %}" class="event-image-large">
 				</div>

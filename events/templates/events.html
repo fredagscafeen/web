@@ -5,9 +5,10 @@
 {% load is_bartender not_answered first_file %}
 
 {% block content %}
-<h2 id="events">
+
+<h2 id="bartender-events">
 	{% translate "Bartender events" %}
-	<a href="#events" class="section-link">#</a>
+	<a href="#bartender-events" class="section-link">#</a>
 </h2>
 
 <div class="row m-2">
@@ -98,7 +99,9 @@
 </div>
 
 <div class="mb-2">
-	<a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">{% bs_icon 'calendar-week' %} iCal feed</a>
+	<a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">
+		{% bs_icon 'calendar-week' %} iCal feed
+	</a>
 </div>
 
 {% endblock %}
