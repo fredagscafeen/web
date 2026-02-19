@@ -48,7 +48,15 @@ class AmountFilter(admin.SimpleListFilter):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ("brewery", "name", "thumbnail")
+    list_display = (
+        "brewery",
+        "name",
+        "type",
+        "container",
+        "priceInDKK",
+        "inStock",
+        "thumbnail",
+    )
     search_fields = ("brewery__name", "name")
     list_display_links = ("name", "thumbnail")
     list_filter = (
