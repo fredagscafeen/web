@@ -1,6 +1,6 @@
 {% load latex_trunc %}
 
-\documentclass[a4paper,oneside,article,11pt,english,landscape]{memoir}
+\documentclass[a4paper,oneside,article,11pt,landscape]{memoir}
 \usepackage[margin=1cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
@@ -53,8 +53,8 @@
 
 {% for shelf_item in shelf.shelf_items.all %}
 {% with item=shelf_item.item %}
-{{ item.type.name|default:"" }} &
-{{ item.name }} &
+{{ item.type.name|default:"--" }} &
+{{ item.name|replace:"&":"\&"|replace:"'":"`" }} &
 {{ item.priceInDKK|floatformat:0 }} kr &
 {% if item.glutenFree %}\glutenfree{% endif %}{% if item.nonAlcoholic %}{% if item.glutenFree %}, {% endif %}\nonalcoholic{% endif %} \\
 {% endwith %}
