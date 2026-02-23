@@ -28,7 +28,7 @@
 \newcommand{\nonalcoholic}{NA}
 
 % Command for ampersand in item name
-\newcommand\amp{\&}
+\newcommand\amp{\&~}
 
 \renewcommand\TruncateMarker{}
 
@@ -38,8 +38,7 @@
 
 {% for shelf in shelves %}
 
-\begin{minipage}{0.45\linewidth}
-\begin{longtable}{p{2.2cm}p{6cm}rc}
+\begin{longtable}[l]{p{2.2cm}p{6cm}rp{1.5cm} }
 \large {{ shelf.name }} & & &  \\
 \toprule
 \textbf{Type} & \textbf{Name} & \textbf{Price} &  \\
@@ -64,7 +63,6 @@
 {% endfor %}
 
 \end{longtable}
-\end{minipage}
 
 {% if not forloop.last %}
 \vspace{1cm}
