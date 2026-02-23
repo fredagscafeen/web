@@ -38,6 +38,7 @@
 
 {% for shelf in shelves %}
 
+\begin{minipage}[l]{0.45\linewidth}
 \begin{longtable}[l]{p{2.2cm}p{6cm}rp{1.5cm} }
 \large {{ shelf.name }} & & &  \\
 \toprule
@@ -63,6 +64,7 @@
 {% endfor %}
 
 \end{longtable}
+\end{minipage}
 
 {% if not forloop.last %}
 \vspace{1cm}

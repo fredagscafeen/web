@@ -522,6 +522,13 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
         if "deactivate" in self.request.POST:
             self.object.isActiveBartender = False
             self.object.save()
+
+            # Add bartender to "tidligere" mailing list
+            tidligere_mailing_list, _ = MailingList.objects.get_or_create(
+                name="tidligere"
+            )
+            tidligere_mailing_list.members.add(self.object)
+
             active_count = Bartender.objects.filter(isActiveBartender=True).count()
             inactive_text = "Bartender har meldt sig inaktiv"
             send_template_email(
