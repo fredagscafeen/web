@@ -54,6 +54,7 @@ class ItemAdmin(admin.ModelAdmin):
         "type",
         "container",
         "priceInDKK",
+        "bestBefore",
         "inStock",
         "thumbnail",
     )
@@ -61,6 +62,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display_links = ("name", "thumbnail")
     list_filter = (
         AmountFilter,
+        "bestBefore",
         "container",
         "type",
         "brewery",

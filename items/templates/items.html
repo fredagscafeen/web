@@ -55,6 +55,7 @@
 					<th class="d-none d-lg-table-cell">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
 					<!--<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>-->
 					{% if user.is_staff %}
+						<th class="d-none d-lg-table-cell">{% translate "Bedst før" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
 						<th class="d-none d-lg-table-cell"></th>
 					{% endif %}
 				</tr>
@@ -63,7 +64,7 @@
 			{% get_current_language as LANGUAGE_CODE %}
 			{% for item in items_data %}
 				<tr>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{% if item.brewery_url %}<a class="common" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='1.0em' %}</i></a>{% endif %}</td>
+					<td class="{% if not item.inStock %}bg-danger{% endif %}">{% if item.brewery_url %}<a class="common" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='0.75em' %}</i></a>{% endif %}</td>
 					<td class="{% if not item.inStock %}bg-danger{% endif %}">{{ item.name|default_if_none:"" }}</td>
 					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.type|default_if_none:"" }}</td>
 					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.container|default_if_none:"" }}</td>
@@ -77,6 +78,7 @@
 						{% endif %}
 					</td>-->
 					{% if user.is_staff %}
+						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.bestBefore|default_if_none:"" }}</td>
 						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
 					{% endif %}
 				</tr>
