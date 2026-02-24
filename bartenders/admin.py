@@ -26,6 +26,7 @@ from bartenders.models import (
 )
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 from fredagscafeen.admin_view import custom_admin_view
+from mail.models import MailingList
 from printer.views import pdf_preview
 
 User = get_user_model()
@@ -112,6 +113,12 @@ class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
     def accept(self, request, obj):
         pk = obj.accept()
         obj.delete()
+
+        # Add bartender to "alle" mailing list
+        bartender = Bartender.objects.get(pk=pk)
+        alle_mailing_list, _ = MailingList.objects.get_or_create(name="alle")
+        alle_mailing_list.members.add(bartender)
+
         return HttpResponseRedirect(
             reverse("admin:bartenders_bartender_change", args=(pk,))
         )

@@ -23,6 +23,7 @@ class Items(ListView):
                     if item.brewery and item.brewery.website
                     else None,
                     "name": item.name,
+                    "bestBefore": item.bestBefore,
                     "inStock": item.inStock,
                     "type": item.type,
                     "container": item.container,

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class Item(models.Model):
@@ -9,22 +10,38 @@ class Item(models.Model):
     type = models.ForeignKey(
         "BeerType", on_delete=models.SET_NULL, null=True, blank=True
     )
-    name = models.CharField(max_length=140)
-    description = models.TextField(blank=True)
-    country = models.CharField(blank=True, max_length=140)
-    priceInDKK = models.DecimalField(max_digits=9 + 2, decimal_places=2)
-    abv = models.FloatField(null=True, blank=True)
-    container = models.CharField(null=True, blank=True, max_length=140)
-    volumeInCentiliters = models.IntegerField(null=True, blank=True)
-    inStock = models.BooleanField(default=True)
-    glutenFree = models.BooleanField(default=False)
-    nonAlcoholic = models.BooleanField(default=False)
-    image = models.ImageField(upload_to="items", blank=True, null=True)
-    barcode = models.CharField(max_length=255, unique=True, null=True, blank=True)
-
-    created = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=140, verbose_name=_("Name"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
+    country = models.CharField(
+        blank=True, max_length=140, verbose_name=_("Country of origin")
+    )
+    priceInDKK = models.DecimalField(
+        max_digits=9 + 2, decimal_places=2, verbose_name=_("Price (DKK)")
+    )
+    abv = models.FloatField(null=True, blank=True, verbose_name=_("Alcohol by volume"))
+    container = models.CharField(
+        null=True,
+        blank=True,
+        max_length=140,
+        verbose_name=_("Container"),
+        help_text=_("E.g., 'Bottle', 'Can', 'Keg'"),
+    )
+    volumeInCentiliters = models.IntegerField(
+        null=True, blank=True, verbose_name=_("Volume in centiliters")
+    )
+    bestBefore = models.DateField(null=True, blank=True, verbose_name=_("Best before"))
+    inStock = models.BooleanField(default=True, verbose_name=_("In stock"))
+    glutenFree = models.BooleanField(default=False, verbose_name=_("Gluten free"))
+    nonAlcoholic = models.BooleanField(default=False, verbose_name=_("Non-alcoholic"))
+    image = models.ImageField(
+        upload_to="items", blank=True, null=True, verbose_name=_("Image")
+    )
+    barcode = models.CharField(
+        max_length=255, unique=True, null=True, blank=True, verbose_name=_("Barcode")
+    )
+    link = models.CharField(max_length=255, blank=True, verbose_name=_("Link"))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_("Created"))
     lastModified = models.DateTimeField(auto_now=True, null=True, blank=True)
-    link = models.CharField(max_length=255, blank=True)
 
     class Meta:
         ordering = ("name",)
