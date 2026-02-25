@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -216,3 +217,29 @@ class EventResponse(models.Model):
 
     def get_sorted_options(self):
         return sorted(self.selected_options.all(), key=lambda o: o.event_choice.id)
+
+
+class CommonEvent(models.Model):
+    class Meta:
+        ordering = ("-date",)
+
+    title = models.CharField(max_length=200)
+    date = models.DateField()
+    description = models.TextField(
+        blank=True,
+        verbose_name=_("Description"),
+    )
+    url = models.URLField(blank=True, verbose_name=_("Link to additional information"))
+
+    def __str__(self):
+        return "%s: %s" % (self.date, self.title)
+
+    def url_bs_icon(self):
+        url_is_internal = settings.DOMAIN in f"{self.url}"
+        if url_is_internal:
+            return "image"
+        return (
+            "facebook"
+            if "facebook.com" in f"{self.url}" or "fb.com" in f"{self.url}"
+            else "box-arrow-up-right"
+        )

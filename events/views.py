@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -10,7 +12,7 @@ from django_ical.views import ICalFeed
 from bartenders.models import Bartender
 
 from .forms import EventResponseForm
-from .models import Event
+from .models import CommonEvent, Event
 
 DEFAULT_EVENTS_PER_PAGE = 3
 
@@ -29,6 +31,16 @@ class Events(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        todayish = date.today() - timedelta(days=1)
+        yearAgo = date.today() - timedelta(days=365)
+
+        futureEvents = CommonEvent.objects.filter(date__gt=(todayish))
+        pastEvents = CommonEvent.objects.filter(
+            date__range=(yearAgo, todayish)
+        ).reverse()
+        context["futureEvents"] = futureEvents
+        context["pastEvents"] = pastEvents
 
         events_per_page = self.request.GET.get("events_per_page")
         if (
@@ -101,6 +113,34 @@ class EventFeed(ICalFeed):
 
     def item_guid(self, event):
         return f"event-{event.pk}@fredagscafeen.dk"
+
+
+class CommonEventFeed(ICalFeed):
+    product_id = "-//fredagscafeen.dk//CommonEvents//EN"
+    timezone = "UTC"
+    file_name = "common_events.ics"
+    title = _("Common Events")
+
+    def items(self):
+        return CommonEvent.objects.all()
+
+    def item_title(self, event):
+        return event.title
+
+    def item_start_datetime(self, event):
+        return event.date
+
+    def item_end_datetime(self, event):
+        return event.date
+
+    def item_description(self, event):
+        return event.description
+
+    def item_link(self, event):
+        return f"{settings.SELF_URL}common-events/"
+
+    def item_guid(self, event):
+        return f"common-event-{event.pk}@fredagscafeen.dk"
 
 
 class EventView(TemplateView):

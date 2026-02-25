@@ -13,7 +13,7 @@ from bartenders.views import (
     UserBarplan,
     UserDepositShifts,
 )
-from events.views import EventFeed
+from events.views import CommonEventFeed, EventFeed
 from guides.views import Guides
 from items.views import Items, Scanner
 from udlejning.views import (
@@ -47,6 +47,7 @@ urlpatterns = [
     path("bartab/", BarTab.as_view(), name="bartab"),
     path("events/", include("events.urls")),
     path("events.ics", EventFeed(), name="event_feed"),
+    path("common_events.ics", CommonEventFeed(), name="common_event_feed"),
     path("login/", Login.as_view(), name="login"),
     path("login/<email>/<token>/", email_login_view, name="email_login"),
     path("logout/", logout_view, name="logout"),

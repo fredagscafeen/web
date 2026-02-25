@@ -1,0 +1,115 @@
+{% load i18n %}
+{% load static %}
+{% load bootstrap5 bootstrap_icons %}
+
+{% if futureEvents %}
+<div class="row">
+    <div class="col-auto">
+        <h2 id="events">
+            {% translate "Kommende events" %}
+            <a href="#events" class="section-link">#</a>
+        </h2>
+    </div>
+    <div class="col text-end">
+        <a class="btn btn-outline-info btn-sm" href="{% url 'common_event_feed' %}" role="button">
+            {% bs_icon 'calendar-week' %} iCal feed
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <hr>
+    {% for event in futureEvents %}
+        <div class="row mb-1">
+            <div class="col-1 text-end">
+                {% if event.url %}
+                    <a href="{{ event.url }}" class="text-primary" target="_blank" rel="external">
+                        {% bs_icon event.url_bs_icon size='1.35em' %}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-10 col-lg-4">
+                <h4 class="mb-0">
+                    {{ event.title }}
+                </h4>
+                <small class="text-secondary">
+                    {{ event.date }}
+                </small>
+            </div>
+            <div class="col-12 col-lg-6 d-none d-lg-block">
+                <p>
+                    {{ event.description }}
+                </p>
+            </div>
+            <div class="d-none d-md-block col-1">
+                {% if user.is_staff %}
+                    <a class="common" href="/admin/events/commonevent/{{ event.id }}/change/">
+                        {% translate "Edit" %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row d-lg-none">
+            <div class="col-1"></div>
+            <div class="col-11">
+                <p>
+                    {{ event.description }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+{% if pastEvents %}
+
+<h2 id="events">
+	{% translate "Tidligere events" %}
+	<a href="#events" class="section-link">#</a>
+</h2>
+
+<div class="container mb-4">
+    <hr>
+    {% for event in pastEvents %}
+        <div class="row">
+            <div class="col-1 text-end">
+                {% if event.url %}
+                    <a href="{{ event.url }}" class="text-primary" target="_blank" rel="external">
+                        {% bs_icon event.url_bs_icon size='1.35em' %}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="col-10 col-lg-4">
+                <h4 class="mb-0">
+                    {{ event.title }}
+                </h4>
+                <small class="text-secondary">
+                    {{ event.date }}
+                </small>
+            </div>
+            <div class="col-12 col-lg-6 d-none d-lg-block">
+                <p>
+                    {{ event.description }}
+                </p>
+            </div>
+            <div class="col-1 d-none d-md-block">
+                {% if user.is_staff %}
+                    <a class="common" href="/admin/events/commonevent/{{ event.id }}/change/">
+                        {% translate "Edit" %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row d-lg-none">
+            <div class="col-1"></div>
+            <div class="col-11">
+                <p>
+                    {{ event.description }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endif %}
