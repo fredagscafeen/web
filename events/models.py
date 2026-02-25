@@ -241,5 +241,5 @@ class CommonEvent(models.Model):
         return (
             "facebook"
             if "facebook.com" in f"{self.url}" or "fb.com" in f"{self.url}"
-            else "box-arrow-up-right"
+            else "link-45deg"
         )
