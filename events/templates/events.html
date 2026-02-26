@@ -6,12 +6,24 @@
 
 {% block content %}
 
-<h2 id="bartender-events">
-	{% translate "Bartender events" %}
-	<a href="#bartender-events" class="section-link">#</a>
-</h2>
+{% include 'common-events.html' %}
+
+<div class="row">
+    <div class="col-auto">
+        <h2 id="bartender-events">
+			{% translate "Bartender events" %}
+			<a href="#bartender-events" class="section-link">#</a>
+		</h2>
+    </div>
+    <div class="col text-end">
+        <a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">
+            {% bs_icon 'calendar-week' %} iCal feed
+        </a>
+    </div>
+</div>
 
 <div class="row m-2">
+	<hr>
 	<ul class="timeline">
 		{% if event_page_obj.has_previous %}
 			<li>
@@ -96,12 +108,6 @@
 			</div>
 		</li>
 	</ul>
-</div>
-
-<div class="mb-2">
-	<a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">
-		{% bs_icon 'calendar-week' %} iCal feed
-	</a>
 </div>
 
 {% endblock %}

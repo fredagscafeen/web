@@ -66,6 +66,11 @@ CONSTANCE_CONFIG = {
         "Skal krydslistens top 10 vises for brugere?",
         bool,
     ),
+    "SHOW_COMMON_EVENTS": (
+        False,
+        "Skal common events vises?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [

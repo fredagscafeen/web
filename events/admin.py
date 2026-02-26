@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from bartenders.models import Bartender
 
-from .models import Event, EventChoice, EventChoiceOption, EventResponse
+from .models import CommonEvent, Event, EventChoice, EventChoiceOption, EventResponse
 
 
 class EventChoiceInlineForm(forms.ModelForm):
@@ -123,3 +123,11 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(EventResponse)
 class EventResponseAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(CommonEvent)
+class CommonEventAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "date",
+    )
