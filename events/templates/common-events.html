@@ -17,10 +17,10 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container mb-4">
     <hr>
     {% for event in futureEvents %}
-        <div class="row mb-1">
+        <div class="row mb-2">
             <div class="col-1 text-end">
                 {% if event.url %}
                     <a href="{{ event.url }}" class="text-primary" target="_blank" rel="external">
@@ -72,7 +72,7 @@
 <div class="container mb-4">
     <hr>
     {% for event in pastEvents %}
-        <div class="row">
+        <div class="row mb-2">
             <div class="col-1 text-end">
                 {% if event.url %}
                     <a href="{{ event.url }}" class="text-primary" target="_blank" rel="external">

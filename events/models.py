@@ -221,7 +221,7 @@ class EventResponse(models.Model):
 
 class CommonEvent(models.Model):
     class Meta:
-        ordering = ("-date",)
+        ordering = ("date",)
 
     title = models.CharField(max_length=200)
     date = models.DateField()
