@@ -78,7 +78,7 @@
 						{% endif %}
 					</td>-->
 					{% if user.is_staff %}
-						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.bestBefore|default_if_none:"" }}</td>
+						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.bestBefore|date:"Y/m/d" }}</td>
 						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
 					{% endif %}
 				</tr>
