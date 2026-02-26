@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -32,15 +33,16 @@ class Events(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        todayish = date.today() - timedelta(days=1)
-        yearAgo = date.today() - timedelta(days=365)
+        if config.SHOW_COMMON_EVENTS:
+            todayish = date.today() - timedelta(days=1)
+            yearAgo = date.today() - timedelta(days=365)
 
-        futureEvents = CommonEvent.objects.filter(date__gt=(todayish))
-        pastEvents = CommonEvent.objects.filter(
-            date__range=(yearAgo, todayish)
-        ).reverse()
-        context["futureEvents"] = futureEvents
-        context["pastEvents"] = pastEvents
+            futureEvents = CommonEvent.objects.filter(date__gt=(todayish))
+            pastEvents = CommonEvent.objects.filter(
+                date__range=(yearAgo, todayish)
+            ).reverse()
+            context["futureEvents"] = futureEvents
+            context["pastEvents"] = pastEvents
 
         events_per_page = self.request.GET.get("events_per_page")
         if (
