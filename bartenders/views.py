@@ -524,7 +524,7 @@ class BartenderInfo(LoginRequiredMixin, UpdateView):
             self.object.save()
 
             # Add bartender to "tidligere" mailing list
-            tidligere_mailing_list, _ = MailingList.objects.get_or_create(
+            tidligere_mailing_list, wasCreated = MailingList.objects.get_or_create(
                 name="tidligere"
             )
             tidligere_mailing_list.members.add(self.object)
