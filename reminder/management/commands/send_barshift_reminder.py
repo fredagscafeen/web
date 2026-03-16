@@ -29,6 +29,7 @@ class Command(ReminderCommand):
         common_event = CommonEvent.objects.filter(
             date=event.start_datetime.date()
         ).first()
+        event_info = ""
         if common_event:
             event_info = f"""
 Husk at der på fredag er {common_event.title}!
