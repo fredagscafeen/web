@@ -88,7 +88,7 @@ class ReminderCommand(BaseCommand):
         return {}
 
     def email_cc(self):
-        return [settings.BEST_MAIL]
+        return [f"reminder@{settings.DOMAIN}"]
 
     def email_reply_to(self):
         raise NotImplementedError

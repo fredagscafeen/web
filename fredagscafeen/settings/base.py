@@ -384,7 +384,7 @@ CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
 # Server admins (get an email when server errors happen)
 ADMINS = [
     ("Anders Bruun Severinsen", "anders@bruunseverinsen.dk"),
-    ("Kasper Baltzer Overgaard", "kbo0506@gmail.com"),
+    ("Mikkel Maae Østergaard", "mikkelmaae@gmail.com"),
 ]
 
 # Allow more fields in GET/POST requests (necessary for BarTabAdmin to function with large snapshots)
