@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 22:07+0100\n"
-"PO-Revision-Date: 2026-02-25 22:09+0050\n"
+"POT-Creation-Date: 2026-03-21 22:31+0100\n"
+"PO-Revision-Date: 2026-03-21 22:32+0050\n"
 "Last-Translator:   <abs@post.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -754,12 +754,10 @@ msgid "Link to additional information"
 msgstr "Link to additional information"
 
 #: events/templates/common-events.html:9
-#| msgid "Bartender events"
 msgid "Kommende events"
 msgstr "Future events"
 
 #: events/templates/common-events.html:68
-#| msgid "Tidligere"
 msgid "Tidligere events"
 msgstr "Past events"
 
@@ -781,7 +779,7 @@ msgid "Not answered"
 msgstr "Not answered"
 
 #: events/templates/event.html:70 events/templates/events.html:84
-#: events/views.py:106
+#: events/views.py:108
 msgid "Tilmeldingsfrist"
 msgstr "Registration deadline"
 
@@ -880,24 +878,23 @@ msgstr "No events yet."
 msgid "Vis tidligere"
 msgstr "Show earlier"
 
-#: events/views.py:88
+#: events/views.py:90
 msgid "Bartender Events"
 msgstr "Bartender Events"
 
-#: events/views.py:122
-#| msgid "Events"
+#: events/views.py:124
 msgid "Common Events"
 msgstr "Common Events"
 
-#: events/views.py:186
+#: events/views.py:188
 msgid "Event with id does not exist"
 msgstr "Event with id does not exist"
 
-#: events/views.py:190
+#: events/views.py:192
 msgid "Not logged in as an active bartender"
 msgstr "Not logged in as an active bartender"
 
-#: events/views.py:202
+#: events/views.py:204
 #, python-format
 msgid "Opdateret tilmelding til %(event_name)s"
 msgstr "Updated registration for %(event_name)s"
@@ -914,11 +911,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:341
+#: fredagscafeen/settings/base.py:346
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:342
+#: fredagscafeen/settings/base.py:347
 msgid "English"
 msgstr "English"
 
@@ -2637,6 +2634,35 @@ msgstr ""
 "\n"
 "All inquiries will be treated confidentially, and individual wishes for anonymity will be taken into account.\n"
 "Nothing is too small or too big to be addressed, and we encourage everyone to contact us if they experience or observe anything that violates the code of conduct."
+
+#: web/templates/about.html:295
+#| msgid "Politi kontaktet"
+msgid "Politiske organisationer"
+msgstr "Political organizations"
+
+#: web/templates/about.html:300
+msgid ""
+"\n"
+"                Det er ikke tilladt for politiske organisationer at have aktiviteter i fredagsbaren, \n"
+"                da vi ønsker at bevare et neutralt og apolitisk miljø, hvor alle gæster føler sig \n"
+"                velkomne uanset deres politiske holdninger.\n"
+"                "
+msgstr ""
+"\n"
+"Political organizations are not allowed to have activities in the Friday bar, as we want to maintain a neutral and apolitical environment where all guests feel welcome regardless of their political views."
+
+#: web/templates/about.html:305
+#| msgid ""
+#| "\n"
+#| "                eller specifikke medlemmer, hvis kontaktoplysninger kan findes\n"
+#| "                "
+msgid ""
+"\n"
+"                En undtagelse kan dog tillades, hvis der foreligger dispensation fra AU.\n"
+"                "
+msgstr ""
+"\n"
+"However, an exception may be allowed if there is a dispensation from AU."
 
 #: web/templates/base.html:31
 msgid "Åben"
