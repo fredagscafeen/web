@@ -117,6 +117,13 @@ SECRET_ADMIN_KEYS = [
         "role": "EVENT",
     },
     {
+        "key": "KOKKEN_JOMFUEN_PASSWORD",
+        "description": "Kokken & Jomfruen",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.kokken-jomfruen.dk/",
+        "role": "EVENT",
+    },
+    {
         "key": "ZETTLE_PASSWORD",
         "description": "Zettle",
         "username": "best@fredagscafeen.dk",
