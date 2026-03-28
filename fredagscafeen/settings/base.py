@@ -110,6 +110,13 @@ SECRET_ADMIN_KEYS = [
         "role": "WEB",
     },
     {
+        "key": "AWS_PASSWORD",
+        "description": "AWS. OBS: Kontoen har 2FA",
+        "username": "web@fredagscafeen.dk",
+        "url": "https://aws.amazon.com/console/",
+        "role": "WEB",
+    },
+    {
         "key": "MIDTTRAFIK_BESTILLING_PASSWORD",
         "description": "midttrafikbestilling.dk",
         "username": "fredagscafeen",
