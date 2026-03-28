@@ -1,8 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, TemplateView
 
-from .models import Item
-
+from .models import (Item, Fridge)
 
 class Items(ListView):
     template_name = "items.html"
@@ -13,6 +12,11 @@ class Items(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        fridges = Fridge.objects.all().prefetch_related("shelves__shelf_items__item")
+
+        for fridge in fridges:
+            fridge.items_count = sum(shelf.shelf_items.count() for shelf in fridge.shelves.all())
 
         items_data = []
         for item in Item.objects.all():
@@ -42,6 +46,7 @@ class Items(ListView):
 
         context["show_all"] = show_all
         context["items_data"] = items_data
+        context["fridges"] = fridges
 
         return context
 

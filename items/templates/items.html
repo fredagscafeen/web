@@ -14,7 +14,88 @@
 	{% endblocktrans %}
 </p>
 
-<div class="row">
+<div>
+	{% if user.is_staff %}
+		<a class="btn btn-primary" href="/admin/items/item/add/" role="button">{% translate "Tilføj vare" %}</a>
+	{% endif %}
+</div>
+
+<section class="mt-4">
+	<h2 id="coolers">
+		{% translate "Køleskabe" %}
+		<a href="#coolers" class="section-link">#</a>
+	</h2>
+
+	<div class="row mt-2" role="tablist">
+		{% for fridge in fridges %}
+		{% if fridge.shelves.count > 0 %}
+		<div class="col">
+			<div class="card mb-3">
+				<div class="card-header sticky-top bg-light" style="z-index: 1020;" role="tab">
+					<div class="row">
+						<div class="col-auto me-auto">
+							{{ fridge.name }} <span class="badge text-bg-primary rounded-pill">{{ fridge.items_count }}</span></li>
+						</div>
+					</div>
+				</div>
+				<div role="tabpanel">
+					<div class="container" style="overflow: scroll;">
+						{% for shelf in fridge.shelves.all %}
+							<h5 class="mt-1">{{ shelf.name }}</h5>
+							<ul class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 list-unstyled">
+								{% for shelf_item in shelf.shelf_items.all %}
+									{% if not shelf_item.item.hideOnShelf %}
+									<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} rounded p-2 flex-column align-items-start justify-content-between d-flex gap-1">
+										<div>
+											{% if not shelf_item.item.inStock %}
+												<span class="text-decoration-line-through">
+											{% endif %}
+												{{ shelf_item.item.name }}
+											{% if not shelf_item.item.inStock %}
+												</span>
+											{% endif %}
+											{% if shelf_item.item.brewery %}
+												<small class="text-muted"> ({{ shelf_item.item.brewery }})</small>
+											{% endif %}
+										</div>
+										<div>
+											{% if shelf_item.item.priceInDKK > 0 %}
+												<small class="text-primary fw-bold">{{ shelf_item.item.priceInDKK|floatformat:-2 }} DKK</small>
+											{% endif %}
+										</div>
+										<div>
+											{% if shelf_item.item.bestBefore %}
+												<small class="text-muted">{{ shelf_item.item.bestBefore }}</small>
+											{% endif %}
+										</div>
+										{% if shelf_item.item.image %}
+											<div class="board-image mt-2" style="background-image: url({{ shelf_item.item.image.url }});"></div>
+										{% else %}
+											<div class="board-image mt-2" style="background-image: url({% static 'images/logo.png' %});"></div>
+										{% endif %}
+										{% if user.is_staff %}
+											<a class="common mt-2" href="/admin/items/item/{{ shelf_item.item.id }}">{% translate "Edit" %}</a>
+										{% endif %}
+									</li>
+									{% endif %}
+								{% endfor %}
+							</ul>
+							{% if not forloop.last %}
+							<hr>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+</section>
+
+
+
+<div class="row mt-4">
 	<div class="col-auto me-auto">
 		<h2 id="selection">
 			{% translate "Sortiment" %}
@@ -27,7 +108,7 @@
 
 	{% if items_data %}
 	<div class="col-auto">
-		<input class="rounded px-2 fs-5" type="text" id="itemsSearchInput" placeholder="{% translate "Søg i sortimentet" %}" autofocus>
+		<input class="rounded px-2 fs-5" type="text" id="itemsSearchInput" placeholder="{% translate "Søg i sortimentet" %}">
 	</div>
 	{% endif %}
 </div>
@@ -63,13 +144,13 @@
 			<tbody>
 			{% get_current_language as LANGUAGE_CODE %}
 			{% for item in items_data %}
-				<tr>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{% if item.brewery_url %}<a class="common" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='0.75em' %}</i></a>{% endif %}</td>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{{ item.name|default_if_none:"" }}</td>
-					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.type|default_if_none:"" }}</td>
-					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.container|default_if_none:"" }}</td>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{{ item.price|floatformat:-2 }},-</td>
-					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
+				<tr class="{% if not item.inStock %}opacity-50{% endif %}">
+					<td>{% if item.brewery_url %}<a class="common" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='0.75em' %}</i></a>{% endif %}</td>
+					<td>{{ item.name|default_if_none:"" }}</td>
+					<td class="d-none d-lg-table-cell">{{ item.type|default_if_none:"" }}</td>
+					<td class="d-none d-lg-table-cell">{{ item.container|default_if_none:"" }}</td>
+					<td>{{ item.price|floatformat:-2 }},-</td>
+					<td class="d-none d-lg-table-cell">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
 					<!--<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">
 						{% if item.image %}
 						<div class="board-image" style="background-image: url({{ item.image.url }});"></div>
@@ -78,8 +159,8 @@
 						{% endif %}
 					</td>-->
 					{% if user.is_staff %}
-						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.bestBefore|date:"Y/m/d" }}</td>
-						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
+						<td class="d-none d-lg-table-cell">{{ item.bestBefore|date:"Y/m/d" }}</td>
+						<td class="d-none d-lg-table-cell"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
 					{% endif %}
 				</tr>
 			{% endfor %}
