@@ -30,6 +30,7 @@ class Item(models.Model):
         null=True, blank=True, verbose_name=_("Volume in centiliters")
     )
     bestBefore = models.DateField(null=True, blank=True, verbose_name=_("Best before"))
+    hideOnShelf = models.BooleanField(default=False, verbose_name=_("Hide on shelf"))
     inStock = models.BooleanField(default=True, verbose_name=_("In stock"))
     glutenFree = models.BooleanField(default=False, verbose_name=_("Gluten free"))
     nonAlcoholic = models.BooleanField(default=False, verbose_name=_("Non-alcoholic"))
@@ -61,16 +62,17 @@ class Item(models.Model):
             self.barcode = None
 
         # Remove from shelves when going out of stock
-        if self.pk:  # Only for existing items (not new ones)
-            try:
-                old_item = Item.objects.get(pk=self.pk)
-                if old_item.inStock and not self.inStock:
-                    # Import here to avoid circular import
-                    from items.models import ShelfItem
+        # MIKKEL: Currently commented out as this is better handled via a (hidden flag) and (in stock flag) on the Item, this preserves shelf placement too. 
+        # if self.pk:  # Only for existing items (not new ones)
+        #     try:
+        #         old_item = Item.objects.get(pk=self.pk)
+        #         if old_item.inStock and not self.inStock:
+        #             # Import here to avoid circular import
+        #             from items.models import ShelfItem
 
-                    ShelfItem.objects.filter(item=self).delete()
-            except Item.DoesNotExist:
-                pass
+        #             ShelfItem.objects.filter(item=self).delete()
+        #     except Item.DoesNotExist:
+        #         pass
 
         super().save(*args, **kwargs)
 
