@@ -82,9 +82,18 @@ class Item(models.Model):
         else:
             return 0
 
+class Fridge(models.Model):
+    name = models.CharField(max_length=140)
+
+    class Meta:
+        ordering = ("name",)
+
+    def __str__(self):
+        return self.name
 
 class Shelf(models.Model):
     name = models.CharField(max_length=140)
+    fridge = models.ForeignKey(Fridge, on_delete=models.SET_NULL, related_name="shelves", null=True, blank=True)
 
     class Meta:
         ordering = ("name",)
