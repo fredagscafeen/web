@@ -17,7 +17,23 @@ echo "Dumping and downloading production database..."
 
 fixture=$(mktemp --suffix .json)
 
-ssh ubuntu@fredagscafeen.dk 'docker exec web_app_1 ./manage.py dumpdata --natural-foreign --exclude auth.permission --exclude contenttypes --exclude admin.logentry | tail -n1' > "$fixture"
+ssh ubuntu@fredagscafeen.dk 'docker exec web-app-1 ./manage.py dumpdata --natural-foreign --exclude auth.permission --exclude contenttypes --exclude admin.logentry | tail -n1' > "$fixture"
+
+# Strip user_permissions and group permissions from the fixture.
+# These reference content types that may not exist locally (e.g. constance
+# virtual models) and aren't needed for local development.
+python3 -c "
+import json, sys
+with open(sys.argv[1]) as f:
+    data = json.load(f)
+for obj in data:
+    if obj['model'] == 'auth.user':
+        obj['fields'].pop('user_permissions', None)
+    elif obj['model'] == 'auth.group':
+        obj['fields'].pop('permissions', None)
+with open(sys.argv[1], 'w') as f:
+    json.dump(data, f)
+" "$fixture"
 
 echo "Importing production database..."
 echo

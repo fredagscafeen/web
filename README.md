@@ -5,7 +5,30 @@ It is maintained by the current voluntary webmaster of Fredagscaféen, but contr
 
 # Setup
 
-## To run project locally
+## To run project locally (Dev Container — recommended)
+
+The easiest way to get started is with a [Dev Container](https://containers.dev/), which gives you
+Python 3.8, Redis, and all system dependencies out of the box. You need
+[Docker](https://www.docker.com/) and **VS Code** or any other IDE that supports the
+[Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+
+1. Clone the repo: `git clone git@github.com:fredagscafeen/web.git`
+2. Open the project in VS Code
+3. When prompted, click **"Reopen in Container"** (or run `Dev Containers: Reopen in Container` from the command palette)
+4. Wait for the container to build and the post-create setup to finish (installs dependencies, runs migrations)
+5. Create a superuser: `make createsuperuser`
+6. Start the server: `make run`
+7. Visit http://0.0.0.0:8000
+
+To seed with production data (requires SSH access to `fredagscafeen.dk`):
+- Import database: `make import-db`
+- Download media: `make download-media`
+
+> [!TIP]
+> Make sure your SSH agent is running and your key is loaded (`ssh-add -l`) before opening the
+> Dev Container, so that `make import-db` and `make download-media` can reach the production server.
+
+## To run project locally (manual)
 
 > [!WARNING]
 > A prerequisite here, is to have **Python 3.8.10** installed and in PATH. Having this exact version ensures
