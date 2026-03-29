@@ -93,8 +93,7 @@
 	</div>
 </section>
 
-
-
+{% if show_list_selection %}
 <div class="row mt-4">
 	<div class="col-auto me-auto">
 		<h2 id="selection">
@@ -170,6 +169,7 @@
 	<script src="{% static 'js/sortimentSearch.js' %}"></script>
 {% else %}
 	<p class="pt-2">{% translate "Sortimentet er desværre tomt" %} &#9785;</p>
+{% endif %}
 {% endif %}
 
 {% endblock %}

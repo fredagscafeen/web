@@ -71,6 +71,11 @@ CONSTANCE_CONFIG = {
         "Skal common events vises?",
         bool,
     ),
+    "SHOW_LIST_SELECTION": (
+        True,
+        "Skal brugere også kunne se udvalget af varer som en liste i stedet for kun på hylderne?",
+        bool,
+    )
 }
 
 SECRET_ADMIN_KEYS = [
