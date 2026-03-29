@@ -46,6 +46,7 @@ class AmountFilter(admin.SimpleListFilter):
 
         return filter_by_amount(queryset, value == "pos")
 
+
 class FridgeAdminForm(forms.ModelForm):
     shelves = forms.ModelMultipleChoiceField(
         queryset=Shelf.objects.all(),
@@ -87,9 +88,11 @@ class FridgeAdminForm(forms.ModelForm):
             save_shelves()
         else:
             old_save_m2m = self.save_m2m
+
             def save_m2m():
                 old_save_m2m()
                 save_shelves()
+
             self.save_m2m = save_m2m
 
         return fridge
@@ -103,10 +106,7 @@ class FridgeAdmin(admin.ModelAdmin):
 
     def shelves_list(self, obj):
         """Display list of shelves on this fridge with links"""
-        shelves= (
-            obj.shelves.all()
-            .order_by("name")
-        )
+        shelves = obj.shelves.all().order_by("name")
 
         if not shelves:
             return "-"
@@ -119,6 +119,7 @@ class FridgeAdmin(admin.ModelAdmin):
         return mark_safe(f'<ul>{"".join(links)}</ul>')
 
     shelves_list.short_description = "Shelves"
+
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):

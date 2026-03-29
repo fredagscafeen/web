@@ -1,9 +1,8 @@
 from constance import config
-
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, TemplateView
 
-from .models import (Item, Fridge)
+from .models import Fridge, Item
 
 
 class Items(ListView):
@@ -18,7 +17,9 @@ class Items(ListView):
         fridges = Fridge.objects.all().prefetch_related("shelves__shelf_items__item")
 
         for fridge in fridges:
-            fridge.items_count = sum(shelf.shelf_items.count() for shelf in fridge.shelves.all())
+            fridge.items_count = sum(
+                shelf.shelf_items.count() for shelf in fridge.shelves.all()
+            )
 
         items_data = []
         if config.SHOW_LIST_SELECTION:
@@ -41,7 +42,6 @@ class Items(ListView):
                         "image": item.image,
                     }
                 )
-        
 
         show_all = "show_all" in self.request.GET
 

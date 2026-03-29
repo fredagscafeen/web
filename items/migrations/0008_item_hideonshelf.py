@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('items', '0007_auto_20260328_2302'),
+        ("items", "0007_auto_20260328_2302"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='item',
-            name='hideOnShelf',
-            field=models.BooleanField(default=False, verbose_name='Hide on shelf'),
+            model_name="item",
+            name="hideOnShelf",
+            field=models.BooleanField(default=False, verbose_name="Hide on shelf"),
         ),
     ]

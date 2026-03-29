@@ -62,7 +62,7 @@ class Item(models.Model):
             self.barcode = None
 
         # Remove from shelves when going out of stock
-        # MIKKEL: Currently commented out as this is better handled via a (hidden flag) and (in stock flag) on the Item, this preserves shelf placement too. 
+        # MIKKEL: Currently commented out as this is better handled via a (hidden flag) and (in stock flag) on the Item, this preserves shelf placement too.
         # if self.pk:  # Only for existing items (not new ones)
         #     try:
         #         old_item = Item.objects.get(pk=self.pk)
@@ -84,6 +84,7 @@ class Item(models.Model):
         else:
             return 0
 
+
 class Fridge(models.Model):
     name = models.CharField(max_length=140)
 
@@ -93,9 +94,12 @@ class Fridge(models.Model):
     def __str__(self):
         return self.name
 
+
 class Shelf(models.Model):
     name = models.CharField(max_length=140)
-    fridge = models.ForeignKey(Fridge, on_delete=models.SET_NULL, related_name="shelves", null=True, blank=True)
+    fridge = models.ForeignKey(
+        Fridge, on_delete=models.SET_NULL, related_name="shelves", null=True, blank=True
+    )
 
     class Meta:
         ordering = ("name",)

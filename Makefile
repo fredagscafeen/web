@@ -10,4 +10,3 @@ import-db:
 	./import_db
 download-media:
 	./download_media
-
