@@ -10,3 +10,7 @@ import-db:
 	./import_db
 download-media:
 	./download_media
+translate:
+	./manage.py makemessages -d django -l da -l en
+	./manage.py makemessages -d djangojs -l da -l en
+	./manage.py compilemessages
