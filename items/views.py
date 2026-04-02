@@ -16,11 +16,6 @@ class Items(ListView):
         context = super().get_context_data(**kwargs)
         fridges = Fridge.objects.all().prefetch_related("shelves__shelf_items__item")
 
-        for fridge in fridges:
-            fridge.items_count = sum(
-                shelf.shelf_items.count() for shelf in fridge.shelves.all()
-            )
-
         items_data = []
         if config.SHOW_LIST_SELECTION:
             for item in Item.objects.all():
