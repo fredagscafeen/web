@@ -31,7 +31,7 @@ jobs:
         run: pip install -r requirements.txt -r dev-requirements.txt
 
       - name: Run pre-commit checks
-        uses: pre-commit/action@v3
+        uses: pre-commit/action@v3.0.1
 
   build:
     runs-on: ubuntu-latest
