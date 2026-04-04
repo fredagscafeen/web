@@ -14,3 +14,5 @@ makemessages:
 	./manage.py makemessages --all
 compilemessages:
 	./manage.py compilemessages
+test:
+	./manage.py test
