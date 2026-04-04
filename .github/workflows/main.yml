@@ -35,6 +35,11 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_tag: ${{ steps.meta.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -82,27 +87,18 @@ jobs:
             GIT_COMMIT_HASH=${{ steps.short_sha.outputs.SHORT_SHA }}
             GIT_BRANCH=${{ github.ref_name }}
 
-      - name: Upload image for other jobs
-        uses: actions/upload-artifact@v7
-        with:
-          name: web-docker-image
-          path: ${{ runner.temp }}/web-docker-image.tar
-
-    outputs:
-      image_tag: ${{ steps.meta.outputs.version }}
-
   test:
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      packages: read
     steps:
-      - name: Download docker image
-        uses: actions/download-artifact@v7
+      - name: Login to GHCR
+        uses: docker/login-action@v3
         with:
-          name: web-docker-image
-          path: ${{ runner.temp }}/web-docker-image.tar
-
-      - name: Load docker image
-        run: docker load --input ${{ runner.temp }}/web-docker-image.tar
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run tests
         run: |
@@ -150,16 +146,9 @@ jobs:
       - pre-commit
       - build
       - test
+    permissions:
+      packages: read
     steps:
-      - name: Download docker image
-        uses: actions/download-artifact@v7
-        with:
-          name: web-docker-image
-          path: ${{ runner.temp }}/web-docker-image.tar
-
-      - name: Load docker image
-        run: docker load --input ${{ runner.temp }}/web-docker-image.tar
-
       - name: Login to ghcr.io
         uses: docker/login-action@v4
         with:
@@ -167,8 +156,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Tag image with latest
-        run: docker tag "${{ env.DOCKER_IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}" "${{ env.DOCKER_IMAGE_NAME }}:latest"
+      - name: Pull Docker image and tag as latest
+        run: |
+          docker pull "${{ env.DOCKER_IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
+          docker tag "${{ env.DOCKER_IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}" "${{ env.DOCKER_IMAGE_NAME }}:latest"
 
       - name: Push Docker image
         run: |
