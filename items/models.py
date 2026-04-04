@@ -45,6 +45,8 @@ class Item(models.Model):
 
     class Meta:
         ordering = ("name",)
+        verbose_name = _("Item")
+        verbose_name_plural = _("Items")
 
     def __str__(self):
         if self.brewery:
@@ -60,18 +62,6 @@ class Item(models.Model):
         if not self.barcode:
             self.barcode = None
 
-        # Remove from shelves when going out of stock
-        if self.pk:  # Only for existing items (not new ones)
-            try:
-                old_item = Item.objects.get(pk=self.pk)
-                if old_item.inStock and not self.inStock:
-                    # Import here to avoid circular import
-                    from items.models import ShelfItem
-
-                    ShelfItem.objects.filter(item=self).delete()
-            except Item.DoesNotExist:
-                pass
-
         super().save(*args, **kwargs)
 
     @property
@@ -83,11 +73,28 @@ class Item(models.Model):
             return 0
 
 
-class Shelf(models.Model):
-    name = models.CharField(max_length=140)
+class Fridge(models.Model):
+    name = models.CharField(max_length=140, verbose_name=_("Name"))
 
     class Meta:
         ordering = ("name",)
+        verbose_name = _("Fridge")
+        verbose_name_plural = _("Fridges")
+
+    def __str__(self):
+        return self.name
+
+
+class Shelf(models.Model):
+    name = models.CharField(max_length=140, verbose_name=_("Name"))
+    fridge = models.ForeignKey(
+        Fridge, on_delete=models.SET_NULL, related_name="shelves", null=True, blank=True
+    )
+
+    class Meta:
+        ordering = ("name",)
+        verbose_name = _("Shelf")
+        verbose_name_plural = _("Shelves")
 
     def __str__(self):
         return self.name
@@ -104,6 +111,8 @@ class ShelfItem(models.Model):
     class Meta:
         ordering = ("order", "item__name")
         unique_together = ("shelf", "item")
+        verbose_name = _("Shelf item")
+        verbose_name_plural = _("Shelf items")
 
     @property
     def glutenFree(self):
@@ -115,21 +124,28 @@ class ShelfItem(models.Model):
 
 
 class BeerType(models.Model):
-    name = models.CharField(max_length=140)
-    description = models.TextField(blank=True)
-    link = models.CharField(blank=True, max_length=255)
+    name = models.CharField(max_length=140, verbose_name=_("Name"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
+    link = models.CharField(blank=True, max_length=255, verbose_name=_("Link"))
+
+    class Meta:
+        ordering = ("name",)
+        verbose_name = _("Beer type")
+        verbose_name_plural = _("Beer types")
 
     def __str__(self):
         return self.name
 
 
 class Brewery(models.Model):
-    name = models.CharField(max_length=140)
-    description = models.TextField(blank=True)
-    website = models.CharField(blank=True, max_length=255)
+    name = models.CharField(max_length=140, verbose_name=_("Name"))
+    description = models.TextField(blank=True, verbose_name=_("Description"))
+    website = models.CharField(blank=True, max_length=255, verbose_name=_("Website"))
 
     class Meta:
-        verbose_name_plural = "Breweries"
+        ordering = ("name",)
+        verbose_name = _("Brewery")
+        verbose_name_plural = _("Breweries")
 
     def __str__(self):
         return self.name

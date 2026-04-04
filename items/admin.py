@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.core.exceptions import FieldError, ValidationError
 from django.db import models
 from django.urls import reverse
+from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 
 from fredagscafeen.admin_view import custom_admin_view
@@ -12,6 +13,7 @@ from printer.views import pdf_preview
 from .models import (
     BeerType,
     Brewery,
+    Fridge,
     InventoryEntry,
     InventorySnapshot,
     Item,
@@ -44,6 +46,89 @@ class AmountFilter(admin.SimpleListFilter):
             return queryset
 
         return filter_by_amount(queryset, value == "pos")
+
+
+class FridgeAdminForm(forms.ModelForm):
+    shelves = forms.ModelMultipleChoiceField(
+        queryset=Shelf.objects.all(),
+        required=False,
+        widget=admin.widgets.FilteredSelectMultiple("shelves", is_stacked=False),
+    )
+
+    class Meta:
+        model = Fridge
+        fields = ("name",)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields["shelves"].initial = self.instance.shelves.all()
+            # Only show unassigned shelves + shelves already on this fridge
+            self.fields["shelves"].queryset = Shelf.objects.filter(
+                models.Q(fridge__isnull=True) | models.Q(fridge=self.instance)
+            )
+        else:
+            self.fields["shelves"].queryset = Shelf.objects.filter(fridge__isnull=True)
+
+    def save(self, commit=True):
+        fridge = super().save(commit=commit)
+
+        def save_shelves():
+            selected = set(self.cleaned_data["shelves"])
+            current = set(fridge.shelves.all())
+            # Remove shelves no longer selected
+            for shelf in current - selected:
+                shelf.fridge = None
+                shelf.save()
+            # Add newly selected shelves
+            for shelf in selected - current:
+                shelf.fridge = fridge
+                shelf.save()
+
+        if commit:
+            save_shelves()
+        else:
+            old_save_m2m = self.save_m2m
+
+            def save_m2m():
+                old_save_m2m()
+                save_shelves()
+
+            self.save_m2m = save_m2m
+
+        return fridge
+
+
+@admin.register(Fridge)
+class FridgeAdmin(admin.ModelAdmin):
+    form = FridgeAdminForm
+    list_display = ("name", "shelves_list")
+    ordering = ("name",)
+
+    def shelves_list(self, obj):
+        """Display list of shelves on this fridge with links"""
+        shelves = obj.shelves.all().order_by("name")
+
+        if not shelves:
+            return "-"
+
+        links = []
+        for shelf in shelves:
+            url = reverse("admin:items_shelf_change", args=[shelf.id])
+            links.append(f'<li><a href="{url}">{shelf}</a></li>')
+
+        links_html = format_html_join(
+            "",
+            '<li><a href="{}">{}</a></li>',
+            (
+                (reverse("admin:items_shelf_change", args=[shelf.id]), shelf)
+                for shelf in shelves
+            ),
+        )
+
+        return format_html("<ul>{}</ul>", links_html)
+
+    shelves_list.short_description = "Shelves"
 
 
 @admin.register(Item)
@@ -233,7 +318,7 @@ class ShelfItemInline(admin.TabularInline):
 
 @admin.register(Shelf)
 class ShelfAdmin(admin.ModelAdmin):
-    list_display = ("name", "item_count", "items_list")
+    list_display = ("name", "item_count", "items_list", "fridge")
     inlines = [ShelfItemInline]
 
     def item_count(self, obj):

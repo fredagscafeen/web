@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-04 15:26+0200\n"
-"PO-Revision-Date: 2026-03-21 22:32+0050\n"
-"Last-Translator:   <abs@post.dk>\n"
+"POT-Creation-Date: 2026-04-04 17:33+0200\n"
+"PO-Revision-Date: 2026-04-04 16:19+0050\n"
+"Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -96,7 +96,7 @@ msgstr "Result"
 #: bartab/templates/admin/consumption.html:20 bartab/templates/bartab.html:136
 #: events/templates/event.html:125 events/templates/event.html:172
 #: events/templates/event.html:201 guides/templates/guides.html:42
-#: items/templates/items.html:51 mail/models.py:18
+#: items/templates/items.html:170 mail/models.py:18
 msgid "Navn"
 msgstr "Name"
 
@@ -410,8 +410,9 @@ msgstr "Bartender's first shift"
 #: bartenders/templates/board.html:39 events/templates/common-events.html:47
 #: events/templates/common-events.html:99 events/templates/event.html:19
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
-#: guides/templates/guides.html:69 items/templates/items.html:82
-#: udlejning/templates/udlejning.html:60
+#: guides/templates/guides.html:69 items/templates/items.html:41
+#: items/templates/items.html:59 items/templates/items.html:112
+#: items/templates/items.html:201 udlejning/templates/udlejning.html:60
 #: udlejning/templates/udlejningBoardGameCart.html:52
 #: udlejning/templates/udlejningGrill.html:52
 #: udlejning/templates/udlejningProjector.html:52
@@ -730,8 +731,9 @@ msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr ""
 "There are too many who have chosen %(option_option)s. Choose something else."
 
-#: events/models.py:62 guides/models.py:20 items/models.py:13 mail/models.py:45
-#: mail/models.py:204
+#: events/models.py:62 guides/models.py:20 items/models.py:13
+#: items/models.py:77 items/models.py:89 items/models.py:127
+#: items/models.py:141 mail/models.py:45 mail/models.py:204
 msgid "Name"
 msgstr "Name"
 
@@ -740,7 +742,7 @@ msgid "Location"
 msgstr "Location"
 
 #: events/models.py:70 events/models.py:230 items/models.py:14
-#: mail/models.py:46
+#: items/models.py:128 items/models.py:142 mail/models.py:46
 msgid "Description"
 msgstr "Description"
 
@@ -914,11 +916,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:360
+#: fredagscafeen/settings/base.py:365
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:361
+#: fredagscafeen/settings/base.py:366
 msgid "English"
 msgstr "English"
 
@@ -958,7 +960,7 @@ msgstr "Short title"
 msgid "Beskrivelse"
 msgstr "Description"
 
-#: gallery/models.py:83 items/models.py:37 items/templates/items.html:56
+#: gallery/models.py:83 items/models.py:37 items/templates/items.html:175
 msgid "Image"
 msgstr "Image"
 
@@ -1238,7 +1240,7 @@ msgctxt "På linket her"
 msgid "her"
 msgstr "here"
 
-#: guides/templates/guides.html:44 items/models.py:42
+#: guides/templates/guides.html:44 items/models.py:42 items/models.py:129
 #: web/templates/secrets_admin.html:14
 msgid "Link"
 msgstr "Link"
@@ -1255,7 +1257,7 @@ msgstr "Price (DKK)"
 msgid "Alcohol by volume"
 msgstr "Alcohol by volume"
 
-#: items/models.py:26 items/templates/items.html:53
+#: items/models.py:26 items/templates/items.html:172
 msgid "Container"
 msgstr "Container"
 
@@ -1287,6 +1289,58 @@ msgstr "Non-alcoholic"
 msgid "Barcode"
 msgstr "Barcode"
 
+#: items/models.py:48
+msgid "Item"
+msgstr "Item"
+
+#: items/models.py:49
+msgid "Items"
+msgstr "Items"
+
+#: items/models.py:81
+msgid "Fridge"
+msgstr "Fridge"
+
+#: items/models.py:82
+msgid "Fridges"
+msgstr "Fridges"
+
+#: items/models.py:96
+msgid "Shelf"
+msgstr "Shelf"
+
+#: items/models.py:97
+msgid "Shelves"
+msgstr "Shelves"
+
+#: items/models.py:114
+msgid "Shelf item"
+msgstr "Shelf item"
+
+#: items/models.py:115
+msgid "Shelf items"
+msgstr "Shelf items"
+
+#: items/models.py:133
+msgid "Beer type"
+msgstr "Beer type"
+
+#: items/models.py:134
+msgid "Beer types"
+msgstr "Beer types"
+
+#: items/models.py:143
+msgid "Website"
+msgstr "Website"
+
+#: items/models.py:147
+msgid "Brewery"
+msgstr "Brewery"
+
+#: items/models.py:148
+msgid "Breweries"
+msgstr "Breweries"
+
 #: items/templates/items.html:9
 msgid ""
 "\n"
@@ -1308,51 +1362,67 @@ msgstr ""
 "you will also find several\n"
 "gluten-free and alcohol-free beers."
 
-#: items/templates/items.html:20 web/templates/base.html:86
+#: items/templates/items.html:19
+msgid "Tilføj vare"
+msgstr "Add new item"
+
+#: items/templates/items.html:25
+msgid "Køleskabe"
+msgstr "Fridges"
+
+#: items/templates/items.html:126
+msgid "Glutenfri"
+msgstr "Gluten Free"
+
+#: items/templates/items.html:129
+msgid "Alkoholfri"
+msgstr "Non-Alcoholic"
+
+#: items/templates/items.html:139 web/templates/base.html:86
 msgid "Sortiment"
 msgstr "Selection"
 
-#: items/templates/items.html:30
+#: items/templates/items.html:149
 msgid "Søg i sortimentet"
 msgstr "Search in the selection"
 
-#: items/templates/items.html:38
+#: items/templates/items.html:157
 msgid "Vis kun ting på lager"
 msgstr "Only show items in stock"
 
-#: items/templates/items.html:40
+#: items/templates/items.html:159
 msgid "Vis også ting ikke på lager"
 msgstr "Also show items not in stock"
 
-#: items/templates/items.html:50
+#: items/templates/items.html:169
 msgid "Bryghus"
 msgstr "Brewery"
 
-#: items/templates/items.html:52
+#: items/templates/items.html:171
 msgid "Type"
 msgstr "Type"
 
-#: items/templates/items.html:54
+#: items/templates/items.html:173
 msgid "Pris"
 msgstr "Price"
 
-#: items/templates/items.html:55
+#: items/templates/items.html:174
 msgid "Status"
 msgstr "Status"
 
-#: items/templates/items.html:58
+#: items/templates/items.html:177
 msgid "Bedst før"
 msgstr "Best before"
 
-#: items/templates/items.html:72
+#: items/templates/items.html:191
 msgid "På lager"
 msgstr "In stock"
 
-#: items/templates/items.html:72
+#: items/templates/items.html:191
 msgid "Ikke på lager"
 msgstr "Not in stock"
 
-#: items/templates/items.html:91
+#: items/templates/items.html:210
 msgid "Sortimentet er desværre tomt"
 msgstr "The selection is unfortunately empty"
 
@@ -2827,6 +2897,9 @@ msgid ""
 msgstr ""
 "Login mail sent: Press the link in your received email to log in. Also "
 "remember to check your spam folder."
+
+#~ msgid "Hide on shelf"
+#~ msgstr "Hide on shelf"
 
 #~ msgid "Additional information about the shift"
 #~ msgstr "Additional information about the shift"

@@ -14,81 +14,201 @@
 	{% endblocktrans %}
 </p>
 
-<div class="row">
-	<div class="col-auto me-auto">
-		<h2 id="selection">
-			{% translate "Sortiment" %}
-			{% if items_data %}
-			<span class="badge text-bg-secondary">{{ items_data | length }}</span>
+{% if user.is_staff %}
+	<div>
+		<a class="btn btn-primary mb-3" href="/admin/items/item/add/" role="button">{% translate "Tilføj vare" %}</a>
+	</div>
+{% endif %}
+
+{% if fridges %}
+<h2 id="fridges">
+	{% translate "Køleskabe" %}
+	<a href="#fridges" class="section-link">#</a>
+</h2>
+
+<div class="row mt-2">
+	{% for fridge in fridges %}
+	<div class="col-12">
+		<div class="card mb-3">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-auto me-auto">
+						{{ fridge.name }}
+					</div>
+					<div class="col-auto">
+						{% if user.is_staff %}
+							<a class="common" href="/admin/items/fridge/{{ fridge.id }}/change/">
+								{% translate "Edit" %}
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<ul class="list-group list-group-flush">
+				{% for shelf in fridge.shelves.all %}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-auto me-auto">
+								<h5 class="mt-1">
+									{{ shelf.name }} <span class="badge text-bg-primary rounded-pill">{{ shelf.shelf_items.all|length }}</span>
+								</h5>
+							</div>
+							<div class="col-auto">
+								{% if user.is_staff %}
+									<a class="common" href="/admin/items/shelf/{{ shelf.id }}/change/">
+										{% translate "Edit" %}
+									</a>
+								{% endif %}
+							</div>
+						</div>
+						<ul class="row row-cols-2 row-cols-md-3 row-cols-lg-6 list-unstyled px-1">
+							{% for shelf_item in shelf.shelf_items.all %}
+								<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex border">
+									{% if shelf_item.item.image %}
+										<div class="board-image m-0 mx-auto" style="background-image: url({{ shelf_item.item.image.url }});"></div>
+									{% else %}
+										<div class="board-image m-0 mx-auto" style="background-image: url({% static 'images/logo.png' %});"></div>
+									{% endif %}
+									<div>
+										{% if not shelf_item.item.inStock %}
+											<span class="text-decoration-line-through">
+												{{ shelf_item.item.name }}
+											</span>
+										{% else %}
+											{{ shelf_item.item.name }}
+										{% endif %}
+									</div>
+									<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
+										{% if shelf_item.item.type %}
+										<div class="bg-primary-subtle rounded text-center px-1">
+											<small class="text-muted">{{ shelf_item.item.type }}</small>
+										</div>
+										{% endif %}
+										{% if shelf_item.item.glutenFree %}
+										<div class="bg-warning-subtle rounded text-center px-1">
+											<small class="text-muted">GF</small>
+										</div>
+										{% endif %}
+										{% if shelf_item.item.nonAlcoholic %}
+										<div class="bg-info-subtle rounded text-center px-1">
+											<small class="text-muted">NA</small>
+										</div>
+										{% endif %}
+									</div>
+									<div>
+										{% if shelf_item.item.brewery %}
+											<small class="text-muted">
+												{{ shelf_item.item.brewery }}
+											</small>
+										{% endif %}
+									</div>
+									<div class="d-flex">
+										{% if shelf_item.item.priceInDKK > 0 %}
+											<small class="text-primary fw-bold">{{ shelf_item.item.priceInDKK|floatformat:-2 }} DKK</small>
+										{% endif %}
+									</div>
+									{% if user.is_staff %}
+										<div class="mt-0">
+											<a class="common mt-2" href="{% url 'admin:items_item_change' shelf_item.item.id %}">{% translate "Edit" %}</a>
+										</div>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	{% endfor %}
+	<div class="d-flex align-content-start flex-wrap gap-1">
+		<div class="bg-warning-subtle rounded text-center px-2">
+			<small class="text-muted">GF</small> {% translate "Glutenfri" %}
+		</div>
+		<div class="bg-info-subtle rounded text-center px-2">
+			<small class="text-muted">NA</small> {% translate "Alkoholfri" %}
+		</div>
+	</div>
+</div>
+{% endif %}
+
+{% if show_list_selection %}
+	<div class="row mt-4">
+		<div class="col-auto me-auto">
+			<h2 id="selection">
+				{% translate "Sortiment" %}
+				{% if items_data %}
+				<span class="badge text-bg-secondary">{{ items_data | length }}</span>
+				{% endif %}
+				<a href="#selection" class="section-link">#</a>
+			</h2>
+		</div>
+
+		{% if items_data %}
+		<div class="col-auto">
+			<input class="rounded px-2 fs-5" type="text" id="itemsSearchInput" placeholder="{% translate "Søg i sortimentet" %}">
+		</div>
+		{% endif %}
+	</div>
+
+	<div class="row mt-2">
+		<div class="col">
+			{% if show_all %}
+			<a class="btn btn-primary btn-sm" href=".#selection" role="button">{% translate "Vis kun ting på lager" %}</a>
+			{% else %}
+			<a class="btn btn-outline-primary btn-sm" href="?show_all#selection" role="button">{% translate "Vis også ting ikke på lager" %}</a>
 			{% endif %}
-			<a href="#selection" class="section-link">#</a>
-		</h2>
+		</div>
 	</div>
 
 	{% if items_data %}
-	<div class="col-auto">
-		<input class="rounded px-2 fs-5" type="text" id="itemsSearchInput" placeholder="{% translate "Søg i sortimentet" %}" autofocus>
-	</div>
-	{% endif %}
-</div>
-
-<div class="row mt-2">
-	<div class="col">
-		{% if show_all %}
-		<a class="btn btn-primary btn-sm" href="." role="button">{% translate "Vis kun ting på lager" %}</a>
-		{% else %}
-		<a class="btn btn-outline-primary btn-sm" href="?show_all" role="button">{% translate "Vis også ting ikke på lager" %}</a>
-		{% endif %}
-	</div>
-</div>
-
-{% if items_data %}
-	<div class="table-responsive-md">
-		<table class="table table-striped tablesorter" id="items">
-			<thead>
-				<tr>
-					<th>{% translate "Bryghus" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></span></th>
-					<th class="filter-select filter-exact">{% translate "Navn" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-					<th class="d-none d-lg-table-cell">{% translate "Type" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-					<th class="d-none d-lg-table-cell">{% translate "Container" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-					<th>{% translate "Pris" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-					<th class="d-none d-lg-table-cell">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-					<!--<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>-->
-					{% if user.is_staff %}
-						<th class="d-none d-lg-table-cell">{% translate "Bedst før" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-						<th class="d-none d-lg-table-cell"></th>
-					{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-			{% get_current_language as LANGUAGE_CODE %}
-			{% for item in items_data %}
-				<tr>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{% if item.brewery_url %}<a class="common" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='0.75em' %}</i></a>{% endif %}</td>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{{ item.name|default_if_none:"" }}</td>
-					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.type|default_if_none:"" }}</td>
-					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.container|default_if_none:"" }}</td>
-					<td class="{% if not item.inStock %}bg-danger{% endif %}">{{ item.price|floatformat:-2 }},-</td>
-					<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
-					<!--<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">
-						{% if item.image %}
-						<div class="board-image" style="background-image: url({{ item.image.url }});"></div>
-						{% else %}
-						<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+		<div class="table-responsive-md">
+			<table class="table table-striped tablesorter" id="items">
+				<thead>
+					<tr>
+						<th>{% translate "Bryghus" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></span></th>
+						<th class="filter-select filter-exact">{% translate "Navn" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+						<th class="d-none d-lg-table-cell">{% translate "Type" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+						<th class="d-none d-lg-table-cell">{% translate "Container" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+						<th>{% translate "Pris" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+						<th class="d-none d-lg-table-cell">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+						<!--<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>-->
+						{% if user.is_staff %}
+							<th class="d-none d-lg-table-cell">{% translate "Bedst før" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+							<th class="d-none d-lg-table-cell"></th>
 						{% endif %}
-					</td>-->
-					{% if user.is_staff %}
-						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">{{ item.bestBefore|date:"Y/m/d" }}</td>
-						<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
-					{% endif %}
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-	</div>
-	<script src="{% static 'js/sortimentSearch.js' %}"></script>
-{% else %}
-	<p class="pt-2">{% translate "Sortimentet er desværre tomt" %} &#9785;</p>
+					</tr>
+				</thead>
+				<tbody>
+				{% get_current_language as LANGUAGE_CODE %}
+				{% for item in items_data %}
+					<tr class="{% if not item.inStock %}opacity-50{% endif %}">
+						<td>{% if item.brewery_url %}<a class="common" href="{{ item.brewery_url }}" target="_blank">{% endif %}{{ item.brewery|default_if_none:"" }}{% if item.brewery_url %} <i>{% bs_icon 'box-arrow-up-right' size='0.75em' %}</i></a>{% endif %}</td>
+						<td>{{ item.name|default_if_none:"" }}</td>
+						<td class="d-none d-lg-table-cell">{{ item.type|default_if_none:"" }}</td>
+						<td class="d-none d-lg-table-cell">{{ item.container|default_if_none:"" }}</td>
+						<td>{{ item.price|floatformat:-2 }},-</td>
+						<td class="d-none d-lg-table-cell">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
+						<!--<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">
+							{% if item.image %}
+							<div class="board-image" style="background-image: url({{ item.image.url }});"></div>
+							{% else %}
+							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+						</td>-->
+						{% if user.is_staff %}
+							<td class="d-none d-lg-table-cell">{{ item.bestBefore|date:"Y/m/d" }}</td>
+							<td class="d-none d-lg-table-cell"><a class="common" href="{% url 'admin:items_item_change' item.id %}">{% translate "Edit" %}</a></td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<script src="{% static 'js/sortimentSearch.js' %}"></script>
+	{% else %}
+		<p class="pt-2">{% translate "Sortimentet er desværre tomt" %} &#9785;</p>
+	{% endif %}
 {% endif %}
 
 {% endblock %}
