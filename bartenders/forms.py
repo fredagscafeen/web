@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 from bartab.models import BarTabUser
 from bartenders.models import Bartender, BartenderApplication
+from email_auth.auth import EmailTokenBackend
 from fredagscafeen.email import send_template_email
 
 
@@ -28,15 +29,21 @@ class BartenderApplicationForm(forms.ModelForm):
             self.fields[name].required = name != "info"
 
     def clean_email(self):
-        """Validate the email doesn't end with au.dk"""
+        """Validate the email doesn't end with au.dk and that it isn't already in use"""
         email = self.cleaned_data.get("email")
-        if email and email.lower().endswith("au.dk"):
+        normalized_email = email.lower()
+        if normalized_email and normalized_email.endswith("au.dk"):
             raise forms.ValidationError(
                 _(
                     "E-mails der slutter med 'au.dk' er ikke tilladt. Brug din personlige e-mail i stedet."
                 )
             )
-        return email
+        if EmailTokenBackend.is_user(normalized_email):
+            raise forms.ValidationError(
+                _("Der findes allerede en bruger med denne email")
+            )
+
+        return normalized_email
 
     def send_email(self, pk):
         d = self.cleaned_data
