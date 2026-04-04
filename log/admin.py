@@ -85,6 +85,8 @@ def printer(self, request, queryset):
                 "template_path": template_path,
             }
 
+    request.method = "GET"  # Force GET method for the view, since we're just generating a PDF preview.
+
     return pdf_preview(request, self.admin_site, SelectedLogEntryContext)
 
 
