@@ -8,6 +8,9 @@ from printer.views import pdf_preview
 
 from .models import LogBase, LogEntry
 
+LOG_FILE_NAME = "logbog"
+LOG_TEMPLATE_PATH = "log/logbog.tex"
+
 
 @admin.action(description=_("Copy selected logs"))
 def copy(self, request, queryset):
@@ -26,6 +29,7 @@ def copy(self, request, queryset):
     )
 
 
+# Log templates view
 @admin.register(LogBase)
 class LogBaseAdmin(admin.ModelAdmin):
     list_display = (
@@ -41,13 +45,13 @@ class LogBaseAdmin(admin.ModelAdmin):
 
 
 class LogEntryContext:
-    file_name = "logbog"
-    file_path = "log/logbog.tex"
+    file_name = LOG_FILE_NAME
+    file_path = LOG_TEMPLATE_PATH  # This is the actual template path that will be used.
 
     @staticmethod
     def get_context():
         log_entries = LogEntry.objects.all()
-        template_path = settings.MEDIA_ROOT + f"guides/logbog.pdf"
+        template_path = LOG_TEMPLATE_PATH  # This is only to test if the file exists. Should be the same as file_path.
         try:
             with open(template_path, "rb") as f:
                 pass
@@ -62,13 +66,15 @@ class LogEntryContext:
 @admin.action(description=_("Print selected log entries"))
 def printer(self, request, queryset):
     class SelectedLogEntryContext:
-        file_name = "logbog"
-        file_path = "log/logbog.tex"
+        file_name = LOG_FILE_NAME
+        file_path = (
+            LOG_TEMPLATE_PATH  # This is the actual template path that will be used.
+        )
 
         @staticmethod
         def get_context():
             log_entries = queryset
-            template_path = settings.MEDIA_ROOT + f"guides/logbog.pdf"
+            template_path = LOG_TEMPLATE_PATH  # This is only to test if the file exists. Should be the same as file_path.
             try:
                 with open(template_path, "rb") as f:
                     pass
@@ -82,6 +88,7 @@ def printer(self, request, queryset):
     return pdf_preview(request, self.admin_site, SelectedLogEntryContext)
 
 
+# Log entries view
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
     list_display = (
