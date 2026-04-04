@@ -182,46 +182,31 @@ jobs:
     steps:
       - name: Generate Summary
         run: |
-          # Determine Context
           IS_MASTER="${{ github.ref == 'refs/heads/master' }}"
-          STATUS_EMOJI="${{ (needs.pre-commit.result == 'success' && needs.test.result == 'success') && '✅' || '❌' }}"
 
-          echo "## $STATUS_EMOJI Workflow Report: ${{ github.workflow }}" >> $GITHUB_STEP_SUMMARY
+          # Header Section
+          echo "<h1>🚀 Workflow Summary: ${{ github.ref_name }}</h1>" >> $GITHUB_STEP_SUMMARY
+
+          echo "<h3>📊 Pipeline Overview</h3>" >> $GITHUB_STEP_SUMMARY
+          echo "<table>
+            <tr><td><b>Linting</b></td><td>${{ needs.pre-commit.result == 'success' && '✅' || '❌' }}</td></tr>
+            <tr><td><b>Image Build</b></td><td>${{ needs.build.result == 'success' && '✅' || '❌' }}</td></tr>
+            <tr><td><b>Django Tests</b></td><td>${{ needs.test.result == 'success' && '✅' || '❌' }}</td></tr>
+          </table>" >> $GITHUB_STEP_SUMMARY
 
           if [ "$IS_MASTER" = "true" ]; then
-            # --- MASTER / RELEASE SUMMARY ---
-            echo "### 🚀 Production Release: \`master\`" >> $GITHUB_STEP_SUMMARY
-            echo "<p align='center'><strong>The production image is ready for deployment.</strong></p>" >> $GITHUB_STEP_SUMMARY
+            echo "<h2>✅ Production Release Ready</h2>" >> $GITHUB_STEP_SUMMARY
+            echo "<p>The <b>master</b> branch has been built and pushed to the registry.</p>" >> $GITHUB_STEP_SUMMARY
 
-            echo "<h4>📦 Artifacts</h4>" >> $GITHUB_STEP_SUMMARY
-            echo "| Registry | Image | Tag |" >> $GITHUB_STEP_SUMMARY
-            echo "| :--- | :--- | :--- |" >> $GITHUB_STEP_SUMMARY
-            echo "| GHCR | \`${{ env.DOCKER_IMAGE_NAME }}\` | \`latest\` |" >> $GITHUB_STEP_SUMMARY
-            echo "| GHCR | \`${{ env.DOCKER_IMAGE_NAME }}\` | \`${{ needs.build.outputs.image_tag }}\` |" >> $GITHUB_STEP_SUMMARY
+            echo "<h3>🚚 Manual Deployment</h3>" >> $GITHUB_STEP_SUMMARY
+            echo "<div style='background-color: #2b2b2b; color: #f1f1f1; padding: 15px; border-radius: 5px; font-family: monospace;'>" >> $GITHUB_STEP_SUMMARY
+            echo "ssh ubuntu@fredagscafeen.dk<br>cd ~/web<br>git pull<br>docker compose pull<br>docker compose up -d" >> $GITHUB_STEP_SUMMARY
+            echo "</div>" >> $GITHUB_STEP_SUMMARY
 
-            echo "<h4>🛠️ Deployment Instructions</h4>" >> $GITHUB_STEP_SUMMARY
-            echo "Run these commands on the production server:" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`bash
-            ssh ubuntu@fredagscafeen.dk
-            cd ~/web
-            git pull
-            docker compose pull
-            docker compose up -d
-            \`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "<h3>📦 Images</h3>" >> $GITHUB_STEP_SUMMARY
+            echo "<ul><li><code>${{ env.DOCKER_IMAGE_NAME }}:latest</code></li><li><code>${{ env.DOCKER_IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}</code></li></ul>" >> $GITHUB_STEP_SUMMARY
           else
-            # --- DEVELOPMENT / PR SUMMARY ---
-            echo "### 🛠️ Development Build: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
-            echo "This build was generated from a feature branch or Pull Request." >> $GITHUB_STEP_SUMMARY
-
-            echo "<h4>🧪 Test Results</h4>" >> $GITHUB_STEP_SUMMARY
-            echo "* **Pre-commit:** ${{ needs.pre-commit.result }}" >> $GITHUB_STEP_SUMMARY
-            echo "* **Build:** ${{ needs.build.result }}" >> $GITHUB_STEP_SUMMARY
-            echo "* **Django Tests:** ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
-
-            echo "<blockquote>⚠️ <b>Note:</b> This image was <b>not</b> tagged as <code>latest</code>. Deployment to production is disabled for this branch.</blockquote>" >> $GITHUB_STEP_SUMMARY
+            echo "<h2>🧪 Development Build</h2>" >> $GITHUB_STEP_SUMMARY
+            echo "<p>Status: <b>${{ needs.test.result == 'success' && 'Tests Passed' || 'Tests Failed' }}</b></p>" >> $GITHUB_STEP_SUMMARY
+            echo "<blockquote>This is a feature branch build. Production deployment is disabled.</blockquote>" >> $GITHUB_STEP_SUMMARY
           fi
-
-          echo "---" >> $GITHUB_STEP_SUMMARY
-          echo "#### ✨ Build Metadata" >> $GITHUB_STEP_SUMMARY
-          echo "* **Triggered by:** @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-          echo "* **Commit:** [\`${{ github.sha }}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }})" >> $GITHUB_STEP_SUMMARY
