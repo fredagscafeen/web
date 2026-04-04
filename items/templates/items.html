@@ -20,6 +20,7 @@
 	</div>
 {% endif %}
 
+{% if fridges %}
 <h2 id="fridges">
 	{% translate "Køleskabe" %}
 	<a href="#fridges" class="section-link">#</a>
@@ -105,6 +106,7 @@
 	{% endif %}
 	{% endfor %}
 </div>
+{% endif %}
 
 {% if show_list_selection %}
 	<div class="row mt-4">
