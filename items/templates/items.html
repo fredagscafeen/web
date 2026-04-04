@@ -26,12 +26,11 @@
 	<a href="#fridges" class="section-link">#</a>
 </h2>
 
-<div class="row mt-2" role="tablist">
+<div class="row mt-2">
 	{% for fridge in fridges %}
-	{% if fridge.shelves.count > 0 %}
 	<div class="col-12">
 		<div class="card mb-3">
-			<div class="card-header" role="tab">
+			<div class="card-header">
 				<div class="row">
 					<div class="col-auto me-auto">
 						{{ fridge.name }}
@@ -51,7 +50,7 @@
 						<div class="row">
 							<div class="col-auto me-auto">
 								<h5 class="mt-1">
-									{{ shelf.name }} <span class="badge text-bg-primary rounded-pill">{{ shelf.shelf_items.count }}</span>
+									{{ shelf.name }} <span class="badge text-bg-primary rounded-pill">{{ shelf.shelf_items.all|length }}</span>
 								</h5>
 							</div>
 							<div class="col-auto">
@@ -92,7 +91,7 @@
 									</div>
 									{% if user.is_staff %}
 										<div class="mt-0">
-											<a class="common mt-2" href="/admin/items/item/{{ shelf_item.item.id }}">{% translate "Edit" %}</a>
+											<a class="common mt-2" href="{% url 'admin:items_item_change' shelf_item.item.id %}">{% translate "Edit" %}</a>
 										</div>
 									{% endif %}
 								</li>
@@ -103,7 +102,6 @@
 			</ul>
 		</div>
 	</div>
-	{% endif %}
 	{% endfor %}
 </div>
 {% endif %}
@@ -174,7 +172,7 @@
 						</td>-->
 						{% if user.is_staff %}
 							<td class="d-none d-lg-table-cell">{{ item.bestBefore|date:"Y/m/d" }}</td>
-							<td class="d-none d-lg-table-cell"><a class="common" href="/admin/items/item/{{ item.id }}">{% translate "Edit" %}</a></td>
+							<td class="d-none d-lg-table-cell"><a class="common" href="{% url 'admin:items_item_change' item.id %}">{% translate "Edit" %}</a></td>
 						{% endif %}
 					</tr>
 				{% endfor %}

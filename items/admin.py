@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.core.exceptions import FieldError, ValidationError
 from django.db import models
 from django.urls import reverse
+from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 
 from fredagscafeen.admin_view import custom_admin_view
@@ -116,7 +117,16 @@ class FridgeAdmin(admin.ModelAdmin):
             url = reverse("admin:items_shelf_change", args=[shelf.id])
             links.append(f'<li><a href="{url}">{shelf}</a></li>')
 
-        return mark_safe(f'<ul>{"".join(links)}</ul>')
+        links_html = format_html_join(
+            "",
+            '<li><a href="{}">{}</a></li>',
+            (
+                (reverse("admin:items_shelf_change", args=[shelf.id]), shelf)
+                for shelf in shelves
+            ),
+        )
+
+        return format_html("<ul>{}</ul>", links_html)
 
     shelves_list.short_description = "Shelves"
 

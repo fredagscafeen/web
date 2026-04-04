@@ -14,7 +14,12 @@ class Items(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        fridges = Fridge.objects.all().prefetch_related("shelves__shelf_items__item")
+        fridges = (
+            Fridge.objects.all()
+            .prefetch_related("shelves__shelf_items__item__brewery")
+            .filter(shelves__isnull=False)
+            .distinct()
+        )
 
         items_data = []
         if config.SHOW_LIST_SELECTION:
