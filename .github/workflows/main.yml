@@ -106,38 +106,36 @@ jobs:
           "${{ env.DOCKER_IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}" \
           ./manage.py test
 
-  # test-docker-compose:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v6
-  #       with:
-  #         sparse-checkout: |
-  #           docker-compose.yml
+  test-docker-compose:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            docker-compose.yml
 
-  #     - name: Download docker image
-  #       uses: actions/download-artifact@v7
-  #       with:
-  #         name: web-docker-image
-  #         path: ${{ runner.temp }}/web-docker-image.tar
+      - name: Login to ghcr.io
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-  #     - name: Load docker image
-  #       run: docker load --input ${{ runner.temp }}/web-docker-image.tar
-
-  #     - name: Test docker compose
-  #       run: |
-  #         for k in "SECRET_KEY" "RECAPTCHA_PUBLIC_KEY" "RECAPTCHA_PRIVATE_KEY"; do
-  #           echo "$k=foo" >> ".env"
-  #         done
-  #         docker network create traefik
-  #         docker compose up -d
-  #         sleep 10
-  #         res=$(docker compose ps)
-  #         echo "$res"
-  #         if echo "$res" | grep Exit &>/dev/null; then
-  #           exit 1
-  #         fi
+      - name: Test docker compose
+        run: |
+          for k in "SECRET_KEY" "RECAPTCHA_PUBLIC_KEY" "RECAPTCHA_PRIVATE_KEY"; do
+            echo "$k=foo" >> ".env"
+          done
+          docker network create traefik
+          docker compose up -d
+          sleep 10
+          res=$(docker compose ps)
+          echo "$res"
+          if echo "$res" | grep Exit &>/dev/null; then
+            exit 1
+          fi
 
   release:
     runs-on: ubuntu-latest
