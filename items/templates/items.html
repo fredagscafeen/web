@@ -63,7 +63,7 @@
 						</div>
 						<ul class="row row-cols-2 row-cols-md-3 row-cols-lg-6 list-unstyled px-1">
 							{% for shelf_item in shelf.shelf_items.all %}
-								<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start justify-content-between d-flex border">
+								<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex border">
 									{% if shelf_item.item.image %}
 										<div class="board-image m-0 mx-auto" style="background-image: url({{ shelf_item.item.image.url }});"></div>
 									{% else %}
@@ -77,8 +77,26 @@
 										{% else %}
 											{{ shelf_item.item.name }}
 										{% endif %}
+									</div>
+									<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
+										{% if shelf_item.item.type %}
+										<div class="bg-primary-subtle rounded text-center px-1">
+											<small class="text-muted">{{ shelf_item.item.type }}</small>
+										</div>
+										{% endif %}
+										{% if shelf_item.item.glutenFree %}
+										<div class="bg-warning-subtle rounded text-center px-1">
+											<small class="text-muted">GF</small>
+										</div>
+										{% endif %}
+										{% if shelf_item.item.nonAlcoholic %}
+										<div class="bg-info-subtle rounded text-center px-1">
+											<small class="text-muted">NA</small>
+										</div>
+										{% endif %}
+									</div>
+									<div>
 										{% if shelf_item.item.brewery %}
-											<br>
 											<small class="text-muted">
 												{{ shelf_item.item.brewery }}
 											</small>
@@ -103,6 +121,14 @@
 		</div>
 	</div>
 	{% endfor %}
+	<div class="d-flex align-content-start flex-wrap gap-1">
+		<div class="bg-warning-subtle rounded text-center px-2">
+			<small class="text-muted">GF</small> {% translate "Glutenfri" %}
+		</div>
+		<div class="bg-info-subtle rounded text-center px-2">
+			<small class="text-muted">NA</small> {% translate "Alkoholfri" %}
+		</div>
+	</div>
 </div>
 {% endif %}
 

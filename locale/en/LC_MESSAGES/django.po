@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-02 23:33+0200\n"
-"PO-Revision-Date: 2026-04-02 23:36+0050\n"
+"POT-Creation-Date: 2026-04-04 16:17+0200\n"
+"PO-Revision-Date: 2026-04-04 16:19+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -96,7 +96,7 @@ msgstr "Result"
 #: bartab/templates/admin/consumption.html:20 bartab/templates/bartab.html:136
 #: events/templates/event.html:125 events/templates/event.html:172
 #: events/templates/event.html:201 guides/templates/guides.html:42
-#: items/templates/items.html:144 mail/models.py:18
+#: items/templates/items.html:174 mail/models.py:18
 msgid "Navn"
 msgstr "Name"
 
@@ -407,8 +407,8 @@ msgstr "Bartender's first shift"
 #: events/templates/common-events.html:99 events/templates/event.html:19
 #: gallery/templates/album.html:60 gallery/templates/gallery.html:27
 #: guides/templates/guides.html:69 items/templates/items.html:41
-#: items/templates/items.html:59 items/templates/items.html:94
-#: items/templates/items.html:175 udlejning/templates/udlejning.html:60
+#: items/templates/items.html:59 items/templates/items.html:116
+#: items/templates/items.html:205 udlejning/templates/udlejning.html:60
 #: udlejning/templates/udlejningBoardGameCart.html:52
 #: udlejning/templates/udlejningGrill.html:52
 #: udlejning/templates/udlejningProjector.html:52
@@ -957,7 +957,7 @@ msgstr "Short title"
 msgid "Beskrivelse"
 msgstr "Description"
 
-#: gallery/models.py:83 items/models.py:37 items/templates/items.html:149
+#: gallery/models.py:83 items/models.py:37 items/templates/items.html:179
 msgid "Image"
 msgstr "Image"
 
@@ -1254,7 +1254,7 @@ msgstr "Price (DKK)"
 msgid "Alcohol by volume"
 msgstr "Alcohol by volume"
 
-#: items/models.py:26 items/templates/items.html:146
+#: items/models.py:26 items/templates/items.html:176
 msgid "Container"
 msgstr "Container"
 
@@ -1357,55 +1357,64 @@ msgstr ""
 msgid "Tilføj vare"
 msgstr "Add new item"
 
-#: items/templates/items.html:24
+#: items/templates/items.html:25
 msgid "Køleskabe"
 msgstr "Fridges"
 
-#: items/templates/items.html:113 web/templates/base.html:86
+#: items/templates/items.html:130
+#| msgid "Gluten free"
+msgid "Glutenfri"
+msgstr "Gluten Free"
+
+#: items/templates/items.html:133
+msgid "Alkoholfri"
+msgstr "Non-Alcoholic"
+
+#: items/templates/items.html:143 web/templates/base.html:86
 msgid "Sortiment"
 msgstr "Selection"
 
-#: items/templates/items.html:123
+#: items/templates/items.html:153
 msgid "Søg i sortimentet"
 msgstr "Search in the selection"
 
-#: items/templates/items.html:131
+#: items/templates/items.html:161
 msgid "Vis kun ting på lager"
 msgstr "Only show items in stock"
 
-#: items/templates/items.html:133
+#: items/templates/items.html:163
 msgid "Vis også ting ikke på lager"
 msgstr "Also show items not in stock"
 
-#: items/templates/items.html:143
+#: items/templates/items.html:173
 msgid "Bryghus"
 msgstr "Brewery"
 
-#: items/templates/items.html:145
+#: items/templates/items.html:175
 msgid "Type"
 msgstr "Type"
 
-#: items/templates/items.html:147
+#: items/templates/items.html:177
 msgid "Pris"
 msgstr "Price"
 
-#: items/templates/items.html:148
+#: items/templates/items.html:178
 msgid "Status"
 msgstr "Status"
 
-#: items/templates/items.html:151
+#: items/templates/items.html:181
 msgid "Bedst før"
 msgstr "Best before"
 
-#: items/templates/items.html:165
+#: items/templates/items.html:195
 msgid "På lager"
 msgstr "In stock"
 
-#: items/templates/items.html:165
+#: items/templates/items.html:195
 msgid "Ikke på lager"
 msgstr "Not in stock"
 
-#: items/templates/items.html:184
+#: items/templates/items.html:214
 msgid "Sortimentet er desværre tomt"
 msgstr "The selection is unfortunately empty"
 
