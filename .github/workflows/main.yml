@@ -166,18 +166,19 @@ jobs:
           docker push "${{ env.DOCKER_IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}"
           docker push "${{ env.DOCKER_IMAGE_NAME }}:latest"
 
-  # deploy: THIS IS BROKEN AND SHOULD NOT BE USED UNTIL FIXED - WEBHOOK POINTS TO webhooks.tyilo.com/hook
-  #   runs-on: ubuntu-latest
-  #   needs: release
-  #   steps:
-  #     - name: Deploy image to production
-  #       run: curl --fail -X POST "$WEBHOOK_URL"
-  #       env:
-  #         WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: release
+    timeout-minutes: 2
+    steps:
+      - name: Deploy image to production
+        run: curl --fail -X POST "$WEBHOOK_URL"
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
 
   summary:
     runs-on: ubuntu-latest
-    needs: [pre-commit, build, test, release]
+    needs: [pre-commit, build, test, release, deploy]
     if: always() # Ensures the summary is posted even if tests fail
     steps:
       - name: Generate Summary
@@ -197,6 +198,13 @@ jobs:
           if [ "$IS_MASTER" = "true" ]; then
             echo "<h2>✅ Production Release Ready</h2>" >> $GITHUB_STEP_SUMMARY
             echo "<p>The <b>master</b> branch has been built and pushed to the registry.</p>" >> $GITHUB_STEP_SUMMARY
+
+            echo "<h3>Deployment Status</h3>" >> $GITHUB_STEP_SUMMARY
+            if [ "${{ needs.deploy.result }}" = "success" ]; then
+              echo "<p><b>Deployment Triggered Successfully</b></p>" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "<p><b>Deployment Trigger Failed</b></p>" >> $GITHUB_STEP_SUMMARY
+            fi
 
             echo "<h3>Manual Deployment</h3>" >> $GITHUB_STEP_SUMMARY
             echo "<div style='background-color: #2b2b2b; color: #f1f1f1; padding: 15px; border-radius: 5px; font-family: monospace;'>" >> $GITHUB_STEP_SUMMARY
