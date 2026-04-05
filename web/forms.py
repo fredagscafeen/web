@@ -21,10 +21,11 @@ class LoginForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        if not EmailTokenBackend.is_user(email):
+        normalized_email = email.lower()
+        if not EmailTokenBackend.is_user(normalized_email):
             raise forms.ValidationError(_("Ukendt email"))
 
-        return email
+        return normalized_email
 
     def send_email(self, next, path):
         email_address = self.cleaned_data["email"]
