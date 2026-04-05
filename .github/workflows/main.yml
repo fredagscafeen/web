@@ -146,7 +146,7 @@ jobs:
       - test
       - test-docker-compose
     permissions:
-      packages: read
+      packages: write
     steps:
       - name: Login to ghcr.io
         uses: docker/login-action@v4
