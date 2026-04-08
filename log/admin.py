@@ -106,3 +106,26 @@ class LogEntryAdmin(admin.ModelAdmin):
 @custom_admin_view("log", _("Generate logs"))
 def generate_log(admin, request):
     return pdf_preview(request, admin.admin_site, LogEntryContext)
+
+
+@custom_admin_view("log", _("Empty log template"))
+def generate_empty_log(admin, request):
+    class EmptyLogEntryContext:
+        file_name = LOG_FILE_NAME
+        file_path = (
+            LOG_TEMPLATE_PATH  # This is the actual template path that will be used.
+        )
+
+        @staticmethod
+        def get_context():
+            template_path = LOG_TEMPLATE_PATH  # This is only to test if the file exists. Should be the same as file_path.
+            try:
+                with open(template_path, "rb") as f:
+                    pass
+            except FileNotFoundError:
+                template_path = None
+            return {
+                "template_path": template_path,
+            }
+
+    return pdf_preview(request, admin.admin_site, EmptyLogEntryContext)

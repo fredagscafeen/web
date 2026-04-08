@@ -143,6 +143,107 @@ Udfyldt af:\\
 {% endwith %}
 
 {% empty %}
+
+%An empty template to render if no log entries are available%
+
+\noindent
+\small{Dato: \textbf{ } }
+
+\subsection*{Foreningen - udfyldes inden arrangementet}
+
+\begin{tabularx}{\textwidth}{|X|X|}
+    \hline
+    \loglabel{Navn} & Fredagscaféen \\ \hline
+    \loglabel{Lokale} &  \\ \hline
+    \loglabel{Bestyrer} & \contactblock{ }{ }{ }{ } \\ \hline
+    \loglabel{Bevillingshaver} & \contactblock{ }{ }{ }{ } \\ \hline
+    \loglabel{Foreningens nøglepersoner} &
+        For- og efternavn:  \newline
+        Tlf.: \\ \hline
+    \loglabel{Foreningens formål} & \\ \hline
+    \loglabel{Husrepræsentant} &  \\ \hline
+\end{tabularx}
+
+\vfill
+
+\begin{center}
+    Side \textbf{1} af \textbf{3}
+\end{center}
+
+\newpage
+
+\noindent
+\small{Dato: \textbf{ } }
+
+\subsection*{Arrangementet - udfyldes inden arrangementet}
+
+\begin{tabularx}{\textwidth}{|X|X|}
+    \hline
+    \loglabel{Arrangementstype} &  \\ \hline
+    \loglabel{Arrangementsansvarlige} &
+        Navn:  \newline
+        Kontaktoplysninger:  \\ \hline
+    \loglabel{Formål} &  \\ \hline
+    \loglabel{Lokale/lokaler} &  \\ \hline
+    \loglabelextended{Evt. lejlighedsbevilling}{(kopi af lejlighedsbevilling bedes vedlagt)} &
+        Navn på ansøger: \newline
+        Kontaktoplysninger: \vspace{0.5cm} \noindent \newline
+        Gyldighed af lejlighedsbevilling: \vspace{1cm} \\ \hline
+    \loglabel{Forventet antal gæster} &  \\ \hline
+    \loglabel{Evt. professionelle vagter tilknyttet} &
+        Antal: \newline
+        Firma: \newline
+        Kontaktperson ved vagtbureau: \\ \hline
+    \loglabel[1cm]{Evt. driftsperson tilknyttet arrangementet} &
+        Navn: \\ \hline
+    \loglabelextended[1cm]{Låneaftale (ved ad hoc-arrangementer)}{(kopi bedes vedlagt)} &
+        Udfyldt af:  \\ \hline
+    \loglabel[1cm]{Sikkerhedskrav godkendt} &
+        Navn: \\ \hline
+\end{tabularx}
+
+\vfill
+
+\begin{center}
+    Side \textbf{2} af \textbf{3}
+\end{center}
+
+\newpage
+
+\noindent
+\small{Dato: \textbf{ } }
+
+\subsection*{Arrangementets forløb - udfyldes umiddelbart efter arrangementet}
+
+\begin{tabularx}{\textwidth}{|X|X|}
+    \hline
+    \loglabelextended[1cm]{Afvigelser fra det normale}{(beskrivelse)} &  \\ \hline
+    \loglabel[1cm]{Myndighedspersonaler kontaktet og/eller tilkaldt} &
+        Politi:  \newline
+        Brandmyndigheder:  \newline
+        Ambulance/læge:  \\ \hline
+    \loglabel[1cm]{AU-personale kontaktet og/eller tilkaldt} &  \\ \hline
+    \loglabelextended[1cm]{Skader på bygninger eller inventar}{(beskrivelse)} &  \\ \hline
+    \loglabel[1cm]{Samlet vurdering af arrangementet} &  \\ \hline
+\end{tabularx}
+
+\vfill
+
+\noindent
+Udfyldt af:\\
+\begin{tabularx}{0.7\textwidth}{XX}
+    & \\
+    & \\
+    & \\
+    \hline
+    Dato & Navn
+\end{tabularx}
+
+\vfill
+
+\begin{center}
+    Side \textbf{3} af \textbf{3}
+\end{center}
 {% endfor %}
 
 \end{document}
