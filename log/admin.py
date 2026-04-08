@@ -108,7 +108,7 @@ def generate_log(admin, request):
     return pdf_preview(request, admin.admin_site, LogEntryContext)
 
 
-@custom_admin_view("log", _("Empty log template"))
+@custom_admin_view("log", _("Empty logbook template"))
 def generate_empty_log(admin, request):
     class EmptyLogEntryContext:
         file_name = LOG_FILE_NAME
