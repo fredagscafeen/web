@@ -10,6 +10,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from bartenders.forms import BartenderApplicationForm
 from bartenders.models import (
     Bartender,
     BartenderApplication,
@@ -110,6 +111,45 @@ class BartenderApplicationTests(TestCase):
             info="Hkll",
         )
 
+        self.client.post("/da/", data=data)
+        self.assertFalse(BartenderApplication.objects.exists())
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_form_normalizes_email_to_lowercase(self):
+        form_data = {
+            "name": "Morten",
+            "username": "Jensen",
+            "email": "Morten@kat.dk",
+            "studentNumber": 123123,
+            "phoneNumber": 12312312,
+            "birthday": datetime.datetime(1993, 1, 1).date(),
+            "prefered_language": "da",
+            "tshirt_size": "L",
+            "study": "Datalogi",
+            "study_year": 1,
+            "info": "Hkll",
+            "g-recaptcha-response": "PASSED",
+        }
+        form = BartenderApplicationForm(data=form_data)
+        self.assertTrue(form.is_valid())
+        # The cleaned_data should return the lowercase version
+        self.assertEqual(form.cleaned_data["email"], "morten@kat.dk")
+
+    def test_duplicate_email_is_invalid(self):
+        Bartender.objects.create(name="Morten", username="Olsen", email="morten@kat.dk")
+        data = dict(
+            name="Morten",
+            username="Jensen",
+            email="morten@kat.dk",
+            studentNumber=123123,
+            phoneNumber=12312312,
+            birthday=datetime.datetime(1993, 1, 1).date(),
+            prefered_language="da",
+            tshirt_size="L",
+            study="Datalogi",
+            study_year=1,
+            info="Hkll",
+        )
         self.client.post("/da/", data=data)
         self.assertFalse(BartenderApplication.objects.exists())
         self.assertEqual(len(mail.outbox), 0)

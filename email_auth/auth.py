@@ -10,7 +10,7 @@ class EmailTokenBackend:
     @classmethod
     def has_exactly_one(self, model, email):
         try:
-            model.objects.get(email=email)
+            model.objects.get(email__iexact=email)
             return True
         except (model.DoesNotExist, model.MultipleObjectsReturned):
             return False
@@ -32,20 +32,25 @@ class EmailTokenBackend:
         )
 
     def authenticate(self, request, email=None, token=None):
+        if not email or not token:
+            return None
+
         try:
-            email_token = EmailToken.objects.get(email=email, token=token)
+            email_token = EmailToken.objects.get(email__iexact=email, token=token)
         except EmailToken.DoesNotExist:
             return None
 
         email_token.refresh_token()
 
         try:
-            user = User.objects.get(email=email, is_staff=True)
+            user = User.objects.get(email__iexact=email, is_staff=True)
         except User.DoesNotExist:
+            # Create all new users with lowercase email
+            normalized_email = email.lower()
             user, _ = User.objects.get_or_create(
-                email=email,
+                email=normalized_email,
                 defaults={
-                    "username": f"ZZZZZ_email_{email}"  # Z is lexicographically large
+                    "username": f"ZZZZZ_email_{normalized_email}"  # Z is lexicographically large
                 },
             )
 
