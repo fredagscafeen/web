@@ -122,7 +122,7 @@ SECRET_ADMIN_KEYS = [
         "role": "WEB",
     },
     {
-        "key": "DANSK_RETUR_SYSTEM_PASSWORD",
+        "key": "DANSK_RETURSYSTEM_PASSWORD",
         "description": "Dansk Retursystem",
         "username": "5790001782870",
         "url": "https://danskretursystem.dk/booking/",
