@@ -122,6 +122,13 @@ SECRET_ADMIN_KEYS = [
         "role": "WEB",
     },
     {
+        "key": "DANSK_RETUR_SYSTEM_PASSWORD",
+        "description": "Dansk Retursystem",
+        "username": "5790001782870",
+        "url": "https://danskretursystem.dk/booking/",
+        "role": "DRIFT",
+    },
+    {
         "key": "MIDTTRAFIK_BESTILLING_PASSWORD",
         "description": "midttrafikbestilling.dk",
         "username": "fredagscafeen",
