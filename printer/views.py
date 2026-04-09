@@ -1,4 +1,5 @@
 import shutil
+import time
 from subprocess import CalledProcessError
 from tempfile import TemporaryDirectory
 
@@ -76,6 +77,6 @@ stderr:
         # Anything else you want in the context...
         form=form,
         connected=Printer.is_connected(),
-        pdf_url=f"{settings.MEDIA_URL}/{file_name}.pdf",
+        pdf_url=f"{settings.MEDIA_URL}/{file_name}.pdf?t={int(time.time())}",
     )
     return TemplateResponse(request, "pdf_preview.html", context)

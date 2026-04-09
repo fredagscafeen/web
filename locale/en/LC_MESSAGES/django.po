@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-04 17:33+0200\n"
+"POT-Creation-Date: 2026-04-08 22:33+0200\n"
 "PO-Revision-Date: 2026-04-04 16:19+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1426,24 +1426,28 @@ msgstr "Not in stock"
 msgid "Sortimentet er desværre tomt"
 msgstr "The selection is unfortunately empty"
 
-#: log/admin.py:12
+#: log/admin.py:15
 msgid "Copy selected logs"
 msgstr "Copy selected logs"
 
-#: log/admin.py:20
+#: log/admin.py:23
 #, python-format
 msgid "%d log copied successfully."
 msgid_plural "%d logs copied successfully."
 msgstr[0] "%d log copied successfully."
 msgstr[1] "%d logs copied successfully."
 
-#: log/admin.py:62
+#: log/admin.py:66
 msgid "Print selected log entries"
 msgstr "Print selected log entries"
 
-#: log/admin.py:97
+#: log/admin.py:106
 msgid "Generate logs"
 msgstr "Generate logs"
+
+#: log/admin.py:111
+msgid "Empty logbook template"
+msgstr "Empty logbook template"
 
 #: log/models.py:14
 msgid "Bestyrer"

@@ -8,6 +8,9 @@ from printer.views import pdf_preview
 
 from .models import LogBase, LogEntry
 
+LOG_FILE_NAME = "logbog"
+LOG_TEMPLATE_PATH = "log/logbog.tex"
+
 
 @admin.action(description=_("Copy selected logs"))
 def copy(self, request, queryset):
@@ -26,6 +29,7 @@ def copy(self, request, queryset):
     )
 
 
+# Log templates view
 @admin.register(LogBase)
 class LogBaseAdmin(admin.ModelAdmin):
     list_display = (
@@ -41,13 +45,13 @@ class LogBaseAdmin(admin.ModelAdmin):
 
 
 class LogEntryContext:
-    file_name = "logbog"
-    file_path = "log/logbog.tex"
+    file_name = LOG_FILE_NAME
+    file_path = LOG_TEMPLATE_PATH  # This is the actual template path that will be used.
 
     @staticmethod
     def get_context():
         log_entries = LogEntry.objects.all()
-        template_path = settings.MEDIA_ROOT + f"guides/logbog.pdf"
+        template_path = LOG_TEMPLATE_PATH  # This is only to test if the file exists. Should be the same as file_path.
         try:
             with open(template_path, "rb") as f:
                 pass
@@ -62,13 +66,15 @@ class LogEntryContext:
 @admin.action(description=_("Print selected log entries"))
 def printer(self, request, queryset):
     class SelectedLogEntryContext:
-        file_name = "logbog"
-        file_path = "log/logbog.tex"
+        file_name = LOG_FILE_NAME
+        file_path = (
+            LOG_TEMPLATE_PATH  # This is the actual template path that will be used.
+        )
 
         @staticmethod
         def get_context():
             log_entries = queryset
-            template_path = settings.MEDIA_ROOT + f"guides/logbog.pdf"
+            template_path = LOG_TEMPLATE_PATH  # This is only to test if the file exists. Should be the same as file_path.
             try:
                 with open(template_path, "rb") as f:
                     pass
@@ -79,9 +85,12 @@ def printer(self, request, queryset):
                 "template_path": template_path,
             }
 
+    request.method = "GET"  # Force GET method for the view, since we're just generating a PDF preview.
+
     return pdf_preview(request, self.admin_site, SelectedLogEntryContext)
 
 
+# Log entries view
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
     list_display = (
@@ -97,3 +106,26 @@ class LogEntryAdmin(admin.ModelAdmin):
 @custom_admin_view("log", _("Generate logs"))
 def generate_log(admin, request):
     return pdf_preview(request, admin.admin_site, LogEntryContext)
+
+
+@custom_admin_view("log", _("Empty logbook template"))
+def generate_empty_log(admin, request):
+    class EmptyLogEntryContext:
+        file_name = LOG_FILE_NAME
+        file_path = (
+            LOG_TEMPLATE_PATH  # This is the actual template path that will be used.
+        )
+
+        @staticmethod
+        def get_context():
+            template_path = LOG_TEMPLATE_PATH  # This is only to test if the file exists. Should be the same as file_path.
+            try:
+                with open(template_path, "rb") as f:
+                    pass
+            except FileNotFoundError:
+                template_path = None
+            return {
+                "template_path": template_path,
+            }
+
+    return pdf_preview(request, admin.admin_site, EmptyLogEntryContext)
