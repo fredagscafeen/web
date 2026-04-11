@@ -298,9 +298,9 @@ class ForwardedMail(models.Model):
             previous_attempt.incoming_mail_id
             if previous_attempt is not None
             and previous_attempt.pk == self.previous_attempt_id
-            else ForwardedMail.objects.filter(pk=self.previous_attempt_id).values_list(
-                "incoming_mail_id", flat=True
-            ).first()
+            else ForwardedMail.objects.filter(pk=self.previous_attempt_id)
+            .values_list("incoming_mail_id", flat=True)
+            .first()
         )
         if previous_attempt_incoming_mail_id != self.incoming_mail_id:
             raise ValidationError(
