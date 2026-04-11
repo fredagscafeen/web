@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -6,10 +7,13 @@ from api.serializers import (
     BartenderSerializer,
     BeerTypeSerializer,
     BrewerySerializer,
+    ForwardedMailStatusSerializer,
+    IncomingMailIngestSerializer,
     ItemSerializer,
 )
 from bartenders.models import Bartender
 from items.models import BeerType, Brewery, Item
+from mail.models import ForwardedMail
 from printer.models import Printer
 
 
@@ -63,3 +67,31 @@ class PrintStatusView(APIView):
     def get(self, request, job_id):
         status, code = Printer.get_status(job_id)
         return Response({"status": status, "code": code})
+
+
+class IncomingMailIngestView(APIView):
+    required_permissions = ("mail.add_incomingmail", "mail.change_incomingmail")
+
+    def post(self, request):
+        serializer = IncomingMailIngestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        incoming_mail = serializer.save()
+        return Response(
+            {"id": incoming_mail.pk, "status": incoming_mail.status},
+            status=status.HTTP_200_OK,
+        )
+
+
+class ForwardedMailStatusView(APIView):
+    required_permissions = ("mail.change_forwardedmail",)
+
+    def patch(self, request, pk):
+        forwarded_mail = get_object_or_404(ForwardedMail, pk=pk)
+        serializer = ForwardedMailStatusSerializer(
+            forwarded_mail,
+            data=request.data,
+            partial=True,
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
