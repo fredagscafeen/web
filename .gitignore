@@ -10,6 +10,7 @@ db.sqlite3
 /staticfiles
 /db_data
 .worktrees
+docs/superpowers
 
 # Mac
 .DS_Store
