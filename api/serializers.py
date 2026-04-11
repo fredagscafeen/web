@@ -78,11 +78,14 @@ class IncomingMailIngestSerializer(serializers.Serializer):
             },
         )
 
+        initial_attempts = incoming_mail.forward_attempts.filter(
+            previous_attempt__isnull=True
+        )
         if incoming_mail.status == IncomingMail.Status.PROCESSED:
-            existing_targets = set(
-                incoming_mail.forward_attempts.filter(previous_attempt__isnull=True)
-                .values_list("target", flat=True)
-            )
+            initial_attempts.exclude(
+                target__in=self.validated_data["expanded_recipients"]
+            ).delete()
+            existing_targets = set(initial_attempts.values_list("target", flat=True))
             ForwardedMail.objects.bulk_create(
                 [
                     ForwardedMail(
@@ -95,13 +98,15 @@ class IncomingMailIngestSerializer(serializers.Serializer):
                     if recipient not in existing_targets
                 ]
             )
+        else:
+            initial_attempts.delete()
 
         return incoming_mail
 
 
 class ForwardedMailStatusSerializer(serializers.ModelSerializer):
     status = serializers.ChoiceField(choices=((ForwardedMail.Status.FAILED, "Failed"),))
-    reason = serializers.CharField(allow_blank=False)
+    reason = serializers.CharField(allow_blank=False, required=True)
 
     class Meta:
         model = ForwardedMail

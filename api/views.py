@@ -90,7 +90,6 @@ class ForwardedMailStatusView(APIView):
         serializer = ForwardedMailStatusSerializer(
             forwarded_mail,
             data=request.data,
-            partial=True,
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()

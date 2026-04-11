@@ -154,6 +154,7 @@ class ApiTests(APITestCase):
         self.assertEqual(first_response.status_code, status.HTTP_200_OK)
 
         payload["sender"] = "updated@example.com"
+        payload["expanded_recipients"] = ["two@example.com", "three@example.com"]
         second_response = self.client.post(
             self.api_path("monitoring/incoming-mails/"),
             payload,
@@ -179,7 +180,7 @@ class ApiTests(APITestCase):
                 )
             ),
             [
-                ("one@example.com", ForwardedMail.Status.FORWARDED, ""),
+                ("three@example.com", ForwardedMail.Status.FORWARDED, ""),
                 ("two@example.com", ForwardedMail.Status.FORWARDED, ""),
             ],
         )
@@ -214,6 +215,46 @@ class ApiTests(APITestCase):
         incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
         self.assertEqual(incoming_mail.status, IncomingMail.Status.DROPPED)
         self.assertEqual(incoming_mail.reason, "No matching mailing list")
+        self.assertEqual(incoming_mail.forward_attempts.count(), 0)
+
+    def test_monitoring_ingest_upserting_dropped_mail_removes_initial_forwarded_rows(self):
+        request_uuid = uuid.uuid4()
+        received_at = timezone.now()
+        processed_payload = {
+            "request_uuid": str(request_uuid),
+            "received_at": received_at.isoformat(),
+            "sender": "sender@example.com",
+            "target": "best@fredagscafeen.dk",
+            "status": IncomingMail.Status.PROCESSED,
+            "reason": "",
+            "s3_object_key": "archive/request-2.eml",
+            "expanded_recipients": ["one@example.com", "two@example.com"],
+        }
+        dropped_payload = {
+            **processed_payload,
+            "status": IncomingMail.Status.DROPPED,
+            "reason": "Suppressed after ingest",
+            "expanded_recipients": [],
+        }
+
+        self.authenticate(permissions=["add_incomingmail", "change_incomingmail"])
+        processed_response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            processed_payload,
+            format="json",
+        )
+        self.assertEqual(processed_response.status_code, status.HTTP_200_OK)
+
+        dropped_response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            dropped_payload,
+            format="json",
+        )
+        self.assertEqual(dropped_response.status_code, status.HTTP_200_OK)
+
+        incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
+        self.assertEqual(incoming_mail.status, IncomingMail.Status.DROPPED)
+        self.assertEqual(incoming_mail.reason, "Suppressed after ingest")
         self.assertEqual(incoming_mail.forward_attempts.count(), 0)
 
     def test_forwarded_mail_status_patch_requires_api_key_permission(self):
@@ -272,3 +313,30 @@ class ApiTests(APITestCase):
         forwarded_mail.refresh_from_db()
         self.assertEqual(forwarded_mail.status, ForwardedMail.Status.FAILED)
         self.assertEqual(forwarded_mail.reason, "SMTP timeout")
+
+    def test_forwarded_mail_status_patch_requires_failure_reason(self):
+        forwarded_mail = ForwardedMail.objects.create(
+            incoming_mail=IncomingMail.objects.create(
+                received_at=timezone.now(),
+                sender="sender@example.com",
+                target="best@fredagscafeen.dk",
+                mail_archive=MailArchive.objects.create(
+                    request_uuid=uuid.uuid4(),
+                    s3_object_key="archive/request-5.eml",
+                ),
+                status=IncomingMail.Status.PROCESSED,
+            ),
+            target="member@example.com",
+            forwarded_at=timezone.now(),
+            status=ForwardedMail.Status.FORWARDED,
+        )
+
+        self.authenticate(permissions=["change_forwardedmail"])
+        response = self.client.patch(
+            self.api_path(f"monitoring/forwarded-mails/{forwarded_mail.pk}/"),
+            {"status": ForwardedMail.Status.FAILED},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("reason", response.data)
