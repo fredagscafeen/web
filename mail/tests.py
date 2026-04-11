@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
+from django.contrib.messages import get_messages
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import RequestFactory, TestCase
@@ -467,6 +468,37 @@ class IncomingMailAdminTest(TestCase):
             request_resend.call_args_list,
         )
 
+    @patch("mail.admin.request_forwarded_mail_resend")
+    def test_resend_action_reports_partial_successes_and_errors(self, request_resend):
+        incoming_mail = self.create_incoming_mail()
+        self.create_forwarded_mail(
+            incoming_mail,
+            target="success@example.com",
+            status=ForwardedMail.Status.FAILED,
+            reason="SMTP timeout",
+        )
+        self.create_forwarded_mail(
+            incoming_mail,
+            target="failure@example.com",
+            status=ForwardedMail.Status.BOUNCED,
+            reason="Mailbox unavailable",
+        )
+        request_resend.side_effect = [None, RuntimeError("Datmail unavailable")]
+
+        response = self.client.get(
+            reverse(
+                "admin:mail_incomingmail_actions",
+                kwargs={"pk": incoming_mail.pk, "tool": "resend"},
+            ),
+            follow=True,
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(request_resend.call_count, 2)
+        messages = [str(message) for message in get_messages(response.wsgi_request)]
+        self.assertIn("Queued resend for 1 recipient(s).", messages)
+        self.assertIn("Datmail unavailable", messages)
+
     def test_change_view_shows_forwarded_mail_inline(self):
         incoming_mail = self.create_incoming_mail()
         forwarded_mail = self.create_forwarded_mail(
@@ -532,3 +564,21 @@ class ForwardedMailAdminTest(TestCase):
             reverse("admin:mail_forwardedmail_change", args=[forwarded_mail.pk]),
         )
         request_resend.assert_called_once_with(forwarded_mail)
+
+    @patch("mail.admin.request_forwarded_mail_resend")
+    def test_resend_action_reports_errors_instead_of_crashing(self, request_resend):
+        forwarded_mail = self.create_forwarded_mail()
+        request_resend.side_effect = RuntimeError("Datmail unavailable")
+
+        response = self.client.get(
+            reverse(
+                "admin:mail_forwardedmail_actions",
+                kwargs={"pk": forwarded_mail.pk, "tool": "resend"},
+            ),
+            follow=True,
+        )
+
+        self.assertEqual(response.status_code, 200)
+        request_resend.assert_called_once_with(forwarded_mail)
+        messages = [str(message) for message in get_messages(response.wsgi_request)]
+        self.assertIn("Datmail unavailable", messages)

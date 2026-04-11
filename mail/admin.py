@@ -295,23 +295,27 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
             )
             return
 
+        success_count = 0
         errors = []
         for forwarded_mail in retryable_attempts:
             try:
                 request_forwarded_mail_resend(forwarded_mail)
             except Exception as error:
                 errors.append(str(error))
+            else:
+                success_count += 1
+
+        if success_count:
+            self.message_user(
+                request,
+                _("Queued resend for %(count)s recipient(s).")
+                % {"count": success_count},
+                messages.SUCCESS,
+            )
 
         if errors:
             self.message_user(request, "; ".join(errors), messages.ERROR)
             return
-
-        self.message_user(
-            request,
-            _("Queued resend for %(count)s recipient(s).")
-            % {"count": len(retryable_attempts)},
-            messages.SUCCESS,
-        )
 
     resend.label = _("Resend failed recipients")
 
@@ -344,7 +348,12 @@ class ForwardedMailAdmin(DjangoObjectActions, admin.ModelAdmin):
         return actions
 
     def resend(self, request, obj):
-        request_forwarded_mail_resend(obj)
+        try:
+            request_forwarded_mail_resend(obj)
+        except Exception as error:
+            self.message_user(request, str(error), messages.ERROR)
+            return
+
         self.message_user(
             request,
             _("Queued resend for %(target)s.") % {"target": obj.target},

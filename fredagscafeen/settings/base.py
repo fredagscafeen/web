@@ -17,6 +17,7 @@ from django.contrib import messages
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -221,8 +222,6 @@ SECRET_ADMIN_KEYS = [
         "role": "KASSERER",
     },
 ]
-
-load_dotenv()
 
 GIT_COMMIT_HASH = os.getenv("GIT_COMMIT_HASH")
 
