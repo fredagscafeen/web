@@ -1,10 +1,7 @@
 from django.db import migrations, models
 
-
 POSTGRES_FUNCTION_NAME = "mail_forwardedmail_previous_attempt_same_incoming_mail"
-POSTGRES_TRIGGER_NAME = (
-    "mail_forwardedmail_previous_attempt_same_incoming_mail_trigger"
-)
+POSTGRES_TRIGGER_NAME = "mail_forwardedmail_previous_attempt_same_incoming_mail_trigger"
 SQLITE_INSERT_TRIGGER_NAME = (
     "mail_forwardedmail_previous_attempt_same_incoming_mail_insert"
 )

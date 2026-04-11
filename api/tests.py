@@ -185,9 +185,7 @@ class ApiTests(APITestCase):
             ],
         )
         self.assertEqual(
-            set(
-                incoming_mail.forward_attempts.values_list("forwarded_at", flat=True)
-            ),
+            set(incoming_mail.forward_attempts.values_list("forwarded_at", flat=True)),
             {received_at},
         )
 
@@ -212,12 +210,16 @@ class ApiTests(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
+        incoming_mail = IncomingMail.objects.get(
+            mail_archive__request_uuid=request_uuid
+        )
         self.assertEqual(incoming_mail.status, IncomingMail.Status.DROPPED)
         self.assertEqual(incoming_mail.reason, "No matching mailing list")
         self.assertEqual(incoming_mail.forward_attempts.count(), 0)
 
-    def test_monitoring_ingest_upserting_dropped_mail_removes_initial_forwarded_rows(self):
+    def test_monitoring_ingest_upserting_dropped_mail_removes_initial_forwarded_rows(
+        self,
+    ):
         request_uuid = uuid.uuid4()
         received_at = timezone.now()
         processed_payload = {
@@ -252,7 +254,9 @@ class ApiTests(APITestCase):
         )
         self.assertEqual(dropped_response.status_code, status.HTTP_200_OK)
 
-        incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
+        incoming_mail = IncomingMail.objects.get(
+            mail_archive__request_uuid=request_uuid
+        )
         self.assertEqual(incoming_mail.status, IncomingMail.Status.DROPPED)
         self.assertEqual(incoming_mail.reason, "Suppressed after ingest")
         self.assertEqual(incoming_mail.forward_attempts.count(), 0)
@@ -282,9 +286,15 @@ class ApiTests(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
+        incoming_mail = IncomingMail.objects.get(
+            mail_archive__request_uuid=request_uuid
+        )
         self.assertEqual(
-            list(incoming_mail.forward_attempts.order_by("target").values_list("target", flat=True)),
+            list(
+                incoming_mail.forward_attempts.order_by("target").values_list(
+                    "target", flat=True
+                )
+            ),
             ["one@example.com", "two@example.com"],
         )
 
@@ -309,7 +319,9 @@ class ApiTests(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
+        incoming_mail = IncomingMail.objects.get(
+            mail_archive__request_uuid=request_uuid
+        )
         initial_attempt = incoming_mail.forward_attempts.get()
         retry_attempt = ForwardedMail.objects.create(
             incoming_mail=incoming_mail,
@@ -329,7 +341,9 @@ class ApiTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         self.assertFalse(
-            ForwardedMail.objects.filter(pk__in=[initial_attempt.pk, retry_attempt.pk]).exists()
+            ForwardedMail.objects.filter(
+                pk__in=[initial_attempt.pk, retry_attempt.pk]
+            ).exists()
         )
         self.assertEqual(
             list(incoming_mail.forward_attempts.values_list("target", flat=True)),

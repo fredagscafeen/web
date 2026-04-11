@@ -86,7 +86,9 @@ class IncomingMailIngestSerializer(serializers.Serializer):
                 target__in=self.validated_data["expanded_recipients"]
             ).delete()
             existing_targets = set(initial_attempts.values_list("target", flat=True))
-            desired_recipients = dict.fromkeys(self.validated_data["expanded_recipients"])
+            desired_recipients = dict.fromkeys(
+                self.validated_data["expanded_recipients"]
+            )
             ForwardedMail.objects.bulk_create(
                 [
                     ForwardedMail(
