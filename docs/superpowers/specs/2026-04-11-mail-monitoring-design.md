@@ -58,7 +58,7 @@ These models belong in the existing Django `mail` app.
 - `s3_object_key` string, for example `archive/<request_uuid>.eml`
 
 Notes:
-
+- The S3 objects for MailArchive will live in the mail-archive bucket. 
 - Store the S3 object key, not a presigned URL
 - Django generates presigned URLs on demand in admin
 
@@ -92,12 +92,13 @@ Notes:
 
 - A resend creates a new `ForwardedMail` row; it does not rewrite the old row
 - `previous_attempt` provides an explicit retry chain for audit and UI display
+- The `ForwardedMail` retry entity should stay close to the original forward entity in the UI display (for correlation).
 
 ## Event flow
 
-### 1. Inbound mail received
+### 1. Inbound mail recorded after processing outcome is known
 
-When `datmail` accepts an inbound message and has enough information to persist it, it calls a Django API endpoint keyed by `request_uuid`.
+When `datmail` finishes the relevant relay decision flow for an inbound message and knows whether the mail was processed or dropped, it calls a Django API endpoint keyed by `request_uuid`.
 
 Payload should include:
 
@@ -109,13 +110,19 @@ Payload should include:
 - `status`
 - `reason` when dropped
 - `s3_object_key`
-- `expanded_recipients` list when forwarding is applicable
+- `expanded_recipients` list when the mail was processed and recipient expansion happened
 
 Django behavior:
 
 - upsert `MailArchive` by `request_uuid`
 - create or update `IncomingMail`
-- bulk-create one initial `ForwardedMail` row per expanded recipient when `expanded_recipients` is present
+- bulk-create one initial `ForwardedMail` row per expanded recipient only when `IncomingMail.status = PROCESSED`
+
+For dropped mail:
+
+- create `IncomingMail` with `status = DROPPED`
+- store the drop reason for UI display
+- do not create any `ForwardedMail` rows
 
 ### 2. Synchronous forwarding failure updates
 
@@ -177,6 +184,11 @@ Each row should show:
 - recipient counts derived from the latest attempt per recipient chain
 - counts for current forwarded / failed / bounced outcomes
 - whether resend attempts exist
+
+Default admin behavior:
+
+- show only `IncomingMail` rows with `status = PROCESSED`
+- provide an easy filter to include or switch to `DROPPED` rows
 
 ### Incoming mail detail
 
@@ -264,7 +276,9 @@ Important:
 - model constraints and relationships
 - idempotent incoming-mail upsert behavior
 - initial `ForwardedMail` bulk creation from expanded recipients
+- no `ForwardedMail` creation for dropped mail
 - admin changelist stats based on latest attempt per recipient chain
+- admin default filtering to processed mail with optional dropped-mail visibility
 - presigned download action behavior
 - resend action triggering the outbound request to `datmail`
 
@@ -278,8 +292,9 @@ Important:
 
 - Django is the source of truth for monitoring data
 - An `IncomingMail` row exists for both processed and dropped mail
+- Dropped mail creates no `ForwardedMail` rows and must carry a visible drop reason
 - `IncomingMail` stores both the raw original target string and a nullable `MailingList` relation
-- Initial expanded recipients are sent from `datmail` to Django so Django can create the first `ForwardedMail` rows immediately
+- `datmail` reports mail to Django after the processing outcome is known, so Django only creates initial `ForwardedMail` rows for processed mail
 - `ForwardedMail` uses `FORWARDED`, `FAILED`, and `BOUNCED`
 - Resends create new `ForwardedMail` rows linked by `previous_attempt`
 - Resends are triggered from Django admin but executed by `datmail`
