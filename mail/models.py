@@ -311,6 +311,10 @@ class ForwardedMail(models.Model):
                 }
             )
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
 
 def create_attachments(attachment_files):
     """

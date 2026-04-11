@@ -1,5 +1,6 @@
 import uuid
 
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
 from django.utils import timezone
@@ -101,6 +102,24 @@ class MonitoringModelsTest(TestCase):
         with self.assertRaises(IntegrityError):
             ForwardedMail.objects.filter(pk=attempt.pk).update(previous_attempt=attempt)
 
+    def test_forwarded_mail_save_rejects_self_as_previous_attempt(self):
+        attempt = ForwardedMail.objects.create(
+            incoming_mail=self.create_incoming_mail(),
+            target="member@example.com",
+            forwarded_at=timezone.now(),
+            status=ForwardedMail.Status.FAILED,
+            reason="SMTP timeout",
+        )
+        attempt.previous_attempt = attempt
+
+        with self.assertRaises(ValidationError) as error:
+            attempt.save()
+
+        self.assertEqual(
+            error.exception.message_dict["previous_attempt"],
+            ["A forwarded mail cannot reference itself as previous attempt."],
+        )
+
     def test_forwarded_mail_previous_attempt_must_belong_to_same_incoming_mail(self):
         first_incoming_mail = self.create_incoming_mail()
         second_incoming_mail = self.create_incoming_mail(target="other-list@fredagscafeen.dk")
@@ -111,8 +130,31 @@ class MonitoringModelsTest(TestCase):
             status=ForwardedMail.Status.FAILED,
             reason="SMTP timeout",
         )
+        second_attempt = ForwardedMail.objects.create(
+            incoming_mail=second_incoming_mail,
+            target="member@example.com",
+            forwarded_at=timezone.now(),
+            status=ForwardedMail.Status.FAILED,
+            reason="SMTP timeout",
+        )
 
         with self.assertRaises(IntegrityError):
+            ForwardedMail.objects.filter(pk=second_attempt.pk).update(
+                previous_attempt=first_attempt
+            )
+
+    def test_forwarded_mail_create_rejects_previous_attempt_from_other_incoming_mail(self):
+        first_incoming_mail = self.create_incoming_mail()
+        second_incoming_mail = self.create_incoming_mail(target="other-list@fredagscafeen.dk")
+        first_attempt = ForwardedMail.objects.create(
+            incoming_mail=first_incoming_mail,
+            target="member@example.com",
+            forwarded_at=timezone.now(),
+            status=ForwardedMail.Status.FAILED,
+            reason="SMTP timeout",
+        )
+
+        with self.assertRaises(ValidationError) as error:
             ForwardedMail.objects.create(
                 incoming_mail=second_incoming_mail,
                 target="member@example.com",
@@ -121,3 +163,8 @@ class MonitoringModelsTest(TestCase):
                 reason="SMTP timeout",
                 previous_attempt=first_attempt,
             )
+
+        self.assertEqual(
+            error.exception.message_dict["previous_attempt"],
+            ["previous_attempt must belong to the same incoming mail."],
+        )
