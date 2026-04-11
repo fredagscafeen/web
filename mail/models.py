@@ -2,6 +2,7 @@ import datetime
 import os
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.db import models
@@ -268,6 +269,47 @@ class ForwardedMail(models.Model):
         on_delete=models.SET_NULL,
         related_name="retry_attempts",
     )
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(pk=models.F("previous_attempt")),
+                name="forwardedmail_previous_attempt_not_self",
+            ),
+        ]
+
+    def clean(self):
+        super().clean()
+
+        if self.previous_attempt_id is None:
+            return
+
+        if self.previous_attempt_id == self.pk:
+            raise ValidationError(
+                {
+                    "previous_attempt": _(
+                        "A forwarded mail cannot reference itself as previous attempt."
+                    )
+                }
+            )
+
+        previous_attempt = getattr(self, "previous_attempt", None)
+        previous_attempt_incoming_mail_id = (
+            previous_attempt.incoming_mail_id
+            if previous_attempt is not None
+            and previous_attempt.pk == self.previous_attempt_id
+            else ForwardedMail.objects.filter(pk=self.previous_attempt_id).values_list(
+                "incoming_mail_id", flat=True
+            ).first()
+        )
+        if previous_attempt_incoming_mail_id != self.incoming_mail_id:
+            raise ValidationError(
+                {
+                    "previous_attempt": _(
+                        "previous_attempt must belong to the same incoming mail."
+                    )
+                }
+            )
 
 
 def create_attachments(attachment_files):
