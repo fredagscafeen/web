@@ -10,7 +10,6 @@ db.sqlite3
 /staticfiles
 /db_data
 .worktrees
-.worktrees/
 
 # Mac
 .DS_Store
