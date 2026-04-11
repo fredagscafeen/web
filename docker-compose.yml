@@ -1,6 +1,6 @@
 services:
   app:
-    image: &app ghcr.io/fredagscafeen/web
+    image: &app ghcr.io/fredagscafeen/web:latest
     restart: always
     networks:
       - traefik
@@ -9,6 +9,7 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - ./media:/app/media
+      - ./django.log:/app/django.log
       - ./.env:/app/.env
       - /var/run/cups:/var/run/cups
     labels:
