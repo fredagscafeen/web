@@ -9,6 +9,7 @@ from django.template import Template
 from django.utils.translation import gettext_lazy as _
 
 from bartenders.models import Bartender
+from web.models import TimeStampedModel
 
 from .fields import CommaSeparatedEmailField
 from .validators import validate_template_syntax
@@ -214,6 +215,59 @@ class Attachment(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class MailArchive(TimeStampedModel):
+    request_uuid = models.UUIDField(unique=True)
+    s3_object_key = models.CharField(max_length=1024)
+
+
+class IncomingMail(models.Model):
+    class Status(models.TextChoices):
+        PROCESSED = "PROCESSED", "Processed"
+        DROPPED = "DROPPED", "Dropped"
+
+    received_at = models.DateTimeField()
+    sender = models.CharField(max_length=320)
+    target = models.CharField(max_length=320)
+    mailing_list = models.ForeignKey(
+        MailingList,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="incoming_mails",
+    )
+    mail_archive = models.OneToOneField(
+        MailArchive,
+        on_delete=models.CASCADE,
+        related_name="incoming_mail",
+    )
+    status = models.CharField(max_length=9, choices=Status.choices)
+    reason = models.TextField(blank=True)
+
+
+class ForwardedMail(models.Model):
+    class Status(models.TextChoices):
+        FORWARDED = "FORWARDED", "Forwarded"
+        FAILED = "FAILED", "Failed"
+        BOUNCED = "BOUNCED", "Bounced"
+
+    incoming_mail = models.ForeignKey(
+        IncomingMail,
+        on_delete=models.CASCADE,
+        related_name="forward_attempts",
+    )
+    target = models.CharField(max_length=320)
+    forwarded_at = models.DateTimeField()
+    status = models.CharField(max_length=9, choices=Status.choices)
+    reason = models.TextField(blank=True)
+    previous_attempt = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="retry_attempts",
+    )
 
 
 def create_attachments(attachment_files):
