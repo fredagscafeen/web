@@ -288,6 +288,54 @@ class ApiTests(APITestCase):
             ["one@example.com", "two@example.com"],
         )
 
+    def test_monitoring_ingest_removes_retry_chain_for_deleted_initial_recipient(self):
+        request_uuid = uuid.uuid4()
+        processed_payload = {
+            "request_uuid": str(request_uuid),
+            "received_at": timezone.now().isoformat(),
+            "sender": "sender@example.com",
+            "target": "best@fredagscafeen.dk",
+            "status": IncomingMail.Status.PROCESSED,
+            "reason": "",
+            "s3_object_key": "archive/request-retry-chain.eml",
+            "expanded_recipients": ["one@example.com"],
+        }
+
+        self.authenticate(permissions=["add_incomingmail", "change_incomingmail"])
+        response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            processed_payload,
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
+        initial_attempt = incoming_mail.forward_attempts.get()
+        retry_attempt = ForwardedMail.objects.create(
+            incoming_mail=incoming_mail,
+            target=initial_attempt.target,
+            forwarded_at=timezone.now(),
+            status=ForwardedMail.Status.FAILED,
+            reason="SMTP timeout",
+            previous_attempt=initial_attempt,
+        )
+
+        processed_payload["expanded_recipients"] = ["two@example.com"]
+        response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            processed_payload,
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.assertFalse(
+            ForwardedMail.objects.filter(pk__in=[initial_attempt.pk, retry_attempt.pk]).exists()
+        )
+        self.assertEqual(
+            list(incoming_mail.forward_attempts.values_list("target", flat=True)),
+            ["two@example.com"],
+        )
+
     def test_forwarded_mail_status_patch_requires_api_key_permission(self):
         forwarded_mail = ForwardedMail.objects.create(
             incoming_mail=IncomingMail.objects.create(

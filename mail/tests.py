@@ -90,6 +90,29 @@ class MonitoringModelsTest(TestCase):
         self.assertEqual(retry_attempt.previous_attempt, first_attempt)
         self.assertEqual(list(first_attempt.retry_attempts.all()), [retry_attempt])
 
+    def test_deleting_initial_forward_attempt_cascades_retry_chain(self):
+        incoming_mail = self.create_incoming_mail()
+        first_attempt = ForwardedMail.objects.create(
+            incoming_mail=incoming_mail,
+            target="member@example.com",
+            forwarded_at=timezone.now(),
+            status=ForwardedMail.Status.FAILED,
+            reason="SMTP timeout",
+        )
+        retry_attempt = ForwardedMail.objects.create(
+            incoming_mail=incoming_mail,
+            target="member@example.com",
+            forwarded_at=timezone.now(),
+            status=ForwardedMail.Status.FORWARDED,
+            previous_attempt=first_attempt,
+        )
+
+        first_attempt.delete()
+
+        self.assertFalse(
+            ForwardedMail.objects.filter(pk__in=[first_attempt.pk, retry_attempt.pk]).exists()
+        )
+
     def test_forwarded_mail_cannot_reference_itself_as_previous_attempt(self):
         attempt = ForwardedMail.objects.create(
             incoming_mail=self.create_incoming_mail(),
