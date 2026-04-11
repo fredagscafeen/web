@@ -9,7 +9,6 @@ from api.views import (
     ItemViewSet,
     LastModifiedView,
     PrintStatusView,
-    TokenAuthView,
 )
 
 router = routers.DefaultRouter()
@@ -19,7 +18,6 @@ router.register(r"beerTypes", BeerTypeViewSet)
 router.register(r"bartenders", BartenderViewSet)
 
 urlpatterns = [
-    path("auth/", TokenAuthView.as_view(), name="token-auth"),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("last-modified/", LastModifiedView.as_view(), name="last-modified"),
     path("is-bartender/<username>/", IsBartenderView.as_view(), name="is_bartender"),

@@ -1,24 +1,8 @@
 from django.contrib.auth.models import AnonymousUser
 from rest_framework import authentication, exceptions
-from rest_framework.authtoken.models import Token
 
 from apikeys.models import GranularAPIKey
 from apikeys.permissions import BearerKeyParser
-
-
-class BearerTokenAuthentication(authentication.TokenAuthentication):
-    keyword = BearerKeyParser.keyword
-
-    def authenticate_credentials(self, key):
-        try:
-            token = Token.objects.select_related("user").get(key=key)
-        except Token.DoesNotExist:
-            return None
-
-        if not token.user.is_active:
-            raise exceptions.AuthenticationFailed("User inactive or deleted.")
-
-        return (token.user, token)
 
 
 class GranularAPIKeyAuthentication(authentication.BaseAuthentication):

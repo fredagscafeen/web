@@ -258,7 +258,6 @@ INSTALLED_APPS = (
     "django_extensions",
     "constance",
     "constance.backends.database",
-    "rest_framework.authtoken",
     "bootstrap5",
     "django_bootstrap_icons",
     "bootstrap_datepicker_plus",
@@ -309,7 +308,6 @@ AUTHENTICATION_BACKENDS = (
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "apikeys.authentication.BearerTokenAuthentication",
         "apikeys.authentication.GranularAPIKeyAuthentication",
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",

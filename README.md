@@ -265,7 +265,6 @@ The printers should be installed on the remote machine and also be entered into 
 # API usage
 
 ### Method Overview
-> - Auth
 > - Items
 > - Breweries
 > - BeerTypes
@@ -273,25 +272,6 @@ The printers should be installed on the remote machine and also be entered into 
 > - Is-Bartender
 
 ### Method details
-
-#### **Auth**
-POST <host>/api/auth/
-
-##### Request
-```
-{
-    "username": "...",
-    "password": "..."
-}
-```
-##### Response
-```
-{
-    "token": "...",
-    "permissions": [...]
-}
-```
------------------
 
 #### **Items**
 GET <host>/api/items/
