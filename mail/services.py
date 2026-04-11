@@ -50,6 +50,8 @@ def request_forwarded_mail_resend(forwarded_mail):
             "incoming_mail_id": forwarded_mail.incoming_mail_id,
             "forwarded_mail_id": forwarded_mail.pk,
             "target": forwarded_mail.target,
+            "sender": forwarded_mail.incoming_mail.sender,
+            "original_target": forwarded_mail.incoming_mail.target,
         },
         headers={
             "Authorization": f"Bearer {settings.DATMAIL_CONTROL_TOKEN}",

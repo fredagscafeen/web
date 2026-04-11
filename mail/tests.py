@@ -280,6 +280,8 @@ class MonitoringServicesTest(TestCase):
                 "incoming_mail_id": incoming_mail.pk,
                 "forwarded_mail_id": forwarded_mail.pk,
                 "target": "member@example.com",
+                "sender": "sender@example.com",
+                "original_target": "list@fredagscafeen.dk",
             },
             headers={
                 "Authorization": "Bearer shared-secret",
