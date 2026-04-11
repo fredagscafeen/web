@@ -257,6 +257,37 @@ class ApiTests(APITestCase):
         self.assertEqual(incoming_mail.reason, "Suppressed after ingest")
         self.assertEqual(incoming_mail.forward_attempts.count(), 0)
 
+    def test_monitoring_ingest_deduplicates_expanded_recipients(self):
+        request_uuid = uuid.uuid4()
+        payload = {
+            "request_uuid": str(request_uuid),
+            "received_at": timezone.now().isoformat(),
+            "sender": "sender@example.com",
+            "target": "best@fredagscafeen.dk",
+            "status": IncomingMail.Status.PROCESSED,
+            "reason": "",
+            "s3_object_key": "archive/request-dedupe.eml",
+            "expanded_recipients": [
+                "one@example.com",
+                "one@example.com",
+                "two@example.com",
+            ],
+        }
+
+        self.authenticate(permissions=["add_incomingmail", "change_incomingmail"])
+        response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            payload,
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        incoming_mail = IncomingMail.objects.get(mail_archive__request_uuid=request_uuid)
+        self.assertEqual(
+            list(incoming_mail.forward_attempts.order_by("target").values_list("target", flat=True)),
+            ["one@example.com", "two@example.com"],
+        )
+
     def test_forwarded_mail_status_patch_requires_api_key_permission(self):
         forwarded_mail = ForwardedMail.objects.create(
             incoming_mail=IncomingMail.objects.create(
