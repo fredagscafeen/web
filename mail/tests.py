@@ -228,8 +228,8 @@ class MonitoringServicesTest(TestCase):
         )
 
     @override_settings(
+        S3_REGION_NAME="eu-west-1",
         MAIL_ARCHIVE_BUCKET_NAME="mail-archive",
-        MAIL_ARCHIVE_AWS_REGION="eu-west-1",
         MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION=600,
     )
     @patch("mail.services.boto3.client")
@@ -394,8 +394,8 @@ class IncomingMailAdminTest(TestCase):
         self.assertTrue(object_from_queryset.has_resends)
 
     @override_settings(
+        S3_REGION_NAME="eu-west-1",
         MAIL_ARCHIVE_BUCKET_NAME="mail-archive",
-        MAIL_ARCHIVE_AWS_REGION="eu-west-1",
         MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION=600,
     )
     @patch("mail.admin.build_mail_archive_download_url")

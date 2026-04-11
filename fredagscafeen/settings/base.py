@@ -28,8 +28,15 @@ load_dotenv()
 DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
 DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk"
+
+# S3 Storage settings
+S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", "http://localhost:9000")
+S3_REGION_NAME = os.getenv("S3_REGION_NAME", "us-east-1")
+S3_ACCESS_KEY_ID = os.getenv("S3_ACCESS_KEY_ID", "minioadmin")
+S3_SECRET_ACCESS_KEY = os.getenv("S3_SECRET_ACCESS_KEY", "minioadmin")
+
+# Email monitoring settings
 MAIL_ARCHIVE_BUCKET_NAME = os.getenv("MAIL_ARCHIVE_BUCKET_NAME", "")
-MAIL_ARCHIVE_AWS_REGION = os.getenv("MAIL_ARCHIVE_AWS_REGION", "eu-west-1")
 MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION = int(
     os.getenv("MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION", "3600")
 )

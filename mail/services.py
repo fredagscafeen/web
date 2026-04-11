@@ -25,7 +25,13 @@ def build_mail_archive_download_url(mail_archive):
     if not settings.MAIL_ARCHIVE_BUCKET_NAME:
         raise ImproperlyConfigured("MAIL_ARCHIVE_BUCKET_NAME is not configured.")
 
-    client = boto3.client("s3", region_name=settings.MAIL_ARCHIVE_AWS_REGION)
+    client = boto3.client(
+        "s3",
+        endpoint_url=settings.S3_ENDPOINT_URL,
+        aws_access_key_id=settings.S3_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.S3_SECRET_ACCESS_KEY,
+        region_name=settings.S3_REGION_NAME,
+    )
     return client.generate_presigned_url(
         "get_object",
         Params={
