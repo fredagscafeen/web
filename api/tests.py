@@ -2,9 +2,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
 
+from apikeys.models import GranularAPIKey
 from items.models import Brewery, Item
 
 
@@ -16,10 +16,19 @@ class ApiTests(APITestCase):
             username="yeaah", password=self.password
         )
 
-    def authenticate(self, token=None):
+    def authenticate(self, token=None, permissions=None):
         if not token:
-            token = Token.objects.get_or_create(user=self.user)[0].key
-        self.client.credentials(HTTP_AUTHORIZATION="Token %s" % token)
+            # Create the key instance
+            api_key, key = GranularAPIKey.objects.create_key(name="Test Key")
+            token = key
+
+            # If specific permissions are requested for this test, add them
+            if permissions:
+                for permission_codename in permissions:
+                    perm = Permission.objects.get(codename=permission_codename)
+                    api_key.allowed_permissions.add(perm)
+
+        self.client.credentials(HTTP_AUTHORIZATION="Bearer %s" % token)
 
     def create_brewery(self, name):
         return self.client.post(reverse("breweries-list"), {"name": name})
@@ -38,8 +47,7 @@ class ApiTests(APITestCase):
         self.assertEqual(r.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_add_brewery_authenticated_with_permissions(self):
-        self.authenticate()
-        self.user.user_permissions.add(Permission.objects.get(codename="add_brewery"))
+        self.authenticate(permissions=["add_brewery"])
         r = self.create_brewery("Hancock")
         self.assertEqual(r.status_code, status.HTTP_201_CREATED)
         self.assertTrue(Brewery.objects.exists())
