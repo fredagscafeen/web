@@ -264,6 +264,7 @@ INSTALLED_APPS = (
     "bootstrap_datepicker_plus",
     "captcha",
     "rest_framework",
+    "rest_framework_api_key",
     "django_celery_beat",
     "corsheaders",
     "items",

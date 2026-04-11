@@ -16,3 +16,5 @@ compilemessages:
 	./manage.py compilemessages
 test:
 	./manage.py test
+new-module:
+	echo "Enter module name: " && read module && ./manage.py startapp $$module
