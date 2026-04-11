@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.contrib import admin, messages
+from django.db.models import Count, Exists, OuterRef, Q
 from django.forms.widgets import TextInput
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import reverse
 from django.template import Context
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_object_actions import DjangoObjectActions
@@ -13,9 +15,17 @@ from .forms import OutgoingEmailAdminForm
 from .models import (
     Attachment,
     EmailTemplate,
+    ForwardedMail,
+    IncomingMail,
     MailingList,
     OutgoingEmail,
     TemplateVariable,
+)
+from .services import (
+    RETRYABLE_FORWARDED_STATUSES,
+    build_mail_archive_download_url,
+    get_retryable_forwarded_mails,
+    request_forwarded_mail_resend,
 )
 
 
@@ -94,6 +104,254 @@ class CommaSeparatedEmailWidget(TextInput):
                 value,
             ]
         return ", ".join([item for item in value])
+
+
+class IncomingMailStatusDefaultListFilter(admin.SimpleListFilter):
+    title = _("status")
+    parameter_name = "status"
+
+    def lookups(self, request, model_admin):
+        return IncomingMail.Status.choices
+
+    def queryset(self, request, queryset):
+        if self.value() == IncomingMail.Status.DROPPED:
+            return queryset.filter(status=IncomingMail.Status.DROPPED)
+
+        return queryset.filter(status=IncomingMail.Status.PROCESSED)
+
+
+class ForwardedMailInline(admin.TabularInline):
+    model = ForwardedMail
+    extra = 0
+    can_delete = False
+    show_change_link = True
+    fields = (
+        "target",
+        "status",
+        "forwarded_at",
+        "reason",
+        "previous_attempt",
+        "resend_link",
+    )
+    readonly_fields = fields
+    ordering = ("forwarded_at", "pk")
+
+    def resend_link(self, obj):
+        if not obj.pk or obj.status not in RETRYABLE_FORWARDED_STATUSES:
+            return "---"
+
+        url = reverse(
+            "admin:mail_forwardedmail_actions",
+            kwargs={"pk": obj.pk, "tool": "resend"},
+        )
+        return format_html('<a href="{}">Resend</a>', url)
+
+    resend_link.short_description = _("Resend")
+
+
+@admin.register(IncomingMail)
+class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
+    list_display = (
+        "received_at",
+        "sender",
+        "target",
+        "mailing_list",
+        "status",
+        "current_forwarded_count_display",
+        "current_failed_count_display",
+        "current_bounced_count_display",
+        "has_resends_display",
+    )
+    list_filter = (IncomingMailStatusDefaultListFilter, "mailing_list")
+    list_select_related = ("mail_archive", "mailing_list")
+    ordering = ("-received_at",)
+    readonly_fields = (
+        "received_at",
+        "sender",
+        "target",
+        "mailing_list",
+        "status",
+        "reason",
+        "mail_archive_link",
+        "current_forwarded_count_display",
+        "current_failed_count_display",
+        "current_bounced_count_display",
+        "has_resends_display",
+    )
+    fields = readonly_fields
+    inlines = (ForwardedMailInline,)
+    change_actions = ("download_eml", "resend")
+
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset(request)
+            .select_related("mail_archive", "mailing_list")
+            .annotate(
+                current_forwarded_count=Count(
+                    "forward_attempts",
+                    filter=Q(forward_attempts__retry_attempts__isnull=True)
+                    & Q(forward_attempts__status=ForwardedMail.Status.FORWARDED),
+                ),
+                current_failed_count=Count(
+                    "forward_attempts",
+                    filter=Q(forward_attempts__retry_attempts__isnull=True)
+                    & Q(forward_attempts__status=ForwardedMail.Status.FAILED),
+                ),
+                current_bounced_count=Count(
+                    "forward_attempts",
+                    filter=Q(forward_attempts__retry_attempts__isnull=True)
+                    & Q(forward_attempts__status=ForwardedMail.Status.BOUNCED),
+                ),
+                has_resends=Exists(
+                    ForwardedMail.objects.filter(
+                        incoming_mail_id=OuterRef("pk"),
+                        previous_attempt__isnull=False,
+                    )
+                ),
+            )
+        )
+
+    def _get_delivery_count(self, obj, attribute_name, status):
+        annotated_value = getattr(obj, attribute_name, None)
+        if annotated_value is not None:
+            return annotated_value
+        return obj.forward_attempts.filter(
+            retry_attempts__isnull=True,
+            status=status,
+        ).count()
+
+    def current_forwarded_count_display(self, obj):
+        return self._get_delivery_count(
+            obj,
+            "current_forwarded_count",
+            ForwardedMail.Status.FORWARDED,
+        )
+
+    current_forwarded_count_display.short_description = _("Forwarded")
+
+    def current_failed_count_display(self, obj):
+        return self._get_delivery_count(
+            obj,
+            "current_failed_count",
+            ForwardedMail.Status.FAILED,
+        )
+
+    current_failed_count_display.short_description = _("Failed")
+
+    def current_bounced_count_display(self, obj):
+        return self._get_delivery_count(
+            obj,
+            "current_bounced_count",
+            ForwardedMail.Status.BOUNCED,
+        )
+
+    current_bounced_count_display.short_description = _("Bounced")
+
+    def has_resends_display(self, obj):
+        annotated_value = getattr(obj, "has_resends", None)
+        if annotated_value is not None:
+            return annotated_value
+        return obj.forward_attempts.filter(previous_attempt__isnull=False).exists()
+
+    has_resends_display.short_description = _("Has resends")
+    has_resends_display.boolean = True
+
+    def mail_archive_link(self, obj):
+        if not obj.pk:
+            return "---"
+
+        url = reverse(
+            "admin:mail_incomingmail_actions",
+            kwargs={"pk": obj.pk, "tool": "download_eml"},
+        )
+        return format_html('<a href="{}">Download EML</a>', url)
+
+    mail_archive_link.short_description = _("Archive")
+
+    def download_eml(self, request, obj):
+        try:
+            download_url = build_mail_archive_download_url(obj.mail_archive)
+        except Exception as error:
+            self.message_user(request, str(error), messages.ERROR)
+            return HttpResponseRedirect(
+                reverse("admin:mail_incomingmail_change", args=[obj.pk])
+            )
+
+        return HttpResponseRedirect(download_url)
+
+    download_eml.label = _("Download EML")
+
+    def resend(self, request, obj):
+        retryable_attempts = list(
+            get_retryable_forwarded_mails(obj)
+            .select_related("incoming_mail__mail_archive")
+            .order_by("forwarded_at", "pk")
+        )
+
+        if not retryable_attempts:
+            self.message_user(
+                request, _("No failed recipients to resend."), messages.WARNING
+            )
+            return
+
+        errors = []
+        for forwarded_mail in retryable_attempts:
+            try:
+                request_forwarded_mail_resend(forwarded_mail)
+            except Exception as error:
+                errors.append(str(error))
+
+        if errors:
+            self.message_user(request, "; ".join(errors), messages.ERROR)
+            return
+
+        self.message_user(
+            request,
+            _("Queued resend for %(count)s recipient(s).")
+            % {"count": len(retryable_attempts)},
+            messages.SUCCESS,
+        )
+
+    resend.label = _("Resend failed recipients")
+
+
+@admin.register(ForwardedMail)
+class ForwardedMailAdmin(DjangoObjectActions, admin.ModelAdmin):
+    list_display = (
+        "incoming_mail",
+        "target",
+        "status",
+        "forwarded_at",
+        "previous_attempt",
+    )
+    list_filter = ("status",)
+    list_select_related = (
+        "incoming_mail",
+        "previous_attempt",
+        "incoming_mail__mail_archive",
+    )
+    readonly_fields = list_display + ("reason",)
+    fields = readonly_fields
+    ordering = ("-forwarded_at",)
+    change_actions = ("resend",)
+
+    def get_change_actions(self, request, object_id, form_url):
+        actions = super().get_change_actions(request, object_id, form_url)
+        obj = self.get_object(request, object_id)
+        if obj is None or obj.status not in RETRYABLE_FORWARDED_STATUSES:
+            return tuple(action for action in actions if action != "resend")
+        return actions
+
+    def resend(self, request, obj):
+        request_forwarded_mail_resend(obj)
+        self.message_user(
+            request,
+            _("Queued resend for %(target)s.") % {"target": obj.target},
+            messages.SUCCESS,
+        )
+
+    resend.label = _("Resend")
 
 
 @admin.register(OutgoingEmail)

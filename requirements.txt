@@ -28,6 +28,12 @@ beautifulsoup4==4.9.3
     #   django-bootstrap-v5
 billiard==4.2.0
     # via celery
+boto3==1.42.88
+    # via -r requirements.in
+botocore==1.42.88
+    # via
+    #   boto3
+    #   s3transfer
 bs4==0.0.1
     # via requests-html
 celery[redis]==5.4.0
@@ -145,6 +151,10 @@ iterfzf==0.5.0.20.0
     # via -r requirements.in
 jedi==0.18.0
     # via ipython
+jmespath==1.1.0
+    # via
+    #   boto3
+    #   botocore
 kombu==5.3.7
     # via celery
 lxml==5.2.1
@@ -227,6 +237,8 @@ requests==2.32.4
     #   requests-html
 requests-html==0.10.0
     # via -r requirements.in
+s3transfer==0.16.0
+    # via boto3
 six==1.16.0
     # via
     #   click-repl

@@ -27,6 +27,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
 DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk"
+MAIL_ARCHIVE_BUCKET_NAME = os.getenv("MAIL_ARCHIVE_BUCKET_NAME", "")
+MAIL_ARCHIVE_AWS_REGION = os.getenv("MAIL_ARCHIVE_AWS_REGION", "eu-west-1")
+MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION = int(
+    os.getenv("MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION", "3600")
+)
+DATMAIL_CONTROL_URL = os.getenv("DATMAIL_CONTROL_URL", "")
+DATMAIL_CONTROL_TOKEN = os.getenv("DATMAIL_CONTROL_TOKEN", "")
+DATMAIL_CONTROL_TIMEOUT = int(os.getenv("DATMAIL_CONTROL_TIMEOUT", "10"))
 
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (False, "Er bartendertilmelding åben?", bool),
