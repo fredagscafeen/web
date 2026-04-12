@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-12 13:16+0200\n"
+"POT-Creation-Date: 2026-04-12 13:48+0200\n"
 "PO-Revision-Date: 2026-04-04 16:19+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1537,83 +1537,97 @@ msgstr "Log"
 msgid "Logbøger"
 msgstr "Logs"
 
-#: mail/admin.py:80 mail/models.py:214
+#: mail/admin.py:82 mail/models.py:214
 msgid "Attachment"
 msgstr "Attachment"
 
-#: mail/admin.py:81 mail/models.py:215
+#: mail/admin.py:83 mail/models.py:215
 msgid "Attachments"
 msgstr "Attachments"
 
-#: mail/admin.py:111
-#, fuzzy
-#| msgid "Status"
-msgid "status"
-msgstr "Status"
-
-#: mail/admin.py:150 mail/admin.py:364
+#: mail/admin.py:137 mail/admin.py:395
 msgid "Resend"
 msgstr "Resend"
 
-#: mail/admin.py:232
+#: mail/admin.py:139
+#, fuzzy
+#| msgid "Block selected TLDs"
+msgid "Block selected domains"
+msgstr "Block selected domains"
+
+#: mail/admin.py:241
 msgid "Forwarded"
 msgstr "Forwarded"
 
-#: mail/admin.py:241
+#: mail/admin.py:250
 msgid "Failed"
 msgstr "Failed"
 
-#: mail/admin.py:250
+#: mail/admin.py:259
 msgid "Bounced"
 msgstr "Bounced"
 
-#: mail/admin.py:258
+#: mail/admin.py:267
 msgid "Has resends"
 msgstr "Has resends"
 
-#: mail/admin.py:271
+#: mail/admin.py:280
 msgid "Archive"
 msgstr "Archive"
 
-#: mail/admin.py:284
+#: mail/admin.py:293
 msgid "Download EML"
 msgstr "Download Email (.eml)"
 
-#: mail/admin.py:295
+#: mail/admin.py:304
 msgid "No failed recipients to resend."
 msgstr "No failed recipients to resend."
 
-#: mail/admin.py:312
+#: mail/admin.py:321
 #, python-format
 msgid "Queued resend for %(count)s recipient(s)."
 msgstr "Queued resend for %(count)s recipient(s)."
 
-#: mail/admin.py:321
+#: mail/admin.py:330
 msgid "Resend failed recipients"
 msgstr "Resend failed recipients"
 
-#: mail/admin.py:360
+#: mail/admin.py:338
+#, python-format
+msgid "TLD '%(tld)s' is already blocked in the spam filter."
+msgstr "Domain '%(tld)s' is already blocked in the spam filter."
+
+#: mail/admin.py:349
+#, python-format
+msgid "TLD '%(tld)s' has been blocked in the spam filter."
+msgstr "Domain '%(tld)s' has been blocked in the spam filter."
+
+#: mail/admin.py:352
+msgid "Block sender's Domain in spam filter"
+msgstr "Block sender's Domain"
+
+#: mail/admin.py:391
 #, python-format
 msgid "Queued resend for %(target)s."
 msgstr "Queued resend for %(target)s."
 
-#: mail/admin.py:384
+#: mail/admin.py:415
 msgid "Fra email"
 msgstr "From email"
 
-#: mail/admin.py:389 mail/models.py:104
+#: mail/admin.py:420 mail/models.py:104
 msgid "Til email(s)"
 msgstr "To email(s)"
 
-#: mail/admin.py:394 mail/models.py:119
+#: mail/admin.py:425 mail/models.py:119
 msgid "Emne"
 msgstr "Subject"
 
-#: mail/admin.py:420
+#: mail/admin.py:451
 msgid "Allow selected TLDs"
 msgstr "Allow selected TLDs"
 
-#: mail/admin.py:430
+#: mail/admin.py:461
 msgid "Block selected TLDs"
 msgstr "Block selected TLDs"
 
@@ -3005,6 +3019,11 @@ msgid ""
 msgstr ""
 "Login mail sent: Press the link in your received email to log in. Also "
 "remember to check your spam folder."
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "status"
+#~ msgstr "Status"
 
 #~ msgid "Hide on shelf"
 #~ msgstr "Hide on shelf"

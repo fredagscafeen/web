@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.conf import settings
 from django.contrib import admin, messages
 from django.db.models import Count, Exists, OuterRef, Q
@@ -107,20 +109,6 @@ class CommaSeparatedEmailWidget(TextInput):
         return ", ".join([item for item in value])
 
 
-class IncomingMailStatusDefaultListFilter(admin.SimpleListFilter):
-    title = _("status")
-    parameter_name = "status"
-
-    def lookups(self, request, model_admin):
-        return IncomingMail.Status.choices
-
-    def queryset(self, request, queryset):
-        if self.value() == IncomingMail.Status.DROPPED:
-            return queryset.filter(status=IncomingMail.Status.DROPPED)
-
-        return queryset.filter(status=IncomingMail.Status.PROCESSED)
-
-
 class ForwardedMailInline(admin.TabularInline):
     model = ForwardedMail
     extra = 0
@@ -150,6 +138,33 @@ class ForwardedMailInline(admin.TabularInline):
     resend_link.short_description = _("Resend")
 
 
+@admin.action(description=_("Block selected domains"))
+def incoming_mail_block_domains(modeladmin, request, queryset):
+    sender_domains = set(
+        mail.sender.split("@")[-1].lower() for mail in queryset if mail.sender
+    )
+    existing_tlds = set(
+        SpamFilterTLD.objects.filter(tld__in=sender_domains).values_list(
+            "tld", flat=True
+        )
+    )
+    new_tlds = sender_domains - existing_tlds
+
+    SpamFilterTLD.objects.bulk_create(
+        [SpamFilterTLD(tld=tld, allowed=False) for tld in new_tlds]
+    )
+
+    updated_count = SpamFilterTLD.objects.filter(tld__in=sender_domains).update(
+        allowed=False
+    )
+
+    modeladmin.message_user(
+        request,
+        f"{updated_count} domain(s) have been blocked in the spam filter.",
+        messages.SUCCESS,
+    )
+
+
 @admin.register(IncomingMail)
 class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = (
@@ -163,7 +178,7 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
         "current_bounced_count_display",
         "has_resends_display",
     )
-    list_filter = (IncomingMailStatusDefaultListFilter, "mailing_list")
+    list_filter = ("status", "mailing_list")
     list_select_related = ("mail_archive", "mailing_list")
     ordering = ("-received_at",)
     readonly_fields = (
@@ -181,7 +196,8 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
     )
     fields = readonly_fields
     inlines = (ForwardedMailInline,)
-    change_actions = ("download_eml", "resend")
+    change_actions = ("download_eml", "resend", "block_in_spamfilter")
+    actions = [incoming_mail_block_domains]
 
     def get_queryset(self, request):
         return (
@@ -319,6 +335,32 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
             return
 
     resend.label = _("Resend failed recipients")
+
+    def block_in_spamfilter(self, request, obj):
+        sender_domain = obj.sender.split("@")[-1].lower()
+        spam_filter_entry, created = SpamFilterTLD.objects.get_or_create(
+            tld=sender_domain
+        )
+        if not created and not spam_filter_entry.allowed:
+            self.message_user(
+                request,
+                _("TLD '%(tld)s' is already blocked in the spam filter.")
+                % {"tld": sender_domain},
+                messages.INFO,
+            )
+            return
+
+        spam_filter_entry.allowed = False
+        spam_filter_entry.save()
+
+        self.message_user(
+            request,
+            _("TLD '%(tld)s' has been blocked in the spam filter.")
+            % {"tld": sender_domain},
+            messages.SUCCESS,
+        )
+
+    block_in_spamfilter.label = _("Block sender's Domain in spam filter")
 
 
 @admin.register(ForwardedMail)
