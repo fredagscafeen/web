@@ -10,8 +10,6 @@ annotated-types==0.7.0
     # via pydantic
 appdirs==1.4.4
     # via pyppeteer
-appnope==0.1.4
-    # via ipython
 asgiref==3.8.1
     # via django
 asttokens==3.0.0
@@ -121,6 +119,8 @@ django-versatileimagefield==3.1
     # via -r requirements.in
 djangorestframework==3.12.4
     # via -r requirements.in
+djangorestframework-api-key==3.1.0
+    # via -r requirements.in
 executing==2.1.0
     # via stack-data
 fake-useragent==0.1.11
@@ -156,7 +156,9 @@ lxml-html-clean==0.4.1
 matplotlib-inline==0.1.2
     # via ipython
 packaging==24.2
-    # via gunicorn
+    # via
+    #   djangorestframework-api-key
+    #   gunicorn
 parse==1.19.0
     # via requests-html
 parso==0.8.2

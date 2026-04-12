@@ -1,7 +1,4 @@
 from rest_framework import status, viewsets
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -60,17 +57,8 @@ class IsBartenderView(APIView):
         return Response(is_bartender, status=status.HTTP_200_OK)
 
 
-class TokenAuthView(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key, "permissions": user.get_all_permissions()})
-
-
 class PrintStatusView(APIView):
-    permission_classes = (IsAdminUser,)
+    required_permissions = ("printer.view_printer",)
 
     def get(self, request, job_id):
         status, code = Printer.get_status(job_id)

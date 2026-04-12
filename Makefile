@@ -1,3 +1,5 @@
+.PHONY: run migrate migrations createsuperuser import-db download-media makemessages compilemessages test new-module
+
 run:
 	./manage.py runserver 0.0.0.0:8000
 migrate:
@@ -16,3 +18,5 @@ compilemessages:
 	./manage.py compilemessages
 test:
 	./manage.py test
+new-module:
+	echo "Enter module name: " && read module && ./manage.py startapp $$module

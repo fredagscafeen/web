@@ -258,18 +258,19 @@ INSTALLED_APPS = (
     "django_extensions",
     "constance",
     "constance.backends.database",
-    "rest_framework.authtoken",
     "bootstrap5",
     "django_bootstrap_icons",
     "bootstrap_datepicker_plus",
     "captcha",
     "rest_framework",
+    "rest_framework_api_key",
     "django_celery_beat",
     "corsheaders",
     "items",
     "bartenders",
     "web",
     "api",
+    "apikeys",
     "reminder",
     "udlejning",
     "logentry_admin",
@@ -307,13 +308,14 @@ AUTHENTICATION_BACKENDS = (
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.TokenAuthentication",
+        "apikeys.authentication.GranularAPIKeyAuthentication",
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
+        "apikeys.permissions.GranularPermission",
+        # "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly",
     ),
 }
 
