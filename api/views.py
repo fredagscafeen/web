@@ -12,10 +12,11 @@ from api.serializers import (
     ItemSerializer,
     MailingListBartenderSerializer,
     MailingListsSerializer,
+    SpamFilterSerializer,
 )
 from bartenders.models import Bartender
 from items.models import BeerType, Brewery, Item
-from mail.models import ForwardedMail, MailingList
+from mail.models import ForwardedMail, MailingList, SpamFilterTLD
 from printer.models import Printer
 
 
@@ -118,4 +119,13 @@ class MailingListView(APIView):
     def get(self, request, mailing_list_name):
         mailing_list = get_object_or_404(MailingList, name=mailing_list_name)
         serializer = MailingListBartenderSerializer(mailing_list.members, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SpamfilterView(APIView):
+    required_permissions = ("mail.view_spamfiltertld",)
+
+    def get(self, request):
+        spamfilter_tlds = SpamFilterTLD.objects.all()
+        serializer = SpamFilterSerializer(spamfilter_tlds, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

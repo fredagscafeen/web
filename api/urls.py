@@ -13,6 +13,7 @@ from api.views import (
     MailingListsView,
     MailingListView,
     PrintStatusView,
+    SpamfilterView,
 )
 
 router = routers.DefaultRouter()
@@ -26,12 +27,13 @@ urlpatterns = [
     path("last-modified/", LastModifiedView.as_view(), name="last-modified"),
     path("is-bartender/<username>/", IsBartenderView.as_view(), name="is_bartender"),
     path("print_status/<job_id>/", PrintStatusView.as_view(), name="print_status"),
-    path("mailinglists/", MailingListsView.as_view(), name="mailing_lists"),
+    path("mail/lists/", MailingListsView.as_view(), name="mail_lists"),
     path(
-        "mailinglists/<mailing_list_name>/",
+        "mail/lists/<mailing_list_name>/",
         MailingListView.as_view(),
-        name="mailing_list_detail",
+        name="mail_list_detail",
     ),
+    path("mail/spamfilter/", SpamfilterView.as_view(), name="mail_spamfilter"),
     path(
         "monitoring/incoming-mails/",
         IncomingMailIngestView.as_view(),

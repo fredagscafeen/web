@@ -3,7 +3,13 @@ from rest_framework import serializers
 
 from bartenders.models import Bartender
 from items.models import BeerType, Brewery, Item
-from mail.models import ForwardedMail, IncomingMail, MailArchive, MailingList
+from mail.models import (
+    ForwardedMail,
+    IncomingMail,
+    MailArchive,
+    MailingList,
+    SpamFilterTLD,
+)
 
 
 class BrewerySerializer(serializers.ModelSerializer):
@@ -134,3 +140,9 @@ class MailingListsSerializer(serializers.ModelSerializer):
     class Meta:
         model = MailingList
         fields = ("id", "name", "isOnlyInternal")
+
+
+class SpamFilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpamFilterTLD
+        fields = ("id", "tld", "allowed")
