@@ -114,3 +114,23 @@ class ForwardedMailStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = ForwardedMail
         fields = ("status", "reason")
+
+
+class MailingListBartenderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bartender
+        fields = ("id", "name", "email")
+
+
+class MailingListSerializer(serializers.ModelSerializer):
+    members = MailingListBartenderSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = MailingList
+        fields = ("id", "name", "isOnlyInternal", "members")
+
+
+class MailingListsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MailingList
+        fields = ("id", "name", "isOnlyInternal")

@@ -10,10 +10,12 @@ from api.serializers import (
     ForwardedMailStatusSerializer,
     IncomingMailIngestSerializer,
     ItemSerializer,
+    MailingListBartenderSerializer,
+    MailingListsSerializer,
 )
 from bartenders.models import Bartender
 from items.models import BeerType, Brewery, Item
-from mail.models import ForwardedMail
+from mail.models import ForwardedMail, MailingList
 from printer.models import Printer
 
 
@@ -93,4 +95,27 @@ class ForwardedMailStatusView(APIView):
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# Lists all mailing lists with their names without members, does not leak any information about the members of the mailing lists
+class MailingListsView(APIView):
+    required_permissions = ("mail.view_mailinglist",)
+
+    def get(self, request):
+        mailing_lists = MailingList.objects.all()
+        serializer = MailingListsSerializer(mailing_lists, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# Lists all members of a mailing list with their emails, requires permission to view mailing list and bartenders, does not leak any information if the mailing list does not exist or if the user does not have permission to view the mailing list
+class MailingListView(APIView):
+    required_permissions = (
+        "mail.view_mailinglist",
+        "bartenders.view_bartender",
+    )
+
+    def get(self, request, mailing_list_name):
+        mailing_list = get_object_or_404(MailingList, name=mailing_list_name)
+        serializer = MailingListBartenderSerializer(mailing_list.members, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
