@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-12 11:33+0200\n"
+"POT-Creation-Date: 2026-04-12 13:16+0200\n"
 "PO-Revision-Date: 2026-04-04 16:18+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -739,7 +739,7 @@ msgid "Location"
 msgstr "Lokation"
 
 #: events/models.py:70 events/models.py:230 items/models.py:14
-#: items/models.py:128 items/models.py:142 mail/models.py:48 mail/models.py:361
+#: items/models.py:128 items/models.py:142 mail/models.py:48 mail/models.py:371
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -1609,11 +1609,11 @@ msgstr "Til email(s)"
 msgid "Emne"
 msgstr "Emne"
 
-#: mail/admin.py:419
+#: mail/admin.py:420
 msgid "Allow selected TLDs"
 msgstr "Tillad valgte domæner"
 
-#: mail/admin.py:428
+#: mail/admin.py:430
 msgid "Block selected TLDs"
 msgstr "Bloker valgte domæner"
 
@@ -1749,35 +1749,37 @@ msgstr "En forwarded mail kan ikke refere sig selv som tidligere forsøg."
 msgid "previous_attempt must belong to the same incoming mail."
 msgstr "Tidligere forsøg skal være fra samme incoming mail"
 
-#: mail/models.py:360
+#: mail/models.py:363
 msgid "TLD"
 msgstr "Domæne"
 
-#: mail/models.py:360
+#: mail/models.py:365
 msgid ""
 "Domain to filter on, supports everything after @ in an email address (e.g. "
 "'example.com' or '.com' to filter all .com domains)"
-msgstr "Domæne at filtrere på, understøtter alt efter @ i en adresse, fx. ('example.com' eller '.com' for filtre alle .com adresser)"
+msgstr ""
+"Domæne at filtrere på, understøtter alt efter @ i en adresse, fx. ('example."
+"com' eller '.com' for filtre alle .com adresser)"
 
-#: mail/models.py:361
+#: mail/models.py:373
 msgid ""
 "Optional description for the TLD, help the next person understand the "
 "purpose of this entry"
 msgstr "Valgfri beskrivelse, men hjælp den næste person."
 
-#: mail/models.py:362
+#: mail/models.py:378
 msgid "Allowed"
 msgstr "Tilladt"
 
-#: mail/models.py:362
+#: mail/models.py:379
 msgid "Whether emails from this TLD should be allowed or blocked"
 msgstr "Styre hvorvidt mails fra dette domæne skal tillades eller blokeres."
 
-#: mail/models.py:365
+#: mail/models.py:383
 msgid "Spam filter TLD"
 msgstr "Spam filter TLD"
 
-#: mail/models.py:366
+#: mail/models.py:384
 msgid "Spam filter TLDs"
 msgstr "Spam filter TLDs"
 

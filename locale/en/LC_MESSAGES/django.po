@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-12 11:33+0200\n"
+"POT-Creation-Date: 2026-04-12 13:16+0200\n"
 "PO-Revision-Date: 2026-04-04 16:19+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -742,7 +742,7 @@ msgid "Location"
 msgstr "Location"
 
 #: events/models.py:70 events/models.py:230 items/models.py:14
-#: items/models.py:128 items/models.py:142 mail/models.py:48 mail/models.py:361
+#: items/models.py:128 items/models.py:142 mail/models.py:48 mail/models.py:371
 msgid "Description"
 msgstr "Description"
 
@@ -1609,11 +1609,11 @@ msgstr "To email(s)"
 msgid "Emne"
 msgstr "Subject"
 
-#: mail/admin.py:419
+#: mail/admin.py:420
 msgid "Allow selected TLDs"
 msgstr "Allow selected TLDs"
 
-#: mail/admin.py:428
+#: mail/admin.py:430
 msgid "Block selected TLDs"
 msgstr "Block selected TLDs"
 
@@ -1749,35 +1749,39 @@ msgstr "A forwarded mail cannot reference itself as previous attempt."
 msgid "previous_attempt must belong to the same incoming mail."
 msgstr "A previous attempt must belong to the same incoming mail."
 
-#: mail/models.py:360
+#: mail/models.py:363
 msgid "TLD"
 msgstr "Domain"
 
-#: mail/models.py:360
+#: mail/models.py:365
 msgid ""
 "Domain to filter on, supports everything after @ in an email address (e.g. "
 "'example.com' or '.com' to filter all .com domains)"
-msgstr "Domain to filter on, supports everything after @ in an email address (e.g. 'example.com' or '.com' to filter all .com domains)"
+msgstr ""
+"Domain to filter on, supports everything after @ in an email address (e.g. "
+"'example.com' or '.com' to filter all .com domains)"
 
-#: mail/models.py:361
+#: mail/models.py:373
 msgid ""
 "Optional description for the TLD, help the next person understand the "
 "purpose of this entry"
-msgstr "Optional description for the TLD, help the next person understand the purpose of this entry"
+msgstr ""
+"Optional description for the TLD, help the next person understand the "
+"purpose of this entry"
 
-#: mail/models.py:362
+#: mail/models.py:378
 msgid "Allowed"
 msgstr "Allowed"
 
-#: mail/models.py:362
+#: mail/models.py:379
 msgid "Whether emails from this TLD should be allowed or blocked"
 msgstr "Whether emails from this TLD should be allowed or blocked"
 
-#: mail/models.py:365
+#: mail/models.py:383
 msgid "Spam filter TLD"
 msgstr "Spam filter TLD"
 
-#: mail/models.py:366
+#: mail/models.py:384
 msgid "Spam filter TLDs"
 msgstr "Spam filter TLDs"
 
