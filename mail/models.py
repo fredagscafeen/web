@@ -354,3 +354,34 @@ def create_attachments(attachment_files):
             opened_file.close()
 
     return attachments
+
+
+class SpamFilterTLD(models.Model):
+    tld = models.CharField(
+        max_length=255,
+        unique=True,
+        verbose_name=_("TLD"),
+        help_text=_(
+            "Domain to filter on, supports everything after @ in an email address (e.g. 'example.com' or '.com' to filter all .com domains)"
+        ),
+    )
+    description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Description"),
+        help_text=_(
+            "Optional description for the TLD, help the next person understand the purpose of this entry"
+        ),
+    )
+    allowed = models.BooleanField(
+        default=False,
+        verbose_name=_("Allowed"),
+        help_text=_("Whether emails from this TLD should be allowed or blocked"),
+    )
+
+    class Meta:
+        verbose_name = _("Spam filter TLD")
+        verbose_name_plural = _("Spam filter TLDs")
+
+    def __str__(self):
+        return self.tld

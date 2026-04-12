@@ -19,6 +19,7 @@ from .models import (
     IncomingMail,
     MailingList,
     OutgoingEmail,
+    SpamFilterTLD,
     TemplateVariable,
 )
 from .services import (
@@ -414,3 +415,36 @@ class OutgoingEmailAdmin(DjangoObjectActions, admin.ModelAdmin):
             f"'{subject}' test mail sendt til {request.user.email}.",
             messages.SUCCESS,
         )
+
+
+@admin.action(description=_("Allow selected TLDs"))
+def allow_tlds(modeladmin, request, queryset):
+    updated_count = queryset.update(allowed=True)
+    modeladmin.message_user(
+        request,
+        f"{updated_count} TLD(s) have been allowed.",
+        messages.SUCCESS,
+    )
+
+
+@admin.action(description=_("Block selected TLDs"))
+def block_tlds(modeladmin, request, queryset):
+    updated_count = queryset.update(allowed=False)
+    modeladmin.message_user(
+        request,
+        f"{updated_count} TLD(s) have been blocked.",
+        messages.SUCCESS,
+    )
+
+
+@admin.register(SpamFilterTLD)
+class SpamFilterTLDAdmin(admin.ModelAdmin):
+    list_display = (
+        "allowed",
+        "tld",
+        "description",
+    )
+    list_filter = ("allowed",)
+    list_display_links = ("tld",)
+    ordering = ("-allowed",)
+    actions = [allow_tlds, block_tlds]
