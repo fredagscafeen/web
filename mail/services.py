@@ -37,6 +37,7 @@ def build_mail_archive_download_url(mail_archive):
         Params={
             "Bucket": settings.MAIL_ARCHIVE_BUCKET_NAME,
             "Key": mail_archive.s3_object_key,
+            "ResponseContentDisposition": f'attachment; filename="{mail_archive.request_uuid}.eml"',
         },
         ExpiresIn=settings.MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION,
     )
