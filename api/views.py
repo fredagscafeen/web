@@ -10,7 +10,7 @@ from api.serializers import (
     ForwardedMailStatusSerializer,
     IncomingMailIngestSerializer,
     ItemSerializer,
-    MailingListBartenderSerializer,
+    MailingListSerializer,
     MailingListsSerializer,
     SpamFilterSerializer,
 )
@@ -117,8 +117,10 @@ class MailingListView(APIView):
     )
 
     def get(self, request, mailing_list_name):
-        mailing_list = get_object_or_404(MailingList, name=mailing_list_name)
-        serializer = MailingListBartenderSerializer(mailing_list.members, many=True)
+        mailing_list = get_object_or_404(
+            MailingList.objects.prefetch_related("members"), name=mailing_list_name
+        )
+        serializer = MailingListSerializer(mailing_list)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
