@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-12 13:48+0200\n"
+"POT-Creation-Date: 2026-04-13 03:34+0200\n"
 "PO-Revision-Date: 2026-04-04 16:19+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1545,89 +1545,89 @@ msgstr "Attachment"
 msgid "Attachments"
 msgstr "Attachments"
 
-#: mail/admin.py:137 mail/admin.py:395
+#: mail/admin.py:138 mail/admin.py:406
 msgid "Resend"
 msgstr "Resend"
 
-#: mail/admin.py:139
+#: mail/admin.py:141
 #, fuzzy
 #| msgid "Block selected TLDs"
 msgid "Block selected domains"
 msgstr "Block selected domains"
 
-#: mail/admin.py:241
+#: mail/admin.py:248
 msgid "Forwarded"
 msgstr "Forwarded"
 
-#: mail/admin.py:250
+#: mail/admin.py:257
 msgid "Failed"
 msgstr "Failed"
 
-#: mail/admin.py:259
+#: mail/admin.py:266
 msgid "Bounced"
 msgstr "Bounced"
 
-#: mail/admin.py:267
+#: mail/admin.py:274
 msgid "Has resends"
 msgstr "Has resends"
 
-#: mail/admin.py:280
+#: mail/admin.py:287
 msgid "Archive"
 msgstr "Archive"
 
-#: mail/admin.py:293
+#: mail/admin.py:300
 msgid "Download EML"
 msgstr "Download Email (.eml)"
 
-#: mail/admin.py:304
+#: mail/admin.py:311
 msgid "No failed recipients to resend."
 msgstr "No failed recipients to resend."
 
-#: mail/admin.py:321
+#: mail/admin.py:328
 #, python-format
 msgid "Queued resend for %(count)s recipient(s)."
 msgstr "Queued resend for %(count)s recipient(s)."
 
-#: mail/admin.py:330
+#: mail/admin.py:337
 msgid "Resend failed recipients"
 msgstr "Resend failed recipients"
 
-#: mail/admin.py:338
+#: mail/admin.py:347
 #, python-format
 msgid "TLD '%(tld)s' is already blocked in the spam filter."
 msgstr "Domain '%(tld)s' is already blocked in the spam filter."
 
-#: mail/admin.py:349
+#: mail/admin.py:358
 #, python-format
 msgid "TLD '%(tld)s' has been blocked in the spam filter."
 msgstr "Domain '%(tld)s' has been blocked in the spam filter."
 
-#: mail/admin.py:352
+#: mail/admin.py:363
 msgid "Block sender's Domain in spam filter"
 msgstr "Block sender's Domain"
 
-#: mail/admin.py:391
+#: mail/admin.py:402
 #, python-format
 msgid "Queued resend for %(target)s."
 msgstr "Queued resend for %(target)s."
 
-#: mail/admin.py:415
+#: mail/admin.py:426
 msgid "Fra email"
 msgstr "From email"
 
-#: mail/admin.py:420 mail/models.py:104
+#: mail/admin.py:431 mail/models.py:104
 msgid "Til email(s)"
 msgstr "To email(s)"
 
-#: mail/admin.py:425 mail/models.py:119
+#: mail/admin.py:436 mail/models.py:119
 msgid "Emne"
 msgstr "Subject"
 
-#: mail/admin.py:451
+#: mail/admin.py:462
 msgid "Allow selected TLDs"
 msgstr "Allow selected TLDs"
 
-#: mail/admin.py:461
+#: mail/admin.py:472
 msgid "Block selected TLDs"
 msgstr "Block selected TLDs"
 
@@ -1755,11 +1755,11 @@ msgstr "The original filename"
 msgid "Emails"
 msgstr "Emails"
 
-#: mail/models.py:291
+#: mail/models.py:291 mail/tests.py:156
 msgid "A forwarded mail cannot reference itself as previous attempt."
 msgstr "A forwarded mail cannot reference itself as previous attempt."
 
-#: mail/models.py:309
+#: mail/models.py:309 mail/tests.py:211
 msgid "previous_attempt must belong to the same incoming mail."
 msgstr "A previous attempt must belong to the same incoming mail."
 
