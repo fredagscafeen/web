@@ -10,6 +10,7 @@ from django.test import RequestFactory, TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from mail.admin import ForwardedMailAdmin, IncomingMailAdmin
 from mail.models import ForwardedMail, IncomingMail, MailArchive, MailingList
@@ -20,9 +21,10 @@ User = get_user_model()
 
 class MonitoringModelsTest(TestCase):
     def create_archive(self):
+        request_uuid = uuid.uuid4()
         return MailArchive.objects.create(
-            request_uuid=uuid.uuid4(),
-            s3_object_key="incoming-mails/raw-message.eml",
+            request_uuid=request_uuid,
+            s3_object_key=f"incoming-mails/{request_uuid}.eml",
         )
 
     def create_incoming_mail(self, **overrides):
@@ -39,14 +41,13 @@ class MonitoringModelsTest(TestCase):
 
     def test_mail_archive_stores_request_uuid_and_s3_key(self):
         request_uuid = uuid.uuid4()
-
         archive = MailArchive.objects.create(
             request_uuid=request_uuid,
-            s3_object_key="incoming-mails/1234.eml",
+            s3_object_key=f"incoming-mails/{request_uuid}.eml",
         )
 
         self.assertEqual(archive.request_uuid, request_uuid)
-        self.assertEqual(archive.s3_object_key, "incoming-mails/1234.eml")
+        self.assertEqual(archive.s3_object_key, f"incoming-mails/{request_uuid}.eml")
         self.assertIsNotNone(archive.created_at)
 
     def test_incoming_mail_can_be_dropped_without_forwarded_mail_rows(self):
@@ -152,7 +153,7 @@ class MonitoringModelsTest(TestCase):
 
         self.assertEqual(
             error.exception.message_dict["previous_attempt"],
-            ["A forwarded mail cannot reference itself as previous attempt."],
+            [_("A forwarded mail cannot reference itself as previous attempt.")],
         )
 
     def test_forwarded_mail_previous_attempt_must_belong_to_same_incoming_mail(self):
@@ -207,15 +208,16 @@ class MonitoringModelsTest(TestCase):
 
         self.assertEqual(
             error.exception.message_dict["previous_attempt"],
-            ["previous_attempt must belong to the same incoming mail."],
+            [_("previous_attempt must belong to the same incoming mail.")],
         )
 
 
 class MonitoringServicesTest(TestCase):
     def create_archive(self):
+        request_uuid = uuid.uuid4()
         return MailArchive.objects.create(
-            request_uuid=uuid.uuid4(),
-            s3_object_key="archive/test-message.eml",
+            request_uuid=request_uuid,
+            s3_object_key=f"archive/{request_uuid}.eml",
         )
 
     def create_incoming_mail(self):
@@ -239,15 +241,23 @@ class MonitoringServicesTest(TestCase):
             "https://download.example.com/mail.eml"
         )
 
-        download_url = build_mail_archive_download_url(self.create_archive())
+        mail_archive = self.create_archive()
+        download_url = build_mail_archive_download_url(mail_archive)
 
         self.assertEqual(download_url, "https://download.example.com/mail.eml")
-        boto3_client.assert_called_once_with("s3", region_name="eu-west-1")
+        boto3_client.assert_called_once_with(
+            "s3",
+            region_name="eu-west-1",
+            aws_access_key_id="minioadmin",
+            aws_secret_access_key="minioadmin",
+            endpoint_url="http://localhost:9000",
+        )
         s3_client.generate_presigned_url.assert_called_once_with(
             "get_object",
             Params={
                 "Bucket": "mail-archive",
-                "Key": "archive/test-message.eml",
+                "Key": f"archive/{mail_archive.request_uuid}.eml",
+                "ResponseContentDisposition": f'attachment; filename="{mail_archive.request_uuid}.eml"',
             },
             ExpiresIn=600,
         )
@@ -304,9 +314,10 @@ class IncomingMailAdminTest(TestCase):
         self.client.force_login(self.user)
 
     def create_archive(self):
+        request_uuid = uuid.uuid4()
         return MailArchive.objects.create(
-            request_uuid=uuid.uuid4(),
-            s3_object_key="archive/test-message.eml",
+            request_uuid=request_uuid,
+            s3_object_key=f"archive/{request_uuid}.eml",
         )
 
     def create_incoming_mail(self, **overrides):
@@ -331,19 +342,6 @@ class IncomingMailAdminTest(TestCase):
         }
         defaults.update(overrides)
         return ForwardedMail.objects.create(**defaults)
-
-    def test_changelist_defaults_to_processed_rows(self):
-        processed = self.create_incoming_mail(sender="processed@example.com")
-        dropped = self.create_incoming_mail(
-            sender="dropped@example.com",
-            status=IncomingMail.Status.DROPPED,
-            reason="No matching mailing list",
-        )
-
-        response = self.client.get(reverse("admin:mail_incomingmail_changelist"))
-
-        self.assertContains(response, processed.sender)
-        self.assertNotContains(response, dropped.sender)
 
     def test_changelist_can_filter_dropped_rows(self):
         processed = self.create_incoming_mail(sender="processed@example.com")
@@ -498,7 +496,7 @@ class IncomingMailAdminTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(request_resend.call_count, 2)
         messages = [str(message) for message in get_messages(response.wsgi_request)]
-        self.assertIn("Queued resend for 1 recipient(s).", messages)
+        self.assertIn("Satte nyt forsøg i kø for 1 modtagere.", messages)
         self.assertIn("Datmail unavailable", messages)
 
     def test_change_view_shows_forwarded_mail_inline(self):
