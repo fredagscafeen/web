@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 22:33+0200\n"
+"POT-Creation-Date: 2026-04-13 03:34+0200\n"
 "PO-Revision-Date: 2026-04-04 16:19+0050\n"
 "Last-Translator:   <abs@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,7 +96,7 @@ msgstr "Result"
 #: bartab/templates/admin/consumption.html:20 bartab/templates/bartab.html:136
 #: events/templates/event.html:125 events/templates/event.html:172
 #: events/templates/event.html:201 guides/templates/guides.html:42
-#: items/templates/items.html:170 mail/models.py:18
+#: items/templates/items.html:170 mail/models.py:20
 msgid "Navn"
 msgstr "Name"
 
@@ -733,7 +733,7 @@ msgstr ""
 
 #: events/models.py:62 guides/models.py:20 items/models.py:13
 #: items/models.py:77 items/models.py:89 items/models.py:127
-#: items/models.py:141 mail/models.py:45 mail/models.py:204
+#: items/models.py:141 mail/models.py:47 mail/models.py:206
 msgid "Name"
 msgstr "Name"
 
@@ -742,7 +742,7 @@ msgid "Location"
 msgstr "Location"
 
 #: events/models.py:70 events/models.py:230 items/models.py:14
-#: items/models.py:128 items/models.py:142 mail/models.py:46
+#: items/models.py:128 items/models.py:142 mail/models.py:48 mail/models.py:371
 msgid "Description"
 msgstr "Description"
 
@@ -916,11 +916,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:365
+#: fredagscafeen/settings/base.py:388
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:366
+#: fredagscafeen/settings/base.py:389
 msgid "English"
 msgstr "English"
 
@@ -1537,25 +1537,99 @@ msgstr "Log"
 msgid "Logbøger"
 msgstr "Logs"
 
-#: mail/admin.py:69 mail/models.py:212
+#: mail/admin.py:82 mail/models.py:214
 msgid "Attachment"
 msgstr "Attachment"
 
-#: mail/admin.py:70 mail/models.py:213
+#: mail/admin.py:83 mail/models.py:215
 msgid "Attachments"
 msgstr "Attachments"
 
-#: mail/admin.py:116
+#: mail/admin.py:138 mail/admin.py:406
+msgid "Resend"
+msgstr "Resend"
+
+#: mail/admin.py:141
+#, fuzzy
+#| msgid "Block selected TLDs"
+msgid "Block selected domains"
+msgstr "Block selected domains"
+
+#: mail/admin.py:248
+msgid "Forwarded"
+msgstr "Forwarded"
+
+#: mail/admin.py:257
+msgid "Failed"
+msgstr "Failed"
+
+#: mail/admin.py:266
+msgid "Bounced"
+msgstr "Bounced"
+
+#: mail/admin.py:274
+msgid "Has resends"
+msgstr "Has resends"
+
+#: mail/admin.py:287
+msgid "Archive"
+msgstr "Archive"
+
+#: mail/admin.py:300
+msgid "Download EML"
+msgstr "Download Email (.eml)"
+
+#: mail/admin.py:311
+msgid "No failed recipients to resend."
+msgstr "No failed recipients to resend."
+
+#: mail/admin.py:328
+#, python-format
+msgid "Queued resend for %(count)s recipient(s)."
+msgstr "Queued resend for %(count)s recipient(s)."
+
+#: mail/admin.py:337
+msgid "Resend failed recipients"
+msgstr "Resend failed recipients"
+
+#: mail/admin.py:347
+#, python-format
+msgid "TLD '%(tld)s' is already blocked in the spam filter."
+msgstr "Domain '%(tld)s' is already blocked in the spam filter."
+
+#: mail/admin.py:358
+#, python-format
+msgid "TLD '%(tld)s' has been blocked in the spam filter."
+msgstr "Domain '%(tld)s' has been blocked in the spam filter."
+
+#: mail/admin.py:363
+msgid "Block sender's Domain in spam filter"
+msgstr "Block sender's Domain"
+
+#: mail/admin.py:402
+#, python-format
+msgid "Queued resend for %(target)s."
+msgstr "Queued resend for %(target)s."
+
+#: mail/admin.py:426
 msgid "Fra email"
 msgstr "From email"
 
-#: mail/admin.py:121 mail/models.py:102
+#: mail/admin.py:431 mail/models.py:104
 msgid "Til email(s)"
 msgstr "To email(s)"
 
-#: mail/admin.py:126 mail/models.py:117
+#: mail/admin.py:436 mail/models.py:119
 msgid "Emne"
 msgstr "Subject"
+
+#: mail/admin.py:462
+msgid "Allow selected TLDs"
+msgstr "Allow selected TLDs"
+
+#: mail/admin.py:472
+msgid "Block selected TLDs"
+msgstr "Block selected TLDs"
 
 #: mail/fields.py:9
 msgid "Comma-separated emails"
@@ -1573,75 +1647,75 @@ msgstr "Send email"
 msgid "Send emails"
 msgstr "Send emails"
 
-#: mail/models.py:21
+#: mail/models.py:23
 msgid "Only list members can send to this mailing list"
 msgstr "Only list members can send to this mailing list"
 
-#: mail/models.py:24
+#: mail/models.py:26
 msgid "Medlemmer"
 msgstr "Members"
 
-#: mail/models.py:31
+#: mail/models.py:33
 msgid "Mailingliste"
 msgstr "Mailing list"
 
-#: mail/models.py:32
+#: mail/models.py:34
 msgid "Mailinglister"
 msgstr "Mailing lists"
 
-#: mail/models.py:48
+#: mail/models.py:50
 msgid "Subject"
 msgstr "Subject"
 
-#: mail/models.py:54
+#: mail/models.py:56
 msgid "Email HTML text"
 msgstr "Email HTML text"
 
-#: mail/models.py:60
+#: mail/models.py:62
 msgid "Email template"
 msgstr "Email template"
 
-#: mail/models.py:61
+#: mail/models.py:63
 msgid "Email templates"
 msgstr "Email templates"
 
-#: mail/models.py:77
+#: mail/models.py:79
 msgid "Template variable"
 msgstr "Template variable"
 
-#: mail/models.py:78
+#: mail/models.py:80
 msgid "Template variables"
 msgstr "Template variables"
 
-#: mail/models.py:85
+#: mail/models.py:87
 msgid "Variable name"
 msgstr "Variable name"
 
-#: mail/models.py:88
+#: mail/models.py:90
 msgid "Variable value"
 msgstr "Variable value"
 
-#: mail/models.py:98
+#: mail/models.py:100
 msgid "Fra mailingliste"
 msgstr "From mailing list"
 
-#: mail/models.py:103
+#: mail/models.py:105
 msgid "Cc"
 msgstr "Cc"
 
-#: mail/models.py:104
+#: mail/models.py:106
 msgid "Bcc"
 msgstr "Bcc"
 
-#: mail/models.py:105
+#: mail/models.py:107
 msgid "Svar til"
 msgstr "Reply to"
 
-#: mail/models.py:108
+#: mail/models.py:110
 msgid "Template"
 msgstr "Template"
 
-#: mail/models.py:112
+#: mail/models.py:114
 msgid ""
 "If template is selected, HTML message and subject fields will not be used - "
 "they will be populated from template"
@@ -1649,37 +1723,81 @@ msgstr ""
 "If template is selected, HTML message and subject fields will not be used - "
 "they will be populated from template"
 
-#: mail/models.py:118
+#: mail/models.py:120
 msgid "Besked"
 msgstr "Message"
 
-#: mail/models.py:120
+#: mail/models.py:122
 msgid "HTML besked"
 msgstr "HTML message"
 
-#: mail/models.py:122
+#: mail/models.py:124
 msgid "Used only if template is not selected"
 msgstr "Used only if template is not selected"
 
-#: mail/models.py:126
+#: mail/models.py:128
 msgid "Udgående mail"
 msgstr "Outgoing mail"
 
-#: mail/models.py:127
+#: mail/models.py:129
 msgid "Udgående mails"
 msgstr "Outgoing mails"
 
-#: mail/models.py:202
+#: mail/models.py:204
 msgid "File"
 msgstr "File"
 
-#: mail/models.py:204
+#: mail/models.py:206
 msgid "The original filename"
 msgstr "The original filename"
 
-#: mail/models.py:207
+#: mail/models.py:209
 msgid "Emails"
 msgstr "Emails"
+
+#: mail/models.py:291 mail/tests.py:156
+msgid "A forwarded mail cannot reference itself as previous attempt."
+msgstr "A forwarded mail cannot reference itself as previous attempt."
+
+#: mail/models.py:309 mail/tests.py:211
+msgid "previous_attempt must belong to the same incoming mail."
+msgstr "A previous attempt must belong to the same incoming mail."
+
+#: mail/models.py:363
+msgid "TLD"
+msgstr "Domain"
+
+#: mail/models.py:365
+msgid ""
+"Domain to filter on, supports everything after @ in an email address (e.g. "
+"'example.com' or '.com' to filter all .com domains)"
+msgstr ""
+"Domain to filter on, supports everything after @ in an email address (e.g. "
+"'example.com' or '.com' to filter all .com domains)"
+
+#: mail/models.py:373
+msgid ""
+"Optional description for the TLD, help the next person understand the "
+"purpose of this entry"
+msgstr ""
+"Optional description for the TLD, help the next person understand the "
+"purpose of this entry"
+
+#: mail/models.py:378
+msgid "Allowed"
+msgstr "Allowed"
+
+#: mail/models.py:379
+msgid "Whether emails from this TLD should be allowed or blocked"
+msgstr "Whether emails from this TLD should be allowed or blocked"
+
+#: mail/models.py:383
+msgid "Spam filter TLD"
+msgstr "Spam filter TLD"
+
+#: mail/models.py:384
+msgid "Spam filter TLDs"
+msgstr "Spam filter TLDs"
 
 #: mail/templates/admin/send_mail.html:10
 msgid "Send"
@@ -2901,6 +3019,11 @@ msgid ""
 msgstr ""
 "Login mail sent: Press the link in your received email to log in. Also "
 "remember to check your spam folder."
+
+#, fuzzy
+#~| msgid "Status"
+#~ msgid "status"
+#~ msgstr "Status"
 
 #~ msgid "Hide on shelf"
 #~ msgstr "Hide on shelf"

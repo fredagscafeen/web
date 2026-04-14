@@ -1,5 +1,10 @@
-.PHONY: run migrate migrations createsuperuser import-db download-media makemessages compilemessages test new-module
+.PHONY: deploy logs run migrate migrations createsuperuser import-db download-media makemessages compilemessages test new-module
 
+deploy:
+	docker-compose pull
+	docker-compose up -d --remove-orphans
+logs:
+	tail -f django.log
 run:
 	./manage.py runserver 0.0.0.0:8000
 migrate:
