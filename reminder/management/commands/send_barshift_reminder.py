@@ -38,7 +38,7 @@ Husk at der på fredag er {common_event.title}!
         return f"""Hej {humanized_bartenders}.
 
 Den kommende fredag er det JERES tur til at stå i Fredagscaféen.
-Dette er en automatisk email sendt til jer og bestyrelsen.
+Dette er en automatisk email sendt til jer.
 Emailen er hovedsageligt sendt så I kan finde en anden at bytte vagt med,
 hvis en af jer ikke har mulighed for selv at tage den.
 Husk at jeres vagt starter kl. {start_time}.
