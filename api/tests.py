@@ -433,3 +433,86 @@ class ApiTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("reason", response.data)
+
+    def test_monitoring_ingest_subject_is_accepted(self):
+        request_uuid = uuid.uuid4()
+        payload = {
+            "request_uuid": str(request_uuid),
+            "received_at": timezone.now().isoformat(),
+            "sender": "test@example.com",
+            "target": "target@example.com",
+            "status": IncomingMail.Status.PROCESSED,
+            "reason": "",
+            "s3_object_key": "archive/test-subject.eml",
+            "expanded_recipients": [],
+            "subject": "Test Subject",
+        }
+
+        self.authenticate(permissions=["add_incomingmail", "change_incomingmail"])
+        response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            payload,
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        incoming_mail = IncomingMail.objects.get(
+            mail_archive__request_uuid=request_uuid
+        )
+        self.assertEqual(incoming_mail.subject, "Test Subject")
+
+    def test_monitoring_ingest_subject_defaults_to_default_string(self):
+        request_uuid = uuid.uuid4()
+        payload = {
+            "request_uuid": str(request_uuid),
+            "received_at": timezone.now().isoformat(),
+            "sender": "text@example.com",
+            "target": "target@example.com",
+            "status": IncomingMail.Status.PROCESSED,
+            "reason": "",
+            "s3_object_key": "archive/test-subject-default.eml",
+            "expanded_recipients": [],
+        }
+
+        self.authenticate(permissions=["add_incomingmail", "change_incomingmail"])
+        response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            payload,
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        incoming_mail = IncomingMail.objects.get(
+            mail_archive__request_uuid=request_uuid
+        )
+        self.assertEqual(incoming_mail.subject, "(No Subject)")
+
+    def test_monitoring_ingest_subject_accepts_too_long_subject(self):
+        request_uuid = uuid.uuid4()
+        long_subject = "A" * 10000
+        payload = {
+            "request_uuid": str(request_uuid),
+            "received_at": timezone.now().isoformat(),
+            "sender": "test@example.com",
+            "target": "target@example.com",
+            "status": IncomingMail.Status.PROCESSED,
+            "reason": "",
+            "s3_object_key": "archive/test-subject-long.eml",
+            "expanded_recipients": [],
+            "subject": long_subject,
+        }
+
+        self.authenticate(permissions=["add_incomingmail", "change_incomingmail"])
+        response = self.client.post(
+            self.api_path("monitoring/incoming-mails/"),
+            payload,
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        incoming_mail = IncomingMail.objects.get(
+            mail_archive__request_uuid=request_uuid
+        )
+        self.assertEqual(
+            incoming_mail.subject, "A" * 384
+        )  # Should be truncated to 384 chars
