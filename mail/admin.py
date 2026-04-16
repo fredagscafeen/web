@@ -141,7 +141,14 @@ class ForwardedMailInline(admin.TabularInline):
 @admin.action(description=_("Block selected domains"))
 def incoming_mail_block_domains(modeladmin, request, queryset):
     sender_domains = set(
-        mail.sender.split("@")[-1].lower() for mail in queryset if mail.sender
+        mail.sender.split("@")[-1]
+        .lower()
+        .split(":")[0]
+        .strip("[]")
+        .strip(">")
+        .strip("<")
+        for mail in queryset
+        if mail.sender
     )
     existing_tlds = set(
         SpamFilterTLD.objects.filter(tld__in=sender_domains).values_list(
@@ -337,7 +344,14 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
     resend.label = _("Resend failed recipients")
 
     def block_in_spamfilter(self, request, obj):
-        sender_domain = obj.sender.split("@")[-1].lower()
+        sender_domain = (
+            obj.sender.split("@")[-1]
+            .lower()
+            .split(":")[0]
+            .strip("[]")
+            .strip(">")
+            .strip("<")
+        )
         spam_filter_entry, created = SpamFilterTLD.objects.get_or_create(
             tld=sender_domain
         )
