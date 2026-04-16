@@ -307,7 +307,6 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
             "admin:mail_incomingmail_actions",
             kwargs={"pk": obj.pk, "tool": "download_eml"},
         )
-        print(url)
         return format_html('<a href="{}" download>Download EML</a>', url)
 
     mail_archive_link.short_description = _("Archive")
