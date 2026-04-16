@@ -1,4 +1,5 @@
 import datetime
+import secrets
 from collections import Counter
 
 from django.conf import settings
@@ -73,7 +74,7 @@ class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
             last_name=last_name,
         )
 
-        password = User.objects.make_random_password(length=30)
+        password = secrets.token_urlsafe(30)[:30]
         user.set_password(password)
 
         user.is_staff = True
