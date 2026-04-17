@@ -12,8 +12,7 @@ SQLITE_UPDATE_TRIGGER_NAME = (
 
 def create_previous_attempt_integrity_trigger(apps, schema_editor):
     if schema_editor.connection.vendor == "postgresql":
-        schema_editor.execute(
-            f"""
+        schema_editor.execute(f"""
             CREATE FUNCTION {POSTGRES_FUNCTION_NAME}()
             RETURNS TRIGGER AS $$
             BEGIN
@@ -30,21 +29,17 @@ def create_previous_attempt_integrity_trigger(apps, schema_editor):
                 RETURN NEW;
             END;
             $$ LANGUAGE plpgsql;
-            """
-        )
-        schema_editor.execute(
-            f"""
+            """)
+        schema_editor.execute(f"""
             CREATE TRIGGER {POSTGRES_TRIGGER_NAME}
             BEFORE INSERT OR UPDATE ON mail_forwardedmail
             FOR EACH ROW
             EXECUTE FUNCTION {POSTGRES_FUNCTION_NAME}();
-            """
-        )
+            """)
         return
 
     if schema_editor.connection.vendor == "sqlite":
-        schema_editor.execute(
-            f"""
+        schema_editor.execute(f"""
             CREATE TRIGGER {SQLITE_INSERT_TRIGGER_NAME}
             BEFORE INSERT ON mail_forwardedmail
             FOR EACH ROW
@@ -61,10 +56,8 @@ def create_previous_attempt_integrity_trigger(apps, schema_editor):
                       AND incoming_mail_id <> NEW.incoming_mail_id
                 );
             END;
-            """
-        )
-        schema_editor.execute(
-            f"""
+            """)
+        schema_editor.execute(f"""
             CREATE TRIGGER {SQLITE_UPDATE_TRIGGER_NAME}
             BEFORE UPDATE ON mail_forwardedmail
             FOR EACH ROW
@@ -81,8 +74,7 @@ def create_previous_attempt_integrity_trigger(apps, schema_editor):
                       AND incoming_mail_id <> NEW.incoming_mail_id
                 );
             END;
-            """
-        )
+            """)
 
 
 def drop_previous_attempt_integrity_trigger(apps, schema_editor):
