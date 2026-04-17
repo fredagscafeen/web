@@ -12,3 +12,4 @@ db.sqlite3
 .vscode/
 /staticfiles
 /db_data
+/temp_media_tmp

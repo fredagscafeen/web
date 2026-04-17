@@ -1,11 +1,15 @@
+import io
+import os
 import tempfile
 
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from PIL import Image as PILImage
 
+from fredagscafeen.settings import base as settings
 from gallery import views
 from gallery.models import Album, Image
 
@@ -18,7 +22,7 @@ class SimpleAlbumTest(TestCase):
         self.assertTrue(Album.objects.exists())
 
 
-@override_settings(MEDIA_ROOT=tempfile.gettempdir())
+@override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR, "test_media_tmp"))
 class SimpleMediaTest(TestCase):
     def setUp(self):
         album = Album.objects.create(title="Album Title", slug="album-title")
@@ -27,10 +31,25 @@ class SimpleMediaTest(TestCase):
     def generate_image(self, suffix):
         album = Album.objects.all()[0]
 
-        temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
-        PILImage.new("RGB", (100, 100)).save(temp_file)
+        # 1. Create the image in memory
+        img = PILImage.new("RGB", (100, 100))
+        buffer = io.BytesIO()
 
-        Image(file=temp_file.name, album=album).save()
+        ext = suffix.strip(".")
+        img_format = "JPEG" if ext.lower() == "jpg" else ext.upper()
+
+        img.save(buffer, format=img_format)
+        buffer.seek(0)
+
+        # 2. Wrap it in a SimpleUploadedFile
+        # The name is just a name, not a system path
+        file_name = f"test_image{suffix}"
+        uploaded_file = SimpleUploadedFile(
+            file_name, buffer.read(), content_type=f"image/{suffix.strip('.')}"
+        )
+
+        # 3. Save the model with the uploaded file
+        Image(file=uploaded_file, album=album).save()
 
         try:
             Image.objects.all()[0].file.crop["200x200"]
