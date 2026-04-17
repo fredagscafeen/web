@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
-{% load bootstrap5 bootstrap_icons %}
+{% load django_bootstrap5 bootstrap_icons %}
 {% load is_udlejning_with_user compare_udlejning_to_now %}
 
 {% block extrahead %}
@@ -204,11 +204,11 @@
 <form method="post" action="/{{ LANGUAGE_CODE }}/udlejning/#rentingform">
 	{% csrf_token %}
 	{% bootstrap_form form %}
-	{% buttons %}
+	<div class="mt-3">
 		{% translate "Indsend" as BUTTON_TEXT %}
 		<button type="submit" class="btn btn-primary">
 			{% bs_icon 'send-fill' size='1.0em' %} {{ BUTTON_TEXT }}
 		</button>
-	{% endbuttons %}
+	</div>
 </form>
 {% endblock %}

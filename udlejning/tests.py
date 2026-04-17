@@ -1,7 +1,6 @@
-import datetime
 import os
+from datetime import datetime, timedelta, timezone
 
-import pytz
 from django.core import mail
 from django.test import TestCase
 
@@ -18,7 +17,7 @@ class UdlejningApplicationTests(TestCase):
 
     def test_accepting_application(self):
         d = dict(
-            dateFrom=datetime.datetime(2024, 9, 16, 16, 0, tzinfo=pytz.UTC),
+            dateFrom=datetime(2024, 9, 16, 16, 0, tzinfo=timezone.utc),
             dateTo=None,
             whoReserved="Abekat",
             contactEmail="kat@mail.dk",
@@ -38,8 +37,8 @@ class UdlejningApplicationTests(TestCase):
 
     def test_sending_application(self):
         data = dict(
-            dateFrom=datetime.datetime(2024, 9, 16, 16, 0, tzinfo=pytz.UTC),
-            dateTo=datetime.datetime(2024, 9, 16, 22, 0, tzinfo=pytz.UTC),
+            dateFrom=datetime(2024, 9, 16, 16, 0, tzinfo=timezone.utc),
+            dateTo=datetime(2024, 9, 16, 22, 0, tzinfo=timezone.utc),
             whoReserved="Abekat",
             contactEmail="kat@mail.dk",
             contactPhone=42345123,
@@ -62,8 +61,8 @@ class UdlejningApplicationTests(TestCase):
     def test_invalid_application(self):
         # Missing payment info
         data = dict(
-            dateFrom=datetime.datetime(2024, 9, 16, 16, 0, tzinfo=pytz.UTC),
-            dateTo=datetime.datetime(2024, 9, 16, 22, 0, tzinfo=pytz.UTC),
+            dateFrom=datetime(2024, 9, 16, 16, 0, tzinfo=timezone.utc),
+            dateTo=datetime(2024, 9, 16, 22, 0, tzinfo=timezone.utc),
             whoReserved="Abekat",
             contactEmail="kat@mail.dk",
             contactPhone=42345123,

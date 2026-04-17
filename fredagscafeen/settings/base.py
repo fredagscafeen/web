@@ -241,10 +241,6 @@ for secret in SECRET_ADMIN_KEYS:
     else:
         print("WARNING: Missing secret key in env:", key)
 
-bootstrap5 = {
-    "success_css_class": "",
-}
-
 MESSAGE_TAGS = {
     messages.DEBUG: "alert-info",
     messages.INFO: "alert-info",
@@ -272,7 +268,7 @@ INSTALLED_APPS = (
     "django_extensions",
     "constance",
     "constance.backends.database",
-    "bootstrap5",
+    "django_bootstrap5",
     "django_bootstrap_icons",
     "bootstrap_datepicker_plus",
     "django_recaptcha",
@@ -375,10 +371,6 @@ LANGUAGE_CODE = "da"
 TIME_ZONE = "Europe/Copenhagen"
 
 USE_I18N = True
-
-USE_L10N = True  # default True in django 4.2.30
-
-USE_TZ = True  # Default True in django 4.2.30
 
 DJANGO_CELERY_BEAT_TZ_AWARE = False
 
