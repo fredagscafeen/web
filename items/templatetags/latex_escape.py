@@ -1,5 +1,6 @@
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -23,4 +24,4 @@ def latex_escape(value):
         "^": r"\textasciicircum{}",
         "\\": r"\textbackslash{}",
     }
-    return "".join(chars.get(c, c) for c in value)
+    return mark_safe("".join(chars.get(c, c) for c in value))

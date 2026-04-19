@@ -156,6 +156,7 @@ class ItemAdmin(admin.ModelAdmin):
     )
     empty_value_display = ""
     ordering = ("name",)
+    actions = ["print_shelf_labels"]
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,
@@ -192,6 +193,20 @@ class ItemAdmin(admin.ModelAdmin):
             queryset = queryset.filter(inStock=True)
 
         return queryset, may_have_duplicates
+
+    @admin.action(description="Print shelf labels for selected items")
+    def print_shelf_labels(self, request, queryset):
+        class SelectedShelfLabelContext:
+            file_name = "shelf_labels"
+            file_path = "shelf_labels/shelf_labels.tex"
+
+            @staticmethod
+            def get_context():
+                items = queryset.select_related("brewery", "type").order_by("name")
+                return {"label_items": [{"item": item} for item in items]}
+
+        request.method = "GET"
+        return pdf_preview(request, self.admin_site, SelectedShelfLabelContext)
 
 
 @admin.register(BeerType)
@@ -281,11 +296,11 @@ class ShelfLabelContext:
 
     @staticmethod
     def get_context():
-        shelves = Shelf.objects.all().prefetch_related(
-            "shelf_items__item__brewery", "shelf_items__item__type"
-        )
+        label_items = ShelfItem.objects.select_related(
+            "item", "item__brewery", "item__type", "shelf"
+        ).order_by("shelf__name", "order", "item__name")
 
-        return {"shelves": shelves}
+        return {"label_items": label_items}
 
 
 @custom_admin_view("items", "generate shelf labels")
