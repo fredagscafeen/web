@@ -1,5 +1,4 @@
 import io
-import os
 import tempfile
 
 from django.core.exceptions import ValidationError
