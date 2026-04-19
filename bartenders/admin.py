@@ -27,6 +27,7 @@ from bartenders.models import (
 )
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 from fredagscafeen.admin_view import custom_admin_view
+from fredagscafeen.models import CustomModelAdmin
 from mail.models import MailingList
 from printer.views import pdf_preview
 
@@ -58,7 +59,7 @@ class FreeBeerListContext:
 
 
 @admin.register(Bartender)
-class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
+class BartenderAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = ("name", "username", "email")
     search_fields = ("name", "username", "email")
     list_filter = ("isActiveBartender", ("board_members", NonNullFieldListFilter))
@@ -91,7 +92,7 @@ def generate_free_beer_list(admin, request):
 
 
 @admin.register(BoardMember)
-class BoardMemberAdmin(admin.ModelAdmin):
+class BoardMemberAdmin(CustomModelAdmin):
     list_display = ("thumbnail", "bartender", "responsibilities", "title", "period")
     list_display_links = ("thumbnail", "bartender")
     list_select_related = ("bartender",)
@@ -106,7 +107,7 @@ class BoardMemberAdmin(admin.ModelAdmin):
 
 
 @admin.register(BartenderApplication)
-class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
+class BartenderApplicationAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = ("name", "created", "username", "email")
 
     change_actions = ("accept", "deny")
@@ -132,7 +133,7 @@ class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 
 @admin.register(BartenderShift)
-class BartenderShiftAdmin(admin.ModelAdmin):
+class BartenderShiftAdmin(CustomModelAdmin):
     list_display = ("start_datetime", "shift_responsible", "other_bartenders_list")
     filter_horizontal = ("other_bartenders",)
 
@@ -150,12 +151,12 @@ class BartenderShiftAdmin(admin.ModelAdmin):
 
 
 @admin.register(ReleasedBartenderShift)
-class ReleasedBartenderShiftAdmin(admin.ModelAdmin):
+class ReleasedBartenderShiftAdmin(CustomModelAdmin):
     list_display = ("bartender", "bartender_shift")
 
 
 @admin.register(BoardMemberDepositShift)
-class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
+class BoardMemberDepositShiftAdmin(CustomModelAdmin):
     list_display = ("start_date", "end_date", "responsible_board_members")
     filter_horizontal = ("responsibles",)
 
@@ -174,12 +175,12 @@ class BoardMemberInline(admin.StackedInline):
 
 
 @admin.register(BoardMemberPeriod)
-class BoardMemberPeriodAdmin(admin.ModelAdmin):
+class BoardMemberPeriodAdmin(CustomModelAdmin):
     inlines = [BoardMemberInline]
 
 
 @admin.register(BartenderShiftPeriod)
-class BartenderShiftPeriodAdmin(admin.ModelAdmin):
+class BartenderShiftPeriodAdmin(CustomModelAdmin):
     change_form_template = "bartender_shift_period_change_form.html"
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
@@ -205,7 +206,7 @@ class BartenderShiftPeriodAdmin(admin.ModelAdmin):
 
 
 @admin.register(Poll)
-class PollAdmin(admin.ModelAdmin):
+class PollAdmin(CustomModelAdmin):
     pass
 
 

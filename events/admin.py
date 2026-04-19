@@ -5,6 +5,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from bartenders.models import Bartender
+from fredagscafeen.models import CustomModelAdmin
 
 from .models import CommonEvent, Event, EventChoice, EventChoiceOption, EventResponse
 
@@ -39,7 +40,7 @@ class EventChoiceOptionInline(admin.StackedInline):
 
 
 @admin.register(EventChoice)
-class EventChoiceAdmin(admin.ModelAdmin):
+class EventChoiceAdmin(CustomModelAdmin):
     inlines = [
         EventChoiceOptionInline,
     ]
@@ -92,7 +93,7 @@ class EventAdminForm(forms.ModelForm):
 
 
 @admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
+class EventAdmin(CustomModelAdmin):
     list_display = (
         "name",
         "year",
@@ -121,12 +122,12 @@ class EventAdmin(admin.ModelAdmin):
 
 
 @admin.register(EventResponse)
-class EventResponseAdmin(admin.ModelAdmin):
+class EventResponseAdmin(CustomModelAdmin):
     pass
 
 
 @admin.register(CommonEvent)
-class CommonEventAdmin(admin.ModelAdmin):
+class CommonEventAdmin(CustomModelAdmin):
     list_display = (
         "title",
         "date",

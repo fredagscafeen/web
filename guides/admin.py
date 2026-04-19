@@ -1,10 +1,12 @@
 from django.contrib import admin
 
+from fredagscafeen.models import CustomModelAdmin
+
 from .models import Guide
 
 
 @admin.register(Guide)
-class GuideAdmin(admin.ModelAdmin):
+class GuideAdmin(CustomModelAdmin):
     list_display = (
         "name",
         "category",

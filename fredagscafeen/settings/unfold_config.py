@@ -1,5 +1,4 @@
 from django.templatetags.static import static
-from django.urls import reverse_lazy
 
 # Unfold admin interface settings
 UNFOLD = {
@@ -27,12 +26,12 @@ UNFOLD = {
         "light": lambda request: static("/images/logo.png"),  # light mode
         "dark": lambda request: static("/images/logo.png"),  # dark mode
     },
-    "LOGIN": {
-        "image": lambda request: static("sample/login-bg.jpg"),
-        "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
-        # Inherits from `unfold.forms.AuthenticationForm`
-        "form": "app.forms.CustomLoginForm",
-    },
+    # "LOGIN": {
+    #     "image": lambda request: static("sample/login-bg.jpg"),
+    #     "redirect_after": lambda request: reverse_lazy("admin:APP_MODEL_changelist"),
+    #     # Inherits from `unfold.forms.AuthenticationForm`
+    #     "form": "app.forms.CustomLoginForm",
+    # },
     "BORDER_RADIUS": "6px",
     "COLORS": {
         "base": {

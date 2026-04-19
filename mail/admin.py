@@ -12,6 +12,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_object_actions import DjangoObjectActions
 
+from fredagscafeen.models import CustomModelAdmin
+
 from .fields import CommaSeparatedEmailField
 from .forms import OutgoingEmailAdminForm
 from .models import (
@@ -33,7 +35,7 @@ from .services import (
 
 
 @admin.register(MailingList)
-class MailingListAdmin(admin.ModelAdmin):
+class MailingListAdmin(CustomModelAdmin):
     list_display = ("name", "count", "isOnlyInternal")
     filter_horizontal = ("members",)
 
@@ -41,7 +43,7 @@ class MailingListAdmin(admin.ModelAdmin):
 admin.site.register(EmailTemplate)
 
 
-class EmailTemplateAdmin(admin.ModelAdmin):
+class EmailTemplateAdmin(CustomModelAdmin):
     list_display = ("name", "description", "subject")
     readonly_fields = ["preview_template_field"]
 
@@ -86,7 +88,7 @@ class AttachmentInline(admin.TabularInline):
 admin.site.register(Attachment)
 
 
-class AttachmentAdmin(admin.ModelAdmin):
+class AttachmentAdmin(CustomModelAdmin):
     list_display = (
         "name",
         "file",
@@ -173,7 +175,7 @@ def incoming_mail_block_domains(modeladmin, request, queryset):
 
 
 @admin.register(IncomingMail)
-class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
+class IncomingMailAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = (
         "get_status_display",
         "get_subject_display",
@@ -396,7 +398,7 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 
 @admin.register(ForwardedMail)
-class ForwardedMailAdmin(DjangoObjectActions, admin.ModelAdmin):
+class ForwardedMailAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = (
         "incoming_mail",
         "target",
@@ -439,7 +441,7 @@ class ForwardedMailAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 
 @admin.register(OutgoingEmail)
-class OutgoingEmailAdmin(DjangoObjectActions, admin.ModelAdmin):
+class OutgoingEmailAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = [
         "subject_display",
         "from_mailing_list_display",
@@ -512,7 +514,7 @@ def block_tlds(modeladmin, request, queryset):
 
 
 @admin.register(SpamFilterTLD)
-class SpamFilterTLDAdmin(admin.ModelAdmin):
+class SpamFilterTLDAdmin(CustomModelAdmin):
     list_display = (
         "allowed",
         "tld",

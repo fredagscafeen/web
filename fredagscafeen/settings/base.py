@@ -268,7 +268,7 @@ INSTALLED_APPS = (
     # "unfold.contrib.guardian",  # optional, if django-guardian package is used
     # "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
     # "unfold.contrib.location_field",  # optional, if django-location-field package is used
-    # "unfold.contrib.constance",  # optional, if django-constance package is used
+    "unfold.contrib.constance",  # optional, if django-constance package is used
     "django.contrib.admin",  # required
     "django.contrib.auth",
     "django.contrib.contenttypes",

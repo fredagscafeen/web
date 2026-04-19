@@ -14,6 +14,7 @@ from django.utils.translation import ngettext
 
 from bartenders.models import BoardMemberPeriod
 from fredagscafeen.admin_view import custom_admin_view
+from fredagscafeen.models import CustomModelAdmin
 from printer.views import pdf_preview
 
 from .forms import ConsumptionForm
@@ -71,7 +72,7 @@ def show_on_tab(self, request, queryset):
 
 
 @admin.register(BarTabUser)
-class BarTabUserAdmin(admin.ModelAdmin):
+class BarTabUserAdmin(CustomModelAdmin):
     list_display = ("name", "email", "current_balance", "hidden_from_tab")
     search_fields = ("name", "email")
     list_filter = ("hidden_from_tab",)
@@ -140,7 +141,7 @@ class BarTabContext:
 
 
 @admin.register(BarTabSnapshot)
-class BarTabSnapshotAdmin(admin.ModelAdmin):
+class BarTabSnapshotAdmin(CustomModelAdmin):
     change_form_template = "admin/enhancedinline.html"
     list_display = (
         "date",

@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
+from fredagscafeen.models import CustomModelAdmin
 from gallery.models import Album, BaseMedia
 
 
@@ -42,7 +43,7 @@ class AlbumAdminForm(forms.ModelForm):
         ]
 
 
-class AlbumAdmin(admin.ModelAdmin):
+class AlbumAdmin(CustomModelAdmin):
     # List display of multiple albums
     list_display = ("title", "year", "publish_date", "get_visibility_link")
     ordering = [

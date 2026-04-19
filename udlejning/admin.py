@@ -10,6 +10,7 @@ from django.utils.safestring import mark_safe
 from django_object_actions import DjangoObjectActions
 
 from fredagscafeen.email import send_template_email
+from fredagscafeen.models import CustomModelAdmin
 from udlejning.models import (
     Udlejning,
     UdlejningApplication,
@@ -40,7 +41,7 @@ class StatusDoneListFilter(admin.SimpleListFilter):
 
 # Remember to cut down to 2 classes
 @admin.register(Udlejning)
-class UdlejningAdmin(admin.ModelAdmin):
+class UdlejningAdmin(CustomModelAdmin):
     ordering = ("-dateFrom",)
     list_display = (
         "dateFrom",
@@ -113,7 +114,7 @@ class UdlejningAdmin(admin.ModelAdmin):
 
 
 @admin.register(UdlejningApplication)
-class UdlejningApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
+class UdlejningApplicationAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = ("dateFrom", "whoReserved")
 
     change_actions = ("accept", "deny")
@@ -156,7 +157,7 @@ Se {{link}} for mere info.
 
 
 @admin.register(UdlejningGrill)
-class UdlejningGrillAdmin(admin.ModelAdmin):
+class UdlejningGrillAdmin(CustomModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
     filter_horizontal = ("bartendersInCharge",)
@@ -170,7 +171,7 @@ class UdlejningGrillAdmin(admin.ModelAdmin):
 
 
 @admin.register(UdlejningProjector)
-class UdlejningProjectorAdmin(admin.ModelAdmin):
+class UdlejningProjectorAdmin(CustomModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
     filter_horizontal = ("bartendersInCharge",)
@@ -180,7 +181,7 @@ class UdlejningProjectorAdmin(admin.ModelAdmin):
 
 
 @admin.register(UdlejningSpeakers)
-class UdlejningSpeakersAdmin(admin.ModelAdmin):
+class UdlejningSpeakersAdmin(CustomModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
     filter_horizontal = ("bartendersInCharge",)
@@ -190,7 +191,7 @@ class UdlejningSpeakersAdmin(admin.ModelAdmin):
 
 
 @admin.register(UdlejningBoardGameCart)
-class UdlejningBoardGameCartAdmin(admin.ModelAdmin):
+class UdlejningBoardGameCartAdmin(CustomModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
     filter_horizontal = ("bartendersInCharge",)
@@ -200,7 +201,7 @@ class UdlejningBoardGameCartAdmin(admin.ModelAdmin):
 
 
 @admin.register(UdlejningTent)
-class UdlejningTentAdmin(admin.ModelAdmin):
+class UdlejningTentAdmin(CustomModelAdmin):
     ordering = ("-dateFrom",)
     list_display = ("dateFrom", "whoReserved", "in_charge")
     filter_horizontal = ("bartendersInCharge",)
