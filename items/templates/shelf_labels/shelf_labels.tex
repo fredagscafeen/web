@@ -1,0 +1,75 @@
+{% load latex_escape %}
+
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.5cm, landscape]{geometry}
+\usepackage[pdftex]{graphicx} % Added pdftex driver explicitly
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+
+\pdfinclusionerrorlevel=0
+\pdfminorversion=7
+\pdfsuppresswarningpagegroup=1 % Suppresses the group warning that causes libpng issues
+\setlength{\parindent}{0pt}
+
+% Fix for the & symbol
+\newcommand{\amp}{\&}
+
+% 1. Use valign=c in your image macros as discussed
+\newcommand{\PlaceholderImg}{%
+    \includegraphics[valign=c, width=0.5\textwidth, keepaspectratio]{/app/staticfiles/images/logo.png}%
+}
+
+% 1. The Image Macro: added trim and M-alignment
+\newcommand{\Img}[1]{%
+    \includegraphics[
+        trim=0 0 0 0, clip, % Change to trim=10 10 10 10 if you want to force-crop edges
+        valign=M,
+        max height=2cm,
+        keepaspectratio
+    ]{\detokenize{/app/media/items/#1}}%
+}
+
+% 2. The Box Macro: Simplified to prevent overlap
+\newcommand{\C}[5]{%
+\fbox{%
+    \begin{minipage}[c][3.5cm][c]{8.5cm} % Increased size to prevent overlapping
+        \begin{tabularx}{\textwidth}{>{\centering\arraybackslash}m{2.6cm} X}
+            #1 &
+            \raggedright
+            \vspace{2mm}
+            {\tiny \MakeUppercase{#2}} \par \vspace{1mm}
+            {\large \textbf{#3}} \par \vspace{1mm}
+            {\small #4} \par \vspace{4mm}
+            {\Large \textbf{#5~kr.}} \vspace{2mm}
+        \end{tabularx}
+    \end{minipage}%
+}\hspace{0.4cm}}
+
+
+
+\begin{document}
+    \pagestyle{empty}
+    \begin{flushleft}
+    {% for shelf in shelves %}
+        {% for shelf_item in shelf.shelf_items.all %}
+            \C{{ '{' }}
+                {% if shelf_item.item.image %}
+                    {% if ".webp" in shelf_item.item.image.name.lower or "Schweppes" in shelf_item.item.image.name or "Siren-PinkPaloma" in shelf_item.item.image.name or "funky-fluid" in shelf_item.item.image.name.lower or "magners" in shelf_item.item.image.name.lower %}
+                        \PlaceholderImg
+                    {% else %}
+                        \Img{{"{"}}{{ shelf_item.item.image.name|cut:"items/"|cut:" " }}{{"}"}}
+                    {% endif %}
+                {% else %}
+                    \PlaceholderImg
+                {% endif %}
+            {{ '}' }}{ {{ shelf_item.item.brewery.name|default:"~"|latex_escape }} }{ {{ shelf_item.item.latex_safe_name|default:"Item"|latex_escape }} }{ {{ shelf_item.item.type.name|default:"~"|latex_escape }} }{ {{ shelf_item.item.priceInDKK|latex_escape }} }
+            {% if forloop.counter|divisibleby:2 %}
+                \par\vspace{0.5cm}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    \end{flushleft}
+\end{document}

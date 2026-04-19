@@ -275,6 +275,24 @@ def generate_bartab(admin, request):
     return pdf_preview(request, admin.admin_site, BarMenuContext)
 
 
+class ShelfLabelContext:
+    file_name = "shelf_labels"
+    file_path = "shelf_labels/shelf_labels.tex"
+
+    @staticmethod
+    def get_context():
+        shelves = Shelf.objects.all().prefetch_related(
+            "shelf_items__item__brewery", "shelf_items__item__type"
+        )
+
+        return {"shelves": shelves}
+
+
+@custom_admin_view("items", "generate shelf labels")
+def generate_shelf_labels(admin, request):
+    return pdf_preview(request, admin.admin_site, ShelfLabelContext)
+
+
 class ShelfItemInlineFormSet(forms.models.BaseInlineFormSet):
     def clean(self):
         """Check that the same item isn't added twice to the shelf"""

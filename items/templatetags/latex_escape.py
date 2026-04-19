@@ -18,6 +18,7 @@ def latex_escape(value):
         "_": r"\_",
         "{": r"\{",
         "}": r"\}",
+        "'": r"\textquotesingle{}",
         "~": r"\textasciitilde{}",
         "^": r"\textasciicircum{}",
         "\\": r"\textbackslash{}",
