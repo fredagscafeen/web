@@ -31,7 +31,7 @@ class Command(BaseCommand):
                     row["item"] = Item.objects.get(name=row["name"].split("  ")[1])
 
             row["diff"] = int(row["diff"])
-            row["datetime"] = datetime.fromisoformat(row["datetime"])
+            dt = datetime.fromisoformat(row["datetime"])
             if dt.tzinfo is None:
                 row["datetime"] = dt.replace(tzinfo=timezone.utc)
             else:
