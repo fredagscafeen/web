@@ -34,7 +34,7 @@
         max width=2.6cm,
         max height=2.4cm,
         keepaspectratio
-    ]{\detokenize{/app/media/items/#1}}%
+    ]{\detokenize{#1}}%
 }
 
 \newcommand{\Badge}[1]{%
@@ -81,12 +81,8 @@
         {% for label_item in label_items %}
             \noindent
             \C{{ '{' }}
-                {% if label_item.item.image %}
-                    {% if ".webp" in label_item.item.image.name.lower or "Schweppes" in label_item.item.image.name or "Siren-PinkPaloma" in label_item.item.image.name or "funky-fluid" in label_item.item.image.name.lower or "magners" in label_item.item.image.name.lower %}
-                        \PlaceholderImg
-                    {% else %}
-                        \Img{{"{"}}{{ label_item.item.image.name|cut:"items/"|cut:" " }}{{"}"}}
-                    {% endif %}
+                {% if label_item.has_render_image %}
+                    \Img{{"{"}}{{ label_item.render_image_path }}{{"}"}}
                 {% else %}
                     \PlaceholderImg
                 {% endif %}

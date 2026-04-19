@@ -20,6 +20,7 @@ from .models import (
     Shelf,
     ShelfItem,
 )
+from .shelf_labels import build_shelf_label_context
 
 
 def filter_by_amount(qs, positive):
@@ -201,9 +202,11 @@ class ItemAdmin(admin.ModelAdmin):
             file_path = "shelf_labels/shelf_labels.tex"
 
             @staticmethod
-            def get_context():
+            def get_context_for_work_dir(work_dir):
                 items = queryset.select_related("brewery", "type").order_by("name")
-                return {"label_items": [{"item": item} for item in items]}
+                return build_shelf_label_context(
+                    [{"item": item} for item in items], work_dir
+                )
 
         request.method = "GET"
         return pdf_preview(request, self.admin_site, SelectedShelfLabelContext)
@@ -295,12 +298,12 @@ class ShelfLabelContext:
     file_path = "shelf_labels/shelf_labels.tex"
 
     @staticmethod
-    def get_context():
+    def get_context_for_work_dir(work_dir):
         label_items = ShelfItem.objects.select_related(
             "item", "item__brewery", "item__type", "shelf"
         ).order_by("shelf__name", "order", "item__name")
 
-        return {"label_items": label_items}
+        return build_shelf_label_context(label_items, work_dir)
 
 
 @custom_admin_view("items", "generate shelf labels")
