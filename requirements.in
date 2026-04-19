@@ -37,4 +37,4 @@ tqdm>=4.66.3
 idna>=3.7
 virtualenv>=20.26.6
 djangorestframework-api-key>=3.1.0
-django-unfold
+django-unfold>=0.90.0

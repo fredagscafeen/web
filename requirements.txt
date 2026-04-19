@@ -113,7 +113,7 @@ django-rosetta==0.10.3
     # via -r requirements.in
 django-timezone-field==7.2.1
     # via django-celery-beat
-django-unfold==0.46.0
+django-unfold==0.90.0
     # via -r requirements.in
 django-versatileimagefield==3.1
     # via -r requirements.in
@@ -153,7 +153,7 @@ jmespath==1.1.0
     #   botocore
 kombu[redis]==5.6.2
     # via celery
-lxml==6.0.4
+lxml==6.1.0
     # via
     #   lxml-html-clean
     #   pyquery
@@ -192,11 +192,11 @@ ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.3
     # via stack-data
-pydantic==2.13.1
+pydantic==2.13.2
     # via
     #   django-bootstrap-datepicker-plus
     #   pydantic-settings
-pydantic-core==2.46.1
+pydantic-core==2.46.2
     # via pydantic
 pydantic-settings==2.13.1
     # via django-bootstrap-datepicker-plus
