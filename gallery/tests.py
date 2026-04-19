@@ -9,7 +9,6 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 from PIL import Image as PILImage
 
-from fredagscafeen.settings import base as settings
 from gallery import views
 from gallery.models import Album, Image
 
@@ -22,7 +21,7 @@ class SimpleAlbumTest(TestCase):
         self.assertTrue(Album.objects.exists())
 
 
-@override_settings(MEDIA_ROOT=os.path.join(settings.BASE_DIR, "test_media_tmp"))
+@override_settings(MEDIA_ROOT=tempfile.gettempdir())
 class SimpleMediaTest(TestCase):
     def setUp(self):
         album = Album.objects.create(title="Album Title", slug="album-title")
@@ -59,6 +58,7 @@ class SimpleMediaTest(TestCase):
             )
         self.assertEqual(len(Image.objects.all()), 1)
         self.assertIsInstance(album.basemedia.select_subclasses()[0], Image)
+        uploaded_file.close()
 
     def test_simple_jpg_album(self):
         self.generate_image(".jpg")
@@ -92,6 +92,7 @@ class CorruptedMediaTest(TestCase):
                 instance.save()
 
         self.assertEqual(len(Image.objects.all()), 0)
+        temp_file.close()
 
 
 class GalleryViewTest(TestCase):
