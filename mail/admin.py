@@ -11,6 +11,7 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_object_actions import DjangoObjectActions
+from unfold.widgets import UnfoldAdminTextInputWidget
 
 from fredagscafeen.models import CustomModelAdmin
 
@@ -95,7 +96,7 @@ class AttachmentAdmin(CustomModelAdmin):
     )
 
 
-class CommaSeparatedEmailWidget(TextInput):
+class CommaSeparatedEmailWidget(UnfoldAdminTextInputWidget):
     def __init__(self, *args, **kwargs):
         super(CommaSeparatedEmailWidget, self).__init__(*args, **kwargs)
         self.attrs.update({"class": "vTextField"})
@@ -449,9 +450,9 @@ class OutgoingEmailAdmin(DjangoObjectActions, CustomModelAdmin):
         "template",
     ]
     inlines = [TemplateVariableInline]
-    formfield_overrides = {
-        CommaSeparatedEmailField: {"widget": CommaSeparatedEmailWidget}
-    }
+    # formfield_overrides = {
+    #     CommaSeparatedEmailField: {"widget": CommaSeparatedEmailWidget}
+    # }
     form = OutgoingEmailAdminForm
 
     def from_mailing_list_display(self, instance):

@@ -425,6 +425,7 @@ CORS_URLS_REGEX = r"^/api/.*$"  # Only allow CORS requests in /api
 CORS_ORIGIN_ALLOW_ALL = True
 
 CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
+CONSTANCE_DATABASE_PREFIX = "constance:fredagscafeen:"
 
 # Server admins (get an email when server errors happen)
 ADMINS = [

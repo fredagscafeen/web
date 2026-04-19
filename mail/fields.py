@@ -1,3 +1,5 @@
+import re
+
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 
@@ -19,6 +21,7 @@ class CommaSeparatedEmailField(TextField):
             }
         }
         defaults.update(kwargs)
+        print("defaults", defaults, kwargs)
         return super(CommaSeparatedEmailField, self).formfield(**defaults)
 
     def from_db_value(self, value, expression, connection, context=None):
@@ -42,6 +45,7 @@ class CommaSeparatedEmailField(TextField):
             if value == "":
                 return []
             else:
-                return [s.strip() for s in value.split(",")]
+                matches = re.findall(r"'(.*?)'", value)
+                return matches
         else:
             return value
