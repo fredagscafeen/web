@@ -1,24 +1,39 @@
 {
-  "name": "fredagscafeen-web",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
-  "workspaceFolder": "/app",
-  "postCreateCommand": "pip-sync requirements.txt dev-requirements.txt && pre-commit install && python manage.py migrate",
-  "forwardPorts": [8000],
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-python.python",
-        "ms-python.black-formatter",
-        "batisteo.vscode-django"
-      ],
-      "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.formatting.provider": "none",
-        "[python]": {
-          "editor.defaultFormatter": "ms-python.black-formatter"
+    "name": "fredagscafeen-web",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/app",
+    "postCreateCommand": "pip-sync requirements.txt dev-requirements.txt && pre-commit install && python manage.py migrate",
+    "forwardPorts": [
+        8000
+    ],
+    "containerEnv": {
+        "LANG": "en_US.UTF-8",
+        "LC_ALL": "en_US.UTF-8"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "ms-python.vscode-python-envs",
+                "batisteo.vscode-django"
+            ],
+            "settings": {
+                "terminal.integrated.detectLocale": "on",
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.formatting.provider": "none",
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.black-formatter"
+                }
+            }
         }
-      }
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "configureZshAsDefaultShell": true
+        },
+        "ghcr.io/devcontainers/features/git:1": {}
     }
-  }
 }
