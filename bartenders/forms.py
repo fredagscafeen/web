@@ -1,12 +1,12 @@
 from urllib.parse import urljoin
 
-from captcha.fields import ReCaptchaField
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
+from django_recaptcha.fields import ReCaptchaField
 
 from bartab.models import BarTabUser
 from bartenders.models import Bartender, BartenderApplication
