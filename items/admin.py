@@ -300,8 +300,8 @@ class ShelfLabelContext:
     @staticmethod
     def get_context_for_work_dir(work_dir):
         label_items = ShelfItem.objects.select_related(
-            "item", "item__brewery", "item__type", "shelf"
-        ).order_by("shelf__name", "order", "item__name")
+            "item", "item__brewery", "item__type", "shelf__fridge"
+        ).order_by("shelf__fridge__name", "shelf__name", "order", "item__name")
 
         return build_shelf_label_context(label_items, work_dir)
 
