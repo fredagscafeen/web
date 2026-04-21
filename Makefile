@@ -1,11 +1,11 @@
-.PHONY: deploy logs run migrate migrations createsuperuser import-db download-media makemessages compilemessages test new-module
+.PHONY: deploy logs run migrate migrations createsuperuser import-db import-media makemessages compilemessages test new-module collectstatic
 
 deploy:
 	docker-compose pull
 	docker-compose up -d --remove-orphans
 logs:
 	tail -f django.log
-run:
+run: collectstatic
 	./manage.py runserver 0.0.0.0:8000
 migrate:
 	./manage.py migrate
@@ -15,7 +15,7 @@ createsuperuser:
 	./manage.py createsuperuser
 import-db:
 	./import_db
-download-media:
+import-media:
 	./download_media
 makemessages:
 	./manage.py makemessages --all
@@ -25,3 +25,5 @@ test:
 	./manage.py test
 new-module:
 	echo "Enter module name: " && read module && ./manage.py startapp $$module
+collectstatic:
+	./manage.py collectstatic --noinput

@@ -95,11 +95,10 @@ class AttachmentAdmin(admin.ModelAdmin):
 
 class CommaSeparatedEmailWidget(TextInput):
     def __init__(self, *args, **kwargs):
-        super(CommaSeparatedEmailWidget, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.attrs.update({"class": "vTextField"})
 
-    def format_value(self, value):
-        # If the value is a string wrap it in a list so it does not get sliced.
+    def format_value(self, value: list[str]) -> str:
         if not value:
             return ""
         if isinstance(value, str):
