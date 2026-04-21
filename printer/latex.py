@@ -9,10 +9,20 @@ class LatexError(Exception):
         self.message = message
 
 
+def _get_render_context(work_dir, latex_context):
+    get_context_for_work_dir = getattr(latex_context, "get_context_for_work_dir", None)
+    if callable(get_context_for_work_dir):
+        return get_context_for_work_dir(work_dir)
+
+    return latex_context.get_context()
+
+
 def generate_pdf(work_dir, latex_context):
     file_name = latex_context.file_name
     with (Path(work_dir) / f"{file_name}.tex").open("w") as f:
-        latex = render_to_string(latex_context.file_path, latex_context.get_context())
+        latex = render_to_string(
+            latex_context.file_path, _get_render_context(work_dir, latex_context)
+        )
         f.write(latex)
 
     p = subprocess.run(

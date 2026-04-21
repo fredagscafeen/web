@@ -20,6 +20,7 @@ from .models import (
     Shelf,
     ShelfItem,
 )
+from .shelf_labels import build_shelf_label_context
 
 
 def filter_by_amount(qs, positive):
@@ -156,6 +157,7 @@ class ItemAdmin(admin.ModelAdmin):
     )
     empty_value_display = ""
     ordering = ("name",)
+    actions = ["print_shelf_labels"]
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,
@@ -192,6 +194,22 @@ class ItemAdmin(admin.ModelAdmin):
             queryset = queryset.filter(inStock=True)
 
         return queryset, may_have_duplicates
+
+    @admin.action(description="Print shelf labels for selected items")
+    def print_shelf_labels(self, request, queryset):
+        class SelectedShelfLabelContext:
+            file_name = "shelf_labels"
+            file_path = "shelf_labels/shelf_labels.tex"
+
+            @staticmethod
+            def get_context_for_work_dir(work_dir):
+                items = queryset.select_related("brewery", "type").order_by("name")
+                return build_shelf_label_context(
+                    [{"item": item} for item in items], work_dir
+                )
+
+        request.method = "GET"
+        return pdf_preview(request, self.admin_site, SelectedShelfLabelContext)
 
 
 @admin.register(BeerType)
@@ -273,6 +291,24 @@ class BarMenuContext:
 @custom_admin_view("items", "generate barmenu")
 def generate_bartab(admin, request):
     return pdf_preview(request, admin.admin_site, BarMenuContext)
+
+
+class ShelfLabelContext:
+    file_name = "shelf_labels"
+    file_path = "shelf_labels/shelf_labels.tex"
+
+    @staticmethod
+    def get_context_for_work_dir(work_dir):
+        label_items = ShelfItem.objects.select_related(
+            "item", "item__brewery", "item__type", "shelf__fridge"
+        ).order_by("shelf__fridge__name", "shelf__name", "order", "item__name")
+
+        return build_shelf_label_context(label_items, work_dir)
+
+
+@custom_admin_view("items", "generate shelf labels")
+def generate_shelf_labels(admin, request):
+    return pdf_preview(request, admin.admin_site, ShelfLabelContext)
 
 
 class ShelfItemInlineFormSet(forms.models.BaseInlineFormSet):
