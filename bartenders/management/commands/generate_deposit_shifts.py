@@ -1,12 +1,9 @@
-import datetime
 import random
-from itertools import chain, zip_longest
 
 from django.core.management.base import BaseCommand, CommandError
 
 from bartenders.models import (
     Bartender,
-    BoardMember,
     BoardMemberDepositShift,
     BoardMemberDepositShiftPeriod,
     next_deposit_shift_start,
@@ -16,37 +13,65 @@ from bartenders.models import (
 class Command(BaseCommand):
     help = "Generates new deposit shifts"
 
-    RESPONSIBLES = int(input("Number of responsible board members (2): ") or "2")
-    WEEKS = int(input("Number of consecutive weeks (2): ") or "2")
+    def add_arguments(self, parser):
+        parser.add_argument("--responsibles", type=int)
+        parser.add_argument("--weeks", type=int)
 
     def handle(self, *args, **options):
-        board_members = set(b for b in Bartender.objects.all() if b.isBoardMember)
+        print(
+            """
+HELP:
+This command generates new deposit shifts for board members. It ensures that no board member gets two shifts in a row, and that the last two responsible board members from the previous period are included in the new schedule.
+The command will prompt you for the number of responsible board members per shift and the number of consecutive weeks to generate shifts for. After generating the schedule, it will ask for confirmation before publishing the new shifts to the database.
+            """
+        )
 
-        for shift in iter(BoardMemberDepositShift.objects.all()):
-            first_shift = shift
+        responsibles_per_shift = options["responsibles"]
+        if responsibles_per_shift is None:
+            responsibles_per_shift = int(
+                input("Number of responsible board members (2): ") or "2"
+            )
 
-        assert first_shift != None
+        weeks = options["weeks"]
+        if weeks is None:
+            weeks = int(input("Number of consecutive weeks (2): ") or "2")
 
-        last_responsible = None
-        for board_member in board_members:
-            last_responsible = board_member
+        board_members = [b for b in Bartender.objects.all() if b.isBoardMember]
+        if len(board_members) < 2:
+            raise CommandError(
+                "Need at least 2 active board members to generate shifts"
+            )
 
-        assert last_responsible != None
-        second_last_responsible = list(set(board_members) - {last_responsible})[0]
+        first_shift = BoardMemberDepositShift.objects.last()
+        if first_shift is None:
+            raise CommandError("No existing deposit shifts found")
+
+        previous_shift = (
+            BoardMemberDepositShift.objects.filter(
+                start_date__lt=first_shift.start_date,
+                responsibles__isnull=False,
+            )
+            .distinct()
+            .last()
+        )
+
+        previous_responsibles = []
+        if previous_shift is not None:
+            previous_responsibles = [
+                bartender
+                for bartender in previous_shift.responsibles.all()
+                if bartender in board_members
+            ]
 
         # Shuffle board members, but ensure that no one gets two shifts in a row
         shuffled_board_members = list(board_members)
         random.shuffle(shuffled_board_members)
 
-        if second_last_responsible.isBoardMember:
-            shuffled_board_members.insert(
-                random.randint(1, len(shuffled_board_members)), second_last_responsible
-            )
-
-        if last_responsible.isBoardMember:
-            shuffled_board_members.insert(
-                random.randint(2, len(shuffled_board_members)), last_responsible
-            )
+        # Keep the previous shift's responsibles at the front without duplicating entries.
+        for bartender in reversed(previous_responsibles):
+            if bartender in shuffled_board_members:
+                shuffled_board_members.remove(bartender)
+                shuffled_board_members.insert(0, bartender)
 
         print("Shuffled ordering of board members:")
         print(*shuffled_board_members, sep="\n")
@@ -61,22 +86,34 @@ class Command(BaseCommand):
             shift_starts.append(shift.start_date)
 
         unfilled_existing = len(shift_starts)
-        assert unfilled_existing == self.WEEKS // 2
+        assert unfilled_existing == weeks // 2
 
-        for _ in range(self.WEEKS // self.RESPONSIBLES * len(board_members)):
+        for _ in range(weeks // responsibles_per_shift * len(board_members)):
             responsibles.append([])
             shift_starts.append(next_deposit_shift_start(shift_starts[-1]))
 
         for s, _ in enumerate(shift_starts):
-            first_index = (s - unfilled_existing) // (self.WEEKS // 2)
+            first_index = (s - unfilled_existing) // (weeks // 2)
             if first_index >= 0:
-                responsibles[s].append(shuffled_board_members[first_index])
+                candidate = shuffled_board_members[first_index]
+                if candidate not in responsibles[s]:
+                    responsibles[s].append(candidate)
 
             if first_index + 1 < len(board_members):
-                responsibles[s].append(shuffled_board_members[first_index + 1])
-                assert len(responsibles[s]) == self.RESPONSIBLES
+                candidate = shuffled_board_members[first_index + 1]
+                if candidate in responsibles[s]:
+                    candidate = None
+                    for bartender in shuffled_board_members[first_index + 2 :]:
+                        if bartender not in responsibles[s]:
+                            candidate = bartender
+                            break
+
+                if candidate is not None and candidate not in responsibles[s]:
+                    responsibles[s].append(candidate)
+
+                assert len(responsibles[s]) == responsibles_per_shift
             else:
-                assert len(responsibles[s]) == self.RESPONSIBLES // 2
+                assert len(responsibles[s]) == responsibles_per_shift // 2
 
             print(f"{shift_starts[s]}:")
             for bartender in responsibles[s]:
