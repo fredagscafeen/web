@@ -130,4 +130,5 @@ class CommonEventAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "date",
+        "url",
     )
