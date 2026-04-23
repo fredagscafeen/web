@@ -1,12 +1,9 @@
-import datetime
 import random
-from itertools import chain, zip_longest
 
 from django.core.management.base import BaseCommand, CommandError
 
 from bartenders.models import (
     Bartender,
-    BoardMember,
     BoardMemberDepositShift,
     BoardMemberDepositShiftPeriod,
     next_deposit_shift_start,
@@ -16,73 +13,158 @@ from bartenders.models import (
 class Command(BaseCommand):
     help = "Generates new deposit shifts"
 
-    RESPONSIBLES = int(input("Number of responsible board members (2): ") or "2")
-    WEEKS = int(input("Number of consecutive weeks (2): ") or "2")
+    def add_arguments(self, parser):
+        parser.add_argument("--responsibles", type=int)
+        parser.add_argument("--weeks", type=int)
 
     def handle(self, *args, **options):
-        board_members = set(b for b in Bartender.objects.all() if b.isBoardMember)
+        print(
+            """
+HELP:
+This command generates deposit shifts for active board members using the two most recent filled shifts as seed data.
+It detects members with back-to-back shifts, determines a next-in-line member, shuffles board members, moves recent responsibles to the back, and then assigns each shift using a staggered sliding index.
 
-        for shift in iter(BoardMemberDepositShift.objects.all()):
-            first_shift = shift
+Arguments:
+- --responsibles: number of responsible board members per shift.
+- --weeks: consecutive-week target used to compute cycle count.
 
-        assert first_shift != None
+The command creates:
+    total_shifts = ceil(weeks / responsibles_per_shift) * number_of_active_board_members
 
-        last_responsible = None
-        for board_member in board_members:
-            last_responsible = board_member
+After previewing the generated schedule, it asks for confirmation before publishing to the database.
+            """
+        )
 
-        assert last_responsible != None
-        second_last_responsible = list(set(board_members) - {last_responsible})[0]
+        responsibles_per_shift = options["responsibles"]
+        if responsibles_per_shift is None:
+            responsibles_per_shift = int(
+                input("Number of responsible board members (2): ") or "2"
+            )
 
-        # Shuffle board members, but ensure that no one gets two shifts in a row
+        weeks = options["weeks"]
+        if weeks is None:
+            weeks = int(input("Number of consecutive weeks (2): ") or "2")
+
+        board_members = [b for b in Bartender.objects.all() if b.isBoardMember]
+        if len(board_members) < 2:
+            raise CommandError(
+                "Need at least 2 active board members to generate shifts"
+            )
+
+        if weeks < 1:
+            raise CommandError("--weeks must be at least 1")
+
+        if responsibles_per_shift < 1:
+            raise CommandError("--responsibles must be at least 1")
+
+        if responsibles_per_shift > len(board_members):
+            raise CommandError(
+                "--responsibles cannot be greater than number of active board members"
+            )
+
+        last_two_filled_shifts = list(
+            BoardMemberDepositShift.objects.filter(responsibles__isnull=False)
+            .distinct()
+            .order_by("-start_date")[:2]
+        )
+
+        if len(last_two_filled_shifts) == 0:
+            raise CommandError("No existing deposit shifts with responsibles found")
+
+        last_shift = last_two_filled_shifts[0]
+        second_last_shift = (
+            last_two_filled_shifts[1] if len(last_two_filled_shifts) > 1 else None
+        )
+
+        last_responsibles = [
+            bartender
+            for bartender in last_shift.responsibles.all()
+            if bartender in board_members
+        ]
+        second_last_responsibles = []
+        if second_last_shift is not None:
+            second_last_responsibles = [
+                bartender
+                for bartender in second_last_shift.responsibles.all()
+                if bartender in board_members
+            ]
+
+        repeated_from_last_two = [
+            bartender
+            for bartender in last_responsibles
+            if bartender in second_last_responsibles
+        ]
+
+        next_in_line = None
+        if second_last_shift is not None:
+            next_candidates = [
+                bartender
+                for bartender in last_responsibles
+                if bartender not in second_last_responsibles
+            ]
+            if len(next_candidates) > 0:
+                next_in_line = next_candidates[0]
+
+        if next_in_line is None and len(last_responsibles) > 0:
+            next_in_line = last_responsibles[0]
+
+        # Shuffle board members and move recent responsibles from the last two shifts to the back.
         shuffled_board_members = list(board_members)
         random.shuffle(shuffled_board_members)
 
-        if second_last_responsible.isBoardMember:
-            shuffled_board_members.insert(
-                random.randint(1, len(shuffled_board_members)), second_last_responsible
-            )
+        recent_responsibles = []
+        for bartender in second_last_responsibles + last_responsibles:
+            if bartender in board_members and bartender not in recent_responsibles:
+                recent_responsibles.append(bartender)
 
-        if last_responsible.isBoardMember:
-            shuffled_board_members.insert(
-                random.randint(2, len(shuffled_board_members)), last_responsible
-            )
+        for bartender in recent_responsibles:
+            if bartender in shuffled_board_members:
+                shuffled_board_members.remove(bartender)
+        shuffled_board_members.extend(recent_responsibles)
+
+        # Keep the detected next-in-line member at the front.
+        if next_in_line is not None and next_in_line in shuffled_board_members:
+            shuffled_board_members.remove(next_in_line)
+            shuffled_board_members.insert(0, next_in_line)
 
         print("Shuffled ordering of board members:")
         print(*shuffled_board_members, sep="\n")
         print()
 
-        responsibles = []
+        cycles = (weeks + responsibles_per_shift - 1) // responsibles_per_shift
+        total_shifts = cycles * len(board_members)
+
+        print(
+            f"Generating {total_shifts} shifts using weeks={weeks} and responsibles_per_shift={responsibles_per_shift}..."
+        )
+        print(f"Last shift starts on {last_shift.start_date}")
+        print(f"Last shift member with two shifts in a row: {repeated_from_last_two}")
+        print(f"Detected next-in-line member: {next_in_line}")
+        print(f"Recent members moved to back: {recent_responsibles}")
+        print()
+
         shift_starts = []
-        for shift in BoardMemberDepositShift.objects.filter(
-            start_date__gte=first_shift.start_date
-        ):
-            responsibles.append(list(shift.responsibles.all()))
-            shift_starts.append(shift.start_date)
+        d = next_deposit_shift_start(last_shift.start_date)
+        for _ in range(total_shifts):
+            shift_starts.append(d)
+            d = next_deposit_shift_start(d)
 
-        unfilled_existing = len(shift_starts)
-        assert unfilled_existing == self.WEEKS // 2
+        generated_responsibles = []
+        start_index = 0
+        for shift_start in shift_starts:
+            shift_responsibles = []
+            for offset in range(responsibles_per_shift):
+                idx = (start_index + offset) % len(shuffled_board_members)
+                shift_responsibles.append(shuffled_board_members[idx])
 
-        for _ in range(self.WEEKS // self.RESPONSIBLES * len(board_members)):
-            responsibles.append([])
-            shift_starts.append(next_deposit_shift_start(shift_starts[-1]))
+            generated_responsibles.append(shift_responsibles)
 
-        for s, _ in enumerate(shift_starts):
-            first_index = (s - unfilled_existing) // (self.WEEKS // 2)
-            if first_index >= 0:
-                responsibles[s].append(shuffled_board_members[first_index])
-
-            if first_index + 1 < len(board_members):
-                responsibles[s].append(shuffled_board_members[first_index + 1])
-                assert len(responsibles[s]) == self.RESPONSIBLES
-            else:
-                assert len(responsibles[s]) == self.RESPONSIBLES // 2
-
-            print(f"{shift_starts[s]}:")
-            for bartender in responsibles[s]:
+            print(f"{shift_start}:")
+            for bartender in shift_responsibles:
                 print(f"  {bartender}")
-
             print()
+
+            start_index += 1
 
         while True:
             r = input("Publish? [y/N] ").lower()
@@ -98,12 +180,13 @@ class Command(BaseCommand):
         period = BoardMemberDepositShiftPeriod.objects.create()
 
         for s, d in enumerate(shift_starts):
-            if s < unfilled_existing:
-                shift = BoardMemberDepositShift.objects.get(start_date=d)
-            else:
-                shift = BoardMemberDepositShift.objects.create(
-                    start_date=d, period=period
-                )
+            shift, created = BoardMemberDepositShift.objects.get_or_create(
+                start_date=d,
+                defaults={"period": period},
+            )
 
-            shift.responsibles.set(responsibles[s])
+            if not created and shift.period is None:
+                shift.period = period
+
+            shift.responsibles.set(generated_responsibles[s])
             shift.save()

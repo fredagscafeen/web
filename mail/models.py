@@ -2,6 +2,7 @@ import datetime
 import os
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.db import models
@@ -9,6 +10,7 @@ from django.template import Template
 from django.utils.translation import gettext_lazy as _
 
 from bartenders.models import Bartender
+from web.models import TimeStampedModel
 
 from .fields import CommaSeparatedEmailField
 from .validators import validate_template_syntax
@@ -216,6 +218,104 @@ class Attachment(models.Model):
         return self.name
 
 
+class MailArchive(TimeStampedModel):
+    request_uuid = models.UUIDField(unique=True)
+    s3_object_key = models.CharField(max_length=1024)
+
+
+class IncomingMail(models.Model):
+    class Status(models.TextChoices):
+        PROCESSED = "PROCESSED", "Processed"
+        DROPPED = "DROPPED", "Dropped"
+
+    received_at = models.DateTimeField()
+    sender = models.CharField(max_length=320)
+    target = models.CharField(max_length=320)
+    mailing_list = models.ForeignKey(
+        MailingList,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="incoming_mails",
+    )
+    mail_archive = models.OneToOneField(
+        MailArchive,
+        on_delete=models.CASCADE,
+        related_name="incoming_mail",
+    )
+    status = models.CharField(max_length=9, choices=Status.choices)
+    reason = models.TextField(blank=True)
+
+
+class ForwardedMail(models.Model):
+    class Status(models.TextChoices):
+        FORWARDED = "FORWARDED", "Forwarded"
+        FAILED = "FAILED", "Failed"
+        BOUNCED = "BOUNCED", "Bounced"
+
+    incoming_mail = models.ForeignKey(
+        IncomingMail,
+        on_delete=models.CASCADE,
+        related_name="forward_attempts",
+    )
+    target = models.CharField(max_length=320)
+    forwarded_at = models.DateTimeField()
+    status = models.CharField(max_length=9, choices=Status.choices)
+    reason = models.TextField(blank=True)
+    previous_attempt = models.ForeignKey(
+        "self",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="retry_attempts",
+    )
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check=~models.Q(pk=models.F("previous_attempt")),
+                name="forwardedmail_previous_attempt_not_self",
+            ),
+        ]
+
+    def clean(self):
+        super().clean()
+
+        if self.previous_attempt_id is None:
+            return
+
+        if self.previous_attempt_id == self.pk:
+            raise ValidationError(
+                {
+                    "previous_attempt": _(
+                        "A forwarded mail cannot reference itself as previous attempt."
+                    )
+                }
+            )
+
+        previous_attempt = getattr(self, "previous_attempt", None)
+        previous_attempt_incoming_mail_id = (
+            previous_attempt.incoming_mail_id
+            if previous_attempt is not None
+            and previous_attempt.pk == self.previous_attempt_id
+            else ForwardedMail.objects.filter(pk=self.previous_attempt_id)
+            .values_list("incoming_mail_id", flat=True)
+            .first()
+        )
+        if previous_attempt_incoming_mail_id != self.incoming_mail_id:
+            raise ValidationError(
+                {
+                    "previous_attempt": _(
+                        "previous_attempt must belong to the same incoming mail."
+                    )
+                }
+            )
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
+
 def create_attachments(attachment_files):
     """
     Create Attachment instances from files
@@ -254,3 +354,34 @@ def create_attachments(attachment_files):
             opened_file.close()
 
     return attachments
+
+
+class SpamFilterTLD(models.Model):
+    tld = models.CharField(
+        max_length=255,
+        unique=True,
+        verbose_name=_("TLD"),
+        help_text=_(
+            "Domain to filter on, supports everything after @ in an email address (e.g. 'example.com' or '.com' to filter all .com domains)"
+        ),
+    )
+    description = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name=_("Description"),
+        help_text=_(
+            "Optional description for the TLD, help the next person understand the purpose of this entry"
+        ),
+    )
+    allowed = models.BooleanField(
+        default=False,
+        verbose_name=_("Allowed"),
+        help_text=_("Whether emails from this TLD should be allowed or blocked"),
+    )
+
+    class Meta:
+        verbose_name = _("Spam filter TLD")
+        verbose_name_plural = _("Spam filter TLDs")
+
+    def __str__(self):
+        return self.tld

@@ -14,6 +14,7 @@ class GranularAPIKeyManager(BaseAPIKeyManager):
 
 class GranularAPIKey(AbstractAPIKey):
     objects = GranularAPIKeyManager()
+    prefix = models.CharField(editable=False, max_length=24, unique=True)
     name = models.CharField(max_length=255, unique=True)
     allowed_permissions = models.ManyToManyField(
         Permission, blank=True, help_text="Permissions this API Key is granted."

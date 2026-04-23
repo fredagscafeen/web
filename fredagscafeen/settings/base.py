@@ -17,6 +17,7 @@ from django.contrib import messages
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,6 +28,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
 DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk"
+
+# S3 Storage settings
+S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", "http://localhost:9000")
+S3_REGION_NAME = os.getenv("S3_REGION_NAME", "us-east-1")
+S3_ACCESS_KEY_ID = os.getenv("S3_ACCESS_KEY_ID", "minioadmin")
+S3_SECRET_ACCESS_KEY = os.getenv("S3_SECRET_ACCESS_KEY", "minioadmin")
+
+# Email monitoring settings
+MAIL_ARCHIVE_BUCKET_NAME = os.getenv("MAIL_ARCHIVE_BUCKET_NAME", "")
+MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION = int(
+    os.getenv("MAIL_ARCHIVE_PRESIGNED_URL_EXPIRATION", "3600")
+)
+DATMAIL_CONTROL_URL = os.getenv("DATMAIL_CONTROL_URL", "")
+DATMAIL_CONTROL_TOKEN = os.getenv("DATMAIL_CONTROL_TOKEN", "")
+DATMAIL_CONTROL_TIMEOUT = int(os.getenv("DATMAIL_CONTROL_TIMEOUT", "10"))
 
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (False, "Er bartendertilmelding åben?", bool),
@@ -213,8 +229,6 @@ SECRET_ADMIN_KEYS = [
         "role": "KASSERER",
     },
 ]
-
-load_dotenv()
 
 GIT_COMMIT_HASH = os.getenv("GIT_COMMIT_HASH")
 

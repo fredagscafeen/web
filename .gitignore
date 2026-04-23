@@ -9,6 +9,8 @@ db.sqlite3
 .vscode/
 /staticfiles
 /db_data
+.worktrees
+docs/superpowers
 
 # Mac
 .DS_Store

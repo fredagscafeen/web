@@ -270,11 +270,14 @@ The printers should be installed on the remote machine and also be entered into 
 > - BeerTypes
 > - Bartenders
 > - Is-Bartender
+> - Mail Lists
+> - Mail List Detailed
+> - Spam filter
 
 ### Method details
 
 #### **Items**
-GET <host>/api/items/
+GET {host}/api/items/
 
 ##### Response
 ```
@@ -303,7 +306,7 @@ GET <host>/api/items/
 -----------------
 
 #### **Breweries**
-GET <host>/api/breweries/
+GET {host}/api/breweries/
 
 ##### Response
 ```
@@ -320,7 +323,7 @@ GET <host>/api/breweries/
 -----------------
 
 #### **BeerTypes**
-GET <host>/api/beerTypes/
+GET {host}/api/beerTypes/
 
 ##### Response
 ```
@@ -337,7 +340,7 @@ GET <host>/api/beerTypes/
 -----------------
 
 #### **Bartenders**
-GET <host>/api/bartenders/
+GET {host}/api/bartenders/
 
 ##### Response
 ```
@@ -354,10 +357,67 @@ GET <host>/api/bartenders/
 -----------------
 
 #### **Is-Bartender**
-GET <host>/api/is-bartender/<username>/
+GET {host}/api/is-bartender/{username}/
 
 ##### Response
 ```
 true
 ```
 -----------------
+
+#### **Mail Lists**
+GET {host}/api/mail/lists/
+
+#### Response
+```
+[
+    {
+        "id": 69,
+        "name": "best",
+        "isOnlyInternal": false
+    },
+    ...
+]
+```
+-----------------
+
+#### **Mail List Detailed**
+GET {host}/api/mail/lists/{mail-list-name}/
+
+#### Response
+```
+{
+    "id": 2,
+    "name": "best",
+    "isOnlyInternal": false,
+    "members": [
+        {
+            "id": 420,
+            "name": "Mikkel Maae Østergaard",
+            "email": "mikkelmaae@gmail.com"
+        },
+        ...
+    ]
+}
+```
+-----------------
+
+#### **Spam filter**
+GET {host}/api/mail/spamfilter/
+
+#### Response
+```
+[
+    {
+        "id": 1,
+        "tld": "fredagscafeen.dk",
+        "allowed": true
+    },
+    {
+        "id": 2,
+        "tld": "heyundichan.com",
+        "allowed": false
+    },
+    ...
+]
+```

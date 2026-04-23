@@ -1,0 +1,93 @@
+{% load latex_escape %}
+
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.5cm]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx}
+
+\pdfinclusionerrorlevel=0
+\pdfminorversion=7
+\pdfsuppresswarningpagegroup=1
+\setlength{\parindent}{0pt}
+
+\newcommand{\LabelHeight}{3.5cm}
+\newcommand{\LabelWidth}{10.0cm}
+\newcommand{\ImageColumnWidth}{3.3cm}
+\newcommand{\TextColumnWidth}{6.0cm}
+
+\newcommand{\PlaceholderImg}{%
+    \includegraphics[
+        max width=2.6cm,
+        max height=2.4cm,
+        keepaspectratio
+    ]{/app/staticfiles/images/logo.png}%
+}
+
+\newcommand{\Img}[1]{%
+    \includegraphics[
+        trim=0 0 0 0, clip,
+        max width=2.6cm,
+        max height=2.4cm,
+        keepaspectratio
+    ]{\detokenize{#1}}%
+}
+
+\newcommand{\Badge}[1]{%
+    \fbox{\rule{0pt}{1.4ex}\hspace{0.5mm}\textsf{\scriptsize\textbf{#1}}\hspace{0.5mm}}%
+}
+
+\newcommand{\C}[7]{%
+\fbox{%
+    \begin{minipage}[c][\LabelHeight][c]{\LabelWidth}
+        \setlength{\tabcolsep}{0pt}
+        \renewcommand{\arraystretch}{1}
+        \begin{tabular}{m{\ImageColumnWidth} m{\TextColumnWidth}}
+            \centering
+            \begin{minipage}[c][3.0cm][c]{\ImageColumnWidth}
+                \centering
+                #1
+            \end{minipage}
+            &
+            \begin{minipage}[c][3.0cm][c]{\TextColumnWidth}
+                \raggedright
+                {\scriptsize\textsf{\MakeUppercase{#2}} \par}
+                \vspace{0.6mm}
+                {\Large\bfseries #3 \par}
+                \vspace{0.3mm}
+                {\small #4 \par}
+                \vspace{0.3mm}
+                {\footnotesize #5 \par}
+                \vspace{0.6mm}
+                {\scriptsize #6 \par}
+                \vfill
+                {\raggedleft\LARGE\bfseries #7~kr.\par}
+            \end{minipage}
+        \end{tabular}
+    \end{minipage}%
+}}
+
+
+
+\begin{document}
+    \pagestyle{empty}
+    \setlength{\columnsep}{0cm}
+    \raggedcolumns
+    \centering \begin{multicols*}{2}
+        {% for label_item in label_items %}
+            \noindent
+            \C{{ '{' }}
+                {% if label_item.has_render_image %}
+                    \Img{{"{"}}{{ label_item.render_image_path }}{{"}"}}
+                {% else %}
+                    \PlaceholderImg
+                {% endif %}
+            {{ '}' }}{ {{ label_item.item.brewery.name|default:"~"|latex_escape }} }{ {{ label_item.item.name|default:"Item"|latex_escape }} }{ {{ label_item.item.type.name|default:"~"|latex_escape }} }{ {% if label_item.item.abv %}{{ label_item.item.abv|floatformat:1|latex_escape }}\% ABV{% endif %}{% if label_item.item.abv and label_item.item.volumeInCentiliters %} \textbar{} {% endif %}{% if label_item.item.abv and label_item.item.container and not label_item.item.volumeInCentiliters %} \textbar{} {% endif %}{% if label_item.item.volumeInCentiliters %}{{ label_item.item.volumeInCentiliters|latex_escape }}cl{% endif %}{% if label_item.item.volumeInCentiliters and label_item.item.container %} {% endif %}{% if label_item.item.container %}{{ label_item.item.container|latex_escape }}{% endif %} }{ {% if label_item.item.glutenFree %}\Badge{GF}{% endif %}{% if label_item.item.glutenFree and label_item.item.nonAlcoholic %}\hspace{1mm}{% endif %}{% if label_item.item.nonAlcoholic %}\Badge{NA}{% endif %} }{ {{ label_item.item.priceInDKK|latex_escape }} }
+            \par
+        {% endfor %}
+    \end{multicols*}
+\end{document}
