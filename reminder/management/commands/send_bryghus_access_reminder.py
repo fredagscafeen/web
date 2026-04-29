@@ -34,6 +34,7 @@ Nummer ved magnetstribe: 106820
             subject="VIGTIGT: Aarhus Bryghus adgang udløber!",
             body_template=body_template,
             to=[f"beer@{settings.DOMAIN}"],
+            from_email=f"Fredagscafeen <reminder@{settings.DOMAIN}>",
             cc=[f"reminder@{settings.DOMAIN}"],
             reply_to=[f"best@{settings.DOMAIN}"],
         )
