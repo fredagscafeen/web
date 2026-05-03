@@ -141,7 +141,14 @@ class ForwardedMailInline(admin.TabularInline):
 @admin.action(description=_("Block selected domains"))
 def incoming_mail_block_domains(modeladmin, request, queryset):
     sender_domains = set(
-        mail.sender.split("@")[-1].lower() for mail in queryset if mail.sender
+        mail.sender.split("@")[-1]
+        .lower()
+        .split(":")[0]
+        .strip("[]")
+        .strip(">")
+        .strip("<")
+        for mail in queryset
+        if mail.sender
     )
     existing_tlds = set(
         SpamFilterTLD.objects.filter(tld__in=sender_domains).values_list(
@@ -168,36 +175,39 @@ def incoming_mail_block_domains(modeladmin, request, queryset):
 @admin.register(IncomingMail)
 class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
     list_display = (
-        "received_at",
-        "sender",
-        "target",
+        "get_status_display",
+        "get_subject_display",
         "mailing_list",
-        "status",
+        "sender",
+        "mail_archive_link",
         "current_forwarded_count_display",
         "current_failed_count_display",
         "current_bounced_count_display",
         "has_resends_display",
+        "received_at",
     )
     list_filter = ("status", "mailing_list")
     list_select_related = ("mail_archive", "mailing_list")
     ordering = ("-received_at",)
     readonly_fields = (
-        "received_at",
+        "status",
+        "get_subject_display",
+        "mailing_list",
         "sender",
         "target",
-        "mailing_list",
-        "status",
         "reason",
         "mail_archive_link",
         "current_forwarded_count_display",
         "current_failed_count_display",
         "current_bounced_count_display",
         "has_resends_display",
+        "received_at",
     )
     fields = readonly_fields
     inlines = (ForwardedMailInline,)
     change_actions = ("download_eml", "resend", "block_in_spamfilter")
-    actions = [incoming_mail_block_domains]
+    actions = [incoming_mail_block_domains, "mail_archive_link"]
+    list_display_links = ("get_subject_display",)
 
     def get_queryset(self, request):
         return (
@@ -228,6 +238,21 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
                 ),
             )
         )
+
+    def get_status_display(self, obj):
+        if obj.status == IncomingMail.Status.PROCESSED:
+            return True
+        return False
+
+    get_status_display.short_description = _("Forwarded")
+    get_status_display.boolean = True
+
+    def get_subject_display(self, obj):
+        if not obj.subject:
+            return "(No Subject)"
+        return obj.subject
+
+    get_subject_display.short_description = _("Subject")
 
     def _get_delivery_count(self, obj, attribute_name, status):
         annotated_value = getattr(obj, attribute_name, None)
@@ -282,6 +307,7 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
             "admin:mail_incomingmail_actions",
             kwargs={"pk": obj.pk, "tool": "download_eml"},
         )
+        print(url)
         return format_html('<a href="{}" download>Download EML</a>', url)
 
     mail_archive_link.short_description = _("Archive")
@@ -337,7 +363,14 @@ class IncomingMailAdmin(DjangoObjectActions, admin.ModelAdmin):
     resend.label = _("Resend failed recipients")
 
     def block_in_spamfilter(self, request, obj):
-        sender_domain = obj.sender.split("@")[-1].lower()
+        sender_domain = (
+            obj.sender.split("@")[-1]
+            .lower()
+            .split(":")[0]
+            .strip("[]")
+            .strip(">")
+            .strip("<")
+        )
         spam_filter_entry, created = SpamFilterTLD.objects.get_or_create(
             tld=sender_domain
         )

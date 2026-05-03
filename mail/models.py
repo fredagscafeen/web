@@ -229,6 +229,7 @@ class IncomingMail(models.Model):
         DROPPED = "DROPPED", "Dropped"
 
     received_at = models.DateTimeField()
+    subject = models.CharField(max_length=384, blank=True)
     sender = models.CharField(max_length=320)
     target = models.CharField(max_length=320)
     mailing_list = models.ForeignKey(

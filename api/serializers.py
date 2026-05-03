@@ -39,6 +39,7 @@ class BeerTypeSerializer(serializers.ModelSerializer):
 class IncomingMailIngestSerializer(serializers.Serializer):
     request_uuid = serializers.UUIDField()
     received_at = serializers.DateTimeField()
+    subject = serializers.CharField(allow_blank=True, required=False, default="")
     sender = serializers.CharField(max_length=320)
     target = serializers.CharField(max_length=320)
     mailing_list = serializers.SlugRelatedField(
@@ -64,6 +65,11 @@ class IncomingMailIngestSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 {"reason": "This field is required when status is DROPPED."}
             )
+        if (attrs["subject"] or "").strip() == "":
+            attrs["subject"] = "(No Subject)"
+        elif len(attrs["subject"]) > 384:
+            attrs["subject"] = attrs["subject"][:384]
+
         return attrs
 
     @transaction.atomic
@@ -81,6 +87,7 @@ class IncomingMailIngestSerializer(serializers.Serializer):
                 "mailing_list": self.validated_data.get("mailing_list"),
                 "status": self.validated_data["status"],
                 "reason": self.validated_data.get("reason", ""),
+                "subject": self.validated_data.get("subject", ""),
             },
         )
 
