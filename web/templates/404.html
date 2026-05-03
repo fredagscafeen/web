@@ -1,17 +1,18 @@
-{% extends "base.html" %}
+{% extends "plain_base.html" %}
 {% load i18n %}
 {% block title %}404{% endblock %}
 
-{% block content %}
-<h2 id="404">
-    {% translate "Ikke fundet" %}
-    <a href="#404" class="section-link">#</a>
-</h2>
+{% block body_content %}
+<div class="container pt-3 px-4">
+    <h2 id="404">
+        {% translate "Ikke fundet" %}
+        <a href="#404" class="section-link">#</a>
+    </h2>
 
-<p>{% translate "Du har ikke fundet det du søger." %}</p>
+    <p>{% translate "Du har ikke fundet det du søger." %}</p>
 
-<p><a class="common" href="javascript:history.back()">{% translate "Kig dybere i dit hjerte" %}</a>,
-{% translate "eller" %} <a class="common" href="/">{% translate "få dig en helt ny tilværelse" %}</a>. {% translate "Der er" %}
-<a class="common" href="mailto:best@fredagscafeen.dk">{% translate "sjælestøtte til de værst ramte." %}</a></p>
-
+    <p><a class="common" href="javascript:history.back()">{% translate "Kig dybere i dit hjerte" %}</a>,
+    {% translate "eller" %} <a class="common" href="{% url 'index' %}">{% translate "få dig en helt ny tilværelse" %}</a>. {% translate "Der er" %}
+    <a class="common" href="mailto:best@fredagscafeen.dk">{% translate "sjælestøtte til de værst ramte." %}</a></p>
+</div>
 {% endblock %}
