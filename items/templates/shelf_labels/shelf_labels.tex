@@ -2,7 +2,7 @@
 
 \documentclass[10pt]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=0.5cm]{geometry}
+\usepackage[margin=0.1cm]{geometry}
 \usepackage[pdftex]{graphicx}
 \usepackage{tabularx}
 \usepackage{array}
@@ -16,14 +16,14 @@
 \setlength{\parindent}{0pt}
 
 \newcommand{\LabelHeight}{3.5cm}
-\newcommand{\LabelWidth}{10.0cm}
-\newcommand{\ImageColumnWidth}{3.3cm}
-\newcommand{\TextColumnWidth}{6.0cm}
+\newcommand{\LabelWidth}{8.0cm}
+\newcommand{\ImageColumnWidth}{2.2cm}
+\newcommand{\TextColumnWidth}{5.5cm}
 
 \newcommand{\PlaceholderImg}{%
     \includegraphics[
-        max width=2.6cm,
-        max height=2.4cm,
+        max width=2.0cm,
+        max height=2.0cm,
         keepaspectratio
     ]{/app/staticfiles/images/logo.png}%
 }
@@ -31,8 +31,8 @@
 \newcommand{\Img}[1]{%
     \includegraphics[
         trim=0 0 0 0, clip,
-        max width=2.6cm,
-        max height=2.4cm,
+        max width=2.0cm,
+        max height=2.0cm,
         keepaspectratio
     ]{\detokenize{#1}}%
 }
