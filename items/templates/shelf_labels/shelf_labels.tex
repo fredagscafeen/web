@@ -9,6 +9,8 @@
 \usepackage{multicol}
 \usepackage[export]{adjustbox}
 \usepackage{graphicx}
+\usepackage[outline]{contour}
+\contourlength{0.4pt} % Adjust this to make it thicker/thinner
 
 \pdfinclusionerrorlevel=0
 \pdfminorversion=7
@@ -65,7 +67,7 @@
                 \vspace{0.6mm}
                 {\scriptsize #6 \par}
                 \vfill
-                {\raggedleft\LARGE\bfseries #7~kr.\par}
+                {\raggedleft\huge\bfseries\contour{black}{#7}kr.\par}
             \end{minipage}
         \end{tabular}
     \end{minipage}%
