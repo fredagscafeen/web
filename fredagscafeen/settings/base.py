@@ -103,13 +103,6 @@ SECRET_ADMIN_KEYS = [
         "role": "WEB",
     },
     {
-        "key": "MAILMAN",
-        "description": "AU Maillist",
-        "username": "datcafe@gmail.com",
-        "url": "https://maillist.au.dk/postorius/lists/",
-        "role": "WEB",
-    },
-    {
         "key": "CONTABO_PASSWORD",
         "description": "Contabo. OBS: Kontoen har 2FA",
         "username": "best@fredagscafeen.dk",
