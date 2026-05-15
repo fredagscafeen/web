@@ -131,13 +131,6 @@ SECRET_ADMIN_KEYS = [
         "role": "WEB",
     },
     {
-        "key": "DANSK_RETURSYSTEM_PASSWORD",
-        "description": "Dansk Retursystem",
-        "username": "5790001782870",
-        "url": "https://danskretursystem.dk/booking/",
-        "role": "DRIFT",
-    },
-    {
         "key": "MIDTTRAFIK_BESTILLING_PASSWORD",
         "description": "midttrafikbestilling.dk",
         "username": "fredagscafeen",
@@ -201,10 +194,31 @@ SECRET_ADMIN_KEYS = [
         "role": "PR",
     },
     {
+        "key": "DANSK_RETURSYSTEM_PASSWORD",
+        "description": "Dansk Retursystem",
+        "username": "5790001782870",
+        "url": "https://danskretursystem.dk/booking/",
+        "role": "DRIFT",
+    },
+    {
         "key": "HOLTEC_SOLUTIONS_PASSWORD",
         "description": "Holtec Solutions",
         "username": "best@fredagscafeen.dk",
         "url": "https://holtecsolutions.dk/log-ind/",
+        "role": "DRIFT",
+    },
+    {
+        "key": "BAUHAUS_PASSWORD",
+        "description": "Bauhaus, uses SMS confirmation code",
+        "username": "23989405 (abs)",
+        "url": "https://www.bauhaus.dk/customer/account/login/",
+        "role": "DRIFT",
+    },
+    {
+        "key": "JEMOGFIX_PASSWORD",
+        "description": "Jemogfix",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.jemogfix.dk/mit-jem-fix/log-ind/",
         "role": "DRIFT",
     },
     {
