@@ -222,6 +222,13 @@ SECRET_ADMIN_KEYS = [
         "role": "DRIFT",
     },
     {
+        "key": "LEDVANCE_PASSWORD",
+        "description": "Ledvance SMART+ Mobile App",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.ledvance.com/da-dk/belysning-til-hjemmet/serviceydelser/styringsmulighed/smart-app",
+        "role": "DRIFT",
+    },
+    {
         "key": "SALLING_GROUP_BUSINESS_PASSWORD",
         "description": "Salling Group Business",
         "username": "best@fredagscafeen.dk",
