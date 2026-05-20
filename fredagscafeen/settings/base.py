@@ -222,6 +222,13 @@ SECRET_ADMIN_KEYS = [
         "role": "DRIFT",
     },
     {
+        "key": "PANT_CONTAINER",
+        "description": "Pant-Containere i P-kælderen.",
+        "username": "",
+        "url": "",
+        "role": "DRIFT",
+    },
+    {
         "key": "LEDVANCE_PASSWORD",
         "description": "Ledvance SMART+ Mobile App",
         "username": "best@fredagscafeen.dk",
