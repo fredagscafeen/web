@@ -222,6 +222,13 @@ SECRET_ADMIN_KEYS = [
         "role": "DRIFT",
     },
     {
+        "key": "PANT_CONTAINER",
+        "description": "Pant-Containere i P-kælderen.",
+        "username": "N/A",
+        "url": "N/A",
+        "role": "DRIFT",
+    },
+    {
         "key": "SALLING_GROUP_BUSINESS_PASSWORD",
         "description": "Salling Group Business",
         "username": "best@fredagscafeen.dk",
