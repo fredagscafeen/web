@@ -224,8 +224,8 @@ SECRET_ADMIN_KEYS = [
     {
         "key": "PANT_CONTAINER",
         "description": "Pant-Containere i P-kælderen.",
-        "username": "N/A",
-        "url": "N/A",
+        "username": "",
+        "url": "",
         "role": "DRIFT",
     },
     {
