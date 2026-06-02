@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
-{% load bootstrap5 bootstrap_icons %}
+{% load django_bootstrap5 bootstrap_icons %}
 
 {% block content %}
 
@@ -23,12 +23,12 @@
             <form method="post" action="/{{ LANGUAGE_CODE }}/">
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                {% buttons %}
-                    {% translate "Indsend" as BUTTON_TEXT %}
+                {% translate "Indsend" as BUTTON_TEXT %}
+                <div class="mt-3">
                     <button type="submit" class="btn btn-primary">
                         {% bs_icon 'send-fill' size='1.0em' %} {{ BUTTON_TEXT }}
                     </button>
-                {% endbuttons %}
+                </div>
             </form>
         {% else %}
             <b>{% translate "Bartendertilmeldingen er lukket." %}</b>

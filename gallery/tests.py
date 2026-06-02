@@ -1,7 +1,9 @@
+import io
 import tempfile
 
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from PIL import Image as PILImage
@@ -27,10 +29,25 @@ class SimpleMediaTest(TestCase):
     def generate_image(self, suffix):
         album = Album.objects.all()[0]
 
-        temp_file = tempfile.NamedTemporaryFile(suffix=suffix)
-        PILImage.new("RGB", (100, 100)).save(temp_file)
+        # 1. Create the image in memory
+        img = PILImage.new("RGB", (100, 100))
+        buffer = io.BytesIO()
 
-        Image(file=temp_file.name, album=album).save()
+        ext = suffix.strip(".")
+        img_format = "JPEG" if ext.lower() == "jpg" else ext.upper()
+
+        img.save(buffer, format=img_format)
+        buffer.seek(0)
+
+        # 2. Wrap it in a SimpleUploadedFile
+        # The name is just a name, not a system path
+        file_name = f"test_image{suffix}"
+        uploaded_file = SimpleUploadedFile(
+            file_name, buffer.read(), content_type=f"image/{suffix.strip('.')}"
+        )
+
+        # 3. Save the model with the uploaded file
+        Image(file=uploaded_file, album=album).save()
 
         try:
             Image.objects.all()[0].file.crop["200x200"]
@@ -40,6 +57,7 @@ class SimpleMediaTest(TestCase):
             )
         self.assertEqual(len(Image.objects.all()), 1)
         self.assertIsInstance(album.basemedia.select_subclasses()[0], Image)
+        uploaded_file.close()
 
     def test_simple_jpg_album(self):
         self.generate_image(".jpg")
@@ -73,6 +91,7 @@ class CorruptedMediaTest(TestCase):
                 instance.save()
 
         self.assertEqual(len(Image.objects.all()), 0)
+        temp_file.close()
 
 
 class GalleryViewTest(TestCase):

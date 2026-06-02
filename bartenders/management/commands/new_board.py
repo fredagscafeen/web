@@ -36,7 +36,7 @@ class Command(BaseCommand):
                 image=bm.image,
             )
             # Add previous board member to `tbest` mailing list
-            (tbest, _) = MailingList.objects.get_or_create(name="tbest")
+            tbest, _ = MailingList.objects.get_or_create(name="tbest")
             tbest.members.add(bm.bartender)
 
         print(
