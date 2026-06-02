@@ -18,8 +18,7 @@ class Command(BaseCommand):
         parser.add_argument("--weeks", type=int)
 
     def handle(self, *args, **options):
-        print(
-            """
+        print("""
 HELP:
 This command generates deposit shifts for active board members using the two most recent filled shifts as seed data.
 It detects members with back-to-back shifts, determines a next-in-line member, shuffles board members, moves recent responsibles to the back, and then assigns each shift using a staggered sliding index.
@@ -32,8 +31,7 @@ The command creates:
     total_shifts = ceil(weeks / responsibles_per_shift) * number_of_active_board_members
 
 After previewing the generated schedule, it asks for confirmation before publishing to the database.
-            """
-        )
+            """)
 
         responsibles_per_shift = options["responsibles"]
         if responsibles_per_shift is None:
