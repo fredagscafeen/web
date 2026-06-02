@@ -402,6 +402,49 @@ USE_I18N = True
 
 DJANGO_CELERY_BEAT_TZ_AWARE = False
 
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
+CELERY_BEAT_SCHEDULE = {
+    "send-barshift-reminder": {
+        "task": "reminder.tasks.send_barshift_reminder",
+        "schedule": crontab(hour=8, minute=30, day_of_week="mon"),
+    },
+    "send-pantvagt-reminder": {
+        "task": "reminder.tasks.send_pantvagt_reminder",
+        "schedule": crontab(hour=8, minute=0, day_of_week="mon"),
+    },
+    "send-udlejning-reminder": {
+        "task": "reminder.tasks.send_rental_reminder",
+        "schedule": crontab(hour=9, minute=0, day_of_week="mon"),
+    },
+    "send-projector-reminder": {
+        "task": "reminder.tasks.send_projector_rental_reminder",
+        "schedule": crontab(hour=9, minute=0, day_of_week="mon"),
+    },
+    "send-tent-reminder": {
+        "task": "reminder.tasks.send_tent_rental_reminder",
+        "schedule": crontab(hour=9, minute=0, day_of_week="mon"),
+    },
+    "send-grill-reminder": {
+        "task": "reminder.tasks.send_grill_rental_reminder",
+        "schedule": crontab(hour=9, minute=0, day_of_week="mon"),
+    },
+    "send-speakers-reminder": {
+        "task": "reminder.tasks.send_speakers_rental_reminder",
+        "schedule": crontab(hour=9, minute=0, day_of_week="mon"),
+    },
+    "send-boardgamecart-reminder": {
+        "task": "reminder.tasks.send_boardgamecart_rental_reminder",
+        "schedule": crontab(hour=9, minute=0, day_of_week="mon"),
+    },
+    "send-bryghus-access-reminder": {
+        "task": "reminder.tasks.send_bryghus_access_reminder",
+        "schedule": crontab(hour=12, minute=0, day_of_month=20, month_of_year="*/3"),
+    },
+}
+
 from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = (
