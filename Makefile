@@ -1,4 +1,4 @@
-.PHONY: deploy logs run migrate migrations createsuperuser import-db import-media makemessages compilemessages test new-module collectstatic
+.PHONY: deploy logs run migrate migrations createsuperuser import-db import-media makemessages compilemessages test new-module collectstatic generate-shifts generate-deposit-shifts
 
 deploy:
 	docker-compose pull
@@ -27,3 +27,7 @@ new-module:
 	echo "Enter module name: " && read module && ./manage.py startapp $$module
 collectstatic:
 	./manage.py collectstatic --noinput
+generate-shifts:
+	docker exec -it web-app-1 ./manage.py generate_barshifts
+generate-deposit-shifts:
+	docker exec -it web-app-1 ./manage.py generate_deposit_shifts

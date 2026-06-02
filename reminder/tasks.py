@@ -6,6 +6,9 @@ from .management.commands.send_barshift_reminder import (
 from .management.commands.send_boardgamecart_rental_reminder import (
     Command as BoardGameCartRentalReminderCommand,
 )
+from .management.commands.send_bryghus_access_reminder import (
+    Command as BryghusAccessReminderCommand,
+)
 from .management.commands.send_grill_rental_reminder import (
     Command as GrillRentalReminderCommand,
 )
@@ -69,4 +72,10 @@ def send_tent_rental_reminder():
 @shared_task
 def send_boardgamecart_rental_reminder():
     c = BoardGameCartRentalReminderCommand()
+    c.run_from_argv(["", ""])
+
+
+@shared_task
+def send_bryghus_access_reminder():
+    c = BryghusAccessReminderCommand()
     c.run_from_argv(["", ""])

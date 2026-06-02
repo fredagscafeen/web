@@ -76,6 +76,9 @@
 											</span>
 										{% else %}
 											{{ shelf_item.item.name }}
+											{% if shelf_item.item.abv %}
+											<small class="text-muted text-decoration-underline">{{ shelf_item.item.abv }}%</small>
+											{% endif %}
 										{% endif %}
 									</div>
 									<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
@@ -85,13 +88,13 @@
 										</div>
 										{% endif %}
 										{% if shelf_item.item.glutenFree %}
-										<div class="bg-warning-subtle rounded text-center px-1">
-											<small class="text-muted">GF</small>
+										<div class="bg-warning-subtle rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Glutenfri' %}">
+											<b><small class="text-muted">GF</small></b>
 										</div>
 										{% endif %}
 										{% if shelf_item.item.nonAlcoholic %}
-										<div class="bg-info-subtle rounded text-center px-1">
-											<small class="text-muted">NA</small>
+										<div class="bg-info-subtle rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
+											<b><small class="text-muted">NA</small></b>
 										</div>
 										{% endif %}
 									</div>
@@ -121,14 +124,6 @@
 		</div>
 	</div>
 	{% endfor %}
-	<div class="d-flex align-content-start flex-wrap gap-1">
-		<div class="bg-warning-subtle rounded text-center px-2">
-			<small class="text-muted">GF</small> {% translate "Glutenfri" %}
-		</div>
-		<div class="bg-info-subtle rounded text-center px-2">
-			<small class="text-muted">NA</small> {% translate "Alkoholfri" %}
-		</div>
-	</div>
 </div>
 {% endif %}
 
@@ -210,5 +205,11 @@
 		<p class="pt-2">{% translate "Sortimentet er desværre tomt" %} &#9785;</p>
 	{% endif %}
 {% endif %}
+
+<script>
+	// Enable tooltips
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
 
 {% endblock %}

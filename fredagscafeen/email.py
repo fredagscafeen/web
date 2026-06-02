@@ -11,6 +11,7 @@ def send_template_email(
     html_format={},
     cc=[],
     reply_to=[settings.BEST_MAIL],
+    from_email=None,
 ):
     body_text = render_to_string(
         "email.txt", {"content": body_template.format(**text_format)}
@@ -25,6 +26,7 @@ def send_template_email(
         to=to,
         cc=cc,
         reply_to=reply_to,
+        from_email=from_email,
     )
     email.attach_alternative(body_html, "text/html")
     return email.send()

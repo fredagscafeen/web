@@ -1,4 +1,11 @@
 #!/bin/sh
 ./manage.py collectstatic --noinput &&
 ./manage.py migrate --noinput -v 3 &&
-exec gunicorn --bind 0.0.0.0 --workers 4 fredagscafeen.wsgi:application
+exec gunicorn --bind 0.0.0.0 \
+    --workers 10 \
+    --threads 10 \
+    --timeout 120 \
+    --worker-class gthread \
+    --max-requests 1000 \
+    --max-requests-jitter 50 \
+    fredagscafeen.wsgi:application
