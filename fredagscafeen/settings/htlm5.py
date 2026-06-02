@@ -3,7 +3,7 @@ import os
 from fredagscafeen.settings.base import *
 
 SECRET_KEY = os.environ["SECRET_KEY"]
-DEBUG = True
+DEBUG = False
 
 SELF_URL = "https://fredagscafeen.dk/"
 ALLOWED_HOSTS = ["fredagscafeen.dk", "web-app-1"]
