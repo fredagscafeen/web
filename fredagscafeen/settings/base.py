@@ -236,6 +236,13 @@ SECRET_ADMIN_KEYS = [
         "role": "DRIFT",
     },
     {
+        "key": "CTIPARTY_PASSWORD",
+        "description": "Ctiparty",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.ctiparty.dk/",
+        "role": "DRIFT",
+    },
+    {
         "key": "SALLING_GROUP_BUSINESS_PASSWORD",
         "description": "Salling Group Business",
         "username": "best@fredagscafeen.dk",
