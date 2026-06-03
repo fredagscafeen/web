@@ -7,6 +7,7 @@ DEBUG = False
 
 SELF_URL = "https://fredagscafeen.dk/"
 ALLOWED_HOSTS = ["fredagscafeen.dk", "web-app-1"]
+CSRF_TRUSTED_ORIGINS = ["https://fredagscafeen.dk"]
 
 MEDIA_URL = "https://media.fredagscafeen.dk/"
 
