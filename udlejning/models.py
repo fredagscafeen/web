@@ -85,8 +85,8 @@ class Udlejning(UdlejningCommon):
     )
 
     SYSTEM_CHOICES = (
-        ("small", _("Lille")),
-        ("medium", _("Mellem")),
+        ("small", _("Lille anlæg")),
+        ("barbaren", _("BarBaren")),
     )
 
     draftBeerSystem = models.CharField(

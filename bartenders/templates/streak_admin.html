@@ -6,11 +6,13 @@
 <div style="overflow: auto;">
 	{% if shift_streaks %}
 		<table>
-			<tr>
-				<th>{% translate "Placering" %}</th>
-				<th>{% translate "Streak" %}</th>
-				<th>{% translate "Start - Slut" %}</th>
-			</tr>
+			<thead>
+				<tr>
+					<th>{% translate "Placering" %}</th>
+					<th>{% translate "Streak" %}</th>
+					<th>{% translate "Start - Slut" %}</th>
+				</tr>
+			</thead>
 			<tbody>
 				{% for shift_streak in shift_streaks %}
 					<tr>

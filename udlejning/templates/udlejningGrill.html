@@ -13,51 +13,53 @@
 <i>
 	{% translate "Grillen er allerede reserveret følgende dage:" %}
 </i>
-<table class="table table-striped">
-	<thead>
-		<tr>
-			<th class="col-md-4">{% translate "Dato" %}</th>
-			<th class="col-md-4">{% translate "Reserveret af" %}</th>
-			<th class="col-md-3">{% translate "Ansvarlige" %}</th>
-			{% if user.is_staff %}
-				<th class="hidden-xs col-md-1"></th>
-			{% endif %}
-		</tr>
-	</thead>
-	<tbody>
-    {% for udlejning in udlejningGrill %}
-		{% with udlejningComparedToCurrentWeek=udlejning|compare_udlejning_to_now udlejningIsWithUser=udlejning|is_udlejning_with_user:user %}
-		<tr>
-			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
-				{{ udlejning.dateFrom }}
-				{% if udlejning.dateTo %}
-					- {{ udlejning.dateTo }}
+<div class="card my-2 pt-1">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="col-md-4">{% translate "Dato" %}</th>
+				<th class="col-md-4">{% translate "Reserveret af" %}</th>
+				<th class="col-md-3">{% translate "Ansvarlige" %}</th>
+				{% if user.is_staff %}
+					<th class="hidden-xs col-md-1"></th>
 				{% endif %}
-			</td>
-			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
-				{{ udlejning.whoReserved }}
-			</td>
-			<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
-				{% if udlejning.bartendersInCharge %}
-					{% for bartender in udlejning.bartendersInCharge.all %}
-						{{ bartender.name }}{% if not forloop.last %}, {% endif %}
-					{% endfor %}
-				{% else %}
-					{% translate "Ikke angivet" %}
+			</tr>
+		</thead>
+		<tbody>
+		{% for udlejning in udlejningGrill %}
+			{% with udlejningComparedToCurrentWeek=udlejning|compare_udlejning_to_now udlejningIsWithUser=udlejning|is_udlejning_with_user:user %}
+			<tr>
+				<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+					{{ udlejning.dateFrom }}
+					{% if udlejning.dateTo %}
+						- {{ udlejning.dateTo }}
+					{% endif %}
+				</td>
+				<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+					{{ udlejning.whoReserved }}
+				</td>
+				<td class="{% if udlejningIsWithUser %}bg-info{% endif %} {% if udlejningIsWithUser %}bg-info{% endif %} {% if not udlejningComparedToCurrentWeek %}text-secondary{% endif %}">
+					{% if udlejning.bartendersInCharge %}
+						{% for bartender in udlejning.bartendersInCharge.all %}
+							{{ bartender.name }}{% if not forloop.last %}, {% endif %}
+						{% endfor %}
+					{% else %}
+						{% translate "Ikke angivet" %}
+					{% endif %}
+				</td>
+				{% if user.is_staff %}
+				<td class="{% if udlejningIsWithUser %}bg-info{% endif %}">
+					<a class="common" href="/admin/udlejning/udlejninggrill/{{ udlejning.id }}">
+						{% translate "Edit" %}
+					</a>
+				</td>
 				{% endif %}
-			</td>
-			{% if user.is_staff %}
-			<td class="{% if udlejningIsWithUser %}bg-info{% endif %}">
-				<a class="common" href="/admin/udlejning/udlejninggrill/{{ udlejning.id }}">
-					{% translate "Edit" %}
-				</a>
-			</td>
-			{% endif %}
-		</tr>
-		{% endwith %}
-	{% endfor %}
-	</tbody>
-</table>
+			</tr>
+			{% endwith %}
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% else %}
 <div class="alert alert-light" role="alert">
   	{% translate "Grillen er p.t. ikke reserveret på noget tidspunkt." %}
