@@ -397,10 +397,11 @@ DATABASES = {
 LANGUAGE_CODE = "da"
 
 TIME_ZONE = "Europe/Copenhagen"
+CELERY_TIMEZONE = "Europe/Copenhagen"
 
 USE_I18N = True
 
-DJANGO_CELERY_BEAT_TZ_AWARE = False
+DJANGO_CELERY_BEAT_TZ_AWARE = True
 
 from django.utils.translation import gettext_lazy as _
 
