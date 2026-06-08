@@ -3,16 +3,17 @@
 {% block title %}403{% endblock %}
 
 {% block content %}
-<h2 id="403">
-    {% translate "Adgang nægtet" %}
-    <a href="#403" class="section-link">#</a>
-</h2>
+<div class="container pt-3 px-4">
+    <h2 id="403">
+        {% translate "Adgang nægtet" %}
+        <a href="#403" class="section-link">#</a>
+    </h2>
 
-<p>{% translate "Kun bartendere har adgang til dette." %}</p>
+    <p>{% translate "Kun bartendere har adgang til dette." %}</p>
 
-<p><a class="common" href="javascript:history.back()">{% translate "Gå tilbage" %}</a>,
-{% translate "eller" %} <a class="common" href="{% url 'login' %}">{% translate "log ind" %}</a>.
-{% translate "Hvis du mener du alligevel skal have adgang, så kontakt" %}
-<a class="common" href="mailto:best@fredagscafeen.dk">{% translate "best" %}</a>.</p>
-
+    <p><a class="common" href="javascript:history.back()">{% translate "Gå tilbage" %}</a>,
+    {% translate "eller" %} <a class="common" href="{% url 'login' %}">{% translate "log ind" %}</a>.
+    {% translate "Hvis du mener du alligevel skal have adgang, så kontakt" %}
+    <a class="common" href="mailto:best@fredagscafeen.dk">{% translate "best" %}</a>.</p>
+</div>
 {% endblock %}
