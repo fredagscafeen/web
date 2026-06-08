@@ -4,12 +4,13 @@ from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from unfold.admin import ModelAdmin
+from unfold.admin import TabularInline
 
+from fredagscafeen.admin import CustomModelAdmin
 from gallery.models import Album, BaseMedia
 
 
-class InlineBaseMediaAdmin(admin.TabularInline):
+class InlineBaseMediaAdmin(TabularInline):
     model = BaseMedia
     extra = 0
     fields = (
@@ -43,7 +44,7 @@ class AlbumAdminForm(forms.ModelForm):
         ]
 
 
-class AlbumAdmin(ModelAdmin):
+class AlbumAdmin(CustomModelAdmin):
     # List display of multiple albums
     list_display = ("title", "year", "publish_date", "get_visibility_link")
     ordering = [
@@ -61,8 +62,13 @@ class AlbumAdmin(ModelAdmin):
         "slug": ("title",),
     }
     formfield_overrides = {
-        models.SlugField: {"widget": forms.TextInput(attrs={"readOnly": "True"})}
+        **CustomModelAdmin.formfield_overrides,
+        models.SlugField: {"widget": forms.TextInput(attrs={"readOnly": "True"})},
     }
+    search_fields = (
+        "title",
+        "year",
+    )
 
     add_form_template = "admin/gallery/add_form.html"
 

@@ -6,8 +6,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
-from unfold.admin import ModelAdmin
+from unfold.admin import ModelAdmin, TabularInline
 
+from fredagscafeen.admin import CustomModelAdmin
 from fredagscafeen.admin_view import custom_admin_view
 from printer.views import pdf_preview
 
@@ -15,6 +16,7 @@ from .models import (
     BeerType,
     Brewery,
     Fridge,
+    FridgeShelfAssignment,
     InventoryEntry,
     InventorySnapshot,
     Item,
@@ -50,91 +52,52 @@ class AmountFilter(admin.SimpleListFilter):
         return filter_by_amount(queryset, value == "pos")
 
 
-class FridgeAdminForm(forms.ModelForm):
-    shelves = forms.ModelMultipleChoiceField(
-        queryset=Shelf.objects.all(),
-        required=False,
-        widget=admin.widgets.FilteredSelectMultiple("shelves", is_stacked=False),
-    )
-
-    class Meta:
-        model = Fridge
-        fields = ("name",)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if self.instance.pk:
-            self.fields["shelves"].initial = self.instance.shelves.all()
-            # Only show unassigned shelves + shelves already on this fridge
-            self.fields["shelves"].queryset = Shelf.objects.filter(
-                models.Q(fridge__isnull=True) | models.Q(fridge=self.instance)
-            )
-        else:
-            self.fields["shelves"].queryset = Shelf.objects.filter(fridge__isnull=True)
-
-    def save(self, commit=True):
-        fridge = super().save(commit=commit)
-
-        def save_shelves():
-            selected = set(self.cleaned_data["shelves"])
-            current = set(fridge.shelves.all())
-            # Remove shelves no longer selected
-            for shelf in current - selected:
-                shelf.fridge = None
-                shelf.save()
-            # Add newly selected shelves
-            for shelf in selected - current:
-                shelf.fridge = fridge
-                shelf.save()
-
-        if commit:
-            save_shelves()
-        else:
-            old_save_m2m = self.save_m2m
-
-            def save_m2m():
-                old_save_m2m()
-                save_shelves()
-
-            self.save_m2m = save_m2m
-
-        return fridge
+class FridgeShelfInline(TabularInline):
+    model = FridgeShelfAssignment
+    fields = ("shelf", "order")
+    autocomplete_fields = ["shelf"]
+    extra = 0
+    ordering_field = "order"
+    hide_ordering_field = True
 
 
 @admin.register(Fridge)
-class FridgeAdmin(ModelAdmin):
-    form = FridgeAdminForm
-    list_display = ("name", "shelves_list")
-    ordering = ("name",)
+class FridgeAdmin(CustomModelAdmin):
+    list_display = (
+        "name",
+        "shelves_count",
+        "shelves_list",
+    )
+    search_fields = ("name",)
+    inlines = [FridgeShelfInline]
+    fields = ("name",)
+
+    def shelves_count(self, obj):
+        return obj.shelf_assignments.count()
+
+    shelves_count.short_description = "Shelves"
 
     def shelves_list(self, obj):
         """Display list of shelves on this fridge with links"""
-        shelves = obj.shelves.all().order_by("name")
+        shelf_assignments = obj.shelf_assignments.select_related("shelf").order_by(
+            "order"
+        )
 
-        if not shelves:
+        if not shelf_assignments:
             return "-"
 
         links = []
-        for shelf in shelves:
-            url = reverse("admin:items_shelf_change", args=[shelf.id])
-            links.append(f'<li><a href="{url}">{shelf}</a></li>')
+        for sa in shelf_assignments:
+            url = reverse("admin:items_shelf_change", args=[sa.shelf.id])
+            links.append(f'<li><a href="{url}">{sa.shelf.name}</a></li>')
 
-        links_html = format_html_join(
-            "",
-            '<li><a href="{}">{}</a></li>',
-            (
-                (reverse("admin:items_shelf_change", args=[shelf.id]), shelf)
-                for shelf in shelves
-            ),
-        )
-
-        return format_html("<ul>{}</ul>", links_html)
+        return mark_safe(f'<ul>{"".join(links)}</ul>')
 
     shelves_list.short_description = "Shelves"
 
 
 @admin.register(Item)
-class ItemAdmin(ModelAdmin):
+class ItemAdmin(CustomModelAdmin):
     list_display = (
         "brewery",
         "name",
@@ -159,6 +122,7 @@ class ItemAdmin(ModelAdmin):
     empty_value_display = ""
     ordering = ("name",)
     actions = ["print_shelf_labels"]
+    autocomplete_fields = ["brewery", "type"]
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,
@@ -214,15 +178,23 @@ class ItemAdmin(ModelAdmin):
 
 
 @admin.register(BeerType)
-class BeerTypeAdmin(ModelAdmin):
-    list_display = ("name",)
+class BeerTypeAdmin(CustomModelAdmin):
+    list_display = (
+        "name",
+        "link",
+    )
     ordering = ("name",)
+    search_fields = ("name",)
 
 
 @admin.register(Brewery)
-class BreweryAdmin(ModelAdmin):
-    list_display = ("name",)
+class BreweryAdmin(CustomModelAdmin):
+    list_display = (
+        "name",
+        "website",
+    )
     ordering = ("name",)
+    search_fields = ("name",)
 
 
 class InventoryEntryInlineFormSet(forms.models.BaseInlineFormSet):
@@ -246,7 +218,7 @@ class InventoryEntryInlineFormSet(forms.models.BaseInlineFormSet):
         super().save()
 
 
-class InventoryEntryInline(admin.TabularInline):
+class InventoryEntryInline(TabularInline):
     model = InventoryEntry
     formset = InventoryEntryInlineFormSet
     fields = ("amount", "item")
@@ -260,7 +232,7 @@ class InventoryEntryInline(admin.TabularInline):
 
 
 @admin.register(InventorySnapshot)
-class InventoryAdmin(ModelAdmin):
+class InventoryAdmin(CustomModelAdmin):
     change_form_template = "admin/enhancedinline.html"
     list_display = ("datetime", "changed_items")
     inlines = [InventoryEntryInline]
@@ -289,20 +261,24 @@ class BarMenuContext:
         }
 
 
-@custom_admin_view("items", "generate barmenu")
-def generate_bartab(admin, request):
-    return pdf_preview(request, admin.admin_site, BarMenuContext)
-
-
 class ShelfLabelContext:
     file_name = "shelf_labels"
     file_path = "shelf_labels/shelf_labels.tex"
 
     @staticmethod
     def get_context_for_work_dir(work_dir):
-        label_items = ShelfItem.objects.select_related(
-            "item", "item__brewery", "item__type", "shelf__fridge"
-        ).order_by("shelf__fridge__name", "shelf__name", "order", "item__name")
+        label_items = (
+            ShelfItem.objects.select_related(
+                "item", "item__brewery", "item__type", "shelf"
+            )
+            .prefetch_related("shelf__fridge_assignments__fridge")
+            .order_by(
+                "shelf__fridge_assignments__fridge__name",
+                "shelf__name",
+                "order",
+                "item__name",
+            )
+        )
 
         return build_shelf_label_context(label_items, work_dir)
 
@@ -330,13 +306,31 @@ class ShelfItemInlineFormSet(forms.models.BaseInlineFormSet):
                     items.append(item)
 
 
-class ShelfItemInline(admin.TabularInline):
+class ShelfItemInline(TabularInline):
     model = ShelfItem
     formset = ShelfItemInlineFormSet
-    extra = 1
+    extra = 0
     autocomplete_fields = ["item"]
-    fields = ("item", "gluten_free_display", "non_alcoholic_display")
-    readonly_fields = ("gluten_free_display", "non_alcoholic_display")
+    fields = (
+        "item",
+        "item_image",
+        "gluten_free_display",
+        "non_alcoholic_display",
+        "order",
+    )
+    readonly_fields = ("gluten_free_display", "non_alcoholic_display", "item_image")
+    ordering_field = "order"
+    hide_ordering_field = True
+
+    def item_image(self, obj):
+        if obj.item and obj.item.image:
+            return format_html(
+                '<img src="{}" style="max-height: 48px; border-radius: 4px;" />',
+                obj.item.image.url,
+            )
+        return ""
+
+    item_image.short_description = "Image"
 
     def gluten_free_display(self, obj):
         if obj.item and obj.item.glutenFree:
@@ -353,10 +347,20 @@ class ShelfItemInline(admin.TabularInline):
     non_alcoholic_display.short_description = "Non-Alcoholic"
 
 
+class ShelfFridgeInline(TabularInline):
+    model = FridgeShelfAssignment
+    fields = ("fridge",)
+    autocomplete_fields = ["fridge"]
+    extra = 1
+    max_num = 1
+
+
 @admin.register(Shelf)
-class ShelfAdmin(ModelAdmin):
-    list_display = ("name", "item_count", "items_list", "fridge")
-    inlines = [ShelfItemInline]
+class ShelfAdmin(CustomModelAdmin):
+    list_display = ("name", "item_count", "items_list")
+    inlines = [ShelfFridgeInline, ShelfItemInline]
+    search_fields = ("name",)
+    fields = ("name",)
 
     def item_count(self, obj):
         return obj.shelf_items.filter(item__inStock=True).count()

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}500{% endblock %}
+
+{% block content %}
+<div class="container pt-3 px-4">
+    <h2 id="500">
+        {% translate "Serverfejl" %}
+        <a href="#500" class="section-link">#</a>
+    </h2>
+    <p>{% translate "Der skete en fejl på serveren, og vi kunne ikke behandle din anmodning." %}</p>
+
+    <p>{% translate "Prøv at opdatere siden, eller" %} <a class="common" href="{% url 'index' %}">{% translate "gå tilbage til forsiden" %}</a>. {% translate "Hvis fejlen fortsætter, så" %}
+    <a class="common" href="mailto:best@fredagscafeen.dk">{% translate "send en email til os" %}</a></p>
+</div>
+{% endblock %}

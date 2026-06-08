@@ -1,24 +1,27 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
 {% load static %}
+{% load unfold %}
 {% load bootstrap_icons %}
 {% block content %}
-<div style="overflow: auto;">
+<div class="overflow-x-auto">
 	{% if shift_streaks %}
-		<table>
+		<table class="w-full border-collapse">
 			<thead>
-				<tr>
-					<th>{% translate "Placering" %}</th>
-					<th>{% translate "Streak" %}</th>
-					<th>{% translate "Start - Slut" %}</th>
+				<tr class="border-b border-gray-200 dark:border-gray-700">
+					<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Placering" %}</th>
+					<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Streak" %}</th>
+					<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Start - Slut" %}</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 				{% for shift_streak in shift_streaks %}
-					<tr>
-						<td class="col-md-1">{{ forloop.counter }}</td>
-						<td class="col-md-1">{{ shift_streak.streak }}{% if shift_streak.is_current_shift %}{% bs_icon 'fire' size='0.8em' %}{% endif%}</td>
-						<td>{{ shift_streak.start_datetime|date:"d M, Y" }} - {{ shift_streak.end_datetime|date:"d M, Y" }}</td>
+					<tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+						<td class="px-4 py-3 text-sm text-font-default-light dark:text-font-default-dark">{{ forloop.counter }}</td>
+						<td class="px-4 py-3 text-sm font-medium text-font-important-light dark:text-font-important-dark">
+							{{ shift_streak.streak }}{% if shift_streak.is_current_shift %}{% bs_icon 'fire' size='0.8em' %}{% endif %}
+						</td>
+						<td class="px-4 py-3 text-sm text-font-default-light dark:text-font-default-dark">{{ shift_streak.start_datetime|date:"d M, Y" }} - {{ shift_streak.end_datetime|date:"d M, Y" }}</td>
 					</tr>
 				{% endfor %}
 			</tbody>

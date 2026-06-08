@@ -11,13 +11,13 @@ from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponseRedirect,
+    JsonResponse,
 )
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_POST
 from django.views.defaults import permission_denied
-from jfu.http import JFUResponse, UploadResponse, upload_receive
 
 from gallery.forms import EditVisibilityForm
 from gallery.models import Album, BaseMedia, GenericFile, Image
@@ -177,18 +177,19 @@ def image(request, year, album_slug, image_slug, **kwargs):
 @require_POST
 @permission_required("gallery.add_image", raise_exception=True)
 def upload(request):
-    file = upload_receive(request)
+    file = request.FILES.get("file")
     if file is None:
-        return UploadResponse(request, {"error": "No file"})
-    album = Album.objects.get(id=int(request.POST["object_id"]))
+        return JsonResponse({"error": "No file"}, status=400)
+
+    album = get_object_or_404(Album, id=request.POST.get("album_id"))
     ext = os.path.splitext(file.name)[1].lower()
 
     if ext in (".png", ".gif", ".jpg", ".jpeg"):
         instance = Image(file=file, album=album)
-    elif ext in (".mp3"):
+    elif ext == ".mp3":
         instance = GenericFile(file=file, album=album)
         instance.type = BaseMedia.AUDIO
-    elif ext in (".mp4"):
+    elif ext == ".mp4":
         instance = GenericFile(file=file, album=album)
         instance.type = BaseMedia.VIDEO
     else:
@@ -205,34 +206,15 @@ def upload(request):
             )
         except AttributeError:
             error = " ".join(exn.messages)
+        return JsonResponse({"error": error}, status=400)
 
-        jfu_msg = {
-            "name": file.name,
+    return JsonResponse(
+        {
+            "name": os.path.basename(instance.file.name),
             "size": file.size,
-            "error": error,
+            "url": instance.file.url,
         }
-        return UploadResponse(request, jfu_msg)
-
-    jfu_msg = {
-        "name": os.path.basename(instance.file.path),
-        "size": file.size,
-        "url": instance.file.url,
-    }
-    return UploadResponse(request, jfu_msg)
-
-
-@require_POST
-@permission_required("gallery.delete_image", raise_exception=True)
-def upload_delete(request, pk):
-    success = True
-    try:
-        instance = Image.objects.get(pk=pk)
-        instance.image.delete(save=False)
-        instance.delete()
-    except Image.DoesNotExist:
-        success = False
-
-    return JFUResponse(request, success)
+    )
 
 
 @require_POST

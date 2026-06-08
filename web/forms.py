@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_recaptcha.fields import ReCaptchaField
+from unfold.widgets import UnfoldAdminSelectWidget, UnfoldBooleanSwitchWidget
 
 from bartenders.models import Bartender, BartenderShift
 from email_auth.auth import EmailTokenBackend
@@ -61,19 +62,31 @@ class LoginForm(forms.Form):
 
 
 class SwapForm1(forms.Form):
-    bartender1 = forms.ModelChoiceField(label="Bartender 1", queryset=Bartender.objects)
-    bartender2 = forms.ModelChoiceField(label="Bartender 2", queryset=Bartender.objects)
+    bartender1 = forms.ModelChoiceField(
+        label="Bartender 1", queryset=Bartender.objects, widget=UnfoldAdminSelectWidget
+    )
+    bartender2 = forms.ModelChoiceField(
+        label="Bartender 2", queryset=Bartender.objects, widget=UnfoldAdminSelectWidget
+    )
     swap = forms.BooleanField(
-        help_text="(or replace 1 with 2)", initial=True, required=False
+        label="Swap bartenders",
+        help_text="(or replace 1 with 2)",
+        initial=True,
+        required=False,
+        widget=UnfoldBooleanSwitchWidget,
     )
 
 
 class SwapForm2(SwapForm1):
     bartender_shift1 = forms.ModelChoiceField(
-        label="Shift 1", queryset=BartenderShift.objects.none()
+        label="Shift 1",
+        queryset=BartenderShift.objects.none(),
+        widget=UnfoldAdminSelectWidget,
     )
     bartender_shift2 = forms.ModelChoiceField(
-        label="Shift 2", queryset=BartenderShift.objects.none()
+        label="Shift 2",
+        queryset=BartenderShift.objects.none(),
+        widget=UnfoldAdminSelectWidget,
     )
 
     def __init__(self, *args, swap, bartender1, bartender2, **kwargs):

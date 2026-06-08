@@ -16,6 +16,8 @@ import os
 from django.contrib import messages
 from dotenv import load_dotenv
 
+from fredagscafeen.settings.unfold import *
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 load_dotenv()
 
@@ -287,6 +289,10 @@ TIMEOUT = 600
 
 INSTALLED_APPS = (
     "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+    "unfold.contrib.constance",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -305,6 +311,8 @@ INSTALLED_APPS = (
     "rest_framework_api_key",
     "django_celery_beat",
     "corsheaders",
+    "users",
+    "scheduled",
     "items",
     "bartenders",
     "web",
@@ -312,7 +320,6 @@ INSTALLED_APPS = (
     "apikeys",
     "reminder",
     "udlejning",
-    "logentry_admin",
     "log",
     "mail",
     "bartab",

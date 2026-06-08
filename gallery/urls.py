@@ -16,8 +16,8 @@ urlpatterns = [
     ),
     # Bulk-update BaseMedia.visibility
     re_path(r"^set_visibility/$", views.set_visibility, name="set_image_visibility"),
-    # JFU upload
-    re_path(r"^upload/", views.upload, name="jfu_upload"),
+    # Upload
+    re_path(r"^upload/$", views.upload, name="gallery_upload"),
     # RSS feed
     re_path(r"^album\.rss$", views.AlbumFeed(), name="album_rss"),
 ]

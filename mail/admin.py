@@ -3,15 +3,18 @@ from urllib import request
 from django.conf import settings
 from django.contrib import admin, messages
 from django.db.models import Count, Exists, OuterRef, Q
-from django.forms.widgets import TextInput
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import reverse
 from django.template import Context
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from django_object_actions import DjangoObjectActions
-from unfold.admin import ModelAdmin
+from unfold.admin import TabularInline
+from unfold.contrib.forms.widgets import UnfoldAdminTextInputWidget
+from unfold.decorators import action
+from unfold.enums import ActionVariant
+
+from fredagscafeen.admin import CustomModelAdmin
 
 from .fields import CommaSeparatedEmailField
 from .forms import OutgoingEmailAdminForm
@@ -34,17 +37,20 @@ from .services import (
 
 
 @admin.register(MailingList)
-class MailingListAdmin(ModelAdmin):
+class MailingListAdmin(CustomModelAdmin):
     list_display = ("name", "count", "isOnlyInternal")
     filter_horizontal = ("members",)
+    search_fields = ("name",)
 
 
-admin.site.register(EmailTemplate)
-
-
-class EmailTemplateAdmin(ModelAdmin):
+@admin.register(EmailTemplate)
+class EmailTemplateAdmin(CustomModelAdmin):
     list_display = ("name", "description", "subject")
     readonly_fields = ["preview_template_field"]
+    search_fields = (
+        "name",
+        "subject",
+    )
 
     def preview_template_field(self, o):
         if o.id:
@@ -72,33 +78,28 @@ class EmailTemplateAdmin(ModelAdmin):
         return HttpResponse(content, content_type="text/html")
 
 
-class TemplateVariableInline(admin.TabularInline):
+class TemplateVariableInline(TabularInline):
     model = TemplateVariable
     extra = 1
+    autocomplete_fields = ("email",)
 
 
-class AttachmentInline(admin.TabularInline):
+class AttachmentInline(TabularInline):
     model = Attachment.emails.through
     extra = 1
     verbose_name = _("Attachment")
     verbose_name_plural = _("Attachments")
 
 
-admin.site.register(Attachment)
-
-
-class AttachmentAdmin(ModelAdmin):
+@admin.register(Attachment)
+class AttachmentAdmin(CustomModelAdmin):
     list_display = (
         "name",
         "file",
     )
 
 
-class CommaSeparatedEmailWidget(TextInput):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.attrs.update({"class": "vTextField"})
-
+class CommaSeparatedEmailWidget(UnfoldAdminTextInputWidget):
     def format_value(self, value: list[str]) -> str:
         if not value:
             return ""
@@ -109,7 +110,7 @@ class CommaSeparatedEmailWidget(TextInput):
         return ", ".join([item for item in value])
 
 
-class ForwardedMailInline(admin.TabularInline):
+class ForwardedMailInline(TabularInline):
     model = ForwardedMail
     extra = 0
     can_delete = False
@@ -129,11 +130,11 @@ class ForwardedMailInline(admin.TabularInline):
         if not obj.pk or obj.status not in RETRYABLE_FORWARDED_STATUSES:
             return "---"
 
-        url = reverse(
-            "admin:mail_forwardedmail_actions",
-            kwargs={"pk": obj.pk, "tool": "resend"},
+        url = reverse("admin:mail_forwardedmail_resend", args=[obj.pk])
+        return format_html(
+            '<a href="{}" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">Resend</a>',
+            url,
         )
-        return format_html('<a href="{}">Resend</a>', url)
 
     resend_link.short_description = _("Resend")
 
@@ -173,7 +174,7 @@ def incoming_mail_block_domains(modeladmin, request, queryset):
 
 
 @admin.register(IncomingMail)
-class IncomingMailAdmin(DjangoObjectActions, ModelAdmin):
+class IncomingMailAdmin(CustomModelAdmin):
     list_display = (
         "get_status_display",
         "get_subject_display",
@@ -205,7 +206,7 @@ class IncomingMailAdmin(DjangoObjectActions, ModelAdmin):
     )
     fields = readonly_fields
     inlines = (ForwardedMailInline,)
-    change_actions = ("download_eml", "resend", "block_in_spamfilter")
+    actions_detail = ["download_eml", "resend", "block_in_spamfilter"]
     actions = [incoming_mail_block_domains, "mail_archive_link"]
     list_display_links = ("get_subject_display",)
 
@@ -303,29 +304,30 @@ class IncomingMailAdmin(DjangoObjectActions, ModelAdmin):
         if not obj.pk:
             return "---"
 
-        url = reverse(
-            "admin:mail_incomingmail_actions",
-            kwargs={"pk": obj.pk, "tool": "download_eml"},
+        url = reverse("admin:mail_incomingmail_download_eml", args=[obj.pk])
+        return format_html(
+            '<a href="{}" download class="text-primary-600 dark:text-primary-400 font-medium hover:underline">Download EML</a>',
+            url,
         )
-        print(url)
-        return format_html('<a href="{}" download>Download EML</a>', url)
 
-    mail_archive_link.short_description = _("Archive")
+    mail_archive_link.short_description = _("Download EML")
 
-    def download_eml(self, request, obj):
+    @action(description=_("Download EML"), url_path="download_eml")
+    def download_eml(self, request, object_id: int):
+        obj = IncomingMail.objects.select_related("mail_archive").get(pk=object_id)
         try:
             download_url = build_mail_archive_download_url(obj.mail_archive)
         except Exception as error:
             self.message_user(request, str(error), messages.ERROR)
             return HttpResponseRedirect(
-                reverse("admin:mail_incomingmail_change", args=[obj.pk])
+                reverse("admin:mail_incomingmail_change", args=[object_id])
             )
 
         return HttpResponseRedirect(download_url)
 
-    download_eml.label = _("Download EML")
-
-    def resend(self, request, obj):
+    @action(description=_("Resend failed recipients"), url_path="resend")
+    def resend(self, request, object_id: int):
+        obj = IncomingMail.objects.get(pk=object_id)
         retryable_attempts = list(
             get_retryable_forwarded_mails(obj)
             .select_related("incoming_mail__mail_archive")
@@ -336,7 +338,9 @@ class IncomingMailAdmin(DjangoObjectActions, ModelAdmin):
             self.message_user(
                 request, _("No failed recipients to resend."), messages.WARNING
             )
-            return
+            return HttpResponseRedirect(
+                reverse("admin:mail_incomingmail_change", args=[object_id])
+            )
 
         success_count = 0
         errors = []
@@ -355,14 +359,23 @@ class IncomingMailAdmin(DjangoObjectActions, ModelAdmin):
                 % {"count": success_count},
                 messages.SUCCESS,
             )
+            return HttpResponseRedirect(
+                reverse("admin:mail_incomingmail_change", args=[object_id])
+            )
 
         if errors:
             self.message_user(request, "; ".join(errors), messages.ERROR)
-            return
 
-    resend.label = _("Resend failed recipients")
+        return HttpResponseRedirect(
+            reverse("admin:mail_incomingmail_change", args=[object_id])
+        )
 
-    def block_in_spamfilter(self, request, obj):
+    @action(
+        description=_("Block sender's Domain in spam filter"),
+        url_path="block_in_spamfilter",
+    )
+    def block_in_spamfilter(self, request, object_id: int):
+        obj = IncomingMail.objects.get(pk=object_id)
         sender_domain = (
             obj.sender.split("@")[-1]
             .lower()
@@ -381,7 +394,6 @@ class IncomingMailAdmin(DjangoObjectActions, ModelAdmin):
                 % {"tld": sender_domain},
                 messages.INFO,
             )
-            return
 
         spam_filter_entry.allowed = False
         spam_filter_entry.save()
@@ -393,11 +405,13 @@ class IncomingMailAdmin(DjangoObjectActions, ModelAdmin):
             messages.SUCCESS,
         )
 
-    block_in_spamfilter.label = _("Block sender's Domain in spam filter")
+        return HttpResponseRedirect(
+            reverse("admin:mail_incomingmail_change", args=[object_id])
+        )
 
 
 @admin.register(ForwardedMail)
-class ForwardedMailAdmin(DjangoObjectActions, ModelAdmin):
+class ForwardedMailAdmin(CustomModelAdmin):
     list_display = (
         "incoming_mail",
         "target",
@@ -414,33 +428,39 @@ class ForwardedMailAdmin(DjangoObjectActions, ModelAdmin):
     readonly_fields = list_display + ("reason",)
     fields = readonly_fields
     ordering = ("-forwarded_at",)
-    change_actions = ("resend",)
+    actions_detail = ["resend"]
 
-    def get_change_actions(self, request, object_id, form_url):
-        actions = super().get_change_actions(request, object_id, form_url)
-        obj = self.get_object(request, object_id)
-        if obj is None or obj.status not in RETRYABLE_FORWARDED_STATUSES:
-            return tuple(action for action in actions if action != "resend")
-        return actions
+    @action(description=_("Resend"), url_path="resend")
+    def resend(self, request, object_id: int):
+        obj = ForwardedMail.objects.get(pk=object_id)
+        if obj.status not in RETRYABLE_FORWARDED_STATUSES:
+            self.message_user(
+                request, _("This mail cannot be resent."), messages.WARNING
+            )
+            return HttpResponseRedirect(
+                reverse("admin:mail_forwardedmail_change", args=[object_id])
+            )
 
-    def resend(self, request, obj):
         try:
             request_forwarded_mail_resend(obj)
         except Exception as error:
             self.message_user(request, str(error), messages.ERROR)
-            return
+            return HttpResponseRedirect(
+                reverse("admin:mail_forwardedmail_change", args=[object_id])
+            )
 
         self.message_user(
             request,
             _("Queued resend for %(target)s.") % {"target": obj.target},
             messages.SUCCESS,
         )
-
-    resend.label = _("Resend")
+        return HttpResponseRedirect(
+            reverse("admin:mail_forwardedmail_change", args=[object_id])
+        )
 
 
 @admin.register(OutgoingEmail)
-class OutgoingEmailAdmin(DjangoObjectActions, ModelAdmin):
+class OutgoingEmailAdmin(CustomModelAdmin):
     list_display = [
         "subject_display",
         "from_mailing_list_display",
@@ -448,10 +468,14 @@ class OutgoingEmailAdmin(DjangoObjectActions, ModelAdmin):
         "template",
     ]
     inlines = [TemplateVariableInline]
-    formfield_overrides = {
-        CommaSeparatedEmailField: {"widget": CommaSeparatedEmailWidget}
-    }
     form = OutgoingEmailAdminForm
+    formfield_overrides = {
+        **CustomModelAdmin.formfield_overrides,
+        CommaSeparatedEmailField: {"widget": CommaSeparatedEmailWidget},
+    }
+    autocomplete_fields = ("from_mailing_list", "template")
+    search_fields = ("subject", "message", "html_message")
+    actions_detail = ["send_test", "send"]
 
     def from_mailing_list_display(self, instance):
         return f"{instance.from_mailing_list}@{settings.DOMAIN}"
@@ -468,9 +492,14 @@ class OutgoingEmailAdmin(DjangoObjectActions, ModelAdmin):
 
     subject_display.short_description = _("Emne")
 
-    change_actions = ("send", "send_test")
-
-    def send(self, request, obj):
+    @action(
+        description=_("Send"),
+        url_path="send",
+        icon="send",
+        variant=ActionVariant.PRIMARY,
+    )
+    def send(self, request, object_id: int):
+        obj = OutgoingEmail.objects.get(pk=object_id)
         mail = obj.prepare_email_message()
         mail.send()
         subject = mail.subject if mail.subject else "'<missing>'"
@@ -479,8 +508,13 @@ class OutgoingEmailAdmin(DjangoObjectActions, ModelAdmin):
             f"'{subject}' mail sendt.",
             messages.SUCCESS,
         )
+        return HttpResponseRedirect(
+            reverse("admin:mail_outgoingemail_change", args=[object_id])
+        )
 
-    def send_test(self, request, obj):
+    @action(description=_("Send test"), url_path="send_test")
+    def send_test(self, request, object_id: int):
+        obj = OutgoingEmail.objects.get(pk=object_id)
         to_mails = [request.user.email]
         mail = obj.prepare_email_message(to_mails)
         mail.send()
@@ -489,6 +523,9 @@ class OutgoingEmailAdmin(DjangoObjectActions, ModelAdmin):
             request,
             f"'{subject}' test mail sendt til {request.user.email}.",
             messages.SUCCESS,
+        )
+        return HttpResponseRedirect(
+            reverse("admin:mail_outgoingemail_change", args=[object_id])
         )
 
 
@@ -513,7 +550,7 @@ def block_tlds(modeladmin, request, queryset):
 
 
 @admin.register(SpamFilterTLD)
-class SpamFilterTLDAdmin(ModelAdmin):
+class SpamFilterTLDAdmin(CustomModelAdmin):
     list_display = (
         "allowed",
         "tld",
