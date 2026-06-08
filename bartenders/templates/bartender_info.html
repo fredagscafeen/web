@@ -46,37 +46,39 @@
             <hr>
             {% with mailing_lists=object|get_subscribed_mailing_lists %}
             {% if mailing_lists %}
-            <div class="container" style="overflow: scroll;">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>{% translate "Your mailing lists" %} <span class="badge text-bg-secondary rounded-pill">{{ mailing_lists|length }}</span></th>
-                            <th># {% translate "Modtagere" %}</th>
-                            {% if not object.isActiveBartender %}
-                                <th></th>
-                            {% endif %}
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        {% for mailinglist in mailing_lists %}
+            <div class="card mt-1 pt-1">
+                <div class="container p-0" style="overflow: scroll;">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>
-                                    {{ mailinglist.name }}<span class="text-secondary">@{{ DOMAIN }}</span>
-                                </td>
-                                <td>
-                                    {{ mailinglist.count }}
-                                </td>
+                                <th>{% translate "Your mailing lists" %} <span class="badge text-bg-secondary rounded-pill">{{ mailing_lists|length }}</span></th>
+                                <th># {% translate "Modtagere" %}</th>
                                 {% if not object.isActiveBartender %}
-                                    <td>
-                                        <button type="submit" class="btn btn-sm btn-link link-underline-danger link-underline-opacity-0 link-underline-opacity-75-hover text-danger float-end" value="{{ mailinglist.id }}" name="unsubscribe_maillist">
-                                            {% translate "Afmeld" %}
-                                        </button>
-                                    </td>
+                                    <th></th>
                                 {% endif %}
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% for mailinglist in mailing_lists %}
+                                <tr>
+                                    <td>
+                                        {{ mailinglist.name }}<span class="text-secondary">@{{ DOMAIN }}</span>
+                                    </td>
+                                    <td>
+                                        {{ mailinglist.count }}
+                                    </td>
+                                    {% if not object.isActiveBartender %}
+                                        <td>
+                                            <button type="submit" class="btn btn-sm btn-link link-underline-danger link-underline-opacity-0 link-underline-opacity-75-hover text-danger float-end" value="{{ mailinglist.id }}" name="unsubscribe_maillist">
+                                                {% translate "Afmeld" %}
+                                            </button>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             {% else %}
                 <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#subscribeMailingListModal">
