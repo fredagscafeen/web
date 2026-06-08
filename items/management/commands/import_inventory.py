@@ -1,9 +1,8 @@
 import argparse
 import csv
-import datetime
 from collections import defaultdict
+from datetime import datetime, timedelta, timezone
 
-import pytz
 from django.core.management.base import BaseCommand
 
 from items.models import InventoryEntry, InventorySnapshot, Item
@@ -32,14 +31,17 @@ class Command(BaseCommand):
                     row["item"] = Item.objects.get(name=row["name"].split("  ")[1])
 
             row["diff"] = int(row["diff"])
-            row["datetime"] = pytz.utc.localize(
-                datetime.datetime.fromisoformat(row["datetime"])
-            )
+            dt = datetime.fromisoformat(row["datetime"])
+            if dt.tzinfo is None:
+                row["datetime"] = dt.replace(tzinfo=timezone.utc)
+            else:
+                row["datetime"] = dt.astimezone(timezone.utc)
+
             rows.append(row)
 
         rows.sort(key=lambda r: r["datetime"])
 
-        GROUPING_THRESHOLD = datetime.timedelta(minutes=30)
+        GROUPING_THRESHOLD = timedelta(minutes=30)
 
         amounts = defaultdict(int)
         groups = []

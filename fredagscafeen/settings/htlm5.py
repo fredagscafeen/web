@@ -6,7 +6,8 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 DEBUG = False
 
 SELF_URL = "https://fredagscafeen.dk/"
-ALLOWED_HOSTS = ["fredagscafeen.dk", "web-app-1"]
+ALLOWED_HOSTS = ["fredagscafeen.dk", "web-app-1", "app"]
+CSRF_TRUSTED_ORIGINS = ["https://fredagscafeen.dk"]
 
 MEDIA_URL = "https://media.fredagscafeen.dk/"
 
@@ -26,13 +27,20 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "postgres",
         "USER": "postgres",
-        "PASSWORD": "postgres",
+        "PASSWORD": "sehhik-9sysfa-wIkxaq",
         "HOST": "db",
         "PORT": 5432,
     }
 }
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 RECAPTCHA_PUBLIC_KEY = os.environ["RECAPTCHA_PUBLIC_KEY"]
 RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]

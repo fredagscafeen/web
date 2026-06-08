@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.14.4
 
 RUN apt-get update && apt-get install -y texlive-latex-extra latexmk cups && rm -rf /var/lib/apt/lists/*
 

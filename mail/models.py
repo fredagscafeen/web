@@ -274,7 +274,7 @@ class ForwardedMail(models.Model):
     class Meta:
         constraints = [
             models.CheckConstraint(
-                check=~models.Q(pk=models.F("previous_attempt")),
+                condition=~models.Q(pk=models.F("previous_attempt")),
                 name="forwardedmail_previous_attempt_not_self",
             ),
         ]

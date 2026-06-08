@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
-{% load bootstrap5 bootstrap_icons %}
+{% load django_bootstrap5 bootstrap_icons %}
 {% load get_subscribed_mailing_lists %}
 
 {% block content %}
@@ -11,12 +11,12 @@
     <div class="col-auto">
         <form method="post" id="info_form">
             {% csrf_token %}
-            {% buttons %}
+            <div class="mt-3">
                 {% translate "Gem" as BUTTON_TEXT %}
                 <button type="submit" class="btn btn-primary w-100">
                     {% bs_icon 'floppy2' size='1.0em' %} {{ BUTTON_TEXT }}
                 </button>
-            {% endbuttons %}
+            </div>
             <hr>
             {% bootstrap_form form %}
             <label>{% translate "Datoer, hvor du ikke har mulighed for at stå i bar" %}:</label>
@@ -37,12 +37,12 @@
                 </tbody>
             </table>
             <hr>
-            {% buttons %}
+            <div class="mt-3">
                 {% translate "Gem" as BUTTON_TEXT %}
                 <button type="submit" class="btn btn-primary w-100">
                     {% bs_icon 'floppy2' size='1.0em' %} {{ BUTTON_TEXT }}
                 </button>
-            {% endbuttons %}
+            </div>
             <hr>
             {% with mailing_lists=object|get_subscribed_mailing_lists %}
             {% if mailing_lists %}

@@ -53,6 +53,10 @@ class Album(models.Model):
         return "%s: %s" % (self.year, self.title)
 
     def clean(self):
+        if self.pk is None:
+            # This is a new instance, so there are no related BaseMedia objects to clean.
+            return
+
         for m in self.basemedia.all():
             m.save()
 

@@ -103,13 +103,6 @@ SECRET_ADMIN_KEYS = [
         "role": "WEB",
     },
     {
-        "key": "MAILMAN",
-        "description": "AU Maillist",
-        "username": "datcafe@gmail.com",
-        "url": "https://maillist.au.dk/postorius/lists/",
-        "role": "WEB",
-    },
-    {
         "key": "CONTABO_PASSWORD",
         "description": "Contabo. OBS: Kontoen har 2FA",
         "username": "best@fredagscafeen.dk",
@@ -136,13 +129,6 @@ SECRET_ADMIN_KEYS = [
         "username": "web@fredagscafeen.dk",
         "url": "https://aws.amazon.com/console/",
         "role": "WEB",
-    },
-    {
-        "key": "DANSK_RETURSYSTEM_PASSWORD",
-        "description": "Dansk Retursystem",
-        "username": "5790001782870",
-        "url": "https://danskretursystem.dk/booking/",
-        "role": "DRIFT",
     },
     {
         "key": "MIDTTRAFIK_BESTILLING_PASSWORD",
@@ -208,10 +194,52 @@ SECRET_ADMIN_KEYS = [
         "role": "PR",
     },
     {
+        "key": "DANSK_RETURSYSTEM_PASSWORD",
+        "description": "Dansk Retursystem",
+        "username": "5790001782870",
+        "url": "https://danskretursystem.dk/booking/",
+        "role": "DRIFT",
+    },
+    {
         "key": "HOLTEC_SOLUTIONS_PASSWORD",
         "description": "Holtec Solutions",
         "username": "best@fredagscafeen.dk",
         "url": "https://holtecsolutions.dk/log-ind/",
+        "role": "DRIFT",
+    },
+    {
+        "key": "BAUHAUS_PASSWORD",
+        "description": "Bauhaus, uses SMS confirmation code",
+        "username": "23989405 (abs)",
+        "url": "https://www.bauhaus.dk/customer/account/login/",
+        "role": "DRIFT",
+    },
+    {
+        "key": "JEMOGFIX_PASSWORD",
+        "description": "Jemogfix",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.jemogfix.dk/mit-jem-fix/log-ind/",
+        "role": "DRIFT",
+    },
+    {
+        "key": "PANT_CONTAINER",
+        "description": "Pant-Containere i P-kælderen.",
+        "username": "",
+        "url": "",
+        "role": "DRIFT",
+    },
+    {
+        "key": "LEDVANCE_PASSWORD",
+        "description": "Ledvance SMART+ Mobile App",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.ledvance.com/da-dk/belysning-til-hjemmet/serviceydelser/styringsmulighed/smart-app",
+        "role": "DRIFT",
+    },
+    {
+        "key": "CTIPARTY_PASSWORD",
+        "description": "Ctiparty",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://www.ctiparty.dk/",
         "role": "DRIFT",
     },
     {
@@ -241,10 +269,6 @@ for secret in SECRET_ADMIN_KEYS:
     else:
         print("WARNING: Missing secret key in env:", key)
 
-bootstrap5 = {
-    "success_css_class": "",
-}
-
 MESSAGE_TAGS = {
     messages.DEBUG: "alert-info",
     messages.INFO: "alert-info",
@@ -272,10 +296,10 @@ INSTALLED_APPS = (
     "django_extensions",
     "constance",
     "constance.backends.database",
-    "bootstrap5",
+    "django_bootstrap5",
     "django_bootstrap_icons",
     "bootstrap_datepicker_plus",
-    "captcha",
+    "django_recaptcha",
     "rest_framework",
     "rest_framework_api_key",
     "django_celery_beat",
@@ -373,14 +397,11 @@ DATABASES = {
 LANGUAGE_CODE = "da"
 
 TIME_ZONE = "Europe/Copenhagen"
+CELERY_TIMEZONE = "Europe/Copenhagen"
 
 USE_I18N = True
 
-USE_L10N = True
-
-USE_TZ = True
-
-DJANGO_CELERY_BEAT_TZ_AWARE = False
+DJANGO_CELERY_BEAT_TZ_AWARE = True
 
 from django.utils.translation import gettext_lazy as _
 

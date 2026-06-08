@@ -20,6 +20,8 @@ class EventChoiceInlineForm(forms.ModelForm):
 
     def get_initial_for_field(self, field, fieldname):
         if fieldname == "chosen_options":
+            if not self.instance.pk:
+                return ""
             options = sorted(
                 ((o.get_selected(), o.option) for o in self.instance.options.all()),
                 reverse=True,
@@ -130,4 +132,5 @@ class CommonEventAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "date",
+        "url",
     )

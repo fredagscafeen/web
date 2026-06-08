@@ -27,9 +27,11 @@ class Items(ListView):
                 items_data.append(
                     {
                         "brewery": item.brewery.name if item.brewery else None,
-                        "brewery_url": item.brewery.website
-                        if item.brewery and item.brewery.website
-                        else None,
+                        "brewery_url": (
+                            item.brewery.website
+                            if item.brewery and item.brewery.website
+                            else None
+                        ),
                         "name": item.name,
                         "bestBefore": item.bestBefore,
                         "inStock": item.inStock,

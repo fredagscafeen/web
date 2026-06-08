@@ -103,12 +103,12 @@ class BartenderList(TemplateView):
                     "bartender": bartender,
                     "total_shifts": shifts.count(),
                     "responsible_shifts": shifts.filter(responsible=bartender).count(),
-                    "first_shift": shifts.first().start_datetime
-                    if shifts.exists()
-                    else None,
-                    "last_shift": shifts.last().start_datetime
-                    if shifts.exists()
-                    else None,
+                    "first_shift": (
+                        shifts.first().start_datetime if shifts.exists() else None
+                    ),
+                    "last_shift": (
+                        shifts.last().start_datetime if shifts.exists() else None
+                    ),
                 }
                 bartender_stats.append(stat)
                 if bartender.isActiveBartender:

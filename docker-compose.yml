@@ -46,13 +46,13 @@ services:
       - db
 
   db:
-    image: postgres:12
+    image: postgres:18
     restart: always
     volumes:
-      - ./db_data:/var/lib/postgresql/data
+      - ./db_data:/var/lib/postgresql
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=sehhik-9sysfa-wIkxaq
       - POSTGRES_DB=db
 
   media:

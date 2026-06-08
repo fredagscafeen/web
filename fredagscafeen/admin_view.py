@@ -31,6 +31,7 @@ def custom_admin_view(app_label, name):
                 concrete_model = None
                 abstract = False
                 swapped = False
+                is_composite_pk = False
 
                 def get_ordered_objects(self):
                     return False
