@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
 
 from bartenders.models import Bartender
 
@@ -41,7 +42,7 @@ class EventChoiceOptionInline(admin.StackedInline):
 
 
 @admin.register(EventChoice)
-class EventChoiceAdmin(admin.ModelAdmin):
+class EventChoiceAdmin(ModelAdmin):
     inlines = [
         EventChoiceOptionInline,
     ]
@@ -94,7 +95,7 @@ class EventAdminForm(forms.ModelForm):
 
 
 @admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
+class EventAdmin(ModelAdmin):
     list_display = (
         "name",
         "year",
@@ -123,12 +124,12 @@ class EventAdmin(admin.ModelAdmin):
 
 
 @admin.register(EventResponse)
-class EventResponseAdmin(admin.ModelAdmin):
+class EventResponseAdmin(ModelAdmin):
     pass
 
 
 @admin.register(CommonEvent)
-class CommonEventAdmin(admin.ModelAdmin):
+class CommonEventAdmin(ModelAdmin):
     list_display = (
         "title",
         "date",

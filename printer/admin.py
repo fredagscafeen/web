@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.forms.widgets import Select
+from unfold.admin import ModelAdmin
 
 from .models import Printer
 
@@ -12,7 +13,7 @@ class PrinterSelect(Select):
 
 
 @admin.register(Printer)
-class PrinterAdmin(admin.ModelAdmin):
+class PrinterAdmin(ModelAdmin):
     formfield_overrides = {
         models.CharField: {"widget": PrinterSelect},
     }

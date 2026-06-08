@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
+from unfold.admin import ModelAdmin
 
 from fredagscafeen.admin_view import custom_admin_view
 from printer.views import pdf_preview
@@ -31,7 +32,7 @@ def copy(self, request, queryset):
 
 # Log templates view
 @admin.register(LogBase)
-class LogBaseAdmin(admin.ModelAdmin):
+class LogBaseAdmin(ModelAdmin):
     list_display = (
         "created_at",
         "manager",
@@ -92,7 +93,7 @@ def printer(self, request, queryset):
 
 # Log entries view
 @admin.register(LogEntry)
-class LogEntryAdmin(admin.ModelAdmin):
+class LogEntryAdmin(ModelAdmin):
     list_display = (
         "bartender_shift",
         "location",

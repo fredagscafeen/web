@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
+from unfold.admin import ModelAdmin
 
 from fredagscafeen.admin_view import custom_admin_view
 from printer.views import pdf_preview
@@ -101,7 +102,7 @@ class FridgeAdminForm(forms.ModelForm):
 
 
 @admin.register(Fridge)
-class FridgeAdmin(admin.ModelAdmin):
+class FridgeAdmin(ModelAdmin):
     form = FridgeAdminForm
     list_display = ("name", "shelves_list")
     ordering = ("name",)
@@ -133,7 +134,7 @@ class FridgeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
+class ItemAdmin(ModelAdmin):
     list_display = (
         "brewery",
         "name",
@@ -213,13 +214,13 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 @admin.register(BeerType)
-class BeerTypeAdmin(admin.ModelAdmin):
+class BeerTypeAdmin(ModelAdmin):
     list_display = ("name",)
     ordering = ("name",)
 
 
 @admin.register(Brewery)
-class BreweryAdmin(admin.ModelAdmin):
+class BreweryAdmin(ModelAdmin):
     list_display = ("name",)
     ordering = ("name",)
 
@@ -259,7 +260,7 @@ class InventoryEntryInline(admin.TabularInline):
 
 
 @admin.register(InventorySnapshot)
-class InventoryAdmin(admin.ModelAdmin):
+class InventoryAdmin(ModelAdmin):
     change_form_template = "admin/enhancedinline.html"
     list_display = ("datetime", "changed_items")
     inlines = [InventoryEntryInline]
@@ -353,7 +354,7 @@ class ShelfItemInline(admin.TabularInline):
 
 
 @admin.register(Shelf)
-class ShelfAdmin(admin.ModelAdmin):
+class ShelfAdmin(ModelAdmin):
     list_display = ("name", "item_count", "items_list", "fridge")
     inlines = [ShelfItemInline]
 

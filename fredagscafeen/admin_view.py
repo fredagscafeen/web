@@ -1,13 +1,14 @@
 from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin.options import csrf_protect_m
+from unfold.admin import ModelAdmin
 
 
 def custom_admin_view(app_label, name):
     def f(view_function):
         model_name = name.replace(" ", "_").lower()
 
-        class FakeModelAdmin(admin.ModelAdmin):
+        class FakeModelAdmin(ModelAdmin):
             def __init__(self, model, admin_site):
                 model._meta.concrete_model = FakeModel
                 super().__init__(model, admin_site)

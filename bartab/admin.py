@@ -11,6 +11,7 @@ from django.forms.widgets import TextInput
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
+from unfold.admin import ModelAdmin
 
 from bartenders.models import BoardMemberPeriod
 from fredagscafeen.admin_view import custom_admin_view
@@ -71,7 +72,7 @@ def show_on_tab(self, request, queryset):
 
 
 @admin.register(BarTabUser)
-class BarTabUserAdmin(admin.ModelAdmin):
+class BarTabUserAdmin(ModelAdmin):
     list_display = ("name", "email", "current_balance", "hidden_from_tab")
     search_fields = ("name", "email")
     list_filter = ("hidden_from_tab",)
@@ -140,7 +141,7 @@ class BarTabContext:
 
 
 @admin.register(BarTabSnapshot)
-class BarTabSnapshotAdmin(admin.ModelAdmin):
+class BarTabSnapshotAdmin(ModelAdmin):
     change_form_template = "admin/enhancedinline.html"
     list_display = (
         "date",
