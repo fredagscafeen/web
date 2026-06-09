@@ -1,5 +1,6 @@
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
@@ -10,16 +11,15 @@ def traefik_auth_verify(request):
     uri = request.headers.get("X-Forwarded-Uri", "")
     original_url = f"{protocol}://{host}{uri}"
 
-    login_url = request.build_absolute_uri(reverse("admin:login"))
-
-    target_redirect = f"{login_url}?next={quote(original_url)}"
+    relay_path = reverse("auth-relay") + "?to=" + quote(original_url)
+    login_url = f"https://{settings.DOMAIN}{reverse('admin:login')}"
+    target_redirect = f"{login_url}?next={quote(relay_path)}"
 
     if not request.user.is_authenticated:
         return HttpResponseRedirect(target_redirect)
 
     subdomain = host.split(".")[0] if "." in host else ""
 
-    # Allow access if the user has the specific view_<subdomain> permission or is a superuser
     if (
         request.user.has_perm("external_auth.view_" + subdomain)
         or request.user.is_superuser
@@ -28,7 +28,18 @@ def traefik_auth_verify(request):
         response["X-WEBAUTH-USER"] = request.user.username
         return response
 
-    # If they are logged in but lack the specific permission for this host:
     return HttpResponse(
         "Forbidden: You do not have access to this service.", status=403
     )
+
+
+def auth_relay(request):
+    to = request.GET.get("to", "")
+    try:
+        parsed = urlparse(to)
+        host = parsed.hostname or ""
+        if host == settings.DOMAIN or host.endswith("." + settings.DOMAIN):
+            return HttpResponseRedirect(to)
+    except Exception:
+        pass
+    return HttpResponseRedirect(f"https://{settings.DOMAIN}/")
