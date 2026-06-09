@@ -16,8 +16,11 @@ class Items(ListView):
         context = super().get_context_data(**kwargs)
         fridges = (
             Fridge.objects.all()
-            .prefetch_related("shelves__shelf_items__item__brewery")
-            .filter(shelves__isnull=False)
+            .prefetch_related(
+                "shelf_assignments__shelf__shelf_items__item__brewery",
+                "shelf_assignments__shelf__shelf_items__item__type",
+            )
+            .filter(shelf_assignments__isnull=False)
             .distinct()
         )
 
