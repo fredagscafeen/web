@@ -359,9 +359,6 @@ class IncomingMailAdmin(CustomModelAdmin):
                 % {"count": success_count},
                 messages.SUCCESS,
             )
-            return HttpResponseRedirect(
-                reverse("admin:mail_incomingmail_change", args=[object_id])
-            )
 
         if errors:
             self.message_user(request, "; ".join(errors), messages.ERROR)

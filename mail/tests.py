@@ -403,8 +403,8 @@ class IncomingMailAdminTest(TestCase):
 
         response = self.client.get(
             reverse(
-                "admin:mail_incomingmail_actions_detail",
-                kwargs={"pk": incoming_mail.pk, "tool": "download_eml"},
+                "admin:mail_incomingmail_download_eml",
+                kwargs={"object_id": incoming_mail.pk},
             )
         )
 
@@ -447,8 +447,8 @@ class IncomingMailAdminTest(TestCase):
 
         response = self.client.get(
             reverse(
-                "admin:mail_incomingmail_actions_detail",
-                kwargs={"pk": incoming_mail.pk, "tool": "resend"},
+                "admin:mail_incomingmail_resend",
+                kwargs={"object_id": incoming_mail.pk},
             )
         )
 
@@ -487,8 +487,8 @@ class IncomingMailAdminTest(TestCase):
 
         response = self.client.get(
             reverse(
-                "admin:mail_incomingmail_actions_detail",
-                kwargs={"pk": incoming_mail.pk, "tool": "resend"},
+                "admin:mail_incomingmail_resend",
+                kwargs={"object_id": incoming_mail.pk},
             ),
             follow=True,
         )
@@ -554,8 +554,8 @@ class ForwardedMailAdminTest(TestCase):
 
         response = self.client.get(
             reverse(
-                "admin:mail_forwardedmail_actions_detail",
-                kwargs={"pk": forwarded_mail.pk, "tool": "resend"},
+                "admin:mail_forwardedmail_resend",
+                kwargs={"object_id": forwarded_mail.pk},
             )
         )
 
@@ -572,8 +572,8 @@ class ForwardedMailAdminTest(TestCase):
 
         response = self.client.get(
             reverse(
-                "admin:mail_forwardedmail_actions_detail",
-                kwargs={"pk": forwarded_mail.pk, "tool": "resend"},
+                "admin:mail_forwardedmail_resend",
+                kwargs={"object_id": forwarded_mail.pk},
             ),
             follow=True,
         )
