@@ -386,12 +386,41 @@ class ShelfFridgeInline(TabularInline):
     max_num = 1
 
 
+class FridgeFilter(admin.SimpleListFilter):
+    title = "Fridge"
+    parameter_name = "fridge"
+
+    def lookups(self, request, model_admin):
+        return [(f.id, f.name) for f in Fridge.objects.all()]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(fridge_assignments__fridge_id=self.value())
+        return queryset
+
+
 @admin.register(Shelf)
 class ShelfAdmin(CustomModelAdmin):
-    list_display = ("name", "item_count", "items_list")
+    list_display = ("name", "fridge", "item_count", "items_list")
+    list_filter = (FridgeFilter,)
     inlines = [ShelfFridgeInline, ShelfItemInline]
     search_fields = ("name",)
     fields = ("name",)
+
+    def get_queryset(self, request):
+        return (
+            super().get_queryset(request).prefetch_related("fridge_assignments__fridge")
+        )
+
+    def fridge(self, obj):
+        assignment = next(iter(obj.fridge_assignments.all()), None)
+        if not assignment:
+            return "-"
+        url = reverse("admin:items_fridge_change", args=[assignment.fridge.id])
+        return mark_safe(f'<a href="{url}">{assignment.fridge.name}</a>')
+
+    fridge.short_description = "Fridge"
+    fridge.admin_order_field = "fridge_assignments__fridge__name"
 
     def item_count(self, obj):
         return obj.shelf_items.filter(item__inStock=True).count()
