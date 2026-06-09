@@ -45,24 +45,24 @@
 				</div>
 			</div>
 			<ul class="list-group list-group-flush">
-				{% for shelf in fridge.shelves.all %}
+				{% for assignment in fridge.shelf_assignments.all %}
 					<li class="list-group-item">
 						<div class="row">
 							<div class="col-auto me-auto">
 								<h5 class="mt-1">
-									{{ shelf.name }} <span class="badge text-bg-primary rounded-pill">{{ shelf.shelf_items.all|length }}</span>
+									{{ assignment.shelf.name }} <span class="badge text-bg-primary rounded-pill">{{ assignment.shelf.shelf_items.all|length }}</span>
 								</h5>
 							</div>
 							<div class="col-auto">
 								{% if user.is_staff %}
-									<a class="common" href="/admin/items/shelf/{{ shelf.id }}/change/">
+									<a class="common" href="/admin/items/shelf/{{ assignment.shelf.id }}/change/">
 										{% translate "Edit" %}
 									</a>
 								{% endif %}
 							</div>
 						</div>
 						<ul class="row row-cols-2 row-cols-md-3 row-cols-lg-6 list-unstyled px-1">
-							{% for shelf_item in shelf.shelf_items.all %}
+							{% for shelf_item in assignment.shelf.shelf_items.all %}
 								<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex border">
 									{% if shelf_item.item.image %}
 										<div class="board-image m-0 mx-auto" style="background-image: url({{ shelf_item.item.image.url }});"></div>
