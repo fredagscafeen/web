@@ -54,11 +54,40 @@ class AmountFilter(admin.SimpleListFilter):
 
 class FridgeShelfInline(TabularInline):
     model = FridgeShelfAssignment
-    fields = ("shelf", "order")
+    fields = ("shelf", "order", "item_count", "items_list")
+    readonly_fields = ("item_count", "items_list")
     autocomplete_fields = ["shelf"]
     extra = 0
     ordering_field = "order"
     hide_ordering_field = True
+
+    def item_count(self, obj):
+        if not obj.shelf_id:
+            return 0
+        return obj.shelf.shelf_items.filter(item__inStock=True).count()
+
+    item_count.short_description = "Items"
+
+    def items_list(self, obj):
+        if not obj.shelf_id:
+            return "-"
+        shelf_items = (
+            obj.shelf.shelf_items.filter(item__inStock=True)
+            .select_related("item", "item__brewery")
+            .order_by("order", "item__name")
+        )
+
+        if not shelf_items:
+            return "-"
+
+        links = []
+        for si in shelf_items:
+            url = reverse("admin:items_item_change", args=[si.item.id])
+            links.append(f'<li><a href="{url}">{si.item}</a></li>')
+
+        return mark_safe(f'<ul>{"".join(links)}</ul>')
+
+    items_list.short_description = "Items on Shelf"
 
 
 @admin.register(Fridge)
@@ -71,6 +100,8 @@ class FridgeAdmin(CustomModelAdmin):
     search_fields = ("name",)
     inlines = [FridgeShelfInline]
     fields = ("name",)
+    ordering_field = "order"
+    hide_ordering_field = True
 
     def shelves_count(self, obj):
         return obj.shelf_assignments.count()
