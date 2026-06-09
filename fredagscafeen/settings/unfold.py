@@ -41,6 +41,14 @@ UNFOLD = {
                 "target": "_blank",
             },
         },
+        {
+            "icon": "deployed_code",
+            "title": "GitHub Repository",
+            "link": "https://github.com/fredagscafeen",
+            "attrs": {
+                "target": "_blank",
+            },
+        },
     ],
     "SITE_ICON": lambda request: static(
         "favicon.ico"
