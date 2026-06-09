@@ -1,35 +1,40 @@
 {% extends "admin/base_site.html" %}
-{% block content %}
 {% load i18n %}
+{% load unfold %}
+{% block content %}
 {% if form %}
-<form method="post">
+<form method="post" class="flex flex-col gap-4 mb-6">
     {% csrf_token %}
     {{ form.as_p }}
-	<input type="submit" value="{% translate "Submit" %}">
+    {% component "unfold/components/button.html" with type="submit" %}
+        {% translate "Submit" %}
+    {% endcomponent %}
 </form>
 {% endif %}
 {% if result %}
-<h2>{% translate "Result" %}</h2>
+<h2 class="text-lg font-semibold text-font-important-light dark:text-font-important-dark mb-2">{% translate "Result" %}</h2>
 {% if start %}
-<p>{{ start }} - {{ end }}</p>
+<p class="text-sm text-font-default-light dark:text-font-default-dark mb-4">{{ start }} - {{ end }}</p>
 {% endif %}
-<table>
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>{% translate "Navn" %}</th>
-			<th>{% translate "Forbrug" %}</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for name, value in result %}
-		<tr>
-			<td>{{ forloop.counter }}</td>
-			<td>{{ name }}</td>
-			<td>{{ value }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+<div class="overflow-x-auto">
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">#</th>
+                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Navn" %}</th>
+                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Forbrug" %}</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            {% for name, value in result %}
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+                <td class="px-4 py-3 text-sm text-font-default-light dark:text-font-default-dark">{{ forloop.counter }}</td>
+                <td class="px-4 py-3 text-sm font-medium text-font-important-light dark:text-font-important-dark">{{ name }}</td>
+                <td class="px-4 py-3 text-sm text-font-default-light dark:text-font-default-dark">{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endif %}
 {% endblock %}

@@ -1,8 +1,14 @@
 from django.contrib import admin
 from rest_framework_api_key.admin import APIKeyModelAdmin
 from rest_framework_api_key.models import APIKey
+from unfold.admin import ModelAdmin as UnfoldModelAdmin
 
 from .models import GranularAPIKey
+
+
+class UnfoldAPIKeyModelAdmin(UnfoldModelAdmin, APIKeyModelAdmin):
+    pass
+
 
 # Register your models here.
 
@@ -43,7 +49,7 @@ def regenerate_api_keys(modeladmin, request, queryset):
 
 
 @admin.register(GranularAPIKey)
-class GranularAPIKeyAdmin(APIKeyModelAdmin):
+class GranularAPIKeyAdmin(UnfoldAPIKeyModelAdmin):
     actions = [revoke_api_keys, unrevoke_api_keys, regenerate_api_keys]
     title = "Granular API Keys"
     filter_horizontal = ("allowed_permissions",)

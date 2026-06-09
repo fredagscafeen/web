@@ -10,21 +10,25 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from django_object_actions import DjangoObjectActions
+from unfold.admin import StackedInline
+from unfold.decorators import action
 
 from bartenders.models import (
-    BallotLink,
     Bartender,
     BartenderApplication,
     BartenderShift,
     BartenderShiftPeriod,
     BoardMember,
     BoardMemberDepositShift,
+    BoardMemberDepositShiftPeriod,
     BoardMemberPeriod,
     Poll,
     ReleasedBartenderShift,
     ShiftStreak,
 )
+from fredagscafeen.admin import CustomModelAdmin
 from fredagscafeen.admin_filters import NonNullFieldListFilter
 from fredagscafeen.admin_view import custom_admin_view
 from mail.models import MailingList
@@ -58,14 +62,17 @@ class FreeBeerListContext:
 
 
 @admin.register(Bartender)
-class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
+class BartenderAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = ("name", "username", "email")
     search_fields = ("name", "username", "email")
     list_filter = ("isActiveBartender", ("board_members", NonNullFieldListFilter))
 
-    change_actions = ("create_admin_user",)
+    actions_detail = ("create_admin_user",)
+    actions_list = ("create_admin_user",)
 
-    def create_admin_user(self, request, obj):
+    @action(description=_("Create Admin User"), url_path="create_admin_user")
+    def create_admin_user(self, request, object_id):
+        obj = Bartender.objects.get(pk=object_id)
         first_name, last_name = obj.name.rsplit(" ", maxsplit=1)
         user = User.objects.create(
             username=obj.username,
@@ -81,6 +88,9 @@ class BartenderAdmin(DjangoObjectActions, admin.ModelAdmin):
         user.save()
 
         messages.info(request, f"Created user {obj.username} with password {password}")
+        return HttpResponseRedirect(
+            reverse("admin:bartenders_bartender_change", args=[object_id])
+        )
 
     create_admin_user.label = "Create admin user"
 
@@ -91,11 +101,12 @@ def generate_free_beer_list(admin, request):
 
 
 @admin.register(BoardMember)
-class BoardMemberAdmin(admin.ModelAdmin):
+class BoardMemberAdmin(CustomModelAdmin):
     list_display = ("thumbnail", "bartender", "responsibilities", "title", "period")
     list_display_links = ("thumbnail", "bartender")
     list_select_related = ("bartender",)
     list_filter = ("period",)
+    autocomplete_fields = ("bartender", "period")
 
     def thumbnail(self, obj):
         return (
@@ -106,7 +117,7 @@ class BoardMemberAdmin(admin.ModelAdmin):
 
 
 @admin.register(BartenderApplication)
-class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
+class BartenderApplicationAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = ("name", "created", "username", "email")
 
     change_actions = ("accept", "deny")
@@ -132,9 +143,15 @@ class BartenderApplicationAdmin(DjangoObjectActions, admin.ModelAdmin):
 
 
 @admin.register(BartenderShift)
-class BartenderShiftAdmin(admin.ModelAdmin):
+class BartenderShiftAdmin(CustomModelAdmin):
     list_display = ("start_datetime", "shift_responsible", "other_bartenders_list")
     filter_horizontal = ("other_bartenders",)
+    search_fields = ("start_datetime",)
+    ordering = ("-start_datetime",)
+    autocomplete_fields = (
+        "responsible",
+        "period",
+    )
 
     def shift_responsible(self, obj):
         return obj.responsible.name
@@ -150,14 +167,28 @@ class BartenderShiftAdmin(admin.ModelAdmin):
 
 
 @admin.register(ReleasedBartenderShift)
-class ReleasedBartenderShiftAdmin(admin.ModelAdmin):
+class ReleasedBartenderShiftAdmin(CustomModelAdmin):
     list_display = ("bartender", "bartender_shift")
+    autocomplete_fields = (
+        "bartender",
+        "bartender_shift",
+    )
+
+
+@admin.register(BoardMemberDepositShiftPeriod)
+class BoardMemberDepositShiftPeriodAdmin(CustomModelAdmin):
+    search_fields = ("generation_datetime",)
+
+    def has_module_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(BoardMemberDepositShift)
-class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
+class BoardMemberDepositShiftAdmin(CustomModelAdmin):
     list_display = ("start_date", "end_date", "responsible_board_members")
     filter_horizontal = ("responsibles",)
+    autocomplete_fields = ("period",)
+    ordering = ("-start_date",)
 
     def responsible_board_members(self, obj):
         return ", ".join([s.name for s in obj.responsibles.all()])
@@ -169,18 +200,21 @@ class BoardMemberDepositShiftAdmin(admin.ModelAdmin):
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
-class BoardMemberInline(admin.StackedInline):
+class BoardMemberInline(StackedInline):
     model = BoardMember
+    autocomplete_fields = ("bartender",)
 
 
 @admin.register(BoardMemberPeriod)
-class BoardMemberPeriodAdmin(admin.ModelAdmin):
+class BoardMemberPeriodAdmin(CustomModelAdmin):
     inlines = [BoardMemberInline]
+    search_fields = ("start_date",)
 
 
 @admin.register(BartenderShiftPeriod)
-class BartenderShiftPeriodAdmin(admin.ModelAdmin):
+class BartenderShiftPeriodAdmin(CustomModelAdmin):
     change_form_template = "bartender_shift_period_change_form.html"
+    search_fields = ("generation_datetime",)
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         extra_context = extra_context or {}
@@ -205,7 +239,7 @@ class BartenderShiftPeriodAdmin(admin.ModelAdmin):
 
 
 @admin.register(Poll)
-class PollAdmin(admin.ModelAdmin):
+class PollAdmin(CustomModelAdmin):
     pass
 
 

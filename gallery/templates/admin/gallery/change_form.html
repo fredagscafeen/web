@@ -1,12 +1,95 @@
 {% extends "admin/change_form.html" %}
-{% load jfutags %}
-{% load i18n %}
+{% load i18n unfold %}
 {% block content %}
 {{ block.super }}
-<br class="clear"/>
 {% if object_id %}
-{% jfu 'admin/gallery/upload_form.html' %}
+<br class="clear">
+<div class="flex flex-col gap-3 mt-6 mb-6">
+  <h2 class="text-lg font-semibold text-font-important-light dark:text-font-important-dark">
+    {% translate "Upload billeder" %}
+  </h2>
+
+  <input id="gallery-file-input" type="file" multiple accept="image/*,video/*,audio/*" class="hidden">
+  <span id="gallery-upload-trigger">
+    {% component "unfold/components/button.html" with type="button" %}
+      {% translate "Vælg filer…" %}
+    {% endcomponent %}
+  </span>
+
+  <ul id="gallery-upload-log" class="flex flex-col gap-1 text-sm text-font-default-light dark:text-font-default-dark"></ul>
+
+  <div id="gallery-reload-wrap" class="hidden">
+    <span id="gallery-reload-trigger">
+      {% component "unfold/components/button.html" with type="button" style="secondary" %}
+        {% translate "Genindlæs side for at se uploads" %}
+      {% endcomponent %}
+    </span>
+  </div>
+</div>
+<script>
+(function () {
+  var input      = document.getElementById('gallery-file-input');
+  var log        = document.getElementById('gallery-upload-log');
+  var reloadWrap = document.getElementById('gallery-reload-wrap');
+  var uploadUrl  = '{% url "gallery_upload" %}';
+  var albumId    = '{{ object_id }}';
+  var csrf       = '{{ csrf_token }}';
+
+  input.addEventListener('change', function () {
+    Array.from(input.files).forEach(uploadFile);
+    input.value = '';
+  });
+
+  var pickEl = document.querySelector('#gallery-upload-trigger button, #gallery-upload-trigger a');
+  if (pickEl) {
+    pickEl.addEventListener('click', function (e) {
+      e.preventDefault();
+      input.click();
+    });
+  }
+
+  var reloadEl = document.querySelector('#gallery-reload-trigger button, #gallery-reload-trigger a');
+  if (reloadEl) {
+    reloadEl.addEventListener('click', function () { location.reload(); });
+  }
+
+  function uploadFile(file) {
+    var li = document.createElement('li');
+    li.textContent = '⏳ ' + file.name;
+    log.appendChild(li);
+
+    var data = new FormData();
+    data.append('file', file);
+    data.append('album_id', albumId);
+    data.append('csrfmiddlewaretoken', csrf);
+
+    fetch(uploadUrl, { method: 'POST', body: data })
+      .then(function (r) { return r.json(); })
+      .then(function (json) {
+        if (json.error) {
+          li.textContent = '❌ ' + file.name + ': ' + json.error;
+        } else {
+          li.textContent = '✅ ' + json.name + ' (' + formatSize(json.size) + ')';
+        }
+      })
+      .catch(function () {
+        li.textContent = '❌ ' + file.name + ': {% translate "Netværksfejl" %}';
+      })
+      .finally(function () {
+        reloadWrap.classList.remove('hidden');
+      });
+  }
+
+  function formatSize(bytes) {
+    if (bytes >= 1048576) return (bytes / 1048576).toFixed(1) + ' MB';
+    if (bytes >= 1024)    return (bytes / 1024).toFixed(0) + ' KB';
+    return bytes + ' B';
+  }
+})();
+</script>
 {% else %}
-<p>{% translate "Du kan tilføje billeder efter du har trykket på 'Gem og forsæt med at redigere'." %}</p>
+<p class="text-sm text-font-default-light dark:text-font-default-dark mt-4">
+  {% translate "Du kan tilføje billeder efter du har trykket på 'Gem og forsæt med at redigere'." %}
+</p>
 {% endif %}
 {% endblock %}

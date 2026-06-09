@@ -1,11 +1,32 @@
 {% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load unfold %}
 {% block content %}
-<form action="?step={{ next_step }}" method="post">
+<form action="?step={{ next_step }}" method="post" class="flex flex-col gap-4 max-w-lg">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{% if form_step == 0 %}Next{% else %}Submit{% endif %}" />
-	{% if form_step == 1 %}
-		<input type="button" value="Back" onclick="window.location.search = ''" />
-	{% endif %}
+    {% for field in form %}
+    <div class="flex flex-col gap-1">
+        <label for="{{ field.id_for_label }}" class="text-sm font-medium text-font-important-light dark:text-font-important-dark">
+            {{ field.label }}
+        </label>
+        {{ field }}
+        {% if field.help_text %}
+        <p class="text-xs text-font-default-light dark:text-font-default-dark">{{ field.help_text }}</p>
+        {% endif %}
+        {% if field.errors %}
+        <p class="text-xs text-red-500 dark:text-red-400">{{ field.errors }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div class="flex gap-2 mt-2">
+        {% component "unfold/components/button.html" with type="submit" %}
+            {% if form_step == 0 %}{% translate "Next" %}{% else %}{% translate "Submit" %}{% endif %}
+        {% endcomponent %}
+        {% if form_step == 1 %}
+        {% component "unfold/components/button.html" with type="button" style="secondary" attrs='onclick="window.location.search = \"\""' %}
+            {% translate "Back" %}
+        {% endcomponent %}
+        {% endif %}
+    </div>
 </form>
 {% endblock %}

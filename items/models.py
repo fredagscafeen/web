@@ -18,7 +18,12 @@ class Item(models.Model):
     priceInDKK = models.DecimalField(
         max_digits=9 + 2, decimal_places=2, verbose_name=_("Price (DKK)")
     )
-    abv = models.FloatField(null=True, blank=True, verbose_name=_("Alcohol by volume"))
+    abv = models.FloatField(
+        null=True,
+        blank=True,
+        verbose_name=_("Alcohol by volume"),
+        help_text=_("E.g., 5.0 for 5% ABV"),
+    )
     container = models.CharField(
         null=True,
         blank=True,
@@ -75,9 +80,15 @@ class Item(models.Model):
 
 class Fridge(models.Model):
     name = models.CharField(max_length=140, verbose_name=_("Name"))
+    order = models.PositiveIntegerField(
+        default=0, verbose_name=_("Order"), db_index=True
+    )
 
     class Meta:
-        ordering = ("name",)
+        ordering = (
+            "order",
+            "name",
+        )
         verbose_name = _("Fridge")
         verbose_name_plural = _("Fridges")
 
@@ -87,9 +98,6 @@ class Fridge(models.Model):
 
 class Shelf(models.Model):
     name = models.CharField(max_length=140, verbose_name=_("Name"))
-    fridge = models.ForeignKey(
-        Fridge, on_delete=models.SET_NULL, related_name="shelves", null=True, blank=True
-    )
 
     class Meta:
         ordering = ("name",)
@@ -100,16 +108,47 @@ class Shelf(models.Model):
         return self.name
 
 
+class FridgeShelfAssignment(models.Model):
+    fridge = models.ForeignKey(
+        Fridge, on_delete=models.CASCADE, related_name="shelf_assignments"
+    )
+    shelf = models.ForeignKey(
+        Shelf, on_delete=models.CASCADE, related_name="fridge_assignments"
+    )
+    order = models.PositiveIntegerField(
+        default=0, verbose_name=_("Order"), db_index=True
+    )
+
+    class Meta:
+        ordering = (
+            "order",
+            "fridge",
+            "shelf",
+        )
+        unique_together = ("fridge", "shelf")
+        verbose_name = _("Fridge Shelf")
+        verbose_name_plural = _("Fridge Shelves")
+
+    def __str__(self):
+        return f"{self.fridge} - {self.shelf}"
+
+
 class ShelfItem(models.Model):
     shelf = models.ForeignKey(
         Shelf, on_delete=models.CASCADE, related_name="shelf_items"
     )
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="shelf_items")
-    order = models.PositiveIntegerField(default=0)
+    order = models.PositiveIntegerField(
+        default=0, verbose_name=_("Order"), db_index=True
+    )
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ("order", "item__name")
+        ordering = (
+            "order",
+            "shelf",
+            "item",
+        )
         unique_together = ("shelf", "item")
         verbose_name = _("Shelf item")
         verbose_name_plural = _("Shelf items")

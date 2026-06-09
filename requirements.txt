@@ -78,6 +78,7 @@ django==6.0.4
     #   django-recurrence
     #   django-rosetta
     #   django-timezone-field
+    #   django-unfold
     #   django-versatileimagefield
     #   djangorestframework
 django-bootstrap-datepicker-plus==6.0.0
@@ -112,6 +113,8 @@ django-rosetta==0.10.3
     # via -r requirements.in
 django-timezone-field==7.2.1
     # via django-celery-beat
+django-unfold==0.97.0
+    # via -r requirements.in
 django-versatileimagefield==3.1
     # via -r requirements.in
 djangorestframework==3.17.1

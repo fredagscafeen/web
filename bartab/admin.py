@@ -11,6 +11,8 @@ from django.forms.widgets import TextInput
 from django.template.response import TemplateResponse
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
+from unfold.admin import ModelAdmin, TabularInline
+from unfold.widgets import UnfoldAdminTextInputWidget
 
 from bartenders.models import BoardMemberPeriod
 from fredagscafeen.admin_view import custom_admin_view
@@ -20,7 +22,7 @@ from .forms import ConsumptionForm
 from .models import BarTabEntry, BarTabSnapshot, BarTabUser, SumField
 
 
-class BarTabEntryReadonlyInline(admin.TabularInline):
+class BarTabEntryReadonlyInline(TabularInline):
     model = BarTabEntry
     fields = ("added", "used")
     readonly_fields = ("added", "used")
@@ -71,7 +73,7 @@ def show_on_tab(self, request, queryset):
 
 
 @admin.register(BarTabUser)
-class BarTabUserAdmin(admin.ModelAdmin):
+class BarTabUserAdmin(ModelAdmin):
     list_display = ("name", "email", "current_balance", "hidden_from_tab")
     search_fields = ("name", "email")
     list_filter = ("hidden_from_tab",)
@@ -91,13 +93,14 @@ class BarTabUserAdmin(admin.ModelAdmin):
         return qs
 
 
-class BarTabEntryInline(admin.TabularInline):
+class BarTabEntryInline(TabularInline):
     model = BarTabEntry
     fields = ("added_cash", "raw_added", "user", "raw_used")
     extra = 1
     min_num = 1
     formfield_overrides = {
-        SumField: {"widget": TextInput},
+        **TabularInline.formfield_overrides,
+        SumField: {"widget": UnfoldAdminTextInputWidget(attrs={"rows": 1, "cols": 20})},
     }
     autocomplete_fields = ["user"]
 
@@ -140,7 +143,7 @@ class BarTabContext:
 
 
 @admin.register(BarTabSnapshot)
-class BarTabSnapshotAdmin(admin.ModelAdmin):
+class BarTabSnapshotAdmin(ModelAdmin):
     change_form_template = "admin/enhancedinline.html"
     list_display = (
         "date",
@@ -158,6 +161,7 @@ class BarTabSnapshotAdmin(admin.ModelAdmin):
         "total_card_added",
     )
     inlines = [BarTabEntryInline]
+    autocomplete_fields = ["bartender_shift"]
 
     def entry_count(self, obj):
         return obj.entries.count()

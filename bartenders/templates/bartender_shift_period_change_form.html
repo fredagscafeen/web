@@ -1,23 +1,25 @@
 {% extends "admin/change_form.html" %}
-{% block after_related_objects %}
 {% load i18n %}
-<table>
-	<thead>
-		<tr>
-			<th>{% translate "Bartender" %}</th>
-			<th>{% translate "Email" %}</th>
-			<th>{% translate "Antal vagter" %}</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for bartender, count in bartender_shifts %}
-			<tr>
-				<td>{{ bartender.name }}</td>
-				<td>{{ bartender.email }}</td>
-				<td>{{ count }}</td>
+{% load unfold %}
+{% block after_related_objects %}
+<div class="overflow-x-auto mt-6">
+	<table class="w-full border-collapse">
+		<thead>
+			<tr class="border-b border-gray-200 dark:border-gray-700">
+				<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Bartender" %}</th>
+				<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Email" %}</th>
+				<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-font-default-light dark:text-font-default-dark">{% translate "Antal vagter" %}</th>
 			</tr>
-		{% endfor %}
-	</tbody>
-</table>
-<br>
+		</thead>
+		<tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+			{% for bartender, count in bartender_shifts %}
+				<tr class="hover:bg-gray-50 dark:hover:bg-gray-800">
+					<td class="px-4 py-3 text-sm font-medium text-font-important-light dark:text-font-important-dark">{{ bartender.name }}</td>
+					<td class="px-4 py-3 text-sm text-font-default-light dark:text-font-default-dark">{{ bartender.email }}</td>
+					<td class="px-4 py-3 text-sm text-font-default-light dark:text-font-default-dark">{{ count }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 {% endblock %}

@@ -1,18 +1,21 @@
 from django.contrib import admin
 from django.db import models
-from django.forms.widgets import Select
+from unfold.widgets import UnfoldAdminSelectWidget
+
+from fredagscafeen.admin import CustomModelAdmin
 
 from .models import Printer
 
 
-class PrinterSelect(Select):
+class PrinterSelect(UnfoldAdminSelectWidget):
     def __init__(self, *args, **kwargs):
         kwargs["choices"] = Printer.PrinterChoiceIter()
         super().__init__(*args, **kwargs)
 
 
 @admin.register(Printer)
-class PrinterAdmin(admin.ModelAdmin):
+class PrinterAdmin(CustomModelAdmin):
     formfield_overrides = {
+        **CustomModelAdmin.formfield_overrides,
         models.CharField: {"widget": PrinterSelect},
     }
