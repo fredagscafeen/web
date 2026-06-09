@@ -45,7 +45,12 @@ def duplicate_selected(modeladmin, request, queryset):
 duplicate_selected.short_description = _("Duplicate selected items")
 admin.site.add_action(duplicate_selected, "duplicate_selected")
 
-urlpatterns = [path("i18n/", include("django.conf.urls.i18n"))] + i18n_patterns(
+urlpatterns = [
+    path("i18n/", include("django.conf.urls.i18n")),
+    path("auth/", include("external_auth.urls")),
+]
+
+urlpatterns += i18n_patterns(
     path("favicon.ico", RedirectView.as_view(url="/static/favicon.ico")),
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),

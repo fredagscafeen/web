@@ -6,13 +6,14 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 DEBUG = False
 
 SELF_URL = "https://fredagscafeen.dk/"
-ALLOWED_HOSTS = ["fredagscafeen.dk", "web-app-1", "app"]
+ALLOWED_HOSTS = ["fredagscafeen.dk", "web-app-1", "app", ".fredagscafeen.dk"]
 CSRF_TRUSTED_ORIGINS = ["https://fredagscafeen.dk"]
 
 MEDIA_URL = "https://media.fredagscafeen.dk/"
 
 # Only send session cookie when using https
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_DOMAIN = ".fredagscafeen.dk"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "host.docker.internal"
