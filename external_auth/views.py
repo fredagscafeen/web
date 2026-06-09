@@ -1,4 +1,4 @@
-from urllib.parse import quote, urlparse
+from urllib.parse import urlencode, urlparse
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
@@ -11,12 +11,9 @@ def traefik_auth_verify(request):
     uri = request.headers.get("X-Forwarded-Uri", "")
     original_url = f"{protocol}://{host}{uri}"
 
-    relay_path = reverse("auth-relay") + "?to=" + quote(original_url)
-    login_url = f"https://{settings.DOMAIN}{reverse('admin:login')}"
-    target_redirect = f"{login_url}?next={quote(relay_path)}"
-
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(target_redirect)
+        bridge_url = f"https://{settings.DOMAIN}{reverse('auth-bridge')}?{urlencode({'to': original_url})}"
+        return HttpResponseRedirect(bridge_url)
 
     subdomain = host.split(".")[0] if "." in host else ""
 
@@ -33,13 +30,26 @@ def traefik_auth_verify(request):
     )
 
 
-def auth_relay(request):
+def auth_bridge(request):
     to = request.GET.get("to", "")
+
     try:
         parsed = urlparse(to)
         host = parsed.hostname or ""
-        if host == settings.DOMAIN or host.endswith("." + settings.DOMAIN):
-            return HttpResponseRedirect(to)
+        valid = host == settings.DOMAIN or host.endswith("." + settings.DOMAIN)
     except Exception:
-        pass
-    return HttpResponseRedirect(f"https://{settings.DOMAIN}/")
+        valid = False
+
+    if not valid:
+        return HttpResponseRedirect(f"https://{settings.DOMAIN}/")
+
+    if request.user.is_authenticated:
+        # Cycle session key so the response sets a fresh cookie with
+        # SESSION_COOKIE_DOMAIN=".fredagscafeen.dk", fixing old cookies that
+        # lacked subdomain scope and couldn't reach the forwardAuth endpoint.
+        request.session.cycle_key()
+        return HttpResponseRedirect(to)
+
+    bridge_next = reverse("auth-bridge") + "?" + urlencode({"to": to})
+    login_url = f"https://{settings.DOMAIN}{reverse('admin:login')}"
+    return HttpResponseRedirect(f"{login_url}?{urlencode({'next': bridge_next})}")
