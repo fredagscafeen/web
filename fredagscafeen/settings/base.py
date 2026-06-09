@@ -284,6 +284,10 @@ TIMEOUT = 600
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # ALLOWED_HOSTS = ['*']
+ALLOWED_REDIRECT_HOSTS = [
+    "fredagscafeen.dk",
+    ".fredagscafeen.dk",
+]
 
 # Application definition
 
@@ -311,6 +315,7 @@ INSTALLED_APPS = (
     "rest_framework_api_key",
     "django_celery_beat",
     "corsheaders",
+    "external_auth",
     "users",
     "scheduled",
     "items",
