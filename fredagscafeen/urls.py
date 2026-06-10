@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import RedirectView
+from oauth2_provider import urls as oauth2_urls
 
 
 def _deep_copy_obj(obj):
@@ -47,7 +48,7 @@ admin.site.add_action(duplicate_selected, "duplicate_selected")
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
-    path("auth/", include("external_auth.urls")),
+    path("oauth2/", include(oauth2_urls)),
 ]
 
 urlpatterns += i18n_patterns(
