@@ -31,6 +31,16 @@ DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
 DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk"
 
+# OIDC Provider settings
+OAUTH2_PROVIDER = {
+    "OIDC_ENABLED": True,
+    "OIDC_RP_INITIATED_LOGOUT_ENABLED": True,
+    "OIDC_RP_INITIATED_LOGOUT_ALWAYS_PROMPT": True,
+    "SCOPES": {
+        "openid": "OpenID Connect scope",
+    },
+}
+
 # S3 Storage settings
 S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", "http://localhost:9000")
 S3_REGION_NAME = os.getenv("S3_REGION_NAME", "us-east-1")
