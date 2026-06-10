@@ -19,6 +19,7 @@ requests>=2.32.4
 requests-html
 django-logentry-admin
 django-cors-headers
+django-oauth-toolkit
 django-bootstrap-datepicker-plus
 django-constance>=4.3.5
 iterfzf
