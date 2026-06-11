@@ -17,6 +17,7 @@ services:
       - traefik.http.routers.fredagscafeen.rule=Host(`fredagscafeen.dk`)
       - traefik.http.routers.fredagscafeen.entrypoints=https
       - traefik.http.routers.fredagscafeen.tls=true
+      - traefik.http.routers.fredagscafeen.tls.certresolver=lets-encrypt
       - traefik.http.services.fredagscafeen.loadbalancer.server.port=8000
     depends_on:
       - db
@@ -70,6 +71,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.media-fredagscafeen.rule=Host(`media.fredagscafeen.dk`)
       - traefik.http.services.media-fredagscafeen.loadbalancer.server.port=80
+      - traefik.http.routers.media-fredagscafeen.tls.certresolver=lets-encrypt
 
   redis:
     image: redis:alpine
