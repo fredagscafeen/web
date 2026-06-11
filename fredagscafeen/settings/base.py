@@ -38,8 +38,14 @@ OAUTH2_PROVIDER = {
     "OIDC_RP_INITIATED_LOGOUT_ALWAYS_PROMPT": True,
     "SCOPES": {
         "openid": "OpenID Connect scope",
+        "profile": "Access to your profile information",
+        "email": "Access to your email address",
+        "groups": "Access to your group memberships",
     },
+    "ALLOWED_REDIRECT_URI_SCHEMES": ["http", "https"],
+    "PKCE_REQUIRED": False,
 }
+OAUTHLIB_INSECURE_TRANSPORT = 1
 
 # S3 Storage settings
 S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", "http://localhost:9000")
