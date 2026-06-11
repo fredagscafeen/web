@@ -6,6 +6,7 @@ from django.urls import include, path
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import RedirectView
 from oauth2_provider import urls as oauth2_urls
+from oauth2_provider.views import AuthorizationView
 
 
 def _deep_copy_obj(obj):
@@ -46,8 +47,18 @@ def duplicate_selected(modeladmin, request, queryset):
 duplicate_selected.short_description = _("Duplicate selected items")
 admin.site.add_action(duplicate_selected, "duplicate_selected")
 
+
+class AdminLoginAuthorizationView(AuthorizationView):
+    login_url = "/admin/login/"
+
+
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
+    path(
+        "oauth2/authorize/",
+        AdminLoginAuthorizationView.as_view(),
+        name="oauth2-authorize",
+    ),
     path("oauth2/", include(oauth2_urls)),
 ]
 
