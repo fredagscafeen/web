@@ -39,8 +39,7 @@ class CustomOAuth2Validator(OAuth2Validator):
 
         if "groups" in scopes:
             # Safely cast the permissions set to a serializable sorted list
-            raw_perms = user.get_all_permissions()
-            claims["permissions"] = sorted(list(raw_perms))
+            claims["permissions"] = user.is_superuser and ["admin"] or []
 
         return claims
 
