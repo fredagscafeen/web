@@ -34,6 +34,8 @@ DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk"
 # OIDC Provider settings
 OAUTH2_PROVIDER = {
     "OIDC_ENABLED": True,
+    "OIDC_RSA_PRIVATE_KEY": os.getenv("OIDC_RSA_PRIVATE_KEY", ""),
+    "OAUTH2_VALIDATOR_CLASS": "fredagscafeen.oauth_validators.CustomOAuth2Validator",
     "OIDC_RP_INITIATED_LOGOUT_ENABLED": True,
     "OIDC_RP_INITIATED_LOGOUT_ALWAYS_PROMPT": True,
     "SCOPES": {
@@ -46,6 +48,8 @@ OAUTH2_PROVIDER = {
     "PKCE_REQUIRED": False,
 }
 OAUTHLIB_INSECURE_TRANSPORT = 1
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # S3 Storage settings
 S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", "http://localhost:9000")
