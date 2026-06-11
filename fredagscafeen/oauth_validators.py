@@ -8,7 +8,7 @@ class CustomOAuth2Validator(OAuth2Validator):
         "name": "profile",
         "preferred_username": "profile",
         "email": "email",
-        "groups": "groups",
+        "permissions": "groups",
     }
 
     def get_claim_dict(self, request, scopes=None):
@@ -40,9 +40,9 @@ class CustomOAuth2Validator(OAuth2Validator):
         if "groups" in scopes:
             # Safely cast the permissions set to a serializable sorted list
             raw_perms = user.get_all_permissions()
-            claims["groups"] = sorted(list(raw_perms))
+            claims["permissions"] = sorted(list(raw_perms))
 
         return claims
 
     def get_discovery_claims(self, request):
-        return ["sub", "name", "preferred_username", "email", "groups"]
+        return ["sub", "name", "preferred_username", "email", "permissions"]
