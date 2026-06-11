@@ -31,6 +31,26 @@ DOMAIN = "fredagscafeen.dk"
 BEST_MAIL = "best@fredagscafeen.dk"
 DEFAULT_FROM_EMAIL = "noreply@fredagscafeen.dk"
 
+# OIDC Provider settings
+OAUTH2_PROVIDER = {
+    "OIDC_ENABLED": True,
+    "OIDC_RSA_PRIVATE_KEY": os.getenv("OIDC_RSA_PRIVATE_KEY", ""),
+    "OAUTH2_VALIDATOR_CLASS": "fredagscafeen.oauth_validators.CustomOAuth2Validator",
+    "OIDC_RP_INITIATED_LOGOUT_ENABLED": True,
+    "OIDC_RP_INITIATED_LOGOUT_ALWAYS_PROMPT": True,
+    "SCOPES": {
+        "openid": "OpenID Connect scope",
+        "profile": "Access to your profile information",
+        "email": "Access to your email address",
+        "groups": "Access to your group memberships",
+    },
+    "ALLOWED_REDIRECT_URI_SCHEMES": ["http", "https"],
+    "PKCE_REQUIRED": False,
+}
+OAUTHLIB_INSECURE_TRANSPORT = 1
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 # S3 Storage settings
 S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", "http://localhost:9000")
 S3_REGION_NAME = os.getenv("S3_REGION_NAME", "us-east-1")
@@ -314,8 +334,8 @@ INSTALLED_APPS = (
     "rest_framework",
     "rest_framework_api_key",
     "django_celery_beat",
+    "oauth2_provider",
     "corsheaders",
-    "external_auth",
     "users",
     "scheduled",
     "items",

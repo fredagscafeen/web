@@ -36,6 +36,8 @@ certifi==2026.2.25
     # via
     #   pyppeteer
     #   requests
+cffi==2.0.0
+    # via cryptography
 charset-normalizer==3.4.7
     # via requests
 click==8.3.2
@@ -52,6 +54,8 @@ click-repl==0.3.0
     # via celery
 cron-descriptor==1.4.5
     # via django-celery-beat
+cryptography==48.0.1
+    # via jwcrypto
 cssselect==1.4.0
     # via pyquery
 decorator==5.2.1
@@ -74,6 +78,7 @@ django==6.0.4
     #   django-ical
     #   django-logentry-admin
     #   django-model-utils
+    #   django-oauth-toolkit
     #   django-recaptcha
     #   django-recurrence
     #   django-rosetta
@@ -102,6 +107,8 @@ django-ical==1.9.2
 django-logentry-admin==1.1.0
     # via -r requirements.in
 django-model-utils==5.0.0
+    # via -r requirements.in
+django-oauth-toolkit==3.3.0
     # via -r requirements.in
 django-object-actions==5.0.0
     # via -r requirements.in
@@ -151,6 +158,8 @@ jmespath==1.1.0
     # via
     #   boto3
     #   botocore
+jwcrypto==1.5.7
+    # via django-oauth-toolkit
 kombu[redis]==5.6.2
     # via celery
 lxml==6.0.4
@@ -161,6 +170,8 @@ lxml-html-clean==0.4.4
     # via -r requirements.in
 matplotlib-inline==0.2.1
     # via ipython
+oauthlib==3.3.1
+    # via django-oauth-toolkit
 packaging==26.1
     # via
     #   djangorestframework-api-key
@@ -192,6 +203,8 @@ ptyprocess==0.7.0
     # via pexpect
 pure-eval==0.2.3
     # via stack-data
+pycparser==3.0
+    # via cffi
 pydantic==2.13.1
     # via
     #   django-bootstrap-datepicker-plus
@@ -233,6 +246,7 @@ requests==2.33.1
     # via
     #   -r requirements.in
     #   django-bootstrap-icons
+    #   django-oauth-toolkit
     #   django-rosetta
     #   requests-html
 requests-html==0.10.0
@@ -263,6 +277,7 @@ typing-extensions==4.15.0
     # via
     #   beautifulsoup4
     #   django-bootstrap-datepicker-plus
+    #   jwcrypto
     #   pydantic
     #   pydantic-core
     #   pyee
