@@ -7,7 +7,10 @@ from django.http import HttpResponseRedirect
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from django_object_actions import DjangoObjectActions
+from unfold.decorators import action
+from unfold.enums import ActionVariant
 
 from fredagscafeen.admin import CustomModelAdmin
 from fredagscafeen.email import send_template_email
@@ -140,7 +143,7 @@ class UdlejningAdmin(CustomModelAdmin):
 class UdlejningApplicationAdmin(DjangoObjectActions, CustomModelAdmin):
     list_display = ("dateFrom", "whoReserved")
 
-    change_actions = ("accept", "deny")
+    actions_detail = ("accept", "deny")
 
     def _send_accept_email(self, u):
         url = urljoin(
@@ -164,7 +167,13 @@ Se {{link}} for mere info.
             to=["udlejning@fredagscafeen.dk"],
         )
 
-    def accept(self, request, obj):
+    @action(
+        description=_("Accepter"),
+        url_path="accept",
+        variant=ActionVariant.SUCCESS,
+    )
+    def accept(self, request, object_id):
+        obj = UdlejningApplication.objects.get(pk=object_id)
         pk = obj.accept()
         obj.delete()
         self._send_accept_email(Udlejning.objects.get(id=pk))
@@ -172,7 +181,13 @@ Se {{link}} for mere info.
             reverse("admin:udlejning_udlejning_change", args=(pk,))
         )
 
-    def deny(self, request, obj):
+    @action(
+        description=_("Afvis"),
+        url_path="deny",
+        variant=ActionVariant.DANGER,
+    )
+    def deny(self, request, object_id):
+        obj = UdlejningApplication.objects.get(pk=object_id)
         obj.delete()
         return HttpResponseRedirect(
             reverse("admin:udlejning_udlejningapplication_changelist")
