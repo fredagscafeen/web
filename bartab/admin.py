@@ -95,7 +95,7 @@ class BarTabUserAdmin(ModelAdmin):
 
 class BarTabEntryInline(TabularInline):
     model = BarTabEntry
-    fields = ("added_cash", "raw_added", "user", "raw_used")
+    fields = ("payment_method", "raw_added", "user", "raw_used")
     extra = 1
     min_num = 1
     formfield_overrides = {
@@ -152,9 +152,10 @@ class BarTabSnapshotAdmin(ModelAdmin):
         "date",
         "entry_count",
         "total_added",
+        "total_used",
         "total_cash_added",
         "total_card_added",
-        "total_used",
+        "total_other_added",
     )
     readonly_fields = (
         "last_updated",
@@ -162,6 +163,7 @@ class BarTabSnapshotAdmin(ModelAdmin):
         "total_used",
         "total_cash_added",
         "total_card_added",
+        "total_other_added",
     )
     inlines = [BarTabEntryInline]
     autocomplete_fields = ["bartender_shift"]

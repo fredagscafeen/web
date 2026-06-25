@@ -128,7 +128,7 @@ class BarTabSnapshot(models.Model):
         return self.entries.aggregate(
             total_cash=Sum(
                 Case(
-                    When(added_cash=True, then="added"),
+                    When(payment_method="cash", then="added"),
                     default=Value(0),
                     output_field=models.DecimalField(),
                 )
@@ -140,12 +140,24 @@ class BarTabSnapshot(models.Model):
         return self.entries.aggregate(
             total_card=Sum(
                 Case(
-                    When(added_cash=False, then="added"),
+                    When(payment_method="card", then="added"),
                     default=Value(0),
                     output_field=models.DecimalField(),
                 )
             )
         )["total_card"]
+
+    @property
+    def total_other_added(self):
+        return self.entries.aggregate(
+            total_other=Sum(
+                Case(
+                    When(payment_method="other", then="added"),
+                    default=Value(0),
+                    output_field=models.DecimalField(),
+                )
+            )
+        )["total_other"]
 
     def __str__(self):
         s = f"{self.date}: {self.entries.count()} entries"
@@ -156,7 +168,20 @@ class BarTabSnapshot(models.Model):
 
 
 class BarTabEntry(models.Model):
-    added_cash = models.BooleanField(blank=True, null=True, verbose_name=_("Kontant?"))
+    payment_method = models.CharField(
+        max_length=20,
+        choices=(
+            ("none", _("None")),
+            ("cash", _("Cash")),
+            ("card", _("Card")),
+            ("other", _("Other")),
+        ),
+        verbose_name=_("Betalingsmetode"),
+        default="none",
+    )
+    added_cash = models.BooleanField(
+        blank=True, null=True, verbose_name=_("Kontant?")
+    )  # Old field, kept for backwards compatibility
     added = models.DecimalField(max_digits=9 + 2, decimal_places=2)
     used = models.DecimalField(max_digits=9 + 2, decimal_places=2)
     raw_added = SumField(blank=True, verbose_name=_("Indsat"))
@@ -181,8 +206,8 @@ class BarTabEntry(models.Model):
     def clean(self):
         if self.raw_added:
             self.added = self.raw_added.value
-            if self.added_cash == None and self.added != 0:
-                raise ValidationError(_("Vælg kontant eller ej."))
+            if self.payment_method == "none" and self.added != 0:
+                raise ValidationError(_("Vælg betalingsmetode."))
 
         if self.raw_used:
             self.used = self.raw_used.value
