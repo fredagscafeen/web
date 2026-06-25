@@ -104,6 +104,9 @@ class BarTabEntryInline(TabularInline):
     }
     autocomplete_fields = ["user"]
 
+    class Media:
+        js = ("js/bartab_inline_tab.js",)
+
     def get_queryset(self, request):
         """Select related prevents 2*N queries when calling entry.__str__ in each form"""
         return super().get_queryset(request).select_related("user", "snapshot")
