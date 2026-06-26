@@ -17,7 +17,7 @@ echo "Dumping and downloading production database..."
 
 fixture=$(mktemp --suffix .json)
 
-ssh ubuntu@fredagscafeen.dk 'docker exec web-app-1 ./manage.py dumpdata --natural-foreign --exclude auth.permission --exclude contenttypes --exclude admin.logentry --exclude external_auth.servicepermission | tail -n1' > "$fixture"
+ssh ubuntu@fredagscafeen.dk 'docker exec web-app-1 ./manage.py dumpdata --natural-foreign --exclude auth.permission --exclude contenttypes --exclude admin.logentry | tail -n1' > "$fixture"
 
 # Strip user_permissions and group permissions from the fixture.
 # These reference content types that may not exist locally (e.g. constance
