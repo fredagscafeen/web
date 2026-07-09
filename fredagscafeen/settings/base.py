@@ -357,6 +357,7 @@ INSTALLED_APPS = (
     "jfu",
     "gallery",
     "versatileimagefield",
+    "qr",
 )
 
 MIDDLEWARE = (
