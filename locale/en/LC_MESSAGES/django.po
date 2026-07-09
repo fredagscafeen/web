@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-09 22:55+0200\n"
+"POT-Creation-Date: 2026-07-10 00:06+0200\n"
 "PO-Revision-Date: 2026-06-24 20:50+0200\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -950,11 +950,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:443
+#: fredagscafeen/settings/base.py:454
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:444
+#: fredagscafeen/settings/base.py:455
 msgid "English"
 msgstr "English"
 
@@ -1928,7 +1928,7 @@ msgstr "Error in email address name - more than one \"<\" or \">\" symbols"
 msgid "Error in email address name - \">\" is before \"<\""
 msgstr "Error in email address name - \">\" is before \"<\""
 
-#: qr/admin.py:35
+#: qr/admin.py:42
 msgid ""
 "Dynamic QR Codes: You can safely change the 'Destination URL' at any time. "
 "The printed QR code relies entirely on the 'Slug', which should remain "
@@ -1936,7 +1936,7 @@ msgid ""
 "genqrcode.com"
 msgstr ""
 
-#: qr/admin.py:47
+#: qr/admin.py:54
 msgid ""
 "Fill out the form below. Leave the slug descriptive but short slugs make the "
 "QR code easier for older phone cameras to scan."
@@ -1962,7 +1962,9 @@ msgstr "A descriptive name for the QR code."
 msgid ""
 "The URL that the QR code will redirect to when scanned. This should be a "
 "valid URL."
-msgstr "The URL that the QR code will redirect to when scanned. This should be a valid URL."
+msgstr ""
+"The URL that the QR code will redirect to when scanned. This should be a "
+"valid URL."
 
 #: qr/models.py:29
 msgid "Whether the QR code is active and can be scanned."
