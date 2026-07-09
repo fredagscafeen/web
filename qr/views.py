@@ -1,4 +1,6 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.translation import gettext as _
 
 from .models import QRCode
 
@@ -12,6 +14,9 @@ def qr_redirect_view(request, slug):
     increments the scan count, and redirects to the destination URL.
     """
     qr_code = get_object_or_404(QRCode, slug=slug)
+
+    if not qr_code.is_active:
+        raise Http404(_("QR code is not active."))
 
     qr_code.increment_scan_count()
 
