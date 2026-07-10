@@ -1,0 +1,110 @@
+{% load i18n %}
+{% load static %}
+{% load django_bootstrap5 bootstrap_icons %}
+{% load is_bartender not_answered first_file %}
+
+{% comment %} <div class="row">
+    <div class="col-auto">
+        <h2 id="events">
+			{% translate "Events" %}
+			<a href="#events" class="section-link">#</a>
+		</h2>
+    </div>
+    <div class="col text-end">
+        <a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">
+            {% bs_icon 'calendar-week' %} iCal feed
+        </a>
+    </div>
+</div> {% endcomment %}
+
+<div class="row m-2">
+    <div style="display: flex; justify-content: space-evenly; align-items: center;">
+        <div style="width: 50%; padding-right: 24px;">
+            <h2 >Public Events</h2>
+            <hr>
+        </div>
+        <div style="width: 50%; padding-left: 24px;">
+            <h2>Bartender Events</h2>
+            <hr>
+        </div>
+    </div>
+    <div style="position: relative; height: 100%;">
+        <div style="position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; background-color: #ccc;"></div>
+        <ol class="timeline">
+            {% for events_data in events_data %}
+                {% with events_data.event as event %}
+                {% if events_data.year %}
+                <li class="timeline-item right fw-bold">
+                    {{ events_data.year }}
+                </li>
+                {% endif %}
+
+                <li class="timeline-item right">
+                    <div class="card card-hover">
+                        {% if album.bartenderalbum and not user|is_bartender %}
+                        {% else %}
+                            {% with firstFile=event.event_album|first_file %}
+                            {% if event.event_album.thumbnail %}
+                                <img src="{{ event.event_album.thumbnail.url }}" class="card-img-top event-image" alt="{{ event.name }}">
+                            {% elif firstFile %}
+                                {% if firstFile.type == "I" %}
+                                <img src="{{ firstFile.file.crop.940x940.url }}" class="card-img-top event-image" alt="{{ event.name }}">
+                                {% else %}
+                                <img src="{% static "images/logo.png" %}" class="card-img-top event-image" alt="{{ event.name }}">
+                                {% endif %}
+                            {% endif %}
+                            {% endwith %}
+                        {% endif %}
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                {{ event.name }}
+                                {% if user|not_answered:event %}
+                                    <i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
+                                    <span class="visually-hidden">{% translate "Not answered" %}</span>
+                                {% endif %}
+                            </h4>
+                            <p class="card-text mb-1">
+                                {% bs_icon 'calendar-event-fill' size='1.1em' %} <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.<br>
+                                {% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}<br>
+                                {% bs_icon 'people-fill' size='1.1em' %} {{ event.attending_count }}
+                            </p>
+                            <a href="{{ event.id }}" class="card-link stretched-link"></a>
+                        </div>
+                        {% if not event.deadline_exceeded %}
+                            <div class="card-footer">
+                                <small class="text-body-secondary">
+                                    <b>{% translate "Tilmeldingsfrist" %}:</b>
+                                    {{ event.response_deadline }}
+                                    {% if event.deadline_exceeded %} ({% translate "for sent" %}){% endif %}
+                                </small>
+                            </div>
+                        {% endif %}
+                    </div>
+                </li>
+
+
+                {% endwith %}
+            {% endfor %}
+            <li class="timeline-item left">
+                <div class="card">
+                    <h3>Event 1</h3>
+                    <p>Description of Event 1.</p>
+                </div>
+            </li>
+            <li class="timeline-item left">
+                <div class="card">
+                    <h3>Event 3</h3>
+                    <p>Description of Event 3.</p>
+                </div>
+            </li>
+        </ol>
+    </div>
+	{% comment %} <ul class="timeline">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul> {% endcomment %}
+</div>

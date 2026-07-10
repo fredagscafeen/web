@@ -6,6 +6,8 @@
 
 {% block content %}
 
+{% include 'new-events.html' %}
+
 {% include 'common-events.html' %}
 
 <div class="row">
@@ -26,18 +28,12 @@
 	<hr>
 	<ul class="timeline">
 		{% if event_page_obj.has_previous %}
-			<li>
-				<div>
-					<p></p>
-				</div>
-			</li>
-			<li class="timeline-item">
-				<div>
-					<p>
-						<a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
-					</p>
-				</div>
-			</li>
+        <li><p></p></li>
+        <li class="timeline-item">
+            <p>
+                <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
+            </p>
+        </li>
 		{% endif %}
 		{% for events_data in events_data %}
 			{% with events_data.event as event %}
@@ -46,7 +42,7 @@
 				{{ events_data.year }}
 			</li>
 			{% endif %}
-			<li class="timeline-item mb-3">
+			<li class="timeline-item mb-3 left">
 				<div class="col-lg-6 mb-2">
 					<div class="card card-hover">
 						{% if album.bartenderalbum and not user|is_bartender %}
