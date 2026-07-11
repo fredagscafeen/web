@@ -11,87 +11,77 @@ from gallery.models import Album
 from web.models import TimeStampedModel
 
 
-class EventChoice(models.Model):
-    name = models.CharField(max_length=255)
-    event = models.ForeignKey(
-        "Event", on_delete=models.CASCADE, related_name="event_choices"
-    )
-
-    def __str__(self):
-        return f"{self.event}: {self.name}"
-
-
-class EventChoiceOption(models.Model):
-    class Meta:
-        unique_together = ("event_choice", "option")
-
-    event_choice = models.ForeignKey(
-        EventChoice, on_delete=models.CASCADE, related_name="options"
-    )
-    option = models.CharField(max_length=255)
-    max_selected = models.PositiveIntegerField(blank=True, null=True)
-
-    def __str__(self):
-        selected = self.get_selected()
-        if self.max_selected:
-            return f"{self.option} ({selected}, max {self.max_selected})"
-        return f"{self.option} ({selected})"
-
-    def get_selected(self):
-        return EventResponse.objects.filter(selected_options=self).count()
-
-    def can_more_choose(self):
-        return self.max_selected == None or self.get_selected() < self.max_selected
-
-    def can_bartender_choose(self, bartender):
-        if self.can_more_choose():
-            return True
-
-        try:
-            response = EventResponse.objects.get(
-                event=self.event_choice.event, bartender=bartender
-            )
-            return response.get_option(self.event_choice) == self
-        except EventResponse.DoesNotExist:
-            return False
-
-
 class Event(TimeStampedModel):
+    class EventType(models.TextChoices):
+        COMMON = "common", _("Common Event")
+        INTERNAL = "internal", _("Bartender event")
+
+    event_type = models.CharField(
+        max_length=20,
+        choices=EventType.choices,
+        default=EventType.INTERNAL,
+        verbose_name=_("Event type"),
+        help_text=_(
+            "Common events are visible to all bartenders, while bartender events are only visible to bartenders who are allowed to attend."
+        ),
+    )
+
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
+        help_text=_("The visible name of the event."),
     )
-    location = models.CharField(
-        max_length=255,
-        verbose_name=_("Location"),
+    year = models.PositiveSmallIntegerField(
+        default=get_year,
+        verbose_name=_("Årgang"),
+        help_text=_("The year of the event."),
     )
-    description = models.TextField(
-        blank=True,
-        verbose_name=_("Description"),
-    )
-    year = models.PositiveSmallIntegerField(default=get_year, verbose_name=_("Årgang"))
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
     event_album = models.ForeignKey(
         Album,
         blank=True,
         null=True,
-        on_delete=models.CASCADE,
-        related_name="album",
+        on_delete=models.SET_NULL,
+        related_name="events",
         verbose_name=_("Event album"),
+        help_text=_("The album associated with the event."),
     )
-    start_datetime = models.DateTimeField()
-    end_datetime = models.DateTimeField()
+
+    location = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name=_("Location"),
+        help_text=_("The location of the event."),
+    )
+    description = models.TextField(
+        blank=True,
+        verbose_name=_("Description"),
+        help_text=_("A detailed description of the event."),
+    )
+
+    # --- BARTENDER EVENTS ONLY ---
     response_deadline = models.DateTimeField(
+        blank=True,
+        null=True,
         verbose_name=_("Response deadline"),
+        help_text=_("The deadline for bartenders to respond to the event invitation."),
     )
     bartender_whitelist = models.ManyToManyField(
         Bartender,
         related_name="whitelisted_events",
         blank=True,
+        help_text=_(
+            "Bartenders who are allowed to attend the event. If empty, all bartenders are allowed to attend."
+        ),
     )
     bartender_blacklist = models.ManyToManyField(
         Bartender,
         related_name="blacklisted_events",
         blank=True,
+        help_text=_(
+            "Bartenders who are not allowed to attend the event. If empty, all bartenders are allowed to attend."
+        ),
     )
 
     class Meta:
@@ -101,7 +91,38 @@ class Event(TimeStampedModel):
     def __str__(self):
         return f"{self.year}: {self.name}"
 
+    def is_main_link(self):
+        """This is only temporary until the CommonEvent model is removed. It is to maintain compatibility with the existing templates."""
+        if self.event_album_id:
+            return True
+        return self.links.exists()
+
+    def get_main_link(self):
+        """This is only temporary until the CommonEvent model is removed. It is to maintain compatibility with the existing templates."""
+        if self.event_album:
+            return self.event_album.get_absolute_url()
+
+        first_link = self.links.first()
+        if first_link:
+            return first_link.url
+        return None
+
+    def get_main_link_icon(self):
+        """This is only temporary until the CommonEvent model is removed. It is to maintain compatibility with the existing templates."""
+        if self.event_album:
+            return "image"
+
+        first_link = self.links.first()
+        if first_link:
+            return first_link.get_icon()
+        return "link-45deg"
+
+    def is_bartender_event(self):
+        return self.event_type == self.EventType.INTERNAL
+
     def deadline_exceeded(self):
+        if not self.response_deadline:
+            return False
         return timezone.now() > self.response_deadline
 
     def attending_count(self):
@@ -178,14 +199,159 @@ class Event(TimeStampedModel):
         return self.may_attend_default(bartender)
 
 
+class EventChoice(models.Model):
+    name = models.CharField(
+        max_length=255,
+        verbose_name=_("Name"),
+        help_text=_("The visible name of the choice."),
+    )
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="event_choices",
+        verbose_name=_("Event"),
+        help_text=_("The event this choice is associated with."),
+    )
+
+    def __str__(self):
+        return f"{self.event}: {self.name}"
+
+
+class EventChoiceOption(models.Model):
+    class Meta:
+        unique_together = ("event_choice", "option")
+
+    event_choice = models.ForeignKey(
+        EventChoice,
+        on_delete=models.CASCADE,
+        related_name="options",
+        verbose_name=_("Event choice"),
+        help_text=_("The event choice this option is associated with."),
+    )
+    option = models.CharField(
+        max_length=255,
+        verbose_name=_("Option"),
+        help_text=_("The visible name of the option."),
+    )
+    max_selected = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        help_text=_(
+            "The maximum number of bartenders that can select this option. Leave blank for no limit."
+        ),
+    )
+
+    def __str__(self):
+        selected = self.get_selected()
+        if self.max_selected:
+            return f"{self.option} ({selected}, max {self.max_selected})"
+        return f"{self.option} ({selected})"
+
+    def get_selected(self):
+        return EventResponse.objects.filter(selected_options=self).count()
+
+    def can_more_choose(self):
+        return self.max_selected == None or self.get_selected() < self.max_selected
+
+    def can_bartender_choose(self, bartender):
+        if self.can_more_choose():
+            return True
+
+        try:
+            response = EventResponse.objects.get(
+                event=self.event_choice.event, bartender=bartender
+            )
+            return response.get_option(self.event_choice) == self
+        except EventResponse.DoesNotExist:
+            return False
+
+
+class EventLink(models.Model):
+    class EventLinkType(models.TextChoices):
+        """Mapping from TYPE -> (type, display-label)"""
+
+        FACEBOOK = "facebook", _("Facebook")
+        INSTAGRAM = "instagram", _("Instagram")
+        LINKEDIN = "linkedin", _("LinkedIn")
+        TWITTER = "twitter", _("Twitter")
+        YOUTUBE = "youtube", _("YouTube")
+        OTHER = "other", _("Other")
+
+        @property
+        def icon(self):
+            icons = {
+                self.FACEBOOK: "facebook",
+                self.INSTAGRAM: "instagram",
+                self.LINKEDIN: "linkedin",
+                self.TWITTER: "twitter",
+                self.YOUTUBE: "youtube",
+                self.OTHER: "link-45deg",
+            }
+            return icons.get(self, "link-45deg")
+
+    type = models.CharField(
+        max_length=20,
+        choices=EventLinkType.choices,
+        default=EventLinkType.FACEBOOK,
+        verbose_name=_("Link type"),
+        help_text=_(
+            "The type of link. This determines the default title and icon for the link."
+        ),
+    )
+    title = models.CharField(
+        max_length=25,
+        verbose_name=_("Title"),
+        blank=True,
+        help_text=_(
+            "Override the displayed title of the link. Leave blank to use the default title for the link type."
+        ),
+    )
+    url = models.URLField(verbose_name=_("URL"), help_text=_("The URL of the link."))
+
+    event = models.ForeignKey(  # Adds the "links" field to the Event model with a Many to One relationship
+        Event,
+        on_delete=models.CASCADE,
+        related_name="links",
+        verbose_name=_("Event"),
+        help_text=_("The event this link is associated with."),
+    )
+
+    def get_title(self):
+        if self.title:
+            return self.title
+        return self.EventLinkType(self.type).label
+
+    def get_icon(self):
+        return self.EventLinkType(self.type).icon
+
+
 class EventResponse(models.Model):
     class Meta:
         unique_together = ("event", "bartender")
 
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="responses")
-    bartender = models.ForeignKey(Bartender, on_delete=models.CASCADE)
-    attending = models.BooleanField()
-    selected_options = models.ManyToManyField(EventChoiceOption)
+    event = models.ForeignKey(  # Adds the "responses" field to the Event model with a Many to One relationship
+        Event,
+        on_delete=models.CASCADE,
+        related_name="responses",
+        verbose_name=_("Event"),
+        help_text=_("The event this response is associated with."),
+    )
+    bartender = models.ForeignKey(  # Adds the "event_responses" field to the Bartender model with a Many to One relationship
+        Bartender,
+        on_delete=models.CASCADE,
+        related_name="event_responses",
+        verbose_name=_("Bartender"),
+        help_text=_("The bartender who submitted this response."),
+    )
+    attending = models.BooleanField(
+        help_text=_("Whether the bartender is attending the event.")
+    )
+    selected_options = models.ManyToManyField(  # Adds the "event_responses" field to the EventChoiceOption model with a Many to Many relationship
+        EventChoiceOption,
+        related_name="event_responses",
+        verbose_name=_("Selected options"),
+        help_text=_("The options selected by the bartender for this event response."),
+    )
 
     def __str__(self):
         return f"{self.event}, {self.bartender}: {self.attending}"

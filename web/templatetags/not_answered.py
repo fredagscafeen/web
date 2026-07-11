@@ -18,6 +18,7 @@ def not_answered(user, event):
     events = Event.objects.filter(
         pk=event.pk,
         response_deadline__gte=timezone.now(),
+        event_type=Event.EventType.INTERNAL,
     )
     events = events.exclude(responses__bartender=bartender)
     return len(events) > 0

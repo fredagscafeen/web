@@ -39,3 +39,7 @@ Stylesheet loaded by unfold, you can add custom styles here. This file is not us
     background-color: var(--color-base-800);
     color: var(--color-base-300);
 }
+
+a.text-important {
+    color: var(--color-primary-600);
+}

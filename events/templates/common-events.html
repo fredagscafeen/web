@@ -22,18 +22,18 @@
     {% for event in futureEvents %}
         <div class="row mb-2">
             <div class="col-1 text-end">
-                {% if event.url %}
-                    <a href="{{ event.url }}" class="text-primary" target="_blank" rel="external">
-                        {% bs_icon event.url_bs_icon size='1.35em' %}
+                {% if event.is_main_link %}
+                    <a href="{{ event.get_main_link }}" class="text-primary" target="_blank" rel="external">
+                        {% bs_icon event.get_main_link_icon size='1.35em' %}
                     </a>
                 {% endif %}
             </div>
             <div class="col-10 col-lg-4">
                 <h4 class="mb-0">
-                    {{ event.title }}
+                    {{ event.name }}
                 </h4>
                 <small class="text-secondary">
-                    {{ event.date }}
+                    {{ event.start_datetime }}
                 </small>
             </div>
             <div class="col-12 col-lg-6 d-none d-lg-block">
@@ -43,7 +43,7 @@
             </div>
             <div class="d-none d-md-block col-1">
                 {% if user.is_staff %}
-                    <a class="common" href="/admin/events/commonevent/{{ event.id }}/change/">
+                    <a class="common" href="{% url 'admin:events_event_change' event.id %}">
                         {% translate "Edit" %}
                     </a>
                 {% endif %}
@@ -74,18 +74,18 @@
     {% for event in pastEvents %}
         <div class="row mb-2">
             <div class="col-1 text-end">
-                {% if event.url %}
-                    <a href="{{ event.url }}" class="text-primary" target="_blank" rel="external">
-                        {% bs_icon event.url_bs_icon size='1.35em' %}
+                {% if event.is_main_link %}
+                    <a href="{{ event.get_main_link }}" class="text-primary" target="_blank" rel="external">
+                        {% bs_icon event.get_main_link_icon size='1.35em' %}
                     </a>
                 {% endif %}
             </div>
             <div class="col-10 col-lg-4">
                 <h4 class="mb-0">
-                    {{ event.title }}
+                    {{ event.name }}
                 </h4>
                 <small class="text-secondary">
-                    {{ event.date }}
+                    {{ event.start_datetime }}
                 </small>
             </div>
             <div class="col-12 col-lg-6 d-none d-lg-block">
@@ -95,7 +95,7 @@
             </div>
             <div class="col-1 d-none d-md-block">
                 {% if user.is_staff %}
-                    <a class="common" href="/admin/events/commonevent/{{ event.id }}/change/">
+                    <a class="common" href="{% url 'admin:events_event_change' event.id %}">
                         {% translate "Edit" %}
                     </a>
                 {% endif %}
