@@ -53,6 +53,7 @@ class AdminLoginAuthorizationView(AuthorizationView):
 
 
 urlpatterns = [
+    path("qr/", include("qr.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path(
         "oauth2/authorize/",

@@ -66,6 +66,10 @@ DATMAIL_CONTROL_URL = os.getenv("DATMAIL_CONTROL_URL", "")
 DATMAIL_CONTROL_TOKEN = os.getenv("DATMAIL_CONTROL_TOKEN", "")
 DATMAIL_CONTROL_TIMEOUT = int(os.getenv("DATMAIL_CONTROL_TIMEOUT", "10"))
 
+# QR Code generation settings
+GEN_QR_CODE_API_URL = os.getenv("GEN_QR_CODE_API_URL", "https://api.genqrcode.com")
+GEN_QR_CODE_API_KEY = os.getenv("GEN_QR_CODE_API_KEY", "")
+
 CONSTANCE_CONFIG = {
     "REGISTRATION_OPEN": (False, "Er bartendertilmelding åben?", bool),
     "SEND_REMINDERS": (
@@ -150,6 +154,13 @@ SECRET_ADMIN_KEYS = [
         "description": "AWS. OBS: Kontoen har 2FA",
         "username": "web@fredagscafeen.dk",
         "url": "https://aws.amazon.com/console/",
+        "role": "WEB",
+    },
+    {
+        "key": "GEN_QR_CODE_PASSWORD",
+        "description": "GenQRCode",
+        "username": "web@fredagscafeen.dk",
+        "url": "https://genqrcode.com/",
         "role": "WEB",
     },
     {
@@ -357,6 +368,7 @@ INSTALLED_APPS = (
     "jfu",
     "gallery",
     "versatileimagefield",
+    "qr",
 )
 
 MIDDLEWARE = (
