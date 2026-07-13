@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from bartenders.models import BartenderShift, date_format
-from events.models import CommonEvent
+from events.models import Event
 from reminder.management.commands._private import ReminderCommand
 
 
@@ -26,13 +26,13 @@ class Command(ReminderCommand):
     def email_body(self, humanized_bartenders, event):
         start = event.start_datetime - datetime.timedelta(minutes=30)
         start_time = date_format(start, "H:i")
-        common_event = CommonEvent.objects.filter(
-            date=event.start_datetime.date()
+        common_event = Event.objects.filter(
+            date=event.start_datetime.date(), event_type=Event.EventType.COMMON
         ).first()
         event_info = ""
         if common_event:
             event_info = f"""
-Husk at der på fredag er {common_event.title}!
+Husk at der på fredag er {common_event.name}!
 """
 
         return f"""Hej {humanized_bartenders}.

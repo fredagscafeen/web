@@ -13,7 +13,7 @@ from django_ical.views import ICalFeed
 from bartenders.models import Bartender
 
 from .forms import EventResponseForm
-from .models import CommonEvent, Event
+from .models import Event
 
 DEFAULT_EVENTS_PER_PAGE = 3
 
@@ -37,9 +37,12 @@ class Events(TemplateView):
             todayish = date.today() - timedelta(days=1)
             yearAgo = date.today() - timedelta(days=365)
 
-            futureEvents = CommonEvent.objects.filter(date__gt=(todayish))
-            pastEvents = CommonEvent.objects.filter(
-                date__range=(yearAgo, todayish)
+            futureEvents = Event.objects.filter(
+                start_datetime__gt=(todayish), event_type=Event.EventType.COMMON
+            )
+            pastEvents = Event.objects.filter(
+                start_datetime__range=(yearAgo, todayish),
+                event_type=Event.EventType.COMMON,
             ).reverse()
             context["futureEvents"] = futureEvents
             context["pastEvents"] = pastEvents
@@ -55,7 +58,7 @@ class Events(TemplateView):
             events_per_page = DEFAULT_EVENTS_PER_PAGE
         context["events_per_page"] = events_per_page
 
-        events = Event.objects.defer(
+        events = Event.objects.filter(event_type=Event.EventType.INTERNAL).defer(
             "description", "bartender_whitelist", "bartender_blacklist"
         )
 
@@ -90,7 +93,7 @@ class EventFeed(ICalFeed):
     title = _("Bartender Events")
 
     def items(self):
-        return Event.objects.all()
+        return Event.objects.filter(event_type=Event.EventType.INTERNAL).all()
 
     def item_title(self, event):
         return event.name
@@ -124,16 +127,16 @@ class CommonEventFeed(ICalFeed):
     title = _("Common Events")
 
     def items(self):
-        return CommonEvent.objects.all()
+        return Event.objects.filter(event_type=Event.EventType.COMMON).all()
 
     def item_title(self, event):
-        return event.title
+        return event.name
 
     def item_start_datetime(self, event):
-        return event.date
+        return event.start_datetime
 
     def item_end_datetime(self, event):
-        return event.date
+        return event.end_datetime
 
     def item_description(self, event):
         return event.description

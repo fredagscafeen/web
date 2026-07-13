@@ -1,7 +1,6 @@
 from django import template
 
-from bartenders.models import BartenderShift
-from events.models import CommonEvent
+from events.models import Event
 
 register = template.Library()
 
@@ -9,6 +8,8 @@ register = template.Library()
 @register.filter(name="event_info")
 def event_info(shift):
     try:
-        return CommonEvent.objects.filter(date=shift.start_datetime.date()).first()
-    except BartenderShift.DoesNotExist:
+        return Event.objects.filter(
+            date=shift.start_datetime.date(), event_type=Event.EventType.COMMON
+        ).first()
+    except Event.DoesNotExist:
         return None
