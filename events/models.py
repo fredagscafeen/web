@@ -196,12 +196,14 @@ class Event(TimeStampedModel):
 
         return False
 
-    def may_attend(self, bartender):
-        if self.bartender_blacklist.filter(id=bartender.id).exists():
+    def may_attend(self, bartender, default_result=None):
+        if bartender in self.bartender_blacklist.all():
             return False
-
-        if self.bartender_whitelist.filter(id=bartender.id).exists():
+        if bartender in self.bartender_whitelist.all():
             return True
+
+        if default_result is not None:
+            return default_result
 
         return self.may_attend_default(bartender)
 

@@ -32,6 +32,12 @@ class Events(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        base_queryset = Event.objects.select_related("event_album").prefetch_related(
+            "links", "responses", "bartender_whitelist", "bartender_blacklist"
+        )
+        bartender = self.get_bartender()
+        default_result = Event.may_attend_default(bartender) if bartender else None
+
         events_per_page = self.request.GET.get("events_per_page")
         if (
             not events_per_page
@@ -44,15 +50,10 @@ class Events(TemplateView):
         context["events_per_page"] = events_per_page
 
         events = ()
-
         if config.SHOW_COMMON_EVENTS:
-            events = Event.objects.defer(
-                "description", "bartender_whitelist", "bartender_blacklist"
-            )
+            events = base_queryset
         else:
-            events = Event.objects.filter(event_type=Event.EventType.INTERNAL).defer(
-                "description", "bartender_whitelist", "bartender_blacklist"
-            )
+            events = base_queryset.filter(event_type=Event.EventType.INTERNAL)
 
         paginator_events = Paginator(events, events_per_page)
 
@@ -61,20 +62,30 @@ class Events(TemplateView):
         context["event_page_obj"] = event_page_obj
 
         seen_years = set()
-        events_data = []
 
+        now = timezone.now()
+        events_data = []
         for event in event_page_obj:
             data = {"event": event}
             if event.year not in seen_years:
                 data["year"] = event.year
                 seen_years.add(event.year)
-            if event.start_datetime > timezone.now():
+            if event.start_datetime > now:
                 data["future"] = True
+
+            not_answered = False
+            if bartender and event.response_deadline and event.response_deadline >= now:
+                if event.may_attend(bartender, default_result):
+                    answered = any(
+                        r.bartender_id == bartender.id for r in event.responses.all()
+                    )
+                    not_answered = not answered
+            data["not_answered"] = not_answered
 
             events_data.append(data)
 
         context["events_data"] = events_data
-
+        context["is_bartender"] = bartender is not None
         return context
 
 
