@@ -14,15 +14,15 @@
         <div class="mb-2 d-flex justify-content-between align-items-center">
             <div class="d-flex gap-2 align-items-center">
                 {% if event.is_bartender_event %}
-                    <span class="badge rounded-pill bg-primary">Bartender Event</span>
+                    <span class="badge rounded-pill bg-primary">{% translate "Bartender Event" %}</span>
                 {% else %}
-                    <span class="badge rounded-pill bg-success">Public Event</span>
+                    <span class="badge rounded-pill bg-success">{% translate "Public Event" %}</span>
                 {% endif %}
                 {% if not future %}
-                    <span class="badge rounded-pill bg-light text-dark border border-1 border-dark">Past Event</span>
+                    <span class="badge rounded-pill bg-light text-dark border border-1 border-dark">{% translate "Past Event" %}</span>
                 {% endif %}
                 {% if not_answered and event.response_deadline %}
-                    <span class="badge rounded-pill bg-warning text-dark">Remember to sign up!</span>
+                    <span class="badge rounded-pill bg-warning text-dark">{% translate "Remember to sign up!" %}</span>
                 {% endif %}
             </div>
             {% if user.is_staff %}

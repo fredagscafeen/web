@@ -38,19 +38,19 @@
         <div class="card-body d-flex gap-3 flex-column">
             <div class="d-flex gap-2 align-items-center">
                 {% if event.is_bartender_event %}
-                    <span class="badge rounded-pill bg-primary">Bartender Event</span>
+                    <span class="badge rounded-pill bg-primary">{% translate "Bartender Event" %}</span>
                 {% else %}
-                    <span class="badge rounded-pill bg-success">Public Event</span>
+                    <span class="badge rounded-pill bg-success">{% translate "Public Event" %}</span>
                 {% endif %}
                 {% if not future %}
-                    <span class="badge rounded-pill bg-light text-dark border border-1 border-dark">Past Event</span>
+                    <span class="badge rounded-pill bg-light text-dark border border-1 border-dark">{% translate "Past Event" %}</span>
                 {% endif %}
                 {% if user|not_answered:event and event.response_deadline %}
-                    <span class="badge rounded-pill bg-warning text-dark">Remember to sign up!</span>
+                    <span class="badge rounded-pill bg-warning text-dark">{% translate "Remember to sign up!" %}</span>
                 {% endif %}
             </div>
             <div class="d-flex flex-column gap-2">
-                <p class="m-0"><b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b></p>
+                <p class="m-0"><b>{{ event.start_datetime }}</b> {% translate "to" %} <b>{{ event.end_datetime }}</b></p>
                 <h2 class="m-0" id="{{ event.name }}">
                     {{ event.start_datetime.date }} - {{ event.name }}
                     <a href="#{{ event.name }}" class="section-link">#</a>
@@ -87,7 +87,7 @@
                 {% endfor %}
             </div>
             <div class="d-flex flex-column gap-2">
-                <h5 class="fw-semibold m-0">Event Description</h5>
+                <h5 class="fw-semibold m-0">{% translate "Event Description" %}</h5>
                 <p class="m-0" style="white-space: pre-line;">{{ event.description }}</p>
                 {% if event.internal_description and user|is_bartender %}
                     <div class="card mt-3">

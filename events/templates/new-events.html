@@ -2,26 +2,12 @@
 {% load static %}
 {% load django_bootstrap5 bootstrap_icons %}
 
-{% comment %} <div class="row">
-    <div class="col-auto">
-        <h2 id="events">
-			{% translate "Events" %}
-			<a href="#events" class="section-link">#</a>
-		</h2>
-    </div>
-    <div class="col text-end">
-        <a class="btn btn-outline-info btn-sm" href="{% url 'event_feed' %}" role="button">
-            {% bs_icon 'calendar-week' %} iCal feed
-        </a>
-    </div>
-</div> {% endcomment %}
-
 <!-- Mobile view -->
 <div class="m-2 d-lg-none" data-timeline-size="mobile">
     <div class="d-flex align-items-center">
         <div class="w-100 text-start">
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Events</h2>
+                <h2>{% translate "Events" %}</h2>
                 <div class="dropdown">
                     <button class="btn btn-outline-info btn-sm dropdown-toggle d-flex align-items-center gap-2" type="button" id="icalDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         {% bs_icon 'calendar-week' %} iCal Feed
@@ -30,13 +16,13 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'common_event_feed' %}">
                                 <span class="badge bg-success" style="width: 12px; height: 12px; padding: 0; border-radius: 50%; display: inline-block;"></span>
-                                Public Events
+                                {% translate "Public Events" %}
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'event_feed' %}">
                                 <span class="badge bg-primary" style="width: 12px; height: 12px; padding: 0; border-radius: 50%; display: inline-block;"></span>
-                                Bartender Events
+                                {% translate "Bartender Events" %}
                             </a>
                         </li>
                     </ul>
@@ -82,7 +68,7 @@
     <div class="d-flex justify-content-evenly align-items-center">
         <div class="w-50 pe-4 text-start">
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Public Events</h2>
+                <h2>{% translate "Public Events" %}</h2>
                 <a class="btn btn-outline-info btn-sm d-flex align-items-center gap-2" href="{% url 'common_event_feed' %}" role="button">
                     {% bs_icon 'calendar-week' %} iCal feed
                 </a>
@@ -91,7 +77,7 @@
         </div>
         <div class="w-50 ps-4 text-start">
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Bartender Events</h2>
+                <h2>{% translate "Bartender Events" %}</h2>
                 <a class="btn btn-outline-info btn-sm d-flex align-items-center gap-2" href="{% url 'event_feed' %}" role="button">
                     {% bs_icon 'calendar-week' %} iCal feed
                 </a>
@@ -132,5 +118,5 @@
 </div>
 
 <div class="row m-4">
-    <p class="text-center text-dark m-0">Showing {{ event_page_obj.start_index }} to {{ event_page_obj.end_index }} of {{ event_page_obj.paginator.count }} events</p>
+    <p class="text-center text-dark m-0">{% translate "Showing" %} {{ event_page_obj.start_index }} {% translate "to" %} {{ event_page_obj.end_index }} {% translate "of" %} {{ event_page_obj.paginator.count }} {% translate "events" %}</p>
 </div>
