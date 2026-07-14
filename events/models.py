@@ -56,8 +56,16 @@ class Event(TimeStampedModel):
     )
     description = models.TextField(
         blank=True,
-        verbose_name=_("Description"),
-        help_text=_("A detailed description of the event."),
+        verbose_name=_("Public description"),
+        help_text=_("A description of the event. This will be visible to all users."),
+    )
+
+    internal_description = models.TextField(
+        blank=True,
+        verbose_name=_("Internal description"),
+        help_text=_(
+            "This will display for bartenders instead of the public description. Leave blank to use the public description. This is useful for internal information that should not be visible to the public. For example when the event is common but it has internal information for bartenders."
+        ),
     )
 
     # --- BARTENDER EVENTS ONLY ---
@@ -85,7 +93,6 @@ class Event(TimeStampedModel):
     )
 
     class Meta:
-        unique_together = ("name", "year")
         ordering = ("-start_datetime",)
 
     def __str__(self):
