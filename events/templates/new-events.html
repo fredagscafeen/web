@@ -57,7 +57,7 @@
                 {% with event_data.event as event %}
                     {% if event_data.year %}
                         <li class="timeline-item center">
-                            <h4 class="fw-bold text-primary">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
                                 {{ event_data.year }}
                             </h4>
                         </li>
@@ -111,7 +111,7 @@
                 {% with event_data.event as event %}
                     {% if event_data.year %}
                         <li class="timeline-item center">
-                            <h4 class="fw-bold text-primary">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
                                 {{ event_data.year }}
                             </h4>
                         </li>

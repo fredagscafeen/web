@@ -1,10 +1,9 @@
 {% load i18n %}
 {% load django_bootstrap5 bootstrap_icons %}
-{% load is_bartender not_answered event_image_url %}
+{% load is_bartender not_answered event_image_url event_description %}
 
 <div class="card card-hover" style="background-color: var(--lightblue);">
-    {% if event.event_album and event.event_album.bartenderalbum and not user|is_bartender %}
-    {% else %}
+    {% if event.event_album %}
         {% with image_url=event|event_image_url %}
             {% if image_url %}
                 <img src="{{ image_url }}" class="card-img-top event-image" alt="{{ event.name }}">
@@ -40,9 +39,11 @@
             {% endif %}
         </h4>
         <p>
-            {% if event.description %}
-                {{ event.description|linebreaksbr }}
+            {% with description=event|event_description:user %}
+            {% if description %}
+                {{ description|linebreaksbr }}
             {% endif %}
+            {% endwith %}
         </p>
         <div class="card-text mb-2">
             <p class="d-none d-md-flex align-items-center gap-2 m-0 ">
