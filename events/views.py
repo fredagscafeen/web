@@ -1,11 +1,10 @@
-from datetime import date, timedelta
-
 from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.http import HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 from django_ical.views import ICalFeed
@@ -15,7 +14,7 @@ from bartenders.models import Bartender
 from .forms import EventResponseForm
 from .models import Event
 
-DEFAULT_EVENTS_PER_PAGE = 3
+DEFAULT_EVENTS_PER_PAGE = 30
 
 
 class Events(TemplateView):
@@ -33,20 +32,6 @@ class Events(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        if config.SHOW_COMMON_EVENTS:
-            todayish = date.today() - timedelta(days=1)
-            yearAgo = date.today() - timedelta(days=365)
-
-            futureEvents = Event.objects.filter(
-                start_datetime__gt=(todayish), event_type=Event.EventType.COMMON
-            )
-            pastEvents = Event.objects.filter(
-                start_datetime__range=(yearAgo, todayish),
-                event_type=Event.EventType.COMMON,
-            ).reverse()
-            context["futureEvents"] = futureEvents
-            context["pastEvents"] = pastEvents
-
         events_per_page = self.request.GET.get("events_per_page")
         if (
             not events_per_page
@@ -58,17 +43,22 @@ class Events(TemplateView):
             events_per_page = DEFAULT_EVENTS_PER_PAGE
         context["events_per_page"] = events_per_page
 
-        events = Event.objects.filter(event_type=Event.EventType.INTERNAL).defer(
-            "description", "bartender_whitelist", "bartender_blacklist"
-        )
+        events = ()
+
+        if config.SHOW_COMMON_EVENTS:
+            events = Event.objects.defer(
+                "description", "bartender_whitelist", "bartender_blacklist"
+            )
+        else:
+            events = Event.objects.filter(event_type=Event.EventType.INTERNAL).defer(
+                "description", "bartender_whitelist", "bartender_blacklist"
+            )
 
         paginator_events = Paginator(events, events_per_page)
 
         event_page = self.request.GET.get("event_page", 1)
         event_page_obj = paginator_events.get_page(event_page)
         context["event_page_obj"] = event_page_obj
-
-        bartender = self.get_bartender()
 
         seen_years = set()
         events_data = []
@@ -78,9 +68,11 @@ class Events(TemplateView):
             if event.year not in seen_years:
                 data["year"] = event.year
                 seen_years.add(event.year)
+            if event.start_datetime > timezone.now():
+                data["future"] = True
+
             events_data.append(data)
 
-        context["bartender"] = bartender
         context["events_data"] = events_data
 
         return context

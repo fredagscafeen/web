@@ -15,10 +15,6 @@ def not_answered(user, event):
     bartender = Bartender.objects.get(email=user.email)
     if not event.may_attend(bartender):
         return False
-    events = Event.objects.filter(
-        pk=event.pk,
-        response_deadline__gte=timezone.now(),
-        event_type=Event.EventType.INTERNAL,
-    )
+    events = Event.objects.filter(pk=event.pk, response_deadline__gte=timezone.now())
     events = events.exclude(responses__bartender=bartender)
     return len(events) > 0

@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load static %}
 {% load django_bootstrap5 bootstrap_icons %}
-{% load is_bartender not_answered first_file %}
 
 {% comment %} <div class="row">
     <div class="col-auto">
@@ -17,94 +16,121 @@
     </div>
 </div> {% endcomment %}
 
-<div class="row m-2">
-    <div style="display: flex; justify-content: space-evenly; align-items: center;">
-        <div style="width: 50%; padding-right: 24px;">
-            <h2 >Public Events</h2>
-            <hr>
-        </div>
-        <div style="width: 50%; padding-left: 24px;">
-            <h2>Bartender Events</h2>
-            <hr>
+<!-- Mobile view -->
+<div class="m-2 d-lg-none" data-timeline-size="mobile">
+    <div class="d-flex align-items-center">
+        <div class="w-100 text-start">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Events</h2>
+                <div class="dropdown">
+                    <button class="btn btn-outline-info btn-sm dropdown-toggle d-flex align-items-center gap-2" type="button" id="icalDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% bs_icon 'calendar-week' %} iCal Feed
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="icalDropdown">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'common_event_feed' %}">
+                                <span class="badge bg-success" style="width: 12px; height: 12px; padding: 0; border-radius: 50%; display: inline-block;"></span>
+                                Public Events
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'event_feed' %}">
+                                <span class="badge bg-primary" style="width: 12px; height: 12px; padding: 0; border-radius: 50%; display: inline-block;"></span>
+                                Bartender Events
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="m-0">
         </div>
     </div>
-    <div style="position: relative; height: 100%;">
-        <div style="position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; background-color: #ccc;"></div>
+    <div class="position-relative h-100" style="padding-left: 36px;">
+        <div class="timeline-separator"></div>
         <ol class="timeline">
-            {% for events_data in events_data %}
-                {% with events_data.event as event %}
-                {% if events_data.year %}
-                <li class="timeline-item right fw-bold">
-                    {{ events_data.year }}
+            {% if event_page_obj.has_previous %}
+                <li class="timeline-item center timeline-navigation">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
                 </li>
-                {% endif %}
-
-                <li class="timeline-item right">
-                    <div class="card card-hover">
-                        {% if album.bartenderalbum and not user|is_bartender %}
-                        {% else %}
-                            {% with firstFile=event.event_album|first_file %}
-                            {% if event.event_album.thumbnail %}
-                                <img src="{{ event.event_album.thumbnail.url }}" class="card-img-top event-image" alt="{{ event.name }}">
-                            {% elif firstFile %}
-                                {% if firstFile.type == "I" %}
-                                <img src="{{ firstFile.file.crop.940x940.url }}" class="card-img-top event-image" alt="{{ event.name }}">
-                                {% else %}
-                                <img src="{% static "images/logo.png" %}" class="card-img-top event-image" alt="{{ event.name }}">
-                                {% endif %}
-                            {% endif %}
-                            {% endwith %}
-                        {% endif %}
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                {{ event.name }}
-                                {% if user|not_answered:event %}
-                                    <i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
-                                    <span class="visually-hidden">{% translate "Not answered" %}</span>
-                                {% endif %}
+            {% endif %}
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item center">
+                            <h4 class="fw-bold text-primary">
+                                {{ event_data.year }}
                             </h4>
-                            <p class="card-text mb-1">
-                                {% bs_icon 'calendar-event-fill' size='1.1em' %} <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.<br>
-                                {% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}<br>
-                                {% bs_icon 'people-fill' size='1.1em' %} {{ event.attending_count }}
-                            </p>
-                            <a href="{{ event.id }}" class="card-link stretched-link"></a>
-                        </div>
-                        {% if not event.deadline_exceeded %}
-                            <div class="card-footer">
-                                <small class="text-body-secondary">
-                                    <b>{% translate "Tilmeldingsfrist" %}:</b>
-                                    {{ event.response_deadline }}
-                                    {% if event.deadline_exceeded %} ({% translate "for sent" %}){% endif %}
-                                </small>
-                            </div>
-                        {% endif %}
-                    </div>
-                </li>
+                        </li>
+                    {% endif %}
 
-
+                    <li class="timeline-item right mb-3">
+                        {% include 'components/event-card.html' with event=event future=event_data.future %}
+                    </li>
                 {% endwith %}
             {% endfor %}
-            <li class="timeline-item left">
-                <div class="card">
-                    <h3>Event 1</h3>
-                    <p>Description of Event 1.</p>
-                </div>
-            </li>
-            <li class="timeline-item left">
-                <div class="card">
-                    <h3>Event 3</h3>
-                    <p>Description of Event 3.</p>
-                </div>
-            </li>
+            {% if event_page_obj.has_next %}
+                <li class="timeline-item center timeline-navigation">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.next_page_number }}">{% translate "Vis tidligere" %}</a>
+                </li>
+            {% endif %}
         </ol>
     </div>
-	{% comment %} <ul class="timeline">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul> {% endcomment %}
+</div>
+
+<!-- Desktop view -->
+<div class="m-2 d-none d-lg-block" data-timeline-size="desktop">
+    <div class="d-flex justify-content-evenly align-items-center">
+        <div class="w-50 pe-4 text-start">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Public Events</h2>
+                <a class="btn btn-outline-info btn-sm d-flex align-items-center gap-2" href="{% url 'common_event_feed' %}" role="button">
+                    {% bs_icon 'calendar-week' %} iCal feed
+                </a>
+            </div>
+            <hr class="m-0">
+        </div>
+        <div class="w-50 ps-4 text-start">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Bartender Events</h2>
+                <a class="btn btn-outline-info btn-sm d-flex align-items-center gap-2" href="{% url 'event_feed' %}" role="button">
+                    {% bs_icon 'calendar-week' %} iCal feed
+                </a>
+            </div>
+            <hr class="m-0">
+        </div>
+    </div>
+    <div class="position-relative h-100">
+        <div class="timeline-separator"></div>
+        <ol class="timeline">
+            {% if event_page_obj.has_previous %}
+                <li class="timeline-item center timeline-navigation">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
+                </li>
+            {% endif %}
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item center">
+                            <h4 class="fw-bold text-primary">
+                                {{ event_data.year }}
+                            </h4>
+                        </li>
+                    {% endif %}
+
+                    <li class="timeline-item {% if event.is_bartender_event %}right{% else %}left{% endif %} mb-3">
+                        {% include 'components/event-card.html' with event=event future=event_data.future %}
+                    </li>
+                {% endwith %}
+            {% endfor %}
+            {% if event_page_obj.has_next %}
+                <li class="timeline-item center timeline-navigation">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ event_page_obj.next_page_number }}">{% translate "Vis tidligere" %}</a>
+                </li>
+            {% endif %}
+        </ol>
+    </div>
+</div>
+
+<div class="row m-4">
+    <p class="text-center text-dark m-0">Showing {{ event_page_obj.start_index }} to {{ event_page_obj.end_index }} of {{ event_page_obj.paginator.count }} events</p>
 </div>

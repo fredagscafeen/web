@@ -7,9 +7,9 @@ register = template.Library()
 
 @register.filter(name="event_info")
 def event_info(shift):
-    try:
-        return Event.objects.filter(
-            date=shift.start_datetime.date(), event_type=Event.EventType.COMMON
-        ).first()
-    except Event.DoesNotExist:
+    if not shift or not getattr(shift, "start_datetime", None):
         return None
+
+    shift_date = shift.start_datetime.date()
+
+    return Event.objects.filter(start_datetime__date=shift_date).first()
