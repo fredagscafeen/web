@@ -21,6 +21,8 @@ from fredagscafeen.settings.unfold import *
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 load_dotenv()
 
+BS_ICONS_BASE_PATH = f"{BASE_DIR}/web/static/bootstrap_icons/"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
