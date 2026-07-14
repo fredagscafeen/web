@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load static %}
 {% load django_bootstrap5 bootstrap_icons %}
-{% load not_answered first_file %}
+{% load not_answered is_bartender event_image_url %}
 
 {% block content %}
 <div class="my-3">
@@ -22,218 +22,288 @@
 		</div>
 	</div>
 </div>
-<div>
-	{% with album=event.event_album %}
-	{% if album %}
-		{% with firstFile=album|first_file %}
-		{% if album.thumbnail %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
-				<div class="card">
-					<img src="{{ album.thumbnail.url }}" class="event-image-large">
-				</div>
-			</a>
-		{% elif firstFile %}
-			{% if firstFile.type == "I" %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
-				<div class="card">
-					<img src="{{ firstFile.file.crop.940x940.url }}" class="event-image-large">
-				</div>
-			</a>
-			{% else %}
-			<a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
-				<div class="card">
-					<img src="{% static "images/logo.png" %}" class="event-image-large">
-				</div>
-			</a>
-			{% endif %}
-		{% endif %}
-		{% endwith %}
-	{% endif %}
-	{% endwith %}
-	<div class="mt-3">
-		<p class="mb-1"><b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>.</p>
-		<h2 id="{{ event.name }}">
-			{{ event.start_datetime.date }} - {{ event.name }}
-			<a href="#{{ event.name }}" class="section-link">#</a>
-		</h2>
-		<p class="text-primary">{% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}</p>
-		<p class="mb-0" style="white-space: pre-line;">{{ event.description }}</p>
-		<h3 class="mt-4" id="signup">
-			{% translate "Tilmelding" %}
-			{% if user|not_answered:event %}
-				<i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
-				<span class="visually-hidden">{% translate "Not answered" %}</span>
-			{% endif %}
-			<a href="#signup" class="section-link">#</a>
-		</h4>
-		<div class="alert {% if event.deadline_exceeded %}alert-secondary{% else %}alert-primary{% endif %}" role="alert">
-			<span class="me-1"><span class="me-1">{% bs_icon 'exclamation-circle' %}</span> <b>{% translate "Tilmeldingsfrist" %}:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} <i>({% translate "for sent" %})</i>{% endif %}.
-		</div>
-		<div>
-			{% if not bartender %}
-			<p><b>{% translate "Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events, eller se hvem der deltager." %} <a class="common" href="/login/?next=/events/">{% translate "Klik her for at logge ind." %}</a></b></p>
-			{% elif not may_attend %}
-			<p><b>{% translate "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen." %}</b></p>
-			<p>{% translate "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav" %}:
-				<ul>
-					<li>{% translate "Man er aktiv bartender." %}</li>
-					<li>{% translate "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år siden." %}</li>
-					<li>{% translate "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden." %}</li>
-				</ul>
-			</p>
-			{% endif %}
-		</div>
-		{% if form %}
-			<form method="post">
-				<fieldset{% if event.deadline_exceeded %} disabled{% endif %}>
-					{% csrf_token %}
-					<input type="hidden" name="event_id" value="{{ event.id }}">
-					{% bootstrap_form form %}
-					<div class="mt-3">
-						{% translate "Gem" as BUTTON_TEXT %}
-						<button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
-							{% bs_icon 'floppy2' size='1.0em' %} {{ BUTTON_TEXT }}
-						</button>
-					</div>
-				</fieldset>
-			</form>
-		{% endif %}
-		{% if bartender %}
-		<div role="tablist">
-			<div class="card mb-2">
-				<div class="card-header" role="tab">
-					<ul class="nav nav-tabs card-header-tabs">
-						<li class="nav-item">
-							<a class="nav-link {% if not load_no_answers %}active{% endif %}" {% if not load_no_answers %}aria-current="true"{% endif %} data-bs-toggle="tab" data-bs-target="#attending" type="button" role="tab">{% translate "Deltager" %} <span class="badge text-bg-primary rounded-pill">{{ event.attending_count }}</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-body" data-bs-toggle="tab" data-bs-target="#notAttending" type="button" role="tab">{% translate "Deltager ikke" %} <span class="badge text-bg-secondary rounded-pill">{{ event.not_attending_count }}</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-body {% if load_no_answers %}active{% endif %}" {% if load_no_answers %}aria-current="true" data-bs-toggle="tab" data-bs-target="#noAnswer" type="button" role="tab"{% else %}href="?load_no_answers=true#signup" type="submit"{% endif %}> {% if not load_no_answers %}{% bs_icon 'arrow-clockwise' %}{% endif %}{% translate "Intet svar" %} <span class="badge text-bg-secondary rounded-pill">{{ event.no_answer_count }}</span></a>
-						</li>
-					</ul>
-				</div>
-				<div class="tab-content">
-					<div id="attending" class="tab-pane fade show {% if not load_no_answers %}active{% endif %}" role="tabpanel">
-						{% if event.attending_count > 0 %}
-							<div role="tabpanel">
-								<div class="container" style="overflow: scroll;">
-									<table class="table tablesorter">
-										<thead>
-											<tr>
-												<th>{% translate "Navn" %}</th>
-												{% for choice in event.sorted_choices %}
-													<th>{{ choice.name }}</th>
-												{% endfor %}
-											</tr>
-										</thead>
-										<tbody class="table-group-divider">
-											{% for response in event.sorted_responses %}
-												<tr>
-													{% if response.attending %}
-														<td>{{ response.bartender.name }}</td>
-														{% for option in response.get_sorted_options %}
-															<td>{{ option.option }}</td>
-														{% endfor %}
-													{% endif %}
-												</tr>
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</div>
-							{% if user.is_staff %}
-							<div class="card-body pt-0">
-									<a href="mailto:event@{{ DOMAIN }}?cc=&bcc=
-										{% for response in event.sorted_responses %}
-											{% if response.attending %}
-												{{ response.bartender.email }},
-											{% endif %}
-										{% endfor %}
-										&subject=Fredagscaféen's {{ event.name }} {{ event.start_datetime.date.year }}&body=" class="btn btn-primary" target="_top">
-										{% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
-									</a>
-							</div>
-							{% endif %}
-						{% else %}
-						<div class="card-body">
-							<p class="card-text">{% translate "Ingen tilmeldte endnu." %}</p>
-						</div>
-						{% endif %}
-					</div>
-					<div id="notAttending" class="tab-pane fade" role="tabpanel">
-						{% if event.not_attending_count > 0 %}
-							<div role="tabpanel">
-								<div class="container" style="overflow: scroll;">
-									<table class="table tablesorter">
-										<thead>
-											<tr>
-												<th>{% translate "Navn" %}</th>
-											</tr>
-										</thead>
-										<tbody class="table-group-divider">
-											{% for response in event.sorted_responses %}
-												<tr>
-													{% if not response.attending %}
-														<td>{{ response.bartender.name }}</td>
-													{% endif %}
-												</tr>
-											{% endfor %}
-										</tbody>
-									</table>
-								</div>
-							</div>
-						{% else %}
-						<div class="card-body">
-							<p class="card-text">{% translate "Ingen ikke-deltager endnu." %}</p>
-						</div>
-						{% endif %}
-					</div>
-					{% if load_no_answers %}
-						<div id="noAnswer" class="tab-pane fade {% if load_no_answers %}show active{% endif %}" role="tabpanel">
-							{% if event.no_answer_count > 0 %}
-								<div role="tabpanel">
-									<div class="container" style="overflow: scroll;">
-										<table class="table tablesorter">
-											<thead>
-												<tr>
-													<th>{% translate "Navn" %}</th>
-												</tr>
-											</thead>
-											<tbody class="table-group-divider">
-												{% for bartender in event.sorted_no_answer %}
-													<tr>
-														<td>{{ bartender.name }}</td>
-													</tr>
-												{% endfor %}
-											</tbody>
-										</table>
-									</div>
-								</div>
-								{% if user.is_staff %}
-								<div class="card-body pt-0">
-										<a href="mailto:event@{{ DOMAIN }}?cc=&bcc=
-										{% for bartender in event.sorted_no_answer %}
-											{{ bartender.email }},
-										{% endfor %}
-										&subject=Fredagscaféen's {{ event.name }} {{ event.start_datetime.date.year }}&body=" class="btn btn-secondary" target="_top">
-											{% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
-										</a>
-								</div>
-								{% endif %}
-							{% else %}
-							<div class="card-body">
-								<p class="card-text">{% translate "Alle inviterede har svaret." %}</p>
-							</div>
-							{% endif %}
-						</div>
-					{% endif %}
-				</div>
-			</div>
-		</div>
-		{% endif %}
-	</div>
+<div class="d-flex flex-column gap-3">
+    <div class="card">
+        {% with album=event.event_album %}
+        {% if album %}
+            {% with image_url=event|event_image_url %}
+                {% if image_url %}
+                    <a href="{% url 'album' year=album.year album_slug=album.slug %}" title="{% translate "Gå til galleriet" %}">
+                        <img src="{{ image_url }}" class="event-image-large card-img-top" alt="{{ event.name }}" title="{% translate "Gå til galleriet" %}">
+                    </a>
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+        {% endwith %}
+        <div class="card-body d-flex gap-3 flex-column">
+            <div class="d-flex gap-2 align-items-center">
+                {% if event.is_bartender_event %}
+                    <span class="badge rounded-pill bg-primary">{% translate "Bartender Event" %}</span>
+                {% else %}
+                    <span class="badge rounded-pill bg-success">{% translate "Public Event" %}</span>
+                {% endif %}
+                {% if not future %}
+                    <span class="badge rounded-pill bg-light text-dark border border-1 border-dark">{% translate "Past Event" %}</span>
+                {% endif %}
+                {% if user|not_answered:event and event.response_deadline %}
+                    <span class="badge rounded-pill bg-warning text-dark">{% translate "Remember to sign up!" %}</span>
+                {% endif %}
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <p class="m-0"><b>{{ event.start_datetime }}</b> {% translate "to" %} <b>{{ event.end_datetime }}</b></p>
+                <h2 class="m-0" id="{{ event.name }}">
+                    {{ event.start_datetime.date }} - {{ event.name }}
+                    <a href="#{{ event.name }}" class="section-link">#</a>
+                </h2>
+                <p class="text-primary m-0">{% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}</p>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+                {% if event.event_album and event.event_album.bartenderalbum and not user|is_bartender %}
+                    <span class="badge badge-hover rounded-pill bg-light text-dark border border-1 border-dark">
+                        {% bs_icon 'lock-fill' %}
+                        <span>
+                            {% translate "Bartender Album" %}
+                        </span>
+                    </span>
+                {% elif event.event_album %}
+                    <a href="{{ event.event_album.get_absolute_url }}" class="d-flex gap-2 align-items-center badge badge-hover rounded-pill bg-info text-dark text-decoration-none border border-1 border-primary">
+                        {% bs_icon 'images' %}
+                        <span>
+                            {% translate "View Album" %}
+                        </span>
+                    </a>
+                {% endif %}
+                {% for link in event.links.all %}
+                    <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="d-flex gap-2 align-items-center badge badge-hover rounded-pill bg-light text-dark text-decoration-none border border-1 border-dark">
+                        {% with icon=link.get_icon %}
+                            {% if icon %}
+                                {% bs_icon icon %}
+                            {% endif %}
+                        {% endwith %}
+                        <span>
+                        {{ link.get_title }}
+                        </span>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="d-flex flex-column gap-2">
+                <h5 class="fw-semibold m-0">{% translate "Event Description" %}</h5>
+                <p class="m-0" style="white-space: pre-line;">{{ event.description }}</p>
+                {% if event.internal_description and user|is_bartender %}
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <p class="card-title d-flex align-items-center gap-2 fw-bold m-0">
+                                {% bs_icon 'info-circle' %}{% translate "Internal description" %}
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p class="m-0" style="white-space: pre-line;">{{ event.internal_description }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title" id="signup">
+                {% translate "Tilmelding" %}
+                {% if user|not_answered:event %}
+                    <i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
+                    <span class="visually-hidden">{% translate "Not answered" %}</span>
+                {% endif %}
+                <a href="#signup" class="section-link">#</a>
+            </h4>
+        </div>
+        <div class="card-body d-flex flex-column gap-3">
+            <div class="alert {% if event.deadline_exceeded %}alert-secondary{% else %}alert-primary{% endif %} d-flex align-items-center gap-2 m-0" role="alert">
+                <span>{% bs_icon 'exclamation-circle' %}</span>
+                <span><b>{% translate "Tilmeldingsfrist" %}:</b> {{ event.response_deadline }}{% if event.deadline_exceeded %} <i>({% translate "for sent" %})</i>{% endif %}.</span>
+            </div>
+            {% if not bartender or not may_attend %}
+                <div class="d-flex flex-column gap-2">
+                    {% if not bartender %}
+                        <p class="m-0">
+                            <b>{% translate "Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events, eller se hvem der deltager." %} <a class="common" href="/login/?next=/events/">{% translate "Klik her for at logge ind." %}</a></b>
+                        </p>
+                    {% elif not may_attend %}
+                        <p class="m-0">
+                            <b>{% translate "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit lov af bestyrelsen." %}</b>
+                        </p>
+                        <p class="m-0">
+                            {% translate "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende krav" %}:
+                            <ul class="m-0">
+                                <li>{% translate "Man er aktiv bartender." %}</li>
+                                <li>{% translate "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år siden." %}</li>
+                                <li>{% translate "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre end en måned siden." %}</li>
+                            </ul>
+                        </p>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if form %}
+                <form method="post">
+                    <fieldset{% if event.deadline_exceeded %} disabled{% endif %}>
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value="{{ event.id }}">
+                        {% bootstrap_form form %}
+                        <div>
+                            {% translate "Gem" as BUTTON_TEXT %}
+                            <button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px;">
+                                {% bs_icon 'floppy2' size='1.0em' %} {{ BUTTON_TEXT }}
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if bartender %}
+        <div role="tablist">
+            <div class="card">
+                <div class="card-header" role="tab">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link {% if not load_no_answers %}active{% endif %}" {% if not load_no_answers %}aria-current="true"{% endif %} data-bs-toggle="tab" data-bs-target="#attending" type="button" role="tab">
+                                {% translate "Deltager" %}
+                                <span class="badge text-bg-primary rounded-pill">{{ event.attending_count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body" data-bs-toggle="tab" data-bs-target="#notAttending" type="button" role="tab">
+                                {% translate "Deltager ikke" %}
+                                <span class="badge text-bg-secondary rounded-pill">{{ event.not_attending_count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-body {% if load_no_answers %}active{% endif %}" {% if load_no_answers %}aria-current="true" data-bs-toggle="tab" data-bs-target="#noAnswer" type="button" role="tab"{% else %}href="?load_no_answers=true#signup" type="submit"{% endif %}>
+                                {% if not load_no_answers %}{% bs_icon 'arrow-clockwise' %}{% endif %}
+                                {% translate "Intet svar" %}
+                                <span class="badge text-bg-secondary rounded-pill">{{ event.no_answer_count }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div id="attending" class="tab-pane fade show {% if not load_no_answers %}active{% endif %}" role="tabpanel">
+                        {% if event.attending_count > 0 %}
+                            <div role="tabpanel">
+                                <div class="container" style="overflow: scroll;">
+                                    <table class="table tablesorter">
+                                        <thead>
+                                            <tr>
+                                                <th>{% translate "Navn" %}</th>
+                                                {% for choice in event.sorted_choices %}
+                                                    <th>{{ choice.name }}</th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for response in event.sorted_responses %}
+                                                <tr>
+                                                    {% if response.attending %}
+                                                        <td>{{ response.bartender.name }}</td>
+                                                        {% for option in response.get_sorted_options %}
+                                                            <td>{{ option.option }}</td>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {% if user.is_staff %}
+                                <div class="card-body pt-0">
+                                    <a href="mailto:event@{{ DOMAIN }}?cc=&bcc=
+                                        {% for response in event.sorted_responses %}
+                                            {% if response.attending %}
+                                                {{ response.bartender.email }},
+                                            {% endif %}
+                                        {% endfor %}
+                                        &subject=Fredagscaféen's {{ event.name }} {{ event.start_datetime.date.year }}&body=" class="btn btn-primary" target="_top">
+                                        {% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="card-body">
+                                <p class="card-text">{% translate "Ingen tilmeldte endnu." %}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div id="notAttending" class="tab-pane fade" role="tabpanel">
+                        {% if event.not_attending_count > 0 %}
+                            <div role="tabpanel">
+                                <div class="container" style="overflow: scroll;">
+                                    <table class="table tablesorter">
+                                        <thead>
+                                            <tr>
+                                                <th>{% translate "Navn" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            {% for response in event.sorted_responses %}
+                                                <tr>
+                                                    {% if not response.attending %}
+                                                        <td>{{ response.bartender.name }}</td>
+                                                    {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        {% else %}
+                        <div class="card-body">
+                            <p class="card-text">{% translate "Ingen ikke-deltager endnu." %}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if load_no_answers %}
+                        <div id="noAnswer" class="tab-pane fade {% if load_no_answers %}show active{% endif %}" role="tabpanel">
+                            {% if event.no_answer_count > 0 %}
+                                <div role="tabpanel">
+                                    <div class="container" style="overflow: scroll;">
+                                        <table class="table tablesorter">
+                                            <thead>
+                                                <tr>
+                                                    <th>{% translate "Navn" %}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                {% for bartender in event.sorted_no_answer %}
+                                                    <tr>
+                                                        <td>{{ bartender.name }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                {% if user.is_staff %}
+                                    <div class="card-body pt-0">
+                                        <a href="mailto:event@{{ DOMAIN }}?cc=&bcc=
+                                        {% for bartender in event.sorted_no_answer %}
+                                            {{ bartender.email }},
+                                        {% endfor %}
+                                        &subject=Fredagscaféen's {{ event.name }} {{ event.start_datetime.date.year }}&body=" class="btn btn-secondary" target="_top">
+                                            {% bs_icon 'envelope-at-fill' size='1.0em' %} {% translate "Send mail" %}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="card-body">
+                                    <p class="card-text">{% translate "Alle inviterede har svaret." %}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>
 <div class="mt-3">
 	<p class="fw-light">

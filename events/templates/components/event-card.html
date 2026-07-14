@@ -1,0 +1,106 @@
+{% load i18n %}
+{% load django_bootstrap5 bootstrap_icons %}
+{% load event_image_url event_description %}
+
+<div class="card card-hover" style="background-color: var(--lightblue);">
+    {% if event.event_album %}
+        {% with image_url=event|event_image_url %}
+            {% if image_url %}
+                <img src="{{ image_url }}" class="card-img-top event-image" alt="{{ event.name }}">
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+    <div class="card-body">
+        <div class="mb-2 d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-2 align-items-center">
+                {% if event.is_bartender_event %}
+                    <span class="badge rounded-pill bg-primary">{% translate "Bartender Event" %}</span>
+                {% else %}
+                    <span class="badge rounded-pill bg-success">{% translate "Public Event" %}</span>
+                {% endif %}
+                {% if not future %}
+                    <span class="badge rounded-pill bg-light text-dark border border-1 border-dark">{% translate "Past Event" %}</span>
+                {% endif %}
+                {% if not_answered and event.response_deadline %}
+                    <span class="badge rounded-pill bg-warning text-dark">{% translate "Remember to sign up!" %}</span>
+                {% endif %}
+            </div>
+            {% if user.is_staff %}
+                <a href="/admin/events/event/{{ event.id }}/change/" title="{% translate "Edit" %}" class="common">
+                    {% translate "Edit" %}
+                </a>
+            {% endif %}
+        </div>
+        <h4 class="card-title">
+            {{ event.name }}
+            {% if not_answered %}
+                <i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
+                <span class="visually-hidden">{% translate "Not answered" %}</span>
+            {% endif %}
+        </h4>
+        <p>
+            {% with description=event|event_description:user %}
+            {% if description %}
+                {{ description|linebreaksbr }}
+            {% endif %}
+            {% endwith %}
+        </p>
+        <div class="card-text mb-2">
+            <p class="d-none d-md-flex align-items-center gap-2 m-0 ">
+                {% bs_icon 'calendar-event-fill' size='1.1em' %} <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>
+            </p>
+            <div class="d-flex d-md-none align-items-center gap-2 m-0">
+                {% bs_icon 'calendar-event-fill' size='1.1em' %}
+                <div class="d-flex flex-column">
+                    <p class="m-0"><span>{% translate "Fra" %}: </span><b>{{ event.start_datetime }}</b></p>
+                    <p class="m-0"><span>{% translate "Til" %}: </span><b>{{ event.end_datetime }}</b></p>
+                </div>
+            </div>
+            {% if event.location %}
+                <p class="d-flex align-items-center gap-2 m-0">{% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}</p>
+            {% endif %}
+            {% if event.is_bartender_event %}
+                <p class="d-flex align-items-center gap-2 m-0">{% bs_icon 'people-fill' size='1.1em' %} {{ event.attending_count }}</p>
+            {% endif %}
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+            {% if event.event_album and event.event_album.bartenderalbum and not is_bartender %}
+                <span class="badge badge-hover rounded-pill bg-light text-dark border border-1 border-dark">
+                    {% bs_icon 'lock-fill' %}
+                    <span>
+                        {% translate "Bartender Album" %}
+                    </span>
+                </span>
+            {% elif event.event_album %}
+                <a href="{{ event.event_album.get_absolute_url }}" class="d-flex gap-2 align-items-center badge badge-hover rounded-pill bg-info text-dark text-decoration-none border border-1 border-primary">
+                    {% bs_icon 'images' %}
+                    <span>
+                        {% translate "View Album" %}
+                    </span>
+                </a>
+            {% endif %}
+            {% for link in event.links.all %}
+                <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="d-flex gap-2 align-items-center badge badge-hover rounded-pill bg-light text-dark text-decoration-none border border-1 border-dark">
+                    {% with icon=link.get_icon %}
+                        {% if icon %}
+                            {% bs_icon icon %}
+                        {% endif %}
+                    {% endwith %}
+                    <span>
+                    {{ link.get_title }}
+                    </span>
+                </a>
+            {% endfor %}
+        </div>
+        <a href="{{ event.id }}" class="card-link stretched-link"></a>
+    </div>
+    {% if not event.deadline_exceeded and event.is_bartender_event and is_bartender %}
+        <div class="card-footer">
+            <small class="text-body-secondary">
+                <b>{% translate "Tilmeldingsfrist" %}:</b>
+                {{ event.response_deadline }}
+                {% if event.deadline_exceeded %} ({% translate "for sent" %}){% endif %}
+            </small>
+        </div>
+    {% endif %}
+</div>

@@ -1,5 +1,11 @@
 :root {
     --datblue: #152ff5;
+    --lightblue: #f8f9fa;
+}
+
+[data-bs-theme="dark"] {
+    --datblue: #152ff5;
+    --lightblue: #212529;
 }
 
 .section-link {
@@ -25,6 +31,11 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     border-color: var(--datblue);
 }
 
+.card-hover a:not(.stretched-link) {
+    position: relative;
+    z-index: 2; /* Lifts these links above the invisible stretched link overlay */
+}
+
 .google-maps {
     margin-bottom: -6px;
     height: 300px;
@@ -48,6 +59,107 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     filter: brightness(0) invert(1);
 }
 
+.badge-hover:hover {
+    filter: brightness(0.9);
+}
+
+.timeline {
+    position: relative;
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
+.timeline-separator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--bs-border-color);
+}
+[data-timeline-size="desktop"] .timeline-separator {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 24px;
+}
+[data-timeline-size="desktop"] .timeline-item {
+    width: 50%;
+}
+.timeline-item:nth-of-type(1) {
+    padding-top: 24px !important;
+}
+
+.timeline-item.center {
+    width: min-content;
+    left: 0;
+    transform: translateX(-50%);
+    margin: 24px 0;
+    padding: 12px 0;
+    margin-bottom: 36px;
+    margin-top: 0;
+    background: var(--bs-body-bg);
+}
+[data-timeline-size="desktop"] .timeline-item.center {
+    left: 50%;
+    transform: translateX(-50%);
+}
+.timeline-item.center > * {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.timeline-item.left {
+    left: 0;
+    padding-right: 24px;
+}
+.timeline-item.right {
+    padding-left: 36px;
+}
+[data-timeline-size="desktop"] .timeline-item.right {
+    left: 50%;
+    padding-left: 24px;
+}
+
+.timeline-item:after {
+    position: absolute;
+    display: block;
+    top: 0;
+    background-color: var(--bs-primary);
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    content: "";
+    outline: var(--bs-primary) solid 1.5px;
+    outline-offset: 2px;
+}
+
+.timeline-item.center:after {
+    display: none;
+}
+
+.timeline-item.left:after {
+    right: -5px;
+}
+.timeline-item.right:after {
+    left: -5px;
+}
+
+.timeline-navigation {
+    text-align: center;
+    width: 100%;
+    padding: 12px 0 !important;
+    margin-bottom: 12px !important;
+    margin-top: 0 !important;
+    background: var(--bs-body-bg);
+}
+
+/*
 .timeline {
     border-left: 1px solid var(--bs-secondary);
     position: relative;
@@ -72,7 +184,7 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
 
 .timeline .timeline-item-primary:after {
     background-color: var(--bs-primary);
-}
+} */
 
 /* Instead of the below Vootstrap classes one can use the class 'common' on links */
 /* link-offset link-offset-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover text-primary */

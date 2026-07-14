@@ -223,7 +223,10 @@ class EventAdmin(CustomModelAdmin):
                 )
             },
         ),
-        (_("Event details"), {"fields": ("location", "description")}),
+        (
+            _("Event details"),
+            {"fields": ("location", "description", "internal_description")},
+        ),
         (
             _("Bartender access"),
             {

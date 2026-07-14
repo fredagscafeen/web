@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-10 00:06+0200\n"
+"POT-Creation-Date: 2026-07-14 23:32+0200\n"
 "PO-Revision-Date: 2026-06-24 20:49+0200\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,7 +73,7 @@ msgstr "Kontant"
 msgid "Card"
 msgstr "Kort"
 
-#: bartab/models.py:177 gallery/models.py:90
+#: bartab/models.py:177 events/models.py:287 gallery/models.py:90
 msgid "Other"
 msgstr "Andre"
 
@@ -114,8 +114,8 @@ msgid "Result"
 msgstr "Resultat"
 
 #: bartab/templates/admin/consumption.html:24 bartab/templates/bartab.html:136
-#: events/templates/event.html:125 events/templates/event.html:172
-#: events/templates/event.html:201 guides/templates/guides.html:42
+#: events/templates/event.html:196 events/templates/event.html:243
+#: events/templates/event.html:272 guides/templates/guides.html:42
 #: items/templates/items.html:165 mail/models.py:20
 msgid "Navn"
 msgstr "Navn"
@@ -299,8 +299,8 @@ msgstr "Titel"
 msgid "Alias"
 msgstr "Alias"
 
-#: bartenders/models.py:265 events/templates/event.html:54
-#: events/templates/events.html:75 web/templates/about.html:69
+#: bartenders/models.py:265 events/templates/components/event-card.html:50
+#: web/templates/about.html:69
 msgid "til"
 msgstr "til"
 
@@ -308,7 +308,7 @@ msgstr "til"
 msgid "Studie"
 msgstr "Studie"
 
-#: bartenders/models.py:271 events/models.py:72 gallery/models.py:46
+#: bartenders/models.py:271 events/models.py:36 gallery/models.py:46
 msgid "Årgang"
 msgstr "Årgang"
 
@@ -330,7 +330,7 @@ msgstr "Barvagten burde ikke være tilgængelig længere!"
 
 #: bartenders/templates/ballots_update.html:18
 #: bartenders/templates/bartender_info.html:15
-#: bartenders/templates/bartender_info.html:41 events/templates/event.html:93
+#: bartenders/templates/bartender_info.html:41 events/templates/event.html:151
 msgid "Gem"
 msgstr "Gem"
 
@@ -442,11 +442,14 @@ msgstr "Bartenderens første vagt"
 
 #: bartenders/templates/barplan.html:317 bartenders/templates/barplan.html:423
 #: bartenders/templates/board.html:39 events/templates/common-events.html:47
-#: events/templates/common-events.html:99 events/templates/event.html:19
-#: gallery/templates/album.html:60 gallery/templates/gallery.html:27
-#: guides/templates/guides.html:69 items/templates/items.html:41
-#: items/templates/items.html:59 items/templates/items.html:115
-#: items/templates/items.html:196 udlejning/templates/udlejning.html:62
+#: events/templates/common-events.html:99
+#: events/templates/components/event-card.html:29
+#: events/templates/components/event-card.html:30
+#: events/templates/event.html:19 gallery/templates/album.html:60
+#: gallery/templates/gallery.html:27 guides/templates/guides.html:69
+#: items/templates/items.html:41 items/templates/items.html:59
+#: items/templates/items.html:115 items/templates/items.html:196
+#: udlejning/templates/udlejning.html:62
 #: udlejning/templates/udlejningBoardGameCart.html:53
 #: udlejning/templates/udlejningGrill.html:53
 #: udlejning/templates/udlejningProjector.html:53
@@ -545,6 +548,7 @@ msgid "er ikke bartender."
 msgstr "er ikke bartender."
 
 #: bartenders/templates/bartender_shift_period_change_form.html:9
+#: events/models.py:352
 msgid "Bartender"
 msgstr "Bartender"
 
@@ -724,19 +728,47 @@ msgstr "Du er nu afmeldt"
 msgid "mailinglisten"
 msgstr "mailinglisten"
 
-#: events/admin.py:21
-msgid "Chosen options"
+#: events/admin.py:82 events/models.py:361
+msgid "Selected options"
 msgstr "Valgte muligheder"
 
-#: events/admin.py:89
+#: events/admin.py:113
+msgid "Available choices"
+msgstr "Tilgængelige muligheder"
+
+#: events/admin.py:122
+msgid "Chosen options stats"
+msgstr "Statistik over valgte muligheder"
+
+#: events/admin.py:126
+msgid "Save to view selection stats"
+msgstr "Gem for at se statistik"
+
+#: events/admin.py:135
+msgid "No options configured"
+msgstr "Ingen muligheder konfigureret"
+
+#: events/admin.py:152
+msgid "Links"
+msgstr "Links"
+
+#: events/admin.py:165
 msgid "Default allowed attendees"
 msgstr "Standard tilladte deltagere"
 
-#: events/admin.py:90
+#: events/admin.py:166
 msgid "Can be overwritten using the whitelist and blacklist above."
 msgstr "Kan overskrives ved hjælp af hvidlisten og sortlisten ovenfor."
 
-#: events/admin.py:140
+#: events/admin.py:227
+msgid "Event details"
+msgstr "Event detaljer"
+
+#: events/admin.py:231
+msgid "Bartender access"
+msgstr "Bartender adgang"
+
+#: events/admin.py:249
 msgid "Event Album"
 msgstr "Event album"
 
@@ -744,11 +776,11 @@ msgstr "Event album"
 msgid "Vælg"
 msgstr "Vælg"
 
-#: events/forms.py:21 events/forms.py:59 events/templates/event.html:107
+#: events/forms.py:21 events/forms.py:59 events/templates/event.html:169
 msgid "Deltager"
 msgstr "Deltager"
 
-#: events/forms.py:22 events/templates/event.html:110
+#: events/forms.py:22 events/templates/event.html:175
 msgid "Deltager ikke"
 msgstr "Deltager ikke"
 
@@ -762,30 +794,201 @@ msgstr "Du skal udfylde %(choice_name)s, når du deltager"
 msgid "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 msgstr "Der er for mange der har valgt %(option_option)s. Vælg noget andet."
 
-#: events/models.py:62 guides/models.py:20 items/models.py:13
-#: items/models.py:82 items/models.py:100 items/models.py:166
-#: items/models.py:180 mail/models.py:47 mail/models.py:206
+#: events/models.py:16
+msgid "Common Event"
+msgstr "Common Event"
+
+#: events/models.py:17
+msgid "Bartender event"
+msgstr "Bartender event"
+
+#: events/models.py:23
+msgid "Event type"
+msgstr "Begivenhedstype"
+
+#: events/models.py:25
+msgid ""
+"Common events are visible to all bartenders, while bartender events are only "
+"visible to bartenders who are allowed to attend."
+msgstr ""
+
+#: events/models.py:31 events/models.py:214 guides/models.py:20
+#: items/models.py:13 items/models.py:82 items/models.py:100
+#: items/models.py:166 items/models.py:180 mail/models.py:47 mail/models.py:206
 msgid "Name"
 msgstr "Navn"
 
-#: events/models.py:66
-msgid "Location"
-msgstr "Lokation"
+#: events/models.py:32
+msgid "The visible name of the event."
+msgstr ""
 
-#: events/models.py:70 events/models.py:230 items/models.py:14
-#: items/models.py:167 items/models.py:181 mail/models.py:48 mail/models.py:372
-msgid "Description"
-msgstr "Beskrivelse"
+#: events/models.py:37
+msgid "The year of the event."
+msgstr ""
 
-#: events/models.py:79
+#: events/models.py:47
 msgid "Event album"
 msgstr "Event album"
 
-#: events/models.py:84
+#: events/models.py:48
+msgid "The album associated with the event."
+msgstr ""
+
+#: events/models.py:54
+msgid "Location"
+msgstr "Lokation"
+
+#: events/models.py:55
+msgid "The location of the event."
+msgstr ""
+
+#: events/models.py:59
+msgid "Public description"
+msgstr "Offentlig beskrivelse"
+
+#: events/models.py:60
+msgid "A description of the event. This will be visible to all users."
+msgstr ""
+
+#: events/models.py:65 events/templates/event.html:96
+msgid "Internal description"
+msgstr "Intern beskrivelse"
+
+#: events/models.py:67
+msgid ""
+"This will display for bartenders instead of the public description. Leave "
+"blank to use the public description. This is useful for internal information "
+"that should not be visible to the public. For example when the event is "
+"common but it has internal information for bartenders."
+msgstr ""
+
+#: events/models.py:75
 msgid "Response deadline"
 msgstr "Response deadline"
 
-#: events/models.py:232
+#: events/models.py:76
+msgid "The deadline for bartenders to respond to the event invitation."
+msgstr ""
+
+#: events/models.py:83
+msgid ""
+"Bartenders who are allowed to attend the event. If empty, all bartenders are "
+"allowed to attend."
+msgstr ""
+
+#: events/models.py:91
+msgid ""
+"Bartenders who are not allowed to attend the event. If empty, all bartenders "
+"are allowed to attend."
+msgstr ""
+
+#: events/models.py:215
+msgid "The visible name of the choice."
+msgstr ""
+
+#: events/models.py:221 events/models.py:324 events/models.py:345
+msgid "Event"
+msgstr ""
+
+#: events/models.py:222
+msgid "The event this choice is associated with."
+msgstr ""
+
+#: events/models.py:237
+msgid "Event choice"
+msgstr ""
+
+#: events/models.py:238
+msgid "The event choice this option is associated with."
+msgstr ""
+
+#: events/models.py:242
+msgid "Option"
+msgstr ""
+
+#: events/models.py:243
+msgid "The visible name of the option."
+msgstr ""
+
+#: events/models.py:249
+msgid ""
+"The maximum number of bartenders that can select this option. Leave blank "
+"for no limit."
+msgstr ""
+
+#: events/models.py:282
+msgid "Facebook"
+msgstr ""
+
+#: events/models.py:283
+msgid "Instagram"
+msgstr ""
+
+#: events/models.py:284
+msgid "LinkedIn"
+msgstr ""
+
+#: events/models.py:285
+msgid "Twitter"
+msgstr ""
+
+#: events/models.py:286
+msgid "YouTube"
+msgstr ""
+
+#: events/models.py:305
+msgid "Link type"
+msgstr ""
+
+#: events/models.py:307
+msgid ""
+"The type of link. This determines the default title and icon for the link."
+msgstr ""
+
+#: events/models.py:312
+msgid "Title"
+msgstr ""
+
+#: events/models.py:315
+msgid ""
+"Override the displayed title of the link. Leave blank to use the default "
+"title for the link type."
+msgstr ""
+
+#: events/models.py:318
+msgid "URL"
+msgstr ""
+
+#: events/models.py:318
+msgid "The URL of the link."
+msgstr ""
+
+#: events/models.py:325
+msgid "The event this link is associated with."
+msgstr ""
+
+#: events/models.py:346
+msgid "The event this response is associated with."
+msgstr ""
+
+#: events/models.py:353
+msgid "The bartender who submitted this response."
+msgstr ""
+
+#: events/models.py:356
+msgid "Whether the bartender is attending the event."
+msgstr ""
+
+#: events/models.py:362
+msgid "The options selected by the bartender for this event response."
+msgstr ""
+
+#: events/models.py:405 items/models.py:14 items/models.py:167
+#: items/models.py:181 mail/models.py:48 mail/models.py:372
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: events/models.py:407
 msgid "Link to additional information"
 msgstr "Link til yderligere information"
 
@@ -797,33 +1000,80 @@ msgstr "Kommende events"
 msgid "Tidligere events"
 msgstr "Tidligere events"
 
+#: events/templates/components/event-card.html:17
+#: events/templates/event.html:41
+msgid "Bartender Event"
+msgstr "Bartender event"
+
+#: events/templates/components/event-card.html:19
+#: events/templates/event.html:43
+msgid "Public Event"
+msgstr "Offentligt event"
+
+#: events/templates/components/event-card.html:22
+#: events/templates/event.html:46
+msgid "Past Event"
+msgstr "Tidligere event"
+
+#: events/templates/components/event-card.html:25
+#: events/templates/event.html:49
+msgid "Remember to sign up!"
+msgstr "Husk at tilmelde dig!"
+
+#: events/templates/components/event-card.html:38
+#: events/templates/event.html:113
+msgid "Not answered"
+msgstr "Ikke besvaret"
+
+#: events/templates/components/event-card.html:55
+msgid "Fra"
+msgstr "Fra"
+
+#: events/templates/components/event-card.html:56
+msgid "Til"
+msgstr "Til"
+
+#: events/templates/components/event-card.html:71
+#: events/templates/event.html:65
+msgid "Bartender Album"
+msgstr ""
+
+#: events/templates/components/event-card.html:78
+#: events/templates/event.html:72
+msgid "View Album"
+msgstr ""
+
+#: events/templates/components/event-card.html:100
+#: events/templates/event.html:121 events/views.py:114
+msgid "Tilmeldingsfrist"
+msgstr "Tilmeldingsfrist"
+
+#: events/templates/components/event-card.html:102
+#: events/templates/event.html:121
+msgid "for sent"
+msgstr "for sent"
+
 #: events/templates/event.html:13
 msgid "Tilbage"
 msgstr "Tilbage"
 
-#: events/templates/event.html:30 events/templates/event.html:37
-#: events/templates/event.html:43
+#: events/templates/event.html:31 events/templates/event.html:32
 msgid "Gå til galleriet"
 msgstr "Gå til galleriet"
 
-#: events/templates/event.html:62
+#: events/templates/event.html:53 events/templates/new-events.html:121
+msgid "to"
+msgstr "til"
+
+#: events/templates/event.html:90
+msgid "Event Description"
+msgstr "Event beskrivelse"
+
+#: events/templates/event.html:110
 msgid "Tilmelding"
 msgstr "Tilmelding"
 
-#: events/templates/event.html:65 events/templates/events.html:71
-msgid "Not answered"
-msgstr "Ikke besvaret"
-
-#: events/templates/event.html:70 events/templates/events.html:84
-#: events/views.py:108
-msgid "Tilmeldingsfrist"
-msgstr "Tilmeldingsfrist"
-
-#: events/templates/event.html:70 events/templates/events.html:86
-msgid "for sent"
-msgstr "for sent"
-
-#: events/templates/event.html:74
+#: events/templates/event.html:127
 msgid ""
 "Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events, "
 "eller se hvem der deltager."
@@ -831,11 +1081,11 @@ msgstr ""
 "Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events, "
 "eller se hvem der deltager."
 
-#: events/templates/event.html:74
+#: events/templates/event.html:127
 msgid "Klik her for at logge ind."
 msgstr "Klik her for at logge ind."
 
-#: events/templates/event.html:76
+#: events/templates/event.html:131
 msgid ""
 "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit "
 "lov af bestyrelsen."
@@ -843,7 +1093,7 @@ msgstr ""
 "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit "
 "lov af bestyrelsen."
 
-#: events/templates/event.html:77
+#: events/templates/event.html:134
 msgid ""
 "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende "
 "krav"
@@ -851,11 +1101,11 @@ msgstr ""
 "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende "
 "krav"
 
-#: events/templates/event.html:79
+#: events/templates/event.html:136
 msgid "Man er aktiv bartender."
 msgstr "Man er aktiv bartender."
 
-#: events/templates/event.html:80
+#: events/templates/event.html:137
 msgid ""
 "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år "
 "siden."
@@ -863,7 +1113,7 @@ msgstr ""
 "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år "
 "siden."
 
-#: events/templates/event.html:81
+#: events/templates/event.html:138
 msgid ""
 "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre "
 "end en måned siden."
@@ -871,67 +1121,80 @@ msgstr ""
 "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre "
 "end en måned siden."
 
-#: events/templates/event.html:113
+#: events/templates/event.html:182
 msgid "Intet svar"
 msgstr "Intet svar"
 
-#: events/templates/event.html:155 events/templates/event.html:221
+#: events/templates/event.html:226 events/templates/event.html:292
 msgid "Send mail"
 msgstr "Send mail"
 
-#: events/templates/event.html:161
+#: events/templates/event.html:232
 msgid "Ingen tilmeldte endnu."
 msgstr "Ingen tilmeldte endnu."
 
-#: events/templates/event.html:189
+#: events/templates/event.html:260
 msgid "Ingen ikke-deltager endnu."
 msgstr "Ingen ikke-deltager endnu."
 
-#: events/templates/event.html:227
+#: events/templates/event.html:298
 msgid "Alle inviterede har svaret."
 msgstr "Alle inviterede har svaret."
 
-#: events/templates/event.html:240 items/models.py:48
+#: events/templates/event.html:310 items/models.py:48
 msgid "Created"
 msgstr "Oprettet"
 
-#: events/templates/event.html:243
+#: events/templates/event.html:313
 msgid "Updated"
 msgstr "Opdateret"
 
-#: events/templates/events.html:14
-msgid "Bartender events"
-msgstr "Bartender events"
+#: events/templates/new-events.html:10 web/templates/base.html:100
+msgid "Events"
+msgstr "Events"
 
-#: events/templates/events.html:37
-msgid "Vis nyere"
-msgstr "Vis nyere"
+#: events/templates/new-events.html:19 events/templates/new-events.html:71
+msgid "Public Events"
+msgstr "Offentlige Events"
 
-#: events/templates/events.html:97
-msgid "Ingen events endnu."
-msgstr "Ingen events endnu."
-
-#: events/templates/events.html:105
-msgid "Vis tidligere"
-msgstr "Vis tidligere"
-
-#: events/views.py:90
+#: events/templates/new-events.html:25 events/templates/new-events.html:80
+#: events/views.py:96
 msgid "Bartender Events"
 msgstr "Bartender Events"
 
-#: events/views.py:124
+#: events/templates/new-events.html:39 events/templates/new-events.html:93
+msgid "Vis nyere"
+msgstr "Vis nyere"
+
+#: events/templates/new-events.html:59 events/templates/new-events.html:113
+msgid "Vis tidligere"
+msgstr "Vis tidligere"
+
+#: events/templates/new-events.html:121
+msgid "Showing"
+msgstr "Viser"
+
+#: events/templates/new-events.html:121
+msgid "of"
+msgstr "af"
+
+#: events/templates/new-events.html:121
+msgid "events"
+msgstr "events"
+
+#: events/views.py:130
 msgid "Common Events"
 msgstr "Common Events"
 
-#: events/views.py:188
+#: events/views.py:194
 msgid "Event with id does not exist"
 msgstr "Begivenhed med id findes ikke"
 
-#: events/views.py:192
+#: events/views.py:198
 msgid "Not logged in as an active bartender"
 msgstr "Ikke logget ind som aktiv bartender"
 
-#: events/views.py:204
+#: events/views.py:210
 #, python-format
 msgid "Opdateret tilmelding til %(event_name)s"
 msgstr "Opdateret tilmelding til %(event_name)s"
@@ -948,11 +1211,11 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: fredagscafeen/settings/base.py:454
+#: fredagscafeen/settings/base.py:456
 msgid "Danish"
 msgstr "Dansk"
 
-#: fredagscafeen/settings/base.py:455
+#: fredagscafeen/settings/base.py:457
 msgid "English"
 msgstr "Engelsk"
 
@@ -3150,10 +3413,6 @@ msgstr "Forside"
 msgid "Udlejning"
 msgstr "Udlejning"
 
-#: web/templates/base.html:100
-msgid "Events"
-msgstr "Events"
-
 #: web/templates/base.html:104
 msgid "New events"
 msgstr "Nye events"
@@ -3225,6 +3484,9 @@ msgid ""
 msgstr ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind. Husk "
 "også at checke din spam mappe."
+
+#~ msgid "Ingen events endnu."
+#~ msgstr "Ingen events endnu."
 
 #~ msgid "Vælg kontant eller ej."
 #~ msgstr "Vælg kontant eller ej."
