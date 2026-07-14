@@ -13,4 +13,3 @@ def event_info(shift):
     shift_date = shift.start_datetime.date()
 
     return Event.objects.filter(start_datetime__date=shift_date).first()
-
