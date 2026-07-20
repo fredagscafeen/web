@@ -10,6 +10,7 @@ def event_info(shift):
     if not shift or not getattr(shift, "start_datetime", None):
         return None
 
-    shift_date = shift.start_datetime.date()
-
-    return Event.objects.filter(start_datetime__date=shift_date).first()
+    return Event.objects.filter(
+        start_datetime__date=shift.start_datetime.date(),
+        event_type=Event.EventType.COMMON,
+    ).first()

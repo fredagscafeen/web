@@ -27,7 +27,8 @@ class Command(ReminderCommand):
         start = event.start_datetime - datetime.timedelta(minutes=30)
         start_time = date_format(start, "H:i")
         common_event = Event.objects.filter(
-            date=event.start_datetime.date(), event_type=Event.EventType.COMMON
+            start_datetime__date=event.start_datetime.date(),
+            event_type=Event.EventType.COMMON,
         ).first()
         event_info = ""
         if common_event:
@@ -38,7 +39,7 @@ Husk at der på fredag er {common_event.name}!
         return f"""Hej {humanized_bartenders}.
 
 Den kommende fredag er det JERES tur til at stå i Fredagscaféen.
-Dette er en automatisk email sendt til jer.
+Dette er en automatisk email.
 Emailen er hovedsageligt sendt så I kan finde en anden at bytte vagt med,
 hvis en af jer ikke har mulighed for selv at tage den.
 Husk at jeres vagt starter kl. {start_time}.

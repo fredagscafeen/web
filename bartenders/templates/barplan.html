@@ -63,7 +63,7 @@
 						{{ shift.display_str }}{% if show_all_bartendershifts %}, {{ shift.start_datetime.year }}{% endif %}
 						{% endif %}
 						{% if shiftEvent %}
-							<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-warning{% else %}text-bg-info{% endif %}">{% if shiftEvent.url %}<a href="{{ shiftEvent.url }}" target="_blank" class="common">{% bs_icon shiftEvent.url_bs_icon size='1.0em' %}{{ shiftEvent.title }}</a>{% else %}{{ shiftEvent.title }}{% endif %}</span>
+							<span class="badge {% if shiftComparedToCurrentWeek == -1 %}text-bg-warning{% else %}text-bg-info{% endif %}"><a href="{% url 'event' event_id=shiftEvent.id %}" target="_blank" class="common">{{ shiftEvent.name }}</a></span>
 						{% endif %}
 					</td>
 					{% with released_bartender_shift=shift.responsible|released_shift:shift %}
