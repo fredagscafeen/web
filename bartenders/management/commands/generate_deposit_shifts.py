@@ -43,7 +43,9 @@ After previewing the generated schedule, it asks for confirmation before publish
         if weeks is None:
             weeks = int(input("Number of consecutive weeks (2): ") or "2")
 
-        board_members = [b for b in Bartender.objects.all() if b.isBoardMember]
+        board_members = [
+            b for b in Bartender.objects.all(isActiveBartender=True) if b.isBoardMember
+        ]
         if len(board_members) < 2:
             raise CommandError(
                 "Need at least 2 active board members to generate shifts"
