@@ -44,7 +44,9 @@ After previewing the generated schedule, it asks for confirmation before publish
             weeks = int(input("Number of consecutive weeks (2): ") or "2")
 
         board_members = [
-            b for b in Bartender.objects.all(isActiveBartender=True) if b.isBoardMember
+            b
+            for b in Bartender.objects.filter(isActiveBartender=True)
+            if b.isBoardMember
         ]
         if len(board_members) < 2:
             raise CommandError(
