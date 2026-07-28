@@ -123,7 +123,8 @@ class BartenderApplicationAdmin(DjangoObjectActions, CustomModelAdmin):
     actions_detail = ("accept", "deny")
 
     @action(description=_("Accept"), url_path="accept")
-    def accept(self, request, obj):
+    def accept(self, request, object_id):
+        obj = BartenderApplication.objects.get(pk=object_id)
         pk = obj.accept()
         obj.delete()
 
@@ -139,7 +140,8 @@ class BartenderApplicationAdmin(DjangoObjectActions, CustomModelAdmin):
     accept.label = "Accept"
 
     @action(description=_("Deny"), url_path="deny")
-    def deny(self, request, obj):
+    def deny(self, request, object_id):
+        obj = BartenderApplication.objects.get(pk=object_id)
         obj.delete()
         return HttpResponseRedirect(
             reverse("admin:bartenders_bartenderapplication_changelist")
