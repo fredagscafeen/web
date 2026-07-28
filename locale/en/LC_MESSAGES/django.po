@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-14 23:32+0200\n"
-"PO-Revision-Date: 2026-06-24 20:50+0200\n"
+"POT-Creation-Date: 2026-07-28 14:45+0200\n"
+"PO-Revision-Date: 2026-07-28 15:09+0200\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -73,7 +73,7 @@ msgstr "Cash"
 msgid "Card"
 msgstr "Card"
 
-#: bartab/models.py:177 events/models.py:287 gallery/models.py:90
+#: bartab/models.py:177 events/models.py:284 gallery/models.py:90
 msgid "Other"
 msgstr "Other"
 
@@ -114,8 +114,8 @@ msgid "Result"
 msgstr "Result"
 
 #: bartab/templates/admin/consumption.html:24 bartab/templates/bartab.html:136
-#: events/templates/event.html:196 events/templates/event.html:243
-#: events/templates/event.html:272 guides/templates/guides.html:42
+#: events/templates/event.html:202 events/templates/event.html:249
+#: events/templates/event.html:278 guides/templates/guides.html:42
 #: items/templates/items.html:165 mail/models.py:20
 msgid "Navn"
 msgstr "Name"
@@ -202,7 +202,6 @@ msgid "Create Admin User"
 msgstr "Create Admin User"
 
 #: bartenders/admin.py:125
-#, fuzzy
 #| msgid "Accepter"
 msgid "Accept"
 msgstr "Accept"
@@ -308,7 +307,7 @@ msgstr "to"
 msgid "Studie"
 msgstr "Study"
 
-#: bartenders/models.py:271 events/models.py:36 gallery/models.py:46
+#: bartenders/models.py:271 events/models.py:35 gallery/models.py:46
 msgid "Årgang"
 msgstr "Year"
 
@@ -330,7 +329,7 @@ msgstr "The bar shift shouldn't be available anymore!"
 
 #: bartenders/templates/ballots_update.html:18
 #: bartenders/templates/bartender_info.html:15
-#: bartenders/templates/bartender_info.html:41 events/templates/event.html:151
+#: bartenders/templates/bartender_info.html:41 events/templates/event.html:157
 msgid "Gem"
 msgstr "Save"
 
@@ -535,7 +534,8 @@ msgstr "Are you sure?"
 
 #: bartenders/templates/bartender_info.html:127
 msgid ""
-"Husk at du som inaktiv bartender ikke kan komme til bartenderarrangementerne."
+"Husk at du som inaktiv bartender ikke kan komme til "
+"bartenderarrangementerne."
 msgstr ""
 "Remember that as an inactive bartender you cannot come to the bartender "
 "events."
@@ -549,7 +549,7 @@ msgid "er ikke bartender."
 msgstr "is not a bartender."
 
 #: bartenders/templates/bartender_shift_period_change_form.html:9
-#: events/models.py:352
+#: events/models.py:349
 msgid "Bartender"
 msgstr "Bartender"
 
@@ -638,8 +638,8 @@ msgid ""
 "begivenheder, såsom ølsmagning og lign. Alt sammen gratis for bartendere."
 msgstr ""
 "In addition to this, you are invited to our annual events for bartenders, "
-"such as the Summer Party and the Christmas Lunch. In addition, there will be "
-"ongoing cool events, such as beer tasting and the like. All free for "
+"such as the Summer Party and the Christmas Lunch. In addition, there will be"
+" ongoing cool events, such as beer tasting and the like. All free for "
 "bartenders."
 
 #: bartenders/templates/index.html:20
@@ -730,29 +730,29 @@ msgstr "You are now unsubscribed from"
 msgid "mailinglisten"
 msgstr "mailing list"
 
-#: events/admin.py:82 events/models.py:361
+#: events/admin.py:82 events/models.py:358
 msgid "Selected options"
-msgstr ""
+msgstr "Selected options"
 
 #: events/admin.py:113
 msgid "Available choices"
-msgstr ""
+msgstr "Available choices"
 
 #: events/admin.py:122
 msgid "Chosen options stats"
-msgstr ""
+msgstr "Chosen options stats"
 
 #: events/admin.py:126
 msgid "Save to view selection stats"
-msgstr ""
+msgstr "Save to view selection stats"
 
 #: events/admin.py:135
 msgid "No options configured"
-msgstr ""
+msgstr "No options configured"
 
 #: events/admin.py:152
 msgid "Links"
-msgstr ""
+msgstr "Links"
 
 #: events/admin.py:165
 msgid "Default allowed attendees"
@@ -764,11 +764,11 @@ msgstr "Can be overwritten using the whitelist and blacklist above."
 
 #: events/admin.py:227
 msgid "Event details"
-msgstr ""
+msgstr "Event details"
 
 #: events/admin.py:231
 msgid "Bartender access"
-msgstr ""
+msgstr "Bartender access"
 
 #: events/admin.py:249
 msgid "Event Album"
@@ -778,11 +778,11 @@ msgstr "Event album"
 msgid "Vælg"
 msgstr "Choose"
 
-#: events/forms.py:21 events/forms.py:59 events/templates/event.html:169
+#: events/forms.py:21 events/forms.py:59 events/templates/event.html:175
 msgid "Deltager"
 msgstr "Attending"
 
-#: events/forms.py:22 events/templates/event.html:175
+#: events/forms.py:22 events/templates/event.html:181
 msgid "Deltager ikke"
 msgstr "Not attending"
 
@@ -799,199 +799,207 @@ msgstr ""
 
 #: events/models.py:16
 msgid "Common Event"
-msgstr ""
+msgstr "Common event"
 
 #: events/models.py:17
 msgid "Bartender event"
-msgstr ""
+msgstr "Bartender event"
 
 #: events/models.py:23
 msgid "Event type"
-msgstr ""
+msgstr "Event type"
 
 #: events/models.py:25
 msgid ""
-"Common events are visible to all bartenders, while bartender events are only "
-"visible to bartenders who are allowed to attend."
+"Common events are visible to everyone, while bartender events are only "
+"visible to bartenders."
 msgstr ""
+"Common events are visible to everyone, while bartender events are only "
+"visible to bartenders."
 
-#: events/models.py:31 events/models.py:214 guides/models.py:20
+#: events/models.py:30 events/models.py:211 guides/models.py:20
 #: items/models.py:13 items/models.py:82 items/models.py:100
-#: items/models.py:166 items/models.py:180 mail/models.py:47 mail/models.py:206
+#: items/models.py:166 items/models.py:180 mail/models.py:47
+#: mail/models.py:206
 msgid "Name"
 msgstr "Name"
 
-#: events/models.py:32
+#: events/models.py:31
 msgid "The visible name of the event."
-msgstr ""
+msgstr "The visible name of the event."
 
-#: events/models.py:37
+#: events/models.py:36
 msgid "The year of the event."
-msgstr ""
+msgstr "The year of the event."
+
+#: events/models.py:46
+msgid "Event album"
+msgstr "Event album"
 
 #: events/models.py:47
-msgid "Event album"
-msgstr ""
-
-#: events/models.py:48
 msgid "The album associated with the event."
-msgstr ""
+msgstr "The album associated with the event."
 
-#: events/models.py:54
+#: events/models.py:52
 msgid "Location"
 msgstr "Location"
 
-#: events/models.py:55
+#: events/models.py:53
 msgid "The location of the event."
-msgstr ""
+msgstr "The location of the event."
 
-#: events/models.py:59
+#: events/models.py:57
 msgid "Public description"
-msgstr ""
+msgstr "Public description"
 
-#: events/models.py:60
+#: events/models.py:58
 msgid "A description of the event. This will be visible to all users."
-msgstr ""
+msgstr "A description of the event. This will be visible to all users."
 
-#: events/models.py:65 events/templates/event.html:96
+#: events/models.py:62 events/templates/event.html:100
 msgid "Internal description"
-msgstr ""
+msgstr "Internal description"
 
-#: events/models.py:67
-msgid ""
-"This will display for bartenders instead of the public description. Leave "
-"blank to use the public description. This is useful for internal information "
-"that should not be visible to the public. For example when the event is "
-"common but it has internal information for bartenders."
-msgstr ""
+#: events/models.py:64
+msgid "Internal information shown only to bartenders."
+msgstr "Internal information shown only to bartenders."
 
-#: events/models.py:75
+#: events/models.py:72
 msgid "Response deadline"
 msgstr "Response deadline"
 
-#: events/models.py:76
+#: events/models.py:73
 msgid "The deadline for bartenders to respond to the event invitation."
-msgstr ""
+msgstr "The deadline for bartenders to respond to the event invitation."
 
-#: events/models.py:83
+#: events/models.py:80
 msgid ""
-"Bartenders who are allowed to attend the event. If empty, all bartenders are "
-"allowed to attend."
+"Bartenders who are allowed to attend the event. If empty, all bartenders are"
+" allowed to attend."
 msgstr ""
+"Bartenders who are allowed to attend the event. If empty, all bartenders are"
+" allowed to attend."
 
-#: events/models.py:91
+#: events/models.py:88
 msgid ""
-"Bartenders who are not allowed to attend the event. If empty, all bartenders "
-"are allowed to attend."
+"Bartenders who are not allowed to attend the event. If empty, all bartenders"
+" are allowed to attend."
 msgstr ""
+"Bartenders who are not allowed to attend the event. If empty, all bartenders"
+" are allowed to attend."
 
-#: events/models.py:215
+#: events/models.py:212
 msgid "The visible name of the choice."
-msgstr ""
+msgstr "The visible name of the choice."
 
-#: events/models.py:221 events/models.py:324 events/models.py:345
+#: events/models.py:218 events/models.py:321 events/models.py:342
 msgid "Event"
-msgstr ""
+msgstr "Event"
 
-#: events/models.py:222
+#: events/models.py:219
 msgid "The event this choice is associated with."
-msgstr ""
+msgstr "The event this choice is associated with."
 
-#: events/models.py:237
+#: events/models.py:234
 msgid "Event choice"
-msgstr ""
+msgstr "Event choice"
 
-#: events/models.py:238
+#: events/models.py:235
 msgid "The event choice this option is associated with."
-msgstr ""
+msgstr "The event choice this option is associated with."
 
-#: events/models.py:242
+#: events/models.py:239
 msgid "Option"
-msgstr ""
+msgstr "Option"
 
-#: events/models.py:243
+#: events/models.py:240
 msgid "The visible name of the option."
-msgstr ""
+msgstr "The visible name of the option."
 
-#: events/models.py:249
+#: events/models.py:246
 msgid ""
 "The maximum number of bartenders that can select this option. Leave blank "
 "for no limit."
 msgstr ""
+"The maximum number of bartenders that can select this option. Leave blank "
+"for no limit."
+
+#: events/models.py:279
+msgid "Facebook"
+msgstr "Facebook"
+
+#: events/models.py:280
+msgid "Instagram"
+msgstr "Instagram"
+
+#: events/models.py:281
+msgid "LinkedIn"
+msgstr "LinkedIn"
 
 #: events/models.py:282
-msgid "Facebook"
-msgstr ""
+msgid "Twitter"
+msgstr "Twitter"
 
 #: events/models.py:283
-msgid "Instagram"
-msgstr ""
-
-#: events/models.py:284
-msgid "LinkedIn"
-msgstr ""
-
-#: events/models.py:285
-msgid "Twitter"
-msgstr ""
-
-#: events/models.py:286
 msgid "YouTube"
-msgstr ""
+msgstr "YouTube"
 
-#: events/models.py:305
+#: events/models.py:302
 msgid "Link type"
-msgstr ""
+msgstr "Link type"
 
-#: events/models.py:307
+#: events/models.py:304
 msgid ""
 "The type of link. This determines the default title and icon for the link."
 msgstr ""
+"The type of link. This determines the default title and icon for the link."
+
+#: events/models.py:309
+msgid "Title"
+msgstr "Title"
 
 #: events/models.py:312
-msgid "Title"
-msgstr ""
-
-#: events/models.py:315
 msgid ""
 "Override the displayed title of the link. Leave blank to use the default "
 "title for the link type."
 msgstr ""
+"Override the displayed title of the link. Leave blank to use the default "
+"title for the link type."
 
-#: events/models.py:318
+#: events/models.py:315
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
-#: events/models.py:318
+#: events/models.py:315
 msgid "The URL of the link."
-msgstr ""
+msgstr "The URL of the link."
 
-#: events/models.py:325
+#: events/models.py:322
 msgid "The event this link is associated with."
-msgstr ""
+msgstr "The event this link is associated with."
 
-#: events/models.py:346
+#: events/models.py:343
 msgid "The event this response is associated with."
-msgstr ""
+msgstr "The event this response is associated with."
+
+#: events/models.py:350
+msgid "The bartender who submitted this response."
+msgstr "The bartender who submitted this response."
 
 #: events/models.py:353
-msgid "The bartender who submitted this response."
-msgstr ""
-
-#: events/models.py:356
 msgid "Whether the bartender is attending the event."
-msgstr ""
+msgstr "Whether the bartender is attending the event."
 
-#: events/models.py:362
+#: events/models.py:359
 msgid "The options selected by the bartender for this event response."
-msgstr ""
+msgstr "The options selected by the bartender for this event response."
 
-#: events/models.py:405 items/models.py:14 items/models.py:167
+#: events/models.py:402 items/models.py:14 items/models.py:167
 #: items/models.py:181 mail/models.py:48 mail/models.py:372
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
-#: events/models.py:407
+#: events/models.py:404
 msgid "Link to additional information"
 msgstr "Link to additional information"
 
@@ -1006,25 +1014,25 @@ msgstr "Past events"
 #: events/templates/components/event-card.html:17
 #: events/templates/event.html:41
 msgid "Bartender Event"
-msgstr ""
+msgstr "Bartender Event"
 
 #: events/templates/components/event-card.html:19
 #: events/templates/event.html:43
 msgid "Public Event"
-msgstr ""
+msgstr "Public Event"
 
 #: events/templates/components/event-card.html:22
 #: events/templates/event.html:46
 msgid "Past Event"
-msgstr ""
+msgstr "Past Event"
 
 #: events/templates/components/event-card.html:25
 #: events/templates/event.html:49
 msgid "Remember to sign up!"
-msgstr ""
+msgstr "Remember to sign up!"
 
 #: events/templates/components/event-card.html:38
-#: events/templates/event.html:113
+#: events/templates/event.html:119
 msgid "Not answered"
 msgstr "Not answered"
 
@@ -1037,22 +1045,22 @@ msgid "Til"
 msgstr "To"
 
 #: events/templates/components/event-card.html:71
-#: events/templates/event.html:65
+#: events/templates/event.html:67
 msgid "Bartender Album"
-msgstr ""
+msgstr "Bartender Album"
 
 #: events/templates/components/event-card.html:78
-#: events/templates/event.html:72
+#: events/templates/event.html:74
 msgid "View Album"
-msgstr ""
+msgstr "View Album"
 
 #: events/templates/components/event-card.html:100
-#: events/templates/event.html:121 events/views.py:114
+#: events/templates/event.html:127 events/views.py:114
 msgid "Tilmeldingsfrist"
 msgstr "Registration deadline"
 
 #: events/templates/components/event-card.html:102
-#: events/templates/event.html:121
+#: events/templates/event.html:127
 msgid "for sent"
 msgstr "too late"
 
@@ -1066,29 +1074,29 @@ msgstr "Go to the gallery"
 
 #: events/templates/event.html:53 events/templates/new-events.html:121
 msgid "to"
-msgstr ""
+msgstr "to"
 
-#: events/templates/event.html:90
+#: events/templates/event.html:93
 msgid "Event Description"
-msgstr ""
+msgstr "Event Description"
 
-#: events/templates/event.html:110
+#: events/templates/event.html:116
 msgid "Tilmelding"
 msgstr "Sign up"
 
-#: events/templates/event.html:127
+#: events/templates/event.html:133
 msgid ""
-"Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events, "
-"eller se hvem der deltager."
+"Du er ikke logget ind som bartender, og kan derfor ikke tilmelde dig events,"
+" eller se hvem der deltager."
 msgstr ""
 "You are not logged in as a bartender, and therefore cannot register for "
 "events or see who is participating."
 
-#: events/templates/event.html:127
+#: events/templates/event.html:133
 msgid "Klik her for at logge ind."
 msgstr "Click here to log in."
 
-#: events/templates/event.html:131
+#: events/templates/event.html:137
 msgid ""
 "Du har ikke lov til at tilmelde dig events, medmindre du har fået eksplicit "
 "lov af bestyrelsen."
@@ -1096,7 +1104,7 @@ msgstr ""
 "You are not allowed to register for events, unless you have been given "
 "explicit permission by the board."
 
-#: events/templates/event.html:134
+#: events/templates/event.html:140
 msgid ""
 "Normalt kan man kun tilmelde sig events, hvis man opfylder et af følgende "
 "krav"
@@ -1104,18 +1112,18 @@ msgstr ""
 "Normally, you can only register for events if you meet one of the following "
 "requirements"
 
-#: events/templates/event.html:136
+#: events/templates/event.html:142
 msgid "Man er aktiv bartender."
 msgstr "You are an active bartender"
 
-#: events/templates/event.html:137
+#: events/templates/event.html:143
 msgid ""
 "Man har været i en bestyrelse, som har været aktiv mellem nu og for et år "
 "siden."
 msgstr ""
 "You have been on a board that has been active between now and a year ago."
 
-#: events/templates/event.html:138
+#: events/templates/event.html:144
 msgid ""
 "Man har haft en barvagt i en barvagtplansperiode, som sluttede for mindre "
 "end en måned siden."
@@ -1123,31 +1131,31 @@ msgstr ""
 "There has been a bar guard during a bar guard plan period that ended less "
 "than a month ago."
 
-#: events/templates/event.html:182
+#: events/templates/event.html:188
 msgid "Intet svar"
 msgstr "No answer"
 
-#: events/templates/event.html:226 events/templates/event.html:292
+#: events/templates/event.html:232 events/templates/event.html:298
 msgid "Send mail"
 msgstr "Send mail"
 
-#: events/templates/event.html:232
+#: events/templates/event.html:238
 msgid "Ingen tilmeldte endnu."
 msgstr "No one signed up yet."
 
-#: events/templates/event.html:260
+#: events/templates/event.html:266
 msgid "Ingen ikke-deltager endnu."
 msgstr "No non-participants yet."
 
-#: events/templates/event.html:298
+#: events/templates/event.html:304
 msgid "Alle inviterede har svaret."
 msgstr "All invitees have responded."
 
-#: events/templates/event.html:310 items/models.py:48
+#: events/templates/event.html:317 items/models.py:48
 msgid "Created"
 msgstr "Created"
 
-#: events/templates/event.html:313
+#: events/templates/event.html:320
 msgid "Updated"
 msgstr "Updated"
 
@@ -1157,7 +1165,7 @@ msgstr "Events"
 
 #: events/templates/new-events.html:19 events/templates/new-events.html:71
 msgid "Public Events"
-msgstr ""
+msgstr "Public Events"
 
 #: events/templates/new-events.html:25 events/templates/new-events.html:80
 #: events/views.py:96
@@ -1174,15 +1182,15 @@ msgstr "Show earlier"
 
 #: events/templates/new-events.html:121
 msgid "Showing"
-msgstr ""
+msgstr "Showing"
 
 #: events/templates/new-events.html:121
 msgid "of"
-msgstr ""
+msgstr "of"
 
 #: events/templates/new-events.html:121
 msgid "events"
-msgstr ""
+msgstr "events"
 
 #: events/views.py:130
 msgid "Common Events"
@@ -1196,7 +1204,11 @@ msgstr "Event with id does not exist"
 msgid "Not logged in as an active bartender"
 msgstr "Not logged in as an active bartender"
 
-#: events/views.py:210
+#: events/views.py:201
+msgid "This event does not take responses"
+msgstr "This event does not take responses"
+
+#: events/views.py:213
 #, python-format
 msgid "Opdateret tilmelding til %(event_name)s"
 msgstr "Updated registration for %(event_name)s"
@@ -1240,11 +1252,11 @@ msgstr "Welcome back to"
 #: fredagscafeen/templates/admin/login.html:26
 #, python-format
 msgid ""
-"You are authenticated as %(username)s, but are not authorized to access this "
-"page. Would you like to login to a different account?"
+"You are authenticated as %(username)s, but are not authorized to access this"
+" page. Would you like to login to a different account?"
 msgstr ""
-"You are authenticated as %(username)s, but are not authorized to access this "
-"page. Would you like to login to a different account?"
+"You are authenticated as %(username)s, but are not authorized to access this"
+" page. Would you like to login to a different account?"
 
 #: fredagscafeen/templates/admin/login.html:48
 msgid "Log in"
@@ -1570,8 +1582,8 @@ msgstr "Guides"
 #: guides/templates/guides.html:15
 msgctxt "Fredagscaféen"
 msgid ""
-"Her ligger alle de lækre guides, som er rare at have, når man involverer sig "
-"i driften af"
+"Her ligger alle de lækre guides, som er rare at have, når man involverer sig"
+" i driften af"
 msgstr ""
 "Here are all the delicious guides that are nice to have when you get "
 "involved in the operation of"
@@ -1586,8 +1598,8 @@ msgstr ""
 
 #: guides/templates/guides.html:21
 msgid ""
-"Har du tilføjelser eller foreslag til ændringer, kan du lave et Pull Request "
-"på GitHub "
+"Har du tilføjelser eller foreslag til ændringer, kan du lave et Pull Request"
+" på GitHub "
 msgstr ""
 "If you have additions or suggestions for changes, you can make a Pull "
 "Request on GitHub"
@@ -1718,22 +1730,16 @@ msgstr "Breweries"
 #: items/templates/items.html:9
 msgid ""
 "\n"
-"\tHer kan du se Fredagscaféens sortiment, samt mange af de ting vi er kendte "
-"for at sælge.\n"
-"\tDu finder du altid et stort sortiment af spændende og nye specialøl, for "
-"enhver smag, i baren.\n"
-"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor "
-"finder du også flere\n"
+"\tHer kan du se Fredagscaféens sortiment, samt mange af de ting vi er kendte for at sælge.\n"
+"\tDu finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.\n"
+"\tVi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere\n"
 "\tglutenfrie og alkoholfrie øl.\n"
 "\t"
 msgstr ""
 "\n"
-"Here you can see Fredagscaféen's selection, as well as many of the things we "
-"are known for selling.\n"
-"You will always find a large range of exciting and new specialty beers, for "
-"every taste, in the bar.\n"
-"At Fredagscaféen, we have a great focus on having something for everyone, so "
-"you will also find several\n"
+"Here you can see Fredagscaféen's selection, as well as many of the things we are known for selling.\n"
+"You will always find a large range of exciting and new specialty beers, for every taste, in the bar.\n"
+"At Fredagscaféen, we have a great focus on having something for everyone, so you will also find several\n"
 "gluten-free and alcohol-free beers."
 
 #: items/templates/items.html:19
@@ -2195,15 +2201,21 @@ msgstr "Error in email address name - \">\" is before \"<\""
 msgid ""
 "Dynamic QR Codes: You can safely change the 'Destination URL' at any time. "
 "The printed QR code relies entirely on the 'Slug', which should remain "
-"unchanged once printed. To create a QR Code with the slug use https://"
-"genqrcode.com"
+"unchanged once printed. To create a QR Code with the slug use "
+"https://genqrcode.com"
 msgstr ""
+"Dynamic QR Codes: You can safely change the 'Destination URL' at any time. "
+"The printed QR code relies entirely on the 'Slug', which should remain "
+"unchanged once printed. To create a QR Code with the slug use "
+"https://genqrcode.com"
 
 #: qr/admin.py:54
 msgid ""
-"Fill out the form below. Leave the slug descriptive but short slugs make the "
-"QR code easier for older phone cameras to scan."
+"Fill out the form below. Leave the slug descriptive but short slugs make the"
+" QR code easier for older phone cameras to scan."
 msgstr ""
+"Fill out the form below. Leave the slug descriptive but short slugs make the"
+" QR code easier for older phone cameras to scan."
 
 #: qr/apps.py:7
 msgid "QR-codes"
@@ -2216,6 +2228,10 @@ msgid ""
 "placeholder'>Generating preview...</code> <br><em>Note: Once printed, the "
 "slug should not be changed, as the physical QR code relies on it.</em>"
 msgstr ""
+"A unique identifier for the QR code. If left blank, it will be generated "
+"from the name. <br><strong>Live Link:</strong> <code class='loading-"
+"placeholder'>Generating preview...</code> <br><em>Note: Once printed, the "
+"slug should not be changed, as the physical QR code relies on it.</em>"
 
 #: qr/models.py:20
 msgid "A descriptive name for the QR code."
@@ -2344,8 +2360,8 @@ msgstr "Expected consumption"
 
 #: udlejning/models.py:64
 msgid ""
-"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af "
-"hver type?"
+"Hvilke slags øl eller andre drikkevarer ønskes der og hvor mange fustager af"
+" hver type?"
 msgstr ""
 "What types of beer or other beverages are desired and how many kegs of each "
 "type?"
@@ -2498,7 +2514,8 @@ msgstr "The kegerators are currently not booked at any time."
 msgid ""
 "Hvis vores anlæg ikke allerede er udlånt, kan du låne det ved at udfylde"
 msgstr ""
-"If our kegerator is not already on loan, you can borrow it by filling out the"
+"If our kegerator is not already on loan, you can borrow it by filling out "
+"the"
 
 #: udlejning/templates/udlejning.html:79
 msgid "ansøgningsformularen"
@@ -2540,20 +2557,17 @@ msgstr "Internal events"
 #: udlejning/templates/udlejning.html:97
 msgid ""
 "\n"
-"\t\t\t\t\tUdlån inkluderer opstilling, kopper, kulsyre og skylning af "
-"anlægget,\n"
+"\t\t\t\t\tUdlån inkluderer opstilling, kopper, kulsyre og skylning af anlægget,\n"
 "\t\t\t\t\tsamt opvask af brugte kopper.\n"
 "\t\t\t\t\t"
 msgstr ""
 "\n"
-"Rental includes setup, cups, carbonation and rinsing of the system, as well "
-"as washing of used cups."
+"Rental includes setup, cups, carbonation and rinsing of the system, as well as washing of used cups."
 
 #: udlejning/templates/udlejning.html:104
 msgid ""
 "\n"
-"\t\t\t\tUdelukkende arrangementer der finder sted på universitetet. Dette "
-"inkluderer:\n"
+"\t\t\t\tUdelukkende arrangementer der finder sted på universitetet. Dette inkluderer:\n"
 "\t\t\t\t"
 msgstr ""
 "\n"
@@ -2574,27 +2588,22 @@ msgstr "Events with association"
 #: udlejning/templates/udlejning.html:119
 msgid ""
 "\n"
-"\t\t\t\t\tHer inkluderer udlån udelukkende oplås og aflås af "
-"fadølsanlægget.\n"
-"\t\t\t\t\tDet vil sige at anlægget skal afhentes i Hopper-0, og afleveres "
-"rengjort i Hopper-0.\n"
+"\t\t\t\t\tHer inkluderer udlån udelukkende oplås og aflås af fadølsanlægget.\n"
+"\t\t\t\t\tDet vil sige at anlægget skal afhentes i Hopper-0, og afleveres rengjort i Hopper-0.\n"
 "\t\t\t\t\t"
 msgstr ""
 "\n"
 "Here, lending only includes unlocking and locking the kegerator.\n"
-"This means that the kegerator must be picked up in Hopper-0, and returned "
-"cleaned in Hopper-0."
+"This means that the kegerator must be picked up in Hopper-0, and returned cleaned in Hopper-0."
 
 #: udlejning/templates/udlejning.html:126
 msgid ""
 "\n"
-"\t\t\t\tArrangementer der finder sted på universitetet eller andetsteds, kan "
-"være af privat natur. Dette inkluderer:\n"
+"\t\t\t\tArrangementer der finder sted på universitetet eller andetsteds, kan være af privat natur. Dette inkluderer:\n"
 "\t\t\t\t"
 msgstr ""
 "\n"
-"Events taking place at the university or elsewhere may be of a private "
-"nature. This includes:"
+"Events taking place at the university or elsewhere may be of a private nature. This includes:"
 
 #: udlejning/templates/udlejning.html:130
 msgid "Eksterne virksomheder, der af en årsag har tilknytning til baren"
@@ -2611,13 +2620,11 @@ msgstr "In some cases, events by bartenders"
 #: udlejning/templates/udlejning.html:140
 msgid ""
 "\n"
-"\tVil man af andre grunde gerne låne anlægget, eller ønsker man også "
-"bartendere til bemanding af baren, kan man sende en forespørgelse til\n"
+"\tVil man af andre grunde gerne låne anlægget, eller ønsker man også bartendere til bemanding af baren, kan man sende en forespørgelse til\n"
 "\t"
 msgstr ""
 "\n"
-"If you would like to rent the kegerator for other reasons, or if you also "
-"want bartenders to staff the bar, you can send an inquiry to"
+"If you would like to rent the kegerator for other reasons, or if you also want bartenders to staff the bar, you can send an inquiry to"
 
 #: udlejning/templates/udlejning.html:148
 msgid "Anmod om udlejning i god tid"
@@ -2626,22 +2633,14 @@ msgstr "Request rental in good time"
 #: udlejning/templates/udlejning.html:150
 msgid ""
 "\n"
-"\t\t\tNår du låner et anlæg, skal der på udlåningsdagen samt ved "
-"tilbagelevering,\n"
-"\t\t\tvære et bestyrelsesmedlem tilgængelig, der står for det praktiske og "
-"kunne låse op.\n"
-"\t\t\tVi er alle frivillige og har studie og jobs ved siden af vores "
-"bestyrelsesarbejde,\n"
-"\t\t\tog vi kan derfor ikke garantere, at kunne stille et bestyrelsesmedlem "
-"til rådighed.\n"
+"\t\t\tNår du låner et anlæg, skal der på udlåningsdagen samt ved tilbagelevering,\n"
+"\t\t\tvære et bestyrelsesmedlem tilgængelig, der står for det praktiske og kunne låse op.\n"
+"\t\t\tVi er alle frivillige og har studie og jobs ved siden af vores bestyrelsesarbejde,\n"
+"\t\t\tog vi kan derfor ikke garantere, at kunne stille et bestyrelsesmedlem til rådighed.\n"
 "\t\t\t"
 msgstr ""
 "\n"
-"When you borrow a kegerator, on the day of loan and upon return, a board "
-"member must be available to handle the practicalities and unlock the "
-"kegerator. We are all volunteers and have studies and jobs in addition to "
-"our board work, and we cannot guarantee that a board member will be "
-"available."
+"When you borrow a kegerator, on the day of loan and upon return, a board member must be available to handle the practicalities and unlock the kegerator. We are all volunteers and have studies and jobs in addition to our board work, and we cannot guarantee that a board member will be available."
 
 #: udlejning/templates/udlejning.html:158
 msgid "Derfor skal du, for at være sikker på at kunne låne anlægget"
@@ -2748,8 +2747,8 @@ msgid ""
 "Hvis vores brætspilsvogn ikke allerede er udlånt, kan du låne den ved at "
 "sende en mail til"
 msgstr ""
-"If our board game cart is not already borrowed, you can borrow it by sending "
-"an email to"
+"If our board game cart is not already borrowed, you can borrow it by sending"
+" an email to"
 
 #: udlejning/templates/udlejningBoardGameCart.html:80
 #: udlejning/templates/udlejningGrill.html:80
@@ -2865,7 +2864,8 @@ msgid ""
 "Hvis vores festteltet ikke allerede er udlånt, kan du låne det ved at sende "
 "en mail til"
 msgstr ""
-"If our tent is not already borrowed, you can borrow it by sending an email to"
+"If our tent is not already borrowed, you can borrow it by sending an email "
+"to"
 
 #: udlejning/templates/udlejningTent.html:81
 msgid ""
@@ -2951,7 +2951,8 @@ msgid "Serverfejl"
 msgstr "Server error"
 
 #: web/templates/500.html:11
-msgid "Der skete en fejl på serveren, og vi kunne ikke behandle din anmodning."
+msgid ""
+"Der skete en fejl på serveren, og vi kunne ikke behandle din anmodning."
 msgstr ""
 "An error occurred on the server and we were unable to process your request."
 
@@ -2978,30 +2979,20 @@ msgstr "General info"
 #: web/templates/about.html:14
 msgid ""
 "\n"
-"    Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus "
-"Universitet,\n"
-"    som siden 1993 har været et socialt samlingspunkt for studerende og "
-"ansatte på instituttet.\n"
-"    Vi er kendt for vores store udvalg af specialøl, der kontinuerligt "
-"udskiftes.\n"
-"    Derudover har vi fokus på at have noget for enhver smag og prisklasse, "
-"og vi har altid\n"
-"    et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie "
-"alternativer.\n"
+"    Fredagscaféen er en studenterdrevet bar på Institut for Datalogi, Aarhus Universitet,\n"
+"    som siden 1993 har været et socialt samlingspunkt for studerende og ansatte på instituttet.\n"
+"    Vi er kendt for vores store udvalg af specialøl, der kontinuerligt udskiftes.\n"
+"    Derudover har vi fokus på at have noget for enhver smag og prisklasse, og vi har altid\n"
+"    et stort udvalg af sodavand, cider, shots, glutenfri øl og alkoholfrie alternativer.\n"
 "    Vi er samtidig en af de eneste fredagsbarer, der fast har fadøl fra\n"
 "    "
 msgstr ""
 "\n"
-"Fredagscaféen is a student-run bar at the Department of Computer Science, "
-"Aarhus University,\n"
-"which has been a social gathering place for students and employees at the "
-"department since 1993.\n"
-"We are known for our large selection of specialty beers, which are "
-"constantly being changed.\n"
-"In addition, we focus on having something for every taste and price range, "
-"and we always have\n"
-"a large selection of soda, cider, shots, gluten-free beer and non-alcoholic "
-"alternatives.\n"
+"Fredagscaféen is a student-run bar at the Department of Computer Science, Aarhus University,\n"
+"which has been a social gathering place for students and employees at the department since 1993.\n"
+"We are known for our large selection of specialty beers, which are constantly being changed.\n"
+"In addition, we focus on having something for every taste and price range, and we always have\n"
+"a large selection of soda, cider, shots, gluten-free beer and non-alcoholic alternatives.\n"
 "We are also one of the only Friday bars that always has keg beer from"
 
 #: web/templates/about.html:23
@@ -3016,26 +3007,22 @@ msgstr ""
 #: web/templates/about.html:29
 msgid ""
 "\n"
-"    Fredagscaféen drives af en frivillig bestyrelse, der består af "
-"studerende på instituttet,\n"
+"    Fredagscaféen drives af en frivillig bestyrelse, der består af studerende på instituttet,\n"
 "    som også kan ses\n"
 "    "
 msgstr ""
 "\n"
-"Fredagscaféen is run by a volunteer board of directors consisting of "
-"students at the department,\n"
+"Fredagscaféen is run by a volunteer board of directors consisting of students at the department,\n"
 "which can also be seen"
 
 #: web/templates/about.html:34
 msgid ""
 "\n"
-"    Baren er non-profit, og overskuddet går til vedligeholdelse af baren og "
-"arrangementer for bartenderne.\n"
+"    Baren er non-profit, og overskuddet går til vedligeholdelse af baren og arrangementer for bartenderne.\n"
 "    "
 msgstr ""
 "\n"
-"The bar is non-profit, and the profits go towards maintaining the bar and "
-"events for the bartenders."
+"The bar is non-profit, and the profits go towards maintaining the bar and events for the bartenders."
 
 #: web/templates/about.html:45
 msgid "befinder sig kælderen i Nygaard-bygningen på Institut for Datalogi"
@@ -3137,16 +3124,12 @@ msgstr "Fredagscaféens logo"
 #: web/templates/about.html:141
 msgid ""
 "\n"
-"                    Vores logo forestiller <i>Kaffeturingmaskinen</i>. En "
-"kaffekande, som bliver varmet af\n"
-"                    den turingmaskine den står på. Ud af siderne løber det "
-"uendelige bånd fra turingmaskinen.\n"
+"                    Vores logo forestiller <i>Kaffeturingmaskinen</i>. En kaffekande, som bliver varmet af\n"
+"                    den turingmaskine den står på. Ud af siderne løber det uendelige bånd fra turingmaskinen.\n"
 "                    "
 msgstr ""
 "\n"
-"Our logo depicts the <i>Coffee Turing Machine</i>. A coffee pot that is "
-"heated by the Turing Machine it sits on. Out of the sides runs the infinite "
-"tape of the Turing Machine."
+"Our logo depicts the <i>Coffee Turing Machine</i>. A coffee pot that is heated by the Turing Machine it sits on. Out of the sides runs the infinite tape of the Turing Machine."
 
 #: web/templates/about.html:147
 msgid "Logoet er originalt tegnet af"
@@ -3168,17 +3151,13 @@ msgstr "This is typically the first Friday in September."
 #: web/templates/about.html:166
 msgid ""
 "\n"
-"                    Det er ikke den officielle fødselsdato, da der ikke er "
-"enighed om hvornår baren\n"
-"                    blev til, da vi er en sammensætning af Åbobaren og den "
-"originale datalogiske bar\n"
+"                    Det er ikke den officielle fødselsdato, da der ikke er enighed om hvornår baren\n"
+"                    blev til, da vi er en sammensætning af Åbobaren og den originale datalogiske bar\n"
 "                    på Ny Munkegade.\n"
 "                    "
 msgstr ""
 "\n"
-"It is not the official birthday, as there is no consensus on when the bar "
-"was created, as we are a combination of Åbobaren and the original computer "
-"science bar on Ny Munkegade."
+"It is not the official birthday, as there is no consensus on when the bar was created, as we are a combination of Åbobaren and the original computer science bar on Ny Munkegade."
 
 #: web/templates/about.html:178
 msgid "Adfærdskodeks"
@@ -3191,15 +3170,12 @@ msgstr "Purpose"
 #: web/templates/about.html:191
 msgid ""
 "\n"
-"                Fredagsbaren er et socialt arrangement for indskrevne "
-"studerende på Aarhus Universitet.\n"
-"                Formålet er at skabe et trygt og hyggeligt fællesskab for "
-"alle deltagere.\n"
+"                Fredagsbaren er et socialt arrangement for indskrevne studerende på Aarhus Universitet.\n"
+"                Formålet er at skabe et trygt og hyggeligt fællesskab for alle deltagere.\n"
 "                "
 msgstr ""
 "\n"
-"The Friday Bar is a social event for enrolled students at Aarhus "
-"University.\n"
+"The Friday Bar is a social event for enrolled students at Aarhus University.\n"
 "The purpose is to create a safe and cozy community for all participants."
 
 #: web/templates/about.html:201
@@ -3209,16 +3185,13 @@ msgstr "Target audience"
 #: web/templates/about.html:206
 msgid ""
 "\n"
-"                Fredagsbaren er i udgangspunktet for indskrevne studerende "
-"ved Aarhus Universitet.\n"
-"                Gæster udefra er også velkomne, så længe de også respekterer "
-"retningslinjerne for adfærd herunder, samt dem fra\n"
+"                Fredagsbaren er i udgangspunktet for indskrevne studerende ved Aarhus Universitet.\n"
+"                Gæster udefra er også velkomne, så længe de også respekterer retningslinjerne for adfærd herunder, samt dem fra\n"
 "                "
 msgstr ""
 "\n"
 "The Friday bar is primarily for enrolled students at Aarhus University.\n"
-"Guests from outside are also welcome, as long as they also respect the "
-"guidelines for behavior below, as well as those from"
+"Guests from outside are also welcome, as long as they also respect the guidelines for behavior below, as well as those from"
 
 #: web/templates/about.html:210
 msgid ""
@@ -3236,8 +3209,7 @@ msgstr "Behavior"
 #: web/templates/about.html:222
 msgid ""
 "\n"
-"                Alle deltagere skal respektere følgende grundlæggende "
-"retningslinjer:\n"
+"                Alle deltagere skal respektere følgende grundlæggende retningslinjer:\n"
 "                "
 msgstr ""
 "\n"
@@ -3248,8 +3220,8 @@ msgid ""
 "Opføre sig respektfuldt overfor de andre deltagende gæster og de frivillige "
 "bartendere."
 msgstr ""
-"Behave respectfully towards the other participating guests and the volunteer "
-"bartenders."
+"Behave respectfully towards the other participating guests and the volunteer"
+" bartenders."
 
 #: web/templates/about.html:227
 msgid "Undlad støjende, truende eller generende adfærd."
@@ -3260,8 +3232,8 @@ msgid ""
 "Vær opmærksom på grænser - diskriminerende, krænkende eller på anden måde "
 "uacceptabel adfærd tolereres ikke."
 msgstr ""
-"Be aware of boundaries - discriminatory, offensive or otherwise unacceptable "
-"behavior will not be tolerated."
+"Be aware of boundaries - discriminatory, offensive or otherwise unacceptable"
+" behavior will not be tolerated."
 
 #: web/templates/about.html:229
 msgid ""
@@ -3291,8 +3263,8 @@ msgstr ""
 
 #: web/templates/about.html:247
 msgid ""
-"Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove "
-"overtrædelser finder sted."
+"Nægte adgang til fremtidige arrangementer, hvis gentagne eller særligt grove"
+" overtrædelser finder sted."
 msgstr ""
 "Deny access to future events if repeated or particularly serious violations "
 "occur."
@@ -3304,14 +3276,12 @@ msgstr "Disciplinary measures for students"
 #: web/templates/about.html:260
 msgid ""
 "\n"
-"                Indskrevne studerende, der forbryder sig mod AU's "
-"ordensregler, kan desuden blive omfattet\n"
+"                Indskrevne studerende, der forbryder sig mod AU's ordensregler, kan desuden blive omfattet\n"
 "                af disciplinære foranstaltninger i henhold til\n"
 "                "
 msgstr ""
 "\n"
-"Enrolled students who violate AU's rules of conduct may also be subject to "
-"disciplinary measures in accordance with"
+"Enrolled students who violate AU's rules of conduct may also be subject to disciplinary measures in accordance with"
 
 #: web/templates/about.html:265
 msgid "Aarhus Universitet's ordensregler"
@@ -3324,21 +3294,16 @@ msgstr "Reporting Violations"
 #: web/templates/about.html:277
 msgid ""
 "\n"
-"                Henvendelser vedrørende ordensreglementet eller konkrete "
-"hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til "
-"bestyrelsen gennem\n"
+"                Henvendelser vedrørende ordensreglementet eller konkrete hændelser kan rettes til arrangørerne af fredagsbaren, eller direkte til bestyrelsen gennem\n"
 "                "
 msgstr ""
 "\n"
-"Inquiries regarding the rules of procedure or specific incidents can be "
-"directed to the organizers of the Friday bar, or directly to the board of "
-"directors through"
+"Inquiries regarding the rules of procedure or specific incidents can be directed to the organizers of the Friday bar, or directly to the board of directors through"
 
 #: web/templates/about.html:281
 msgid ""
 "\n"
-"                eller specifikke medlemmer, hvis kontaktoplysninger kan "
-"findes\n"
+"                eller specifikke medlemmer, hvis kontaktoplysninger kan findes\n"
 "                "
 msgstr ""
 "\n"
@@ -3347,19 +3312,13 @@ msgstr ""
 #: web/templates/about.html:285
 msgid ""
 "\n"
-"                Alle henvendelser vil blive behandlet fortroligt, og der vil "
-"blive taget hensyn til den enkeltes ønsker om anonymitet.\n"
-"                Intet er for småt eller for stort til at blive taget op, og "
-"vi opfordrer alle til at henvende sig, hvis de oplever eller observerer "
-"noget, der strider imod ordensreglerne.\n"
+"                Alle henvendelser vil blive behandlet fortroligt, og der vil blive taget hensyn til den enkeltes ønsker om anonymitet.\n"
+"                Intet er for småt eller for stort til at blive taget op, og vi opfordrer alle til at henvende sig, hvis de oplever eller observerer noget, der strider imod ordensreglerne.\n"
 "                "
 msgstr ""
 "\n"
-"All inquiries will be treated confidentially, and individual wishes for "
-"anonymity will be taken into account.\n"
-"Nothing is too small or too big to be addressed, and we encourage everyone "
-"to contact us if they experience or observe anything that violates the code "
-"of conduct."
+"All inquiries will be treated confidentially, and individual wishes for anonymity will be taken into account.\n"
+"Nothing is too small or too big to be addressed, and we encourage everyone to contact us if they experience or observe anything that violates the code of conduct."
 
 #: web/templates/about.html:295
 msgid "Politiske organisationer"
@@ -3368,23 +3327,18 @@ msgstr "Political organizations"
 #: web/templates/about.html:300
 msgid ""
 "\n"
-"                Det er ikke tilladt for politiske organisationer at have "
-"aktiviteter i fredagsbaren,\n"
-"                da vi ønsker at bevare et neutralt og apolitisk miljø, hvor "
-"alle gæster føler sig\n"
+"                Det er ikke tilladt for politiske organisationer at have aktiviteter i fredagsbaren,\n"
+"                da vi ønsker at bevare et neutralt og apolitisk miljø, hvor alle gæster føler sig\n"
 "                velkomne uanset deres politiske holdninger.\n"
 "                "
 msgstr ""
 "\n"
-"Political organizations are not allowed to have activities in the Friday "
-"bar, as we want to maintain a neutral and apolitical environment where all "
-"guests feel welcome regardless of their political views."
+"Political organizations are not allowed to have activities in the Friday bar, as we want to maintain a neutral and apolitical environment where all guests feel welcome regardless of their political views."
 
 #: web/templates/about.html:305
 msgid ""
 "\n"
-"                En undtagelse kan dog tillades, hvis der foreligger "
-"dispensation fra AU.\n"
+"                En undtagelse kan dog tillades, hvis der foreligger dispensation fra AU.\n"
 "                "
 msgstr ""
 "\n"
@@ -3476,8 +3430,8 @@ msgstr "Back"
 
 #: web/views.py:52
 msgid ""
-"Login mail sendt: Tryk på linket i din modtagede mail for at logge ind. Husk "
-"også at checke din spam mappe."
+"Login mail sendt: Tryk på linket i din modtagede mail for at logge ind. Husk"
+" også at checke din spam mappe."
 msgstr ""
 "Login mail sent: Press the link in your received email to log in. Also "
 "remember to check your spam folder."

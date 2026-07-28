@@ -197,6 +197,9 @@ class EventView(TemplateView):
         if not bartender or not event.may_attend(bartender):
             return HttpResponseForbidden(_("Not logged in as an active bartender"))
 
+        if not event.response_deadline:
+            return HttpResponseForbidden(_("This event does not take responses"))
+
         form = EventResponseForm(request.POST, event=event, bartender=bartender)
         if not form.is_valid():
             for error in form.errors.values():
