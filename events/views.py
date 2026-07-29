@@ -166,6 +166,8 @@ class EventView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        now = timezone.now()
+
         context["load_no_answers"] = self.request.GET.get("load_no_answers")
 
         event_id = self.request.resolver_match.kwargs["event_id"]
@@ -179,6 +181,9 @@ class EventView(TemplateView):
 
         if may_attend:
             context["form"] = EventResponseForm(event=event, bartender=bartender)
+
+        if event.start_datetime > now:
+            context["future"] = True
 
         context["bartender"] = bartender
         context["event"] = event
@@ -196,6 +201,9 @@ class EventView(TemplateView):
         bartender = self.get_bartender()
         if not bartender or not event.may_attend(bartender):
             return HttpResponseForbidden(_("Not logged in as an active bartender"))
+
+        if not event.response_deadline:
+            return HttpResponseForbidden(_("This event does not take responses"))
 
         form = EventResponseForm(request.POST, event=event, bartender=bartender)
         if not form.is_valid():

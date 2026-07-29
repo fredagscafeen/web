@@ -2,7 +2,7 @@
 {% load django_bootstrap5 bootstrap_icons %}
 {% load event_image_url event_description %}
 
-<div class="card card-hover" style="background-color: var(--lightblue);">
+<div class="card card-hover" style="background-color: var(--lightblue);{% if not future %} opacity: 0.7;{% endif %}">
     {% if event.event_album %}
         {% with image_url=event|event_image_url %}
             {% if image_url %}

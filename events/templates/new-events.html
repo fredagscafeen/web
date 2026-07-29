@@ -49,7 +49,7 @@
                         </li>
                     {% endif %}
 
-                    <li class="timeline-item right mb-3">
+                    <li class="timeline-item right">
                         {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
                     </li>
                 {% endwith %}
@@ -103,7 +103,7 @@
                         </li>
                     {% endif %}
 
-                    <li class="timeline-item {% if event.is_bartender_event %}right{% else %}left{% endif %} mb-3">
+                    <li class="timeline-item {% if event.is_bartender_event %}right{% else %}left{% endif %}">
                         {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
                     </li>
                 {% endwith %}

@@ -22,10 +22,9 @@ class Event(TimeStampedModel):
         default=EventType.INTERNAL,
         verbose_name=_("Event type"),
         help_text=_(
-            "Common events are visible to all bartenders, while bartender events are only visible to bartenders who are allowed to attend."
+            "Common events are visible to everyone, while bartender events are only visible to bartenders."
         ),
     )
-
     name = models.CharField(
         max_length=255,
         verbose_name=_("Name"),
@@ -47,7 +46,6 @@ class Event(TimeStampedModel):
         verbose_name=_("Event album"),
         help_text=_("The album associated with the event."),
     )
-
     location = models.CharField(
         blank=True,
         max_length=255,
@@ -59,13 +57,10 @@ class Event(TimeStampedModel):
         verbose_name=_("Public description"),
         help_text=_("A description of the event. This will be visible to all users."),
     )
-
     internal_description = models.TextField(
         blank=True,
         verbose_name=_("Internal description"),
-        help_text=_(
-            "This will display for bartenders instead of the public description. Leave blank to use the public description. This is useful for internal information that should not be visible to the public. For example when the event is common but it has internal information for bartenders."
-        ),
+        help_text=_("Internal information shown only to bartenders."),
     )
 
     # --- BARTENDER EVENTS ONLY ---
