@@ -93,32 +93,6 @@ class Event(TimeStampedModel):
     def __str__(self):
         return f"{self.year}: {self.name}"
 
-    def is_main_link(self):
-        """This is only temporary until the CommonEvent model is removed. It is to maintain compatibility with the existing templates."""
-        if self.event_album_id:
-            return True
-        return self.links.exists()
-
-    def get_main_link(self):
-        """This is only temporary until the CommonEvent model is removed. It is to maintain compatibility with the existing templates."""
-        if self.event_album:
-            return self.event_album.get_absolute_url()
-
-        first_link = self.links.first()
-        if first_link:
-            return first_link.url
-        return None
-
-    def get_main_link_icon(self):
-        """This is only temporary until the CommonEvent model is removed. It is to maintain compatibility with the existing templates."""
-        if self.event_album:
-            return "image"
-
-        first_link = self.links.first()
-        if first_link:
-            return first_link.get_icon()
-        return "link-45deg"
-
     def is_bartender_event(self):
         return self.event_type == self.EventType.INTERNAL
 
@@ -387,29 +361,3 @@ class EventResponse(models.Model):
 
     def get_sorted_options(self):
         return sorted(self.selected_options.all(), key=lambda o: o.event_choice.id)
-
-
-class CommonEvent(models.Model):
-    class Meta:
-        ordering = ("date",)
-
-    title = models.CharField(max_length=200)
-    date = models.DateField()
-    description = models.TextField(
-        blank=True,
-        verbose_name=_("Description"),
-    )
-    url = models.URLField(blank=True, verbose_name=_("Link to additional information"))
-
-    def __str__(self):
-        return "%s: %s" % (self.date, self.title)
-
-    def url_bs_icon(self):
-        url_is_internal = settings.DOMAIN in f"{self.url}"
-        if url_is_internal:
-            return "image"
-        return (
-            "facebook"
-            if "facebook.com" in f"{self.url}" or "fb.com" in f"{self.url}"
-            else "link-45deg"
-        )

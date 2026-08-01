@@ -9,14 +9,7 @@ from unfold.widgets import UnfoldAdminTextareaWidget
 from bartenders.models import Bartender
 from fredagscafeen.admin import CustomModelAdmin
 
-from .models import (
-    CommonEvent,
-    Event,
-    EventChoice,
-    EventChoiceOption,
-    EventLink,
-    EventResponse,
-)
+from .models import Event, EventChoice, EventChoiceOption, EventLink, EventResponse
 
 
 class EventLinkInlineForm(forms.ModelForm):
@@ -253,12 +246,3 @@ class EventAdmin(CustomModelAdmin):
 class EventResponseAdmin(CustomModelAdmin):
     autocomplete_fields = ["event", "bartender", "selected_options"]
     pass
-
-
-@admin.register(CommonEvent)
-class CommonEventAdmin(CustomModelAdmin):
-    list_display = (
-        "title",
-        "date",
-        "url",
-    )
