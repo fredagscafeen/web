@@ -1,0 +1,117 @@
+{% load i18n %}
+{% load static %}
+{% load django_bootstrap5 bootstrap_icons %}
+
+{% with past_events_data as events_data %}
+
+<div class="m-2">
+    <div class="d-flex align-items-center">
+        <div class="w-100 text-start">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>{% translate "Past events" %}</h2>
+            </div>
+            <hr class="m-0">
+        </div>
+    </div>
+
+    <!-- Extra Small Mobile view -->
+    <div class="position-relative h-100 d-sm-none" data-timeline-size="xs-mobile">
+        <ol class="timeline">
+            {% if past_page_obj.has_previous %}
+                <li class="timeline-item timeline-navigation" data-timeline-position="center">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ past_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
+                </li>
+            {% endif %}
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item" data-timeline-position="center">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
+                                {{ event_data.year }}
+                            </h4>
+                        </li>
+                    {% endif %}
+
+                    <li class="timeline-item" data-timeline-position="right" data-timeline-type="past">
+                        {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
+                    </li>
+                {% endwith %}
+            {% endfor %}
+            {% if past_page_obj.has_next %}
+                <li class="timeline-item timeline-navigation" data-timeline-position="center">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ past_page_obj.next_page_number }}">{% translate "Vis tidligere" %}</a>
+                </li>
+            {% endif %}
+        </ol>
+    </div>
+
+    <!-- Mobile view -->
+    <div class="position-relative h-100 d-none d-sm-block d-lg-none" style="padding-left: 36px;" data-timeline-size="mobile">
+        <div class="timeline-separator"></div>
+        <ol class="timeline">
+            {% if past_page_obj.has_previous %}
+                <li class="timeline-item timeline-navigation" data-timeline-position="center">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ past_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
+                </li>
+            {% endif %}
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item" data-timeline-position="center">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
+                                {{ event_data.year }}
+                            </h4>
+                        </li>
+                    {% endif %}
+
+                    <li class="timeline-item" data-timeline-position="right" data-timeline-type="past">
+                        {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
+                    </li>
+                {% endwith %}
+            {% endfor %}
+            {% if past_page_obj.has_next %}
+                <li class="timeline-item timeline-navigation" data-timeline-position="center">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ past_page_obj.next_page_number }}">{% translate "Vis tidligere" %}</a>
+                </li>
+            {% endif %}
+        </ol>
+    </div>
+
+    <!-- Desktop view -->
+    <div class="position-relative h-100 d-none d-lg-block" data-timeline-size="desktop">
+        <div class="timeline-separator"></div>
+        <ol class="timeline">
+            {% if past_page_obj.has_previous %}
+                <li class="timeline-item timeline-navigation" data-timeline-position="center">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ past_page_obj.previous_page_number }}">{% translate "Vis nyere" %}</a>
+                </li>
+            {% endif %}
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item" data-timeline-position="center">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
+                                {{ event_data.year }}
+                            </h4>
+                        </li>
+                    {% endif %}
+
+                    <li class="timeline-item" data-timeline-position="{% if event.is_bartender_event %}right{% else %}left{% endif %}" data-timeline-type="past">
+                        {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
+                    </li>
+                {% endwith %}
+            {% endfor %}
+            {% if past_page_obj.has_next %}
+                <li class="timeline-item timeline-navigation" data-timeline-position="center">
+                    <a class="btn btn-outline-primary btn-sm" href="?events_per_page={{ events_per_page }}&event_page={{ past_page_obj.next_page_number }}">{% translate "Vis tidligere" %}</a>
+                </li>
+            {% endif %}
+        </ol>
+    </div>
+</div>
+
+<div class="row sm-m-4">
+    <p class="text-center text-dark m-0">{% translate "Showing" %} {{ past_page_obj.start_index }} {% translate "to" %} {{ past_page_obj.end_index }} {% translate "of" %} {{ past_page_obj.paginator.count }} {% translate "past events" %}</p>
+</div>
+
+{% endwith %}

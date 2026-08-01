@@ -1,0 +1,107 @@
+{% load i18n %}
+{% load static %}
+{% load django_bootstrap5 bootstrap_icons %}
+
+{% with upcoming_events_data as events_data %}
+
+<div class="m-2">
+    <div class="d-flex align-items-center">
+        <div class="w-100 text-start">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="d-lg-none">{% translate "Events" %}</h2>
+                <h2 class="d-none d-lg-block">{% translate "Upcoming events" %}</h2>
+                <div class="dropdown">
+                    <button class="btn btn-outline-info btn-sm dropdown-toggle d-flex align-items-center gap-2" type="button" id="icalDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% bs_icon 'calendar-week' %} iCal Feed
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="icalDropdown">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'common_event_feed' %}">
+                                <span class="badge bg-success" style="width: 12px; height: 12px; padding: 0; border-radius: 50%; display: inline-block;"></span>
+                                {% translate "Public Events" %}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'event_feed' %}">
+                                <span class="badge bg-primary" style="width: 12px; height: 12px; padding: 0; border-radius: 50%; display: inline-block;"></span>
+                                {% translate "Bartender Events" %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="m-0">
+        </div>
+    </div>
+
+    <!-- Extra Small Mobile view -->
+    <div class="position-relative h-100 d-sm-none" data-timeline-size="xs-mobile">
+        <ol class="timeline">
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item" data-timeline-position="center">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
+                                {{ event_data.year }}
+                            </h4>
+                        </li>
+                    {% endif %}
+
+                    <li class="timeline-item" data-timeline-position="right">
+                        {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
+                    </li>
+                {% endwith %}
+            {% endfor %}
+        </ol>
+    </div>
+
+    <!-- Mobile view -->
+    <div class="position-relative h-100 d-none d-sm-block d-lg-none" style="padding-left: 36px;" data-timeline-size="mobile">
+        <div class="timeline-separator"></div>
+        <ol class="timeline">
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item" data-timeline-position="center">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
+                                {{ event_data.year }}
+                            </h4>
+                        </li>
+                    {% endif %}
+
+                    <li class="timeline-item" data-timeline-position="right">
+                        {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
+                    </li>
+                {% endwith %}
+            {% endfor %}
+        </ol>
+    </div>
+
+    <!-- Desktop view -->
+    <div class="d-none d-lg-block position-relative h-100" data-timeline-size="desktop">
+        <div class="timeline-separator"></div>
+        <ol class="timeline">
+            {% for event_data in events_data %}
+                {% with event_data.event as event %}
+                    {% if event_data.year %}
+                        <li class="timeline-item" data-timeline-position="center">
+                            <h4 class="fw-bold text-primary" id="year-{{ event_data.year }}">
+                                {{ event_data.year }}
+                            </h4>
+                        </li>
+                    {% endif %}
+
+                    <li class="timeline-item" data-timeline-position="{% if event.is_bartender_event %}right{% else %}left{% endif %}">
+                        {% include 'components/event-card.html' with event=event future=event_data.future not_answered=event_data.not_answered %}
+                    </li>
+                {% endwith %}
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+
+<div class="row m-sm-4">
+    <p class="text-center text-dark m-0">{% translate "Showing" %} {{ events_data|length }} {% translate "upcoming events" %}</p>
+</div>
+
+{% endwith %}
