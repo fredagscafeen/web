@@ -196,7 +196,8 @@ class EventAdmin(CustomModelAdmin):
         EventResponseReadonlyInline,
     ]
     list_display_links = ("name",)
-    autocomplete_fields = ["event_album", "bartender_whitelist", "bartender_blacklist"]
+    autocomplete_fields = ["event_album"]
+    filter_horizontal = ("bartender_whitelist", "bartender_blacklist")
     search_fields = (
         "name",
         "year",
