@@ -68,6 +68,12 @@ DATMAIL_CONTROL_URL = os.getenv("DATMAIL_CONTROL_URL", "")
 DATMAIL_CONTROL_TOKEN = os.getenv("DATMAIL_CONTROL_TOKEN", "")
 DATMAIL_CONTROL_TIMEOUT = int(os.getenv("DATMAIL_CONTROL_TIMEOUT", "10"))
 
+# Accountant settings
+EXPENSE_ATTACHMENT_BUCKET_NAME = os.getenv("EXPENSE_ATTACHMENT_BUCKET_NAME", "")
+EXPENSE_ATTACHMENT_PRESIGNED_URL_EXPIRATION = int(
+    os.getenv("EXPENSE_ATTACHMENT_PRESIGNED_URL_EXPIRATION", "3600")
+)
+
 # QR Code generation settings
 GEN_QR_CODE_API_URL = os.getenv("GEN_QR_CODE_API_URL", "https://api.genqrcode.com")
 GEN_QR_CODE_API_KEY = os.getenv("GEN_QR_CODE_API_KEY", "")
@@ -371,6 +377,9 @@ INSTALLED_APPS = (
     "gallery",
     "versatileimagefield",
     "qr",
+    "accountant",
+    "crispy_forms",
+    "crispy_tailwind",
 )
 
 MIDDLEWARE = (
@@ -517,3 +526,6 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ("image_2280", "thumbnail__2280x2280"),
     ],
 }
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
