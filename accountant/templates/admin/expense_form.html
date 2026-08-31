@@ -1,0 +1,90 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load unfold %}
+
+{% block content %}
+<style>
+    .file-input::file-selector-button,
+    .file-input::-webkit-file-upload-button {
+        margin-right: 1rem;
+        border: 0;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: #e4e4e7;
+        color: #18181b;
+        cursor: pointer;
+    }
+    .file-input:hover::file-selector-button,
+    .file-input:hover::-webkit-file-upload-button {
+        background: #d4d4d8;
+    }
+    @media (prefers-color-scheme: dark) {
+        .file-input::file-selector-button,
+        .file-input::-webkit-file-upload-button {
+            background: #3f3f46;
+            color: #f4f4f5;
+        }
+        .file-input:hover::file-selector-button,
+        .file-input:hover::-webkit-file-upload-button {
+            background: #52525b;
+        }
+    }
+</style>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% crispy expense_form %}
+
+    {% translate "Expense items" as expense_items_title %}
+    {% component "unfold/components/card.html" with title=expense_items_title class="mt-6" %}
+        {{ item_formset.management_form }}
+
+        <div id="expense-items" class="flex flex-col gap-4">
+            {% for form in item_formset %}
+                <div class="expense-item border border-base-200 rounded-default p-4 dark:border-base-800">
+                    {% crispy form %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-4">
+            {% component "unfold/components/button.html" with type="button" id="add-item" variant="secondary" icon="add" %}
+                {% translate "Add expense item" %}
+            {% endcomponent %}
+        </div>
+    {% endcomponent %}
+
+    <div class="mt-6">
+        {% component "unfold/components/button.html" with submit=True %}
+            {% translate "Submit" %}
+        {% endcomponent %}
+    </div>
+</form>
+
+<template id="empty-item-template">
+    <div class="expense-item border border-base-200 rounded-default p-4 dark:border-base-800">
+        {% crispy item_formset.empty_form %}
+    </div>
+</template>
+
+<script>
+    (function () {
+        var container = document.getElementById("expense-items");
+        var addButton = document.getElementById("add-item");
+        var totalForms = document.getElementById("id_items-TOTAL_FORMS");
+        var templateHtml = document.getElementById("empty-item-template").innerHTML;
+
+        addButton.addEventListener("click", function () {
+            var formIndex = parseInt(totalForms.value, 10);
+            container.insertAdjacentHTML(
+                "beforeend",
+                templateHtml.split("__prefix__").join(formIndex)
+            );
+            totalForms.value = formIndex + 1;
+        });
+    })();
+</script>
+{% endblock %}

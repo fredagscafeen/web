@@ -1,4 +1,4 @@
-.PHONY: deploy logs run migrate migrations createsuperuser import-db import-media makemessages compilemessages test new-module collectstatic generate-shifts generate-deposit-shifts
+.PHONY: deploy logs run migrate migrations createsuperuser import-db import-media makemessages compilemessages test new-module collectstatic generate-shifts generate-deposit-shifts install-packages
 
 deploy:
 	docker-compose pull
@@ -31,3 +31,5 @@ generate-shifts:
 	docker exec -it web-app-1 ./manage.py generate_barshifts
 generate-deposit-shifts:
 	docker exec -it web-app-1 ./manage.py generate_deposit_shifts
+install-packages:
+	pip install -r requirements.txt
