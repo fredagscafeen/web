@@ -17,16 +17,20 @@
         color: #18181b;
         cursor: pointer;
     }
+
     .file-input:hover::file-selector-button,
     .file-input:hover::-webkit-file-upload-button {
         background: #d4d4d8;
     }
+
     @media (prefers-color-scheme: dark) {
+
         .file-input::file-selector-button,
         .file-input::-webkit-file-upload-button {
             background: #3f3f46;
             color: #f4f4f5;
         }
+
         .file-input:hover::file-selector-button,
         .file-input:hover::-webkit-file-upload-button {
             background: #52525b;
@@ -40,33 +44,50 @@
 
     {% translate "Expense items" as expense_items_title %}
     {% component "unfold/components/card.html" with title=expense_items_title class="mt-6" %}
-        {{ item_formset.management_form }}
+    {{ item_formset.management_form }}
 
-        <div id="expense-items" class="flex flex-col gap-4">
-            {% for form in item_formset %}
-                <div class="expense-item border border-base-200 rounded-default p-4 dark:border-base-800">
-                    {% crispy form %}
-                </div>
-            {% endfor %}
+    <div id="expense-items" class="flex flex-col gap-4">
+        {% for form in item_formset %}
+        <div class="expense-item border border-base-200 rounded-default p-4 dark:border-base-800">
+            {% crispy form %}
+            {% if items_editable %}
+            <div class="mt-2">
+                {% component "unfold/components/button.html" with type="button" extra_attrs='id="remove-item"' variant="danger" icon="close" %}
+                {% translate "Remove item" %}
+                {% endcomponent %}
+            </div>
+            {% endif %}
         </div>
+        {% endfor %}
+    </div>
 
-        <div class="mt-4">
-            {% component "unfold/components/button.html" with type="button" id="add-item" variant="secondary" icon="add" %}
-                {% translate "Add expense item" %}
-            {% endcomponent %}
-        </div>
-    {% endcomponent %}
-
-    <div class="mt-6">
-        {% component "unfold/components/button.html" with submit=True %}
-            {% translate "Submit" %}
+    {% if items_editable %}
+    <div class="mt-4">
+        {% component "unfold/components/button.html" with type="button" extra_attrs='id="add-item"' variant="secondary" icon="add" %}
+        {% translate "Add expense item" %}
         {% endcomponent %}
     </div>
+    {% endif %}
+    {% endcomponent %}
+
+    {% if show_submit %}
+    <div class="mt-6">
+        {% component "unfold/components/button.html" with submit=True %}
+        {% translate "Submit" %}
+        {% endcomponent %}
+    </div>
+    {% endif %}
 </form>
 
+{% if items_editable %}
 <template id="empty-item-template">
     <div class="expense-item border border-base-200 rounded-default p-4 dark:border-base-800">
         {% crispy item_formset.empty_form %}
+        <div class="mt-2">
+            {% component "unfold/components/button.html" with type="button" extra_attrs='id="remove-item"' variant="danger" icon="close" %}
+            {% translate "Remove item" %}
+            {% endcomponent %}
+        </div>
     </div>
 </template>
 
@@ -85,6 +106,20 @@
             );
             totalForms.value = formIndex + 1;
         });
+
+        container.addEventListener("click", function (event) {
+            var removeButton = event.target.closest("#remove-item");
+            if (!removeButton) {
+                return;
+            }
+            var row = removeButton.closest(".expense-item");
+            var deleteCheckbox = row.querySelector('input[name$="-DELETE"]');
+            if (deleteCheckbox) {
+                deleteCheckbox.checked = true;
+            }
+            row.style.display = "none";
+        });
     })();
 </script>
+{% endif %}
 {% endblock %}

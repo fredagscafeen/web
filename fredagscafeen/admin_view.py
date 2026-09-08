@@ -5,7 +5,7 @@ from django.contrib.admin.options import csrf_protect_m
 from fredagscafeen.admin import CustomModelAdmin
 
 
-def custom_admin_view(app_label, name):
+def custom_admin_view(app_label, name, show_in_sidebar=True):
     def f(view_function):
         model_name = name.replace(" ", "_").lower()
 
@@ -26,6 +26,9 @@ def custom_admin_view(app_label, name):
 
             def has_change_permission(self, *args, **kwargs):
                 return True
+
+            def has_module_permission(self, request):
+                return show_in_sidebar
 
         class FakeModel:
             class Meta:

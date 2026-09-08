@@ -1,0 +1,48 @@
+{% load latex_escape %}
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=2cm, landscape]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\keepXColumns
+\usepackage[pdftex]{graphicx}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent\begin{minipage}[c]{0.15\linewidth}
+\includegraphics[height=1.5cm]{%
+{{ logo_path }}%
+}
+\end{minipage}%
+\begin{minipage}[c]{0.85\linewidth}
+\centering
+{\LARGE \textbf{Udgiftsbilag}}
+\end{minipage}
+
+\vspace{0.3cm}
+\noindent
+\textbf{Bruger:} {{ user_name|latex_escape }} \\
+\textbf{Reg. nr.:} {{ bank_registration_number|latex_escape }} \quad
+\textbf{Kontonr.:} {{ bank_account_number|latex_escape }} \\
+\textbf{Genereret:} {% now "j. F Y" %}
+
+\vspace{0.5cm}
+
+\begin{tabularx}{\linewidth}{|l|X|r|X|X|}
+\hline
+\textbf{Dato} & \textbf{Beskrivelse} & \textbf{Beløb (DKK)} & \textbf{Noter} & \textbf{Bilag} \\
+\hline
+\endhead
+{% for item in items %}
+{{ item.date|date:"j/n-Y" }} & {{ item.description|latex_escape }} & {{ item.amount }} & {{ item.notes|latex_escape }} & {% for attachment in item.attachments %}{{ attachment|latex_escape }}{% if not forloop.last %} \newline {% endif %}{% endfor %} \\
+\hline
+{% endfor %}
+\end{tabularx}
+
+\vspace{0.3cm}
+\noindent
+\textbf{Total: {{ total }} DKK}
+
+\end{document}
