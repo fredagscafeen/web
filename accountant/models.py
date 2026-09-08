@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
-from bartenders.models import Bartender
 from web.models import TimeStampedModel
 
 
@@ -13,10 +15,14 @@ class OutOfPocketExpense(TimeStampedModel):
             ("complete_expenses", "Can mark out of pocket expenses as completed"),
         ]
 
-    bartender = models.ForeignKey(
-        Bartender,
+    user = models.ForeignKey(
+        User,
         on_delete=models.CASCADE,
         related_name="out_of_pocket_expenses",
+        verbose_name=_("User"),
+        help_text=_(
+            "The user this expense belongs to. Can edit it until it is completed."
+        ),
     )
 
     bank_registration_number = models.CharField(
@@ -38,7 +44,7 @@ class OutOfPocketExpense(TimeStampedModel):
     )
 
     def __str__(self):
-        return f"{self.bartender.name} - {self.created_at.strftime('%Y-%m-%d')} - {self.total_amount} DKK"
+        return f"{self.user.first_name} {self.user.last_name} - {self.created_at.strftime('%Y-%m-%d')} - {self.total_amount} DKK"
 
     @property
     def total_amount(self):
@@ -59,6 +65,11 @@ class OutOfPocketExpenseItem(TimeStampedModel):
         max_length=255,
         verbose_name=_("Description"),
     )
+    date = models.DateField(
+        default=timezone.localdate,
+        verbose_name=_("Date"),
+        help_text=_("The date the expense was made."),
+    )
     notes = models.TextField(
         blank=True,
         verbose_name=_("Notes"),
@@ -67,7 +78,7 @@ class OutOfPocketExpenseItem(TimeStampedModel):
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Amount"),
-        help_text=_("The amount in DKK."),
+        help_text=_("The amount in DKK. Only 2 decimal digits are accepted."),
     )
 
 
@@ -82,3 +93,7 @@ class ExpenseAttachment(TimeStampedModel):
         related_name="attachments",
     )
     s3_object_key = models.CharField(max_length=1024)
+
+    @property
+    def filename(self):
+        return self.s3_object_key.rsplit("/", 1)[-1]

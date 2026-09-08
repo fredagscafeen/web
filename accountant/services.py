@@ -1,8 +1,10 @@
 import uuid
-
 import boto3
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+
+def expense_key(expense_id, expense_item_id, filename):
+    return f"expense-attachments/{expense_id}/{expense_item_id}/{filename}"
 
 
 def upload_expense_attachment(uploaded_file, expense_item):
@@ -11,7 +13,7 @@ def upload_expense_attachment(uploaded_file, expense_item):
             print(
                 "Warning: EXPENSE_ATTACHMENT_BUCKET_NAME is not configured. Skipping upload to S3."
             )
-            return f"local/{uuid.uuid4().hex}-{uploaded_file.name}"
+            return expense_key(expense_item.expense_id, expense_item.id, uploaded_file.name)
         else:
             raise ImproperlyConfigured(
                 "EXPENSE_ATTACHMENT_BUCKET_NAME is not configured."
@@ -24,7 +26,7 @@ def upload_expense_attachment(uploaded_file, expense_item):
         aws_secret_access_key=settings.S3_SECRET_ACCESS_KEY,
         region_name=settings.S3_REGION_NAME,
     )
-    object_key = f"expense-attachments/{expense_item.expense_id}/{expense_item.id}/{uuid.uuid4().hex}-{uploaded_file.name}"
+    object_key = expense_key(expense_item.expense_id, expense_item.id, uploaded_file.name)
 
     client.put_object(
         Bucket=settings.EXPENSE_ATTACHMENT_BUCKET_NAME,
@@ -34,6 +36,26 @@ def upload_expense_attachment(uploaded_file, expense_item):
     )
 
     return object_key
+
+
+def get_expense_attachment_bytes(attachment):
+    if not settings.EXPENSE_ATTACHMENT_BUCKET_NAME:
+        if settings.DEBUG:
+            return b""
+        raise ImproperlyConfigured("EXPENSE_ATTACHMENT_BUCKET_NAME is not configured.")
+
+    client = boto3.client(
+        "s3",
+        endpoint_url=settings.S3_ENDPOINT_URL,
+        aws_access_key_id=settings.S3_ACCESS_KEY_ID,
+        aws_secret_access_key=settings.S3_SECRET_ACCESS_KEY,
+        region_name=settings.S3_REGION_NAME,
+    )
+    response = client.get_object(
+        Bucket=settings.EXPENSE_ATTACHMENT_BUCKET_NAME,
+        Key=attachment.s3_object_key,
+    )
+    return response["Body"].read()
 
 
 def build_expense_attachment_download_url(attachment):

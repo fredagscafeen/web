@@ -72,6 +72,7 @@ UNFOLD = {
         "form": "fredagscafeen.forms.AdminLoginForm",
     },
     "STYLES": [
+        lambda request: static("css/tailwind.css"),
         lambda request: static("css/style.css"),
     ],
     "SCRIPTS": [
