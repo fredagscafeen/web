@@ -2,8 +2,11 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Div, Field, Layout
 from django import forms
 from django.contrib.auth import get_user_model
+from django.core.validators import FileExtensionValidator
 from django.forms import inlineformset_factory
 from unfold.widgets import UnfoldAdminTextInputWidget
+
+ALLOWED_ATTACHMENT_EXTENSIONS = ["jpg", "jpeg", "png", "pdf"]
 
 from .models import OutOfPocketExpense, OutOfPocketExpenseItem
 
@@ -14,7 +17,10 @@ class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
     def __init__(self, attrs=None):
-        default_attrs = {"class": "file-input"}
+        default_attrs = {
+            "class": "file-input",
+            "accept": ",".join(f".{ext}" for ext in ALLOWED_ATTACHMENT_EXTENSIONS),
+        }
         if attrs:
             default_attrs.update(attrs)
         super().__init__(default_attrs)
@@ -112,26 +118,29 @@ class OutOfPocketExpenseForm(forms.ModelForm):
 ATTACHMENT_LINKS_HTML = """
 <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Receipts</label>
 {% if form.instance.pk %}
-<div class="expense-item-attachments flex flex-col gap-1 mb-2 divide-y-4 divide-gray-200 dark:divide-gray-700">
+<div class="expense-item-attachments flex flex-col gap-1 mb-2 divide-y divide-gray-200 dark:divide-gray-700">
     {% for attachment in form.instance.attachments.all %}
-        <a href="{% url 'admin:accountant_expenseattachment_download' attachment.pk %}"
-           class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
-            {{ attachment.filename }}
-        </a>
-    {% endfor %}
-    {% for attachment in form.instance.attachments.all %}
+        <div class="pb-2">
             <a href="{% url 'admin:accountant_expenseattachment_download' attachment.pk %}"
                class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
                 {{ attachment.filename }}
             </a>
-        {% endfor %}
+            <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                {{ attachment.created_at }}
+            </span>
+        </div>
+    {% endfor %}
 </div>
 {% endif %}
 """
 
 
 class OutOfPocketExpenseItemForm(forms.ModelForm):
-    attachments = MultipleFileField(required=False, label="")
+    attachments = MultipleFileField(
+        required=False,
+        label="",
+        validators=[FileExtensionValidator(allowed_extensions=ALLOWED_ATTACHMENT_EXTENSIONS)],
+    )
 
     class Meta:
         model = OutOfPocketExpenseItem

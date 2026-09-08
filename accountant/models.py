@@ -78,7 +78,7 @@ class OutOfPocketExpenseItem(TimeStampedModel):
         max_digits=10,
         decimal_places=2,
         verbose_name=_("Amount"),
-        help_text=_("The amount in DKK."),
+        help_text=_("The amount in DKK. Only 2 decimal digits are accepted."),
     )
 
 
