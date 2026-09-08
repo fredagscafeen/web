@@ -137,7 +137,9 @@ class OutOfPocketExpenseItemForm(forms.ModelForm):
         model = OutOfPocketExpenseItem
         fields = ["description", "date", "amount", "notes"]
         widgets = {
-            "date": forms.DateInput(attrs={"type": "date"}),
+            # type="date" requires an ISO value; the browser then displays it
+            # per the user's own locale (already DD-MM-YYYY for Danish users)
+            "date": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
         }
 
     def __init__(self, *args, editable=True, **kwargs):
