@@ -13,7 +13,7 @@ npm install bootstrap-icons@latest
 
 2. Copy the icons from the npm module to our static folder
 ```bash
-cp -r node_modules/bootstrap-icons/icons/*.svg web/static/bootstrap_icons/icons/
+npm run update-icons
 ```
 
 3. Commit the changes and enjoy the near-zero load times

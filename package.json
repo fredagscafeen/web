@@ -1,5 +1,11 @@
 {
-  "dependencies": {
-    "bootstrap-icons": "^1.11.2"
-  }
+    "scripts": {
+        "update-icons": "cp -r ./node_modules/bootstrap-icons/icons/*.svg ./web/static/bootstrap_icons/icons/",
+        "compile-tailwind": "npx @tailwindcss/cli -i ./static/css/tailwind.css -o ./web/static/css/tailwind.css --minify"
+    },
+    "dependencies": {
+        "@tailwindcss/cli": "^4.3.3",
+        "bootstrap-icons": "^1.11.2",
+        "tailwindcss": "^4.3.3"
+    }
 }
