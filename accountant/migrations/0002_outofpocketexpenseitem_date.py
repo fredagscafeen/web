@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('accountant', '0001_initial'),
+        ("accountant", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='outofpocketexpenseitem',
-            name='date',
-            field=models.DateField(default=django.utils.timezone.localdate, help_text='The date the expense was made.', verbose_name='Date'),
+            model_name="outofpocketexpenseitem",
+            name="date",
+            field=models.DateField(
+                default=django.utils.timezone.localdate,
+                help_text="The date the expense was made.",
+                verbose_name="Date",
+            ),
         ),
     ]

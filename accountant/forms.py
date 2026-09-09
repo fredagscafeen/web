@@ -139,7 +139,9 @@ class OutOfPocketExpenseItemForm(forms.ModelForm):
     attachments = MultipleFileField(
         required=False,
         label="",
-        validators=[FileExtensionValidator(allowed_extensions=ALLOWED_ATTACHMENT_EXTENSIONS)],
+        validators=[
+            FileExtensionValidator(allowed_extensions=ALLOWED_ATTACHMENT_EXTENSIONS)
+        ],
     )
 
     class Meta:

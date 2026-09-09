@@ -1,7 +1,7 @@
-import uuid
 import boto3
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+
 
 def expense_key(expense_id, expense_item_id, filename):
     return f"expense-attachments/{expense_id}/{expense_item_id}/{filename}"
@@ -13,7 +13,9 @@ def upload_expense_attachment(uploaded_file, expense_item):
             print(
                 "Warning: EXPENSE_ATTACHMENT_BUCKET_NAME is not configured. Skipping upload to S3."
             )
-            return expense_key(expense_item.expense_id, expense_item.id, uploaded_file.name)
+            return expense_key(
+                expense_item.expense_id, expense_item.id, uploaded_file.name
+            )
         else:
             raise ImproperlyConfigured(
                 "EXPENSE_ATTACHMENT_BUCKET_NAME is not configured."
@@ -26,7 +28,9 @@ def upload_expense_attachment(uploaded_file, expense_item):
         aws_secret_access_key=settings.S3_SECRET_ACCESS_KEY,
         region_name=settings.S3_REGION_NAME,
     )
-    object_key = expense_key(expense_item.expense_id, expense_item.id, uploaded_file.name)
+    object_key = expense_key(
+        expense_item.expense_id, expense_item.id, uploaded_file.name
+    )
 
     client.put_object(
         Bucket=settings.EXPENSE_ATTACHMENT_BUCKET_NAME,

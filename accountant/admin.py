@@ -2,8 +2,8 @@ import zipfile
 from io import BytesIO
 from tempfile import TemporaryDirectory
 
-from django.contrib import admin, messages
 from django.conf import settings
+from django.contrib import admin, messages
 from django.contrib.admin.utils import unquote
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db import transaction
