@@ -10,6 +10,8 @@ def delete_existing_expenses(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
+    atomic = False
+
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ("accountant", "0002_outofpocketexpenseitem_date"),
