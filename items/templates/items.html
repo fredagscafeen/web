@@ -89,58 +89,52 @@
 			<li class="list-group-item bg-warning-subtle">
 				<ul class="row list-unstyled px-1">
 					{% for spotlightItem in spotlightItems %}
-						<li class="col {% if not spotlightItem.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex bg-warning-subtle border border-warning">
-							{% if spotlightItem.image %}
-								<div class="image size-150 m-0 mx-auto" style="background-image: url({{ spotlightItem.image.url }});"></div>
-							{% else %}
-								<div class="image size-150 m-0 mx-auto" style="background-image: url({% static 'images/logo.png' %});"></div>
-							{% endif %}
-							<div>
-								{% if not spotlightItem.inStock %}
-									<span class="text-decoration-line-through">
-										{{ spotlightItem.name }}
-									</span>
+						<li class="col spotlight-item {% if not spotlightItem.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex bg-warning-subtle border border-warning">
+							<div class="spotlight-item-media">
+								{% if spotlightItem.image %}
+									<div class="image size-150" style="background-image: url({{ spotlightItem.image.url }});"></div>
 								{% else %}
-									{{ spotlightItem.name }}
-									{% if spotlightItem.abv %}
-									<small class="text-muted text-decoration-underline">{{ spotlightItem.abv }}%</small>
+									<div class="image size-150" style="background-image: url({% static 'images/logo.png' %});"></div>
+								{% endif %}
+							</div>
+							<div class="spotlight-item-overlay justify-content-center d-flex flex-column">
+								<div>
+									{% if not spotlightItem.inStock %}
+										<span class="text-decoration-line-through">{{ spotlightItem.name }}</span>
+									{% else %}
+										<b>{{ spotlightItem.name }}</b>
+										{% if spotlightItem.abv %}
+											<small class="text-decoration-underline">{{ spotlightItem.abv }}%</small>
+										{% endif %}
 									{% endif %}
-								{% endif %}
-							</div>
-							<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
-								{% if spotlightItem.type %}
-								<div class="bg-primary-subtle border border-primary rounded text-center px-1">
-									<small class="text-muted">{{ spotlightItem.type }}</small>
 								</div>
-								{% endif %}
-								{% if spotlightItem.glutenFree %}
-								<div class="bg-warning-subtle border border-warning rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Glutenfri' %}">
-									<b><small class="text-muted">GF</small></b>
+								<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
+									{% if spotlightItem.type %}
+									<div class="bg-primary-subtle border border-primary rounded text-center px-1">
+										<small class="text-muted">{{ spotlightItem.type }}</small>
+									</div>
+									{% endif %}
+									{% if spotlightItem.glutenFree %}
+									<div class="bg-warning-subtle border border-warning rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Glutenfri' %}">
+										<b><small class="text-muted">GF</small></b>
+									</div>
+									{% endif %}
+									{% if spotlightItem.nonAlcoholic %}
+									<div class="bg-info-subtle border border-info rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
+										<b><small class="text-muted">NA</small></b>
+									</div>
+									{% endif %}
 								</div>
-								{% endif %}
-								{% if spotlightItem.nonAlcoholic %}
-								<div class="bg-info-subtle border border-info rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
-									<b><small class="text-muted">NA</small></b>
-								</div>
-								{% endif %}
-							</div>
-							<div>
 								{% if spotlightItem.brewery %}
-									<small class="text-muted">
-										{{ spotlightItem.brewery }}
-									</small>
+									<small>{{ spotlightItem.brewery }}</small>
 								{% endif %}
-							</div>
-							<div class="d-flex">
 								{% if spotlightItem.priceInDKK > 0 %}
-									<small class="text-primary fw-bold">{{ spotlightItem.priceInDKK|floatformat:-2 }} DKK</small>
+									<div class="text-primary fw-bold">{{ spotlightItem.priceInDKK|floatformat:-2 }} DKK</div>
+								{% endif %}
+								{% if user.is_staff %}
+									<a class="common mt-2" href="{% url 'admin:items_item_change' spotlightItem.id %}">{% translate "Edit" %}</a>
 								{% endif %}
 							</div>
-							{% if user.is_staff %}
-								<div class="mt-0">
-									<a class="common mt-2" href="{% url 'admin:items_item_change' spotlightItem.id %}">{% translate "Edit" %}</a>
-								</div>
-							{% endif %}
 						</li>
 					{% endfor %}
 				</ul>

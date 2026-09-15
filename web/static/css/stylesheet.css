@@ -40,6 +40,24 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     width: 200px;
 }
 
+.spotlight-item-media {
+    height: 150px;
+    margin: 0 auto;
+    width: 150px;
+}
+
+.spotlight-item {
+    min-height: 150px;
+    position: relative;
+}
+
+.spotlight-item-overlay {
+    inset: 0;
+    overflow-y: auto;
+    padding: 0.5rem;
+    position: absolute;
+}
+
 .card-hover:hover {
     border-color: var(--datblue);
 }
