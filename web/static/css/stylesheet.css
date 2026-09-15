@@ -49,6 +49,28 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     z-index: 2; /* Lifts these links above the invisible stretched link overlay */
 }
 
+.beer-of-the-month-card {
+    overflow: hidden;
+}
+
+.beer-of-the-month-description {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(var(--bs-secondary-rgb), 0.7) !important;
+    padding: 0.75rem;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.beer-of-the-month-card:hover .beer-of-the-month-description,
+.beer-of-the-month-card:focus-within .beer-of-the-month-description {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .google-maps {
     margin-bottom: -6px;
     height: 300px;

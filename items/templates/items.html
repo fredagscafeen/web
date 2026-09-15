@@ -13,7 +13,7 @@
 
 {% if beerOfTheMonth %}
 <div class="gap-3">
-	<div class="card text-bg-info mb-3">
+	<div class="card text-bg-info mb-3 beer-of-the-month-card">
 		<div class="card-header">
 			<div class="row">
 				<div class="col-auto me-auto">
@@ -66,10 +66,8 @@
 				<h5 class="text-primary fw-bold">{{ beerOfTheMonth.priceInDKK|floatformat:-2 }} DKK</h5>
 			</div>
 			{% if beerOfTheMonth.description %}
-				<div class="overflow-y-scroll">
-					<small class="text-muted">
-						{{ beerOfTheMonth.description }}
-					</small>
+				<div class="beer-of-the-month-description bg-secondary text-white overflow-y-auto">
+					{{ beerOfTheMonth.description }}
 				</div>
 			{% endif %}
 		</div>
