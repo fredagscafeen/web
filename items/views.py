@@ -58,6 +58,8 @@ class Items(ListView):
         context["fridges"] = fridges
         context["show_list_selection"] = config.SHOW_LIST_SELECTION
 
+        context["beerOfTheMonth"] = Item.objects.filter(isBeerOfTheMonth=True).first()
+
         return context
 
 

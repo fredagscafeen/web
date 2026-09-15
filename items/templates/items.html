@@ -20,6 +20,154 @@
 	</div>
 {% endif %}
 
+{% if beerOfTheMonth %}
+<div class="gap-3">
+	<div class="card text-bg-info mb-3">
+		<div class="card-header">
+			<div class="row">
+				<div class="col-auto me-auto">
+					{% translate "Månedens Øl" %}
+				</div>
+				<div class="col-auto">
+					{% if user.is_staff %}
+						<a class="common" href="{% url 'admin:items_item_change' beerOfTheMonth.id %}">
+							{% translate "Edit" %}
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="p-2 flex-column align-items-start bg-info-subtle rounded-bottom">
+			{% if not shelf_item.item.image %}
+				<div class="spotlight-image m-0 mx-auto" style="background-image: url({{ beerOfTheMonth.image.url }});"></div>
+			{% else %}
+				<div class="spotlight-image m-0 mx-auto" style="background-image: url({% static 'images/logo.png' %});"></div>
+			{% endif %}
+		</div>
+		<div class="card-img-overlay mt-5 justify-content-center d-flex flex-column">
+			<h5 class="card-title">
+				{{ beerOfTheMonth.name }}
+				<small class="text-muted text-decoration-underline">{{ beerOfTheMonth.abv }}%</small>
+			</h5>
+			<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
+				<div class="bg-primary-subtle rounded text-center px-1">
+					<small class="text-muted">{{ beerOfTheMonth.type }}</small>
+				</div>
+				{% if beerOfTheMonth.glutenFree %}
+				<div class="bg-warning-subtle rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Glutenfri' %}">
+					<b><small class="text-muted">GF</small></b>
+				</div>
+				{% endif %}
+				{% if beerOfTheMonth.nonAlcoholic %}
+				<div class="bg-info-subtle rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
+					<b><small class="text-muted">NA</small></b>
+				</div>
+				{% endif %}
+			</div>
+			<div>
+				<small class="text-muted">
+					{{ beerOfTheMonth.brewery }}
+				</small>
+			</div>
+			<div class="d-flex">
+				<h5 class="text-primary fw-bold">{{ beerOfTheMonth.priceInDKK|floatformat:-2 }} DKK</h5>
+			</div>
+			{% if beerOfTheMonth.description %}
+				<div class="overflow-y-scroll">
+					<small class="text-muted">
+						{{ beerOfTheMonth.description }}
+					</small>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endif %}
+
+<div class="gap-3">
+	<div class="card text-bg-warning mb-3">
+		<div class="card-header">
+			<div class="row">
+				<div class="col-auto me-auto">
+					{% translate "Ugens Spotlight" %}
+				</div>
+				<div class="col-auto">
+					{% if user.is_staff %}
+						<a class="common" href="">
+							{% translate "Edit" %}
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item bg-warning-subtle">
+				<ul class="row list-unstyled px-1">
+					{% for fridge in fridges %}
+					{% for assignment in fridge.shelf_assignments.all %}
+					{% for shelf_item in assignment.shelf.shelf_items.all %}
+						<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex bg-warning-subtle border border-warning">
+							{% if shelf_item.item.image %}
+								<div class="weekly-spotlight-image m-0 mx-auto" style="background-image: url({{ shelf_item.item.image.url }});"></div>
+							{% else %}
+								<div class="weekly-spotlight-image m-0 mx-auto" style="background-image: url({% static 'images/logo.png' %});"></div>
+							{% endif %}
+							<div>
+								{% if not shelf_item.item.inStock %}
+									<span class="text-decoration-line-through">
+										{{ shelf_item.item.name }}
+									</span>
+								{% else %}
+									{{ shelf_item.item.name }}
+									{% if shelf_item.item.abv %}
+									<small class="text-muted text-decoration-underline">{{ shelf_item.item.abv }}%</small>
+									{% endif %}
+								{% endif %}
+							</div>
+							<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
+								{% if shelf_item.item.type %}
+								<div class="bg-primary-subtle rounded text-center px-1">
+									<small class="text-muted">{{ shelf_item.item.type }}</small>
+								</div>
+								{% endif %}
+								{% if shelf_item.item.glutenFree %}
+								<div class="bg-warning-subtle rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Glutenfri' %}">
+									<b><small class="text-muted">GF</small></b>
+								</div>
+								{% endif %}
+								{% if shelf_item.item.nonAlcoholic %}
+								<div class="bg-info-subtle rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
+									<b><small class="text-muted">NA</small></b>
+								</div>
+								{% endif %}
+							</div>
+							<div>
+								{% if shelf_item.item.brewery %}
+									<small class="text-muted">
+										{{ shelf_item.item.brewery }}
+									</small>
+								{% endif %}
+							</div>
+							<div class="d-flex">
+								{% if shelf_item.item.priceInDKK > 0 %}
+									<small class="text-primary fw-bold">{{ shelf_item.item.priceInDKK|floatformat:-2 }} DKK</small>
+								{% endif %}
+							</div>
+							{% if user.is_staff %}
+								<div class="mt-0">
+									<a class="common mt-2" href="{% url 'admin:items_item_change' shelf_item.item.id %}">{% translate "Edit" %}</a>
+								</div>
+							{% endif %}
+						</li>
+					{% endfor %}
+					{% endfor %}
+					{% endfor %}
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+
 {% if fridges %}
 <h2 id="fridges">
 	{% translate "Køleskabe" %}
@@ -63,7 +211,7 @@
 						</div>
 						<ul class="row row-cols-2 row-cols-md-3 row-cols-lg-6 list-unstyled px-1">
 							{% for shelf_item in assignment.shelf.shelf_items.all %}
-								<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex border">
+								<li class="col {% if not shelf_item.item.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex bg-warning-subtle border border-warning">
 									{% if shelf_item.item.image %}
 										<div class="board-image m-0 mx-auto" style="background-image: url({{ shelf_item.item.image.url }});"></div>
 									{% else %}
