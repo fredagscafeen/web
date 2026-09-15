@@ -18,31 +18,26 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     display: inline;
 }
 
-.board-image {
+.image {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+}
+
+.size-100 {
     height: 100px;
     width: 100px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex-shrink: 0;
 }
 
-.spotlight-image {
-    height: 200px;
-    width: 200px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex-shrink: 0;
-}
-
-.weekly-spotlight-image {
+.size-150 {
     height: 150px;
     width: 150px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex-shrink: 0;
+}
+
+.size-200 {
+    height: 200px;
+    width: 200px;
 }
 
 .card-hover:hover {
