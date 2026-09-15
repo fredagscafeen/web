@@ -5,18 +5,9 @@
 
 {% block content %}
 
-<p>
-	{% blocktrans %}
-	Her kan du se Fredagscaféens sortiment, samt mange af de ting vi er kendte for at sælge.
-	Du finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
-	Vi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere
-	glutenfrie og alkoholfrie øl.
-	{% endblocktrans %}
-</p>
-
 {% if user.is_staff %}
-	<div>
-		<a class="btn btn-primary mb-3" href="/admin/items/item/add/" role="button">{% translate "Tilføj vare" %}</a>
+	<div class="position-fixed bottom-0 end-0 m-4 z-3">
+		<a class="btn btn-primary" href="/admin/items/item/add/" role="button">{% translate "Tilføj vare" %} <i>{% bs_icon 'plus' size='1.5em' %}</i></a>
 	</div>
 {% endif %}
 
@@ -158,6 +149,15 @@
 	</div>
 </div>
 {% endif %}
+
+<p>
+	{% blocktrans %}
+	Her kan du se Fredagscaféens sortiment, samt mange af de ting vi er kendte for at sælge.
+	Du finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
+	Vi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere
+	glutenfrie og alkoholfrie øl.
+	{% endblocktrans %}
+</p>
 
 {% if fridges %}
 <h2 id="fridges">
