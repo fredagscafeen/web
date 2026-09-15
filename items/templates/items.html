@@ -29,16 +29,18 @@
 			</div>
 		</div>
 		<div class="p-2 flex-column align-items-start bg-info-subtle rounded-bottom">
-			{% if not shelf_item.item.image %}
-				<div class="spotlight-image m-0 mx-auto" style="background-image: url({{ beerOfTheMonth.image.url }});"></div>
-			{% else %}
+			       {% if beerOfTheMonth.image %}
+				       <div class="spotlight-image m-0 mx-auto" style="background-image: url({{ beerOfTheMonth.image.url }});"></div>
+			       {% else %}
 				<div class="spotlight-image m-0 mx-auto" style="background-image: url({% static 'images/logo.png' %});"></div>
 			{% endif %}
 		</div>
 		<div class="card-img-overlay mt-5 justify-content-center d-flex flex-column">
 			<h5 class="card-title">
 				{{ beerOfTheMonth.name }}
+				   {% if beerOfTheMonth.abv %}
 				<small class="text-muted text-decoration-underline">{{ beerOfTheMonth.abv }}%</small>
+				   {% endif %}
 			</h5>
 			<div class="d-flex align-content-start flex-wrap ps-0 gap-1">
 				<div class="bg-primary-subtle rounded text-center px-1">
@@ -153,7 +155,7 @@
 <p>
 	{% blocktrans %}
 	Her kan du se Fredagscaféens sortiment, samt mange af de ting vi er kendte for at sælge.
-	Du finder du altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
+	Du finder altid et stort sortiment af spændende og nye specialøl, for enhver smag, i baren.
 	Vi har i Fredagscaféen et stort fokus på at have noget for alle, så derfor finder du også flere
 	glutenfrie og alkoholfrie øl.
 	{% endblocktrans %}
