@@ -5,6 +5,7 @@ from django.utils import timezone
 
 from bartenders.models import BartenderShift, date_format
 from events.models import Event
+from items.models import Item
 from reminder.management.commands._private import ReminderCommand
 
 
@@ -36,6 +37,22 @@ class Command(ReminderCommand):
 Husk at der på fredag er {common_event.name}!
 """
 
+        spotlight_info = ""
+        spotlight_items = Item.objects.filter(isOnSpotlight=True)
+        if spotlight_items.exists():
+            spotlight_info = f"""
+Ugens spotlight (Øl I gerne må anbefale hvis nogen spørger):
+"""
+            for item in spotlight_items:
+                spotlight_info += (
+                    f'- "{item.name}", {item.abv}% {item.type} ({item.brewery})\n'
+                )
+                spotlight_info += (
+                    f"  {item.description}\n"
+                    if item.description
+                    else f"  Ingen beskrivelse, men den er nok god!\n"
+                )
+
         return f"""Hej {humanized_bartenders}.
 
 Den kommende fredag er det JERES tur til at stå i Fredagscaféen.
@@ -43,7 +60,7 @@ Dette er en automatisk email.
 Emailen er hovedsageligt sendt så I kan finde en anden at bytte vagt med,
 hvis en af jer ikke har mulighed for selv at tage den.
 Husk at jeres vagt starter kl. {start_time}.
-{event_info}
+{event_info}{spotlight_info}
 Ses i baren!
 
 /Bestyrelsen"""

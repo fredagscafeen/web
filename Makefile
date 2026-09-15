@@ -31,5 +31,7 @@ generate-shifts:
 	docker exec -it web-app-1 ./manage.py generate_barshifts
 generate-deposit-shifts:
 	docker exec -it web-app-1 ./manage.py generate_deposit_shifts
+send-barshift-reminder:
+	./manage.py send_barshift_reminder
 install-packages:
 	pip install -r requirements.txt
