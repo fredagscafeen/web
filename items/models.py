@@ -41,6 +41,9 @@ class Item(models.Model):
     isBeerOfTheMonth = models.BooleanField(
         default=False, verbose_name=_("Is beer of the month")
     )
+    isOnSpotlight = models.BooleanField(
+        default=False, verbose_name=_("Is on this weeks spotlight")
+    )
     image = models.ImageField(
         upload_to="items", blank=True, null=True, verbose_name=_("Image")
     )

@@ -59,6 +59,7 @@ class Items(ListView):
         context["show_list_selection"] = config.SHOW_LIST_SELECTION
 
         context["beerOfTheMonth"] = Item.objects.filter(isBeerOfTheMonth=True).first()
+        context["spotlightItems"] = Item.objects.filter(isOnSpotlight=True)
 
         return context
 
