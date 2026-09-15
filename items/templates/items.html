@@ -135,6 +135,11 @@
 									<a class="common mt-2" href="{% url 'admin:items_item_change' spotlightItem.id %}">{% translate "Edit" %}</a>
 								{% endif %}
 							</div>
+							{% if spotlightItem.description %}
+								<div class="spotlight-item-description bg-secondary text-white overflow-y-auto">
+									{{ spotlightItem.description }}
+								</div>
+							{% endif %}
 						</li>
 					{% endfor %}
 				</ul>
