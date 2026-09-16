@@ -22,17 +22,16 @@ nodeenv==1.10.0
 platformdirs==4.9.6
     # via
     #   -c requirements.txt
-    #   python-discovery
     #   virtualenv
-pre-commit==4.5.1
+pre-commit==4.6.2
     # via -r dev-requirements.in
-python-discovery==1.2.2
+python-discovery==1.6.0
     # via
     #   -c requirements.txt
     #   virtualenv
 pyyaml==6.0.3
     # via pre-commit
-virtualenv==21.2.4
+virtualenv==21.7.9
     # via
     #   -c requirements.txt
     #   pre-commit
