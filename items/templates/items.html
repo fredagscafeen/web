@@ -86,10 +86,10 @@
 			</div>
 		</div>
 		<ul class="list-group list-group-flush">
-			<li class="list-group-item bg-warning-subtle">
-				<ul class="row list-unstyled px-1">
+			<li class="list-group-item bg-warning-subtle m-0 p-0 overflow-hidden">
+				<ul class="row list-unstyled m-0 p-0">
 					{% for spotlightItem in spotlightItems %}
-						<li class="col spotlight-item {% if not spotlightItem.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex bg-warning-subtle border border-warning">
+						<li class="col-12 col-sm spotlight-item {% if not spotlightItem.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex border border-warning">
 							<div class="spotlight-item-media">
 								{% if spotlightItem.image %}
 									<div class="image size-150" style="background-image: url({{ spotlightItem.image.url }});"></div>
