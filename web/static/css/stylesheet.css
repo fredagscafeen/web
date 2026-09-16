@@ -18,13 +18,64 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     display: inline;
 }
 
-.board-image {
-    height: 100px;
-    width: 100px;
+.image {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     flex-shrink: 0;
+}
+
+.size-100 {
+    height: 100px;
+    width: 100px;
+}
+
+.size-150 {
+    height: 150px;
+    width: 150px;
+}
+
+.size-200 {
+    height: 200px;
+    width: 200px;
+}
+
+.spotlight-item-media {
+    height: 150px;
+    margin: 0 auto;
+    width: 150px;
+}
+
+.spotlight-item {
+    min-height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.spotlight-item-overlay {
+    inset: 0;
+    overflow-y: auto;
+    padding: 0.5rem;
+    position: absolute;
+}
+
+.spotlight-item-description {
+    background-color: rgba(var(--bs-secondary-rgb), 0.7) !important;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    padding: 0.75rem;
+    position: absolute;
+    right: 0;
+    transform: translateY(100%);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    z-index: 2;
+}
+
+.spotlight-item:hover .spotlight-item-description,
+.spotlight-item:focus-within .spotlight-item-description {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .card-hover:hover {
@@ -34,6 +85,28 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
 .card-hover a:not(.stretched-link) {
     position: relative;
     z-index: 2; /* Lifts these links above the invisible stretched link overlay */
+}
+
+.beer-of-the-month-card {
+    overflow: hidden;
+}
+
+.beer-of-the-month-description {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(var(--bs-secondary-rgb), 0.7) !important;
+    padding: 0.75rem;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.beer-of-the-month-card:hover .beer-of-the-month-description,
+.beer-of-the-month-card:focus-within .beer-of-the-month-description {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .google-maps {

@@ -48,9 +48,9 @@
 						{% if board.chairman %}
 						<div class="col-md-6 d-flex border border-primary p-3" style="overflow: auto;">
 							{% if board.chairman.image %}
-							<div class="board-image" style="background-image: url({{ board.chairman.image.url }});"></div>
+							<div class="image size-100" style="background-image: url({{ board.chairman.image.url }});"></div>
 							{% else %}
-							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							<div class="image size-100" style="background-image: url({% static 'images/logo.png' %});"></div>
 							{% endif %}
 							<div class="ms-3 d-flex flex-column justify-content-center">
 								<b>{{ board.chairman.responsibilities }}</b>
@@ -63,9 +63,9 @@
 						{% if board.treasurer %}
 						<div class="col-md-6 d-flex border border-primary p-3" style="overflow: auto;">
 							{% if board.treasurer.image %}
-							<div class="board-image" style="background-image: url({{ board.treasurer.image.url }});"></div>
+							<div class="image size-100" style="background-image: url({{ board.treasurer.image.url }});"></div>
 							{% else %}
-							<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+							<div class="image size-100" style="background-image: url({% static 'images/logo.png' %});"></div>
 							{% endif %}
 							<div class="ms-3 d-flex flex-column justify-content-center">
 								<b>{{ board.treasurer.responsibilities }}</b>
@@ -82,9 +82,9 @@
 							{% if boardmember.is_common %}
 							<div class="col-md-6 d-flex border p-3" style="overflow: auto;">
 								{% if boardmember.image %}
-								<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+								<div class="image size-100" style="background-image: url({{ boardmember.image.url }});"></div>
 								{% else %}
-								<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+								<div class="image size-100" style="background-image: url({% static 'images/logo.png' %});"></div>
 								{% endif %}
 								<div class="ms-3 d-flex flex-column justify-content-center">
 									<b>{{ boardmember.responsibilities }}</b>
@@ -103,9 +103,9 @@
 								{% if boardmember.is_substitute %}
 								<div class="col-md-6 d-flex border p-3" style="overflow: auto;">
 									{% if boardmember.image %}
-									<div class="board-image" style="background-image: url({{ boardmember.image.url }});"></div>
+									<div class="image size-100" style="background-image: url({{ boardmember.image.url }});"></div>
 									{% else %}
-									<div class="board-image" style="background-image: url({% static 'images/logo.png' %});"></div>
+									<div class="image size-100" style="background-image: url({% static 'images/logo.png' %});"></div>
 									{% endif %}
 									<div class="ms-3 d-flex flex-column justify-content-center">
 										<b>{{ boardmember.responsibilities }}</b>
