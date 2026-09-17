@@ -126,6 +126,11 @@ CONSTANCE_CONFIG = {
         "Skal brugere også kunne se udvalget af varer som en liste i stedet for kun på hylderne?",
         bool,
     ),
+    "SHOW_OFFICE_HOURS": (
+        False,
+        "Skal kontortider vises?",
+        bool,
+    ),
 }
 
 SECRET_ADMIN_KEYS = [

@@ -113,6 +113,35 @@
 
 <div class="row mb-3">
     <div class="col-md-6 col-xl-4 mb-3">
+        {% if showOfficeHours %}
+        <div class="card mb-3">
+            <div class="card-header pb-0">
+                <h5 class="card-title">{% translate "Kontortider" %}</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    {% blocktranslate %}
+                    Medlemmer af bestyrelsen kan, ud over i baren, også findes på
+                    udvalgte kontortider. Så hvis man skulle have indvendinger eller
+                    af andre grunde ikke kan vende dem på mail, er man velkommen til
+                    at kigge forbi.
+                    {% endblocktranslate %}
+                </li>
+                <li class="list-group-item">
+                    {% translate "Bestyrelsen har kontortider i" %} <b>Turing-030</b> {% translate "på følgende tidspunkter hver uge" %}*:
+                </li>
+                <li class="list-group-item ps-5">
+                    {% translate "Mandage fra kl. 14" %}
+                </li>
+                <li class="list-group-item ps-5">
+                    {% translate "Torsdage kl. 12 til 14" %}
+                </li>
+            </ul>
+            <div class="card-footer">
+                *{% translate "Ikke i eksamens- og ferieperioder." %}
+            </div>
+        </div>
+        {% endif %}
         <div class="card">
             <div class="card-header pb-0">
                 <h5 class="card-title">{% translate "Fødevarestyrelsen" %}</h5>
