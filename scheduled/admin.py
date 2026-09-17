@@ -34,23 +34,31 @@ class UnfoldPeriodicTaskForm(PeriodicTaskForm):
 @admin.register(PeriodicTask)
 class PeriodicTaskAdmin(BasePeriodicTaskAdmin, ModelAdmin):
     form = UnfoldPeriodicTaskForm
+    autocomplete_fields = ("clocked", "crontab", "interval", "solar")
 
 
 @admin.register(IntervalSchedule)
 class IntervalScheduleAdmin(ModelAdmin):
-    pass
+    search_fields = ("period",)
 
 
 @admin.register(CrontabSchedule)
 class CrontabScheduleAdmin(BaseCrontabScheduleAdmin, ModelAdmin):
-    pass
+    search_fields = (
+        "minute",
+        "hour",
+        "day_of_month",
+        "month_of_year",
+        "day_of_week",
+        "timezone",
+    )
 
 
 @admin.register(SolarSchedule)
 class SolarScheduleAdmin(ModelAdmin):
-    pass
+    search_fields = ("event",)
 
 
 @admin.register(ClockedSchedule)
 class ClockedScheduleAdmin(BaseClockedScheduleAdmin, ModelAdmin):
-    pass
+    search_fields = ("clocked_time",)
