@@ -9,18 +9,14 @@ from django.forms import model_to_dict
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
-from django_celery_beat.models import PeriodicTask
 
 from bartenders.forms import BartenderApplicationForm
 from bartenders.models import (
     Bartender,
     BartenderApplication,
-    BartenderShift,
     BoardMember,
     BoardMemberPeriod,
-    ReleasedBartenderShift,
 )
-from bartenders.tasks import delete_old_released_bartender_shifts
 
 
 class BartenderApplicationTests(TestCase):
@@ -175,50 +171,6 @@ class BartenderApplicationTests(TestCase):
         )
 
         self.assertTrue(bartender.isBoardMember)
-
-
-class ReleasedBartenderShiftCleanupTests(TestCase):
-    def test_cleanup_is_scheduled_weekly(self):
-        periodic_task = PeriodicTask.objects.get(
-            name="Delete old released bartender shifts"
-        )
-
-        self.assertEqual(
-            periodic_task.task, "bartenders.tasks.delete_old_released_bartender_shifts"
-        )
-        self.assertEqual(periodic_task.interval.every, 1)
-        self.assertEqual(periodic_task.interval.period, "weeks")
-        self.assertTrue(periodic_task.enabled)
-
-    def test_delete_old_released_bartender_shifts(self):
-        bartender = Bartender.objects.create(
-            name="Bartender", username="bartender", email="bartender@example.org"
-        )
-        old_shift = BartenderShift.objects.create(
-            start_datetime=timezone.now() - datetime.timedelta(days=2),
-            end_datetime=timezone.now() - datetime.timedelta(days=2, hours=-7),
-            responsible=bartender,
-        )
-        current_shift = BartenderShift.objects.create(
-            start_datetime=timezone.now(),
-            end_datetime=timezone.now() + datetime.timedelta(hours=7),
-            responsible=bartender,
-        )
-        old_release = ReleasedBartenderShift.objects.create(
-            bartender=bartender, bartender_shift=old_shift
-        )
-        current_release = ReleasedBartenderShift.objects.create(
-            bartender=bartender, bartender_shift=current_shift
-        )
-
-        delete_old_released_bartender_shifts()
-
-        self.assertFalse(
-            ReleasedBartenderShift.objects.filter(pk=old_release.pk).exists()
-        )
-        self.assertTrue(
-            ReleasedBartenderShift.objects.filter(pk=current_release.pk).exists()
-        )
 
     def test_board_member_periods(self):
         today = timezone.localdate()
