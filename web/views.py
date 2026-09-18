@@ -1,5 +1,6 @@
 import datetime
 
+from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login, logout
@@ -111,5 +112,7 @@ class About(TemplateView):
             longest_streak = max(shift_streaks, key=lambda x: x.streak, default=None)
         context["shift_streak"] = shift_streak
         context["longest_streak"] = longest_streak
+
+        context["showOfficeHours"] = config.SHOW_OFFICE_HOURS
 
         return context
