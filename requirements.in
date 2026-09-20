@@ -16,7 +16,6 @@ django-object-actions
 django-extensions
 ipython>=9.17.1
 requests>=2.34.2
-requests-html
 django-logentry-admin
 django-cors-headers
 django-oauth-toolkit
@@ -32,7 +31,7 @@ django-dprog-jfu
 django-versatileimagefield
 django-model-utils
 Unidecode
-urllib3>=1.26.19
+urllib3>=2.7.0
 Pygments>=2.21.0
 tqdm>=4.70.1
 idna>=3.19
