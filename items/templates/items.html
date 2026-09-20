@@ -271,7 +271,7 @@
 			<h2 id="selection">
 				{% translate "Sortiment" %}
 				{% if items_data %}
-				<span class="badge text-bg-secondary">{{ items_data | length }}</span>
+				<span class="badge text-bg-secondary" id="sortiment-count">{{ items_data | length }}</span>
 				{% endif %}
 				<a href="#selection" class="section-link">#</a>
 			</h2>
@@ -279,7 +279,7 @@
 
 		{% if items_data %}
 		<div class="col-auto">
-			<input class="rounded px-2 fs-5" type="text" id="itemsSearchInput" placeholder="{% translate "Søg i sortimentet" %}">
+			<input class="form-control" type="text" id="itemsSearchInput" placeholder="{% translate "Søg i sortimentet" %}">
 		</div>
 		{% endif %}
 	</div>
@@ -296,18 +296,18 @@
 
 	{% if items_data %}
 		<div class="table-responsive-md">
-			<table class="table table-striped tablesorter" id="items">
+			<table class="table table-striped sortable" id="items">
 				<thead>
 					<tr>
-						<th>{% translate "Bryghus" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></span></th>
-						<th class="filter-select filter-exact">{% translate "Navn" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-						<th class="d-none d-lg-table-cell">{% translate "Type" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-						<th class="d-none d-lg-table-cell">{% translate "Container" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-						<th>{% translate "Pris" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
-						<th class="d-none d-lg-table-cell">{% translate "Status" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+						<th>{% translate "Bryghus" %}</span></th>
+						<th class="filter-select filter-exact">{% translate "Navn" %}</th>
+						<th class="d-none d-lg-table-cell">{% translate "Type" %}</th>
+						<th class="d-none d-lg-table-cell">{% translate "Container" %}</th>
+						<th>{% translate "Pris" %}</th>
+						<th class="d-none d-lg-table-cell">{% translate "Status" %}</th>
 						<!--<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>-->
 						{% if user.is_staff %}
-							<th class="d-none d-lg-table-cell">{% translate "Bedst før" %}<i>{% bs_icon 'arrows-collapse' size='1.0em' %}</i></th>
+							<th class="d-none d-lg-table-cell">{% translate "Bedst før" %}</th>
 							<th class="d-none d-lg-table-cell"></th>
 						{% endif %}
 					</tr>
@@ -338,7 +338,7 @@
 				</tbody>
 			</table>
 		</div>
-		<script src="{% static 'js/sortimentSearch.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/sortimentSearch.js' %}"></script>
 	{% else %}
 		<p class="pt-2">{% translate "Sortimentet er desværre tomt" %} &#9785;</p>
 	{% endif %}

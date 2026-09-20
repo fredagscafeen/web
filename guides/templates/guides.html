@@ -35,7 +35,7 @@
 				</div>
 				<div role="tabpanel">
 					<div class="container" style="overflow: scroll;">
-						<table class="table table-hover tablesorter">
+						<table class="table table-hover sortable">
 							<thead>
 								<tr>
 									<th></th>
@@ -79,22 +79,5 @@
 		</div>
 	{% endfor %}
 </div>
-
-<script>
-$(function () {
-	$(".tablesorter").tablesorter();
-});
-function updateRequired() {
-	$('form').each(function (i, form) {
-		var attending = $(form).find('[name="attending"]').val() === 'True';
-		$(form).find('select[name!="attending"]').each(function (i, select) {
-			$(select).prop('required', attending);
-			$(select).prop('disabled', !attending);
-		});
-	});
-}
-$('[name="attending"]').change(updateRequired);
-updateRequired();
-</script>
 
 {% endblock %}
