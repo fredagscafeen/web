@@ -31,7 +31,7 @@ django-dprog-jfu
 django-versatileimagefield
 django-model-utils
 Unidecode
-urllib3>=2.7.0
+urllib3>=2.8.0
 Pygments>=2.21.0
 tqdm>=4.70.1
 idna>=3.19
