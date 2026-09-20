@@ -58,7 +58,7 @@
 											{% endif %}
 										</td>
 										<td>{{ guide.name }}</td>
-										<td>{{ guide.updated_at|date:"d/m/Y" }}</td>
+										<td>{{ guide.updated_at|date:"Y/m/d" }}</td>
 										<td>
 											<a class="ps-1" href="{{ guide.document.url }}">
 												{% bs_icon 'filetype-pdf' size='1.3em' %}
