@@ -1,35 +1,21 @@
 $(document).ready(function () {
-	$("#items").tablesorter();
+	var rows = $("#items tbody tr");
 
-	$("#itemsSearchInput").on("keyup", function() {
-		var value = $(this).val();
-		var rows = $("table tr");
+	$("#itemsSearchInput").on("input", function() {
+		var searchTerm = $(this).val().toLocaleUpperCase();
+		var visibleRows = 0;
 
-		if (rows.length == 1)
-			return;
+		rows.each(function() {
+			var row = $(this);
+			var matchesSearch = row.text().toLocaleUpperCase().indexOf(searchTerm) !== -1;
 
-		var count = 0;
-
-		rows.each(function(index) {
-			if (index !== 0) {
-
-				$row = $(this);
-
-				var id = $row.find("td").text();
-
-				if (id.toUpperCase().indexOf(value.toUpperCase()) !== -1) {
-					$row.show();
-					count++;
-				}
-				else {
-					$row.hide();
-				}
-
-				if(index == (rows.length - 1) && value != "")
-					$("#sortiment-count").text("(" + count + "/" + (rows.length - 1) + ")");
-				else
-					$("#sortiment-count").text("(" + (rows.length - 1) + ")");
-			}
+			row.toggle(matchesSearch);
+			if (matchesSearch)
+				visibleRows++;
 		});
+
+		$("#sortiment-count").text(
+			searchTerm ? visibleRows + "/" + rows.length : rows.length
+		);
 	});
 });
