@@ -177,6 +177,13 @@ SECRET_ADMIN_KEYS = [
         "role": "WEB",
     },
     {
+        "key": "ICLOUD_PASSWORD",
+        "description": "Apple iCloud",
+        "username": "best@fredagscafeen.dk",
+        "url": "https://apple.com",
+        "role": "WEB",
+    },
+    {
         "key": "MIDTTRAFIK_BESTILLING_PASSWORD",
         "description": "midttrafikbestilling.dk",
         "username": "fredagscafeen",
@@ -237,6 +244,13 @@ SECRET_ADMIN_KEYS = [
         "description": "Instagram",
         "username": "fredagscafeen.dk",
         "url": "https://www.instagram.com/",
+        "role": "PR",
+    },
+    {
+        "key": "FIND_DIN_FORENING_APPEN_PASSWORD",
+        "description": "'Find Din Forening'-appen",
+        "username": "fredag",
+        "url": "https://fdfapp.au.dk/",
         "role": "PR",
     },
     {
