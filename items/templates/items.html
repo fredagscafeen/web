@@ -56,6 +56,11 @@
 					<b><small class="text-muted">NA</small></b>
 				</div>
 				{% endif %}
+				{% if beerOfTheMonth.isNew %}
+				<div class="bg-success-subtle rounded border border-success text-center px-1">
+					<i><small class="text-muted">{% translate "NYHED" %}</small></i>
+				</div>
+				{% endif %}
 			</div>
 			<div>
 				<small class="text-muted">
@@ -122,6 +127,11 @@
 									{% if spotlightItem.nonAlcoholic %}
 									<div class="bg-info-subtle border border-info rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
 										<b><small class="text-muted">NA</small></b>
+									</div>
+									{% endif %}
+									{% if spotlightItem.isNew %}
+									<div class="bg-success-subtle rounded border border-success text-center px-1">
+										<i><small class="text-muted">{% translate "NYHED" %}</small></i>
 									</div>
 									{% endif %}
 								</div>
@@ -233,6 +243,11 @@
 										{% if shelf_item.item.nonAlcoholic %}
 										<div class="bg-info-subtle rounded border border-info text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
 											<b><small class="text-muted">NA</small></b>
+										</div>
+										{% endif %}
+										{% if shelf_item.item.isNew %}
+										<div class="bg-success-subtle rounded border border-success text-center px-1">
+											<i><small class="text-muted">{% translate "NYHED" %}</small></i>
 										</div>
 										{% endif %}
 									</div>

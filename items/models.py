@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+DAYS_TO_CONSIDER_NEW = 30
+
 
 class Item(models.Model):
     brewery = models.ForeignKey(
@@ -82,6 +84,12 @@ class Item(models.Model):
             return latest_entry.amount
         else:
             return 0
+
+    @property
+    def isNew(self):
+        return self.created >= timezone.now() - timezone.timedelta(
+            days=DAYS_TO_CONSIDER_NEW
+        )
 
 
 class Fridge(models.Model):
