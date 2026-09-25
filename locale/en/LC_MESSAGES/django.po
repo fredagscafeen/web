@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 18:34+0200\n"
-"PO-Revision-Date: 2026-09-17 18:42+0200\n"
+"POT-Creation-Date: 2026-09-25 11:51+0200\n"
+"PO-Revision-Date: 2026-09-25 11:52+0200\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -117,8 +117,8 @@ msgstr "Out of Pocket Expense Item"
 msgid "Out of Pocket Expense Items"
 msgstr "Out of Pocket Expense Items"
 
-#: accountant/models.py:66 items/models.py:14 items/models.py:173
-#: items/models.py:187 mail/models.py:48 mail/models.py:372
+#: accountant/models.py:66 items/models.py:16 items/models.py:181
+#: items/models.py:195 mail/models.py:48 mail/models.py:372
 msgid "Description"
 msgstr "Description"
 
@@ -261,7 +261,7 @@ msgstr "Result"
 #: bartab/templates/admin/consumption.html:24 bartab/templates/bartab.html:136
 #: events/templates/event.html:202 events/templates/event.html:249
 #: events/templates/event.html:278 guides/templates/guides.html:42
-#: items/templates/items.html:303 mail/models.py:20
+#: items/templates/items.html:314 mail/models.py:20
 msgid "Navn"
 msgstr "Name"
 
@@ -481,11 +481,11 @@ msgstr "Save"
 msgid "Barplan"
 msgstr "Bar Plan"
 
-#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:380
+#: bartenders/templates/barplan.html:19 bartenders/templates/barplan.html:379
 msgid "Vis kun nuværende"
 msgstr "Show only current"
 
-#: bartenders/templates/barplan.html:21 bartenders/templates/barplan.html:382
+#: bartenders/templates/barplan.html:21 bartenders/templates/barplan.html:381
 msgid "Vis også tidligere"
 msgstr "Also show earlier"
 
@@ -583,15 +583,15 @@ msgstr "You're taking someone else's shift"
 msgid "Bartender's first shift"
 msgstr "Bartender's first shift"
 
-#: bartenders/templates/barplan.html:317 bartenders/templates/barplan.html:423
+#: bartenders/templates/barplan.html:317 bartenders/templates/barplan.html:422
 #: bartenders/templates/board.html:39
 #: events/templates/components/event-card.html:29
 #: events/templates/components/event-card.html:30
 #: events/templates/event.html:19 gallery/templates/album.html:60
 #: gallery/templates/gallery.html:27 guides/templates/guides.html:69
-#: items/templates/items.html:25 items/templates/items.html:135
-#: items/templates/items.html:179 items/templates/items.html:197
-#: items/templates/items.html:253 items/templates/items.html:334
+#: items/templates/items.html:25 items/templates/items.html:145
+#: items/templates/items.html:189 items/templates/items.html:207
+#: items/templates/items.html:268 items/templates/items.html:345
 #: udlejning/templates/udlejning.html:62
 #: udlejning/templates/udlejningBoardGameCart.html:53
 #: udlejning/templates/udlejningGrill.html:53
@@ -605,15 +605,15 @@ msgstr "Edit"
 msgid "Pantvagter"
 msgstr "Deposit shifts"
 
-#: bartenders/templates/barplan.html:388
+#: bartenders/templates/barplan.html:387
 msgid "Pantvagter per side"
 msgstr "Deposit shifts per page"
 
-#: bartenders/templates/barplan.html:405
+#: bartenders/templates/barplan.html:404
 msgid "Uge"
 msgstr "Week"
 
-#: bartenders/templates/barplan.html:406 udlejning/models.py:105
+#: bartenders/templates/barplan.html:405 udlejning/models.py:105
 #: udlejning/models.py:159 udlejning/models.py:181 udlejning/models.py:203
 #: udlejning/models.py:225 udlejning/models.py:247
 #: udlejning/templates/udlejning.html:28
@@ -625,11 +625,11 @@ msgstr "Week"
 msgid "Ansvarlige"
 msgstr "Responsible"
 
-#: bartenders/templates/barplan.html:416
+#: bartenders/templates/barplan.html:415
 msgid "Current week"
 msgstr "Current week"
 
-#: bartenders/templates/barplan.html:419
+#: bartenders/templates/barplan.html:418
 msgid "Bartender's first deposit shift"
 msgstr "Bartender's first deposit shift"
 
@@ -962,8 +962,8 @@ msgstr ""
 "visible to bartenders."
 
 #: events/models.py:30 events/models.py:183 guides/models.py:20
-#: items/models.py:13 items/models.py:88 items/models.py:106
-#: items/models.py:172 items/models.py:186 mail/models.py:47
+#: items/models.py:15 items/models.py:96 items/models.py:114
+#: items/models.py:180 items/models.py:194 mail/models.py:47
 #: mail/models.py:206
 msgid "Name"
 msgstr "Name"
@@ -1278,7 +1278,7 @@ msgstr "No non-participants yet."
 msgid "Alle inviterede har svaret."
 msgstr "All invitees have responded."
 
-#: events/templates/event.html:317 items/models.py:54
+#: events/templates/event.html:317 items/models.py:56
 msgid "Created"
 msgstr "Created"
 
@@ -1366,11 +1366,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:470
+#: fredagscafeen/settings/base.py:484
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:471
+#: fredagscafeen/settings/base.py:485
 msgid "English"
 msgstr "English"
 
@@ -1463,7 +1463,7 @@ msgstr "Short title"
 msgid "Beskrivelse"
 msgstr "Description"
 
-#: gallery/models.py:87 items/models.py:48 items/templates/items.html:308
+#: gallery/models.py:87 items/models.py:50 items/templates/items.html:319
 msgid "Image"
 msgstr "Image"
 
@@ -1751,128 +1751,128 @@ msgctxt "På linket her"
 msgid "her"
 msgstr "here"
 
-#: guides/templates/guides.html:44 items/models.py:53 items/models.py:174
+#: guides/templates/guides.html:44 items/models.py:55 items/models.py:182
 #: web/templates/secrets_admin.html:16
 msgid "Link"
 msgstr "Link"
 
-#: items/models.py:16
+#: items/models.py:18
 msgid "Country of origin"
 msgstr "Country of origin"
 
-#: items/models.py:19
+#: items/models.py:21
 msgid "Price (DKK)"
 msgstr "Price (DKK)"
 
-#: items/models.py:24
+#: items/models.py:26
 msgid "Alcohol by volume"
 msgstr "Alcohol by volume"
 
-#: items/models.py:25
+#: items/models.py:27
 msgid "E.g., 5.0 for 5% ABV"
 msgstr "E.g., 5.0 for 5% ABV"
 
-#: items/models.py:31 items/templates/items.html:305
+#: items/models.py:33 items/templates/items.html:316
 msgid "Container"
 msgstr "Container"
 
-#: items/models.py:32
+#: items/models.py:34
 msgid "E.g., 'Bottle', 'Can', 'Keg'"
 msgstr "E.g., 'Bottle', 'Can', 'Keg'"
 
-#: items/models.py:35
+#: items/models.py:37
 msgid "Volume in centiliters"
 msgstr "Volume in centiliters"
 
-#: items/models.py:37
+#: items/models.py:39
 msgid "Best before"
 msgstr "Best before"
 
-#: items/models.py:38
+#: items/models.py:40
 msgid "In stock"
 msgstr "In stock"
 
-#: items/models.py:39
+#: items/models.py:41
 msgid "Gluten free"
 msgstr "Gluten free"
 
-#: items/models.py:40
+#: items/models.py:42
 msgid "Non-alcoholic"
 msgstr "Non-alcoholic"
 
-#: items/models.py:42
+#: items/models.py:44
 msgid "Is beer of the month"
 msgstr "Is beer of the month"
 
-#: items/models.py:45
+#: items/models.py:47
 msgid "Is on this week's spotlight"
 msgstr "Is on this week's spotlight"
 
-#: items/models.py:51
+#: items/models.py:53
 msgid "Barcode"
 msgstr "Barcode"
 
-#: items/models.py:59
+#: items/models.py:61
 msgid "Item"
 msgstr "Item"
 
-#: items/models.py:60
+#: items/models.py:62
 msgid "Items"
 msgstr "Items"
 
-#: items/models.py:90 items/models.py:125 items/models.py:148
+#: items/models.py:98 items/models.py:133 items/models.py:156
 msgid "Order"
 msgstr "Order"
 
-#: items/models.py:98
+#: items/models.py:106
 msgid "Fridge"
 msgstr "Fridge"
 
-#: items/models.py:99
+#: items/models.py:107
 msgid "Fridges"
 msgstr "Fridges"
 
-#: items/models.py:110
+#: items/models.py:118
 msgid "Shelf"
 msgstr "Shelf"
 
-#: items/models.py:111
+#: items/models.py:119
 msgid "Shelves"
 msgstr "Shelves"
 
-#: items/models.py:135
+#: items/models.py:143
 msgid "Fridge Shelf"
 msgstr "Fridge Shelf"
 
-#: items/models.py:136
+#: items/models.py:144
 msgid "Fridge Shelves"
 msgstr "Fridge Shelves"
 
-#: items/models.py:159
+#: items/models.py:167
 msgid "Shelf item"
 msgstr "Shelf item"
 
-#: items/models.py:160
+#: items/models.py:168
 msgid "Shelf items"
 msgstr "Shelf items"
 
-#: items/models.py:178
+#: items/models.py:186
 msgid "Beer type"
 msgstr "Beer type"
 
-#: items/models.py:179
+#: items/models.py:187
 msgid "Beer types"
 msgstr "Beer types"
 
-#: items/models.py:188
+#: items/models.py:196
 msgid "Website"
 msgstr "Website"
 
-#: items/models.py:192
+#: items/models.py:200
 msgid "Brewery"
 msgstr "Brewery"
 
-#: items/models.py:193
+#: items/models.py:201
 msgid "Breweries"
 msgstr "Breweries"
 
@@ -1884,21 +1884,26 @@ msgstr "Add new item"
 msgid "Månedens Øl"
 msgstr "Beer Of The Month"
 
-#: items/templates/items.html:50 items/templates/items.html:118
-#: items/templates/items.html:229
+#: items/templates/items.html:50 items/templates/items.html:123
+#: items/templates/items.html:239
 msgid "Glutenfri"
 msgstr "Gluten Free"
 
-#: items/templates/items.html:55 items/templates/items.html:123
-#: items/templates/items.html:234
+#: items/templates/items.html:55 items/templates/items.html:128
+#: items/templates/items.html:244
 msgid "Alkoholfri"
 msgstr "Non-Alcoholic"
 
-#: items/templates/items.html:84
+#: items/templates/items.html:61 items/templates/items.html:134
+#: items/templates/items.html:250
+msgid "NYHED"
+msgstr "NEW"
+
+#: items/templates/items.html:89
 msgid "Ugens Spotlight"
 msgstr "This Weeks Spotlight"
 
-#: items/templates/items.html:153
+#: items/templates/items.html:163
 msgid ""
 "\n"
 "\tHer kan du se Fredagscaféens sortiment, samt mange af de ting vi er kendte for at sælge.\n"
@@ -1913,55 +1918,55 @@ msgstr ""
 "At Fredagscaféen, we have a great focus on having something for everyone, so you will also find several\n"
 "gluten-free and alcohol-free beers."
 
-#: items/templates/items.html:163
+#: items/templates/items.html:173
 msgid "Køleskabe"
 msgstr "Fridges"
 
-#: items/templates/items.html:272 web/templates/base.html:86
+#: items/templates/items.html:285 web/templates/base.html:86
 msgid "Sortiment"
 msgstr "Selection"
 
-#: items/templates/items.html:282
-msgid "Søg i sortimentet"
-msgstr "Search in the selection"
-
-#: items/templates/items.html:290
+#: items/templates/items.html:298
 msgid "Vis kun ting på lager"
 msgstr "Only show items in stock"
 
-#: items/templates/items.html:292
+#: items/templates/items.html:300
 msgid "Vis også ting ikke på lager"
 msgstr "Also show items not in stock"
 
-#: items/templates/items.html:302
+#: items/templates/items.html:304
+msgid "Søg i sortimentet"
+msgstr "Search in the selection"
+
+#: items/templates/items.html:313
 msgid "Bryghus"
 msgstr "Brewery"
 
-#: items/templates/items.html:304
+#: items/templates/items.html:315
 msgid "Type"
 msgstr "Type"
 
-#: items/templates/items.html:306
+#: items/templates/items.html:317
 msgid "Pris"
 msgstr "Price"
 
-#: items/templates/items.html:307
+#: items/templates/items.html:318
 msgid "Status"
 msgstr "Status"
 
-#: items/templates/items.html:310
+#: items/templates/items.html:321
 msgid "Bedst før"
 msgstr "Best before"
 
-#: items/templates/items.html:324
+#: items/templates/items.html:335
 msgid "På lager"
 msgstr "In stock"
 
-#: items/templates/items.html:324
+#: items/templates/items.html:335
 msgid "Ikke på lager"
 msgstr "Not in stock"
 
-#: items/templates/items.html:343
+#: items/templates/items.html:355
 msgid "Sortimentet er desværre tomt"
 msgstr "The selection is unfortunately empty"
 
@@ -3277,7 +3282,6 @@ msgstr ""
 "In addition to at the bar, board members can also be found during designated office hours. So, if you have any questions—or for some other reason cannot raise them via email—you are welcome to stop by."
 
 #: web/templates/about.html:131
-#| msgid "Bestyrelsen kan kontaktes på"
 msgid "Bestyrelsen har kontortider i"
 msgstr "The board has office hours in"
 
