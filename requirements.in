@@ -22,7 +22,7 @@ django-oauth-toolkit
 django-bootstrap-datepicker-plus
 django-constance>=4.3.5
 iterfzf
-boto3==1.43.93
+boto3==1.43.103
 django-rosetta
 lxml_html_clean>=0.4.5
 django_bootstrap_icons>=0.8.7
@@ -34,9 +34,9 @@ Unidecode
 urllib3>=2.8.0
 Pygments>=2.21.0
 tqdm>=4.70.1
-idna>=3.19
-virtualenv>=21.7.9
+idna>=3.20
+virtualenv>=21.13.0
 djangorestframework-api-key>=3.1.0
-django-unfold==0.106.0
+django-unfold==0.108.0
 django-crispy-forms==2.7
 crispy-tailwind==1.0.3
