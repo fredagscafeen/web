@@ -3,6 +3,7 @@ from celery import shared_task
 from .management.commands.send_barshift_reminder import (
     Command as BarshiftReminderCommand,
 )
+from .management.commands.send_beer_reminder import Command as BeerReminderCommand
 from .management.commands.send_boardgamecart_rental_reminder import (
     Command as BoardGameCartRentalReminderCommand,
 )
@@ -25,6 +26,7 @@ from .management.commands.send_speakers_rental_reminder import (
 from .management.commands.send_tent_rental_reminder import (
     Command as TentRentalReminderCommand,
 )
+from .management.commands.send_web_reminder import Command as WebReminderCommand
 
 
 @shared_task
@@ -78,4 +80,16 @@ def send_boardgamecart_rental_reminder():
 @shared_task
 def send_bryghus_access_reminder():
     c = BryghusAccessReminderCommand()
+    c.run_from_argv(["", ""])
+
+
+@shared_task
+def send_beer_reminder():
+    c = BeerReminderCommand()
+    c.run_from_argv(["", ""])
+
+
+@shared_task
+def send_web_reminder():
+    c = WebReminderCommand()
     c.run_from_argv(["", ""])
