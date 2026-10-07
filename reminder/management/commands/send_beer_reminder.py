@@ -12,9 +12,7 @@ DAYS_TO_CONSIDER_SOON = 31
 
 
 class Command(BaseCommand):
-    help = (
-        "Send beer reminder emails to responsible board members for the upcoming week"
-    )
+    help = "Send beer reminder email to responsible board members for the upcoming week"
 
     def handle(self, *args, **options):
         if not config.SEND_REMINDERS:
@@ -51,17 +49,17 @@ De følgende varer udløber snart. Check om vi stadig har dem på lager, eller o
 Husk at opdatere månedens øl og ugens spotlight.
  -\tMånedens øl er den øl vi gerne vil have solgt mest af i den kommende periode.
 \tDet er også den øl man kan finde på hjulet i baren, så prisen på denne øl skal ligge omkring de 30 kr. +/- for at hjulet går i nul.
- -\tUgens spotlight kan bruges til øl vi gerne vil have solgt ud af, hvis de f.eks. er ved at overgå deres best før dato.
+ -\tUgens spotlight kan bruges til varer vi gerne vil have solgt ud af, hvis de f.eks. er ved at overgå deres best før dato.
 \tDet kan også bruges til at fremhæve en øl vi gerne vil have solgt mere af.
 {itemsExpiringSoon_info}
-Husk, bare fordi en øl er overgået sin best før dato, må vi stadig godt sælge den,
+Husk, bare fordi en varer er overgået sin best før dato, må vi stadig godt sælge den,
 så længe den ikke er dårlig og at vi gør opmærksom på at den er overgået sin best før dato.
 Hvis den er gået på dato kan man overveje at sætte prisen ned, så vi får solgt den ud.
 
 /snek"""
 
         send_template_email(
-            subject=f"({len(itemsExpiringSoon)}) øl nærmer sig best før dato. Husk at opdatere månedens øl og ugens spotlight",
+            subject=f"{len(itemsExpiringSoon)} varer nærmer sig best før dato. Husk at opdatere månedens øl og ugens spotlight",
             body_template=body_template,
             to=[f"beer@{settings.DOMAIN}"],
             cc=[f"reminder@{settings.DOMAIN}"],

@@ -36,12 +36,12 @@ After previewing the generated schedule, it asks for confirmation before publish
         responsibles_per_shift = options["responsibles"]
         if responsibles_per_shift is None:
             responsibles_per_shift = int(
-                input("Number of responsible board members (2): ") or "2"
+                input("Number of responsible board members (default=2): ") or "2"
             )
 
         weeks = options["weeks"]
         if weeks is None:
-            weeks = int(input("Number of consecutive weeks (2): ") or "2")
+            weeks = int(input("Number of consecutive weeks (default=2): ") or "2")
 
         board_members = [
             b

@@ -28,7 +28,7 @@ class Command(ReminderCommand):
 
 Hej {humanized_bartenders}.
 
-I skal tage jer af panten/opvask inden næste fredag!
+I skal tage jer af panten/opvasken inden næste fredag!
 
 /Bestyrelsen"""
 
