@@ -24,7 +24,9 @@ class Command(ReminderCommand):
         return f"Du har pantvagt i næste uge!"
 
     def email_body(self, humanized_bartenders, event):
-        return f"""Hej {humanized_bartenders}.
+        return f"""Dette er en automatisk email.
+
+Hej {humanized_bartenders}.
 
 I skal tage jer af panten/opvask inden næste fredag!
 

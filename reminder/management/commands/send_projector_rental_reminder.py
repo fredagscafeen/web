@@ -26,12 +26,13 @@ class Command(ReminderCommand):
         return f"Du er ansvarlig for en udlejning af projektor og lærred i denne uge!"
 
     def email_body(self, humanized_bartenders, event):
+        pronoun = "Du" if len(self.get_bartenders_from_event(event)) == 1 else "I"
         link = """Se mere i {link}."""
         return f"""Dette er en automatisk email.
 
 Hej {humanized_bartenders}.
 
-Du/I er ansvarlige for at leje projektor og lærred ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d/%-m, kl. %H:%M")}.
+{pronoun} er ansvarlige for at leje projektor og lærred ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d/%-m, kl. %H:%M")}.
 
 {link}
 

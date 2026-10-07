@@ -14,7 +14,8 @@ class Command(BaseCommand):
             print("SEND_REMINDERS is false, not sending any reminders.")
             return
 
-        body_template = """
+        body_template = """Dette er en automatisk email.
+
 Det er blevet tid til at forny Aarhus Bryghus' adgangskort til p-kælderen!
 
 Dette skal gøres hver 3. måned, og kortet udløber omkring d. 29. i måneden.
@@ -28,15 +29,15 @@ EXTERNAL IDENTITY CARD
 Aarhus Bryghus Fredagscafe, øl-depot ADA
 Kortnr. 060546
 Nummer ved magnetstribe: 106820
-"""
+
+/snek"""
 
         send_template_email(
-            subject="VIGTIGT: Aarhus Bryghus adgang udløber!",
+            subject="VIGTIGT: Aarhus Bryghus adgang udløber snart!",
             body_template=body_template,
             to=[f"beer@{settings.DOMAIN}"],
-            from_email=f"Fredagscafeen <reminder@{settings.DOMAIN}>",
             cc=[f"reminder@{settings.DOMAIN}"],
             reply_to=[f"best@{settings.DOMAIN}"],
         )
 
-        print(f"Reminders sent to the beer mailing list!")
+        print(f"Reminder sent to the beer mailing list!")

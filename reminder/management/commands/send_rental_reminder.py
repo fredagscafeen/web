@@ -26,16 +26,17 @@ class Command(ReminderCommand):
         return f"Du er ansvarlig for en udlejning i denne uge!"
 
     def email_body(self, humanized_bartenders, event):
+        pronoun = "Du" if len(self.get_bartenders_from_event(event)) == 1 else "I"
         link = """Se mere i {link}."""
         return f"""Dette er en automatisk email.
 
 Hej {humanized_bartenders}.
 
-Du/I er ansvarlige for at leje {event.get_draftBeerSystem_display()} ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d/%-m, kl. %H:%M")}.
+{pronoun} er ansvarlige for at leje {event.get_draftBeerSystem_display()} ud til {event.whoReserved}, {event.dateFrom.astimezone().strftime("d. %-d/%-m, kl. %H:%M")}.
 
 1. Husk at sætte strøm til anlægget mindst 12 timer inden arrangementet.
 
-2. Husk at få bestilt ind.
+2. Husk at få bestilt ind. (beer@{settings.DOMAIN} på CC)
 
 Forventet forbrug:
 {event.expectedConsummation}
@@ -61,7 +62,7 @@ Forventet forbrug:
         }
 
     def email_cc(self):
-        return [f"udlejning@{settings.DOMAIN}"]
+        return [f"udlejning@{settings.DOMAIN}, beer@{settings.DOMAIN}"]
 
     def email_reply_to(self):
         return []

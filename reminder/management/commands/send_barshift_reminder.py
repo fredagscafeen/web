@@ -45,18 +45,20 @@ Ugens spotlight (Øl I gerne må anbefale hvis nogen spørger):
 """
             for item in spotlight_items:
                 spotlight_info += (
-                    f'- "{item.name}", {item.abv}% {item.type} ({item.brewery})\n'
+                    f' -\t"{item.name}", {item.abv}% {item.type} ({item.brewery})\n'
                 )
                 spotlight_info += (
-                    f"  {item.description}\n"
+                    f"\t{item.description}\n"
                     if item.description
-                    else f"  Ingen beskrivelse, men den er nok god!\n"
+                    else f"\tIngen beskrivelse, men den er nok god!\n"
                 )
 
-        return f"""Hej {humanized_bartenders}.
+        return f"""Dette er en automatisk email.
+
+Hej {humanized_bartenders}.
 
 Den kommende fredag er det JERES tur til at stå i Fredagscaféen.
-Dette er en automatisk email.
+
 Emailen er hovedsageligt sendt så I kan finde en anden at bytte vagt med,
 hvis en af jer ikke har mulighed for selv at tage den.
 Husk at jeres vagt starter kl. {start_time}.
