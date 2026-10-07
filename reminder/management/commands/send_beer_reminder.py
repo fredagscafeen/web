@@ -22,6 +22,7 @@ class Command(BaseCommand):
         today = timezone.localdate()
         itemsExpiringSoon = Item.objects.filter(
             bestBefore__lte=today + datetime.timedelta(DAYS_TO_CONSIDER_SOON),
+            inStock=True,
         ).order_by("bestBefore")
 
         itemsExpiringSoon_info = ""
@@ -53,7 +54,7 @@ Husk at opdatere månedens øl og ugens spotlight.
 \tDet kan også bruges til at fremhæve en øl vi gerne vil have solgt mere af.
 {itemsExpiringSoon_info}
 Husk, bare fordi en varer er overgået sin bedst før dato, må vi stadig godt sælge den,
-så længe den ikke er dårlig og at vi gør opmærksom på at den er overgået sin bedst før dato.
+så længe den ikke er dårlig og at vi gør opmærksom på, at den er overgået sin bedst før dato.
 Hvis den er gået på dato kan man overveje at sætte prisen ned, så vi får solgt den ud.
 
 /snek"""
