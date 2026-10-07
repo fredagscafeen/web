@@ -27,13 +27,13 @@ class Command(BaseCommand):
         itemsExpiringSoon_info = ""
         if itemsExpiringSoon.exists():
             itemsExpiringSoon_info += f"""
-De følgende varer udløber snart. Check om vi stadig har dem på lager, eller om best før datoen skal opdateres.
+De følgende varer udløber snart. Check om vi stadig har dem på lager, eller om bedst før datoen skal opdateres.
 """
             for item in itemsExpiringSoon:
                 item_info = f'"{item.name}", {item.type} ({item.brewery})'
                 if item.bestBefore is None:
                     itemsExpiringSoon_info += (
-                        f" -\t(INGEN BEST FØR DATO!) {item_info}\n"
+                        f" -\t(INGEN BEDST FØR DATO!) {item_info}\n"
                     )
                     continue
                 elif item.bestBefore == today:
@@ -49,17 +49,17 @@ De følgende varer udløber snart. Check om vi stadig har dem på lager, eller o
 Husk at opdatere månedens øl og ugens spotlight.
  -\tMånedens øl er den øl vi gerne vil have solgt mest af i den kommende periode.
 \tDet er også den øl man kan finde på hjulet i baren, så prisen på denne øl skal ligge omkring de 30 kr. +/- for at hjulet går i nul.
- -\tUgens spotlight kan bruges til varer vi gerne vil have solgt ud af, hvis de f.eks. er ved at overgå deres best før dato.
+ -\tUgens spotlight kan bruges til varer vi gerne vil have solgt ud af, hvis de f.eks. er ved at overgå deres bedst før dato.
 \tDet kan også bruges til at fremhæve en øl vi gerne vil have solgt mere af.
 {itemsExpiringSoon_info}
-Husk, bare fordi en varer er overgået sin best før dato, må vi stadig godt sælge den,
-så længe den ikke er dårlig og at vi gør opmærksom på at den er overgået sin best før dato.
+Husk, bare fordi en varer er overgået sin bedst før dato, må vi stadig godt sælge den,
+så længe den ikke er dårlig og at vi gør opmærksom på at den er overgået sin bedst før dato.
 Hvis den er gået på dato kan man overveje at sætte prisen ned, så vi får solgt den ud.
 
 /snek"""
 
         send_template_email(
-            subject=f"{len(itemsExpiringSoon)} varer nærmer sig best før dato. Husk at opdatere månedens øl og ugens spotlight",
+            subject=f"{len(itemsExpiringSoon)} varer nærmer sig bedst før dato. Husk at opdatere månedens øl og ugens spotlight",
             body_template=body_template,
             to=[f"beer@{settings.DOMAIN}"],
             cc=[f"reminder@{settings.DOMAIN}"],
