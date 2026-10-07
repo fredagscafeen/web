@@ -11,8 +11,9 @@ from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
-from bartenders.models import BartenderShift, ShiftStreak
+from bartenders.models import Bartender, BartenderShift, ShiftStreak
 from email_auth.auth import EmailTokenBackend
+from items.models import Item
 from web.forms import LoginForm
 
 
@@ -114,5 +115,8 @@ class About(TemplateView):
         context["longest_streak"] = longest_streak
 
         context["showOfficeHours"] = config.SHOW_OFFICE_HOURS
+
+        context["num_bartenders"] = Bartender.objects.count()
+        context["num_beers"] = Item.objects.count()
 
         return context
