@@ -408,7 +408,7 @@ def next_bartender_shift_dates(count):
 
 def next_deposit_shift_start(last_date=None):
     """
-    Returns the next monday after the last shift
+    Returns the next Saturday after the last shift
 
     Can't be a class method, because we need to use this as a default value
     """
@@ -419,7 +419,7 @@ def next_deposit_shift_start(last_date=None):
         else:
             last_date = timezone.now().date() - datetime.timedelta(1)
 
-    return next_date_with_weekday(last_date, Weekday.MONDAY)
+    return next_date_with_weekday(last_date, Weekday.SATURDAY)
 
 
 class BartenderShiftPeriod(models.Model):
@@ -609,7 +609,7 @@ class BoardMemberDepositShift(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.end_date:
-            self.end_date = next_date_with_weekday(self.start_date, Weekday.SUNDAY)
+            self.end_date = next_date_with_weekday(self.start_date, Weekday.FRIDAY)
 
         super().save(*args, **kwargs)
 
