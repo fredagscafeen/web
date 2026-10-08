@@ -16,6 +16,7 @@ from bartenders.views import (
 from events.views import CommonEventFeed, EventFeed
 from guides.views import Guides
 from items.views import Items, Scanner
+from signage.views import Signage
 from udlejning.views import (
     Udlejninger,
     UdlejningerBoardGameCart,
@@ -37,6 +38,7 @@ urlpatterns = [
     path(
         "barplan/<username>/", RedirectView.as_view(pattern_name="user_shifts")
     ),  # Old URLs, redirect
+    path("signage/", Signage.as_view(), name="signage"),
     path("prices/", Items.as_view(), name="prices"),
     path("scanner/", Scanner.as_view()),
     path("board/", Board.as_view(), name="board"),
