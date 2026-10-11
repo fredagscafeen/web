@@ -17,8 +17,10 @@ class Signage(TemplateView):
         events = Event.objects.select_related("event_album").prefetch_related(
             "links", "responses", "bartender_whitelist", "bartender_blacklist"
         )
-        events.filter(event_type=Event.EventType.COMMON)
-        now = timezone.now()
-        events = events.filter(start_datetime__gte=now).order_by("start_datetime")
+        events = events.filter(
+            event_type=Event.EventType.COMMON,
+            start_datetime__gte=timezone.now(),
+        ).order_by("start_datetime")
         context["events"] = events[:2]
+
         return context
