@@ -1,5 +1,7 @@
+from django.utils import timezone
 from django.views.generic import TemplateView
 
+from events.models import Event
 from items.models import Item
 
 
@@ -12,4 +14,11 @@ class Signage(TemplateView):
         context["beerOfTheMonth"] = Item.objects.filter(isBeerOfTheMonth=True).first()
         context["spotlightItems"] = Item.objects.filter(isOnSpotlight=True)
 
+        events = Event.objects.select_related("event_album").prefetch_related(
+            "links", "responses", "bartender_whitelist", "bartender_blacklist"
+        )
+        events.filter(event_type=Event.EventType.COMMON)
+        now = timezone.now()
+        events = events.filter(start_datetime__gte=now).order_by("start_datetime")
+        context["events"] = events[:2]
         return context
