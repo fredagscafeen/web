@@ -5,25 +5,272 @@
 {% load django_bootstrap5 bootstrap_icons %}
 {% load event_image_url event_description %}
 
+{% block extrahead %}
+<style>
+    .signage {
+        --signage-gap: clamp(1rem, 1.5vw, 2rem);
+        container-type: inline-size;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: var(--signage-gap);
+        min-height: 100svh;
+        padding: clamp(1.25rem, 2.7vw, 3.5rem) clamp(1.25rem, 3.2vw, 4rem);
+    }
+
+    .signage-header,
+    .signage-brand,
+    .signage-footer,
+    .signage-qr {
+        display: flex;
+        align-items: center;
+        gap: var(--signage-gap);
+    }
+
+    .signage-header,
+    .signage-footer {
+        justify-content: space-between;
+    }
+
+    .signage-brand img {
+        width: clamp(3.5rem, 6cqw, 7rem);
+        height: clamp(3rem, 5cqw, 6rem);
+        object-fit: contain;
+    }
+
+    .signage-brand h1 {
+        font-family: Times New Roman;
+        color: var(--datblue);
+        font-size: clamp(2rem, 3.2cqw, 4rem);
+        margin: 0;
+    }
+
+    .signage-header p {
+        margin: 0.25rem 0 0;
+        font-size: clamp(0.85rem, 1.15cqw, 1.5rem);
+    }
+
+    .signage-clock {
+        text-align: right;
+    }
+
+    .signage-clock h2 {
+        font-size: clamp(1.75rem, 2.8cqw, 3.5rem);
+        margin: 0;
+    }
+
+    .signage-content {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(0, 1fr);
+        gap: var(--signage-gap);
+        min-height: 0;
+    }
+
+    .signage-content:has(> .signage-beer):has(> .signage-spotlight):has(> .signage-events) {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.15fr);
+    }
+
+    .signage-content > *,
+    .signage-content .card {
+        min-width: 0;
+    }
+
+    .signage-content .card-header {
+        padding: clamp(0.75rem, 0.9cqw, 1.25rem) clamp(1rem, 1.2cqw, 1.5rem);
+        font-size: clamp(1rem, 1.25cqw, 1.6rem);
+        font-weight: 600;
+    }
+
+    .signage-beer-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--signage-gap);
+        padding: clamp(1rem, 1.5cqw, 2rem);
+        text-align: center;
+    }
+
+    .signage-beer-image {
+        flex: 1;
+        width: 100%;
+        min-height: 12rem;
+    }
+
+    .signage-product-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+        min-width: 0;
+        overflow-wrap: anywhere;
+        font-size: clamp(1rem, 1.3cqw, 1.7rem);
+    }
+
+    .signage-beer .signage-product-details {
+        align-items: center;
+    }
+
+    .signage-beer .card-title {
+        font-size: clamp(1.5rem, 2.2cqw, 2.8rem);
+        margin: 0;
+    }
+
+    .signage-price {
+        font-size: clamp(1.25rem, 1.7cqw, 2.2rem);
+        margin: 0;
+    }
+
+    .signage-beer .signage-price {
+        font-size: clamp(1.75rem, 2.5cqw, 3.2rem);
+    }
+
+    .signage-spotlight-list {
+        flex: 1;
+    }
+
+    .signage-spotlight-item {
+        display: grid;
+        flex: 1;
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+        align-items: center;
+        gap: 0.75rem;
+        padding: clamp(1rem, 1.2cqw, 1.5rem);
+    }
+
+    .signage-spotlight-image {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: stretch;
+        min-height: 9rem;
+    }
+
+    .signage-spotlight-item .signage-product-details {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .signage-events {
+        display: flex;
+        flex-direction: column;
+        gap: var(--signage-gap);
+    }
+
+    .signage-events > h2 {
+        font-size: clamp(1.5rem, 1.9cqw, 2.5rem);
+        margin: 0;
+    }
+
+    .signage-event {
+        flex: 1;
+        background-color: var(--lightblue);
+    }
+
+    .signage-event .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(1rem, 1.4cqw, 1.8rem);
+        font-size: clamp(0.9rem, 1.15cqw, 1.5rem);
+        overflow-wrap: anywhere;
+    }
+
+    .signage-event .card-title {
+        font-size: clamp(1.5rem, 2.2cqw, 2.8rem);
+    }
+
+    .signage-event .event-image {
+        height: clamp(6rem, 12vh, 12rem);
+    }
+
+    .signage-event-date {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .signage-event-date svg {
+        flex-shrink: 0;
+        margin-top: 0.25em;
+    }
+
+    .signage-footer {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .signage-website {
+        font-family: "Times New Roman", Times, serif;
+        font-size: clamp(1.25rem, 1.6cqw, 2rem);
+        color: var(--datblue);
+        text-decoration: none;
+        justify-self: start;
+    }
+
+    .signage-version {
+        font-size: clamp(0.75rem, 0.8cqw, 1rem);
+        text-align: center;
+    }
+
+    .signage-qr {
+        justify-self: end;
+        text-align: right;
+        font-size: clamp(1rem, 1.3cqw, 1.7rem);
+        line-height: 1.45;
+    }
+
+    .signage-qr img {
+        width: clamp(5rem, 6cqw, 8rem);
+        height: auto;
+    }
+
+    @media (max-width: 991.98px) {
+        .signage-content,
+        .signage-content:has(> .signage-beer):has(> .signage-spotlight):has(> .signage-events) {
+            grid-auto-flow: row;
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .signage-beer-image {
+            flex: none;
+            height: 16rem;
+        }
+
+        .signage-header {
+            flex-wrap: wrap;
+        }
+
+        .signage-footer {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .signage-version {
+            grid-column: 1 / -1;
+            grid-row: 2;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block body_content %}
 
 <meta http-equiv="refresh" content="20" />
 
-<div class="container pt-4 px-6">
-    <header>
-        <div class="row align-items-center">
+<div class="signage">
+    <header class="signage-header">
+        <div class="signage-brand">
             {% get_current_language as LANGUAGE_CODE %}
             {% get_available_languages as LANGUAGES %}
             {% get_language_info_list for LANGUAGES as languages %}
-            <div class="col-auto">
+            <div>
                 <a href="/{{ LANGUAGE_CODE }}/" class="text-decoration-none">
-                    <img src="{% static 'images/logo.png' %}" height="50" {% if config.SHOW_OPEN_EVERY_FRIDAY %}style="margin-bottom: 10px;"{% endif %}>
+                    <img src="{% static 'images/logo.png' %}" alt="Fredagscaféen">
                 </a>
             </div>
-            <div class="col-auto me-auto">
+            <div>
                 <a href="/{{ LANGUAGE_CODE }}/" class="text-decoration-none">
                     <div>
-                        <h1 style="font-family: Times New Roman; color: var(--datblue); display: inline;">
+                        <h1>
                             Fredagscaféen
                         </h1>
                         {% if config.SHOW_OPEN_EVERY_FRIDAY %}
@@ -34,18 +281,16 @@
                     </div>
                 </a>
             </div>
-            <div class="col-auto text-primary-emphasis" align="center">
-                <h3>{% now "H:i" %}</h3>
-                <p>{% now "l, j. F Y" %}</p>
-            </div>
+        </div>
+        <div class="signage-clock text-primary-emphasis">
+            <h2>{% now "H:i" %}</h2>
+            <p>{% now "l, j. F Y" %}</p>
         </div>
     </header>
 
-    <div class="row">
-        <div class="{% if events %}col-6{% else %}col-12{% endif %}">
+    <main class="signage-content">
             {% if beerOfTheMonth %}
-            <div class="gap-3">
-                <div class="card text-bg-info mb-3 beer-of-the-month-card">
+                <section class="card text-bg-info beer-of-the-month-card signage-beer">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-auto me-auto">
@@ -53,20 +298,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-2 flex-column align-items-start bg-info-subtle rounded-bottom">
+                    <div class="signage-beer-body bg-info-subtle rounded-bottom">
                         {% if beerOfTheMonth.image %}
-                            <div class="image size-200 m-0 mx-auto" style="background-image: url({{ beerOfTheMonth.image.url }});"></div>
+                            <div class="image signage-beer-image" role="img" aria-label="{{ beerOfTheMonth.name }}" style="background-image: url({{ beerOfTheMonth.image.url }});"></div>
                         {% else %}
-                            <div class="image size-200 m-0 mx-auto" style="background-image: url({% static 'images/logo.png' %});"></div>
+                            <div class="image signage-beer-image" role="img" aria-label="Fredagscaféen" style="background-image: url({% static 'images/logo.png' %});"></div>
                         {% endif %}
-                    </div>
-                    <div class="card-img-overlay mt-5 justify-content-center d-flex flex-column">
-                        <h5 class="card-title text-body">
+                    <div class="signage-product-details">
+                        <h2 class="card-title text-body">
                             {{ beerOfTheMonth.name }}
                             {% if beerOfTheMonth.abv %}
                             <small class="text-muted text-decoration-underline">{{ beerOfTheMonth.abv }}%</small>
                             {% endif %}
-                        </h5>
+                        </h2>
                         <div class="d-flex align-content-start flex-wrap ps-0 gap-1">
                             <div class="bg-primary-subtle rounded border border-primary text-center px-1">
                                 <small class="text-muted">{{ beerOfTheMonth.type }}</small>
@@ -93,36 +337,31 @@
                             </small>
                         </div>
                         <div class="d-flex">
-                            <h5 class="text-primary fw-bold">{{ beerOfTheMonth.priceInDKK|floatformat:-2 }} DKK</h5>
+                             <p class="signage-price text-primary fw-bold">{{ beerOfTheMonth.priceInDKK|floatformat:-2 }} DKK</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                    </div>
+                </section>
             {% endif %}
 
             {% if spotlightItems %}
-            <div class="gap-3">
-                <div class="card text-bg-warning mb-3">
-                    <div class="card-header">
+                <section class="card bg-warning-subtle border-warning signage-spotlight">
+                    <div class="card-header text-bg-warning">
                         <div class="row">
                             <div class="col-auto me-auto">
                                 {% translate "Ugens Spotlight" %} <span class="badge text-bg-primary rounded-pill">{{ spotlightItems|length }}</span>
                             </div>
                         </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item bg-warning-subtle m-0 p-0 overflow-hidden">
-                            <ul class="row list-unstyled m-0 p-0">
+                    <ul class="list-group list-group-flush signage-spotlight-list">
                                 {% for spotlightItem in spotlightItems %}
-                                    <li class="col-12 col-sm spotlight-item {% if not spotlightItem.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex border border-warning">
-                                        <div class="spotlight-item-media">
+                                    <li class="list-group-item bg-warning-subtle border-warning signage-spotlight-item {% if not spotlightItem.inStock %}opacity-50{% endif %}">
                                             {% if spotlightItem.image %}
-                                                <div class="image size-150" style="background-image: url({{ spotlightItem.image.url }});"></div>
+                                                <div class="image signage-spotlight-image" role="img" aria-label="{{ spotlightItem.name }}" style="background-image: url({{ spotlightItem.image.url }});"></div>
                                             {% else %}
-                                                <div class="image size-150" style="background-image: url({% static 'images/logo.png' %});"></div>
+                                                <div class="image signage-spotlight-image" role="img" aria-label="Fredagscaféen" style="background-image: url({% static 'images/logo.png' %});"></div>
                                             {% endif %}
-                                        </div>
-                                        <div class="spotlight-item-overlay justify-content-center d-flex flex-column">
+                                        <div class="signage-product-details">
                                             <div>
                                                 {% if not spotlightItem.inStock %}
                                                     <span class="text-decoration-line-through">{{ spotlightItem.name }}</span>
@@ -159,24 +398,19 @@
                                                 <small>{{ spotlightItem.brewery }}</small>
                                             {% endif %}
                                             {% if spotlightItem.priceInDKK > 0 %}
-                                                <div class="text-primary fw-bold">{{ spotlightItem.priceInDKK|floatformat:-2 }} DKK</div>
+                                                <div class="signage-price text-primary fw-bold">{{ spotlightItem.priceInDKK|floatformat:-2 }} DKK</div>
                                             {% endif %}
                                         </div>
                                     </li>
                                 {% endfor %}
-                            </ul>
-                        </li>
                     </ul>
-                </div>
-            </div>
+                </section>
             {% endif %}
-        </div>
         {% if events %}
-        <div class="col-6">
-            <h2 class="d-none d-lg-block">{% translate "Upcoming events" %}</h2>
+        <section class="signage-events">
+            <h2>{% translate "Upcoming events" %}</h2>
             {% for event in events %}
-            <div class="mb-3">
-                <div class="card card-hover" style="background-color: var(--lightblue);">
+                <article class="card card-hover signage-event">
                     {% if event.event_album %}
                         {% with image_url=event|event_image_url %}
                             {% if image_url %}
@@ -200,10 +434,7 @@
                             {% endwith %}
                         </p>
                         <div class="card-text mb-2">
-                            <p class="d-none d-md-flex align-items-center gap-2 m-0 ">
-                                {% bs_icon 'calendar-event-fill' size='1.1em' %} <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>
-                            </p>
-                            <div class="d-flex d-md-none align-items-center gap-2 m-0">
+                            <div class="signage-event-date">
                                 {% bs_icon 'calendar-event-fill' size='1.1em' %}
                                 <div class="d-flex flex-column">
                                     <p class="m-0"><span>{% translate "Fra" %}: </span><b>{{ event.start_datetime }}</b></p>
@@ -246,7 +477,7 @@
                                 </a>
                             {% endfor %}
                         </div>
-                        <a href="{{ event.id }}" class="card-link stretched-link"></a>
+                        <a href="{% url 'event' event_id=event.id %}" class="card-link stretched-link"></a>
                     </div>
                     {% if not event.deadline_exceeded and event.is_bartender_event and is_bartender %}
                         <div class="card-footer">
@@ -257,8 +488,7 @@
                             </small>
                         </div>
                     {% endif %}
-                </div>
-            </div>
+                </article>
             {% empty %}
             <div class="row m-sm-4">
                 <p class="text-center text-dark m-0">
@@ -266,36 +496,23 @@
                 </p>
             </div>
             {% endfor %}
-        </div>
+        </section>
         {% endif %}
-    </div>
+    </main>
 
-    <footer class="text-primary-emphasis pb-4 fixed-bottom">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-auto" align="center">
-                    <img src="{% static 'images/qr-signage.svg' %}" height="150">
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-auto" align="center">
-                    <a class="common" href="/{{ LANGUAGE_CODE }}/signage">
-                        {{ DOMAIN }}/{{ LANGUAGE_CODE }}/signage
-                    </a>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-auto" align="center">
-                    <small>
-                        {% if GIT_COMMIT_HASH %}
-                        {% translate "Running version" %}
-                        <a class="common" href="https://github.com/fredagscafeen/web/commit/{{ GIT_COMMIT_HASH }}" target="_blank" rel="external">{{ GIT_COMMIT_HASH }} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
-                        {% else %}
-                        {% translate "Running unknown version." %}
-                        {% endif %}
-                    </small>
-                </div>
-            </div>
+    <footer class="signage-footer text-primary-emphasis">
+        <a class="signage-website" href="/{{ LANGUAGE_CODE }}/">Fredagscafeen.dk</a>
+        <small class="signage-version">
+            {% if GIT_COMMIT_HASH %}
+            {% translate "Running version" %}
+            <a class="common" href="https://github.com/fredagscafeen/web/commit/{{ GIT_COMMIT_HASH }}" target="_blank" rel="external">{{ GIT_COMMIT_HASH }} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+            {% else %}
+            {% translate "Running unknown version." %}
+            {% endif %}
+        </small>
+        <div class="signage-qr">
+            <strong>{% translate "Scan to see" %}<br>{% translate "our selection" %}</strong>
+            <img src="{% static 'images/qr-signage.svg' %}" alt="{% translate 'QR code' %}">
         </div>
     </footer>
 </div>
