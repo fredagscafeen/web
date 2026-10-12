@@ -1,0 +1,19 @@
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+<header class="sg-header">
+    <a href="/{{ LANGUAGE_CODE }}/" class="sg-brand text-decoration-none">
+        <img src="{% static 'images/logo.png' %}" class="sg-logo" alt="">
+        <div>
+            <h1 class="sg-title">Fredagscaféen</h1>
+            {% if config.SHOW_OPEN_EVERY_FRIDAY %}
+            <p class="sg-tagline text-primary-emphasis">
+                <i>{% translate "Åben" %} <u>{% translate "hver" %}</u> {% translate "fredag" %}!</i>
+            </p>
+            {% endif %}
+        </div>
+    </a>
+    <div class="sg-clock text-primary-emphasis">
+        <div class="sg-time">{% now "H:i" %}</div>
+        <div class="sg-date">{% now "l, j. F Y" %}</div>
+    </div>
+</header>

@@ -1,0 +1,7 @@
+{% load i18n %}
+<div class="card text-bg-info sg-card sg-beer">
+    <div class="card-header">{% translate "Månedens Øl" %}</div>
+    <div class="sg-card-body bg-info-subtle text-body">
+        {% include "signage/_item.html" with item=beerOfTheMonth %}
+    </div>
+</div>

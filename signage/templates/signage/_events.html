@@ -1,0 +1,43 @@
+{% load i18n event_image_url event_description bootstrap_icons %}
+<section class="sg-events">
+    <h2 class="sg-events-title">{% translate "Upcoming events" %}</h2>
+    <div class="sg-events-list">
+        {% for event in events %}
+        <div class="card sg-event" style="background-color: var(--lightblue);">
+            {% if event.event_album %}
+                {% with image_url=event|event_image_url %}
+                    {% if image_url %}
+                        <img src="{{ image_url }}" class="sg-event-img" alt="{{ event.name }}">
+                    {% endif %}
+                {% endwith %}
+            {% endif %}
+            <div class="sg-event-body">
+                <h4 class="sg-event-name">{{ event.name }}</h4>
+                {% with description=event|event_description:user %}
+                    {% if description %}
+                        <p class="sg-event-desc">{{ description|linebreaksbr }}</p>
+                    {% endif %}
+                {% endwith %}
+                <div class="sg-event-meta">
+                    <div class="d-flex align-items-center gap-2">
+                        {% bs_icon 'calendar-event-fill' size='1.1em' %}
+                        <div class="d-flex flex-column">
+                            <span>{% translate "Fra" %}: <b>{{ event.start_datetime }}</b></span>
+                            <span>{% translate "Til" %}: <b>{{ event.end_datetime }}</b></span>
+                        </div>
+                    </div>
+                    {% if event.location %}
+                        <div class="d-flex align-items-center gap-2">{% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}</div>
+                    {% endif %}
+                    {% if event.is_bartender_event %}
+                        <div class="d-flex align-items-center gap-2">{% bs_icon 'people-fill' size='1.1em' %} {{ event.attending_count }}</div>
+                    {% endif %}
+                </div>
+                <a href="{% url 'event' event_id=event.id %}" class="card-link stretched-link"></a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="sg-empty text-center text-dark m-0">{% translate "No upcoming events" %}</p>
+        {% endfor %}
+    </div>
+</section>

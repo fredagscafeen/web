@@ -1,0 +1,15 @@
+{% load i18n %}
+<div class="card text-bg-warning sg-card sg-spotlight">
+    <div class="card-header">
+        {% translate "Ugens Spotlight" %} <span class="badge text-bg-primary rounded-pill">{{ spotlightItems|length }}</span>
+    </div>
+    <div class="sg-card-body bg-warning-subtle text-body p-0">
+        <div class="sg-spotlight-grid">
+            {% for item in spotlightItems %}
+                <div class="sg-spotlight-cell border border-warning">
+                    {% include "signage/_item.html" %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

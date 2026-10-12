@@ -1,0 +1,11 @@
+{% load i18n bootstrap_icons %}
+<footer class="sg-version text-primary-emphasis">
+    <small>
+        {% if GIT_COMMIT_HASH %}
+        {% translate "Running version" %}
+        <a class="common" href="https://github.com/fredagscafeen/web/commit/{{ GIT_COMMIT_HASH }}" target="_blank" rel="external">{{ GIT_COMMIT_HASH }} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+        {% else %}
+        {% translate "Running unknown version." %}
+        {% endif %}
+    </small>
+</footer>

@@ -1,0 +1,9 @@
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+<div class="card sg-qr bg-white">
+    <img src="{% static 'images/qr-signage.svg' %}" class="sg-qr-img" alt="QR">
+    <div class="sg-qr-text text-primary-emphasis">
+        <div class="sg-qr-cta">{% translate "Scan to see our selection" %}</div>
+        <a class="common sg-qr-url" href="/{{ LANGUAGE_CODE }}/signage">{{ DOMAIN }}/{{ LANGUAGE_CODE }}/signage</a>
+    </div>
+</div>

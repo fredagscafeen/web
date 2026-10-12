@@ -1,0 +1,12 @@
+<div class="sg-main">
+    <div class="sg-cols">
+        {% if beerOfTheMonth %}
+        <div class="sg-col">{% include "signage/_beer.html" %}</div>
+        {% endif %}
+        {% if spotlightItems %}
+        <div class="sg-col">{% include "signage/_spotlight.html" %}</div>
+        {% endif %}
+        <div class="sg-col">{% include "signage/_events.html" %}</div>
+    </div>
+    {% include "signage/_qr.html" %}
+</div>
