@@ -3654,3 +3654,7 @@ msgid ""
 msgstr ""
 "Login mail sendt: Tryk på linket i din modtagede mail for at logge ind. Husk"
 " også at checke din spam mappe."
+
+#: signage/templates/signage/_qr.html
+msgid "Scan to see our selection"
+msgstr "Scan for at se vores udvalg"

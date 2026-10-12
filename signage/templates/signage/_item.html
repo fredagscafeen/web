@@ -1,0 +1,42 @@
+{% load i18n static %}
+<div class="sg-item{% if not item.inStock %} opacity-50{% endif %}">
+    <div class="image sg-item-media" style="background-image: url({% if item.image %}{{ item.image.url }}{% else %}{% static 'images/logo.png' %}{% endif %});"></div>
+    <div class="sg-item-info">
+        <div class="sg-item-name">
+            {% if not item.inStock %}
+                <span class="text-decoration-line-through">{{ item.name }}</span>
+            {% else %}
+                {{ item.name }}
+                {% if item.abv %}<small class="sg-item-abv">{{ item.abv }}%</small>{% endif %}
+            {% endif %}
+        </div>
+        <div class="sg-tags d-flex flex-wrap gap-1">
+            {% if item.type %}
+            <div class="bg-primary-subtle rounded border border-primary text-center px-1">
+                <small class="text-muted">{{ item.type }}</small>
+            </div>
+            {% endif %}
+            {% if item.glutenFree %}
+            <div class="bg-warning-subtle rounded border border-warning text-center px-1">
+                <b><small class="text-muted">GF</small></b>
+            </div>
+            {% endif %}
+            {% if item.nonAlcoholic %}
+            <div class="bg-info-subtle rounded border border-info text-center px-1">
+                <b><small class="text-muted">NA</small></b>
+            </div>
+            {% endif %}
+            {% if item.isNew %}
+            <div class="bg-success-subtle rounded border border-success text-center px-1">
+                <i><small class="text-muted">{% translate "NYHED" %}</small></i>
+            </div>
+            {% endif %}
+        </div>
+        {% if item.brewery %}
+            <small class="sg-item-brewery">{{ item.brewery }}</small>
+        {% endif %}
+        {% if item.priceInDKK > 0 %}
+            <div class="sg-item-price text-primary fw-bold">{{ item.priceInDKK|floatformat:-2 }} DKK</div>
+        {% endif %}
+    </div>
+</div>
