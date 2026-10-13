@@ -30,6 +30,11 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
     width: 100px;
 }
 
+.size-125 {
+    height: 125px;
+    width: 125px;
+}
+
 .size-150 {
     height: 150px;
     width: 150px;
@@ -41,9 +46,7 @@ h2:hover .section-link, h3:hover .section-link, h4:hover .section-link, h5:hover
 }
 
 .spotlight-item-media {
-    height: 150px;
     margin: 0 auto;
-    width: 150px;
 }
 
 .spotlight-item {
