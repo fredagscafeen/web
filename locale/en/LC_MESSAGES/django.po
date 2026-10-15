@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 11:51+0200\n"
-"PO-Revision-Date: 2026-09-25 11:52+0200\n"
+"POT-Creation-Date: 2026-10-13 23:49+0200\n"
+"PO-Revision-Date: 2026-10-13 23:49+0200\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -443,7 +443,7 @@ msgid "Alias"
 msgstr "Alias"
 
 #: bartenders/models.py:265 events/templates/components/event-card.html:50
-#: web/templates/about.html:69
+#: signage/templates/signage.html:199 web/templates/about.html:69
 msgid "til"
 msgstr "to"
 
@@ -1159,35 +1159,38 @@ msgid "Remember to sign up!"
 msgstr "Remember to sign up!"
 
 #: events/templates/components/event-card.html:38
-#: events/templates/event.html:119
+#: events/templates/event.html:119 signage/templates/signage.html:187
 msgid "Not answered"
 msgstr "Not answered"
 
 #: events/templates/components/event-card.html:55
+#: signage/templates/signage.html:204
 msgid "Fra"
 msgstr "From"
 
 #: events/templates/components/event-card.html:56
+#: signage/templates/signage.html:205
 msgid "Til"
 msgstr "To"
 
 #: events/templates/components/event-card.html:71
-#: events/templates/event.html:67
+#: events/templates/event.html:67 signage/templates/signage.html:220
 msgid "Bartender Album"
 msgstr "Bartender Album"
 
 #: events/templates/components/event-card.html:78
-#: events/templates/event.html:74
+#: events/templates/event.html:74 signage/templates/signage.html:227
 msgid "View Album"
 msgstr "View Album"
 
 #: events/templates/components/event-card.html:100
 #: events/templates/event.html:127 events/views.py:144
+#: signage/templates/signage.html:249
 msgid "Tilmeldingsfrist"
 msgstr "Registration deadline"
 
 #: events/templates/components/event-card.html:102
-#: events/templates/event.html:127
+#: events/templates/event.html:127 signage/templates/signage.html:251
 msgid "for sent"
 msgstr "too late"
 
@@ -1317,7 +1320,7 @@ msgstr "past events"
 msgid "Events"
 msgstr "Events"
 
-#: events/templates/upcoming-events.html:12
+#: events/templates/upcoming-events.html:12 signage/templates/signage.html:172
 msgid "Upcoming events"
 msgstr "Upcoming events"
 
@@ -1366,11 +1369,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: fredagscafeen/settings/base.py:484
+#: fredagscafeen/settings/base.py:485
 msgid "Danish"
 msgstr "Danish"
 
-#: fredagscafeen/settings/base.py:485
+#: fredagscafeen/settings/base.py:486
 msgid "English"
 msgstr "English"
 
@@ -1880,26 +1883,29 @@ msgstr "Breweries"
 msgid "Tilføj vare"
 msgstr "Add new item"
 
-#: items/templates/items.html:20
+#: items/templates/items.html:20 signage/templates/signage.html:51
 msgid "Månedens Øl"
 msgstr "Beer Of The Month"
 
 #: items/templates/items.html:50 items/templates/items.html:123
-#: items/templates/items.html:239
+#: items/templates/items.html:239 signage/templates/signage.html:74
+#: signage/templates/signage.html:140
 msgid "Glutenfri"
 msgstr "Gluten Free"
 
 #: items/templates/items.html:55 items/templates/items.html:128
-#: items/templates/items.html:244
+#: items/templates/items.html:244 signage/templates/signage.html:79
+#: signage/templates/signage.html:145
 msgid "Alkoholfri"
 msgstr "Non-Alcoholic"
 
 #: items/templates/items.html:61 items/templates/items.html:134
-#: items/templates/items.html:250
+#: items/templates/items.html:250 signage/templates/signage.html:85
+#: signage/templates/signage.html:151
 msgid "NYHED"
 msgstr "NEW"
 
-#: items/templates/items.html:89
+#: items/templates/items.html:89 signage/templates/signage.html:106
 msgid "Ugens Spotlight"
 msgstr "This Weeks Spotlight"
 
@@ -2428,6 +2434,35 @@ msgstr "Dynamic QR-codes"
 #: qr/views.py:19
 msgid "QR code is not active."
 msgstr "QR code is not active."
+
+#: signage/templates/signage.html:31 web/templates/base.html:31
+msgid "Åben"
+msgstr "Open"
+
+#: signage/templates/signage.html:31 web/templates/base.html:31
+msgid "hver"
+msgstr "every"
+
+#: signage/templates/signage.html:31 web/templates/base.html:31
+msgid "fredag"
+msgstr "Friday"
+
+#: signage/templates/signage.html:259
+msgid "No upcoming events"
+msgstr "No upcoming events"
+
+#: signage/templates/signage.html:267
+#| msgid "Save to view selection stats"
+msgid "Scan to see our entire selection"
+msgstr "Scan to see our entire selection"
+
+#: signage/templates/signage.html:297 web/templates/base.html:188
+msgid "Running version"
+msgstr "Running version"
+
+#: signage/templates/signage.html:300 web/templates/base.html:191
+msgid "Running unknown version."
+msgstr "Running unknown version."
 
 #: udlejning/admin.py:171
 msgid "Accepter"
@@ -3544,18 +3579,6 @@ msgstr ""
 "\n"
 "However, an exception may be allowed if there is a dispensation from AU."
 
-#: web/templates/base.html:31
-msgid "Åben"
-msgstr "Open"
-
-#: web/templates/base.html:31
-msgid "hver"
-msgstr "every"
-
-#: web/templates/base.html:31
-msgid "fredag"
-msgstr "Friday"
-
 #: web/templates/base.html:83
 msgid "Forside"
 msgstr "Home"
@@ -3603,14 +3626,6 @@ msgstr "Admin"
 #: web/templates/base.html:180
 msgid "er en fredagsbar for datalogi og IT på Aarhus Universitet."
 msgstr "is a Friday bar for computer science and IT at Aarhus University."
-
-#: web/templates/base.html:188
-msgid "Running version"
-msgstr "Running version"
-
-#: web/templates/base.html:191
-msgid "Running unknown version."
-msgstr "Running unknown version."
 
 #: web/templates/secrets_admin.html:12
 msgid "Django key"

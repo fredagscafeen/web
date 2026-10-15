@@ -397,6 +397,7 @@ INSTALLED_APPS = (
     "versatileimagefield",
     "qr",
     "accountant",
+    "signage",
     "crispy_forms",
     "crispy_tailwind",
 )

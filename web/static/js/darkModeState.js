@@ -67,3 +67,10 @@ function setThemeToggle() {
         }
     }
 }
+
+function setLightMode() {
+    "use strict";
+    localStorage.setItem("lightMode", true);
+    localStorage.setItem("darkMode", false);
+    document.documentElement.setAttribute('data-bs-theme','light')
+}

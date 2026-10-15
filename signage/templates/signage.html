@@ -1,0 +1,313 @@
+{% extends 'plain_base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load django_bootstrap5 bootstrap_icons %}
+{% load event_image_url event_description %}
+
+{% block body_content %}
+
+<meta http-equiv="refresh" content="20" />
+
+<div class="container pt-4 px-6">
+    <header>
+        <div class="row align-items-center">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            <div class="col-auto">
+                <a href="/{{ LANGUAGE_CODE }}/" class="text-decoration-none">
+                    <img src="{% static 'images/logo.png' %}" height="50" {% if config.SHOW_OPEN_EVERY_FRIDAY %}style="margin-bottom: 10px;"{% endif %}>
+                </a>
+            </div>
+            <div class="col-auto me-auto">
+                <a href="/{{ LANGUAGE_CODE }}/" class="text-decoration-none">
+                    <div>
+                        <h1 style="font-family: Times New Roman; color: var(--datblue); display: inline;">
+                            Fredagscaféen
+                        </h1>
+                        {% if config.SHOW_OPEN_EVERY_FRIDAY %}
+                        <p class="text-primary-emphasis">
+                            <i>{% translate "Åben" %} <u>{% translate "hver" %}</u> {% translate "fredag" %}!</i>
+                        </p>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            <div class="col-auto text-primary-emphasis" align="center">
+                <h3>{% now "H:i" %}</h3>
+                <p>{% now "l, j. F Y" %}</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="{% if events %}col-7{% else %}col-12{% endif %}">
+            {% if beerOfTheMonth %}
+            <div class="card text-bg-info mb-3 beer-of-the-month-card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto me-auto">
+                            {% translate "Månedens Øl" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 flex-column align-items-start bg-info-subtle">
+                    {% if beerOfTheMonth.image %}
+                        <div class="image size-150 m-0 mx-auto" style="background-image: url({{ beerOfTheMonth.image.url }});"></div>
+                    {% else %}
+                        <div class="image size-150 m-0 mx-auto" style="background-image: url({% static 'images/logo.png' %});"></div>
+                    {% endif %}
+                </div>
+                <div class="card-body bg-info-subtle text-center d-flex flex-column p-0">
+                    <h5 class="card-title text-body">
+                        {{ beerOfTheMonth.name }}
+                        {% if beerOfTheMonth.abv %}
+                        <small class="text-muted text-decoration-underline">{{ beerOfTheMonth.abv }}%</small>
+                        {% endif %}
+                    </h5>
+                    <div class="justify-content-center d-flex align-content-center flex-wrap ps-0 gap-1">
+                        <div class="bg-primary-subtle rounded border border-primary text-center px-1">
+                            <small class="text-muted">{{ beerOfTheMonth.type }}</small>
+                        </div>
+                        {% if beerOfTheMonth.glutenFree %}
+                        <div class="bg-warning-subtle rounded border border-warning text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Glutenfri' %}">
+                            <b><small class="text-muted">GF</small></b>
+                        </div>
+                        {% endif %}
+                        {% if beerOfTheMonth.nonAlcoholic %}
+                        <div class="bg-info-subtle rounded border border-info text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
+                            <b><small class="text-muted">NA</small></b>
+                        </div>
+                        {% endif %}
+                        {% if beerOfTheMonth.isNew %}
+                        <div class="bg-success-subtle rounded border border-success text-center px-1">
+                            <i><small class="text-muted">{% translate "NYHED" %}</small></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <small class="text-muted">
+                            {{ beerOfTheMonth.brewery }}
+                        </small>
+                    </div>
+                    <div class="justify-content-center d-flex">
+                        <h5 class="text-primary fw-bold">{{ beerOfTheMonth.priceInDKK|floatformat:-2 }} DKK</h5>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if spotlightItems %}
+            <div class="card text-bg-warning mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto me-auto">
+                            {% translate "Ugens Spotlight" %} <span class="badge text-bg-primary rounded-pill">{{ spotlightItems|length }}</span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-warning-subtle m-0 p-0 overflow-hidden">
+                        <ul class="row list-unstyled m-0 p-0">
+                            {% for spotlightItem in spotlightItems %}
+                                <li class="col-12 col-sm spotlight-item {% if not spotlightItem.inStock %}opacity-50{% endif %} p-2 flex-column align-items-start d-flex border border-warning">
+                                    <div class="spotlight-item-media">
+                                        {% if spotlightItem.image %}
+                                            <div class="image size-125" style="background-image: url({{ spotlightItem.image.url }});"></div>
+                                        {% else %}
+                                            <div class="image size-125" style="background-image: url({% static 'images/logo.png' %});"></div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="justify-content-center d-flex flex-column">
+                                        <div>
+                                            {% if not spotlightItem.inStock %}
+                                                <span class="text-decoration-line-through">{{ spotlightItem.name }}</span>
+                                            {% else %}
+                                                <b>{{ spotlightItem.name }}</b>
+                                                {% if spotlightItem.abv %}
+                                                    <small class="text-decoration-underline">{{ spotlightItem.abv }}%</small>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="d-flex align-content-start flex-wrap ps-0 gap-1">
+                                            {% if spotlightItem.type %}
+                                            <div class="bg-primary-subtle border border-primary rounded text-center px-1">
+                                                <small class="text-muted">{{ spotlightItem.type }}</small>
+                                            </div>
+                                            {% endif %}
+                                            {% if spotlightItem.glutenFree %}
+                                            <div class="bg-warning-subtle border border-warning rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Glutenfri' %}">
+                                                <b><small class="text-muted">GF</small></b>
+                                            </div>
+                                            {% endif %}
+                                            {% if spotlightItem.nonAlcoholic %}
+                                            <div class="bg-info-subtle border border-info rounded text-center px-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{% translate 'Alkoholfri' %}">
+                                                <b><small class="text-muted">NA</small></b>
+                                            </div>
+                                            {% endif %}
+                                            {% if spotlightItem.isNew %}
+                                            <div class="bg-success-subtle rounded border border-success text-center px-1">
+                                                <i><small class="text-muted">{% translate "NYHED" %}</small></i>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                        {% if spotlightItem.brewery %}
+                                            <small>{{ spotlightItem.brewery }}</small>
+                                        {% endif %}
+                                        {% if spotlightItem.priceInDKK > 0 %}
+                                            <div class="text-primary fw-bold">{{ spotlightItem.priceInDKK|floatformat:-2 }} DKK</div>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% if events %}
+        <div class="col-5 d-flex flex-column">
+            <h2 class="d-none d-lg-block">{% translate "Upcoming events" %}</h2>
+            {% for event in events %}
+                <div class="card card-hover flex-fill mb-3 pt-auto" style="background-color: var(--lightblue);">
+                    {% if event.event_album %}
+                        {% with image_url=event|event_image_url %}
+                            {% if image_url %}
+                                <img src="{{ image_url }}" class="card-img-top event-image" alt="{{ event.name }}">
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
+                    <div class="card-body d-flex flex-column flex-grow-1 justify-content-center">
+                        <h4 class="card-title">
+                            {{ event.name }}
+                            {% if not_answered %}
+                                <i class="text-primary">{% bs_icon 'circle-fill' size='0.5em' %}</i>
+                                <span class="visually-hidden">{% translate "Not answered" %}</span>
+                            {% endif %}
+                        </h4>
+                        <p>
+                            {% with description=event|event_description:user %}
+                            {% if description %}
+                                {{ description|linebreaksbr }}
+                            {% endif %}
+                            {% endwith %}
+                        </p>
+                        <div class="card-text mb-2">
+                            <p class="d-none d-md-flex align-items-center gap-2 m-0 ">
+                                {% bs_icon 'calendar-event-fill' size='1.1em' %} <b>{{ event.start_datetime }}</b> {% translate "til" %} <b>{{ event.end_datetime }}</b>
+                            </p>
+                            <div class="d-flex d-md-none align-items-center gap-2 m-0">
+                                {% bs_icon 'calendar-event-fill' size='1.1em' %}
+                                <div class="d-flex flex-column">
+                                    <p class="m-0"><span>{% translate "Fra" %}: </span><b>{{ event.start_datetime }}</b></p>
+                                    <p class="m-0"><span>{% translate "Til" %}: </span><b>{{ event.end_datetime }}</b></p>
+                                </div>
+                            </div>
+                            {% if event.location %}
+                                <p class="d-flex align-items-center gap-2 m-0">{% bs_icon 'geo-alt-fill' size='1.1em' %} {{ event.location }}</p>
+                            {% endif %}
+                            {% if event.is_bartender_event %}
+                                <p class="d-flex align-items-center gap-2 m-0">{% bs_icon 'people-fill' size='1.1em' %} {{ event.attending_count }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex gap-2 align-items-center flex-wrap">
+                            {% if event.event_album and event.event_album.bartenderalbum and not is_bartender %}
+                                <span class="badge badge-hover rounded-pill bg-light text-dark border border-1 border-dark">
+                                    {% bs_icon 'lock-fill' %}
+                                    <span>
+                                        {% translate "Bartender Album" %}
+                                    </span>
+                                </span>
+                            {% elif event.event_album %}
+                                <a href="{{ event.event_album.get_absolute_url }}" class="d-flex gap-2 align-items-center badge badge-hover rounded-pill bg-info text-dark text-decoration-none border border-1 border-primary">
+                                    {% bs_icon 'images' %}
+                                    <span>
+                                        {% translate "View Album" %}
+                                    </span>
+                                </a>
+                            {% endif %}
+                            {% for link in event.links.all %}
+                                <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="d-flex gap-2 align-items-center badge badge-hover rounded-pill bg-light text-dark text-decoration-none border border-1 border-dark">
+                                    {% with icon=link.get_icon %}
+                                        {% if icon %}
+                                            {% bs_icon icon %}
+                                        {% endif %}
+                                    {% endwith %}
+                                    <span>
+                                    {{ link.get_title }}
+                                    </span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                        <a href="{{ event.id }}" class="card-link stretched-link"></a>
+                    </div>
+                    {% if not event.deadline_exceeded and event.is_bartender_event and is_bartender %}
+                        <div class="card-footer">
+                            <small class="text-body-secondary">
+                                <b>{% translate "Tilmeldingsfrist" %}:</b>
+                                {{ event.response_deadline }}
+                                {% if event.deadline_exceeded %} ({% translate "for sent" %}){% endif %}
+                            </small>
+                        </div>
+                    {% endif %}
+                </div>
+            {% empty %}
+            <div class="row m-sm-4">
+                <p class="text-center text-dark m-0">
+                    {% translate "No upcoming events" %}
+                </p>
+            </div>
+            {% endfor %}
+            <div class="card mb-3">
+                <div class="card-body p-1">
+                    <div class="row align-items-center">
+                        <div class="col-auto ms-auto">
+                            <h5 class="card-title">{% translate "Scan to see our entire selection" %}</h5>
+                            <a class="common" href="/{{ LANGUAGE_CODE }}/prices">
+                                {{ DOMAIN }}/{{ LANGUAGE_CODE }}/prices
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <img src="{% static 'images/qr-signage.svg' %}" height="125">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer class="text-primary-emphasis pb-4 fixed-bottom">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-auto">
+                    <small>
+                        <a class="common" href="/{{ LANGUAGE_CODE }}/signage">
+                            {{ DOMAIN }}/{{ LANGUAGE_CODE }}/signage
+                        </a>
+                    </small>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-auto">
+                    <small>
+                        {% if GIT_COMMIT_HASH %}
+                        {% translate "Running version" %}
+                        <a class="common" href="https://github.com/fredagscafeen/web/commit/{{ GIT_COMMIT_HASH }}" target="_blank" rel="external">{{ GIT_COMMIT_HASH }} {% bs_icon 'box-arrow-up-right' size='0.75em' %}</a>.
+                        {% else %}
+                        {% translate "Running unknown version." %}
+                        {% endif %}
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script>
+    window.onload = setLightMode()
+</script>
+
+{% endblock %}
