@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 23:49+0200\n"
-"PO-Revision-Date: 2026-10-13 23:49+0200\n"
+"POT-Creation-Date: 2026-10-27 17:57+0100\n"
+"PO-Revision-Date: 2026-10-27 17:59+0100\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -117,8 +117,8 @@ msgstr "Out of Pocket Expense Item"
 msgid "Out of Pocket Expense Items"
 msgstr "Out of Pocket Expense Items"
 
-#: accountant/models.py:66 items/models.py:16 items/models.py:181
-#: items/models.py:195 mail/models.py:48 mail/models.py:372
+#: accountant/models.py:66 items/models.py:20 items/models.py:205
+#: items/models.py:219 mail/models.py:48 mail/models.py:372
 msgid "Description"
 msgstr "Description"
 
@@ -962,8 +962,8 @@ msgstr ""
 "visible to bartenders."
 
 #: events/models.py:30 events/models.py:183 guides/models.py:20
-#: items/models.py:15 items/models.py:96 items/models.py:114
-#: items/models.py:180 items/models.py:194 mail/models.py:47
+#: items/models.py:19 items/models.py:120 items/models.py:138
+#: items/models.py:204 items/models.py:218 mail/models.py:47
 #: mail/models.py:206
 msgid "Name"
 msgstr "Name"
@@ -1281,7 +1281,7 @@ msgstr "No non-participants yet."
 msgid "Alle inviterede har svaret."
 msgstr "All invitees have responded."
 
-#: events/templates/event.html:317 items/models.py:56
+#: events/templates/event.html:317 items/models.py:67
 msgid "Created"
 msgstr "Created"
 
@@ -1466,7 +1466,7 @@ msgstr "Short title"
 msgid "Beskrivelse"
 msgstr "Description"
 
-#: gallery/models.py:87 items/models.py:50 items/templates/items.html:319
+#: gallery/models.py:87 items/models.py:61 items/templates/items.html:319
 msgid "Image"
 msgstr "Image"
 
@@ -1754,128 +1754,152 @@ msgctxt "På linket her"
 msgid "her"
 msgstr "here"
 
-#: guides/templates/guides.html:44 items/models.py:55 items/models.py:182
+#: guides/templates/guides.html:44 items/models.py:66 items/models.py:206
 #: web/templates/secrets_admin.html:16
 msgid "Link"
 msgstr "Link"
 
-#: items/models.py:18
+#: items/admin.py:161
+#| msgid "Generate logs"
+msgid "General"
+msgstr "General"
+
+#: items/admin.py:175
+#| msgid "Event details"
+msgid "Stock details"
+msgstr "Stock details"
+
+#: items/admin.py:190
+#| msgid "Event details"
+msgid "Extra details"
+msgstr "Extra details"
+
+#: items/models.py:22
 msgid "Country of origin"
 msgstr "Country of origin"
 
-#: items/models.py:21
+#: items/models.py:29
+#| msgid "Price (DKK)"
+msgid "Purchase price (DKK)"
+msgstr "Purchase price (DKK)"
+
+#: items/models.py:32
 msgid "Price (DKK)"
 msgstr "Price (DKK)"
 
-#: items/models.py:26
+#: items/models.py:37
 msgid "Alcohol by volume"
 msgstr "Alcohol by volume"
 
-#: items/models.py:27
+#: items/models.py:38
 msgid "E.g., 5.0 for 5% ABV"
 msgstr "E.g., 5.0 for 5% ABV"
 
-#: items/models.py:33 items/templates/items.html:316
+#: items/models.py:44 items/templates/items.html:316
 msgid "Container"
 msgstr "Container"
 
-#: items/models.py:34
+#: items/models.py:45
 msgid "E.g., 'Bottle', 'Can', 'Keg'"
 msgstr "E.g., 'Bottle', 'Can', 'Keg'"
 
-#: items/models.py:37
+#: items/models.py:48
 msgid "Volume in centiliters"
 msgstr "Volume in centiliters"
 
-#: items/models.py:39
+#: items/models.py:50
 msgid "Best before"
 msgstr "Best before"
 
-#: items/models.py:40
+#: items/models.py:51
 msgid "In stock"
 msgstr "In stock"
 
-#: items/models.py:41
+#: items/models.py:52
 msgid "Gluten free"
 msgstr "Gluten free"
 
-#: items/models.py:42
+#: items/models.py:53
 msgid "Non-alcoholic"
 msgstr "Non-alcoholic"
 
-#: items/models.py:44
+#: items/models.py:55
 msgid "Is beer of the month"
 msgstr "Is beer of the month"
 
-#: items/models.py:47
+#: items/models.py:58
 msgid "Is on this week's spotlight"
 msgstr "Is on this week's spotlight"
 
-#: items/models.py:53
+#: items/models.py:64
 msgid "Barcode"
 msgstr "Barcode"
 
-#: items/models.py:61
+#: items/models.py:72
 msgid "Item"
 msgstr "Item"
 
-#: items/models.py:62
+#: items/models.py:73
 msgid "Items"
 msgstr "Items"
 
-#: items/models.py:98 items/models.py:133 items/models.py:156
+#: items/models.py:101
+msgid "Suggested selling price (DKK)"
+msgstr "Suggested selling price (DKK)"
+
+#: items/models.py:122 items/models.py:157 items/models.py:180
 msgid "Order"
 msgstr "Order"
 
-#: items/models.py:106
+#: items/models.py:130
 msgid "Fridge"
 msgstr "Fridge"
 
-#: items/models.py:107
+#: items/models.py:131
 msgid "Fridges"
 msgstr "Fridges"
 
-#: items/models.py:118
+#: items/models.py:142
 msgid "Shelf"
 msgstr "Shelf"
 
-#: items/models.py:119
+#: items/models.py:143
 msgid "Shelves"
 msgstr "Shelves"
 
-#: items/models.py:143
+#: items/models.py:167
 msgid "Fridge Shelf"
 msgstr "Fridge Shelf"
 
-#: items/models.py:144
+#: items/models.py:168
 msgid "Fridge Shelves"
 msgstr "Fridge Shelves"
 
-#: items/models.py:167
+#: items/models.py:191
 msgid "Shelf item"
 msgstr "Shelf item"
 
-#: items/models.py:168
+#: items/models.py:192
 msgid "Shelf items"
 msgstr "Shelf items"
 
-#: items/models.py:186
+#: items/models.py:210
 msgid "Beer type"
 msgstr "Beer type"
 
-#: items/models.py:187
+#: items/models.py:211
 msgid "Beer types"
 msgstr "Beer types"
 
-#: items/models.py:196
+#: items/models.py:220
 msgid "Website"
 msgstr "Website"
 
-#: items/models.py:200
+#: items/models.py:224
 msgid "Brewery"
 msgstr "Brewery"
 
-#: items/models.py:201
+#: items/models.py:225
 msgid "Breweries"
 msgstr "Breweries"
 
@@ -2452,7 +2476,6 @@ msgid "No upcoming events"
 msgstr "No upcoming events"
 
 #: signage/templates/signage.html:267
-#| msgid "Save to view selection stats"
 msgid "Scan to see our entire selection"
 msgstr "Scan to see our entire selection"
 

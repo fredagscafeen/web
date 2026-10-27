@@ -1,8 +1,12 @@
+import math
+from decimal import Decimal
+
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 DAYS_TO_CONSIDER_NEW = 30
+DESIRED_PROFIT = Decimal("1.25")
 
 
 class Item(models.Model):
@@ -16,6 +20,13 @@ class Item(models.Model):
     description = models.TextField(blank=True, verbose_name=_("Description"))
     country = models.CharField(
         blank=True, max_length=140, verbose_name=_("Country of origin")
+    )
+    purchasePriceInDKK = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=9 + 2,
+        decimal_places=2,
+        verbose_name=_("Purchase price (DKK)"),
     )
     priceInDKK = models.DecimalField(
         max_digits=9 + 2, decimal_places=2, verbose_name=_("Price (DKK)")
@@ -76,6 +87,19 @@ class Item(models.Model):
             self.barcode = None
 
         super().save(*args, **kwargs)
+
+    def ceil_step(self, x, step):
+        return math.ceil(x / step) * step
+
+    @property
+    def suggestedSellingPriceInDKK(self):
+        if self.purchasePriceInDKK is None:
+            return None
+        return self.ceil_step(self.purchasePriceInDKK * DESIRED_PROFIT, 5)
+
+    suggestedSellingPriceInDKK.fget.short_description = _(
+        "Suggested selling price (DKK)"
+    )
 
     @property
     def current_amount(self):
