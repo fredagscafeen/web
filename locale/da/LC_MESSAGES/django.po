@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 17:57+0100\n"
-"PO-Revision-Date: 2026-10-27 17:58+0100\n"
+"POT-Creation-Date: 2026-10-27 18:11+0100\n"
+"PO-Revision-Date: 2026-10-27 18:11+0100\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -118,8 +118,8 @@ msgstr "Udgift"
 msgid "Out of Pocket Expense Items"
 msgstr "Udgifter"
 
-#: accountant/models.py:66 items/models.py:20 items/models.py:205
-#: items/models.py:219 mail/models.py:48 mail/models.py:372
+#: accountant/models.py:66 items/models.py:20 items/models.py:207
+#: items/models.py:221 mail/models.py:48 mail/models.py:372
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -961,8 +961,8 @@ msgstr ""
 "for bartendere."
 
 #: events/models.py:30 events/models.py:183 guides/models.py:20
-#: items/models.py:19 items/models.py:120 items/models.py:138
-#: items/models.py:204 items/models.py:218 mail/models.py:47
+#: items/models.py:19 items/models.py:122 items/models.py:140
+#: items/models.py:206 items/models.py:220 mail/models.py:47
 #: mail/models.py:206
 msgid "Name"
 msgstr "Navn"
@@ -1756,32 +1756,40 @@ msgctxt "På linket her"
 msgid "her"
 msgstr "her"
 
-#: guides/templates/guides.html:44 items/models.py:66 items/models.py:206
+#: guides/templates/guides.html:44 items/models.py:66 items/models.py:208
 #: web/templates/secrets_admin.html:16
 msgid "Link"
 msgstr "Link"
 
 #: items/admin.py:161
-#| msgid "Generate logs"
 msgid "General"
 msgstr "Generel"
 
 #: items/admin.py:175
-#| msgid "Event details"
 msgid "Stock details"
 msgstr "Lager detaljer"
 
-#: items/admin.py:190
-#| msgid "Event details"
+#: items/admin.py:191
 msgid "Extra details"
 msgstr "Ekstra detaljer"
+
+#: items/admin.py:211 items/models.py:118
+msgid "New"
+msgstr "Nyhed"
+
+#: items/models.py:14 items/models.py:226
+msgid "Brewery"
+msgstr "Bryggeri"
+
+#: items/models.py:17 items/templates/items.html:315
+msgid "Type"
+msgstr "Type"
 
 #: items/models.py:22
 msgid "Country of origin"
 msgstr "Oprindelsesland"
 
 #: items/models.py:29
-#| msgid "Price (DKK)"
 msgid "Purchase price (DKK)"
 msgstr "Indkøbspris (DKK)"
 
@@ -1849,59 +1857,55 @@ msgstr "Varer"
 msgid "Suggested selling price (DKK)"
 msgstr "Vejledende salgspris (DKK)"
 
-#: items/models.py:122 items/models.py:157 items/models.py:180
+#: items/models.py:124 items/models.py:159 items/models.py:182
 msgid "Order"
 msgstr "Rækkefølge"
 
-#: items/models.py:130
+#: items/models.py:132
 msgid "Fridge"
 msgstr "Køleskab"
 
-#: items/models.py:131
+#: items/models.py:133
 msgid "Fridges"
 msgstr "Køleskabe"
 
-#: items/models.py:142
+#: items/models.py:144
 msgid "Shelf"
 msgstr "Hylde"
 
-#: items/models.py:143
+#: items/models.py:145
 msgid "Shelves"
 msgstr "Hylder"
 
-#: items/models.py:167
+#: items/models.py:169
 msgid "Fridge Shelf"
 msgstr "Køleskabshylde"
 
-#: items/models.py:168
+#: items/models.py:170
 msgid "Fridge Shelves"
 msgstr "Køleskabshylder"
 
-#: items/models.py:191
+#: items/models.py:193
 msgid "Shelf item"
 msgstr "Hyldevare"
 
-#: items/models.py:192
+#: items/models.py:194
 msgid "Shelf items"
 msgstr "Hyldevarer"
 
-#: items/models.py:210
+#: items/models.py:212
 msgid "Beer type"
 msgstr "Øltype"
 
-#: items/models.py:211
+#: items/models.py:213
 msgid "Beer types"
 msgstr "Øltyper"
 
-#: items/models.py:220
+#: items/models.py:222
 msgid "Website"
 msgstr "Hjemmeside"
 
-#: items/models.py:224
-msgid "Brewery"
-msgstr "Bryggeri"
-
-#: items/models.py:225
+#: items/models.py:227
 msgid "Breweries"
 msgstr "Bryggerier"
 
@@ -1973,10 +1977,6 @@ msgstr "Søg i sortimentet"
 #: items/templates/items.html:313
 msgid "Bryghus"
 msgstr "Bryghus"
-
-#: items/templates/items.html:315
-msgid "Type"
-msgstr "Type"
 
 #: items/templates/items.html:317
 msgid "Pris"

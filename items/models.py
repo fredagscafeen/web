@@ -11,10 +11,18 @@ DESIRED_PROFIT = Decimal("1.25")
 
 class Item(models.Model):
     brewery = models.ForeignKey(
-        "Brewery", on_delete=models.SET_NULL, null=True, blank=True
+        "Brewery",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("Brewery"),
     )
     type = models.ForeignKey(
-        "BeerType", on_delete=models.SET_NULL, null=True, blank=True
+        "BeerType",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("Type"),
     )
     name = models.CharField(max_length=140, verbose_name=_("Name"))
     description = models.TextField(blank=True, verbose_name=_("Description"))
@@ -114,6 +122,8 @@ class Item(models.Model):
         return self.created >= timezone.now() - timezone.timedelta(
             days=DAYS_TO_CONSIDER_NEW
         )
+
+    isNew.fget.short_description = _("New")
 
 
 class Fridge(models.Model):

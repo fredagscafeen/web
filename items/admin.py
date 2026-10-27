@@ -140,7 +140,7 @@ class ItemAdmin(CustomModelAdmin):
         "inStock",
         "thumbnail",
     )
-    readonly_fields = ["suggestedSellingPriceInDKK"]
+    readonly_fields = ["suggestedSellingPriceInDKK", "isNew"]
     search_fields = ("brewery__name", "name")
     list_display_links = ("name", "thumbnail")
     list_filter = (
@@ -182,6 +182,7 @@ class ItemAdmin(CustomModelAdmin):
                     "inStock",
                     "isBeerOfTheMonth",
                     "isOnSpotlight",
+                    "isNew",
                 ),
                 "classes": ("tab",),
             },
@@ -202,6 +203,12 @@ class ItemAdmin(CustomModelAdmin):
             },
         ),
     )
+
+    def isNew(self, obj):
+        return obj.isNew
+
+    isNew.boolean = True
+    isNew.short_description = _("New")
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,
