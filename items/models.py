@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 DAYS_TO_CONSIDER_NEW = 30
-DESIRED_PROFIT = Decimal("1.25")
+DESIRED_PROFIT = 1.25
 
 
 class Item(models.Model):
@@ -97,13 +97,13 @@ class Item(models.Model):
         super().save(*args, **kwargs)
 
     def ceil_step(self, x, step):
-        return math.ceil(x / step) * step
+        return Decimal(math.ceil(x / step) * step)
 
     @property
     def suggestedSellingPriceInDKK(self):
         if self.purchasePriceInDKK is None:
             return None
-        return self.ceil_step(self.purchasePriceInDKK * DESIRED_PROFIT, 5)
+        return self.ceil_step(self.purchasePriceInDKK * Decimal(DESIRED_PROFIT), 5)
 
     suggestedSellingPriceInDKK.fget.short_description = _(
         "Suggested selling price (DKK)"
