@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-13 23:49+0200\n"
-"PO-Revision-Date: 2026-10-13 23:49+0200\n"
+"POT-Creation-Date: 2026-10-27 18:11+0100\n"
+"PO-Revision-Date: 2026-10-27 18:11+0100\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -118,8 +118,8 @@ msgstr "Udgift"
 msgid "Out of Pocket Expense Items"
 msgstr "Udgifter"
 
-#: accountant/models.py:66 items/models.py:16 items/models.py:181
-#: items/models.py:195 mail/models.py:48 mail/models.py:372
+#: accountant/models.py:66 items/models.py:20 items/models.py:207
+#: items/models.py:221 mail/models.py:48 mail/models.py:372
 msgid "Description"
 msgstr "Beskrivelse"
 
@@ -961,8 +961,8 @@ msgstr ""
 "for bartendere."
 
 #: events/models.py:30 events/models.py:183 guides/models.py:20
-#: items/models.py:15 items/models.py:96 items/models.py:114
-#: items/models.py:180 items/models.py:194 mail/models.py:47
+#: items/models.py:19 items/models.py:122 items/models.py:140
+#: items/models.py:206 items/models.py:220 mail/models.py:47
 #: mail/models.py:206
 msgid "Name"
 msgstr "Navn"
@@ -1281,7 +1281,7 @@ msgstr "Ingen ikke-deltager endnu."
 msgid "Alle inviterede har svaret."
 msgstr "Alle inviterede har svaret."
 
-#: events/templates/event.html:317 items/models.py:56
+#: events/templates/event.html:317 items/models.py:67
 msgid "Created"
 msgstr "Oprettet"
 
@@ -1466,7 +1466,7 @@ msgstr "Kort titel"
 msgid "Beskrivelse"
 msgstr "Beskrivelse"
 
-#: gallery/models.py:87 items/models.py:50 items/templates/items.html:319
+#: gallery/models.py:87 items/models.py:61 items/templates/items.html:319
 msgid "Image"
 msgstr "Billede"
 
@@ -1756,128 +1756,156 @@ msgctxt "På linket her"
 msgid "her"
 msgstr "her"
 
-#: guides/templates/guides.html:44 items/models.py:55 items/models.py:182
+#: guides/templates/guides.html:44 items/models.py:66 items/models.py:208
 #: web/templates/secrets_admin.html:16
 msgid "Link"
 msgstr "Link"
 
-#: items/models.py:18
-msgid "Country of origin"
-msgstr "Oprindelsesland"
+#: items/admin.py:161
+msgid "General"
+msgstr "Generel"
 
-#: items/models.py:21
-msgid "Price (DKK)"
-msgstr "Pris (DKK)"
+#: items/admin.py:175
+msgid "Stock details"
+msgstr "Lager detaljer"
 
-#: items/models.py:26
-msgid "Alcohol by volume"
-msgstr "Alkoholprocent"
+#: items/admin.py:191
+msgid "Extra details"
+msgstr "Ekstra detaljer"
 
-#: items/models.py:27
-msgid "E.g., 5.0 for 5% ABV"
-msgstr "F.eks. 5,0 for 5% alkoholprocent"
+#: items/admin.py:211 items/models.py:118
+msgid "New"
+msgstr "Nyhed"
 
-#: items/models.py:33 items/templates/items.html:316
-msgid "Container"
-msgstr "Beholder"
-
-#: items/models.py:34
-msgid "E.g., 'Bottle', 'Can', 'Keg'"
-msgstr "F.eks., 'Bottle', 'Can', 'Keg'"
-
-#: items/models.py:37
-msgid "Volume in centiliters"
-msgstr "Volumen i centiliter"
-
-#: items/models.py:39
-msgid "Best before"
-msgstr "Bedst før"
-
-#: items/models.py:40
-msgid "In stock"
-msgstr "På lager"
-
-#: items/models.py:41
-msgid "Gluten free"
-msgstr "Glutenfri"
-
-#: items/models.py:42
-msgid "Non-alcoholic"
-msgstr "Alkoholfri"
-
-#: items/models.py:44
-msgid "Is beer of the month"
-msgstr "Månedens Øl"
-
-#: items/models.py:47
-msgid "Is on this week's spotlight"
-msgstr "Er på Ugens Spotlight"
-
-#: items/models.py:53
-msgid "Barcode"
-msgstr "Stregkode"
-
-#: items/models.py:61
-msgid "Item"
-msgstr "Vare"
-
-#: items/models.py:62
-msgid "Items"
-msgstr "Varer"
-
-#: items/models.py:98 items/models.py:133 items/models.py:156
-msgid "Order"
-msgstr "Rækkefølge"
-
-#: items/models.py:106
-msgid "Fridge"
-msgstr "Køleskab"
-
-#: items/models.py:107
-msgid "Fridges"
-msgstr "Køleskabe"
-
-#: items/models.py:118
-msgid "Shelf"
-msgstr "Hylde"
-
-#: items/models.py:119
-msgid "Shelves"
-msgstr "Hylder"
-
-#: items/models.py:143
-msgid "Fridge Shelf"
-msgstr "Køleskabshylde"
-
-#: items/models.py:144
-msgid "Fridge Shelves"
-msgstr "Køleskabshylder"
-
-#: items/models.py:167
-msgid "Shelf item"
-msgstr "Hyldevare"
-
-#: items/models.py:168
-msgid "Shelf items"
-msgstr "Hyldevarer"
-
-#: items/models.py:186
-msgid "Beer type"
-msgstr "Øltype"
-
-#: items/models.py:187
-msgid "Beer types"
-msgstr "Øltyper"
-
-#: items/models.py:196
-msgid "Website"
-msgstr "Hjemmeside"
-
-#: items/models.py:200
+#: items/models.py:14 items/models.py:226
 msgid "Brewery"
 msgstr "Bryggeri"
 
-#: items/models.py:201
+#: items/models.py:17 items/templates/items.html:315
+msgid "Type"
+msgstr "Type"
+
+#: items/models.py:22
+msgid "Country of origin"
+msgstr "Oprindelsesland"
+
+#: items/models.py:29
+msgid "Purchase price (DKK)"
+msgstr "Indkøbspris (DKK)"
+
+#: items/models.py:32
+msgid "Price (DKK)"
+msgstr "Pris (DKK)"
+
+#: items/models.py:37
+msgid "Alcohol by volume"
+msgstr "Alkoholprocent"
+
+#: items/models.py:38
+msgid "E.g., 5.0 for 5% ABV"
+msgstr "F.eks. 5,0 for 5% alkoholprocent"
+
+#: items/models.py:44 items/templates/items.html:316
+msgid "Container"
+msgstr "Beholder"
+
+#: items/models.py:45
+msgid "E.g., 'Bottle', 'Can', 'Keg'"
+msgstr "F.eks., 'Bottle', 'Can', 'Keg'"
+
+#: items/models.py:48
+msgid "Volume in centiliters"
+msgstr "Volumen i centiliter"
+
+#: items/models.py:50
+msgid "Best before"
+msgstr "Bedst før"
+
+#: items/models.py:51
+msgid "In stock"
+msgstr "På lager"
+
+#: items/models.py:52
+msgid "Gluten free"
+msgstr "Glutenfri"
+
+#: items/models.py:53
+msgid "Non-alcoholic"
+msgstr "Alkoholfri"
+
+#: items/models.py:55
+msgid "Is beer of the month"
+msgstr "Månedens Øl"
+
+#: items/models.py:58
+msgid "Is on this week's spotlight"
+msgstr "Er på Ugens Spotlight"
+
+#: items/models.py:64
+msgid "Barcode"
+msgstr "Stregkode"
+
+#: items/models.py:72
+msgid "Item"
+msgstr "Vare"
+
+#: items/models.py:73
+msgid "Items"
+msgstr "Varer"
+
+#: items/models.py:101
+msgid "Suggested selling price (DKK)"
+msgstr "Vejledende salgspris (DKK)"
+
+#: items/models.py:124 items/models.py:159 items/models.py:182
+msgid "Order"
+msgstr "Rækkefølge"
+
+#: items/models.py:132
+msgid "Fridge"
+msgstr "Køleskab"
+
+#: items/models.py:133
+msgid "Fridges"
+msgstr "Køleskabe"
+
+#: items/models.py:144
+msgid "Shelf"
+msgstr "Hylde"
+
+#: items/models.py:145
+msgid "Shelves"
+msgstr "Hylder"
+
+#: items/models.py:169
+msgid "Fridge Shelf"
+msgstr "Køleskabshylde"
+
+#: items/models.py:170
+msgid "Fridge Shelves"
+msgstr "Køleskabshylder"
+
+#: items/models.py:193
+msgid "Shelf item"
+msgstr "Hyldevare"
+
+#: items/models.py:194
+msgid "Shelf items"
+msgstr "Hyldevarer"
+
+#: items/models.py:212
+msgid "Beer type"
+msgstr "Øltype"
+
+#: items/models.py:213
+msgid "Beer types"
+msgstr "Øltyper"
+
+#: items/models.py:222
+msgid "Website"
+msgstr "Hjemmeside"
+
+#: items/models.py:227
 msgid "Breweries"
 msgstr "Bryggerier"
 
@@ -1949,10 +1977,6 @@ msgstr "Søg i sortimentet"
 #: items/templates/items.html:313
 msgid "Bryghus"
 msgstr "Bryghus"
-
-#: items/templates/items.html:315
-msgid "Type"
-msgstr "Type"
 
 #: items/templates/items.html:317
 msgid "Pris"
@@ -2453,7 +2477,6 @@ msgid "No upcoming events"
 msgstr "Ingen kommende events"
 
 #: signage/templates/signage.html:267
-#| msgid "Save to view selection stats"
 msgid "Scan to see our entire selection"
 msgstr "Scan for at se hele vores udvalg"
 

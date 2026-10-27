@@ -1,21 +1,40 @@
+import math
+from decimal import Decimal
+
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 DAYS_TO_CONSIDER_NEW = 30
+DESIRED_PROFIT = 1.25
 
 
 class Item(models.Model):
     brewery = models.ForeignKey(
-        "Brewery", on_delete=models.SET_NULL, null=True, blank=True
+        "Brewery",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("Brewery"),
     )
     type = models.ForeignKey(
-        "BeerType", on_delete=models.SET_NULL, null=True, blank=True
+        "BeerType",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("Type"),
     )
     name = models.CharField(max_length=140, verbose_name=_("Name"))
     description = models.TextField(blank=True, verbose_name=_("Description"))
     country = models.CharField(
         blank=True, max_length=140, verbose_name=_("Country of origin")
+    )
+    purchasePriceInDKK = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=9 + 2,
+        decimal_places=2,
+        verbose_name=_("Purchase price (DKK)"),
     )
     priceInDKK = models.DecimalField(
         max_digits=9 + 2, decimal_places=2, verbose_name=_("Price (DKK)")
@@ -76,6 +95,19 @@ class Item(models.Model):
             self.barcode = None
 
         super().save(*args, **kwargs)
+
+    def ceil_step(self, x, step):
+        return Decimal(math.ceil(x / step) * step)
+
+    @property
+    def suggestedSellingPriceInDKK(self):
+        if self.purchasePriceInDKK is None:
+            return None
+        return self.ceil_step(self.purchasePriceInDKK * Decimal(DESIRED_PROFIT), 5)
+
+    suggestedSellingPriceInDKK.fget.short_description = _(
+        "Suggested selling price (DKK)"
+    )
 
     @property
     def current_amount(self):

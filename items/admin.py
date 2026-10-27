@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin, TabularInline
 
 from fredagscafeen.admin import CustomModelAdmin
@@ -139,6 +140,7 @@ class ItemAdmin(CustomModelAdmin):
         "inStock",
         "thumbnail",
     )
+    readonly_fields = ["suggestedSellingPriceInDKK", "isNew"]
     search_fields = ("brewery__name", "name")
     list_display_links = ("name", "thumbnail")
     list_filter = (
@@ -154,6 +156,59 @@ class ItemAdmin(CustomModelAdmin):
     ordering = ("name",)
     actions = ["print_shelf_labels"]
     autocomplete_fields = ["brewery", "type"]
+    fieldsets = (
+        (
+            _("General"),
+            {
+                "fields": (
+                    "brewery",
+                    "type",
+                    "name",
+                    "abv",
+                    "container",
+                    "image",
+                ),
+                "classes": ("tab",),
+            },
+        ),
+        (
+            _("Stock details"),
+            {
+                "fields": (
+                    "purchasePriceInDKK",
+                    "suggestedSellingPriceInDKK",
+                    "priceInDKK",
+                    "bestBefore",
+                    "inStock",
+                    "isBeerOfTheMonth",
+                    "isOnSpotlight",
+                    "isNew",
+                ),
+                "classes": ("tab",),
+            },
+        ),
+        (
+            _("Extra details"),
+            {
+                "fields": (
+                    "country",
+                    "volumeInCentiliters",
+                    "glutenFree",
+                    "nonAlcoholic",
+                    "description",
+                    "barcode",
+                    "link",
+                ),
+                "classes": ("tab",),
+            },
+        ),
+    )
+
+    def isNew(self, obj):
+        return obj.isNew
+
+    isNew.boolean = True
+    isNew.short_description = _("New")
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,
