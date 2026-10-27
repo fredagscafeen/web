@@ -62,7 +62,11 @@ Forventet forbrug:
         }
 
     def email_cc(self):
-        return [f"udlejning@{settings.DOMAIN}, beer@{settings.DOMAIN}"]
+        return [
+            f"reminder@{settings.DOMAIN}",
+            f"udlejning@{settings.DOMAIN}",
+            f"beer@{settings.DOMAIN}",
+        ]
 
     def email_reply_to(self):
         return []

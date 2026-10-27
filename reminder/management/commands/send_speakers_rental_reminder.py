@@ -55,7 +55,7 @@ Hej {humanized_bartenders}.
         }
 
     def email_cc(self):
-        return [f"udlejning@{settings.DOMAIN}"]
+        return [f"reminder@{settings.DOMAIN}", f"udlejning@{settings.DOMAIN}"]
 
     def email_reply_to(self):
         return []
