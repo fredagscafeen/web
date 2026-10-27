@@ -105,10 +105,6 @@ class Item(models.Model):
             return None
         return self.ceil_step(self.purchasePriceInDKK * Decimal(DESIRED_PROFIT), 5)
 
-    suggestedSellingPriceInDKK.fget.short_description = _(
-        "Suggested selling price (DKK)"
-    )
-
     @property
     def current_amount(self):
         latest_entry = self.entries.order_by("-snapshot__datetime").first()
