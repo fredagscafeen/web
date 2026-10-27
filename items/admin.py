@@ -130,6 +130,9 @@ class FridgeAdmin(CustomModelAdmin):
 
 @admin.register(Item)
 class ItemAdmin(CustomModelAdmin):
+    class Media:
+        js = ("js/item_admin.js",)
+
     list_display = (
         "brewery",
         "name",
@@ -140,7 +143,7 @@ class ItemAdmin(CustomModelAdmin):
         "inStock",
         "thumbnail",
     )
-    readonly_fields = ["suggestedSellingPriceInDKK", "isNew"]
+    readonly_fields = ["suggested_selling_price", "isNew"]
     search_fields = ("brewery__name", "name")
     list_display_links = ("name", "thumbnail")
     list_filter = (
@@ -176,7 +179,7 @@ class ItemAdmin(CustomModelAdmin):
             {
                 "fields": (
                     "purchasePriceInDKK",
-                    "suggestedSellingPriceInDKK",
+                    "suggested_selling_price",
                     "priceInDKK",
                     "bestBefore",
                     "inStock",
@@ -209,6 +212,14 @@ class ItemAdmin(CustomModelAdmin):
 
     isNew.boolean = True
     isNew.short_description = _("New")
+
+    def suggested_selling_price(self, obj):
+        return format_html(
+            '<span id="suggested-selling-price">{}</span>',
+            obj.suggestedSellingPriceInDKK or "-",
+        )
+
+    suggested_selling_price.short_description = _("Suggested selling price (DKK)")
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,

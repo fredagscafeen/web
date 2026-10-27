@@ -119,6 +119,8 @@ class Item(models.Model):
 
     @property
     def isNew(self):
+        if not self.created:
+            return True
         return self.created >= timezone.now() - timezone.timedelta(
             days=DAYS_TO_CONSIDER_NEW
         )
