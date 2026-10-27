@@ -123,8 +123,6 @@ class Item(models.Model):
             days=DAYS_TO_CONSIDER_NEW
         )
 
-    isNew.fget.short_description = _("New")
-
 
 class Fridge(models.Model):
     name = models.CharField(max_length=140, verbose_name=_("Name"))
