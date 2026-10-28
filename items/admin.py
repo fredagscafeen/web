@@ -139,11 +139,19 @@ class ItemAdmin(CustomModelAdmin):
         "type",
         "container",
         "priceInDKK",
+        "profitMargin",
         "bestBefore",
         "inStock",
         "thumbnail",
     )
-    readonly_fields = ["suggested_selling_price", "isNew"]
+    readonly_fields = [
+        "purchasePriceInDKK",
+        "priceInDKKExcludingVAT",
+        "suggested_selling_price",
+        "isNew",
+        "actualProfit",
+        "profitMargin",
+    ]
     search_fields = ("brewery__name", "name")
     list_display_links = ("name", "thumbnail")
     list_filter = (
@@ -175,12 +183,24 @@ class ItemAdmin(CustomModelAdmin):
             },
         ),
         (
-            _("Stock details"),
+            _("Price"),
             {
                 "fields": (
+                    "purchasePriceInDKKExcludingVAT",
                     "purchasePriceInDKK",
                     "suggested_selling_price",
                     "priceInDKK",
+                    "priceInDKKExcludingVAT",
+                    "actualProfit",
+                    "profitMargin",
+                ),
+                "classes": ("tab",),
+            },
+        ),
+        (
+            _("Stock"),
+            {
+                "fields": (
                     "bestBefore",
                     "inStock",
                     "isBeerOfTheMonth",
@@ -191,7 +211,7 @@ class ItemAdmin(CustomModelAdmin):
             },
         ),
         (
-            _("Extra details"),
+            _("Extra"),
             {
                 "fields": (
                     "country",
@@ -213,13 +233,42 @@ class ItemAdmin(CustomModelAdmin):
     isNew.boolean = True
     isNew.short_description = _("New")
 
+    def purchasePriceInDKK(self, obj):
+        return self._render_dynamic_value("purchase-price", obj.purchasePriceInDKK)
+
+    purchasePriceInDKK.short_description = _("Purchase price (DKK)")
+
+    def priceInDKKExcludingVAT(self, obj):
+        return self._render_dynamic_value(
+            "price-excluding-vat", obj.priceInDKKExcludingVAT
+        )
+
+    priceInDKKExcludingVAT.short_description = _("Price (DKK) excluding VAT")
+
     def suggested_selling_price(self, obj):
-        return format_html(
-            '<span id="suggested-selling-price">{}</span>',
-            obj.suggestedSellingPriceInDKK or "-",
+        return self._render_dynamic_value(
+            "suggested-selling-price", obj.suggestedSellingPriceInDKK
         )
 
     suggested_selling_price.short_description = _("Suggested selling price (DKK)")
+
+    def actualProfit(self, obj):
+        return self._render_dynamic_value("actual-profit", obj.actualProfit)
+
+    actualProfit.short_description = _("Actual profit")
+
+    def profitMargin(self, obj):
+        return self._render_dynamic_value("profit-margin", obj.profitMargin)
+
+    profitMargin.short_description = _("Profit margin")
+
+    @staticmethod
+    def _render_dynamic_value(field_id, value):
+        return format_html(
+            '<span id="{}">{}</span>',
+            field_id,
+            value if value is not None else "-",
+        )
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,

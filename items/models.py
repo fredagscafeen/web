@@ -1,5 +1,5 @@
 import math
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 
 from django.db import models
 from django.utils import timezone
@@ -7,6 +7,11 @@ from django.utils.translation import gettext_lazy as _
 
 DAYS_TO_CONSIDER_NEW = 30
 DESIRED_PROFIT = 1.25
+TWO_DECIMAL_PLACES = Decimal("0.01")
+
+
+def round_to_two_decimals(value):
+    return value.quantize(TWO_DECIMAL_PLACES, rounding=ROUND_HALF_UP)
 
 
 class Item(models.Model):
@@ -29,12 +34,12 @@ class Item(models.Model):
     country = models.CharField(
         blank=True, max_length=140, verbose_name=_("Country of origin")
     )
-    purchasePriceInDKK = models.DecimalField(
+    purchasePriceInDKKExcludingVAT = models.DecimalField(
         null=True,
         blank=True,
         max_digits=9 + 2,
         decimal_places=2,
-        verbose_name=_("Purchase price (DKK)"),
+        verbose_name=_("Purchase price (DKK) excluding VAT"),
     )
     priceInDKK = models.DecimalField(
         max_digits=9 + 2, decimal_places=2, verbose_name=_("Price (DKK)")
@@ -97,13 +102,55 @@ class Item(models.Model):
         super().save(*args, **kwargs)
 
     def ceil_step(self, x, step):
-        return Decimal(math.ceil(x / step) * step)
+        return round_to_two_decimals(Decimal(math.ceil(x / step) * step))
+
+    @property
+    def purchasePriceInDKK(self):
+        if self.purchasePriceInDKKExcludingVAT is None:
+            return None
+        return round_to_two_decimals(
+            self.purchasePriceInDKKExcludingVAT * Decimal("1.25")
+        )
+
+    @property
+    def priceInDKKExcludingVAT(self):
+        return round_to_two_decimals(self.priceInDKK * Decimal("0.8"))
 
     @property
     def suggestedSellingPriceInDKK(self):
         if self.purchasePriceInDKK is None:
             return None
-        return self.ceil_step(self.purchasePriceInDKK * Decimal(DESIRED_PROFIT), 5)
+        return self.ceil_step(self.purchasePriceInDKK * Decimal(str(DESIRED_PROFIT)), 5)
+
+    @property
+    def actualProfit(self):
+        if self.purchasePriceInDKK is None:
+            return None
+
+        priceInDKKVAT = self.priceInDKK * Decimal("0.2")
+        purchasePriceInDKKVAT = self.purchasePriceInDKK * Decimal("0.25")
+
+        return round_to_two_decimals(
+            self.priceInDKKExcludingVAT
+            - self.purchasePriceInDKK
+            - (priceInDKKVAT - purchasePriceInDKKVAT)
+        )
+
+    @property
+    def profitMargin(self):
+        if (
+            self.purchasePriceInDKKExcludingVAT is None
+            or self.priceInDKKExcludingVAT is None
+        ):
+            return None
+        if self.purchasePriceInDKK == 0:
+            return None  # Avoid division by zero
+
+        return round_to_two_decimals(
+            (self.priceInDKKExcludingVAT - self.purchasePriceInDKKExcludingVAT)
+            / self.purchasePriceInDKKExcludingVAT
+            * 100
+        )
 
     @property
     def current_amount(self):
