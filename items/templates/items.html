@@ -339,9 +339,9 @@
 								{% if item.profitMargin == 0 %}
 									<td class="d-none d-lg-table-cell">{{ item.profitMargin|floatformat:2 }}%</td>
 								{% elif item.profitMargin > 0 %}
-									<td class="d-none d-lg-table-cell text-success">+{{ item.profitMargin|floatformat:2 }}%</td>
+									<td class="d-none d-lg-table-cell text-success">{{ item.profitMargin|floatformat:2 }}%</td>
 								{% elif item.profitMargin < 0 %}
-									<td class="d-none d-lg-table-cell text-danger">-{{ item.profitMargin|floatformat:2 }}%</td>
+									<td class="d-none d-lg-table-cell text-danger">{{ item.profitMargin|floatformat:2 }}%</td>
 								{% else %}
 									<td class="d-none d-lg-table-cell"></td>
 								{% endif %}
