@@ -41,6 +41,7 @@ class Items(ListView):
                         "type": item.type,
                         "container": item.container,
                         "price": item.priceInDKK,
+                        "profitMargin": item.profitMargin,
                         "barcode": item.barcode,
                         "id": item.id,
                         "amount": item.current_amount,

@@ -1,8 +1,12 @@
+from decimal import Decimal
+
 from django import forms
 from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import FieldError, ValidationError
 from django.db import models
+from django.db.models import Case, F, Value, When
+from django.db.models.functions import Round
 from django.urls import reverse
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
@@ -139,11 +143,19 @@ class ItemAdmin(CustomModelAdmin):
         "type",
         "container",
         "priceInDKK",
+        "profitMargin",
         "bestBefore",
         "inStock",
         "thumbnail",
     )
-    readonly_fields = ["suggested_selling_price", "isNew"]
+    readonly_fields = [
+        "purchasePriceInDKK",
+        "priceInDKKExcludingVAT",
+        "suggested_selling_price",
+        "isNew",
+        "actualProfit",
+        "profitMargin",
+    ]
     search_fields = ("brewery__name", "name")
     list_display_links = ("name", "thumbnail")
     list_filter = (
@@ -175,12 +187,24 @@ class ItemAdmin(CustomModelAdmin):
             },
         ),
         (
-            _("Stock details"),
+            _("Price"),
             {
                 "fields": (
+                    "purchasePriceInDKKExcludingVAT",
                     "purchasePriceInDKK",
                     "suggested_selling_price",
                     "priceInDKK",
+                    "priceInDKKExcludingVAT",
+                    "actualProfit",
+                    "profitMargin",
+                ),
+                "classes": ("tab",),
+            },
+        ),
+        (
+            _("Stock"),
+            {
+                "fields": (
                     "bestBefore",
                     "inStock",
                     "isBeerOfTheMonth",
@@ -191,7 +215,7 @@ class ItemAdmin(CustomModelAdmin):
             },
         ),
         (
-            _("Extra details"),
+            _("Extra"),
             {
                 "fields": (
                     "country",
@@ -213,13 +237,73 @@ class ItemAdmin(CustomModelAdmin):
     isNew.boolean = True
     isNew.short_description = _("New")
 
+    def purchasePriceInDKK(self, obj):
+        return self._render_dynamic_value("purchase-price", obj.purchasePriceInDKK)
+
+    purchasePriceInDKK.short_description = _("Purchase price (DKK)")
+
+    def priceInDKKExcludingVAT(self, obj):
+        return self._render_dynamic_value(
+            "price-excluding-vat", obj.priceInDKKExcludingVAT
+        )
+
+    priceInDKKExcludingVAT.short_description = _("Price (DKK) excluding VAT")
+
     def suggested_selling_price(self, obj):
-        return format_html(
-            '<span id="suggested-selling-price">{}</span>',
-            obj.suggestedSellingPriceInDKK or "-",
+        return self._render_dynamic_value(
+            "suggested-selling-price", obj.suggestedSellingPriceInDKK
         )
 
     suggested_selling_price.short_description = _("Suggested selling price (DKK)")
+
+    def actualProfit(self, obj):
+        return self._render_dynamic_value("actual-profit", obj.actualProfit)
+
+    actualProfit.short_description = _("Actual profit (DKK)")
+
+    def get_queryset(self, request):
+        return (
+            super()
+            .get_queryset(request)
+            .annotate(
+                profit_margin=Case(
+                    When(
+                        purchasePriceInDKKExcludingVAT__isnull=True,
+                        then=Value(None),
+                    ),
+                    When(
+                        purchasePriceInDKKExcludingVAT=Decimal("0.00"),
+                        then=Value(None),
+                    ),
+                    default=(
+                        (
+                            Round(
+                                F("priceInDKK") * Value(Decimal("0.8")),
+                                precision=2,
+                            )
+                            - F("purchasePriceInDKKExcludingVAT")
+                        )
+                        / F("purchasePriceInDKKExcludingVAT")
+                        * Value(Decimal("100"))
+                    ),
+                    output_field=models.DecimalField(decimal_places=2, max_digits=20),
+                )
+            )
+        )
+
+    def profitMargin(self, obj):
+        return self._render_dynamic_value("profit-margin", obj.profitMargin)
+
+    profitMargin.short_description = _("Profit margin (%)")
+    profitMargin.admin_order_field = "profit_margin"
+
+    @staticmethod
+    def _render_dynamic_value(field_id, value):
+        return format_html(
+            '<span id="{}">{}</span>',
+            field_id,
+            value if value is not None else "-",
+        )
 
     ordered_related_fields_to_model = {
         "brewery": Brewery,

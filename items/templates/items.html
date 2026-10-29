@@ -315,6 +315,9 @@
 							<th class="d-none d-lg-table-cell">{% translate "Type" %}</th>
 							<th class="d-none d-lg-table-cell">{% translate "Container" %}</th>
 							<th>{% translate "Pris" %}</th>
+							{% if user.is_staff %}
+								<th class="d-none d-lg-table-cell">{% translate "Profit margin" %}</th>
+							{% endif %}
 							<th class="d-none d-lg-table-cell">{% translate "Status" %}</th>
 							<!--<th class="d-none d-lg-table-cell">{% translate "Image" %}</i></th>-->
 							{% if user.is_staff %}
@@ -332,6 +335,17 @@
 							<td class="d-none d-lg-table-cell">{{ item.type|default_if_none:"" }}</td>
 							<td class="d-none d-lg-table-cell">{{ item.container|default_if_none:"" }}</td>
 							<td>{{ item.price|floatformat:-2 }},-</td>
+							{% if user.is_staff %}
+								{% if item.profitMargin == 0 %}
+									<td class="d-none d-lg-table-cell">{{ item.profitMargin|floatformat:2 }}%</td>
+								{% elif item.profitMargin > 0 %}
+									<td class="d-none d-lg-table-cell text-success">+{{ item.profitMargin|floatformat:2 }}%</td>
+								{% elif item.profitMargin < 0 %}
+									<td class="d-none d-lg-table-cell text-danger">-{{ item.profitMargin|floatformat:2 }}%</td>
+								{% else %}
+									<td class="d-none d-lg-table-cell"></td>
+								{% endif %}
+							{% endif %}
 							<td class="d-none d-lg-table-cell">{% if item.inStock %}{% translate "På lager" %}{% else %}{% translate "Ikke på lager" %}{% endif %}</td>
 							<!--<td class="d-none d-lg-table-cell {% if not item.inStock %}bg-danger{% endif %}">
 								{% if item.image %}
