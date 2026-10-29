@@ -102,6 +102,32 @@ class ItemModelTest(TestCase):
 
 
 class ItemAdminTest(TestCase):
+    def test_profit_margin_column_is_orderable(self):
+        item_admin = ItemAdmin(Item, admin.site)
+        Item.objects.create(
+            name="Low margin",
+            purchasePriceInDKKExcludingVAT=Decimal("20.00"),
+            priceInDKK=Decimal("25.00"),
+        )
+        Item.objects.create(
+            name="High margin",
+            purchasePriceInDKKExcludingVAT=Decimal("10.00"),
+            priceInDKK=Decimal("25.00"),
+        )
+        Item.objects.create(name="No margin", priceInDKK=Decimal("25.00"))
+
+        queryset = item_admin.get_queryset(None)
+
+        self.assertEqual(ItemAdmin.profitMargin.admin_order_field, "profit_margin")
+        self.assertEqual(
+            list(queryset.order_by("profit_margin").values_list("name", flat=True)),
+            ["No margin", "Low margin", "High margin"],
+        )
+        self.assertEqual(
+            list(queryset.order_by("-profit_margin").values_list("name", flat=True)),
+            ["High margin", "Low margin", "No margin"],
+        )
+
     def test_item_admin_loads_dynamic_suggested_price_script(self):
         media = ItemAdmin(Item, admin.site).media
 

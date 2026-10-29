@@ -51,7 +51,7 @@
             purchasePrice !== 0 &&
             priceExcludingVAT !== 0
                 ? ((priceExcludingVAT - purchasePriceExcludingVAT) /
-                      priceExcludingVAT) *
+                      purchasePriceExcludingVAT) *
                   100
                 : Number.NaN;
         setReadonlyValue(
