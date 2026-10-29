@@ -131,7 +131,7 @@ class Item(models.Model):
         purchasePriceInDKKVAT = self.purchasePriceInDKK * Decimal("0.25")
 
         return round_to_two_decimals(
-            self.priceInDKKExcludingVAT
+            self.priceInDKK
             - self.purchasePriceInDKK
             - (priceInDKKVAT - purchasePriceInDKKVAT)
         )

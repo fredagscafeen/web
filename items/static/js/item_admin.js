@@ -36,7 +36,7 @@
 
         const actualProfit =
             Number.isFinite(purchasePrice) && Number.isFinite(price)
-                ? priceExcludingVAT -
+                ? price -
                   purchasePrice -
                   (price * 0.2 - purchasePrice * 0.25)
                 : Number.NaN;

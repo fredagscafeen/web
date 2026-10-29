@@ -42,7 +42,7 @@ class ItemModelTest(TestCase):
             priceInDKK=Decimal("25.00"),
         )
 
-        self.assertEqual(item.actualProfit, Decimal("5.63"))
+        self.assertEqual(item.actualProfit, Decimal("10.63"))
         self.assertEqual(item.profitMargin, Decimal("100.00"))
 
     def test_computed_price_properties_are_limited_to_two_decimal_places(self):
@@ -53,7 +53,7 @@ class ItemModelTest(TestCase):
 
         self.assertEqual(item.purchasePriceInDKK, Decimal("12.51"))
         self.assertEqual(item.priceInDKKExcludingVAT, Decimal("20.01"))
-        self.assertEqual(item.actualProfit, Decimal("5.63"))
+        self.assertEqual(item.actualProfit, Decimal("10.63"))
         self.assertEqual(item.profitMargin, Decimal("99.90"))
 
     def test_actual_profit_margin_is_none_when_purchase_price_is_zero(self):
