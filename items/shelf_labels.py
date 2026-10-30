@@ -5,7 +5,6 @@ from django.utils.text import slugify
 from PIL import Image as PILImage
 from PIL import ImageOps, UnidentifiedImageError
 
-
 LARGE_CONTAINERS = {"keg", "draught", "draft", "draugth beer", "draft beer"}
 
 
