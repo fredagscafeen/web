@@ -114,6 +114,8 @@ class Item(models.Model):
 
     @property
     def priceInDKKExcludingVAT(self):
+        if self.priceInDKK is None:
+            return None
         return round_to_two_decimals(self.priceInDKK * Decimal("0.8"))
 
     @property
@@ -124,7 +126,7 @@ class Item(models.Model):
 
     @property
     def actualProfit(self):
-        if self.purchasePriceInDKK is None:
+        if self.purchasePriceInDKK is None or self.priceInDKK is None:
             return None
 
         priceInDKKVAT = self.priceInDKK * Decimal("0.2")
