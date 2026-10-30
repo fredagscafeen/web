@@ -111,6 +111,7 @@
     \pagestyle{empty}
     \setlength{\columnsep}{0cm}
     \raggedcolumns
+    {% if label_items %}
     \centering \begin{multicols*}{2}
         {% for label_item in label_items %}
             \noindent
@@ -118,6 +119,11 @@
             \par
         {% endfor %}
     \end{multicols*}
+    {% else %}
+    \large{No items found for the given filters.}
+    {% endif %}
+    {% if label_items and large_label_items %}
+    {% endif %}
     {% if large_label_items %}
     \par\noindent
     {% for label_item in large_label_items %}\BigC{% include "shelf_labels/label_args.tex" %}\hspace{2mm}{% endfor %}
