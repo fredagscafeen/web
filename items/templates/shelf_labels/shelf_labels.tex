@@ -75,21 +75,58 @@
 
 
 
+% Large label (63.5 mm x 88.9 mm) for kegs/draught, outer frame included
+\newcommand{\BigC}[7]{%
+\begingroup\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.4pt}%
+\fbox{%
+    \begin{minipage}[t][\dimexpr 88.9mm-0.8pt\relax][t]{\dimexpr 63.5mm-0.8pt\relax}
+        \centering
+        \vspace{4mm}
+        \begin{minipage}[c][3.8cm][c]{\linewidth}
+            \centering
+            \renewcommand{\Img}[1]{\includegraphics[max width=6.0cm,max height=3.7cm,keepaspectratio]{\detokenize{##1}}}
+            \renewcommand{\PlaceholderImg}{\includegraphics[max width=3.7cm,max height=3.7cm,keepaspectratio]{/app/staticfiles/images/logo.png}}
+            #1
+        \end{minipage}
+        \par\vspace{4mm}
+        \begin{minipage}[t][3.6cm][t]{\dimexpr\linewidth-4mm\relax}
+            \raggedright
+            \renewcommand{\Badge}[1]{ {\setlength{\fboxsep}{1.3mm}\fbox{\textsf{\normalsize\textbf{##1}}}}}
+            {\scriptsize\textsf{\MakeUppercase{#2}} \par}
+            \vspace{0.6mm}
+            {\Large\bfseries #3 \par}
+            \vspace{0.3mm}
+            {\small #4 \par}
+            \vspace{0.3mm}
+            {\footnotesize #5 \par}
+            \vspace{1mm}
+            {#6 \par}
+            \vfill
+            {\raggedleft\huge\bfseries\contour{black}{#7}kr.\par}
+        \end{minipage}
+    \end{minipage}%
+}\endgroup}
+
 \begin{document}
     \pagestyle{empty}
     \setlength{\columnsep}{0cm}
     \raggedcolumns
+    {% if label_items %}
     \centering \begin{multicols*}{2}
         {% for label_item in label_items %}
             \noindent
-            \C{{ '{' }}
-                {% if label_item.has_render_image %}
-                    \Img{{"{"}}{{ label_item.render_image_path }}{{"}"}}
-                {% else %}
-                    \PlaceholderImg
-                {% endif %}
-            {{ '}' }}{ {{ label_item.item.brewery.name|default:"~"|latex_escape }} }{ {{ label_item.item.name|default:"Item"|latex_escape }} }{ {{ label_item.item.type.name|default:"~"|latex_escape }} }{ {% if label_item.item.abv %}{{ label_item.item.abv|floatformat:1|latex_escape }}\% ABV{% endif %}{% if label_item.item.abv and label_item.item.volumeInCentiliters %} \textbar{} {% endif %}{% if label_item.item.abv and label_item.item.container and not label_item.item.volumeInCentiliters %} \textbar{} {% endif %}{% if label_item.item.volumeInCentiliters %}{{ label_item.item.volumeInCentiliters|latex_escape }}cl{% endif %}{% if label_item.item.volumeInCentiliters and label_item.item.container %} {% endif %}{% if label_item.item.container %}{{ label_item.item.container|latex_escape }}{% endif %} }{ {% if label_item.item.glutenFree %}\Badge{GF}{% endif %}{% if label_item.item.glutenFree and label_item.item.nonAlcoholic %}\hspace{1mm}{% endif %}{% if label_item.item.nonAlcoholic %}\Badge{NA}{% endif %} }{ {{ label_item.item.priceInDKK|latex_escape }} }
+            \C{% include "shelf_labels/label_args.tex" %}
             \par
         {% endfor %}
     \end{multicols*}
+    {% else %}
+    \large{No items found for the given filters.}
+    {% endif %}
+    {% if label_items and large_label_items %}
+    {% endif %}
+    {% if large_label_items %}
+    \par\noindent
+    {% for label_item in large_label_items %}\BigC{% include "shelf_labels/label_args.tex" %}\hspace{2mm}{% endfor %}
+    \par
+    {% endif %}
 \end{document}

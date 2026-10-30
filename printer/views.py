@@ -1,5 +1,6 @@
 import shutil
 import time
+from pathlib import Path
 from subprocess import CalledProcessError
 from tempfile import TemporaryDirectory
 
@@ -55,7 +56,9 @@ stderr:
         with TemporaryDirectory() as d:
             try:
                 fname = generate_pdf(d, latex_context)
-                shutil.copy(fname, pdf_path)
+                media_root = Path(settings.MEDIA_ROOT)
+                media_root.mkdir(parents=True, exist_ok=True)
+                shutil.copy(fname, media_root / f"{file_name}.pdf")
             except LatexError as e:
                 with open(f"{d}/{file_name}.tex") as f:
                     source = f.read()

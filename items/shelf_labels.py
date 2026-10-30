@@ -5,13 +5,21 @@ from django.utils.text import slugify
 from PIL import Image as PILImage
 from PIL import ImageOps, UnidentifiedImageError
 
+LARGE_CONTAINERS = {"keg", "draught", "draft", "draugth beer", "draft beer"}
+
+
+def _is_large(item):
+    return (item.container or "").strip().lower() in LARGE_CONTAINERS
+
 
 def build_shelf_label_context(label_items, work_dir):
+    prepared = [
+        _prepare_label_item(label_item=label_item, work_dir=work_dir)
+        for label_item in label_items
+    ]
     return {
-        "label_items": [
-            _prepare_label_item(label_item=label_item, work_dir=work_dir)
-            for label_item in label_items
-        ]
+        "label_items": [p for p in prepared if not _is_large(p["item"])],
+        "large_label_items": [p for p in prepared if _is_large(p["item"])],
     }
 
 
