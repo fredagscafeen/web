@@ -75,14 +75,19 @@ function setLightMode() {
     document.documentElement.setAttribute('data-bs-theme','light')
 }
 
-function setLightModeAccordingToTheTime() {
+function setDarkMode() {
+    "use strict";
+    localStorage.setItem("lightMode", false);
+    localStorage.setItem("darkMode", true);
+    document.documentElement.setAttribute('data-bs-theme','dark')
+}
+
+function setThemeAccordingToTheTime() {
     "use strict";
     const currentHour = new Date().getHours();
     if (currentHour >= 6 && currentHour < 18) {
         setLightMode();
     } else {
-        localStorage.setItem("lightMode", false);
-        localStorage.setItem("darkMode", true);
-        document.documentElement.setAttribute('data-bs-theme','dark')
+        setDarkMode();
     }
 }
