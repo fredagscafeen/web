@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login, logout
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import TemplateView
@@ -23,7 +24,9 @@ def email_login_view(request, email, token):
         login(request, user)
 
     next = request.GET.get(REDIRECT_FIELD_NAME)
-    if next:
+    if next and url_has_allowed_host_and_scheme(
+        next, allowed_hosts={request.get_host()}, require_https=request.is_secure()
+    ):
         return redirect(next)
 
     if EmailTokenBackend.is_bartender(email):
