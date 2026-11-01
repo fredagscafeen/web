@@ -5,7 +5,7 @@
     },
     "dependencies": {
         "@tailwindcss/cli": "^4.3.3",
-        "bootstrap-icons": "^1.11.2",
+        "bootstrap-icons": "^1.13.2",
         "tailwindcss": "^4.3.3",
         "source-map-js": "^1.2.2"
     }
