@@ -126,32 +126,25 @@ class Item(models.Model):
 
     @property
     def actualProfit(self):
-        if self.purchasePriceInDKK is None or self.priceInDKK is None:
-            return None
-
-        priceInDKKVAT = self.priceInDKK * Decimal("0.2")
-        purchasePriceInDKKVAT = self.purchasePriceInDKK * Decimal("0.25")
-
-        return round_to_two_decimals(
-            self.priceInDKK
-            - self.purchasePriceInDKK
-            - (priceInDKKVAT - purchasePriceInDKKVAT)
-        )
-
-    @property
-    def profitMargin(self):
         if (
             self.purchasePriceInDKKExcludingVAT is None
             or self.priceInDKKExcludingVAT is None
         ):
             return None
-        if self.purchasePriceInDKK == 0:
+
+        return round_to_two_decimals(
+            self.priceInDKKExcludingVAT - self.purchasePriceInDKKExcludingVAT
+        )
+
+    @property
+    def profitMargin(self):
+        if self.actualProfit is None:
+            return None
+        if self.priceInDKKExcludingVAT == 0:
             return None  # Avoid division by zero
 
         return round_to_two_decimals(
-            (self.priceInDKKExcludingVAT - self.purchasePriceInDKKExcludingVAT)
-            / self.purchasePriceInDKKExcludingVAT
-            * 100
+            self.actualProfit / self.priceInDKKExcludingVAT * 100
         )
 
     @property

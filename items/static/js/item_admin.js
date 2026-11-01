@@ -35,10 +35,9 @@
         setReadonlyValue("suggested-selling-price", suggestedPrice);
 
         const actualProfit =
-            Number.isFinite(purchasePrice) && Number.isFinite(price)
-                ? price -
-                  purchasePrice -
-                  (price * 0.2 - purchasePrice * 0.25)
+            Number.isFinite(purchasePriceExcludingVAT) &&
+            Number.isFinite(priceExcludingVAT)
+                ? priceExcludingVAT - purchasePriceExcludingVAT
                 : Number.NaN;
         const roundedActualProfit = Number.isFinite(actualProfit)
             ? roundToTwoDecimals(actualProfit)
@@ -46,13 +45,8 @@
         setReadonlyValue("actual-profit", roundedActualProfit);
 
         const profitMargin =
-            Number.isFinite(purchasePriceExcludingVAT) &&
-            Number.isFinite(priceExcludingVAT) &&
-            purchasePrice !== 0 &&
-            priceExcludingVAT !== 0
-                ? ((priceExcludingVAT - purchasePriceExcludingVAT) /
-                      purchasePriceExcludingVAT) *
-                  100
+            Number.isFinite(roundedActualProfit) && priceExcludingVAT !== 0
+                ? (roundedActualProfit / priceExcludingVAT) * 100
                 : Number.NaN;
         setReadonlyValue(
             "profit-margin",
