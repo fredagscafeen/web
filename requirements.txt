@@ -26,8 +26,10 @@ celery[redis]==5.6.3
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2026.2.25
-    # via requests
+certifi==2026.10.23
+    # via
+    #   -r requirements.in
+    #   requests
 cffi==2.0.0
     # via cryptography
 charset-normalizer==3.4.7
