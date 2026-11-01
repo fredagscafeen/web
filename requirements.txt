@@ -16,7 +16,7 @@ asttokens==3.0.1
     # via stack-data
 billiard==4.2.4
     # via celery
-boto3==1.43.121
+boto3==1.43.122
     # via -r requirements.in
 botocore==1.43.123
     # via

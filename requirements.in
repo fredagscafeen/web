@@ -27,7 +27,7 @@ django-oauth-toolkit
 django-bootstrap-datepicker-plus
 django-constance>=4.5.0
 iterfzf
-boto3==1.43.121
+boto3==1.43.122
 django-rosetta
 lxml_html_clean>=0.4.6
 django_bootstrap_icons>=0.8.7
