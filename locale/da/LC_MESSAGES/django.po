@@ -1801,7 +1801,11 @@ msgstr "Faktisk overskud (DKK)"
 #: items/admin.py:263
 #| msgid "Profit margin"
 msgid "Profit margin (%)"
-msgstr "Profitmargen (%)"
+msgstr "Avance (%)"
+
+#: items/templates/items.html:319
+msgid "Profit margin"
+msgstr "Avance"
 
 #: items/models.py:23 items/models.py:277
 msgid "Brewery"

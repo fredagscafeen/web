@@ -272,7 +272,7 @@ class ItemAdmin(CustomModelAdmin):
                         then=Value(None),
                     ),
                     When(
-                        purchasePriceInDKKExcludingVAT=Decimal("0.00"),
+                        priceInDKK=Decimal("0.00"),
                         then=Value(None),
                     ),
                     default=(
@@ -283,7 +283,10 @@ class ItemAdmin(CustomModelAdmin):
                             )
                             - F("purchasePriceInDKKExcludingVAT")
                         )
-                        / F("purchasePriceInDKKExcludingVAT")
+                        / Round(
+                            F("priceInDKK") * Value(Decimal("0.8")),
+                            precision=2,
+                        )
                         * Value(Decimal("100"))
                     ),
                     output_field=models.DecimalField(decimal_places=2, max_digits=20),

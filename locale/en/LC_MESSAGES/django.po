@@ -1801,6 +1801,10 @@ msgstr "Actual profit (DKK)"
 msgid "Profit margin (%)"
 msgstr "Profit margin (%)"
 
+#: items/templates/items.html:319
+msgid "Profit margin"
+msgstr "Profit margin"
+
 #: items/models.py:23 items/models.py:277
 msgid "Brewery"
 msgstr "Brewery"

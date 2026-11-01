@@ -42,8 +42,8 @@ class ItemModelTest(TestCase):
             priceInDKK=Decimal("25.00"),
         )
 
-        self.assertEqual(item.actualProfit, Decimal("10.63"))
-        self.assertEqual(item.profitMargin, Decimal("100.00"))
+        self.assertEqual(item.actualProfit, Decimal("10.00"))
+        self.assertEqual(item.profitMargin, Decimal("50.00"))
 
     def test_computed_price_properties_are_limited_to_two_decimal_places(self):
         item = Item(
@@ -53,16 +53,35 @@ class ItemModelTest(TestCase):
 
         self.assertEqual(item.purchasePriceInDKK, Decimal("12.51"))
         self.assertEqual(item.priceInDKKExcludingVAT, Decimal("20.01"))
-        self.assertEqual(item.actualProfit, Decimal("10.63"))
-        self.assertEqual(item.profitMargin, Decimal("99.90"))
+        self.assertEqual(item.actualProfit, Decimal("10.00"))
+        self.assertEqual(item.profitMargin, Decimal("49.98"))
 
-    def test_actual_profit_margin_is_none_when_purchase_price_is_zero(self):
+    def test_profit_margin_is_full_when_purchase_price_is_zero(self):
         item = Item(
             purchasePriceInDKKExcludingVAT=Decimal("0.00"),
             priceInDKK=Decimal("25.00"),
         )
 
+        self.assertEqual(item.actualProfit, Decimal("20.00"))
+        self.assertEqual(item.profitMargin, Decimal("100.00"))
+
+    def test_profit_margin_is_none_when_selling_price_is_zero(self):
+        item = Item(
+            purchasePriceInDKKExcludingVAT=Decimal("10.00"),
+            priceInDKK=Decimal("0.00"),
+        )
+
+        self.assertEqual(item.actualProfit, Decimal("-10.00"))
         self.assertIsNone(item.profitMargin)
+
+    def test_profit_margin_is_negative_when_selling_at_a_loss(self):
+        item = Item(
+            purchasePriceInDKKExcludingVAT=Decimal("25.00"),
+            priceInDKK=Decimal("25.00"),
+        )
+
+        self.assertEqual(item.actualProfit, Decimal("-5.00"))
+        self.assertEqual(item.profitMargin, Decimal("-25.00"))
 
     def test_current_amount_uses_the_latest_inventory_snapshot(self):
         item = Item.objects.create(name="Test item", priceInDKK=Decimal("25.00"))
