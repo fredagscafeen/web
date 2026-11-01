@@ -26,10 +26,33 @@ document.addEventListener('DOMContentLoaded', function() {
             currentSlug = currentSlug || '<slug>';
 
             if (helpText) {
-                helpText.innerHTML = `A unique identifier for the QR code. If left blank, it will be generated from the name. <br>` +
-                    `<span class="font-semibold text-primary-600 dark:text-primary-400">Live Link:</span> ` +
-                    `<code class="bg-base-100 dark:bg-base-800 px-1.5 py-0.5 rounded font-mono text-xs font-medium">${baseDomain}/qr/${currentSlug}</code> <br>` +
-                    `<span class="italic text-font-muted-light dark:text-font-muted-dark">Note: Once printed, the slug should not be changed, as the physical QR code relies on it.</span>`;
+                helpText.replaceChildren(
+                    document.createTextNode(
+                        'A unique identifier for the QR code. If left blank, it will be generated from the name. '
+                    ),
+                    document.createElement('br'),
+                    (() => {
+                        const liveLinkLabel = document.createElement('span');
+                        liveLinkLabel.className = 'font-semibold text-primary-600 dark:text-primary-400';
+                        liveLinkLabel.textContent = 'Live Link:';
+                        return liveLinkLabel;
+                    })(),
+                    document.createTextNode(' '),
+                    (() => {
+                        const liveLink = document.createElement('code');
+                        liveLink.className = 'bg-base-100 dark:bg-base-800 px-1.5 py-0.5 rounded font-mono text-xs font-medium';
+                        liveLink.textContent = `${baseDomain}/qr/${currentSlug}`;
+                        return liveLink;
+                    })(),
+                    document.createTextNode(' '),
+                    document.createElement('br'),
+                    (() => {
+                        const note = document.createElement('span');
+                        note.className = 'italic text-font-muted-light dark:text-font-muted-dark';
+                        note.textContent = 'Note: Once printed, the slug should not be changed, as the physical QR code relies on it.';
+                        return note;
+                    })()
+                );
             }
         }
 

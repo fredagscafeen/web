@@ -16,4 +16,16 @@ npm install bootstrap-icons@latest
 npm run update-icons
 ```
 
+The root [package.json](./package.json) defines the npm scripts and dependencies, while [package-lock.json](./package-lock.json) records the exact dependency versions. To reconcile the lockfile after changing `package.json`, run:
+
+```bash
+npm install
+```
+
+For a clean install from the committed lockfile, use:
+
+```bash
+npm ci
+```
+
 3. Commit the changes and enjoy the near-zero load times

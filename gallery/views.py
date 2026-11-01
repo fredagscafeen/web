@@ -222,8 +222,8 @@ def upload(request):
 def set_visibility(request):
     try:
         form = EditVisibilityForm.from_POST(request.POST)
-    except EditVisibilityForm.Missing as exn:
-        return HttpResponseBadRequest(str(exn))
+    except EditVisibilityForm.Missing:
+        return HttpResponseBadRequest("Invalid media selection")
     if not form.is_valid():
         return HttpResponseBadRequest(str(form.errors))
     for pk, key in form.basemedias:

@@ -10,3 +10,13 @@ updates:
       python-packages:
         patterns:
           - "*"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "sunday"
+      time: "09:00"
+    groups:
+      npm-packages:
+        patterns:
+          - "*"

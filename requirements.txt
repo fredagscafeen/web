@@ -26,8 +26,10 @@ celery[redis]==5.6.3
     # via
     #   -r requirements.in
     #   django-celery-beat
-certifi==2026.2.25
-    # via requests
+certifi==2026.10.23
+    # via
+    #   -r requirements.in
+    #   requests
 cffi==2.0.0
     # via cryptography
 charset-normalizer==3.4.7
@@ -48,8 +50,10 @@ crispy-tailwind==1.0.3
     # via -r requirements.in
 cron-descriptor==1.4.5
     # via django-celery-beat
-cryptography==48.0.1
-    # via jwcrypto
+cryptography==50.0.2
+    # via
+    #   -r requirements.in
+    #   jwcrypto
 defusedxml==0.7.1
     # via django-bootstrap-icons
 distlib==0.4.4
@@ -126,8 +130,9 @@ djangorestframework-api-key==3.1.0
     # via -r requirements.in
 executing==2.2.1
     # via stack-data
-filelock==3.28.0
+filelock==4.2.6
     # via
+    #   -r requirements.in
     #   python-discovery
     #   virtualenv
 gunicorn==26.2.0
@@ -160,8 +165,10 @@ lxml-html-clean==0.4.6
     # via -r requirements.in
 matplotlib-inline==0.2.1
     # via ipython
-oauthlib==3.3.1
-    # via django-oauth-toolkit
+oauthlib==4.0.1
+    # via
+    #   -r requirements.in
+    #   django-oauth-toolkit
 packaging==26.3
     # via
     #   djangorestframework-api-key
@@ -199,8 +206,10 @@ pydantic==2.13.1
     #   pydantic-settings
 pydantic-core==2.46.1
     # via pydantic
-pydantic-settings==2.13.1
-    # via django-bootstrap-datepicker-plus
+pydantic-settings==2.16.2
+    # via
+    #   -r requirements.in
+    #   django-bootstrap-datepicker-plus
 pygments==2.21.0
     # via
     #   -r requirements.in
@@ -254,6 +263,7 @@ typing-extensions==4.15.0
     #   jwcrypto
     #   pydantic
     #   pydantic-core
+    #   pydantic-settings
     #   typing-inspection
 typing-inspection==0.4.2
     # via

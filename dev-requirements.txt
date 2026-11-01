@@ -10,7 +10,7 @@ distlib==0.4.4
     # via
     #   -c requirements.txt
     #   virtualenv
-filelock==3.28.0
+filelock==4.2.6
     # via
     #   -c requirements.txt
     #   python-discovery
