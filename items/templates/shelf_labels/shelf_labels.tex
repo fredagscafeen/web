@@ -9,6 +9,9 @@
 \usepackage{multicol}
 \usepackage[export]{adjustbox}
 \usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{transparent}
+\definecolor{fcblue}{HTML}{0C1A8F}
 \usepackage[outline]{contour}
 \contourlength{0.4pt} % Adjust this to make it thicker/thinner
 
@@ -75,38 +78,50 @@
 
 
 
-% Large label (63.5 mm x 88.9 mm) for kegs/draught, outer frame included
+% Staggered wall of small semi-transparent logos, used behind the product image on large labels
+\newcommand{\WallLogo}{\makebox[1.2cm][c]{\transparent{0.12}\includegraphics[width=1.2cm]{/app/staticfiles/images/logo.png}}}
+\newcommand{\LogoWall}{{%
+    \WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\par\vspace{2.5mm}
+    \WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\par\vspace{2.5mm}
+    \WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\par\vspace{2.5mm}
+    \WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\par\vspace{2.5mm}
+    \WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\hspace{3mm}\WallLogo\par}}
+
+% Large label (66.675 mm x 93.345 mm = 5% larger than 63.5 x 88.9), regular layout with a double dark blue frame
 \newcommand{\BigC}[7]{%
-\begingroup\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.4pt}%
-\fbox{%
-    \begin{minipage}[t][\dimexpr 88.9mm-0.8pt\relax][t]{\dimexpr 63.5mm-0.8pt\relax}
+\begingroup\setlength{\fboxrule}{1pt}\setlength{\fboxsep}{1.2mm}%
+\fcolorbox{fcblue}{white}{%
+\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.4pt}%
+\fcolorbox{fcblue!55}{white}{%
+    \begin{minipage}[t][\dimexpr 93.345mm-2.4mm-2pt-0.8pt\relax][t]{\dimexpr 66.675mm-2.4mm-2pt-0.8pt\relax}
         \centering
-        \vspace{4mm}
-        \begin{minipage}[c][3.8cm][c]{\linewidth}
+        \vspace{2mm}
+        \begin{minipage}[c][3.8cm][c]{\dimexpr\linewidth-6mm\relax}
             \centering
-            \renewcommand{\Img}[1]{\includegraphics[max width=6.0cm,max height=3.7cm,keepaspectratio]{\detokenize{##1}}}
-            \renewcommand{\PlaceholderImg}{\includegraphics[max width=3.7cm,max height=3.7cm,keepaspectratio]{/app/staticfiles/images/logo.png}}
-            #1
+            \renewcommand{\Img}[1]{\includegraphics[max width=5.8cm,max height=3.7cm,keepaspectratio]{\detokenize{##1}}}
+            \renewcommand{\PlaceholderImg}{}
+            \parbox[c][3.7cm][c]{\linewidth}{\centering\LogoWall}\hspace{-\linewidth}\parbox[c][3.7cm][c]{\linewidth}{\centering\mbox{}#1}
         \end{minipage}
-        \par\vspace{4mm}
-        \begin{minipage}[t][3.6cm][t]{\dimexpr\linewidth-4mm\relax}
+        \par\vspace{1.5mm}
+        {\color{fcblue}\rule{\dimexpr\linewidth-6mm\relax}{0.6pt}}\par
+        \vspace{1.5mm}
+        \begin{minipage}[t][3.9cm][t]{\dimexpr\linewidth-6mm\relax}
             \raggedright
-            \renewcommand{\Badge}[1]{ {\setlength{\fboxsep}{1.3mm}\fbox{\textsf{\normalsize\textbf{##1}}}}}
-            {\scriptsize\textsf{\MakeUppercase{#2}} \par}
-            \vspace{0.6mm}
+            \renewcommand{\Badge}[1]{ {\setlength{\fboxsep}{1.3mm}\setlength{\fboxrule}{0.5pt}\fcolorbox{fcblue}{white}{\color{fcblue}\textsf{\normalsize\textbf{##1}}}}}
+            {\color{fcblue}\small\textsf{\bfseries\MakeUppercase{#2}} \par}
+            \vspace{0.8mm}
             {\Large\bfseries #3 \par}
-            \vspace{0.3mm}
-            {\small #4 \par}
-            \vspace{0.3mm}
-            {\footnotesize #5 \par}
+            \vspace{0.5mm}
+            {\large #4 \par}
+            \vspace{0.5mm}
+            {\normalsize #5 \par}
             \vspace{1mm}
             {#6 \par}
             \vfill
-            {\raggedleft\huge\bfseries\contour{black}{#7}kr.\par}
+            {\raggedleft\huge\bfseries\color{black}\contour{black}{#7}kr.\par}
         \end{minipage}
     \end{minipage}%
-}\endgroup}
-
+}}\endgroup}
 \begin{document}
     \pagestyle{empty}
     \setlength{\columnsep}{0cm}
@@ -125,8 +140,8 @@
     {% if label_items and large_label_items %}
     {% endif %}
     {% if large_label_items %}
-    \par\noindent
-    {% for label_item in large_label_items %}\BigC{% include "shelf_labels/label_args.tex" %}\hspace{2mm}{% endfor %}
+    \par\noindent\centering
+    {% for label_item in large_label_items %}\BigC{% include "shelf_labels/label_args.tex" %}\hspace{1.5mm}{% endfor %}
     \par
     {% endif %}
 \end{document}
