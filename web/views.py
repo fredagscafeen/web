@@ -4,6 +4,7 @@ from constance import config
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login, logout
+from django.db.models import Count, F, Q
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -121,5 +122,26 @@ class About(TemplateView):
 
         context["num_bartenders"] = Bartender.objects.count()
         context["num_beers"] = Item.objects.count()
+
+        now = timezone.now()
+        bartenders_by_shift_count = Bartender.objects.annotate(
+            num_shifts=Count(
+                "bartendershift",
+                filter=Q(bartendershift__end_datetime__lte=now),
+                distinct=True,
+            )
+            + Count(
+                "shifts",
+                filter=Q(shifts__end_datetime__lte=now)
+                & ~Q(shifts__responsible_id=F("pk")),
+                distinct=True,
+            )
+        ).order_by("-num_shifts", "name", "pk")
+        top_bartender = bartenders_by_shift_count.first()
+        if top_bartender and top_bartender.num_shifts:
+            context["most_shifts_count"] = top_bartender.num_shifts
+            context["most_shifts_bartenders"] = bartenders_by_shift_count.filter(
+                num_shifts=top_bartender.num_shifts
+            ).values_list("name", flat=True)
 
         return context
