@@ -17,7 +17,7 @@ import-db:
 	./import_db
 import-media:
 	./download_media
-makemessages:
+messages:
 	./manage.py makemessages --all
 compilemessages:
 	./manage.py compilemessages
