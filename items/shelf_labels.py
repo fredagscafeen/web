@@ -6,6 +6,7 @@ from PIL import Image as PILImage
 from PIL import ImageOps, UnidentifiedImageError
 
 LARGE_CONTAINERS = {"keg", "draught", "draft", "draugth beer", "draft beer"}
+LARGE_NAME_MAX_CHARS = 30
 
 
 def _is_large(item):
@@ -27,8 +28,13 @@ def _prepare_label_item(label_item, work_dir):
     item = label_item["item"] if isinstance(label_item, dict) else label_item.item
     render_image_path = get_printable_image_path(item=item, work_dir=work_dir)
 
+    name = item.name or ""
+    if _is_large(item) and len(name) > LARGE_NAME_MAX_CHARS:
+        name = name[: LARGE_NAME_MAX_CHARS - 3].rstrip() + "..."
+
     return {
         "item": item,
+        "display_name": name,
         "has_render_image": bool(render_image_path),
         "render_image_path": render_image_path,
     }
@@ -54,10 +60,7 @@ def get_printable_image_path(item, work_dir):
             normalized_image.load()
 
             if _has_transparency(normalized_image):
-                rgba_image = normalized_image.convert("RGBA")
-                flattened_image = PILImage.new("RGB", rgba_image.size, "white")
-                flattened_image.paste(rgba_image, mask=rgba_image.getchannel("A"))
-                normalized_image = flattened_image
+                normalized_image = normalized_image.convert("RGBA")
             elif normalized_image.mode != "RGB":
                 normalized_image = normalized_image.convert("RGB")
 
