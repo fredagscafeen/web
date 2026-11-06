@@ -7,6 +7,6 @@ register = template.Library()
 
 @register.filter(name="is_bartender")
 def is_bartender(user):
-    if not user.is_authenticated:
+    if not getattr(user, "is_authenticated", False):
         return False
     return EmailTokenBackend.is_bartender(user.email)

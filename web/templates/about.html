@@ -211,11 +211,11 @@
                     {% translate "Der er højt til loftet i Fredagscaféens lokaler - helt præcis " %} <b>40</b> {% translate " ølkasser højt. Tror du ikke på det?" %} <a class="common" href="https://fredagscafeen.dk/en/gallery/2026/oktoberfest/20261003002451_00" rel="internal" target="_blank">{% translate "Her er proof" %}</a>.
                 </li>
                 <li class="list-group-item">
-                    {% blocktranslate count count=num_bartenders %}Siden Fredagscaféen fik en hjemmeside, har <b>{{ count }}</b> frivillige bartendere været tilknyttet baren.{% endblocktranslate %}
+                    {% blocktranslate with count=num_bartenders %}Siden Fredagscaféen fik en hjemmeside, har <b>{{ count }}</b> frivillige bartendere været tilknyttet baren.{% endblocktranslate %}
                 </li>
                 {% if most_shifts_count %}
                 <li class="list-group-item">
-                    {% blocktranslate with names=most_shifts_bartenders|join:", " count count=most_shifts_count %}Rekorden for flest barvagter tilhører <b>{{ names }}</b>: <b>{{ count }}</b> afsluttede barvagter registreret på hjemmesiden.{% endblocktranslate %}
+                    {% blocktranslate with names=most_shifts_bartenders|join:", " count=most_shifts_count %}Rekorden for flest barvagter tilhører <b>{{ names }}</b>: <b>{{ count }}</b> afsluttede barvagter registreret på hjemmesiden.{% endblocktranslate %}
                 </li>
                 {% endif %}
                 <li class="list-group-item">
