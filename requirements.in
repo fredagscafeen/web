@@ -1,9 +1,9 @@
-django>=6.0.9
+django>=6.0.10
 django-celery-beat>=2.9.0
 celery[redis]>=5.4.0
 django-recaptcha>=4.1.0
 djangorestframework>=3.18.3
-sqlparse>=0.6.0
+sqlparse>=0.6.1
 python-dotenv
 dj-config-url
 django-bootstrap5>=26.4
@@ -14,12 +14,12 @@ whitenoise
 django-ical
 django-object-actions
 django-extensions
-ipython>=9.17.1
+ipython>=9.18.1
 requests>=2.34.2
 certifi>=2026.10.23
 cryptography>=50.0.0
 oauthlib>=4.0.0
-filelock>=4.2.1
+filelock>=4.2.9
 pydantic-settings>=2.14.2
 django-logentry-admin
 django-cors-headers
@@ -27,7 +27,7 @@ django-oauth-toolkit
 django-bootstrap-datepicker-plus
 django-constance>=4.5.0
 iterfzf
-boto3==1.43.122
+boto3==1.43.124
 django-rosetta
 lxml_html_clean>=0.4.6
 django_bootstrap_icons>=0.8.7
@@ -40,8 +40,8 @@ urllib3>=2.8.0
 Pygments>=2.21.0
 tqdm>=4.70.1
 idna>=3.20
-virtualenv>=21.15.1
+virtualenv>=21.15.5
 djangorestframework-api-key>=3.1.0
-django-unfold==0.110.0
+django-unfold==0.110.1
 django-crispy-forms==2.7
 crispy-tailwind==1.0.3
