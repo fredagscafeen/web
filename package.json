@@ -4,7 +4,7 @@
         "compile-tailwind": "npx @tailwindcss/cli -i ./static/css/tailwind.css -o ./web/static/css/tailwind.css --minify"
     },
     "dependencies": {
-        "@tailwindcss/cli": "^4.3.3",
+        "@tailwindcss/cli": "^4.3.4",
         "bootstrap-icons": "^1.13.2",
         "tailwindcss": "^4.3.3",
         "source-map-js": "^1.2.2"
