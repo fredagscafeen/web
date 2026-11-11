@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 00:11+0100\n"
+"POT-Creation-Date: 2026-11-11 18:39+0100\n"
 "PO-Revision-Date: 2026-10-29 09:11+0100\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -800,7 +800,7 @@ msgstr ""
 "før du tilmelder dig, så du ved hvad en typisk vagt i Fredagscaféen "
 "indebærer."
 
-#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:211
+#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:224
 msgid "Indsend"
 msgstr "Indsend"
 
@@ -2918,33 +2918,55 @@ msgstr "Derfor skal du, for at være sikker på at kunne låne anlægget"
 msgid "skrive mindst 7 dage i forvejen"
 msgstr "skrive mindst 7 dage i forvejen"
 
-#: udlejning/templates/udlejning.html:165
+#: udlejning/templates/udlejning.html:167
+msgid "Tilbagelevering af fustager"
+msgstr "Tilbagelevering af fustager"
+
+#: udlejning/templates/udlejning.html:171
+msgid ""
+"Ved tilbagelevering efter udlejning opkræves et håndteringsgebyr på 75 kr. "
+"pr. uåbnet fustage ud over de første 2 uåbnede tilbageleverede fustager."
+msgstr ""
+"Ved tilbagelevering efter udlejning opkræves et håndteringsgebyr på 75 kr. "
+"pr. uåbnet fustage ud over de første 2 uåbnede tilbageleverede fustager."
+
+#: udlejning/templates/udlejning.html:172
+msgid ""
+"Der er altså intet tilbageleveringsgebyr ved op til 2 uåbnede fustager "
+"retur, mens 3 uåbnede fustager koster 75 kr., 4 uåbnede fustager koster 150 "
+"kr. osv."
+msgstr ""
+"Der er altså intet tilbageleveringsgebyr ved op til 2 uåbnede fustager "
+"retur, mens 3 uåbnede fustager koster 75 kr., 4 uåbnede fustager koster 150 "
+"kr. osv."
+
+#: udlejning/templates/udlejning.html:178
 msgid "Priser"
 msgstr "Priser"
 
-#: udlejning/templates/udlejning.html:170
+#: udlejning/templates/udlejning.html:183
 msgid "Vi tager forbehold for eventuelle fejl, i de anførte priser."
 msgstr "Vi tager forbehold for eventuelle fejl, i de anførte priser."
 
-#: udlejning/templates/udlejning.html:175
+#: udlejning/templates/udlejning.html:188
 msgid "Der betales pr. åbnet fustage."
 msgstr "Der betales pr. åbnet fustage."
 
-#: udlejning/templates/udlejning.html:179
+#: udlejning/templates/udlejning.html:192
 msgid ""
 "Vi kan skaffe fustager fra Aarhus Bryghus, så tag et kig på deres udvalg,"
 msgstr ""
 "Vi kan skaffe fustager fra Aarhus Bryghus, så tag et kig på deres udvalg,"
 
-#: udlejning/templates/udlejning.html:180
+#: udlejning/templates/udlejning.html:193
 msgid "her"
 msgstr "her"
 
-#: udlejning/templates/udlejning.html:181
+#: udlejning/templates/udlejning.html:194
 msgid "og check hvad der eventuelt er i sæson."
 msgstr "og check hvad der eventuelt er i sæson."
 
-#: udlejning/templates/udlejning.html:182
+#: udlejning/templates/udlejning.html:195
 msgid ""
 "Vores priser følger dem, Aarhus Bryghus har på deres hjemmeside, men vi "
 "tager forbehold for ændringer."
@@ -2952,48 +2974,48 @@ msgstr ""
 "Vores priser følger dem, Aarhus Bryghus har på deres hjemmeside, men vi "
 "tager forbehold for ændringer."
 
-#: udlejning/templates/udlejning.html:185
+#: udlejning/templates/udlejning.html:198
 msgid "Vi kan også skaffe Magners Cider på fustage for"
 msgstr "Vi kan også skaffe Magners Cider på fustage for"
 
-#: udlejning/templates/udlejning.html:185
+#: udlejning/templates/udlejning.html:198
 msgid "kr. pr. fustage."
 msgstr "kr. pr. fustage."
 
-#: udlejning/templates/udlejning.html:188
+#: udlejning/templates/udlejning.html:201
 msgid "Der kan tilkøbes engangs plastikkopper for"
 msgstr "Der kan tilkøbes engangs plastikkopper for"
 
-#: udlejning/templates/udlejning.html:188
+#: udlejning/templates/udlejning.html:201
 msgid "kr. pr. rulle af 50 stk.."
 msgstr "kr. pr. rulle af 50 stk.."
 
-#: udlejning/templates/udlejning.html:189
+#: udlejning/templates/udlejning.html:202
 msgid "Ellers kan man få lov at låne vores genanvendelige plastikkopper."
 msgstr "Ellers kan man få lov at låne vores genanvendelige plastikkopper."
 
-#: udlejning/templates/udlejning.html:192
+#: udlejning/templates/udlejning.html:205
 #: udlejning/templates/udlejningGrill.html:82
 msgid "Pris for gas efter aftale."
 msgstr "Pris for gas efter aftale."
 
-#: udlejning/templates/udlejning.html:195
+#: udlejning/templates/udlejning.html:208
 msgid "Derudover kan vi også levere sodavand og chips. Sodavand koster "
 msgstr "Derudover kan vi også levere sodavand og chips. Sodavand koster"
 
-#: udlejning/templates/udlejning.html:195
+#: udlejning/templates/udlejning.html:208
 msgid "kr. pr. stk. og chips koster "
 msgstr "kr. pr. stk. og chips koster"
 
-#: udlejning/templates/udlejning.html:195
+#: udlejning/templates/udlejning.html:208
 msgid "kr. pr. pose."
 msgstr "kr. pr. pose."
 
-#: udlejning/templates/udlejning.html:199
+#: udlejning/templates/udlejning.html:212
 msgid "Priser er inklusiv moms."
 msgstr "Priser er inklusiv moms."
 
-#: udlejning/templates/udlejning.html:204
+#: udlejning/templates/udlejning.html:217
 msgid "Ansøgninsformular"
 msgstr "Ansøgningsformular"
 

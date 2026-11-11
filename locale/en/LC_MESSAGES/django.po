@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 00:11+0100\n"
+"POT-Creation-Date: 2026-11-11 18:39+0100\n"
 "PO-Revision-Date: 2026-10-29 09:11+0100\n"
 "Last-Translator:   <test@post.au.dk>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -801,7 +801,7 @@ msgstr ""
 "before you sign up, so you know what a typical shift in Fredagscaféen "
 "involve."
 
-#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:211
+#: bartenders/templates/index.html:26 udlejning/templates/udlejning.html:224
 msgid "Indsend"
 msgstr "Submit"
 
@@ -2917,33 +2917,54 @@ msgstr "Therefore, to be sure of being able to borrow the facility, you must"
 msgid "skrive mindst 7 dage i forvejen"
 msgstr "write at least 7 days in advance"
 
-#: udlejning/templates/udlejning.html:165
+#: udlejning/templates/udlejning.html:167
+msgid "Tilbagelevering af fustager"
+msgstr "Returning kegs"
+
+#: udlejning/templates/udlejning.html:171
+msgid ""
+"Ved tilbagelevering efter udlejning opkræves et håndteringsgebyr på 75 kr. "
+"pr. uåbnet fustage ud over de første 2 uåbnede tilbageleverede fustager."
+msgstr ""
+"When returning kegs after a rental, a handling fee of DKK 75 is charged for "
+"each unopened keg beyond the first 2 returned unopened kegs."
+
+#: udlejning/templates/udlejning.html:172
+msgid ""
+"Der er altså intet tilbageleveringsgebyr ved op til 2 uåbnede fustager "
+"retur, mens 3 uåbnede fustager koster 75 kr., 4 uåbnede fustager koster 150 "
+"kr. osv."
+msgstr ""
+"There is no return fee for up to 2 unopened kegs, while returning 3 unopened "
+"kegs costs DKK 75, 4 unopened kegs costs DKK 150, and so on."
+
+#: udlejning/templates/udlejning.html:178
 msgid "Priser"
 msgstr "Prices"
 
-#: udlejning/templates/udlejning.html:170
+#: udlejning/templates/udlejning.html:183
 msgid "Vi tager forbehold for eventuelle fejl, i de anførte priser."
 msgstr "We reserve the right to any errors in the prices stated."
 
-#: udlejning/templates/udlejning.html:175
+#: udlejning/templates/udlejning.html:188
 msgid "Der betales pr. åbnet fustage."
 msgstr "Payment is made per opened keg."
 
-#: udlejning/templates/udlejning.html:179
+#: udlejning/templates/udlejning.html:192
 msgid ""
 "Vi kan skaffe fustager fra Aarhus Bryghus, så tag et kig på deres udvalg,"
 msgstr ""
 "We can source kegs from Aarhus Bryghus, so take a look at their selection,"
 
-#: udlejning/templates/udlejning.html:180
+#: udlejning/templates/udlejning.html:193
 msgid "her"
 msgstr "here"
 
-#: udlejning/templates/udlejning.html:181
+#: udlejning/templates/udlejning.html:194
 msgid "og check hvad der eventuelt er i sæson."
 msgstr "and check what may be in season."
 
-#: udlejning/templates/udlejning.html:182
+#: udlejning/templates/udlejning.html:195
 msgid ""
 "Vores priser følger dem, Aarhus Bryghus har på deres hjemmeside, men vi "
 "tager forbehold for ændringer."
@@ -2951,48 +2972,48 @@ msgstr ""
 "Our prices follow those of Aarhus Bryghus on their website, but we reserve "
 "the right to change."
 
-#: udlejning/templates/udlejning.html:185
+#: udlejning/templates/udlejning.html:198
 msgid "Vi kan også skaffe Magners Cider på fustage for"
 msgstr "We can also provide Magners Cider on keg for"
 
-#: udlejning/templates/udlejning.html:185
+#: udlejning/templates/udlejning.html:198
 msgid "kr. pr. fustage."
 msgstr "DKK per keg."
 
-#: udlejning/templates/udlejning.html:188
+#: udlejning/templates/udlejning.html:201
 msgid "Der kan tilkøbes engangs plastikkopper for"
 msgstr "Disposable plastic cups can be purchased for"
 
-#: udlejning/templates/udlejning.html:188
+#: udlejning/templates/udlejning.html:201
 msgid "kr. pr. rulle af 50 stk.."
 msgstr "DKK per roll of 50 cups."
 
-#: udlejning/templates/udlejning.html:189
+#: udlejning/templates/udlejning.html:202
 msgid "Ellers kan man få lov at låne vores genanvendelige plastikkopper."
 msgstr "Otherwise, you can borrow our reusable plastic cups."
 
-#: udlejning/templates/udlejning.html:192
+#: udlejning/templates/udlejning.html:205
 #: udlejning/templates/udlejningGrill.html:82
 msgid "Pris for gas efter aftale."
 msgstr "Price for gas by agreement."
 
-#: udlejning/templates/udlejning.html:195
+#: udlejning/templates/udlejning.html:208
 msgid "Derudover kan vi også levere sodavand og chips. Sodavand koster "
 msgstr "In addition, we can also deliver soda and chips. Soda costs"
 
-#: udlejning/templates/udlejning.html:195
+#: udlejning/templates/udlejning.html:208
 msgid "kr. pr. stk. og chips koster "
 msgstr "DKK per item and chips cost"
 
-#: udlejning/templates/udlejning.html:195
+#: udlejning/templates/udlejning.html:208
 msgid "kr. pr. pose."
 msgstr "DKK per bag."
 
-#: udlejning/templates/udlejning.html:199
+#: udlejning/templates/udlejning.html:212
 msgid "Priser er inklusiv moms."
 msgstr "Prices include VAT."
 
-#: udlejning/templates/udlejning.html:204
+#: udlejning/templates/udlejning.html:217
 msgid "Ansøgninsformular"
 msgstr "Application form"
 
@@ -3508,14 +3529,18 @@ msgstr "Here's the proof"
 msgid ""
 "Siden Fredagscaféen fik en hjemmeside, har <b>%(count)s</b> frivillige "
 "bartendere været tilknyttet baren."
-msgstr "Since Fredagscaféen got a website, <b>%(count)s</b> volunteer bartenders have been associated with the bar."
+msgstr ""
+"Since Fredagscaféen got a website, <b>%(count)s</b> volunteer bartenders "
+"have been associated with the bar."
 
 #: web/templates/about.html:218
 #, python-format
 msgid ""
 "Rekorden for flest barvagter tilhører <b>%(names)s</b>: <b>%(count)s</b> "
 "afsluttede barvagter registreret på hjemmesiden."
-msgstr "The record for the most bar shifts belongs to <b>%(names)s</b>: <b>%(count)s</b> completed bar shifts registered on the website."
+msgstr ""
+"The record for the most bar shifts belongs to <b>%(names)s</b>: "
+"<b>%(count)s</b> completed bar shifts registered on the website."
 
 #: web/templates/about.html:222
 msgid "Fredagscaféen har lige nu "
