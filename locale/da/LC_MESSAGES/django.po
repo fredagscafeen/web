@@ -3846,15 +3846,3 @@ msgstr ""
 
 #~ msgid "Extra details"
 #~ msgstr "Ekstra detaljer"
-
-#: signage/templates/signage.html
-msgid "From our selection"
-msgstr "Fra sortimentet"
-
-#: signage/templates/signage.html
-msgid "No products or events right now"
-msgstr "Der er ingen produkter eller events lige nu"
-
-#: signage/templates/signage.html
-msgid "Check back later"
-msgstr "Kig forbi senere"

@@ -182,7 +182,7 @@ class SignageViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["slides"], [])
-        self.assertContains(response, "Der er ingen produkter eller events lige nu")
+        self.assertContains(response, "Sortiment")
 
 
 class InitialSlideTests(TestCase):

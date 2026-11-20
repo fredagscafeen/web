@@ -3843,15 +3843,3 @@ msgstr ""
 
 #~ msgid "Extra details"
 #~ msgstr "Extra details"
-
-#: signage/templates/signage.html
-msgid "From our selection"
-msgstr "From our selection"
-
-#: signage/templates/signage.html
-msgid "No products or events right now"
-msgstr "No products or events right now"
-
-#: signage/templates/signage.html
-msgid "Check back later"
-msgstr "Check back later"

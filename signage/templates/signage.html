@@ -183,7 +183,7 @@
                     {% elif slide.label == "spotlight" %}
                         {% translate "Ugens Spotlight" %}
                     {% else %}
-                        {% translate "From our selection" %}
+                        {% translate "Sortiment" %}
                     {% endif %}
                 </div>
                 <div class="sg-product-body{% if slide.label == 'beer_of_the_month' %} bg-info-subtle{% elif slide.label == 'spotlight' %} bg-warning-subtle{% endif %}">
@@ -294,11 +294,9 @@
         {% empty %}
         <section class="sg-slide is-active">
             <div class="card">
-                <div class="sg-product-body">
-                    <div class="sg-product-info">
-                        <h5 class="card-title">{% translate "No products or events right now" %}</h5>
-                        <div><small class="text-muted">{% translate "Check back later" %}</small></div>
-                    </div>
+                <div class="card-header">{% translate "Sortiment" %}</div>
+                <div class="sg-product-body justify-content-center">
+                    <div class="image sg-product-image" style="background-image: url({% static 'images/logo.png' %});"></div>
                 </div>
             </div>
         </section>
