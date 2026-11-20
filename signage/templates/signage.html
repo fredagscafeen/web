@@ -328,6 +328,8 @@
         var refreshAfter = parseInt(root.getAttribute('data-refresh-after'), 10) || 22;
         // The slide on screen now counts as the first one of this selection.
         var shown = 1;
+        // Last time a slide was put on screen, used to notice a frozen page.
+        var lastAdvance = Date.now();
 
         if (current >= slides.length) {
             current = 0;
@@ -354,6 +356,7 @@
             slides[current].classList.remove('is-active');
             current = index;
             slides[current].classList.add('is-active');
+            lastAdvance = Date.now();
 
             if (counter) {
                 counter.textContent = String(current + 1);
@@ -384,6 +387,23 @@
                 show(current + 1);
             }, secondsOf(slides[current]) * 1000);
         }
+
+        // A page with no data at all has a single fallback slide and no timer, and
+        // a script error can freeze the loop. Reload rather than sit on a still image.
+        function longestSlideSeconds() {
+            var longest = 0;
+            slides.forEach(function (slide) {
+                longest = Math.max(longest, secondsOf(slide));
+            });
+            return longest;
+        }
+
+        window.setInterval(function () {
+            var limit = (longestSlideSeconds() + 60) * 1000;
+            if (Date.now() - lastAdvance > limit) {
+                window.location.reload();
+            }
+        }, 15000);
 
         function pad(value) {
             return value < 10 ? '0' + value : String(value);
