@@ -431,5 +431,9 @@ body {
 }
 
 .sg-qr {
-    height: clamp(3rem, 8vh, 7rem);
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: var(--bs-border-radius);
+    height: clamp(5rem, 13vh, 9.5rem);
+    padding: 0.5vh;
 }
