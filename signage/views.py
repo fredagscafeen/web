@@ -23,6 +23,10 @@ MAX_OVERVIEW_EVENTS = 2
 MAX_PRODUCT_SLIDES = 14
 MAX_EVENT_SLIDES = 4
 
+# After this many slides the loop starts over with a fresh draw, so the screen
+# keeps showing other products without waiting for a long list to finish.
+SLIDES_PER_SELECTION = 22
+
 BEER_OF_THE_MONTH_LABEL = "beer_of_the_month"
 SPOTLIGHT_LABEL = "spotlight"
 SELECTION_LABEL = "selection"
@@ -150,6 +154,7 @@ class Signage(TemplateView):
         context["product_slide_count"] = len(products)
         context["event_slide_count"] = len(events)
         context["initial_slide"] = initial_slide(self.request, len(slides))
+        context["slides_per_selection"] = SLIDES_PER_SELECTION
 
         return context
 

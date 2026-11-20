@@ -13,7 +13,7 @@
 
 {% get_current_language as LANGUAGE_CODE %}
 
-<div class="sg" data-initial-slide="{{ initial_slide }}">
+<div class="sg" data-initial-slide="{{ initial_slide }}" data-refresh-after="{{ slides_per_selection }}">
     <header class="sg-header">
         <div class="sg-brand">
             <img src="{% static 'images/logo.png' %}" alt="" class="sg-logo">
@@ -325,6 +325,9 @@
         var progressBar = document.querySelector('.sg-progress-bar');
         var counter = document.getElementById('sg-counter-current');
         var current = parseInt(root.getAttribute('data-initial-slide'), 10) || 0;
+        var refreshAfter = parseInt(root.getAttribute('data-refresh-after'), 10) || 22;
+        // The slide on screen now counts as the first one of this selection.
+        var shown = 1;
 
         if (current >= slides.length) {
             current = 0;
@@ -359,6 +362,12 @@
             var seconds = secondsOf(slides[current]);
             restartProgress(seconds);
             window.setTimeout(function () {
+                shown += 1;
+                if (shown >= refreshAfter) {
+                    // Enough slides from this draw: reload for a new selection.
+                    window.location.reload();
+                    return;
+                }
                 var next = current + 1;
                 if (next >= slides.length) {
                     // Start over with fresh products and events for the next loop.
