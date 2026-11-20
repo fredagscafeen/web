@@ -3,7 +3,6 @@
 {% load i18n %}
 {% load static %}
 {% load django_bootstrap5 bootstrap_icons %}
-{% load event_image_url %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'css/signage.css' %}">
@@ -94,18 +93,12 @@
             {% else %}
             {% with event=slide.event %}
             <div class="sg-slide-inner sg-event">
-                {% with image_url=event|event_image_url %}
-                <div class="sg-media sg-event-media{% if not image_url %} is-badge{% endif %}">
-                    {% if image_url %}
-                    <div class="sg-image" style="background-image: url('{{ image_url }}');"></div>
-                    {% else %}
+                <div class="sg-media sg-event-media">
                     <div class="sg-event-badge">
                         <span class="sg-event-badge-day">{{ event.start_datetime|date:"j" }}</span>
                         <span class="sg-event-badge-month">{{ event.start_datetime|date:"M" }}</span>
                     </div>
-                    {% endif %}
                 </div>
-                {% endwith %}
                 <div class="sg-details">
                     <p class="sg-eyebrow">{% translate "Upcoming events" %}</p>
                     <h2 class="sg-title">{{ event.name }}</h2>

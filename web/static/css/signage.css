@@ -208,21 +208,7 @@ body {
 /* Events */
 
 .sg-event .sg-event-media {
-    flex: 1 1 55%;
-    overflow: hidden;
-}
-
-.sg-event .sg-event-media.is-badge {
     flex: 0 0 34%;
-}
-
-.sg-event .sg-image {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 0.75rem;
-    height: 100%;
-    width: 100%;
 }
 
 .sg-event-badge {
