@@ -1,4 +1,8 @@
-/* Full screen slide show for the signage TV at /signage. */
+/* Full screen slide show for the signage TV at /signage.
+
+   Card, header, badge and colour rules follow the rest of the site, so the
+   screen reads as Fredagscaféen's own: light page, white cards with a thin
+   border, a header strip per card, and datblue for prices and the date. */
 
 html,
 body {
@@ -16,6 +20,8 @@ body {
     height: 100vh;
     padding: 1.5vh 2vw 0;
 }
+
+/* Header, as on the rest of the site. */
 
 .sg-header {
     align-items: center;
@@ -68,6 +74,8 @@ body {
     margin: 0;
 }
 
+/* Slides */
+
 .sg-stage {
     flex: 1 1 auto;
     margin: 1.5vh 0;
@@ -90,14 +98,47 @@ body {
 
 .sg-slide-inner {
     background-color: #fff;
-    border: 2px solid rgba(var(--bs-primary-rgb), 0.25);
-    border-radius: 1.25rem;
-    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: 0.5rem;
     display: flex;
-    gap: 3vw;
+    flex-direction: column;
     height: 100%;
     overflow: hidden;
-    padding: 3vh 3vw;
+}
+
+.sg-card {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sg-eyebrow {
+    background-color: var(--bs-tertiary-bg);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.175);
+    color: var(--bs-body-color);
+    font-size: clamp(0.9rem, 1.9vh, 1.5rem);
+    font-weight: 500;
+    margin: 0;
+    padding: 0.9vh 1.4vw;
+}
+
+.sg-body {
+    display: flex;
+    flex: 1 1 auto;
+    gap: 3vw;
+    min-height: 0;
+    padding: 2.5vh 2vw;
+}
+
+.sg-details {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
 }
 
 /* Products */
@@ -113,8 +154,8 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    height: min(58vh, 40vw);
-    width: min(58vh, 40vw);
+    height: min(56vh, 38vw);
+    width: min(56vh, 38vw);
 }
 
 .sg-image-empty {
@@ -122,33 +163,16 @@ body {
     opacity: 0.5;
 }
 
-.sg-details {
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 0;
-}
-
-.sg-eyebrow {
-    color: var(--datblue);
-    font-size: clamp(1rem, 2.2vh, 1.8rem);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    margin: 0 0 0.5vh;
-    text-transform: uppercase;
-}
-
 .sg-title {
-    font-size: clamp(2rem, 6vh, 5rem);
-    font-weight: 700;
-    line-height: 1.05;
+    font-size: clamp(1.8rem, 5vh, 4rem);
+    font-weight: 500;
+    line-height: 1.1;
     margin: 0 0 1vh;
 }
 
 .sg-subtitle {
     color: var(--bs-secondary-color);
-    font-size: clamp(1rem, 2.4vh, 2rem);
+    font-size: clamp(1rem, 2.3vh, 1.9rem);
     margin: 0 0 1.5vh;
 }
 
@@ -160,32 +184,35 @@ body {
 }
 
 .sg-tag {
-    border: 1px solid var(--bs-primary);
-    border-radius: 0.5rem;
+    border: 1px solid var(--bs-primary-border-subtle);
+    border-radius: 0.375rem;
     color: var(--bs-secondary-color);
-    font-size: clamp(0.8rem, 1.8vh, 1.4rem);
-    padding: 0.1rem 0.6rem;
+    font-size: clamp(0.8rem, 1.7vh, 1.3rem);
+    padding: 0 0.5rem;
 }
 
 .sg-tag-gf {
-    border-color: var(--bs-warning);
+    background-color: var(--bs-warning-bg-subtle);
+    border-color: var(--bs-warning-border-subtle);
 }
 
 .sg-tag-na {
-    border-color: var(--bs-info);
+    background-color: var(--bs-info-bg-subtle);
+    border-color: var(--bs-info-border-subtle);
 }
 
 .sg-tag-new {
-    border-color: var(--bs-success);
-    color: var(--bs-success);
+    background-color: var(--bs-success-bg-subtle);
+    border-color: var(--bs-success-border-subtle);
+    color: var(--bs-success-text-emphasis);
     font-style: italic;
 }
 
 .sg-description {
     color: var(--bs-body-color);
     display: -webkit-box;
-    font-size: clamp(1rem, 2.2vh, 1.9rem);
-    line-height: 1.35;
+    font-size: clamp(1rem, 2.1vh, 1.8rem);
+    line-height: 1.4;
     margin: 0 0 2vh;
     max-height: 22vh;
     overflow: hidden;
@@ -195,27 +222,25 @@ body {
 
 .sg-price {
     color: var(--datblue);
-    font-size: clamp(1.8rem, 5vh, 4rem);
-    font-weight: 700;
+    font-size: clamp(1.6rem, 4.5vh, 3.5rem);
+    font-weight: 500;
     margin: 0;
 }
 
 .sg-price small {
-    font-size: 0.45em;
-    font-weight: 400;
+    font-size: 0.5em;
 }
 
 /* Events */
 
-.sg-event .sg-event-media {
+.sg-event-media {
     flex: 0 0 34%;
 }
 
 .sg-event-badge {
-    background: radial-gradient(circle at 30% 20%, #eef2ff, #dbe3ff 70%);
-    border: 1px solid rgba(var(--bs-primary-rgb), 0.25);
-    border-radius: 0.75rem;
-    color: var(--datblue);
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -223,7 +248,6 @@ body {
     width: 100%;
 }
 
-/* With a cover image the card is split in half: cover on top, date below. */
 .sg-event-cover {
     background-position: center;
     background-repeat: no-repeat;
@@ -234,6 +258,8 @@ body {
 
 .sg-event-date {
     align-items: center;
+    background-color: var(--bs-tertiary-bg);
+    color: var(--datblue);
     display: flex;
     flex: 1 1 50%;
     flex-direction: column;
@@ -241,13 +267,12 @@ body {
 }
 
 .sg-event-badge.has-cover .sg-event-date {
-    flex: 1 1 50%;
     min-height: 0;
 }
 
 .sg-event-badge-day {
     font-size: clamp(3rem, 11vh, 8rem);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1;
 }
 
@@ -257,7 +282,6 @@ body {
 
 .sg-event-badge-month {
     font-size: clamp(1rem, 3vh, 2.4rem);
-    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
@@ -265,24 +289,146 @@ body {
     font-size: clamp(0.9rem, 2.2vh, 1.8rem);
 }
 
-.sg-event .sg-details {
-    flex: 1 1 45%;
-}
-
 .sg-when,
 .sg-where {
     align-items: center;
     display: flex;
-    font-size: clamp(1rem, 2.4vh, 2rem);
+    font-size: clamp(1rem, 2.3vh, 1.9rem);
     gap: 0.5em;
     margin: 0 0 1vh;
 }
 
-.sg-empty {
+/* Overview slide: the old signage layout on one screen. */
+
+.sg-overview {
+    display: grid;
+    gap: 1.5vw;
+    grid-template-columns: 1.55fr 1fr;
+    height: 100%;
+}
+
+.sg-overview-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+    min-width: 0;
+}
+
+/* Both cards share the column height, so the two columns line up. */
+.sg-overview-column > .sg-card {
+    flex: 1 1 0;
+    min-height: 0;
+}
+
+.sg-card-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: 1.5vh 1.4vw;
+}
+
+.sg-overview-beer {
     align-items: center;
+    display: flex;
+    gap: 1.6vw;
+}
+
+.sg-overview-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex: 0 0 auto;
+    height: min(24vh, 15vw);
+    width: min(24vh, 15vw);
+}
+
+.sg-overview-list {
+    display: grid;
+    gap: 1vw;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sg-overview-item {
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: 0.5rem;
+    padding: 1vh 0.8vw;
+    text-align: center;
+}
+
+.sg-overview-thumb {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: min(19vh, 12vw);
+    margin: 0 auto 0.5vh;
+    width: 100%;
+}
+
+.sg-overview-list {
+    height: 100%;
+    align-items: center;
+}
+
+.sg-overview-item-name {
+    font-size: clamp(0.9rem, 2.1vh, 1.6rem);
+    margin: 0;
+}
+
+.sg-overview-item-meta {
+    color: var(--bs-secondary-color);
+    font-size: clamp(0.75rem, 1.6vh, 1.2rem);
+    margin: 0;
+}
+
+.sg-overview-events {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 1.5vh;
+    justify-content: space-between;
+}
+
+.sg-overview-event {
+    align-items: center;
+    display: flex;
+    flex: 1 1 0;
+    gap: 1.2vw;
+}
+
+.sg-overview-date {
+    align-items: center;
+    align-self: center;
+    aspect-ratio: 1 / 1;
+    background-color: var(--bs-tertiary-bg);
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: 0.5rem;
+    color: var(--datblue);
+    display: flex;
+    flex: 0 0 auto;
     flex-direction: column;
     justify-content: center;
-    text-align: center;
+    padding: 1vh 0.6vw;
+    width: clamp(4.5rem, 8vw, 8.5rem);
+}
+
+.sg-overview-date-day {
+    font-size: clamp(1.6rem, 5vh, 3.6rem);
+    line-height: 1;
+}
+
+.sg-overview-date-month {
+    font-size: clamp(0.75rem, 1.8vh, 1.3rem);
+    text-transform: uppercase;
+}
+
+.sg-overview-event-when,
+.sg-overview-event-where {
+    color: var(--bs-body-color);
+    font-size: clamp(0.85rem, 1.9vh, 1.4rem);
+    margin: 0;
 }
 
 /* Footer */
@@ -293,9 +439,8 @@ body {
 }
 
 .sg-progress {
-    background-color: rgba(var(--bs-primary-rgb), 0.12);
-    border-radius: 999px;
-    height: 0.6vh;
+    background-color: var(--bs-secondary-bg);
+    height: 0.5vh;
     margin-bottom: 1vh;
     overflow: hidden;
 }
@@ -339,163 +484,4 @@ body {
 
 .sg-qr {
     height: clamp(3rem, 8vh, 7rem);
-}
-
-/* Overview slide: the old signage layout on one screen. */
-
-.sg-overview {
-    display: grid;
-    gap: 2vw;
-    grid-template-columns: 1.55fr 1fr;
-}
-
-.sg-ov-main {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5vh;
-    min-width: 0;
-}
-
-.sg-ov-beer {
-    background: linear-gradient(135deg, #eef7f9, #dff0f5);
-    border-radius: 0.9rem;
-    padding: 1.5vh 1.5vw;
-}
-
-.sg-ov-beer .sg-eyebrow {
-    margin-bottom: 1vh;
-}
-
-.sg-ov-beer-body {
-    align-items: center;
-    display: flex;
-    gap: 2vw;
-}
-
-.sg-ov-image {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    flex: 0 0 auto;
-    height: min(24vh, 16vw);
-    width: min(24vh, 16vw);
-}
-
-.sg-ov-beer-text {
-    min-width: 0;
-}
-
-.sg-ov-title {
-    font-size: clamp(1.4rem, 3.4vh, 2.8rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin: 0 0 0.5vh;
-}
-
-.sg-ov-beer-text .sg-subtitle {
-    margin-bottom: 1vh;
-}
-
-.sg-price-small {
-    font-size: clamp(1.2rem, 3vh, 2.4rem);
-}
-
-.sg-ov-spotlight {
-    flex: 1 1 auto;
-    min-height: 0;
-}
-
-.sg-ov-list {
-    display: grid;
-    gap: 1vw;
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.sg-ov-item {
-    background: #fff;
-    border: 1px solid rgba(var(--bs-primary-rgb), 0.2);
-    border-radius: 0.9rem;
-    padding: 1vh 0.8vw;
-    text-align: center;
-}
-
-.sg-ov-thumb {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: min(15vh, 10vw);
-    margin: 0 auto 0.5vh;
-    width: 100%;
-}
-
-.sg-ov-item-name {
-    font-size: clamp(0.9rem, 2.2vh, 1.7rem);
-    font-weight: 600;
-    margin: 0;
-}
-
-.sg-ov-item-meta {
-    color: var(--bs-secondary-color);
-    font-size: clamp(0.75rem, 1.7vh, 1.3rem);
-    margin: 0;
-}
-
-.sg-ov-events {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5vh;
-    min-width: 0;
-}
-
-.sg-ov-event {
-    align-items: center;
-    background: #f7f8fd;
-    border: 1px solid rgba(var(--bs-primary-rgb), 0.2);
-    border-radius: 0.9rem;
-    display: flex;
-    flex: 1 1 0;
-    gap: 1.2vw;
-    padding: 1.2vh 1.2vw;
-}
-
-.sg-ov-date {
-    align-items: center;
-    align-self: center;
-    aspect-ratio: 1 / 1;
-    background: radial-gradient(circle at 30% 20%, #eef2ff, #dbe3ff 70%);
-    border: 1px solid rgba(var(--bs-primary-rgb), 0.25);
-    border-radius: 0.7rem;
-    color: var(--datblue);
-    display: flex;
-    flex: 0 0 auto;
-    flex-direction: column;
-    justify-content: center;
-    padding: 1vh 0.6vw;
-    width: clamp(4.5rem, 8vw, 8.5rem);
-}
-
-.sg-ov-date-day {
-    font-size: clamp(1.6rem, 5vh, 3.6rem);
-    font-weight: 700;
-    line-height: 1;
-}
-
-.sg-ov-date-month {
-    font-size: clamp(0.75rem, 1.8vh, 1.3rem);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-.sg-ov-event-text {
-    min-width: 0;
-}
-
-.sg-ov-event-when,
-.sg-ov-event-where {
-    color: var(--bs-body-color);
-    font-size: clamp(0.85rem, 2vh, 1.5rem);
-    margin: 0;
 }
