@@ -28,9 +28,22 @@ SPOTLIGHT_LABEL = "spotlight"
 SELECTION_LABEL = "selection"
 
 
+def shelved_items():
+    """Items the bar has on a shelf in a fridge, so the screen only shows what can be sold."""
+    return (
+        Item.objects.filter(
+            inStock=True,
+            shelf_items__isnull=False,
+            shelf_items__shelf__fridge_assignments__isnull=False,
+        )
+        .select_related("type", "brewery")
+        .distinct()
+    )
+
+
 def product_slides():
     """Product slides, most promoted products first, the rest in random order."""
-    items = list(Item.objects.filter(inStock=True).select_related("type", "brewery"))
+    items = list(shelved_items())
 
     beer_of_the_month = [item for item in items if item.isBeerOfTheMonth][:1]
     spotlight = [
