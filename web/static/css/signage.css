@@ -1,0 +1,327 @@
+/* Full screen slide show for the signage TV at /signage. */
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background-color: var(--lightblue);
+}
+
+.sg {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 1.5vh 2vw 0;
+}
+
+.sg-header {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    padding: 0 1vw;
+}
+
+.sg-brand {
+    align-items: center;
+    display: flex;
+    gap: 1vw;
+}
+
+.sg-logo {
+    height: clamp(2.5rem, 7vh, 6rem);
+}
+
+.sg-name {
+    color: var(--datblue);
+    font-family: "Times New Roman", serif;
+    font-size: clamp(1.6rem, 4.2vh, 3.4rem);
+    line-height: 1.1;
+    margin: 0;
+}
+
+.sg-open {
+    color: var(--bs-primary-text-emphasis);
+    font-size: clamp(0.9rem, 2vh, 1.6rem);
+    margin: 0;
+}
+
+.sg-clock {
+    text-align: right;
+}
+
+.sg-time {
+    color: var(--bs-primary-text-emphasis);
+    font-size: clamp(1.8rem, 5.5vh, 4.5rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0;
+}
+
+.sg-date {
+    color: var(--bs-secondary-color);
+    font-size: clamp(0.9rem, 2vh, 1.6rem);
+    margin: 0;
+}
+
+.sg-stage {
+    flex: 1 1 auto;
+    margin: 1.5vh 0;
+    min-height: 0;
+    position: relative;
+}
+
+.sg-slide {
+    inset: 0;
+    opacity: 0;
+    position: absolute;
+    transition: opacity 600ms ease-in-out;
+    visibility: hidden;
+}
+
+.sg-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sg-slide-inner {
+    background-color: #fff;
+    border: 2px solid rgba(var(--bs-primary-rgb), 0.25);
+    border-radius: 1.25rem;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.06);
+    display: flex;
+    gap: 3vw;
+    height: 100%;
+    overflow: hidden;
+    padding: 3vh 3vw;
+}
+
+/* Products */
+
+.sg-media {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+}
+
+.sg-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: min(58vh, 40vw);
+    width: min(58vh, 40vw);
+}
+
+.sg-image-empty {
+    background-size: 60%;
+    opacity: 0.5;
+}
+
+.sg-details {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.sg-eyebrow {
+    color: var(--datblue);
+    font-size: clamp(1rem, 2.2vh, 1.8rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.5vh;
+    text-transform: uppercase;
+}
+
+.sg-title {
+    font-size: clamp(2rem, 6vh, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    margin: 0 0 1vh;
+}
+
+.sg-subtitle {
+    color: var(--bs-secondary-color);
+    font-size: clamp(1rem, 2.4vh, 2rem);
+    margin: 0 0 1.5vh;
+}
+
+.sg-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6vw;
+    margin: 0 0 1.5vh;
+}
+
+.sg-tag {
+    border: 1px solid var(--bs-primary);
+    border-radius: 0.5rem;
+    color: var(--bs-secondary-color);
+    font-size: clamp(0.8rem, 1.8vh, 1.4rem);
+    padding: 0.1rem 0.6rem;
+}
+
+.sg-tag-gf {
+    border-color: var(--bs-warning);
+}
+
+.sg-tag-na {
+    border-color: var(--bs-info);
+}
+
+.sg-tag-new {
+    border-color: var(--bs-success);
+    color: var(--bs-success);
+    font-style: italic;
+}
+
+.sg-description {
+    color: var(--bs-body-color);
+    display: -webkit-box;
+    font-size: clamp(1rem, 2.2vh, 1.9rem);
+    line-height: 1.35;
+    margin: 0 0 2vh;
+    max-height: 22vh;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+}
+
+.sg-price {
+    color: var(--datblue);
+    font-size: clamp(1.8rem, 5vh, 4rem);
+    font-weight: 700;
+    margin: 0;
+}
+
+.sg-price small {
+    font-size: 0.45em;
+    font-weight: 400;
+}
+
+/* Events */
+
+.sg-event .sg-event-media {
+    flex: 1 1 55%;
+    overflow: hidden;
+}
+
+.sg-event .sg-event-media.is-badge {
+    flex: 0 0 34%;
+}
+
+.sg-event .sg-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 0.75rem;
+    height: 100%;
+    width: 100%;
+}
+
+.sg-event-badge {
+    align-items: center;
+    background: radial-gradient(circle at 30% 20%, #eef2ff, #dbe3ff 70%);
+    border: 1px solid rgba(var(--bs-primary-rgb), 0.25);
+    border-radius: 0.75rem;
+    color: var(--datblue);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+}
+
+.sg-event-badge-day {
+    font-size: clamp(4rem, 14vh, 11rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.sg-event-badge-month {
+    font-size: clamp(1.2rem, 3.5vh, 2.8rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.sg-event .sg-details {
+    flex: 1 1 45%;
+}
+
+.sg-when,
+.sg-where {
+    align-items: center;
+    display: flex;
+    font-size: clamp(1rem, 2.4vh, 2rem);
+    gap: 0.5em;
+    margin: 0 0 1vh;
+}
+
+.sg-empty {
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Footer */
+
+.sg-footer {
+    flex: 0 0 auto;
+    padding-bottom: 1.5vh;
+}
+
+.sg-progress {
+    background-color: rgba(var(--bs-primary-rgb), 0.12);
+    border-radius: 999px;
+    height: 0.6vh;
+    margin-bottom: 1vh;
+    overflow: hidden;
+}
+
+.sg-progress-bar {
+    background-color: var(--datblue);
+    display: block;
+    height: 100%;
+    width: 0;
+}
+
+.sg-footer-inner {
+    align-items: center;
+    display: flex;
+    gap: 2vw;
+}
+
+.sg-scan {
+    font-size: clamp(0.9rem, 2vh, 1.6rem);
+    margin: 0;
+}
+
+.sg-domain {
+    color: var(--bs-secondary-color);
+    font-size: clamp(0.8rem, 1.7vh, 1.3rem);
+    margin: 0;
+}
+
+.sg-footer-right {
+    align-items: center;
+    display: flex;
+    gap: 2vw;
+    margin-left: auto;
+}
+
+.sg-counter {
+    color: var(--bs-secondary-color);
+    font-size: clamp(0.8rem, 1.7vh, 1.3rem);
+    font-variant-numeric: tabular-nums;
+}
+
+.sg-qr {
+    height: clamp(3rem, 8vh, 7rem);
+}
