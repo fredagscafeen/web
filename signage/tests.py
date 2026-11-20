@@ -5,7 +5,15 @@ from django.urls import reverse
 from django.utils import timezone
 
 from events.models import Event
-from items.models import BeerType, Brewery, Item
+from items.models import (
+    BeerType,
+    Brewery,
+    Fridge,
+    FridgeShelfAssignment,
+    Item,
+    Shelf,
+    ShelfItem,
+)
 from signage.views import (
     EVENT_SLIDE_SECONDS,
     MAX_EVENT_SLIDES,
@@ -29,6 +37,19 @@ def product(name, label="selection"):
 
 def event_slide(name):
     return {"kind": "event", "event": name, "seconds": EVENT_SLIDE_SECONDS}
+
+
+def make_fridge(name="Køleskab"):
+    return Fridge.objects.create(name=name)
+
+
+def shelve(item, fridge=None):
+    """Put an item on a shelf, in a fridge when one stands there, like the bar does."""
+    shelf = Shelf.objects.create(name=f"Hylde {Shelf.objects.count() + 1}")
+    ShelfItem.objects.create(shelf=shelf, item=item)
+    if fridge is not None:
+        FridgeShelfAssignment.objects.create(fridge=fridge, shelf=shelf)
+    return item
 
 
 class BuildSlidesTests(TestCase):
@@ -82,15 +103,19 @@ class ProductSlidesTests(TestCase):
     def setUp(self):
         self.type = BeerType.objects.create(name="IPA")
         self.brewery = Brewery.objects.create(name="Testbryggeriet")
+        self.fridge = make_fridge()
 
-    def make_item(self, name, **kwargs):
+    def make_item(self, name, shelved=True, fridge="default", **kwargs):
         defaults = {
             "priceInDKK": 45,
             "type": self.type,
             "brewery": self.brewery,
         }
         defaults.update(kwargs)
-        return Item.objects.create(name=name, **defaults)
+        item = Item.objects.create(name=name, **defaults)
+        if shelved:
+            shelve(item, self.fridge if fridge == "default" else fridge)
+        return item
 
     def test_beer_of_the_month_comes_first(self):
         self.make_item("Almindelig")
@@ -118,6 +143,28 @@ class ProductSlidesTests(TestCase):
             self.make_item(f"Øl {index}")
 
         self.assertEqual(len(product_slides()), MAX_PRODUCT_SLIDES)
+
+    def test_items_not_on_a_shelf_are_skipped(self):
+        self.make_item("På hylde")
+        self.make_item("Kun på lager", shelved=False)
+
+        self.assertEqual(
+            [slide["item"].name for slide in product_slides()], ["På hylde"]
+        )
+
+    def test_items_on_a_shelf_outside_a_fridge_are_skipped(self):
+        self.make_item("I køleskab")
+        self.make_item("Løs hylde", fridge=None)
+
+        self.assertEqual(
+            [slide["item"].name for slide in product_slides()], ["I køleskab"]
+        )
+
+    def test_item_on_two_shelves_only_gets_one_slide(self):
+        item = self.make_item("To hylder")
+        shelve(item, self.fridge)
+
+        self.assertEqual(len(product_slides()), 1)
 
 
 class EventSlidesTests(TestCase):
@@ -153,7 +200,9 @@ class EventSlidesTests(TestCase):
 
 class SignageViewTests(TestCase):
     def setUp(self):
-        self.item = Item.objects.create(name="Signage Øl", priceInDKK=50)
+        self.item = shelve(
+            Item.objects.create(name="Signage Øl", priceInDKK=50), make_fridge()
+        )
         start = timezone.now() + timedelta(days=2)
         self.event = Event.objects.create(
             name="Signage Event",
@@ -187,8 +236,9 @@ class SignageViewTests(TestCase):
 
 class InitialSlideTests(TestCase):
     def setUp(self):
+        fridge = make_fridge()
         for index in range(3):
-            Item.objects.create(name=f"Øl {index}", priceInDKK=40)
+            shelve(Item.objects.create(name=f"Øl {index}", priceInDKK=40), fridge)
 
     def test_defaults_to_the_first_slide(self):
         response = self.client.get(reverse("signage"))
@@ -222,14 +272,22 @@ class InitialSlideTests(TestCase):
 class OverviewSlideTests(TestCase):
     def setUp(self):
         self.type = BeerType.objects.create(name="IPA")
+        fridge = make_fridge()
         self.spots = [
-            Item.objects.create(
-                name=f"Spot {index}", priceInDKK=40, type=self.type, isOnSpotlight=True
+            shelve(
+                Item.objects.create(
+                    name=f"Spot {index}",
+                    priceInDKK=40,
+                    type=self.type,
+                    isOnSpotlight=True,
+                ),
+                fridge,
             )
             for index in range(MAX_OVERVIEW_SPOTLIGHT_ITEMS + 2)
         ]
-        self.beer = Item.objects.create(
-            name="Månedens", priceInDKK=55, isBeerOfTheMonth=True
+        self.beer = shelve(
+            Item.objects.create(name="Månedens", priceInDKK=55, isBeerOfTheMonth=True),
+            fridge,
         )
 
     def test_overview_repeats_the_promoted_products_and_the_next_events(self):
