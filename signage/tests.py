@@ -19,6 +19,7 @@ from signage.views import (
     MAX_EVENT_SLIDES,
     MAX_OVERVIEW_SPOTLIGHT_ITEMS,
     MAX_PRODUCT_SLIDES,
+    SLIDES_PER_SELECTION,
     build_slides,
     event_slides,
     overview_slide,
@@ -222,6 +223,13 @@ class SignageViewTests(TestCase):
             [slide["kind"] for slide in response.context["slides"]],
             ["product", "event"],
         )
+
+    def test_selection_starts_over_after_22_slides(self):
+        response = self.client.get(reverse("signage"))
+
+        self.assertEqual(response.context["slides_per_selection"], SLIDES_PER_SELECTION)
+        self.assertEqual(SLIDES_PER_SELECTION, 22)
+        self.assertContains(response, 'data-refresh-after="22"')
 
     def test_empty_signage_still_renders(self):
         Item.objects.all().delete()
