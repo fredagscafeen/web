@@ -224,6 +224,12 @@ class SignageViewTests(TestCase):
             ["product", "event"],
         )
 
+    def test_stylesheet_keeps_a_stable_url(self):
+        html = self.client.get(reverse("signage")).content.decode()
+
+        self.assertIn("css/signage.css?v=", html)
+        self.assertNotRegex(html, r"css/signage\.[0-9a-f]+\.css")
+
     def test_page_is_never_cached(self):
         response = self.client.get(reverse("signage"))
 
