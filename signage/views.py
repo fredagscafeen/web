@@ -13,6 +13,12 @@ EVENT_SLIDE_SECONDS = 15
 # An event slide is shown after this many product slides.
 PRODUCTS_BETWEEN_EVENTS = 2
 
+# The overview slide repeats the old signage layout: beer of the month, the
+# spotlight items and the next events on one screen.
+OVERVIEW_SLIDE_SECONDS = 20
+MAX_OVERVIEW_SPOTLIGHT_ITEMS = 4
+MAX_OVERVIEW_EVENTS = 2
+
 # Upper bounds, so a long product list does not push events out of the loop.
 MAX_PRODUCT_SLIDES = 14
 MAX_EVENT_SLIDES = 4
@@ -71,10 +77,36 @@ def event_slides():
     ]
 
 
-def build_slides(products, events):
+def overview_slide(products, events):
+    """One slide with everything the old signage page showed at once."""
+    beer = next(
+        (
+            slide["item"]
+            for slide in products
+            if slide["label"] == BEER_OF_THE_MONTH_LABEL
+        ),
+        None,
+    )
+    spotlight = [
+        slide["item"] for slide in products if slide["label"] == SPOTLIGHT_LABEL
+    ][:MAX_OVERVIEW_SPOTLIGHT_ITEMS]
+
+    if not beer and not spotlight:
+        return None
+
+    return {
+        "kind": "overview",
+        "seconds": OVERVIEW_SLIDE_SECONDS,
+        "beer": beer,
+        "spotlight": spotlight,
+        "events": [slide["event"] for slide in events[:MAX_OVERVIEW_EVENTS]],
+    }
+
+
+def build_slides(products, events, overview=None):
     """Interleave events into the product loop, so both kinds keep appearing."""
     if not products:
-        return list(events)
+        return ([overview] if overview else []) + list(events)
 
     slides = []
     events_shown = 0
@@ -88,7 +120,7 @@ def build_slides(products, events):
     if events and events_shown == 0:
         slides.append(events[0])
 
-    return slides
+    return ([overview] if overview else []) + slides
 
 
 class Signage(TemplateView):
@@ -99,7 +131,7 @@ class Signage(TemplateView):
 
         products = product_slides()
         events = event_slides()
-        slides = build_slides(products, events)
+        slides = build_slides(products, events, overview_slide(products, events))
 
         context["slides"] = slides
         context["product_slide_count"] = len(products)

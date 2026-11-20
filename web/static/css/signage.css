@@ -212,7 +212,6 @@ body {
 }
 
 .sg-event-badge {
-    align-items: center;
     background: radial-gradient(circle at 30% 20%, #eef2ff, #dbe3ff 70%);
     border: 1px solid rgba(var(--bs-primary-rgb), 0.25);
     border-radius: 0.75rem;
@@ -220,20 +219,50 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: center;
+    overflow: hidden;
     width: 100%;
 }
 
+/* With a cover image the card is split in half: cover on top, date below. */
+.sg-event-cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex: 1 1 50%;
+    width: 100%;
+}
+
+.sg-event-date {
+    align-items: center;
+    display: flex;
+    flex: 1 1 50%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sg-event-badge.has-cover .sg-event-date {
+    flex: 1 1 50%;
+    min-height: 0;
+}
+
 .sg-event-badge-day {
-    font-size: clamp(4rem, 14vh, 11rem);
+    font-size: clamp(3rem, 11vh, 8rem);
     font-weight: 700;
     line-height: 1;
 }
 
+.sg-event-badge.has-cover .sg-event-badge-day {
+    font-size: clamp(2.2rem, 7vh, 5rem);
+}
+
 .sg-event-badge-month {
-    font-size: clamp(1.2rem, 3.5vh, 2.8rem);
+    font-size: clamp(1rem, 3vh, 2.4rem);
     letter-spacing: 0.12em;
     text-transform: uppercase;
+}
+
+.sg-event-badge.has-cover .sg-event-badge-month {
+    font-size: clamp(0.9rem, 2.2vh, 1.8rem);
 }
 
 .sg-event .sg-details {
@@ -310,4 +339,163 @@ body {
 
 .sg-qr {
     height: clamp(3rem, 8vh, 7rem);
+}
+
+/* Overview slide: the old signage layout on one screen. */
+
+.sg-overview {
+    display: grid;
+    gap: 2vw;
+    grid-template-columns: 1.55fr 1fr;
+}
+
+.sg-ov-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+    min-width: 0;
+}
+
+.sg-ov-beer {
+    background: linear-gradient(135deg, #eef7f9, #dff0f5);
+    border-radius: 0.9rem;
+    padding: 1.5vh 1.5vw;
+}
+
+.sg-ov-beer .sg-eyebrow {
+    margin-bottom: 1vh;
+}
+
+.sg-ov-beer-body {
+    align-items: center;
+    display: flex;
+    gap: 2vw;
+}
+
+.sg-ov-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex: 0 0 auto;
+    height: min(24vh, 16vw);
+    width: min(24vh, 16vw);
+}
+
+.sg-ov-beer-text {
+    min-width: 0;
+}
+
+.sg-ov-title {
+    font-size: clamp(1.4rem, 3.4vh, 2.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 0.5vh;
+}
+
+.sg-ov-beer-text .sg-subtitle {
+    margin-bottom: 1vh;
+}
+
+.sg-price-small {
+    font-size: clamp(1.2rem, 3vh, 2.4rem);
+}
+
+.sg-ov-spotlight {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+.sg-ov-list {
+    display: grid;
+    gap: 1vw;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sg-ov-item {
+    background: #fff;
+    border: 1px solid rgba(var(--bs-primary-rgb), 0.2);
+    border-radius: 0.9rem;
+    padding: 1vh 0.8vw;
+    text-align: center;
+}
+
+.sg-ov-thumb {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: min(15vh, 10vw);
+    margin: 0 auto 0.5vh;
+    width: 100%;
+}
+
+.sg-ov-item-name {
+    font-size: clamp(0.9rem, 2.2vh, 1.7rem);
+    font-weight: 600;
+    margin: 0;
+}
+
+.sg-ov-item-meta {
+    color: var(--bs-secondary-color);
+    font-size: clamp(0.75rem, 1.7vh, 1.3rem);
+    margin: 0;
+}
+
+.sg-ov-events {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+    min-width: 0;
+}
+
+.sg-ov-event {
+    align-items: center;
+    background: #f7f8fd;
+    border: 1px solid rgba(var(--bs-primary-rgb), 0.2);
+    border-radius: 0.9rem;
+    display: flex;
+    flex: 1 1 0;
+    gap: 1.2vw;
+    padding: 1.2vh 1.2vw;
+}
+
+.sg-ov-date {
+    align-items: center;
+    align-self: center;
+    aspect-ratio: 1 / 1;
+    background: radial-gradient(circle at 30% 20%, #eef2ff, #dbe3ff 70%);
+    border: 1px solid rgba(var(--bs-primary-rgb), 0.25);
+    border-radius: 0.7rem;
+    color: var(--datblue);
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1vh 0.6vw;
+    width: clamp(4.5rem, 8vw, 8.5rem);
+}
+
+.sg-ov-date-day {
+    font-size: clamp(1.6rem, 5vh, 3.6rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.sg-ov-date-month {
+    font-size: clamp(0.75rem, 1.8vh, 1.3rem);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.sg-ov-event-text {
+    min-width: 0;
+}
+
+.sg-ov-event-when,
+.sg-ov-event-where {
+    color: var(--bs-body-color);
+    font-size: clamp(0.85rem, 2vh, 1.5rem);
+    margin: 0;
 }

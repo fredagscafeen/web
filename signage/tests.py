@@ -9,9 +9,11 @@ from items.models import BeerType, Brewery, Item
 from signage.views import (
     EVENT_SLIDE_SECONDS,
     MAX_EVENT_SLIDES,
+    MAX_OVERVIEW_SPOTLIGHT_ITEMS,
     MAX_PRODUCT_SLIDES,
     build_slides,
     event_slides,
+    overview_slide,
     product_slides,
 )
 
@@ -215,3 +217,69 @@ class InitialSlideTests(TestCase):
             ],
             0,
         )
+
+
+class OverviewSlideTests(TestCase):
+    def setUp(self):
+        self.type = BeerType.objects.create(name="IPA")
+        self.spots = [
+            Item.objects.create(
+                name=f"Spot {index}", priceInDKK=40, type=self.type, isOnSpotlight=True
+            )
+            for index in range(MAX_OVERVIEW_SPOTLIGHT_ITEMS + 2)
+        ]
+        self.beer = Item.objects.create(
+            name="Månedens", priceInDKK=55, isBeerOfTheMonth=True
+        )
+
+    def test_overview_repeats_the_promoted_products_and_the_next_events(self):
+        start = timezone.now() + timedelta(days=3)
+        created = [
+            Event.objects.create(
+                name=f"Event {index}",
+                year=start.year,
+                start_datetime=start,
+                end_datetime=start + timedelta(hours=3),
+                event_type=Event.EventType.COMMON,
+            )
+            for index in range(3)
+        ]
+        events = [{"kind": "event", "event": event, "seconds": 15} for event in created]
+
+        overview = overview_slide(product_slides(), events)
+
+        self.assertEqual(overview["kind"], "overview")
+        self.assertEqual(overview["beer"], self.beer)
+        self.assertEqual(len(overview["spotlight"]), MAX_OVERVIEW_SPOTLIGHT_ITEMS)
+        self.assertEqual(
+            [event.name for event in overview["events"]], ["Event 0", "Event 1"]
+        )
+
+    def test_overview_is_skipped_without_promoted_products(self):
+        for item in self.spots + [self.beer]:
+            item.isOnSpotlight = False
+            item.isBeerOfTheMonth = False
+            item.save()
+
+        self.assertIsNone(overview_slide(product_slides(), []))
+
+    def test_overview_is_the_first_slide(self):
+        products = [product("a"), product("b")]
+        overview = {
+            "kind": "overview",
+            "seconds": 20,
+            "beer": None,
+            "spotlight": [],
+            "events": [],
+        }
+
+        slides = build_slides(products, [], overview)
+
+        self.assertEqual(slides[0], overview)
+        self.assertEqual(slides[1:], products)
+
+    def test_view_starts_with_the_overview(self):
+        response = self.client.get(reverse("signage"))
+
+        self.assertEqual(response.context["slides"][0]["kind"], "overview")
+        self.assertEqual(response.context["initial_slide"], 0)

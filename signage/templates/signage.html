@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load static %}
 {% load django_bootstrap5 bootstrap_icons %}
+{% load event_image_url %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'css/signage.css' %}">
@@ -35,7 +36,93 @@
         {% for slide in slides %}
         <section class="sg-slide{% if forloop.counter0 == initial_slide %} is-active{% endif %}" data-seconds="{{ slide.seconds }}" data-kind="{{ slide.kind }}">
 
-            {% if slide.kind == "product" %}
+            {% if slide.kind == "overview" %}
+            <div class="sg-slide-inner sg-overview">
+                <div class="sg-ov-main">
+                    {% if slide.beer %}
+                    <div class="sg-ov-beer">
+                        <p class="sg-eyebrow">{% translate "Månedens Øl" %}</p>
+                        <div class="sg-ov-beer-body">
+                            {% if slide.beer.image %}
+                            <div class="sg-ov-image" style="background-image: url('{{ slide.beer.image.url }}');"></div>
+                            {% else %}
+                            <div class="sg-ov-image sg-image-empty" style="background-image: url('{% static 'images/logo.png' %}');"></div>
+                            {% endif %}
+                            <div class="sg-ov-beer-text">
+                                <h2 class="sg-ov-title">{{ slide.beer.name }}</h2>
+                                {% if slide.beer.brewery %}
+                                <p class="sg-subtitle">{{ slide.beer.brewery }}</p>
+                                {% endif %}
+                                <p class="sg-tags">
+                                    {% if slide.beer.type %}
+                                    <span class="sg-tag">{{ slide.beer.type }}</span>
+                                    {% endif %}
+                                    {% if slide.beer.abv %}
+                                    <span class="sg-tag">{{ slide.beer.abv }}%</span>
+                                    {% endif %}
+                                    {% if slide.beer.glutenFree %}
+                                    <span class="sg-tag sg-tag-gf">GF</span>
+                                    {% endif %}
+                                    {% if slide.beer.nonAlcoholic %}
+                                    <span class="sg-tag sg-tag-na">NA</span>
+                                    {% endif %}
+                                </p>
+                                <p class="sg-price sg-price-small">{{ slide.beer.priceInDKK|floatformat:-2 }} <small>DKK</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if slide.spotlight %}
+                    <div class="sg-ov-spotlight">
+                        <p class="sg-eyebrow">{% translate "Ugens Spotlight" %}</p>
+                        <ul class="sg-ov-list">
+                            {% for item in slide.spotlight %}
+                            <li class="sg-ov-item">
+                                {% if item.image %}
+                                <div class="sg-ov-thumb" style="background-image: url('{{ item.image.url }}');"></div>
+                                {% else %}
+                                <div class="sg-ov-thumb sg-image-empty" style="background-image: url('{% static 'images/logo.png' %}');"></div>
+                                {% endif %}
+                                <p class="sg-ov-item-name">{{ item.name }}</p>
+                                <p class="sg-ov-item-meta">
+                                    {% if item.type %}{{ item.type }}{% endif %}
+                                    {% if item.abv %} · {{ item.abv }}%{% endif %}
+                                    {% if item.priceInDKK %} · {{ item.priceInDKK|floatformat:-2 }} DKK{% endif %}
+                                </p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if slide.events %}
+                <div class="sg-ov-events">
+                    <p class="sg-eyebrow">{% translate "Upcoming events" %}</p>
+                    {% for event in slide.events %}
+                    <div class="sg-ov-event">
+                        <div class="sg-ov-date">
+                            <span class="sg-ov-date-day">{{ event.start_datetime|date:"j" }}</span>
+                            <span class="sg-ov-date-month">{{ event.start_datetime|date:"M" }}</span>
+                        </div>
+                        <div class="sg-ov-event-text">
+                            <h3 class="sg-ov-title">{{ event.name }}</h3>
+                            <p class="sg-ov-event-when">
+                                {{ event.start_datetime|date:"l, j. F" }}
+                                · {{ event.start_datetime|time:"H:i" }}–{{ event.end_datetime|time:"H:i" }}
+                            </p>
+                            {% if event.location %}
+                            <p class="sg-ov-event-where">{{ event.location }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            {% elif slide.kind == "product" %}
             {% with item=slide.item %}
             <div class="sg-slide-inner sg-product">
                 <div class="sg-media">
@@ -93,12 +180,19 @@
             {% else %}
             {% with event=slide.event %}
             <div class="sg-slide-inner sg-event">
+                {% with image_url=event|event_image_url %}
                 <div class="sg-media sg-event-media">
-                    <div class="sg-event-badge">
-                        <span class="sg-event-badge-day">{{ event.start_datetime|date:"j" }}</span>
-                        <span class="sg-event-badge-month">{{ event.start_datetime|date:"M" }}</span>
+                    <div class="sg-event-badge{% if image_url %} has-cover{% endif %}">
+                        {% if image_url %}
+                        <div class="sg-event-cover" style="background-image: url('{{ image_url }}');"></div>
+                        {% endif %}
+                        <div class="sg-event-date">
+                            <span class="sg-event-badge-day">{{ event.start_datetime|date:"j" }}</span>
+                            <span class="sg-event-badge-month">{{ event.start_datetime|date:"M" }}</span>
+                        </div>
                     </div>
                 </div>
+                {% endwith %}
                 <div class="sg-details">
                     <p class="sg-eyebrow">{% translate "Upcoming events" %}</p>
                     <h2 class="sg-title">{{ event.name }}</h2>
