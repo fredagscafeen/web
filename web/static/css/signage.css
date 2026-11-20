@@ -1,8 +1,8 @@
 /* Full screen slide show for the signage TV at /signage.
 
-   Card, header, badge and colour rules follow the rest of the site, so the
-   screen reads as Fredagscaféen's own: light page, white cards with a thin
-   border, a header strip per card, and datblue for prices and the date. */
+   The cards use the site's own product card markup and classes (card,
+   card-header, text-bg-info/warning, bg-*-subtle, badges), scaled up for a
+   screen you read from across the room. */
 
 html,
 body {
@@ -96,36 +96,26 @@ body {
     visibility: visible;
 }
 
-.sg-slide-inner {
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.175);
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
+/* Cards: Bootstrap card look, only the type gets bigger. */
+
+.sg-slide > .card {
     height: 100%;
     overflow: hidden;
 }
 
-.sg-card {
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.175);
-    border-radius: 0.5rem;
+.sg .card-header {
+    font-size: clamp(0.9rem, 1.9vh, 1.5rem);
+    padding: 0.8vh 1.2vw;
+}
+
+/* The product slide copies the beer of the month card from /prices. */
+
+.sg-product {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
-.sg-eyebrow {
-    background-color: var(--bs-tertiary-bg);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.175);
-    color: var(--bs-body-color);
-    font-size: clamp(0.9rem, 1.9vh, 1.5rem);
-    font-weight: 500;
-    margin: 0;
-    padding: 0.9vh 1.4vw;
-}
-
-.sg-body {
+.sg-product-body {
     display: flex;
     flex: 1 1 auto;
     gap: 3vw;
@@ -133,7 +123,13 @@ body {
     padding: 2.5vh 2vw;
 }
 
-.sg-details {
+.sg-product-image {
+    flex: 0 0 auto;
+    height: min(46vh, 30vw);
+    width: min(46vh, 30vw);
+}
+
+.sg-product-info {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
@@ -141,106 +137,59 @@ body {
     min-width: 0;
 }
 
-/* Products */
-
-.sg-media {
-    align-items: center;
-    display: flex;
-    flex: 0 0 auto;
-    justify-content: center;
+.sg .card-title {
+    font-size: clamp(1.6rem, 4.2vh, 3.4rem);
+    line-height: 1.15;
+    margin-bottom: 1vh;
 }
 
-.sg-image {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: min(56vh, 38vw);
-    width: min(56vh, 38vw);
+.sg .card-title small {
+    font-size: 0.6em;
 }
 
-.sg-image-empty {
-    background-size: 60%;
-    opacity: 0.5;
-}
-
-.sg-title {
-    font-size: clamp(1.8rem, 5vh, 4rem);
-    font-weight: 500;
-    line-height: 1.1;
-    margin: 0 0 1vh;
-}
-
-.sg-subtitle {
-    color: var(--bs-secondary-color);
-    font-size: clamp(1rem, 2.3vh, 1.9rem);
-    margin: 0 0 1.5vh;
-}
-
-.sg-tags {
+.sg-badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6vw;
-    margin: 0 0 1.5vh;
+    gap: 0.5vw;
+    margin-bottom: 1.2vh;
 }
 
-.sg-tag {
-    border: 1px solid var(--bs-primary-border-subtle);
-    border-radius: 0.375rem;
-    color: var(--bs-secondary-color);
-    font-size: clamp(0.8rem, 1.7vh, 1.3rem);
-    padding: 0 0.5rem;
+.sg-badges small {
+    font-size: clamp(0.8rem, 1.6vh, 1.2rem);
 }
 
-.sg-tag-gf {
-    background-color: var(--bs-warning-bg-subtle);
-    border-color: var(--bs-warning-border-subtle);
+.sg-product-info > .text-muted,
+.sg-product-info > div > .text-muted {
+    font-size: clamp(0.9rem, 1.9vh, 1.5rem);
 }
 
-.sg-tag-na {
-    background-color: var(--bs-info-bg-subtle);
-    border-color: var(--bs-info-border-subtle);
+.sg-product-info .text-primary.fw-bold {
+    font-size: clamp(1.5rem, 4.2vh, 3.2rem);
+    margin: 0.6vh 0 0;
 }
 
-.sg-tag-new {
-    background-color: var(--bs-success-bg-subtle);
-    border-color: var(--bs-success-border-subtle);
-    color: var(--bs-success-text-emphasis);
-    font-style: italic;
-}
-
-.sg-description {
+.sg-product-description {
     color: var(--bs-body-color);
     display: -webkit-box;
     font-size: clamp(1rem, 2.1vh, 1.8rem);
     line-height: 1.4;
-    margin: 0 0 2vh;
-    max-height: 22vh;
+    margin: 1.5vh 0 0;
+    max-height: 20vh;
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 6;
 }
 
-.sg-price {
-    color: var(--datblue);
-    font-size: clamp(1.6rem, 4.5vh, 3.5rem);
-    font-weight: 500;
-    margin: 0;
-}
-
-.sg-price small {
-    font-size: 0.5em;
-}
-
 /* Events */
 
 .sg-event-media {
-    flex: 0 0 34%;
+    flex: 0 0 32%;
 }
 
 .sg-event-badge {
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.175);
-    border-radius: 0.5rem;
+    border-radius: var(--bs-border-radius);
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -259,7 +208,7 @@ body {
 .sg-event-date {
     align-items: center;
     background-color: var(--bs-tertiary-bg);
-    color: var(--datblue);
+    color: var(--bs-primary);
     display: flex;
     flex: 1 1 50%;
     flex-direction: column;
@@ -272,7 +221,6 @@ body {
 
 .sg-event-badge-day {
     font-size: clamp(3rem, 11vh, 8rem);
-    font-weight: 500;
     line-height: 1;
 }
 
@@ -298,7 +246,7 @@ body {
     margin: 0 0 1vh;
 }
 
-/* Overview slide: the old signage layout on one screen. */
+/* Overview slide: the prices page on one screen. */
 
 .sg-overview {
     display: grid;
@@ -315,9 +263,14 @@ body {
 }
 
 /* Both cards share the column height, so the two columns line up. */
-.sg-overview-column > .sg-card {
+.sg-overview-column > .card {
     flex: 1 1 0;
     min-height: 0;
+}
+
+/* The beer of the month card keeps its natural height, like on /prices. */
+.sg-overview-column > .card:first-child {
+    flex: 0 0 auto;
 }
 
 .sg-card-body {
@@ -327,60 +280,55 @@ body {
     padding: 1.5vh 1.4vw;
 }
 
-.sg-overview-beer {
+.sg-row {
     align-items: center;
     display: flex;
     gap: 1.6vw;
+    justify-content: space-between;
 }
 
 .sg-overview-image {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
     flex: 0 0 auto;
-    height: min(24vh, 15vw);
-    width: min(24vh, 15vw);
+    height: min(22vh, 14vw);
+    width: min(22vh, 14vw);
 }
 
 .sg-overview-list {
+    align-items: stretch;
     display: grid;
     gap: 1vw;
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    height: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 .sg-overview-item {
-    border: 1px solid rgba(0, 0, 0, 0.175);
-    border-radius: 0.5rem;
-    padding: 1vh 0.8vw;
-    text-align: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid var(--bs-warning-border-subtle);
+    border-radius: var(--bs-border-radius);
+    display: flex;
+    gap: 0.6vw;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 0.8vh 0.7vw;
+}
+
+.sg-overview-item-text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.sg-overview-item .text-primary.fw-bold {
+    font-size: clamp(1rem, 2.2vh, 1.8rem);
 }
 
 .sg-overview-thumb {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    height: min(19vh, 12vw);
-    margin: 0 auto 0.5vh;
-    width: 100%;
-}
-
-.sg-overview-list {
-    height: 100%;
-    align-items: center;
-}
-
-.sg-overview-item-name {
-    font-size: clamp(0.9rem, 2.1vh, 1.6rem);
-    margin: 0;
-}
-
-.sg-overview-item-meta {
-    color: var(--bs-secondary-color);
-    font-size: clamp(0.75rem, 1.6vh, 1.2rem);
-    margin: 0;
+    flex: 0 0 auto;
+    height: min(13vh, 7.5vw);
+    width: min(13vh, 7.5vw);
 }
 
 .sg-overview-events {
@@ -402,10 +350,10 @@ body {
     align-items: center;
     align-self: center;
     aspect-ratio: 1 / 1;
-    background-color: var(--bs-tertiary-bg);
-    border: 1px solid rgba(0, 0, 0, 0.175);
-    border-radius: 0.5rem;
-    color: var(--datblue);
+    background-color: var(--bs-primary-bg-subtle);
+    border: 1px solid var(--bs-primary-border-subtle);
+    border-radius: var(--bs-border-radius);
+    color: var(--bs-primary);
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
