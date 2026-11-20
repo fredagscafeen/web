@@ -224,6 +224,21 @@ class SignageViewTests(TestCase):
             ["product", "event"],
         )
 
+    def test_page_is_never_cached(self):
+        response = self.client.get(reverse("signage"))
+
+        self.assertIn("no-store", response["Cache-Control"])
+        self.assertIn("no-cache", response["Cache-Control"])
+
+    def test_empty_page_reloads_itself_instead_of_freezing(self):
+        Item.objects.all().delete()
+        Event.objects.all().delete()
+
+        response = self.client.get(reverse("signage"))
+
+        self.assertEqual(len(response.context["slides"]), 0)
+        self.assertContains(response, "lastAdvance")
+
     def test_selection_starts_over_after_22_slides(self):
         response = self.client.get(reverse("signage"))
 

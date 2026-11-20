@@ -1,6 +1,8 @@
 import random
 
 from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.generic import TemplateView
 
 from events.models import Event
@@ -140,7 +142,10 @@ def build_slides(products, events, overview=None):
     return ([overview] if overview else []) + slides
 
 
+@method_decorator(never_cache, name="dispatch")
 class Signage(TemplateView):
+    """The bar TV. Never handed from a cache, so a bad render cannot stick."""
+
     template_name = "signage.html"
 
     def get_context_data(self, **kwargs):
