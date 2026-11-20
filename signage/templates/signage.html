@@ -6,7 +6,9 @@
 {% load event_image_url %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'css/signage.css' %}">
+{# A stable URL: a screen that is still showing an older copy of this page must
+   keep getting its stylesheet after a deploy rotates the hashed file names. #}
+<link rel="stylesheet" href="{% get_static_prefix %}css/signage.css?v={{ GIT_COMMIT_HASH|default:'dev' }}">
 {% endblock %}
 
 {% block body_content %}
@@ -312,7 +314,7 @@
                 {% if slides %}
                 <span class="sg-counter"><span id="sg-counter-current">{{ initial_slide|add:1 }}</span> / {{ slides|length }}</span>
                 {% endif %}
-                <img src="{% static 'images/qr-signage.svg' %}" class="sg-qr" alt="">
+                <img src="{% get_static_prefix %}images/qr-signage.svg" class="sg-qr" alt="">
             </div>
         </div>
     </footer>
