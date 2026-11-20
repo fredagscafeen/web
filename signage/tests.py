@@ -228,6 +228,7 @@ class SignageViewTests(TestCase):
         html = self.client.get(reverse("signage")).content.decode()
 
         self.assertIn("css/signage.css?v=", html)
+        self.assertNotIn("stable URL", html)
         self.assertNotRegex(html, r"css/signage\.[0-9a-f]+\.css")
 
     def test_page_is_never_cached(self):

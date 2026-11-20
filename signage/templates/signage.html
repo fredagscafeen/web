@@ -6,8 +6,10 @@
 {% load event_image_url %}
 
 {% block extrahead %}
-{# A stable URL: a screen that is still showing an older copy of this page must
-   keep getting its stylesheet after a deploy rotates the hashed file names. #}
+{% comment %}
+A stable URL: a screen still showing an older copy of this page must keep
+getting its stylesheet after a deploy rotates the hashed file names.
+{% endcomment %}
 <link rel="stylesheet" href="{% get_static_prefix %}css/signage.css?v={{ GIT_COMMIT_HASH|default:'dev' }}">
 {% endblock %}
 
